@@ -51,10 +51,6 @@ sections:
       icon: chart-line
       icon_pack: fas
       name: Statistics
-    - description: 10%
-      icon: camera-retro
-      icon_pack: fas
-      name: Photography
     title: Skills
     
 - block: education
@@ -86,7 +82,7 @@ sections:
       date_start: "2013-08-10"
       # description: Taught electronic engineering and researched semiconductor physics.
       location: São Paulo, Brazil
-      title: Academic Exchange Program
+      title: Academic Undergraduate Exchange Program
     - company: University of São Paulo
       company_logo: org-usp
       company_url: ""
@@ -104,121 +100,118 @@ sections:
     title: Experience
     date_format: Jan 2006
     items:
-    - company: Alesp
+    - company: Legislative Assembly of São Paulo (Alesp)
       company_logo: org-alesp
-      company_url: ""
-      date_end: ""
-      date_start: "2021-01-01"
-      description: |2-
-          Aaaa
-      location: California
-      title: CEO
-    - company: GenCoin
+      company_url: "https://www.al.sp.gov.br/"
+      date_end: "2020-01-06"
+      date_start: "2019-03-01"
+      # description: 
+      location: São Paulo, Brazil
+      title: Legislative Assistant
+    - company: Municipal Government of São Paulo
       company_logo: org-pmsp
-      company_url: ""
-      date_end: ""
-      date_start: "2021-01-01"
-      description: |2-
-          Aaaa
-      location: California
-      title: CEO
-    - company: GenCoin
+      company_url: "https://www.capital.sp.gov.br/"
+      date_end: "2021-09-01"
+      date_start: "2021-01-05"
+      # description: 
+      location: São Paulo, Brazil
+      title: Management and Planning Assistant
+    - company: Sonne Consulting
       company_logo: org-sonne
-      company_url: ""
-      date_end: ""
-      date_start: "2021-01-01"
-      description: |2-
-          Aaaa
-      location: California
-      title: CEO
-    - company: GenCoin
+      company_url: "https://www.sonne.global/"
+      date_end: "2016-12-01"
+      date_start: "2012-03-01"
+      # description: 
+      location: São Paulo, Brazil
+      title: Market and Business Intelligence Analyst
+    - company: Itaú BBA
       company_logo: org-itaubba
-      company_url: ""
-      date_end: ""
-      date_start: "2021-01-01"
-      description: |2-
-          Aaaa
-      location: California
-      title: CEO
+      company_url: "https://www.itau.com.br/itaubba-en/international"
+      date_end: "2013-08-01"
+      date_start: "2012-03-01"
+      # description: 
+      location: São Paulo, Brazil
+      title: Controlling and Accounting Intern
     title: Professional Experience
   design:
     columns: "2"
     
-- block: accomplishments
-  content:
-    date_format: Jan 2006
-    items:
-    - certificate_url: https://www.coursera.org
-      date_end: ""
-      date_start: "2021-01-25"
-      description: ""
-      organization: Coursera
-      organization_url: https://www.coursera.org
-      title: Neural Networks and Deep Learning
-      url: ""
-    - certificate_url: https://www.udemy.com
-      date_end: ""
-      date_start: "2021-01-01"
-      description: Formulated informed blockchain models, hypotheses, and use cases.
-      organization: edx
-      organization_url: https://www.udemy.com
-      title: Blockchain Fundamentals
-      url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
-    - certificate_url: https://www.datacamp.com
-      date_end: "2020-12-21"
-      date_start: "2020-07-01"
-      description: ""
-      organization: DataCamp
-      organization_url: https://www.datacamp.com
-      title: Object-Oriented Programming in R
-      url: ""
-    subtitle: null
-    title: Accomplish&shy;ments
-  design:
-    columns: "2"
+# - block: accomplishments
+#   content:
+#     date_format: Jan 2006
+#     items:
+#     - certificate_url: https://www.coursera.org
+#       date_end: ""
+#       date_start: "2021-01-25"
+#       description: ""
+#       organization: Coursera
+#       organization_url: https://www.coursera.org
+#       title: Neural Networks and Deep Learning
+#       url: ""
+#     - certificate_url: https://www.udemy.com
+#       date_end: ""
+#       date_start: "2021-01-01"
+#       description: Formulated informed blockchain models, hypotheses, and use cases.
+#       organization: edx
+#       organization_url: https://www.udemy.com
+#       title: Blockchain Fundamentals
+#       url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
+#     - certificate_url: https://www.datacamp.com
+#       date_end: "2020-12-21"
+#       date_start: "2020-07-01"
+#       description: ""
+#       organization: DataCamp
+#       organization_url: https://www.datacamp.com
+#       title: Object-Oriented Programming in R
+#       url: ""
+#     subtitle: null
+#     title: Accomplishments
+#   design:
+#     columns: "2"
     
-- block: collection
-  content:
-    count: 5
-    filters:
-      author: ""
-      category: ""
-      exclude_featured: false
-      exclude_future: false
-      exclude_past: false
-      folders:
-      - post
-      publication_type: ""
-      tag: ""
-    offset: 0
-    order: desc
-    subtitle: ""
-    text: ""
-    title: Recent Posts
-  design:
-    columns: "2"
-    view: compact
-  id: posts
+# - block: collection
+#   content:
+#     count: 5
+#     filters:
+#       author: ""
+#       category: ""
+#       exclude_featured: false
+#       exclude_future: false
+#       exclude_past: false
+#       folders:
+#       - post
+#       publication_type: ""
+#       tag: ""
+#     offset: 0
+#     order: desc
+#     subtitle: ""
+#     text: ""
+#     title: Recent Posts
+#   design:
+#     columns: "2"
+#     view: compact
+#   id: posts
   
 - block: portfolio
   content:
     buttons:
     - name: All
       tag: '*'
-    - name: Deep Learning
-      tag: Deep Learning
-    - name: Other
-      tag: Demo
+    - name: Graduate
+      tag: Graduate
+    - name: Undergraduate
+      tag: Undergraduate
     default_button_index: 0
     filters:
       folders:
       - project
-    title: Projects
+    title: Teaching Assistance
   design:
-    columns: "1"
+    columns: "2"
     flip_alt_rows: false
     view: showcase
   id: projects
+  
 # - block: markdown
 #   content:
 #     subtitle: ""
@@ -226,6 +219,7 @@ sections:
 #     title: Gallery
 #   design:
 #     columns: "1"
+
 - block: collection
   content:
     filters:
@@ -238,20 +232,20 @@ sections:
     view: card
   id: featured
   
-- block: collection
-  content:
-    filters:
-      exclude_featured: true
-      folders:
-      - publication
-    text: |-
-      {{% callout note %}}
-      Quickly discover relevant content by [filtering publications](./publication/).
-      {{% /callout %}}
-    title: Recent Publications
-  design:
-    columns: "2"
-    view: citation
+# - block: collection
+#   content:
+#     filters:
+#       exclude_featured: true
+#       folders:
+#       - publication
+#     text: |-
+#       {{% callout note %}}
+#       Quickly discover relevant content by [filtering publications](./publication/).
+#       {{% /callout %}}
+#     title: Recent Publications
+#   design:
+#     columns: "2"
+#     view: citation
     
 # - block: collection
 #   content:
@@ -271,13 +265,13 @@ sections:
 
 - block: contact
   content:
-    # address:
-      # city: Ribeirão Preto
-      # country: Brazil
-      # country_code: BR
-      # postcode: "94305"
-      # region: CA
-      # street: 450 Serra Mall
+    address:
+      city: Ribeirão Preto
+      country: Brazil
+      country_code: BR
+      postcode: "14040-905"
+      region: SP
+      street: Av. Bandeirantes, 3900
     # appointment_url: https://calendly.com
     autolink: true
     contact_links:
