@@ -1,56 +1,55 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: My research interests include public sector, applied econometrics and environmetal economics.
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
-email: ""
-first_name: Alice
+  - course: Ph.D. in Economics
+    institution: University of São Paulo
+    year: 2020 -- Present
+  - course: Specialization in Economics and Management
+    institution: Getúlio Vargas Foundation
+    year: 2077 -- 2019
+  - course: B.Sc. in Business Administration
+    institution: University of São Paulo
+    year: 2010 -- 2014
+email: "fabio.nishida@usp.br"
+first_name: Fábio
 highlight_name: true
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
-last_name: Wu
+- Public Sector
+- Applied Econometrics
+- Environmental Economics
+last_name: Nishida
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: University of São Paulo
+  url: https://www.fearp.usp.br
+role: Ph.D. Candidate in Economics
 social:
-- icon: envelope
-  icon_pack: fas
-  link: /#contact
 - display:
     header: true
-  icon: twitter
-  icon_pack: fab
-  label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
-- icon: graduation-cap
+  icon: envelope
   icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: /#contact
+# - icon: twitter
+#   icon_pack: fab
+#   label: Follow me on Twitter
+#   link: https://twitter.com/fhnishdia
+# - icon: graduation-cap
+#   icon_pack: fas
+#   link: https://scholar.google.com
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/fhnishida
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
+  link: https://www.linkedin.com/in/fabionishida/
 - icon: cv
   icon_pack: ai
   link: uploads/resume.pdf
 status:
-  icon: ☕️
+  icon: null
 superuser: true
-title: Alice Wu 吳恩達
+title: Fábio Nishida
 ---
 
-Alice Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Fábio Nishida is a Ph.D. candidate in Economics at the University of São Paulo. His research interests include public sector, applied econometrics and environmetal economics.
 {style="text-align: justify;"}
