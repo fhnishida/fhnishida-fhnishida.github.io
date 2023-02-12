@@ -1,11 +1,11 @@
 ---
-date: "2021-05-01T00:00:00Z"
-external_link: https://fhnishida.github.io/page/
+date: "2022-03-10T00:00:00Z"
+external_link: https://fhnishida.github.io/fearp/eco1.html
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: An example of linking directly to an external project website using `external_link`.
+summary: Graduate TA Sessions on OLS, Panel Data and IV.
 tags:
 - Graduate
-title: Graduate Econometrics I
+title: Econometrics I
 ---

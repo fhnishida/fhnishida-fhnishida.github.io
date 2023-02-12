@@ -40,6 +40,7 @@ sections:
     text: null
     username: admin
   id: about
+
 - block: features
   content:
     items:
@@ -51,7 +52,7 @@ sections:
       icon: chart-line
       icon_pack: fas
       name: Statistics
-    title: Skills
+    title: Programming Skills
     
 - block: education
   content:

@@ -1,11 +1,12 @@
 ---
-date: "2021-05-01T00:00:00Z"
-external_link: https://fhnishida.github.io/page/
+date: "2023-03-10T00:00:00Z"
+external_link: https://www.fearp.usp.br/institucional/docentes/economia/2614-daniel-domingues-dos-santos.html
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: An example of linking directly to an external project website using `external_link`.
+summary: Undergraduate TA Sessions on IV, Panel Data and Logit/Probit.
 tags:
 - Undergraduate
-title: Undergraduate Econometrics I
+title: Econometrics II
 ---
+
