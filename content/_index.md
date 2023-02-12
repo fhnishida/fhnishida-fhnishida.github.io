@@ -56,34 +56,94 @@ sections:
       icon_pack: fas
       name: Photography
     title: Skills
-- block: experience
+    
+- block: education
   content:
+    title: Education
     date_format: Jan 2006
     items:
-    - company: GenCoin
-      company_logo: org-gc
+    - company: University of São Paulo
+      company_logo: org-usp
+      company_url: ""
+      date_end: ""
+      date_start: "2020-01-01"
+      description: |2-
+          Advisor: Prof. Sérgio Naruhiko Sakurai
+      location: Ribeirão Preto, Brazil
+      title: Ph.D. Candidate in Economics
+    - company: Getúlio Vargas Foundation
+      company_logo: org-fgv
+      company_url: ""
+      date_end: "2019-02-01"
+      date_start: "2017-08-01"
+      # description: Taught electronic engineering and researched semiconductor physics.
+      location: São Paulo, Brazil
+      title: Specialization in Economics and Management
+    - company: Jönköping University
+      company_logo: org-ju
+      company_url: ""
+      date_end: "2013-12-10"
+      date_start: "2013-08-10"
+      # description: Taught electronic engineering and researched semiconductor physics.
+      location: São Paulo, Brazil
+      title: Academic Exchange Program
+    - company: University of São Paulo
+      company_logo: org-usp
+      company_url: ""
+      date_end: "2014-12-31"
+      date_start: "2010-03-01"
+      # description: |2-
+      location: São Paulo, Brazil
+      title: B.Sc. in Business Administration
+    title: Education
+  design:
+    columns: "2"
+    
+- block: experience
+  content:
+    title: Experience
+    date_format: Jan 2006
+    items:
+    - company: Alesp
+      company_logo: org-alesp
       company_url: ""
       date_end: ""
       date_start: "2021-01-01"
       description: |2-
-          Responsibilities include:
-
-          * Analysing
-          * Modelling
-          * Deploying
+          Aaaa
       location: California
       title: CEO
-    - company: University X
-      company_logo: org-x
+    - company: GenCoin
+      company_logo: org-pmsp
       company_url: ""
-      date_end: "2020-12-31"
-      date_start: "2016-01-01"
-      description: Taught electronic engineering and researched semiconductor physics.
+      date_end: ""
+      date_start: "2021-01-01"
+      description: |2-
+          Aaaa
       location: California
-      title: Professor of Semiconductor Physics
-    title: Experience
+      title: CEO
+    - company: GenCoin
+      company_logo: org-sonne
+      company_url: ""
+      date_end: ""
+      date_start: "2021-01-01"
+      description: |2-
+          Aaaa
+      location: California
+      title: CEO
+    - company: GenCoin
+      company_logo: org-itaubba
+      company_url: ""
+      date_end: ""
+      date_start: "2021-01-01"
+      description: |2-
+          Aaaa
+      location: California
+      title: CEO
+    title: Professional Experience
   design:
     columns: "2"
+    
 - block: accomplishments
   content:
     date_format: Jan 2006
@@ -96,12 +156,12 @@ sections:
       organization_url: https://www.coursera.org
       title: Neural Networks and Deep Learning
       url: ""
-    - certificate_url: https://www.edx.org
+    - certificate_url: https://www.udemy.com
       date_end: ""
       date_start: "2021-01-01"
       description: Formulated informed blockchain models, hypotheses, and use cases.
-      organization: edX
-      organization_url: https://www.edx.org
+      organization: edx
+      organization_url: https://www.udemy.com
       title: Blockchain Fundamentals
       url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
     - certificate_url: https://www.datacamp.com
@@ -116,6 +176,7 @@ sections:
     title: Accomplish&shy;ments
   design:
     columns: "2"
+    
 - block: collection
   content:
     count: 5
@@ -138,6 +199,7 @@ sections:
     columns: "2"
     view: compact
   id: posts
+  
 - block: portfolio
   content:
     buttons:
@@ -175,6 +237,7 @@ sections:
     columns: "2"
     view: card
   id: featured
+  
 - block: collection
   content:
     filters:
@@ -189,6 +252,7 @@ sections:
   design:
     columns: "2"
     view: citation
+    
 # - block: collection
 #   content:
 #     filters:
@@ -204,6 +268,7 @@ sections:
 #     title: Popular Topics
 #   design:
 #     columns: "2"
+
 - block: contact
   content:
     # address:
@@ -242,7 +307,7 @@ sections:
     # phone: 888 888 88 88
     subtitle: null
     text: #Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mi diam, venenatis ut magna et, vehicula efficitur enim.
-    title: Contato
+    title: Contact
   design:
     columns: "2"
   id: contact
