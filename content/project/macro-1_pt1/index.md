@@ -1,6 +1,6 @@
 ---
 date: "2021-03-01T00:00:00Z"
-external_link: https://fhnishida.github.io/page/
+external_link: https://fhnishida-rec5002-1.netlify.app/docs/
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
