@@ -44,14 +44,26 @@ sections:
 - block: features
   content:
     items:
-    - description: 90%
-      icon: r-project
-      icon_pack: fab
+    - description: #90%
+      icon: r-project-icon
+      icon_pack: custom
       name: R
-    - description: 100%
-      icon: chart-line
-      icon_pack: fas
-      name: Statistics
+    - description: #100%
+      icon: python-icon
+      icon_pack: custom
+      name: Python
+    # - description: #100%
+    #   icon: icons8-matlab
+    #   icon_pack: custom
+    #   name: MatLab
+    # - description: #100%
+    #   icon: icons8-texshop
+    #   icon_pack: custom
+    #   name: LaTeX
+    - description: #100%
+      icon: microsoft_vb-icon
+      icon_pack: custom
+      name: VBA/Excel
     title: Programming Skills
     
 - block: education
@@ -65,7 +77,10 @@ sections:
       date_end: ""
       date_start: "2020-01-01"
       description: |2-
-          Advisor: Prof. Sérgio Naruhiko Sakurai
+      
+          - Thesis: "Essays on Fiscal Federalism and Public Finance"
+          - Advisor: Prof. Sérgio Naruhiko Sakurai
+          
       location: Ribeirão Preto, Brazil
       title: Ph.D. Candidate in Economics
     - company: Getúlio Vargas Foundation
@@ -270,8 +285,8 @@ sections:
       city: Ribeirão Preto
       country: Brazil
       country_code: BR
-      postcode: "14040-905"
-      region: SP
+      postcode: "- 14040-905"
+      region: SP, Brazil 
       street: Av. Bandeirantes, 3900
     # appointment_url: https://calendly.com
     autolink: true

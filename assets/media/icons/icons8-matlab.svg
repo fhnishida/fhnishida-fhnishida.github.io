@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 23.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="22.6454" y1="10.8813" x2="26.7572" y2="23.8536">
+	<stop  offset="0" style="stop-color:#4ADDDF"/>
+	<stop  offset="0.6994" style="stop-color:#3F5352"/>
+	<stop  offset="0.8629" style="stop-color:#442729"/>
+</linearGradient>
+<path style="fill:url(#SVGID_1_);" d="M21,27l-7-6c0,0,1-1.5,2.5-3s2.736-1.852,4.5-3c3.511-2.284,6.5-12,11-12L21,27z"/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="1" y1="27.0329" x2="37.775" y2="27.0329">
+	<stop  offset="0" style="stop-color:#4ADDDF"/>
+	<stop  offset="0.7922" style="stop-color:#3F5352"/>
+	<stop  offset="1" style="stop-color:#442729"/>
+</linearGradient>
+<polygon style="fill:url(#SVGID_2_);" points="11,33.066 1,26 14,21 21.277,26.465 14,32.066 "/>
+<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="11" y1="24" x2="47" y2="24">
+	<stop  offset="0.2065" style="stop-color:#53140F"/>
+	<stop  offset="0.2996" style="stop-color:#84360F"/>
+	<stop  offset="0.4128" style="stop-color:#B85B10"/>
+	<stop  offset="0.5113" style="stop-color:#DF7610"/>
+	<stop  offset="0.5899" style="stop-color:#F68710"/>
+	<stop  offset="0.6388" style="stop-color:#FF8D10"/>
+	<stop  offset="0.7294" style="stop-color:#FD8A10"/>
+	<stop  offset="0.8004" style="stop-color:#F58010"/>
+	<stop  offset="0.8646" style="stop-color:#E86F10"/>
+	<stop  offset="0.9249" style="stop-color:#D65811"/>
+	<stop  offset="0.982" style="stop-color:#C03A11"/>
+	<stop  offset="1" style="stop-color:#B72F11"/>
+</linearGradient>
+<path style="fill:url(#SVGID_3_);" d="M32,3c5,0,13,27,15,34c0,0-7.017-6.63-11-6s-5.47,6.548-9.725,10.756C23.5,44.5,21,45,21,45
+	s-0.206-8.124-5-11c-2.5-1.5-5-1-5-1s6.049-2.901,9.474-8.174S28.5,3,32,3z"/>
+</svg>
