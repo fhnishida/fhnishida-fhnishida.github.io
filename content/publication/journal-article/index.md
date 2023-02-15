@@ -27,7 +27,7 @@ summary: The study reveals a negative and significant impact of retirement on th
 tags:
 # - Source Themes
 title: Impacts of rural pension on school dropout in Brazil
-subtitle: (in Brazilian Portuguese)
+subtitle: (in Portuguese)
 # url_code: 
 # url_dataset: ""
 url_pdf: "https://www.scielo.br/j/resr/a/XrdWDJBpHpb38XBzz8jD6hx/?format=pdf&lang=pt"

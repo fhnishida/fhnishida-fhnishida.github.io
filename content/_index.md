@@ -221,7 +221,7 @@ sections:
     filters:
       folders:
       - project
-    title: Teaching Assistance
+    title: Teaching Assistance (in Portuguese)
   design:
     columns: "2"
     flip_alt_rows: false
