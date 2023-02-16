@@ -1,5 +1,5 @@
 ---
-date: "2021-03-01T00:00:00Z"
+date: "2021-06-01T00:00:00Z"
 # external_link: https://fhnishida-rec5002-1.netlify.app/docs/
 image:
   # caption: Photo by Toa Heftiba on Unsplash
@@ -12,7 +12,6 @@ linktitle: Main
 type: book
 ---
 
-<img src="book.jpg" width=100%/>
 
 Welcome to TA Sessions for Macroeconomics I (Part 1) course!
 

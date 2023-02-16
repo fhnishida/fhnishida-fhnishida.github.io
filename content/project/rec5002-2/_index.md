@@ -9,8 +9,6 @@ linktitle: Main
 type: book
 ---
 
-<img src="book.jpg" width=100%/>
-
 Welcome to TA Sessions for Macroeconomics I (Part 2) course!
 
 Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/view.php?id=89644](https://edisciplinas.usp.br/course/view.php?id=89644)
