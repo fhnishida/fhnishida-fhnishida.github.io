@@ -1,5 +1,5 @@
 ---
-date: "2022-07-20T00:00:00Z"
+date: "2022-07-21T00:00:00Z"
 # external_link: https://fhnishida.github.io/fearp/eco1.html
 image:
   # caption: Photo by Toa Heftiba on Unsplash
@@ -8,9 +8,11 @@ summary: Graduate TA Sessions on OLS, Panel Data and IV.
 tags:
 - Graduate
 title: Econometrics I (Spring 2022)
-linktitle: -----------------------------------
+linktitle: ----------------------
 type: book
+weight: 1
 ---
+
 
 Welcome to TA Sessions for Econometrics I course!
 

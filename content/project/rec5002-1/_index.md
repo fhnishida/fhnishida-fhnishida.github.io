@@ -1,5 +1,5 @@
 ---
-date: "2021-06-01T00:00:00Z"
+date: "2021-05-30T00:00:00Z"
 # external_link: https://fhnishida-rec5002-1.netlify.app/docs/
 image:
   # caption: Photo by Toa Heftiba on Unsplash
@@ -10,6 +10,9 @@ tags:
 title: Macroeconomics I, Part 1 (Spring 2021)
 linktitle: Main
 type: book
+icon: book
+iconpack: fs
+weight: 1
 ---
 
 

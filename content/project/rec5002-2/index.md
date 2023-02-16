@@ -1,5 +1,5 @@
 ---
-date: "2021-07-22T00:00:00Z"
+date: "2021-07-21T00:00:00Z"
 # external_link: https://fhnishida-rec5002-2.netlify.app/docs/
 image:
   # caption: Photo by Toa Heftiba on Unsplash
@@ -9,8 +9,10 @@ tags:
 - Graduate
 title: Macroeconomics I, Part 2 (Spring 2021)
 type: book
-linktitle: -----------------------------------
+linktitle: ----------------------
+weight: 1
 ---
+
 
 Welcome to TA Sessions for Macroeconomics I (Part 2) course!
 
@@ -44,3 +46,4 @@ Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/vi
 #### R Programming
 - [HarvardX Data Science Specialization](https://www.edx.org/professional-certificate/harvardx-data-science?index=product&queryID=7c853e76cef8eaffced84cd6759b2af1&position=1)
 - [John Hopkins Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science)
+

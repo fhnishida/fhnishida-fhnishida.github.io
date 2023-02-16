@@ -8,8 +8,9 @@ summary: Graduate TA Sessions on Neoclassical Growth Model and Recursive Methods
 tags:
 - Graduate
 title: Macroeconomics I, Part 1 (Spring 2021)
-linktitle: -----------------------------------
+linktitle: ----------------------
 type: book
+weight: 1
 ---
 
 
