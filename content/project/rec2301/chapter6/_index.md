@@ -67,19 +67,19 @@ qt_norm = qnorm(probs, mean=0, sd=1)
 plot(Z, pdf_norm, type="l", col="blue", xlab="Escores padrão Z") # pdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
 ```r
 plot(Z, cdf_norm, type="l", col="blue", xlab="Escores padrão Z") # cdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-1-2.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-1-2.png" width="672" />
 
 ```r
 plot(probs, qt_norm, type="l", col="blue", ylab="Escores padrão Z") # quantis
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-1-3.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-1-3.png" width="672" />
 
 ## Distribuição Binomial
 - Criaremos gráficos com taxa de sucesso de 50\% (`prob = 0.5`) e número de tentativas `size = 100`
@@ -99,19 +99,19 @@ qt_binom = qbinom(probs, size=100, prob=0.5)
 plot(quantis, pdf_binom, type="l", col="blue", xlab="Sucessos") # pdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 ```r
 plot(quantis, cdf_binom, type="l", col="blue", xlab="Sucessos") # cdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-2-2.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-2-2.png" width="672" />
 
 ```r
 plot(probs, qt_binom, type="l", col="blue", ylab="Sucessos") # quantis
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-2-3.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-2-3.png" width="672" />
 
 ## Distribuição de Poisson
 - Criaremos gráficos com {{<math>}}$\lambda = 2.5${{</math>}}
@@ -131,19 +131,19 @@ qt_pois = qpois(probs, lambda=2.5)
 plot(quantis, pdf_pois, type="l", col="blue", xlab="Ocorrências") # pdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ```r
 plot(quantis, cdf_pois, type="l", col="blue", xlab="Ocorrências") # cdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-3-2.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-3-2.png" width="672" />
 
 ```r
 plot(probs, qt_pois, type="l", col="blue", ylab="Ocorrências") # quantis
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-3-3.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-3-3.png" width="672" />
 
 
 ## Distribuição Qui-Quadrado
@@ -164,19 +164,19 @@ qt_chisq = qchisq(probs, df=10)
 plot(quantis, pdf_chisq, type="l", col="blue", xlab=expression(chi^2)) # pdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
 plot(quantis, cdf_chisq, type="l", col="blue", xlab=expression(chi^2)) # cdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
 
 ```r
 plot(probs, qt_chisq, type="l", col="blue", ylab=expression(chi^2)) # quantis
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-4-3.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-4-3.png" width="672" />
 
 
 ## Distribuição t-Student
@@ -199,19 +199,19 @@ qt_t = qt(probs, df=10)
 plot(quantis, pdf_t, type="l", col="blue", xlab="Estatística t") # pdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 ```r
 plot(quantis, cdf_t, type="l", col="blue", xlab="Estatística t") # cdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
 
 ```r
 plot(probs, qt_t, type="l", col="blue", ylab="Estatística t") # quantis
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
 
 
 
@@ -233,19 +233,19 @@ qt_f = qf(probs, df1=10, df2=15)
 plot(quantis, pdf_f, type="l", col="blue", xlab="Estatística F") # pdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ```r
 plot(quantis, cdf_f, type="l", col="blue", xlab="Estatística F") # cdf
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-6-2.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-6-2.png" width="672" />
 
 ```r
 plot(probs, qt_f, type="l", col="blue", ylab="Estatística F") # quantis
 ```
 
-<img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-6-3.png" width="672" />
+<img src="/project/rec5004/chapter6/_index_files/figure-html/unnamed-chunk-6-3.png" width="672" />
 
 
 

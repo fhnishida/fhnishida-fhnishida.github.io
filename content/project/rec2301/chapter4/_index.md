@@ -827,15 +827,15 @@ bd1
 ##    name            year  mass
 ##    <chr>          <dbl> <dbl>
 ##  1 C-3PO           2021  75  
-##  2 C-3PO           2022  76.2
+##  2 C-3PO           2022  75.3
 ##  3 Darth Vader     2021 136  
-##  4 Darth Vader     2022 132. 
+##  4 Darth Vader     2022 130. 
 ##  5 Leia Organa     2021  49  
-##  6 Leia Organa     2022  49.3
+##  6 Leia Organa     2022  47.8
 ##  7 Luke Skywalker  2021  77  
 ##  8 Luke Skywalker  2022  78.4
 ##  9 R2-D2           2021  32  
-## 10 R2-D2           2022  31.8
+## 10 R2-D2           2022  31.5
 ```
 
 ```r
@@ -876,15 +876,15 @@ full_join(bd1, bd2, by=c("name", "year"))
 ##    name                year  mass height
 ##    <chr>              <dbl> <dbl>  <dbl>
 ##  1 C-3PO               2021  75    167  
-##  2 C-3PO               2022  76.2  170. 
+##  2 C-3PO               2022  75.3  170. 
 ##  3 Darth Vader         2021 136    202  
-##  4 Darth Vader         2022 132.   206. 
+##  4 Darth Vader         2022 130.   206. 
 ##  5 Leia Organa         2021  49     NA  
-##  6 Leia Organa         2022  49.3   NA  
+##  6 Leia Organa         2022  47.8   NA  
 ##  7 Luke Skywalker      2021  77     NA  
 ##  8 Luke Skywalker      2022  78.4   NA  
 ##  9 R2-D2               2021  32     NA  
-## 10 R2-D2               2022  31.8   NA  
+## 10 R2-D2               2022  31.5   NA  
 ## 11 Beru Whitesun lars  2021  NA    165  
 ## 12 Beru Whitesun lars  2022  NA    168. 
 ## 13 Biggs Darklighter   2021  NA    183  
@@ -902,24 +902,24 @@ full_join(bd1, bd2, by=c("name", "year"))
 
 ```
 ## # A tibble: 16 × 5
-##    name                year mass.x height mass.y
-##    <chr>              <dbl>  <dbl>  <dbl>  <dbl>
-##  1 C-3PO               2021   75    167   -0.176
-##  2 C-3PO               2022   76.2  170.  -2.44 
-##  3 Darth Vader         2021  136    202   -2.02 
-##  4 Darth Vader         2022  132.   206.   0.157
-##  5 Leia Organa         2021   49     NA   NA    
-##  6 Leia Organa         2022   49.3   NA   NA    
-##  7 Luke Skywalker      2021   77     NA   NA    
-##  8 Luke Skywalker      2022   78.4   NA   NA    
-##  9 R2-D2               2021   32     NA   NA    
-## 10 R2-D2               2022   31.8   NA   NA    
-## 11 Beru Whitesun lars  2021   NA    165   -1.35 
-## 12 Beru Whitesun lars  2022   NA    168.   0.459
-## 13 Biggs Darklighter   2021   NA    183    0.599
-## 14 Biggs Darklighter   2022   NA    187.   0.180
-## 15 R5-D4               2021   NA     97    2.00 
-## 16 R5-D4               2022   NA     98.9 -0.185
+##    name                year mass.x height  mass.y
+##    <chr>              <dbl>  <dbl>  <dbl>   <dbl>
+##  1 C-3PO               2021   75    167    1.31  
+##  2 C-3PO               2022   75.3  170.   0.0180
+##  3 Darth Vader         2021  136    202   -1.81  
+##  4 Darth Vader         2022  130.   206.  -1.29  
+##  5 Leia Organa         2021   49     NA   NA     
+##  6 Leia Organa         2022   47.8   NA   NA     
+##  7 Luke Skywalker      2021   77     NA   NA     
+##  8 Luke Skywalker      2022   78.4   NA   NA     
+##  9 R2-D2               2021   32     NA   NA     
+## 10 R2-D2               2022   31.5   NA   NA     
+## 11 Beru Whitesun lars  2021   NA    165   -0.491 
+## 12 Beru Whitesun lars  2022   NA    168.   2.72  
+## 13 Biggs Darklighter   2021   NA    183    1.31  
+## 14 Biggs Darklighter   2022   NA    187.  -0.165 
+## 15 R5-D4               2021   NA     97    1.31  
+## 16 R5-D4               2022   NA     98.9 -1.12
 ```
 
 {{< cta cta_text="👉 Proceed to Data Visualization" cta_link="../chapter5" >}}

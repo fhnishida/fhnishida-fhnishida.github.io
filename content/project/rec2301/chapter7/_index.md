@@ -86,14 +86,14 @@ mtcars %>%
 plot(mtcars$mpg, mtcars$hp, xlab="Milhas por galão (mpg)", ylab="Cavalos-vapor (hp)")
 ```
 
-<img src="/project/rec2301/chapter7/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 ```r
 ## Plotando consumo de combustível (mpg) por peso do carro (wt)
 plot(mtcars$mpg, mtcars$wt, xlab="Milhas por galão (mpg)", ylab="Libras (wt)")
 ```
 
-<img src="/project/rec2301/chapter7/_index_files/figure-html/unnamed-chunk-2-2.png" width="672" />
+<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-2-2.png" width="672" />
 
 Queremos estimar o seguinte modelo:
 {{<math>}}$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon  $${{</math>}}
@@ -693,7 +693,7 @@ text(c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), 0.2,
      pos=2, srt=90, col="red")
 ```
 
-<img src="/project/rec2301/chapter7/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ```r
 # Mazda RX4 Wag 
@@ -705,7 +705,7 @@ text(c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), 0.2,
      pos=2, srt=90, col="blue")
 ```
 
-<img src="/project/rec2301/chapter7/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
+<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
 - Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
 
 

@@ -86,15 +86,15 @@ rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
 ```
 
 ```
-##  [1] -0.0004180973  0.0012455254 -0.6579577493 -1.2433370689 -0.1482663630
-##  [6] -0.3083079633  1.3756309394  0.6454302349  0.1087885908 -0.9645109568
+##  [1]  0.18238187 -0.98951954  0.94211834  2.03646094 -0.61380774 -0.03705462
+##  [7] -1.63146251 -1.69260797  0.20584449  0.29303577
 ```
 
 ```r
 hist(rnorm(n=1000, mean=0, sd=1))  # Histograma dos números gerados
 ```
 
-<img src="/project/rec2301/chapter1/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/project/rec5004/chapter1/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 
 
@@ -331,7 +331,7 @@ plot(pressure) # Gráfico da base de dados 'pressure'
 
 output:
 
-<img src="/project/rec2301/chapter1/_index_files/figure-html/pressure-1.png" width="672" />
+<img src="/project/rec5004/chapter1/_index_files/figure-html/pressure-1.png" width="672" />
 
 *Ao invés de escrever `echo = FALSE`, é possível alterar a configuração do _chunk_ após criá-lo:<br/>  
 Ícone de Config > Output > Show output only

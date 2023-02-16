@@ -1899,7 +1899,7 @@ summary(y) # resumo da variável y
 plot(x, y) # Figura de x contra y
 ```
 
-<img src="/project/rec2301/chapter2/_index_files/figure-html/unnamed-chunk-70-1.png" width="672" />
+<img src="/project/rec5004/chapter2/_index_files/figure-html/unnamed-chunk-70-1.png" width="672" />
 
 
 ### Amostragem aleatória

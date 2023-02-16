@@ -97,7 +97,7 @@ boxplot(pollution$pm25, col="blue")
 abline(h=12, col="red") # Linha horizontal no valor 12
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 - Para múltiplos boxplots, usamos `<variável_numérica> ~ <variável categórica>`:
 
 
@@ -106,7 +106,7 @@ boxplot(pollution$pm25 ~ pollution$region, col="blue")
 abline(h=12, col="red") # Linha horizontal no valor 12
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 
 
@@ -116,7 +116,7 @@ abline(h=12, col="red") # Linha horizontal no valor 12
 hist(pollution$pm25, col="green")
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
 hist(pollution$pm25, col="green", breaks=100) # 100 quebras
@@ -124,7 +124,7 @@ rug(pollution$pm25) # Traços dos valores da amostra abaixo do histograma
 abline(v=12, col="red") # Linha vertical no valor 12
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
 - Podemos colocar mais de um gráfico numa figura usando a função `par(mfrow, mar)`:
 
 ```r
@@ -137,7 +137,7 @@ hist(pol_west$pm25, col="green")
 hist(pol_east$pm25, col="green")
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 - Note que você precisa usar `par(mfrow=c(1, 1))` para voltar a incluir apenas 1 gráfico na figura. 
 
@@ -149,7 +149,7 @@ barplot(table(pollution$region), col="wheat",
         main="Nº de países em cada região")
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 
 
@@ -162,7 +162,7 @@ abline(h=12, lwd=1.5, lty=2, col="red")
 abline(lm(pm25 ~ latitude, data=pollution), col="blue")
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 
 ```r
@@ -172,7 +172,7 @@ plot(pol_west$latitude, pol_west$pm25, main="West")
 plot(pol_east$latitude, pol_east$pm25, main="East")
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 - Também é possível adicionar objetos gráficos e textos no gráfico gerado por `plot()`:
     - `abline()`: adiciona linhas horizontal, vertical ou de regressão
@@ -196,7 +196,7 @@ points(air_other$Wind, air_other$Ozone, col="red")
 legend("topright", pch=1, col=c("blue", "red"), legend=c("May", "Other Months"))
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 
 Alguns parâmetros gráficos importantes:
@@ -266,7 +266,7 @@ g = ggplot(data=mtcars, aes(mpg, wt)) # Criando a base do gráfico
 g
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 3. Layer geomético (`geom`)
     - incluindos formas, linhas e pontos
@@ -277,7 +277,7 @@ g
 g + geom_point()
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 4. Layer de suavização/tendência (`smooth`)
 ```yaml
@@ -303,7 +303,7 @@ g + geom_point() + geom_smooth(method="lm") # suavização a partir de OLS
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 
 
@@ -319,7 +319,7 @@ g + geom_point() + geom_smooth(method="lm") + facet_grid(. ~ cyl) # agrupando po
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 ```r
 g + geom_point() + geom_smooth(method="lm") + facet_grid(cyl ~ .) # agrupando por nº cilindros verticalmente
@@ -329,7 +329,7 @@ g + geom_point() + geom_smooth(method="lm") + facet_grid(cyl ~ .) # agrupando po
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-14-2.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-14-2.png" width="672" />
 
 6. Anotações
     - Rótulos: `xlab()`, `ylab()`, `labs()`, `ggtitle()`
@@ -342,7 +342,7 @@ g + geom_point() + ggthemes::theme_economist() +
     ggtitle("Milhas por galão X Peso do carro")
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 
 7. Modificando Estética
@@ -352,13 +352,13 @@ g + geom_point() + ggthemes::theme_economist() +
 g + geom_point(color="steelblue", size=9, alpha=0.4)
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 ```r
 g + geom_point(aes(color=cyl), size=9, alpha=0.4) # colorindo por variável - precisa usar aes()
 ```
 
-<img src="/project/rec2301/chapter5/_index_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+<img src="/project/rec5004/chapter5/_index_files/figure-html/unnamed-chunk-16-2.png" width="672" />
 
 
 
