@@ -8,7 +8,7 @@ summary: Undergraduate TA Sessions on OLS.
 tags:
 - Undergraduate
 title: Econometrics I (Fall 2022)
-linktitle: --------------------------------------
+linktitle: -----------------------------------
 type: book
 ---
 

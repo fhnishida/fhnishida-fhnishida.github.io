@@ -96,7 +96,7 @@ plot(mtcars$mpg, mtcars$wt, xlab="Milhas por galão (mpg)", ylab="Libras (wt)")
 <img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-2-2.png" width="672" />
 
 Queremos estimar o seguinte modelo:
-$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon  $$
+{{<math>}}$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon  $${{</math>}}
 
 
 ## Estimação por OLS
@@ -313,7 +313,7 @@ head(y)
 
 #### 2. Estimador `\(\hat{\beta}\)`
 O estimador de OLS é dado por:
-$$ \hat{\beta} = (X'X)^{-1} X' y $$
+{{<math>}}$$ \hat{\beta} = (X'X)^{-1} X' y $${{</math>}}
 
 
 ```r
@@ -331,7 +331,7 @@ beta_hat
 
 
 #### 3. Calcular os valores ajustados `\(\hat{y}\)`
-$$ \hat{y} = X\hat{\beta} $$
+{{<math>}}$$ \hat{y} = X\hat{\beta} $${{</math>}}
 
 ```r
 ## Calculando os valores ajustados de y
@@ -352,7 +352,7 @@ head(y_hat)
 
 
 #### 4. Calcular os resíduos `\(e\)`
-$$ \varepsilon = y - \hat{y} $$
+{{<math>}}$$ \varepsilon = y - \hat{y} $${{</math>}}
 
 ```r
 ## Calculando os residuos
@@ -373,7 +373,7 @@ head(e)
 
 
 #### 5. Calcular a variância do termo de erro `\(s^2\)`
-$$ \hat{\sigma}^2 = \frac{e'e}{n-k} $$
+{{<math>}}$$ \hat{\sigma}^2 = \frac{e'e}{n-k} $${{</math>}}
 
 ```r
 ## Estimando variancia do termo de erro
@@ -388,7 +388,7 @@ sigma2
 
 
 #### 6. Calcular a matriz de covariâncias `\(\hat{Cov}(\widehat{\beta})\)`
-$$ \widehat{Cov}(\hat{\beta}) = \hat{\sigma}^2 (X'X)^{-1} $$
+{{<math>}}$$ \widehat{Cov}(\hat{\beta}) = \hat{\sigma}^2 (X'X)^{-1} $${{</math>}}
 
 ```r
 ## Estimando a matriz de variancia/covariancia das estimativas beta
@@ -436,7 +436,7 @@ results
 
 #### 1. Criar função perda que calcula a soma dos desvios quadráticos
 - A função para calcular a soma dos desvios quadráticos recebe como inputs:
-  - um **vetor** de possíveis valores para `\(\beta_0\)`, `\(\beta_1\)` e `\(\beta_2\)`
+  - um **vetor** de possíveis valores para {{<math>}}$\beta_0${{</math>}}, {{<math>}}$\beta_1${{</math>}} e {{<math>}}$\beta_2${{</math>}}
   - uma base de dados
 
 ```r
@@ -455,8 +455,7 @@ desv_quad = function(params, data) {
 
 #### 2. Otimização
 - Agora encontraremos os parâmetros que minimizam a função perda
-$$ \text{argmin}_{\theta \in \Theta} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $$
-<!-- tal que `\(\Theta = \{ \beta_0, \beta_1, \beta_2 \}\)`. -->
+{{<math>}}$$ \text{argmin}_{\theta \in \Theta} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $${{</math>}}
 - Para isto usaremos a função `optim()` que retorna os parâmetros que minimizam uma função (equivalente ao _argmin_):
 ```yaml
 optim(par, fn, gr = NULL, ...,
@@ -518,13 +517,12 @@ fit_ols2
 
 ### _Grid Search_
 
-
 - O método mais simples de otimização numérica é o _grid search_ (discretização).
 - Como o R não lida com problemas com infinitos valores, uma forma lidar com isso é discretizando diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
 - Para cada possível combinação de parâmetros, calculam-se diversos valores a partir da função objetivo. De todos os valores calculados, escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
-- O exemplo abaixo considera apenas um parâmetro de escolha `\(\theta\)` e, para cada ponto escolhido dentro do intervalo `\([-1, 1]\)`, calcula-se a função objetivo:
+- O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
 
-<center><img src="https://fhnishida.github.io/fearp/eco1/grid_search.png"></center>
+<center><img src="../grid_search.png"></center>
 
 - Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis), e menos sensível a chutes de valores iniciais. (ver método abaixo)
 - Porém, por ter que fazer cálculo da função objetivo para inúmeros pontos, tende a ser menos eficiente.
@@ -532,18 +530,16 @@ fit_ols2
 
 ### _Steepest Ascent_
 
-
-
 - Conforme o número de parâmetros do modelo cresce, aumenta o número de possíveis combinações entre parâmetros e torna o processo computacional cada vez mais lento.
 - Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _steepest ascent_.
-- Seja `\(\theta^*\)` o conjunto de parâmetros que maximiza a função objetivo:
-  1. Comece com alguns valores iniciais dos parâmetros, `\(\theta^0\)`
+- Seja {{<math>}}$\theta^*${{</math>}} o conjunto de parâmetros que maximiza a função objetivo:
+  1. Comece com alguns valores iniciais dos parâmetros, {{<math>}}$\theta^0${{</math>}}
   2. Calcula-se o gradiente e avalia-se a possibilidade de "andar para cima" a um valor mais alto
-  3. Caso possa, ande na direção correta a `\(\theta_1\)`
-  4. Repita os passos (2) e (3), andando de `\(\theta^s\)` para `\(\theta^{s+1}\)` até
-  atingir o máximo com `\(\theta^*\)`.
+  3. Caso possa, ande na direção correta a {{<math>}}$\theta_1${{</math>}}
+  4. Repita os passos (2) e (3), andando de {{<math>}}$\theta^s${{</math>}} para {{<math>}}$\theta^{s+1}${{</math>}} até
+  atingir o máximo com {{<math>}}$\theta^*${{</math>}}.
 
-<center><img src="https://fhnishida.github.io/fearp/eco1/steepest_ascent.png"></center>
+<center><img src="../steepest_ascent.png"></center>
 
 - Note que esse método de otimização é sensível ao conjunto de parâmetros iniciais e a descontinuidades da função objetivo.
 - Por outro lado, é um método mais eficiente (calcula uma função objetivo dado os parâmetros a cada passo que dá) e tende a ser também mais preciso nas estimações.
@@ -553,29 +549,12 @@ fit_ols2
 ## Estimação por MLE
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
 
-<!-- Para uma equação de regressão geral -->
-<!-- $$ y_i = \beta' X + \varepsilon $$ -->
-<!-- supondo distribuição normal do termo de erro -->
-<!-- $$ \varepsilon \sim \mathcal{N}(0, \sigma^2), $$ -->
-<!-- temos uma distribuição condicional de `\(y\)` dada por -->
-<!-- $$ y | X \sim \mathcal{N}(\beta'X, \sigma^2). $$ -->
-
-<!-- Logo, a função log-verossimilhança (condicional) é -->
-<!-- $$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y | X, \beta, \sigma^2)}}. $$ -->
-
-<!-- Em nosso exemplo, temos que estimar 4 parâmetros -->
-<!-- $$ \theta = \left( \beta_0, \beta_1, \beta_2, \sigma^2 \right). $$ -->
-
-<!-- Podemos: -->
-
-<!-- - Tomar derivadas de `\(\ln{L(\beta, \sigma^2 | y, X)}\)` em relação a cada parâmetro e resolver as CPOs, ou -->
-<!-- - Maximizar `\(\ln{L(\beta, \sigma^2 | y, X)}\)` por otimização numérica. -->
 
 ### Intuição do cálculo da função de verossimilhança
 - Apenas para ilustrar a construção da função de verossimilhança, considere um modelo logit em que queremos estimar os indivíduos precisam escolher se usam carro ou ônibus para deslocamento.
 - Para estimar as probabilidades de usar carro (e, por consequência, de ônibus), vamos utilizar as informações dos preços que os indivíduos pagam pela gasolina e pela passagem de ônibus.
 - Note que os valores abaixo foram todos inventados.
-- Considere um conjunto de parâmetros `\(\theta^A = \{ \beta^A_0, \beta^A_1, \beta^A_2 \}\)` que gerem as seguintes probabilidades de usar carro e de ônibus (últimas 2 colunas):
+- Considere um conjunto de parâmetros {{<math>}}$\theta^A = \{ \beta^A_0, \beta^A_1, \beta^A_2 \}${{</math>}} que gerem as seguintes probabilidades de usar carro e de ônibus (últimas 2 colunas):
 
 |             | **Preço Gasolina** | **Preço Bus** | **Escolha** | **_Prob(Car  `\(| \theta^A\)`)_** | **_Prob(Bus `\(| \theta^A\)`)_** |
 |:-----------:|:------------------:|:----------------:|:-----------:|:-----------------:|:------------------:|
@@ -584,8 +563,9 @@ fit_ols2
 | Indiv. 3 |        6,80        |       2,50       |    Bus   |        0,25       |        **0,75**        |
 | Indiv. 4 |        6,75        |       5,00       |    Car    |        **0,73**       |        0,27        |
 
-- Logo, a verossimilhança, dado os parâmetros `\(\theta^A\)` é
-$$ \mathcal{L}(\theta^A) = 0,63 \times 0,67 \times 0,75 \times 0,73 = 0,231 $$
+- Logo, a verossimilhança, dado os parâmetros {{<math>}}$\theta^A${{</math>}} é
+{{<math>}}$$ \mathcal{L}(\theta^A) = 0,63 \times 0,67 \times 0,75 \times 0,73 = 0,231 $${{</math>}}
+
 - Agora, considere `\(\theta^B = \{ \beta^B_0, \beta^B_1, \beta^B_2 \}\)` que gerem as seguintes probabilidades:
 
 |             | **Preço Gasolina** | **Preço Bus** | **Escolha** | **_Prob(Car  `\(| \theta^B\)`)_** | **_Prob(Bus `\(| \theta^B\)`)_** |
@@ -595,37 +575,37 @@ $$ \mathcal{L}(\theta^A) = 0,63 \times 0,67 \times 0,75 \times 0,73 = 0,231 $$
 | Indiv. 3 |        6,80        |       2,50       |    Bus   |        0,35       |        **0,65**        |
 | Indiv. 4 |        6,75        |       5,00       |    Car    |        **0,58**       |        0,42        |
 
-- Então, a verossimilhança, dado `\(\theta^B\)`, é
-$$ \mathcal{L}(\theta^B) = 0,54 \times 0,57 \times 0,65 \times 0,58 = 0,116 $$
-- Como `\(\mathcal{L}(\theta^A) = 0,231 > 0,116 = \mathcal{L}(\theta^B)\)`, então os parâmetros `\(\theta^A\)` se mostram mais adequados em relação a `\(\theta^B\)`
-- Na máxima verossimilhança (MLE), é escolhido o conjunto de parâmetros `\(\theta^*\)` que maximiza a função de verossimilhança (ou log-verossimilhança).
+- Então, a verossimilhança, dado {{<math>}}$\theta^B${{</math>}}, é
+
+{{<math>}}$$ \mathcal{L}(\theta^B) = 0,54 \times 0,57 \times 0,65 \times 0,58 = 0,116 $${{</math>}}
+
+- Como {{<math>}}$\mathcal{L}(\theta^A) = 0,231 > 0,116 = \mathcal{L}(\theta^B)${{</math>}}, então os parâmetros {{<math>}}$\theta^A${{</math>}} se mostram mais adequados em relação a {{<math>}}$\theta^B${{</math>}}
+- Na máxima verossimilhança (MLE), é escolhido o conjunto de parâmetros {{<math>}}$\theta^*${{</math>}} que maximiza a função de verossimilhança (ou log-verossimilhança).
 - No modelo logit, as probabilidades usadas para calcular a verossimilhança são as próprias proabilidades de escolha por uma alternativa, dado um conjunto de parâmetros.
-- Já no modelo linear, usamos a função de densidade de probabilidade para avaliar a "distância" de cada observação, `\(y_i\)`, em relação ao seu valor ajustado `\(\hat y_i\)`, dado um conjunto de parâmetros.
+- Já no modelo linear, usamos a função de densidade de probabilidade para avaliar a "distância" de cada observação, {{<math>}}$y_i${{</math>}}, em relação ao seu valor ajustado {{<math>}}$\hat y_i${{</math>}}, dado um conjunto de parâmetros.
 
 
 
 ### Otimização Numérica para MLE
 A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
 
-- Alguns valores inicias dos parâmetros, `\(\theta^0\)`
+- Alguns valores inicias dos parâmetros, {{<math>}}$\theta^0${{</math>}}
 - Uma função que tome esses parâmetros como um argumento e calcule a 
-log-verossimilhança, `\(\ln{L(\theta)}\)`.
-
-<!-- Como `optim()` irá encontrar os parâmetros que minimizem a função objetivo, precisamos adaptar o output da função de log-verossimilhança (minimizaremos o negativo da log-lik). -->
+log-verossimilhança, {{<math>}}$\ln{L(\theta)}${{</math>}}.
 
 A função log-verossimilhança é dada por
-$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}, $$
-em que a distribuição condicional de cada `\(y_i\)` é
-$$ y_i | x_i \sim \mathcal{N}(\beta'x_i, \sigma^2) $$
+{{<math>}}$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}, $${{</math>}}
+em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+{{<math>}}$$ y_i | x_i \sim \mathcal{N}(\beta'x_i, \sigma^2) $${{</math>}}
 
-1. Construir matriz `\(X\)` e vetor `\(y\)`
-2. Calcular os valores ajustados de `\(y\)`, `\(\hat{y} - \beta'x_i\)`, que é a média de cada `\(y_i\)`
-3. Calcular a densidade para cada `\(y_i\)`, `\(f(y_i | x_i, \beta, \sigma^2)\)`
-4. Calcular a log-verossimilhança, `\(\ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}\)`
+1. Construir matriz {{<math>}}$X${{</math>}} e vetor {{<math>}}$y${{</math>}}
+2. Calcular os valores ajustados de {{<math>}}$y${{</math>}}, {{<math>}}$\hat{y} - \beta'x_i${{</math>}}, que é a média de cada {{<math>}}$y_i${{</math>}}
+3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta, \sigma^2)${{</math>}}
+4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}${{</math>}}
 
 
 #### 1. Chute de valores iniciais para `\(\beta_0, \beta_1, \beta_2\)` e `\(\sigma^2\)`
-- Note que, diferente da estimação por OLS, um dos parâmetros a ser estimado via MLE é a variância ($\sigma^2$).
+- Note que, diferente da estimação por OLS, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
 
 ```r
 params = c(35, -0.02, -3.5, 1)
@@ -651,7 +631,7 @@ y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
 ```
 
 #### 4. Cálculo das densidades
-$$ f(y_i | x_i, \beta, \sigma^2) $$
+{{<math>}}$$ f(y_i | x_i, \beta, \sigma^2) $${{</math>}}
 
 ```r
 ## Calculando os pdf's de cada outcome
@@ -673,10 +653,11 @@ prod(y_pdf) # Verossimilhança
 ```
 
 - Para entender melhor o que estamos fazendo aqui, relembre que, na estimação por máxima verossimilhança, assume-se que
-`$$\varepsilon | X \sim N(0, \sigma^2)$$`
-- No exemplo abaixo, podemos ver que, para cada `\(x\)`, temos um valor ajustado `\(\hat{y} = \beta_0 + \beta_1 x\)` e seus desvios `\(\varepsilon\)` são normalmente distribuídos com a mesma variância `\(\sigma^2\)`
+{{<math>}}$$\varepsilon | X \sim N(0, \sigma^2)$${{</math>}}
+- No exemplo abaixo, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
 
-<center><img src="https://fhnishida.github.io/fearp/eco1/mle.jpg"></center>
+<center><img src="../mle.jpg"></center>
+
 - Agora, vamos juntar o data frame `mtcars` com os valores ajustados `mpg_hat` e as densidades `y_pdf`:
 
 ```r
@@ -712,7 +693,7 @@ text(c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), 0.2,
      pos=2, srt=90, col="red")
 ```
 
-<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ```r
 # Mazda RX4 Wag 
@@ -724,12 +705,12 @@ text(c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), 0.2,
      pos=2, srt=90, col="blue")
 ```
 
-<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-24-2.png" width="672" />
+<img src="/project/rec5004/chapter7/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
 - Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
 
 
 #### 5. Calculando a Log-Verossimilhança
-$$ \mathcal{l}(\beta, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta, \sigma^2) \right]} $$
+{{<math>}}$$ \mathcal{l}(\beta, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta, \sigma^2) \right]} $${{</math>}}
 
 ```r
 ## Calculando a log-verossimilhanca
@@ -771,7 +752,7 @@ loglik_lm = function(params, data) {
 #### 7. Otimização
 
 Tendo a função objetivo, usaremos `optim()` para *minimizar*
-$$ -\ln{L(\beta, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}. $$
+{{<math>}}$$ -\ln{L(\beta, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}. $${{</math>}}
 Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (função`optim()` apenas minimiza).
 
 
@@ -836,19 +817,21 @@ cbind(mle$par, mle_se)
 
 
 - Para estimar via GMM precisamos construir vetores relacionados aos seguintes momentos:
-$$ E(\varepsilon) = 0 \qquad \text{ e } \qquad E(\varepsilon'X) = 0 $$
+{{<math>}}$$ E(\varepsilon) = 0 \qquad \text{ e } \qquad E(\varepsilon'X) = 0 $${{</math>}}
 em que `\(X\)` é a matriz de covariadas e `\(\varepsilon\)` é o desvio. Note que estes são os momentos relacionados ao OLS, dado que este é um caso particular do GMM.
 
 
 - Relembre que estamos usando a base de dados `mtcars` para estimar o modelo linear:
-$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon $$
+{{<math>}}$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon $${{</math>}}
 que relaciona o consumo de combustível (em milhas por galão - _mpg_) com a potência (_hp_) e o peso (em mil libras - _wt_) do carro.
 
 
 ### Otimização Numérica para GMM
 
-#### 1. Chute de valores iniciais para `\(\beta_0\)`, `\(\beta_1\)` e `\(\beta_2\)`
-- Vamos criar um vetor com possíveis valores de `\(\beta_0, \beta_1, \beta_2\)`:
+#### 1. Chute de valores iniciais para {{<math>}}$\{ \beta_0, \beta_1, \beta_2 \}${{</math>}}
+
+- Vamos criar um vetor com possíveis valores de {{<math>}}$\{ \beta_0, \beta_1, \beta_2 \}${{</math>}}:
+
 
 ```r
 library(dplyr)
@@ -886,7 +869,9 @@ e = y - y_hat
 ```
 
 #### 4. Criação da matriz de momentos
-- Note que `\(E(\varepsilon' X)\)` é uma multiplicação matricial, mas a função `gmm()` exige que como input os vetores com multiplicação elemento a elemento do resíduo `\(\varepsilon\)` com as covariadas `\(X\)` (neste caso: constante, hp, wt)
+
+- Note que {{<math>}}$E(\varepsilon' X)${{</math>}} é uma multiplicação matricial, mas a função `gmm()` exige que como input os vetores com multiplicação elemento a elemento do resíduo {{<math>}}$\varepsilon${{</math>}} com as covariadas {{<math>}}$X${{</math>}} (neste caso: constante, hp, wt)
+
 
 ```r
 m = X * as.vector(e) # matriz de momentos (sem tomar esperança)
@@ -902,9 +887,14 @@ head(m)
 ## Hornet Sportabout  -0.7600 -133.000 -2.6144000
 ## Valiant            -2.6900 -282.450 -9.3074000
 ```
-- Note que, como multiplicamos a constante igual a 1 com os desvios `\(\varepsilon\)`, a 1ª coluna corresponde ao momento `\(E(\varepsilon)=0\)` (mas sem tomar a esperança).
-- Já as colunas 2 e 3 correspodem ao momento `\(E(\varepsilon'X)=0\)` para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros `\(\theta = \{ \beta_0, \beta_1, \beta_2 \}\)` que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
+
+
+- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperança).
+
+- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
+
+- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1, \beta_2 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
+
 
 
 #### 5. Criação de função com os momentos
@@ -975,4 +965,4 @@ summary(gmm_lm)$coefficients
 
 
 
-{{< cta cta_text="👉 Proceed to SESSION" cta_link="../chapter8" >}}
+{{< cta cta_text="👉 Proceed to Panel Data" cta_link="../chapter8" >}}

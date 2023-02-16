@@ -9,7 +9,7 @@ tags:
 - Graduate
 title: Macroeconomics I, Part 2 (Spring 2021)
 type: book
-linktitle: ----------------------------------------
+linktitle: -----------------------------------
 ---
 
 Welcome to TA Sessions for Macroeconomics I (Part 2) course!

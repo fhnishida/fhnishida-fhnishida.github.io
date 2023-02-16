@@ -8,7 +8,7 @@ summary: Graduate TA Sessions on OLS, Panel Data and IV.
 tags:
 - Graduate
 title: Econometrics I (Spring 2022)
-linktitle: --------------------------------------
+linktitle: -----------------------------------
 type: book
 ---
 

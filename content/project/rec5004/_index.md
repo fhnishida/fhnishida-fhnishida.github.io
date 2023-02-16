@@ -10,6 +10,8 @@ tags:
 title: Econometrics I (Spring 2022)
 linktitle: Main
 type: book
+icon: book
+iconpack: fs
 ---
 
 

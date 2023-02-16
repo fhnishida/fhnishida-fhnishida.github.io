@@ -50,7 +50,7 @@ em que `x` e `q` são estatísticas de cada distribuição (quantis), e `p` é p
 
 
 ## Distribuição Normal
-- Criaremos gráficos com média `\(\mu = 0\)` e desvio padrão `\(\sigma=1\)`
+- Criaremos gráficos com média {{<math>}}$\mu = 0${{</math>}} e desvio padrão {{<math>}}$\sigma=1${{</math>}}
 - Então, neste caso, os quantis em `x` e `q` são escores padrão Z
 
 ```r
@@ -114,7 +114,7 @@ plot(probs, qt_binom, type="l", col="blue", ylab="Sucessos") # quantis
 <img src="/project/rec2301/chapter6/_index_files/figure-html/unnamed-chunk-2-3.png" width="672" />
 
 ## Distribuição de Poisson
-- Criaremos gráficos com `\(\lambda = 2.5\)` 
+- Criaremos gráficos com {{<math>}}$\lambda = 2.5${{</math>}}
 - Os quantis `x` e `q` são números de ocorrências
 
 ```r
@@ -148,7 +148,7 @@ plot(probs, qt_pois, type="l", col="blue", ylab="Ocorrências") # quantis
 
 ## Distribuição Qui-Quadrado
 - Criaremos gráficos com 10 graus de liberdade (`df = 10`)
-- Os quantis `x` e `q` são estatísticas de teste cumulativas de Pearson ($\chi^2$)
+- Os quantis `x` e `q` são estatísticas de teste cumulativas de Pearson ({{<math>}}$\chi^2${{</math>}})
 
 ```r
 # Gerando sequências de valores de quantis e de probabilidades
