@@ -210,6 +210,7 @@ sections:
   
 - block: portfolio
   content:
+    date_format: Jan 2006
     buttons:
     - name: All
       tag: '*'
@@ -221,11 +222,12 @@ sections:
     filters:
       folders:
       - project
-    title: Teaching Assistance (in Portuguese)
+    title: Teaching Assistance
+    subtitle: (in Portuguese)
   design:
     columns: "2"
     flip_alt_rows: false
-    view: showcase
+    view: 6
   id: projects
   
 # - block: markdown
