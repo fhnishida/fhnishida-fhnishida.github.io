@@ -16,7 +16,7 @@ Welcome to TA Sessions for Macroeconomics I (Part 2) course!
 
 Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/view.php?id=89644](https://edisciplinas.usp.br/course/view.php?id=89644)
 
-{{< cta cta_text="👉 Proceed to Session 1" cta_link="chapter1" >}}
+{{< cta cta_text="👉 Proceed to Session 1" cta_link="sec1" >}}
 
 
 

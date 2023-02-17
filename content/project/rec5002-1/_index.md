@@ -20,7 +20,7 @@ Welcome to TA Sessions for Macroeconomics I (Part 1) course!
 
 Course webpage (prof. Fernando Barros Jr): [https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i](https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i)
 
-{{< cta cta_text="👉 Proceed to Session 1" cta_link="chapter1" >}}
+{{< cta cta_text="👉 Proceed to Session 1" cta_link="sec1" >}}
 
 
 

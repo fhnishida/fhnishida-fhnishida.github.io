@@ -18,7 +18,7 @@ Welcome to TA Sessions for Econometrics I course!
 
 Course webpage (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.br/course/view.php?id=99924](https://edisciplinas.usp.br/course/view.php?id=99924)
 
-{{< cta cta_text="👉 Proceed to R Toolkit" cta_link="chapter1" >}}
+{{< cta cta_text="👉 Proceed to R Toolkit" cta_link="sec1" >}}
 
 
 ## Solutions to Theorical Problem Sets
