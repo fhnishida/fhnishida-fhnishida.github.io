@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: OLS Estimation
+linktitle: Univariate OLS
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: OLS Estimation
+title: Univariate OLS
 weight: 7
 output: md_document
 type: book
@@ -15,612 +15,484 @@ type: book
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-É necessário carregar o pacote `dplyr` para manipulação da base de dados abaixo.
+## Regressão simples por MQO
+- [Seção 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
+- Considere o seguinte modelo empírico
+{{<math>}}$$ y = \beta_0 + \beta_1 x + u \tag{2.1} $${{</math>}}
+- Os estimadores de mínimos quadrados ordinários (MQO), segundo Wooldridge (2006, Seção 2.2) é dado por
+
+{{<math>}}\begin{align}
+    \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x} \tag{2.2}\\
+    \hat{\beta}_1 &= \frac{Cov(x,y)}{Var(x)} \tag{2.3}
+\end{align}{{</math>}}
+
+- E os valores ajustados/preditos, $\hat{y}$ é dado por
+{{<math>}}$$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $${{</math>}}
+tal que 
+{{<math>}}$$ y = \hat{y} + \hat{u} $${{</math>}}
+
+### Exemplo 2.3: Salário de Diretores Executivos e Retornos de Ações (Wooldridge, 2006)
+
+- Considere o seguinte modelo de regressão simples
+{{<math>}}$$ \text{salary} = \beta_0 + \beta_1 \text{roe} + u $${{</math>}}
+em que `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o investimento em percentual.
+
+
+#### Estimando regressão simples "na mão"
+
 ```{r message=FALSE, warning=FALSE}
-library(dplyr)
+# Carregando a base de dados do pacote 'wooldridge'
+data(ceosal1, package="wooldridge")
+
+attach(ceosal1) # para não precisar escrever 'ceosal1$' antes de toda variável
+
+cov(salary, roe) # covariância entre variável dependente e independente
+var(roe) # variância do retorno sobre o investimento
+mean(roe) # média do retorno sobre o investimento
+mean(salary) # média do salário
+
+# Cálculo "na mão" dos coeficientes de MQO
+( b1_hat = cov(salary, roe) / var(roe) ) # por (2.3)
+( b0_hat = mean(salary) - var(roe)*mean(salary) ) # por (2.2)
+
+detach(ceosal1) # para parar de procurar variável dentro do objeto 'ceosal1'
+```
+
+- Vemos que um incremento de uma unidade (porcento) no retorno sobre o investimento (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos diretores executivos.
+
+
+#### Estimando regressão simples via `lm()`
+- Uma maneira mais conveniente de fazer a estimação por MQO é usando a função `lm()`
+- Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (`~`):
+```{r}
+lm(ceosal1$salary ~ ceosal1$roe)
+```
+
+- Também podemos deixar de usar o prefixo `ceosal1$` antes dos nomes do vetores preenchermos o argumento `data = ceosal1`
+```{r}
+lm(salary ~ roe, data=ceosal1)
+```
+
+- Podemos usar a função `lm()` para incluir uma reta de regressão no gráfico
+```{r message=FALSE}
+# Gráfico de dispersão (scatter)
+plot(ceosal1$roe, ceosal1$salary)
+
+# Adicionando a reta de regressão
+abline(lm(salary ~ roe, data=ceosal1), col="red")
 ```
 
 
-## Base de dados `mtcars`
+## Coeficientes, Valores Ajustados e Resíduos
+- [Seção 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
+- Podemos "guardar" os resultados da estimação em um objeto (da classe `list`) e, depois, extrair informações dele.
+```{r}
+# atribuindo o resultado da regressão em um objeto
+CEOregres = lm(salary ~ roe, data=ceosal1)
 
-Usaremos dados extraídos da _Motor Trend_ US magazine de 1974, que analisa o
-consumo de combustível e 10 aspectos técnicos de 32 automóveis.
+# verificando os "nomes" das informações contidas no objeto
+names(CEOregres)
+```
 
-No _R_, a base de dados já está incorporada ao programa e pode ser acessada pelo
-código `mtcars`, contendo a seguinte estrutura:
+- Podemos usar a função `coef()` para extrairmos um data frame com os coeficientes da regressão
+```{r}
+( bhat = coef(CEOregres) )
 
-> - _mpg_: milhas por galão
-> - _cyl_: número de cilindros 
-> - _disp_: deslocamento do motor
-> - _hp_: cavalos-vapor bruto
-> - _drat_: razão eixo traseiro
-> - _wt_: peso (1000 libras)
-> - _qsec_: tempo de 1/4 de milha
-> - _vs_: motor (0 = forma de V, 1 = reto)
-> - _am_: transmissão (0 = automático, 1 = manual)
-> - _gear_: número de marchas
+bhat_0 = bhat["(Intercept)"] # ou bhat[1]
+bhat_1 = bhat["roe"] # ou bhat[2]
+```
 
+- Dados estes parâmetros estimados, podemos calcular os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}}, e os desvios, {{<math>}}$\hat{u}${{</math>}}, para cada observação {{<math>}}$i=1, ..., n${{</math>}}:
 
-Façamos um resumo da base de dados:
+{{<math>}}\begin{align}
+    \hat{y}_i &= \hat{\beta}_0 + \hat{\beta}_1 . x_i \tag{2.5} \\
+    \hat{u}_i &= y_i - \hat{y}_i \tag{2.6}
+\end{align}{{</math>}}
 
 ```{r}
-### Examinaremos a base da dados mtcars
-## Estrutura de mtcars
-str(mtcars)
+# Extraindo colunas de ceosal1 em vetores
+sal = ceosal1$salary
+roe = ceosal1$roe
 
-## Selecionando 3 variáveis e resumindo 
-mtcars %>% 
-  select(mpg, hp, wt) %>% 
-  summary()
+# Calculando os valores ajustados/preditos
+sal_hat = bhat_0 + (bhat_1 * roe)
 
-## Plotando consumo de combustível (mpg) por potência do carro (hp)
-plot(mtcars$mpg, mtcars$hp, xlab="Milhas por galão (mpg)", ylab="Cavalos-vapor (hp)")
+# Calculando os desvios
+u_hat = sal - sal_hat
 
-## Plotando consumo de combustível (mpg) por peso do carro (wt)
-plot(mtcars$mpg, mtcars$wt, xlab="Milhas por galão (mpg)", ylab="Libras (wt)")
+# Visualizando as 6 primerias linhas de sal, roe, sal_hat e u_hat
+head( cbind(sal, roe, sal_hat, u_hat) )
 ```
 
-Queremos estimar o seguinte modelo:
-{{<math>}}$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon  $${{</math>}}
-
-
-## Estimação por OLS
-
-### Usando a função `lm()`
-
-```
-lm(formula, data, subset, weights, na.action,
-   method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
-   singular.ok = TRUE, contrasts = NULL, offset, ...)
-   
-formula: an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.
-data: an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
-weights: an optional vector of weights to be used in the fitting process. Should be NULL or a numeric vector.
-```
-- Em `formula` você irá inserir a variável dependente separada por `~` das variáveis independentes. Estas serão separadas por um `+`. Neste exemplo: `formula = mpg ~ hp + wt`
-  - Para incluir uma interação entre variáveis independentes, usa-se `<var1>:<var2>`. Por exemplo: `formula = mpg ~ hp + wt + hp:am`
-  - Para fazer uma alteraçao em alguma variável dentro da função `lm()`, usa-se `I()`. Por exemplo, para incluir também o peso do carro, _wt_, ao quadrado: `formula = mpg ~ hp + wt + I(wt^2)`
-- Em `data`, será atribuída uma base de dados e, em `weights`, é possível atribuir ponderações para cada observação (bastante comum em bases providas pelo IBGE, como PNAD e POF)
-
-Vamos regredir o consumo de combustível (_mpg_) pela potência (_hp_) e pelo peso (_wt_) do carro:
+- Com as funções `fitted()` e `resid()` podemos extrair os valores ajustados e os resíduos do objeto com resultado da regressão:
 ```{r}
-## Rodar a regressao OLS
-fit_ols1 = lm(formula = mpg ~ hp + wt, data = mtcars)
+head( cbind(fitted(CEOregres), resid(CEOregres)) )
 
-## Resumir os resultados da regressao
-summary(fit_ols1)
+# Ou também
+head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 ```
 
-- É possível extrair informações da regressão:
+
+- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por MQO assume as seguintes hipóteses:
+{{<math>}}\begin{align}
+    &\sum^n_{i=1}{\hat{u}_i} = 0 \quad \implies \quad \bar{\hat{u}} = 0 \tag{2.7} \\
+    &\sum^n_{i=1}{x_i \hat{u}_i} = 0 \quad \implies \quad Cov(x,\hat{u}) = 0 \tag{2.8} \\
+    &\bar{y}=\hat{\beta}_0 + \hat{\beta}_1.\bar{x} \tag{2.9}
+\end{align}{{</math>}}
+
+- Podemos verificá-los em nosso exemplo:
 ```{r}
-names(fit_ols1) # verificar todas informações contidas no objeto da regressão
-fit_ols1$coefficients # Estimativas
-summary(fit_ols1)$coefficients # Estimativas pelo summary()
-head(fit_ols1$fitted.values) # valores ajustados
-head(fit_ols1$residuals) # resíduos
+# Verificando (2.7)
+mean(u_hat) # bem próximo de 0
+
+# Verificando (2.8)
+cor(ceosal1$roe, u_hat) # bem próximo de 0
+
+# Verificando (2.9)
+mean(ceosal1$salary)
+mean(sal_hat)
 ```
 
-#### Variáveis categóricas
-- Ao inserir **variáveis categóricas** na regressão, criam-se _dummies_ para cada categoria e retira-se uma delas para evitar problema de multicolinearidade:
-- No exemplo abaixo, transformaremos a variável de cilindros (_cyl_), que possui apenas 3 valores (4, 6, e 8), na classe _factor_.
-```{r}
-mtcars_factor1 = mtcars %>% mutate(cyl = factor(cyl))
-summary( lm(mpg ~ cyl, data=mtcars_factor1) )$coef
-```
-- Note que criou apenas 2 _dummies_ de cilindros (_cyl6_ e _cyl8_), sendo que as suas estimativas são negativas e significativas em relação ao carro com 4 cilindros (_cyl4_) que é a caregoria omitida para evitar multicolinearidade.
-- Podemos também definir a categoria a ser omitida usando as funções:
-  - `factor(..., levels=c(...))`, quando transforma um vetor em factor (omite o 1º)
-  - `relevel(..., ref="")`, quando o vetor já é da classe factor e quer apenas alterar os níveis
-- Para omitir _cyl8_ fazemos:
-```{r}
-# Via relevel() - via factor já existente
-mtcars_factor1$cyl = relevel(mtcars_factor1$cyl, ref="8")
-summary( lm(mpg ~ cyl, data=mtcars_factor1) )$coef
-
-# Via factor() - omite o 1º nível
-mtcars_factor2 = mtcars %>% mutate(cyl = factor(cyl, levels = c(8, 4, 6)))
-summary( lm(mpg ~ cyl, data=mtcars_factor2) )$coef
-```
-- Observe que as estimativas estão positivas agora, dado que a referência agora é _cyl8_
-
-#### Exportando output em LaTeX
-- Podemos usar os pacotes `stargazer` e `textreg` para gerar o output da regressão em LaTeX
-- As funções têm os mesmos nomes dos pacotes:
-```r
-stargazer::stargazer(fit_ols1)
-texreg::texreg(fit_ols1)
-```
-- Depois, copie o output e jogue num programa de LaTeX.
+- **IMPORTANTE**: Isso só quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
+- Isto **NÃO** quer dizer que, para o modelo empírico/populacional, as seguintes hipóteses sejam verdadeiras:
+{{<math>}}\begin{align}
+    &E(u) = 0 \tag{2.7'} \\
+    &Cov(x, u) = 0 \tag{2.8'}
+\end{align}{{</math>}}
+- De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7, 2.8 e 2.9) será viesada.
 
 
-### Estimação Analítica
-- [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 2 (University of Massachusetts Amherst)
-
-#### 1. Construir matrizes de covariadas $X$ e da variável dependente $y$
-```{r}
-## Criando reg_data a partir de variáveis de mtcars + uma coluna de 1's (p/ constante)
-reg_data = mtcars %>% 
-  select(mpg, hp, wt) %>%  # Selecionando as variáveis dependente e independentes
-  mutate(constante = 1)  # Criando coluna de constante
-
-## Selecionando variáveis independentes no objeto X e convertendo em matriz (n x k)
-X = reg_data %>% 
-  select(constante, hp, wt) %>%  # Selecionando as covariadas X (incluindo constante)
-  as.matrix()  # Transformando em matrix
-
-## Selecionando a variável dependente no objeto y e convertendo em matriz (n x 1)
-y = reg_data %>% 
-  select(mpg) %>%  # Selecionando as covariadas X (incluindo constante)
-  as.matrix()  # Transformando em matrix
-
-## Visualização das primeiras linhas de y e X
-head(X)
-head(y)
-```
-
-
-#### 2. Estimador $\hat{\beta}$
-O estimador de OLS é dado por:
-{{<math>}}$$ \hat{\beta} = (X'X)^{-1} X' y $${{</math>}}
-
-```{r}
-## Estimando os parametros beta
-beta_hat = solve(t(X) %*% X) %*% t(X) %*% y # solve() calcula a inversa
-beta_hat
-```
-
-
-#### 3. Calcular os valores ajustados $\hat{y}$
-{{<math>}}$$ \hat{y} = X\hat{\beta} $${{</math>}}
-```{r}
-## Calculando os valores ajustados de y
-y_hat = X %*% beta_hat
-colnames(y_hat) = "mpg_hat"
-head(y_hat)
-```
-
-
-#### 4. Calcular os resíduos $e$
-{{<math>}}$$ \varepsilon = y - \hat{y} $${{</math>}}
-```{r}
-## Calculando os residuos
-e = y - y_hat
-colnames(e) = "e"
-head(e)
-```
-
-
-#### 5. Calcular a variância do termo de erro $s^2$
-{{<math>}}$$ \hat{\sigma}^2 = \frac{e'e}{n-k} $${{</math>}}
-```{r}
-## Estimando variancia do termo de erro
-sigma2 = t(e) %*% e / (nrow(X) - ncol(X))
-sigma2
-```
-
-
-#### 6. Calcular a matriz de covariâncias $\hat{Cov}(\widehat{\beta})$
-{{<math>}}$$ \widehat{Cov}(\hat{\beta}) = \hat{\sigma}^2 (X'X)^{-1} $${{</math>}}
-```{r}
-## Estimando a matriz de variancia/covariancia das estimativas beta
-vcov_hat = c(sigma2) * solve(t(X) %*% X)
-vcov_hat
-```
-
-
-#### 7. Calcular erros padrão, estatísticas t, e p-valores
-```{r}
-## Calculando erros padrao das estimativas beta
-std_err = sqrt(diag(vcov_hat)) # Raiz da diagonal da matriz de covariâncias
-
-## Calculando estatisticas t das estimativas beta
-t_stat = beta_hat / std_err
-
-## Calculando p-valores das estimativas beta
-p_value = 2 * pt(q = -abs(t_stat), df = nrow(X) - ncol(X)) # 2 x acumulada até estatística t negativa
-
-## Organizando os resultados da regressao em uma matriz
-results = cbind(beta_hat, std_err, t_stat, p_value)
-
-## Nomeando as colunas da matriz de resultados
-colnames(results) = c('Estimate', 'Std. Error', 't stat', 'Pr(>|t|)')
-results
-```
-
-
-### Estimação Numérica
-
-#### 1. Criar função perda que calcula a soma dos desvios quadráticos
-- A função para calcular a soma dos desvios quadráticos recebe como inputs:
-  - um **vetor** de possíveis valores para {{<math>}}$\beta_0${{</math>}}, {{<math>}}$\beta_1${{</math>}} e {{<math>}}$\beta_2${{</math>}}
-  - uma base de dados
-```{r}
-desv_quad = function(params, data) {
-  # Extraindo os parâmetros para objetos
-  beta_0 = params[1]
-  beta_1 = params[2]
-  beta_2 = params[3]
+## Transformações log
+- [Seção 2.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- Também podemos fazer estimações transformando variáveis em nível para logaritmo.
+- É especialmente importante para transformar modelos não-lineares em lineares - quando o parâmetro está no expoente ao invés estar multiplicando:
   
-  mpg_ajustado = beta_0 + beta_1*data$hp + beta_2*data$wt # valores ajustados
-  desvios = data$mpg - mpg_ajustado # desvios = observados - ajustados
-  sum(desvios^2)
-}
+{{<math>}}$$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $${{</math>}}
+
+- Também é frequentemente utilizada em variáveis dependentes {{<math>}}$y \ge 0${{</math>}}
+
+
+<center><img src="../tab_2-3.png"></center>
+
+- Há duas maneiras de fazer a transformação log:
+    - Criar um novo vetor/coluna com a variável em log, ou
+    - Usar a função `log()` diretamente no vetor dentro da função `lm()`
+
+
+### Exemplo 2.11: Salário de Diretores Executivos e Vendas das Empresas (Wooldridge, 2006)
+- Considere as variáveis:
+    - `wage`: salário anual em milhares de dólares
+    - `sales`: vendas em milhões de dólares
+
+
+- _Modelo nível-nível_:
+```{r}
+# Carregando a base de dados
+data(ceosal1, package="wooldridge")
+
+# Estimando modelo nível-nível
+lm(salary ~ sales, data=ceosal1)
+```
+- Um aumento em US\$ 1 milhão em vendas está relacionado incremento de US\$ 0,01547 milhares de dólares do salário do diretor executivo.
+- _Modelo log-nível_:
+```{r}
+# Estimando modelo log-nível
+lm(log(salary) ~ sales, data=ceosal1)
+```
+- Um aumento em US\$ 1 milhão em vendas tende a elevar em 0,0015\% ($=100 \beta_1\%$ ) o salário do diretor executivo.
+- _Modelo log-log_:
+```{r}
+# Estimando modelo log-log
+lm(log(salary) ~ log(sales), data=ceosal1)
+```
+- Um aumento em 1\% das vendas aumenta o salário em cerca de 0,257\% ($=\beta_1\%$) maior.
+
+
+## Regressão a partir da origem e sobre uma constante
+- [Seção 2.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- Para esstimar o modelo sem o intercepto (constante), precisamos adicionar `0 +` nos regressores na função `lm()`:
+```{r}
+data(ceosal1, package="wooldridge")
+lm(salary ~ 0 + roe, data=ceosal1)
+```
+
+- Ao regredirmos uma variável dependente sobre uma constante (1), obtemos a média desta variável.
+```{r}
+lm(salary ~ 1, data=ceosal1)
+mean(ceosal1$salary, na.rm=TRUE)
 ```
 
 
-#### 2. Otimização
-- Agora encontraremos os parâmetros que minimizam a função perda
-{{<math>}}$$ \text{argmin}_{\theta \in \Theta} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $${{</math>}}
-- Para isto usaremos a função `optim()` que retorna os parâmetros que minimizam uma função (equivalente ao _argmin_):
-```yaml
-optim(par, fn, gr = NULL, ...,
-      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
-      lower = -Inf, upper = Inf,
-      control = list(), hessian = FALSE)
+## Diferença de médias
+- Baseado no Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006)
+- Poderíamos ter calculado a diferença de médias por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
+- Primeiro vamos criar um vetor único de taxas de refugo (vamos empilhar `SR87` e `SR88`)
+```{r}
+SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
+         1, .45, 5.03, 8, 9, 18, .28, 7, 3.97)
+SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5, 
+         .61, 6.7, 4, 7, 19, .2, 5, 3.83)
 
-par: Initial values for the parameters to be optimized over.
-fn: A function to be minimized (or maximized), with first argument the vector of parameters over which minimization is to take place. It should return a scalar result.
-method: The method to be used. See ‘Details’. Can be abbreviated.
-hessian: Logical. Should a numerically differentiated Hessian matrix be returned?
+( SR = c(SR87, SR88) ) # empilhando SR87 e SR88 em único vetor
 ```
-- Colocaremos como input:
-  - a função perda criada `desv_quad()`
-  - um chute inicial dos parâmetros
-    - Note que a estimação pode ser mais ou menos sensível ao valores iniciais, dependendo do método de otimização utilizado
-    - O mais comum é encontrar como chute inicial um vetor de zeros `c(0, 0, 0)`, por ser mais neutro em relação ao sinal das estimativas
-    - Em Econometria III, prof. Laurini recomendou usar método "Nelder-Mead" (padrão) com um chute inicial de zeros e, depois, usar suas estimativas como chute inicial para o método "BFGS".
-  - Por padrão, temos o argumento `hessian = FALSE`, coloque `TRUE` para calcularmos o erro padrão, estatística t e p-valor das estimativas
+
+- Note que os 20 primeiros valores são relativos às taxas de refugo no ano de 1987 e os 20 últimos valores são de 1988.
+- Vamos criar uma variável _dummy_ chamada de _group88_ que atribui valor 1 as observações do ano de 1988 e o valor 0 para as de 1987:
+```{r}
+( group88 = c(rep(0, 20), rep(1, 20)) ) # valores 0/1 para 20 primeiras/últimas observações
+```
+
+- Ao regredirmos a taxa de refugo em relação à _dummy_ obtemos a diferença das médias
+```{r}
+lm(SR ~ group88)
+```
+
+
+
+## Valores esperados, Variância e Erros padrão
+- [Seção 2.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/106)
+
+
+- Wooldridge (2006, Seção 2.5) deriva o estimador do termo de erro:
+{{<math>}}$$ \hat{\sigma}^2 = \frac{1}{n-2} \sum^n_{i=1}{\hat{u}^2_i} = \frac{n-1}{n-2} Var(\hat{u}) \tag{2.14} $${{</math>}}
+em que {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</math>}}.
+
+- Observe que precisamos considerar os graus de liberdade, dado que estamos estimando dois parâmetros ({{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}).
+- Note que {{<math>}}$\hat{\sigma} = \sqrt{\hat{\sigma}^2}${{</math>}} é chamado de erro padrão da regressão (EPR). No R, é chamado de erro padrão residual 
+- também podemos obter os erros padrão (EP) dos estimadores:
+
+{{<math>}}\begin{align}
+    se(\hat{\beta}_0) &= \sqrt{\frac{\hat{\sigma}\bar{x}^2}{\sum^n_{i=1}{(x_i - \bar{x})^2}}} = \frac{1}{\sqrt{n-1}} \frac{\hat{\sigma}}{sd(x)} \sqrt{\bar{x^2}} \tag{2.15}\\
+    se(\hat{\beta}_1) &= \sqrt{\frac{\hat{\sigma}}{\sum^n_{i=1}{(x_i - \bar{x})^2}}} = \frac{1}{\sqrt{n-1}} \frac{\hat{\sigma}}{sd(x)} \tag{2.16}
+\end{align}{{</math>}}
+
+
+### Exemplo 2.12: Desempenho em Matemática de Estudante e o Programa de Merenda Escolar (Wooldridge, 2006)
+- Sejam as variáveis
+    - `math10`: o percentual de alunos de primeiro ano de ensino médio aprovados em exame de matemática
+    - `lnchprg`: o percentual de estudante aptos para participar do programa de merenda escolar
+- O modelo de regressão simples é
+{{<math>}}$$ \text{math10} = \beta_0 + \beta_1 \text{lnchprg} + u $${{</math>}}
 
 ```{r}
-# Estimação por BFGS
-theta_ini = c(0, 0, 0) # Chute inicial de beta_0, beta_1 e beta_2
+data(meap93, package="wooldridge")
 
-fit_ols2 = optim(par=theta_ini, fn=desv_quad, data=mtcars,
-                  method="BFGS", hessian=TRUE)
-fit_ols2
+# Estimando o modelo e atribuindo no objeto 'results'
+results = lm(math10 ~ lnchprg, data=meap93)
+
+# Extraindo número de observações
+( n = nobs(results) )
+
+# Calculando o Erro Padrão da Regressão (raiz quadrada de 2.14)
+( SER = sqrt( (n-1)/(n-2) ) * sd(resid(results)) )
+
+# Erro padrão de bhat_0 (2.15)
+(1 / sqrt(n-1)) * (SER / sd(meap93$lnchprg)) * sqrt( mean(meap93$lnchprg^2) ) # Erro padrão de bhat_1 (2.16)
+(1 / sqrt(n-1)) * (SER / sd(meap93$lnchprg)) # bhat_1
 ```
 
-## Métodos de Otimização Básicos
-- Essa seção tem o objetivo para dar uma intuição sobre métodos de otimização e está baseada em Hamilton (1994), seção 5.7.
-- Veremos os métodos de _grid search_ (discretização) e _steepest ascent_ que são métodos simples, mas que representam famílias de métodos de otimização.
-- Para maior profundidade no assunto, sugiro cursar disciplina de Economia Computacional.
-
-### _Grid Search_
-
-- O método mais simples de otimização numérica é o _grid search_ (discretização).
-- Como o R não lida com problemas com infinitos valores, uma forma lidar com isso é discretizando diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
-- Para cada possível combinação de parâmetros, calculam-se diversos valores a partir da função objetivo. De todos os valores calculados, escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
-- O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
-
-<center><img src="../grid_search.png"></center>
-
-- Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis), e menos sensível a chutes de valores iniciais. (ver método abaixo)
-- Porém, por ter que fazer cálculo da função objetivo para inúmeros pontos, tende a ser menos eficiente.
-
-
-### _Steepest Ascent_
-
-- Conforme o número de parâmetros do modelo cresce, aumenta o número de possíveis combinações entre parâmetros e torna o processo computacional cada vez mais lento.
-- Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _steepest ascent_.
-- Seja {{<math>}}$\theta^*${{</math>}} o conjunto de parâmetros que maximiza a função objetivo:
-  1. Comece com alguns valores iniciais dos parâmetros, {{<math>}}$\theta^0${{</math>}}
-  2. Calcula-se o gradiente e avalia-se a possibilidade de "andar para cima" a um valor mais alto
-  3. Caso possa, ande na direção correta a {{<math>}}$\theta_1${{</math>}}
-  4. Repita os passos (2) e (3), andando de {{<math>}}$\theta^s${{</math>}} para {{<math>}}$\theta^{s+1}${{</math>}} até
-  atingir o máximo com {{<math>}}$\theta^*${{</math>}}.
-
-<center><img src="../steepest_ascent.png"></center>
-
-- Note que esse método de otimização é sensível ao conjunto de parâmetros iniciais e a descontinuidades da função objetivo.
-- Por outro lado, é um método mais eficiente (calcula uma função objetivo dado os parâmetros a cada passo que dá) e tende a ser também mais preciso nas estimações.
-
-
-
-## Estimação por MLE
-- [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
-
-
-### Intuição do cálculo da função de verossimilhança
-- Apenas para ilustrar a construção da função de verossimilhança, considere um modelo logit em que queremos estimar os indivíduos precisam escolher se usam carro ou ônibus para deslocamento.
-- Para estimar as probabilidades de usar carro (e, por consequência, de ônibus), vamos utilizar as informações dos preços que os indivíduos pagam pela gasolina e pela passagem de ônibus.
-- Note que os valores abaixo foram todos inventados.
-- Considere um conjunto de parâmetros {{<math>}}$\theta^A = \{ \beta^A_0, \beta^A_1, \beta^A_2 \}${{</math>}} que gerem as seguintes probabilidades de usar carro e de ônibus (últimas 2 colunas):
-
-|             | **Preço Gasolina** | **Preço Bus** | **Escolha** | **_Prob(Car  $| \theta^A$)_** | **_Prob(Bus $| \theta^A$)_** |
-|:-----------:|:------------------:|:----------------:|:-----------:|:-----------------:|:------------------:|
-| Indiv. 1 |        6,93        |       5,00       |    Car    |        **0,63**       |        0,37        |
-| Indiv. 2 |        7,01        |       2,50       |    Bus   |        0,33       |        **0,67**        |
-| Indiv. 3 |        6,80        |       2,50       |    Bus   |        0,25       |        **0,75**        |
-| Indiv. 4 |        6,75        |       5,00       |    Car    |        **0,73**       |        0,27        |
-
-- Logo, a verossimilhança, dado os parâmetros {{<math>}}$\theta^A${{</math>}} é
-{{<math>}}$$ \mathcal{L}(\theta^A) = 0,63 \times 0,67 \times 0,75 \times 0,73 = 0,231 $${{</math>}}
-
-- Agora, considere $\theta^B = \{ \beta^B_0, \beta^B_1, \beta^B_2 \}$ que gerem as seguintes probabilidades:
-
-|             | **Preço Gasolina** | **Preço Bus** | **Escolha** | **_Prob(Car  $| \theta^B$)_** | **_Prob(Bus $| \theta^B$)_** |
-|:-----------:|:------------------:|:----------------:|:-----------:|:-----------------:|:------------------:|
-| Indiv. 1 |        6,93        |       5,00       |    Car    |        **0,54**       |        0,46        |
-| Indiv. 2 |        7,01        |       2,50       |    Bus   |        0,43       |        **0,57**        |
-| Indiv. 3 |        6,80        |       2,50       |    Bus   |        0,35       |        **0,65**        |
-| Indiv. 4 |        6,75        |       5,00       |    Car    |        **0,58**       |        0,42        |
-
-- Então, a verossimilhança, dado {{<math>}}$\theta^B${{</math>}}, é
-
-{{<math>}}$$ \mathcal{L}(\theta^B) = 0,54 \times 0,57 \times 0,65 \times 0,58 = 0,116 $${{</math>}}
-
-- Como {{<math>}}$\mathcal{L}(\theta^A) = 0,231 > 0,116 = \mathcal{L}(\theta^B)${{</math>}}, então os parâmetros {{<math>}}$\theta^A${{</math>}} se mostram mais adequados em relação a {{<math>}}$\theta^B${{</math>}}
-- Na máxima verossimilhança (MLE), é escolhido o conjunto de parâmetros {{<math>}}$\theta^*${{</math>}} que maximiza a função de verossimilhança (ou log-verossimilhança).
-- No modelo logit, as probabilidades usadas para calcular a verossimilhança são as próprias proabilidades de escolha por uma alternativa, dado um conjunto de parâmetros.
-- Já no modelo linear, usamos a função de densidade de probabilidade para avaliar a "distância" de cada observação, {{<math>}}$y_i${{</math>}}, em relação ao seu valor ajustado {{<math>}}$\hat y_i${{</math>}}, dado um conjunto de parâmetros.
-
-
-
-### Otimização Numérica para MLE
-A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
-
-- Alguns valores inicias dos parâmetros, {{<math>}}$\theta^0${{</math>}}
-- Uma função que tome esses parâmetros como um argumento e calcule a 
-log-verossimilhança, {{<math>}}$\ln{L(\theta)}${{</math>}}.
-
-A função log-verossimilhança é dada por
-{{<math>}}$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}, $${{</math>}}
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
-{{<math>}}$$ y_i | x_i \sim \mathcal{N}(\beta'x_i, \sigma^2) $${{</math>}}
-
-1. Construir matriz {{<math>}}$X${{</math>}} e vetor {{<math>}}$y${{</math>}}
-2. Calcular os valores ajustados de {{<math>}}$y${{</math>}}, {{<math>}}$\hat{y} - \beta'x_i${{</math>}}, que é a média de cada {{<math>}}$y_i${{</math>}}
-3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta, \sigma^2)${{</math>}}
-4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}${{</math>}}
-
-
-#### 1. Chute de valores iniciais para $\beta_0, \beta_1, \beta_2$ e $\sigma^2$
-- Note que, diferente da estimação por OLS, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
+- Os cálculos dos erros padrão podem ser obtidos via uso da função `summary()` sobre o objeto com resultado da regressão:
 ```{r}
-params = c(35, -0.02, -3.5, 1)
-# (beta_0, beta_1 , beta_2, sigma2)
+summary(results)
 ```
 
-#### 2. Seleção da base de dados e variáveis
+- Observe também que, por padrão, são feitos testes de hipótese (bicaudais), cujas hipóteses nulas são {{<math>}}$\beta_0 = 0${{</math>}} e {{<math>}}$\beta_1=0${{</math>}}.
+- Ou seja, avalia se as estimativas calculadas são estatisticamente nulas e também mostra as respectivas estatísticas t e p-valores.
+- Neste caso, como os p-valores são bem pequenos (`<2e-16` = menor do que {{<math>}}$2 \times 10^{-16}${{</math>}}), rejeitamos ambas hipóteses nulas e, portanto, as estimativas são estatisticamente significantes.
+- Também podemos calcular essas estimativas "na mão":
 ```{r}
-## Adicionando colunas de 1's para o termo constante
-data = mtcars
-beta_0 = params[1]
-beta_1 = params[2]
-beta_2 = params[3]
-sigma2 = params[4]
+# Extraindo as estimativas
+( estim = coef(summary(results)) )
+
+# Estatísticas t para H0: bhat = 0
+( t_bhat_0 = (estim["(Intercept)", "Estimate"] - 0) / estim["(Intercept)", "Std. Error"] )
+( t_bhat_1 = (estim["lnchprg", "Estimate"] - 0) / estim["lnchprg", "Std. Error"] )
+
+# p-valores para H0: bhat = 0
+2 * (1 - pt(abs(t_bhat_0), n-1)) # p-valor para bhat_0
+2 * (1 - pt(abs(t_bhat_1), n-1)) # p-valor para bhat_1
 ```
 
-#### 3. Cálculo dos valores ajustados e das densidades
+
+## Violações de hipótese
+- [Subseção 2.7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/113), mas usando como exemplo o teste elaborado 1.
+- [Simulating a linear model (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model)
+- Na prática, fazemos regressões a partir de observações contidas em bases de dados e não sabemos qual é o _modelo real_ que gerou essas observações.
+- No R, podemos supor um _modelo real_ e simular suas observações no R para analisar o que ocorre quando há violação de hipótese de algum modelo econométrico ou estimador.
+- Usaremos o exemplo dado no Teste Elaborado 1, no qual queremos encontrar a relação das horas de prática em culinária com o número de queimaduras na cozinha.
+
+
+### Sem violação de hipótese: Exemplo 1
+- Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas gastas aprendendo a cozinhar.
+- Suponha o _modelo real_:
+{{<math>}}$$ y = a_0 + b_0 x + \varepsilon, \qquad \varepsilon \sim N(0, 2^2) \tag{1}$${{</math>}}
+em que {{<math>}}$a_0=50${{</math>}} e {{<math>}}$b_0=-5${{</math>}}.
+
+1. Definindo {{<math>}}$a_0${{</math>}} e {{<math>}}$b_0${{</math>}} e gerando por simulação as "observações" de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
+    - Apenas para facilitar, geraremos valores aleatórios {{<math>}}$x \sim N(5; 0,5^2)${{</math>}}. Aqui, não importa a distribuição de {{<math>}}$x${{</math>}}. 
 ```{r}
-## Calculando valores ajustados de y
-y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
-```
+a0 = 50
+b0 = -5
+N = 200 # Número de observações
 
-#### 4. Cálculo das densidades
-{{<math>}}$$ f(y_i | x_i, \beta, \sigma^2) $${{</math>}}
+set.seed(1)
+u = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
+y = a0 + b0*x + u # calculando observações y a partir de "e" e "x"
+
+plot(x, y)
+```
+Simulamos as observações {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que são, na prática, as informações que observamos.
+
+2. Estimando por MQO os parâmetros {{<math>}}$\hat{a}${{</math>}} e {{<math>}}$\hat{b}${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
+    - Um economista supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
+    {{<math>}}$$ y = a + b x + u, \tag{1a}$${{</math>}}
+    assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
+    - Para estimar o modelo por MQO, usamos a função `lm()`
+    
 ```{r}
-## Calculando os pdf's de cada outcome
-y_pdf = dnorm(data$mpg, mean = y_hat, sd = sqrt(sigma2))
-
-head(y_pdf) # Primeiros valores da densidade
-prod(y_pdf) # Verossimilhança
+lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ```
 
-- Para entender melhor o que estamos fazendo aqui, relembre que, na estimação por máxima verossimilhança, assume-se que
-{{<math>}}$$\varepsilon | X \sim N(0, \sigma^2)$${{</math>}}
-- No exemplo abaixo, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
-
-<center><img src="../mle.jpg"></center>
-
-- Agora, vamos juntar o data frame `mtcars` com os valores ajustados `mpg_hat` e as densidades `y_pdf`:
-```{r}
-mpg_hat = y_hat # atribuindo y_hat a um objeto com nome mais adequado
-
-# Juntando as bases e visualizando os primeiros valores
-bd_joined = cbind(mtcars, mpg_hat, y_pdf) %>%
-  select(hp, wt, mpg, mpg_hat, y_pdf)
-head(bd_joined)
-```
-- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
-```{r}
-# Criando gráfico para os 2 primeiros carros (Mazda RX4 e Mazda RX 4 Wag)
-qt_norm = seq(20, 27, by=0.1) # valores de mpg ("escores Z")
-
-# Mazda RX4
-pdf_norm1 = dnorm(qt_norm, mean=bd_joined$mpg_hat[1], sd=sqrt(sigma2)) # pdf
-plot(qt_norm, pdf_norm1, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4")
-abline(v=c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), col="red")
-text(c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), 0.2, 
-     c(expression(widehat(mpg)[1]), expression(mpg[1])), 
-     pos=2, srt=90, col="red")
-
-# Mazda RX4 Wag 
-pdf_norm2 = dnorm(qt_norm, mean=bd_joined$mpg_hat[2], sd=sqrt(sigma2)) # pdf
-plot(qt_norm, pdf_norm2, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4 Wag")
-abline(v=c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), col="blue")
-text(c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), 0.2, 
-     c(expression(widehat(mpg)[2]), expression(mpg[2])), 
-     pos=2, srt=90, col="blue")
-```
-- Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
-
-
-#### 5. Calculando a Log-Verossimilhança
-{{<math>}}$$ \mathcal{l}(\beta, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta, \sigma^2) \right]} $${{</math>}}
-```{r}
-## Calculando a log-verossimilhanca
-loglik = sum(log(y_pdf))
-loglik
-```
-
-
-#### 6. Criando a Função de Log-Verossimilhança
-```{r}
-## Criando funcao para calcular log-verossimilhanca OLS 
-loglik_lm = function(params, data) {
-  # Pegando os parâmetros
-  beta_0 = params[1]
-  beta_1 = params[2]
-  beta_2 = params[3]
-  sigma2 = params[4]
-  
-  ## Calculando valores ajustados de y
-  y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
-  
-  ## Calculando os pdf's de cada outcome
-  y_pdf = dnorm(data$mpg, mean = y_hat, sd = sqrt(sigma2))
-  
-  ## Calculando a log-verossimilhanca
-  loglik = sum(log(y_pdf))
-  
-  ## Retornando o negativo da log-verossimilanca - optim() não maximiza
-  -loglik
-}
-```
-
-
-#### 7. Otimização
-
-Tendo a função objetivo, usaremos `optim()` para *minimizar*
-{{<math>}}$$ -\ln{L(\beta, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}. $${{</math>}}
-Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (função`optim()` apenas minimiza).
-
-```{r warning=FALSE}
-## Maximizando a função log-verossimilhança OLS
-mle = optim(par = c(0, 0, 0, 1), fn = loglik_lm, data = mtcars,
-              method = "BFGS", hessian = TRUE)
-
-## Mostrando os resultados da otimização
-mle
-
-## Calculando os erros padrão
-mle_se = mle$hessian %>% # hessiano
-  solve() %>% # toma a inversa para obter a matriz de var/cov
-  diag() %>% # pega a diagonal da matriz
-  sqrt() # calcula a raiz quadrada
-
-# Visualizando as estimativas e os erros padrão
-cbind(mle$par, mle_se)
-```
-
-
-
-## Estimação por GMM
-- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
-- [Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)](https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199)
-
-
-- Para estimar via GMM precisamos construir vetores relacionados aos seguintes momentos:
-{{<math>}}$$ E(\varepsilon) = 0 \qquad \text{ e } \qquad E(\varepsilon'X) = 0 $${{</math>}}
-em que $X$ é a matriz de covariadas e $\varepsilon$ é o desvio. Note que estes são os momentos relacionados ao OLS, dado que este é um caso particular do GMM.
-
-
-- Relembre que estamos usando a base de dados `mtcars` para estimar o modelo linear:
-{{<math>}}$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon $${{</math>}}
-que relaciona o consumo de combustível (em milhas por galão - _mpg_) com a potência (_hp_) e o peso (em mil libras - _wt_) do carro.
-
-
-### Otimização Numérica para GMM
-
-#### 1. Chute de valores iniciais para {{<math>}}$\{ \beta_0, \beta_1, \beta_2 \}${{</math>}}
-
-- Vamos criar um vetor com possíveis valores de {{<math>}}$\{ \beta_0, \beta_1, \beta_2 \}${{</math>}}:
+- Note que foi possível recuperar os parâmetros populacionais ({{<math>}}$\hat{a} = 50,268 \approx 50 = a_0${{</math>}} e {{<math>}}$\hat{b} = -5,039 \approx -5 = b_0${{</math>}}).
 
 ```{r}
-library(dplyr)
-
-params = c(35, -0.02, -3.5)
-beta_0 = params[1]
-beta_1 = params[2]
-beta_2 = params[3]
+plot(x, y) # Figura de x contra y
+abline(a=50, b=-5, col="red") # reta do modelo real
+abline(lm(y ~ x), col="blue") # reta estimada a partir das observações
 ```
 
-#### 2. Seleção da base de dados e variáveis
+### Sem violação de hipótese: Exemplo 2
+- Agora, no _modelo real_, suponha que o número de queimaduras {{<math>}}$y${{</math>}} é determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
+
+{{<math>}}$$ y = a_0 + b_0 x + c_0 z + u, \qquad u \sim N(0, 2^2) \tag{2} $${{</math>}}
+em que {{<math>}}$a_0=50${{</math>}}, {{<math>}}$b_0=-5${{</math>}} e {{<math>}}$c_0=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim N(5; 0,5^2)${{</math>}} e {{<math>}}$z \sim N(1,875; 0,25^2)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, não é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
+
+- Primeiro, vamos simular as observações:
 ```{r}
-data = mtcars %>% mutate(constant=1) # Criando variável de constante
+a0 = 50
+b0 = -5
+c0 = 3
+N = 200 # Número de observações
 
-## Selecionando colunas para X (covariadas) e convertendo para matrix
-X = data %>% 
-  select("constant", "hp", "wt") %>% 
-  as.matrix()
-
-## Selecionando variavel para y e convertendo para matrix
-y = data %>% 
-  select("mpg") %>% 
-  as.matrix()
+set.seed(1)
+u = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
+z = rnorm(N, 1.875, 0.25) # Gerando 200 obs. de média 1,875 e desv pad 0.25
+y = a0 + b0*x + c0*z + u # calculando observações y a partir de "e", "x" e "z"
 ```
 
-#### 3. Cálculo dos valores ajustados e dos desvios
+- Considere que um economista suponha a relação entre as variáveis pelo seguinte _modelo empírico_:
+    {{<math>}}$$ y = a + b x + u, \tag{2a}$${{</math>}}
+    assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux] = 0${{</math>}}.
+
+- Note que o economista deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba ``entrando'' no erro da estimação.
+- No entanto, como {{<math>}}$z${{</math>}} não tem relação com {{<math>}}$x${{</math>}}, então isso não afeta a estimativa de {{<math>}}$\hat{b}${{</math>}}:
 ```{r}
-## Valores ajustados e desvios
-y_hat = X %*% params
-# equivalente a: y_hat = beta_0 + beta_1 * X[,"hp"] + beta_2 * X[,"wt"]
+cor(x, z) # correlação de x e z -> próxima de 0
+lm(y ~ x) # estimação por MQO
+```
+- Note que {{<math>}}$\hat{b} = -5,12 \approx -5 = b_0${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro populacional {{<math>}}$b_0${{</math>}}, apesar do economista não ter incluído {{<math>}}$z${{</math>}} no modelo.
+- Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$E(ux) = 0${{</math>}} (ou seja, que nenhuma variável explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro).
 
-e = y - y_hat
+
+
+### Violação de E(ux)=0
+- Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} está relacionada com {{<math>}}$z${{</math>}}).
+    - Considere que {{<math>}}$z \sim N(1,875x; (0,25)^2)${{</math>}}:
+    
+```{r}
+set.seed(1)
+e = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
+z = rnorm(N, 1.875*x, 0.25) # Gerando 200 obs. de média 1,875x e desv pad 0.25x
+y = a0 + b0*x + c0*z + e # calculando observações y a partir de "e", "x" e "z"
+cor(x, z) # correlação de x e z
 ```
 
-#### 4. Criação da matriz de momentos
+- Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} são consideravalmente correlacionados
+- Vamos estimar o _modelo empírico_:
+    {{<math>}}$$ y = a + b x + u,$${{</math>}}
+    assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
+    
+```{r}
+lm(y ~ x) # estimação por MQO
+```
 
-- Note que {{<math>}}$E(\varepsilon' X)${{</math>}} é uma multiplicação matricial, mas a função `gmm()` exige que como input os vetores com multiplicação elemento a elemento do resíduo {{<math>}}$\varepsilon${{</math>}} com as covariadas {{<math>}}$X${{</math>}} (neste caso: constante, hp, wt)
+- Observe que {{<math>}}$\hat{b} = 0,5 \neq -5 = b_0${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o desvio {{<math>}}$\hat{u}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$E(ux)\neq 0${{</math>}} (violando a hipótese do MQO).
+- Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}:
 
 ```{r}
-m = X * as.vector(e) # matriz de momentos (sem tomar esperança)
-head(m)
+lm(y ~ x + z)
 ```
 
-
-- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperança).
-
-- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
-
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1, \beta_2 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
-
-
-
-#### 5. Criação de função com os momentos
-- Vamos criar uma função que tem como input um vetor de parâmetros (`params`) e uma base de dados (`data`), e que retorna uma matriz em que cada coluna representa um momento.
-- Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
+### Violação de E(u)=0
+- Agora, consideraremos que {{<math>}}$E[u] = k${{</math>}}, sendo {{<math>}}$k \neq 0${{</math>}} uma constante.
+- Assuma que {{<math>}}$k = 10${{</math>}}:
 ```{r}
-mom_ols = function(params, data) {
-  ## Adicionando colunas de 1's para o termo constante
-  data = data %>% mutate(constant = 1)
-  
-  ## Selecionando colunas para X (covariadas) e convertendo para matrix
-  X = data %>% 
-    select("constant", "hp", "wt") %>% 
-    as.matrix()
-  
-  ## Selecionando variavel para y e convertendo para matrix
-  y = data %>% 
-    select("mpg") %>% 
-    as.matrix()
-  
-  ## Valores ajustados e desvios
-  y_hat = X %*% params
-  e = y - y_hat
-  
-  m = as.vector(e) * X # matriz de momentos (vetor - multiplicação por elemento)
-  m
-}
+a0 = 50
+b0 = -5
+k = 10
+
+set.seed(1)
+u = rnorm(N, k, 2) # Desvios: 200 obs. de média k e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
+y = a0 + b0*x + u # calculando observações y a partir de "e" e "x"
 ```
-
-
-#### 6. Otimização via função `gmm()`
-- A função `gmm()`, assim como a `optim()`, recebe uma função como argumento.
-- No entanto, ao invés de retornar um valor, a função que entra no `gmm()` retorna uma matriz, cujas médias das colunas queremos aproximar de zero. 
+- Caso um economista considere um _modelo empírico_ com {{<math>}}$E[u] = 0${{</math>}}, segue que:
 ```{r}
-library(gmm)
+lm(y ~ x) # estimação por MQO
+```
+- Note que o fato de {{<math>}}$E[u] \neq 0${{</math>}} afeta apenas a estimação de {{<math>}}$\hat{a} \neq a_0${{</math>}}, porém não afeta a de {{<math>}}$\hat{b} \approx b_0${{</math>}}, que é normalmente o parâmetro de interesse em estudos econômicos.
 
-gmm_lm = gmm(mom_ols, mtcars, c(0,0,0),
-             wmatrix = "optimal", # matriz de ponderação
-             optfct = "nlminb" # função de otimização
-             )
 
-summary(gmm_lm)$coefficients
+### Violação de Homocedasticidade
+- Agora, consideraremos que {{<math>}}$u \sim N(0, (2x)^2)${{</math>}}, ou seja, a variância cresce com {{<math>}}$x${{</math>}} ({{<math>}}$u${{</math>}} não é independente de {{<math>}}$x${{</math>}}/não vale homocedasticidade).
+```{r}
+a0 = 50
+b0 = -5
+
+set.seed(1)
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
+u = rnorm(N, 0, 2*x) # Desvios: 200 obs. de média k e desv pad 2x
+y = a0 + b0*x + u # calculando observações y a partir de "e" e "x"
+
+lm(y ~ x) # estimação por MQO
+```
+- Note que, mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}. Mas, observe também que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{b} \neq b_0${{</math>}}. Teste diversas vezes para {{<math>}}$N${{</math>}} menores.
+
+
+
+## Qualidade do ajuste
+- [Seção 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101)
+- A soma de quadrados total (SQT), a soma de quadrados explicada (SQE) e a soma de quadrados dos resíduos (SQR) podem ser escritos como:
+
+{{<math>}}\begin{align}
+    SQT &= \sum^n_{i=1}{(y_i - \bar{y})^2} = (n-1) . Var(y) \tag{2.10}\\
+    SQE &= \sum^n_{i=1}{(\hat{y}_i - \bar{y})^2} = (n-1) . Var(\hat{y}) \tag{2.11}\\
+    SQR &= \sum^n_{i=1}{(\hat{u}_i - 0)^2} = (n-1) . Var(\hat{u}) \tag{2.12}
+\end{align}{{</math>}}
+em que {{<math>}}$Var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}.
+
+- Wooldridge (2006) define o coeficiente de determinação como:
+{{<math>}}\begin{align}
+    R^2 &= \frac{SQE}{SQT} = 1 - \frac{SQR}{SQT}\\
+        &= \frac{Var(\hat{y})}{Var(y)} = 1 - \frac{Var(\hat{u})}{Var(y)} \tag{2.13}
+\end{align}{{</math>}}
+pois {{<math>}}$SQT = SQE + SQR${{</math>}}.
+
+```{r}
+# Calculando R^2 de três maneiras:
+var(sal_hat) / var(sal)
+1 - var(u_hat)/var(sal)
+cor(sal, sal_hat)^2 # correlação ao quadrado da variável dependente com valores ajustados
+```
+
+- Para obter o {{<math>}}$R^2${{</math>}} de forma mais conveniente, pode-se usar a função `summary()` sobre o objeto de resultado da regressão. Esta função fornece uma visualização dos resultados mais detalhada, incluindo o {{<math>}}$R^2${{</math>}}:
+```{r}
+summary(CEOregres)
 ```
 
 
 
-
-{{< cta cta_text="👉 Proceed to Panel Data" cta_link="../sec8" >}}
+{{< cta cta_text="👉 Proceed to Optimization" cta_link="../sec8" >}}

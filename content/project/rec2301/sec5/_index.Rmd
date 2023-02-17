@@ -236,4 +236,4 @@ g + geom_point(aes(color=cyl), size=9, alpha=0.4) # colorindo por variável - pr
 
 
 
-{{< cta cta_text="👉 Proceed to Distributions" cta_link="../sec6" >}}
+{{< cta cta_text="👉 Proceed to Statistics Review" cta_link="../sec6" >}}
