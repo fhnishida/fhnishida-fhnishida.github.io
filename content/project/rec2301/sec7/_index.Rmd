@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Univariate OLS
+linktitle: Regressão Simples
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Univariate OLS
+title: Regressão Simples
 weight: 7
 output: md_document
 type: book
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Regressão simples por MQO
 - [Seção 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
 - Considere o seguinte modelo empírico
-{{<math>}}$$ y = \beta_0 + \beta_1 x + u \tag{2.1} $${{</math>}}
+$$ y = \beta_0 + \beta_1 x + u \tag{2.1} $$
 - Os estimadores de mínimos quadrados ordinários (MQO), segundo Wooldridge (2006, Seção 2.2) é dado por
 
 {{<math>}}\begin{align}
@@ -26,15 +26,15 @@ knitr::opts_chunk$set(echo = TRUE)
     \hat{\beta}_1 &= \frac{Cov(x,y)}{Var(x)} \tag{2.3}
 \end{align}{{</math>}}
 
-- E os valores ajustados/preditos, $\hat{y}$ é dado por
-{{<math>}}$$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $${{</math>}}
+- E os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}} é dado por
+$$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
 tal que 
-{{<math>}}$$ y = \hat{y} + \hat{u} $${{</math>}}
+$$ y = \hat{y} + \hat{u} $$
 
 ### Exemplo 2.3: Salário de Diretores Executivos e Retornos de Ações (Wooldridge, 2006)
 
 - Considere o seguinte modelo de regressão simples
-{{<math>}}$$ \text{salary} = \beta_0 + \beta_1 \text{roe} + u $${{</math>}}
+$$ \text{salary} = \beta_0 + \beta_1 \text{roe} + u $$
 em que `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o investimento em percentual.
 
 
@@ -167,7 +167,7 @@ mean(sal_hat)
 - Também podemos fazer estimações transformando variáveis em nível para logaritmo.
 - É especialmente importante para transformar modelos não-lineares em lineares - quando o parâmetro está no expoente ao invés estar multiplicando:
   
-{{<math>}}$$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $${{</math>}}
+$$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $$
 
 - Também é frequentemente utilizada em variáveis dependentes {{<math>}}$y \ge 0${{</math>}}
 
@@ -254,7 +254,7 @@ lm(SR ~ group88)
 
 
 - Wooldridge (2006, Seção 2.5) deriva o estimador do termo de erro:
-{{<math>}}$$ \hat{\sigma}^2 = \frac{1}{n-2} \sum^n_{i=1}{\hat{u}^2_i} = \frac{n-1}{n-2} Var(\hat{u}) \tag{2.14} $${{</math>}}
+$$ \hat{\sigma}^2 = \frac{1}{n-2} \sum^n_{i=1}{\hat{u}^2_i} = \frac{n-1}{n-2} Var(\hat{u}) \tag{2.14} $$
 em que {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</math>}}.
 
 - Observe que precisamos considerar os graus de liberdade, dado que estamos estimando dois parâmetros ({{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}).
@@ -271,8 +271,9 @@ em que {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</mat
 - Sejam as variáveis
     - `math10`: o percentual de alunos de primeiro ano de ensino médio aprovados em exame de matemática
     - `lnchprg`: o percentual de estudante aptos para participar do programa de merenda escolar
+    
 - O modelo de regressão simples é
-{{<math>}}$$ \text{math10} = \beta_0 + \beta_1 \text{lnchprg} + u $${{</math>}}
+$$ \text{math10} = \beta_0 + \beta_1 \text{lnchprg} + u $$
 
 ```{r}
 data(meap93, package="wooldridge")
@@ -325,7 +326,7 @@ summary(results)
 ### Sem violação de hipótese: Exemplo 1
 - Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas gastas aprendendo a cozinhar.
 - Suponha o _modelo real_:
-{{<math>}}$$ y = a_0 + b_0 x + \varepsilon, \qquad \varepsilon \sim N(0, 2^2) \tag{1}$${{</math>}}
+$$ y = a_0 + b_0 x + \varepsilon, \qquad \varepsilon \sim N(0, 2^2) \tag{1}$$
 em que {{<math>}}$a_0=50${{</math>}} e {{<math>}}$b_0=-5${{</math>}}.
 
 1. Definindo {{<math>}}$a_0${{</math>}} e {{<math>}}$b_0${{</math>}} e gerando por simulação as "observações" de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
@@ -346,7 +347,7 @@ Simulamos as observações {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} q
 
 2. Estimando por MQO os parâmetros {{<math>}}$\hat{a}${{</math>}} e {{<math>}}$\hat{b}${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
     - Um economista supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
-    {{<math>}}$$ y = a + b x + u, \tag{1a}$${{</math>}}
+    $$ y = a + b x + u, \tag{1a}$$
     assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
     - Para estimar o modelo por MQO, usamos a função `lm()`
     
@@ -365,7 +366,7 @@ abline(lm(y ~ x), col="blue") # reta estimada a partir das observações
 ### Sem violação de hipótese: Exemplo 2
 - Agora, no _modelo real_, suponha que o número de queimaduras {{<math>}}$y${{</math>}} é determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
 
-{{<math>}}$$ y = a_0 + b_0 x + c_0 z + u, \qquad u \sim N(0, 2^2) \tag{2} $${{</math>}}
+$$ y = a_0 + b_0 x + c_0 z + u, \qquad u \sim N(0, 2^2) \tag{2} $$
 em que {{<math>}}$a_0=50${{</math>}}, {{<math>}}$b_0=-5${{</math>}} e {{<math>}}$c_0=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim N(5; 0,5^2)${{</math>}} e {{<math>}}$z \sim N(1,875; 0,25^2)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, não é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
 
 - Primeiro, vamos simular as observações:
@@ -383,7 +384,7 @@ y = a0 + b0*x + c0*z + u # calculando observações y a partir de "e", "x" e "z"
 ```
 
 - Considere que um economista suponha a relação entre as variáveis pelo seguinte _modelo empírico_:
-    {{<math>}}$$ y = a + b x + u, \tag{2a}$${{</math>}}
+    $$ y = a + b x + u, \tag{2a}$$
     assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux] = 0${{</math>}}.
 
 - Note que o economista deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba ``entrando'' no erro da estimação.
@@ -412,7 +413,7 @@ cor(x, z) # correlação de x e z
 
 - Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} são consideravalmente correlacionados
 - Vamos estimar o _modelo empírico_:
-    {{<math>}}$$ y = a + b x + u,$${{</math>}}
+    $$ y = a + b x + u,$$
     assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
     
 ```{r}
@@ -495,4 +496,4 @@ summary(CEOregres)
 
 
 
-{{< cta cta_text="👉 Proceed to Optimization" cta_link="../sec8" >}}
+{{< cta cta_text="👉 Seguir para Regressão Múltipla" cta_link="../sec8" >}}

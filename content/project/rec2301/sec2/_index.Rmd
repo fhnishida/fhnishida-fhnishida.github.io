@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: R Programming
+linktitle: Programação em R
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: R Programming
+title: Programação em R
 weight: 2
 output: md_document
 type: book
@@ -163,7 +163,7 @@ class(y)
 
 > **Note que**:
 >
-> character $>$ complex $>$ numeric $>$ integer $>$ logical
+> character > complex > numeric > integer > logical
 
 Também podemos forçar a mudança de classe de objeto para a classe "menos geral", o que acaba transformando:
 
@@ -307,7 +307,7 @@ ncol(x) # Número de colunas de x
 data_txt = read.table("mtcars.txt") # também lê .csv
 data_csv = read.csv("mtcars.csv")
 ```
-- Caso queira testar, faça download das bases: [mtcars.txt](https://fhnishida.github.io/fearp/eco1/mtcars.txt) e [mtcars.csv](https://fhnishida.github.io/fearp/eco1/mtcars.csv)
+- Caso queira testar, faça download das bases: [mtcars.txt](../mtcars.txt) e [mtcars.csv](../mtcars.csv)
 - Note que, caso você não tenha definido o diretório de trabalho, é necessário informar o caminho/endereço inteiro do arquivo que você quer importar:
 ```r
 data = read.table("C:/Users/Fabio/OneDrive/FEA-RP/mtcars.csv")
@@ -332,7 +332,7 @@ Caso queira testar, faça download da base [mtcars.xlsx](../mtcars.xlsx)
 > Caso queira testar, faça download das bases: [mtcars_br.csv](../mtcars_br.csv) e [mtcars_br.xlsx](../mtcars_br.xlsx)
 
 
-## Subsetting
+## Extraindo Subconjuntos
 - [Subsetting - Basics (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/JDoLX/subsetting-basics)
 - Há 3 operadores básicos para extrair subconjuntos de objetos no R:
     - `[]`: retorna um "sub-objeto" da mesma classe do objeto original
@@ -406,7 +406,7 @@ x[, 2] # todas linhas e coluna 2
 x[1, 2, drop = FALSE]
 ```
 
-### Removendo valores ausentes (_missing values_ - `NA`)
+### Removendo valores ausentes (`NA`)
 - [Subsetting - Removing missing values (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/Qy8bH/subsetting-removing-missing-values)
 - Remover dados faltantes é uma ação comum quando manipulamos bases de dados
 - Para verificar quais dados são `NA`, usa-se a função `is.na()`
@@ -524,35 +524,36 @@ mean(x) # Sem excluir valores ausentes
 mean(x, na.rm=TRUE) # Excluindo valores ausentes
 ```
 
+
 ### Exemplo: Otimização de função univariada
-- Queremos encontrar o $x$ que minimiza a função univariada $f(x) = x^2 + 4x - 4$, ou seja,
+- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x) = x^2 + 4x - 4${{</math>}}, ou seja,
     $$ \text{arg} \min_x (x^2 + 4x - 4) $$
 - Ver no [Wolfram](https://www.wolframalpha.com/input?i=solve+x%5E2+%2B+4x+-+4+%3D+0)
-- Para resolver numericamente, podemos chutar diversos valores de $x$ e pegar o menor valor
-- Primeiro, vamos construir um vetor com diversos valores de $x$ no intervalo $[-5, 5]$.
+- Para resolver numericamente, podemos chutar diversos valores de {{<math>}}$x${{</math>}} e pegar o menor valor
+- Primeiro, vamos construir um vetor com diversos valores de {{<math>}}$x${{</math>}} no intervalo {{<math>}}$[-5, 5]${{</math>}}.
 ```{r}
 x_grid = seq(-5, 5, length=20)
 x_grid
 ```
-- Agora, vamos calcular o valor de $f(x)$ para cada possível $x$
+- Agora, vamos calcular o valor de {{<math>}}$f(x)${{</math>}} para cada possível {{<math>}}$x${{</math>}}
 ```{r}
 fx = x_grid^2 + 4*x_grid - 4 
 ```
-- Note que cada elemento calculado em `fx_grid` corresponde a um $x$ na mesma posição/índice em `x_grid`
+- Note que cada elemento calculado em `fx_grid` corresponde a um {{<math>}}$x${{</math>}} na mesma posição/índice em `x_grid`
 ```{r}
 head( cbind(x=x_grid, fx=fx), 6) # mostrando os 6 primeiros valores
 ```
-- Agora, vamos ver o valor e a *posição* de $x$ que minimiza a função:
+- Agora, vamos ver o valor e a *posição* de {{<math>}}$x${{</math>}} que minimiza a função:
 ```{r}
 min(fx) # f(x) mínimo
 argmin_index = which.min(fx) # índice de x que maximiza
 argmin_index
 ```
-- Para recuperar o valor de $x$ que minimiza $f(x)$, precisamos usar o índice encontrado para encontrar no vetor `x_grid`:
+- Para recuperar o valor de {{<math>}}$x${{</math>}} que minimiza {{<math>}}$f(x)${{</math>}}, precisamos usar o índice encontrado para encontrar no vetor `x_grid`:
 ```{r}
 x_grid[argmin_index]
 ```
-- Observe que podemos aumentar a precisão aumentando o número de possíveis valores de $x$ no `x_grid`. Por outro lado, em contas mais complexas, pode elevar muito o tempo de execução do comando.
+- Observe que podemos aumentar a precisão aumentando o número de possíveis valores de {{<math>}}$x${{</math>}} no `x_grid`. Por outro lado, em contas mais complexas, pode elevar muito o tempo de execução do comando.
 
 
 
@@ -638,24 +639,6 @@ distancia
 ```
 
 
-### Exemplo: Tabuada
-- É comum o uso de uma estrutura de repetição dentro de outra estrutura de repetição (repetições encaixadas).
-- Como exemplo, será criada uma matriz vazia e esta será preenchida com a tabela de tabuada
-
-```{r}
-tabuada = matrix(NA, 10, 10)
-tabuada
-
-# Preenchimento da matriz de tabuada
-for (linha in 1:10) {
-    for (coluna in 1:10) {
-        tabuada[linha, coluna] = linha * coluna
-    }
-}
-tabuada
-```
-
-
 ### Exemplo 1: Tabuada
 - É comum o uso de uma estrutura de repetição dentro de outra estrutura de repetição (repetições encaixadas).
 - Como exemplo, será criada uma matriz vazia e esta será preenchida com a tabela de tabuada
@@ -676,14 +659,14 @@ tabuada
 ```
 
 ### Exemplo 2: Otimização de função bivariada
-- Queremos encontrar o $x$ que minimiza a função univariada $f(x, z) = x^2 + 4z^2 - 4$, ou seja,
+- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja,
     $$ \text{arg} \min_{x, z} (x^2 + 4z^2 - 4) $$
 - Primeiro, vamos criar vetores de possíveis valores de $x$ e $z$.
 ```{r}
 x_grid = seq(-5, 5, length=11)
 z_grid = seq(-6, 6, length=11)
 ```
-- Agora, vamos criar uma matriz em que cada linha representa um valor de $x$ e cada coluna representa um valor de $z$:
+- Agora, vamos criar uma matriz em que cada linha representa um valor de {{<math>}}$x${{</math>}} e cada coluna representa um valor de {{<math>}}$z${{</math>}}:
 ```{r}
 # Criando matriz para preencher
 fxz = matrix(NA, length(x_grid), length(z_grid))
@@ -705,7 +688,7 @@ for (lin_x in 1:length(x_grid)) {
 }
 fxz
 ```
-- Para recuperar a dupla $(x, z)$ que minimiza $f(x, z)$, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`:
+- Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`:
 ```{r}
 argmin_index = which(fxz==min(fxz), arr.ind = TRUE)
 argmin_index
@@ -753,4 +736,4 @@ above(vetor, 14) # todos acima de 14
 
 
 
-{{< cta cta_text="👉 Proceed to Data Manipulation" cta_link="../sec3" >}}
+{{< cta cta_text="👉 Seguir para Manipulação de Dados" cta_link="../sec3" >}}

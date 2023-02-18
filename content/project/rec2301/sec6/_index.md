@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Statistics Review
+linktitle: Revisão de Estatística
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Statistics Review
+title: Revisão de Estatística
 weight: 6
 output: md_document
 type: book
@@ -199,7 +199,7 @@ sample(letters, 5) # Amostragem de 5 letras
 ```
 
 ```
-## [1] "j" "x" "r" "l" "z"
+## [1] "d" "a" "f" "u" "r"
 ```
 
 ```r
@@ -207,7 +207,7 @@ sample(1:10, 4) # Amostragem de 4 números de 1 a 10
 ```
 
 ```
-## [1] 9 3 6 5
+## [1] 1 6 8 7
 ```
 
 ```r
@@ -215,7 +215,7 @@ sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
 ```
 
 ```
-##  [1]  9 10  6  7  2  3  8  4  5  1
+##  [1]  9  7  8  1  5  4  6  3 10  2
 ```
 
 ```r
@@ -223,7 +223,7 @@ sample(1:10, replace = TRUE) # Amostragem com reposição
 ```
 
 ```
-##  [1]  8  1  4  2 10  5  8  4  4 10
+##  [1]  1  3  1 10  3  9  2  4  1  9
 ```
 - Note que, por padrão, a função `sample()` faz a amostragem sem reposição.
 
@@ -248,8 +248,8 @@ table(amostra) # tabela com contagem das jogadas
 
 ```
 ## amostra
-##   1   2   3   4   5   6 
-##  77  75  83 100  78  87
+##  1  2  3  4  5  6 
+## 84 72 84 84 78 98
 ```
 
 ```r
@@ -266,7 +266,7 @@ mean(sample(1:6, 2))
 ```
 
 ```
-## [1] 3.5
+## [1] 3
 ```
 - Fazendo isso 500 vezes, temos:
 
@@ -278,7 +278,7 @@ table(amostra) # tabela com contagem das médias de 2 jogadas
 ```
 ## amostra
 ##   1 1.5   2 2.5   3 3.5   4 4.5   5 5.5   6 
-##  12  24  40  48  81  87  70  58  39  27  14
+##  15  24  33  68  69  69  78  65  41  23  15
 ```
 
 ```r
@@ -313,7 +313,7 @@ rnorm(5) # gerando 5 números aleatórios
 ```
 
 ```
-## [1]  0.2939393 -0.6158868 -1.3604721  0.5376091 -0.7449691
+## [1]  0.5241859 -0.3773606  1.0515419  0.5259273  1.0263234
 ```
 
 - Para reproduzir resultados que usem números aleatórios, podemos definir "sementes" usando a função `set.seed()` e informando um número inteiro. Isso também é válido para a função `sample()`.
@@ -352,7 +352,7 @@ rnorm(5)
 - No Apêndice C.5 de Wooldridge (2006, em português), são construídos intervalos de confiança de 95\%.
 - Para uma população normalmente distribuída com média {{<math>}}$\mu${{</math>}} e variância {{<math>}}$\sigma^2${{</math>}}, o intervalo de confiança com significância de `\(\alpha\)` é dado por:
 
-{{<math>}}$$ \text{IC}_\alpha = \left[\bar{y} - C_{\alpha/2}.se(\bar{y}),\quad \bar{y} + C_{\alpha/2}.se(\bar{y})\right] \tag{1.2} $${{</math>}}
+$$ \text{IC}_\alpha = \left[\bar{y} - C_{\alpha/2}.se(\bar{y}),\quad \bar{y} + C_{\alpha/2}.se(\bar{y})\right] \tag{1.2} $$
 em que:
 
 - {{<math>}}$\bar{y}${{</math>}}: média amostral
@@ -417,15 +417,15 @@ avgChange + CV * c(-se, se)
 - Apêndice C.6 de Wooldridge (2006, em português)
 
 - A estatística _t_ para testar uma hipótese sobre uma variável aleatória {{<math>}}$y${{</math>}} normalmente distribuída com média {{<math>}}$\bar{y}${{</math>}} é dado pela equação C.35 (Wooldridge, 2006). Dada a hipótese nula {{<math>}}$H_0: \bar{y} = \mu_0${{</math>}},
-{{<math>}}$$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $${{</math>}}
+$$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $$
 
 - Para rejeitarmos a hipótese nula, o módulo da estatística _t_ precisa ser maior do que o valor crítico, dado um nível de significância {{<math>}}$\alpha${{</math>}}.
 - Por exemplo, ao nível de significância {{<math>}}$\alpha = 5\%${{</math>}} e com uma grande amostra (e, portanto, a distribuição _t_ se aproxima a de uma normal padrão), rejeitamos a hipótese nula se
-{{<math>}}$$ |t| \ge 1,96 \approx \text{valor crítico ao nível de significância de 5%} $${{</math>}}
+$$ |t| \ge 1,96 \approx \text{valor crítico ao nível de significância de 5%} $$
 
 - A vantagem de utilizar o p-valor é a sua conveniência, pois pode-se compará-lo diretamente com o nível de significância.
 - Para testes _t_ bicaudais, a fórmula do p-valor é dado por (Wooldridge, 2006, equação C.42):
-{{<math>}}$$ p = 2.Pr(T_{n-1} > |t|) = 2.[1 - F_{t_{n-1}}(|t|)] $${{</math>}}
+$$ p = 2.Pr(T_{n-1} > |t|) = 2.[1 - F_{t_{n-1}}(|t|)] $$
 em que {{<math>}}$F_{t_{n-1}}(\cdot)${{</math>}} é a fda da distribuição {{<math>}}$t_{n-1}${{</math>}}.
 
 <center><img src="../t-student_test.png"></center>
@@ -516,4 +516,4 @@ testresults$p.value
 
 
 
-{{< cta cta_text="👉 Proceed to Univariate OLS" cta_link="../sec7" >}}
+{{< cta cta_text="👉 Seguir para Regressão Simples" cta_link="../sec7" >}}

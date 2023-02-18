@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: R Toolkit
+linktitle: Ferramentas do R
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: R Toolkit
+title: Ferramentas do R
 weight: 1
 output: md_document
 type: book
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Em cada tema abordado serão citadas as fontes, além de incluir aos vídeos dos cursos citados acima para que possam aprofundar nos estudos.
 
 
-## Installing R
+## Instalando R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
 1. Instalação da base do R ([CRAN](https://cran.r-project.org))
@@ -36,7 +36,7 @@ knitr::opts_chunk$set(echo = TRUE)
     - É uma interface de usuário para facilitar o uso do R
 
 
-## Using R Studio
+## Usando R Studio
 - [RStudio Tour (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
 
 RStudio é dividido em 4 quadrantes:
@@ -50,7 +50,7 @@ RStudio é dividido em 4 quadrantes:
 Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
 
 
-### Diretório de trabalho (_Working Directory_)
+### Diretório de trabalho
 Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).
 
 > Session > Set Working Directory > Choose Directory...
@@ -74,7 +74,7 @@ setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRETO!
 Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
 
 
-### Executando comandos no R
+### Executando comandos
 - Execução direta no console: escreva `1 + 1` no console e dê \<Enter\>
 ```{r}
 1 + 1
@@ -111,7 +111,7 @@ rnorm(mean=0, n=10, sd=1)
 ```
 
 
-## R Packages
+## Pacotes no R
 - Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
 - Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos economistas (principalmente econometristas) já desenvolvem e disponibilizam pacotes com as implementações de seus novos métodos.
 - A instalação de um pacote só precisa ser feita uma única vez.
@@ -163,7 +163,7 @@ dplyr::select(.data, ...) # do pacote dplyr
 
 
 
-## Help
+## Ajuda
 - Caso saiba o nome da função, é possível olhar sua documentação escrevendo `?<nome_da_funcao>` (como visto anteriormente)
 - Caso saiba o nome do pacote, em alguns casos funciona `?<nome_do_pacote>`, mas o ideal é buscar sua documentação no CRAN (diretamente no site ou via Google)
 - Por exemplo, podemos acessar a página do [pacote `dplyr` no CRAN](https://cran.r-project.org/web/packages/dplyr/index.html):
@@ -192,7 +192,7 @@ browseVignettes("dplyr") # Abrirá uma página com vignettes no seu navegador
 
 
 
-## GitHub Sync
+## Sincornização no GitHub
 Não será detalhado aqui, mas é algo interessante para olhar.
 
 - [Criação de projetos](https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r)
@@ -202,5 +202,5 @@ Não será detalhado aqui, mas é algo interessante para olhar.
 
 
 
-{{< cta cta_text="👉 Proceed to R Programming" cta_link="../sec2" >}}
+{{< cta cta_text="👉 Seguir para Programação em R" cta_link="../sec2" >}}
 

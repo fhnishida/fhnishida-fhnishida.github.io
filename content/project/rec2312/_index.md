@@ -7,7 +7,7 @@ image:
 summary: Undergraduate TA Sessions on IV, Panel Data and Logit/Probit.
 tags:
 - Undergraduate
-title: Econometria II (1º semestre/2023)
+title: Econometrics II (Spring 2023)
 type: book
 linktitle: Avisos
 weight: 1

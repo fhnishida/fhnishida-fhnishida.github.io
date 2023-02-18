@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Data Manipulation
+linktitle: Manipulação de Dados
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Data Manipulation
+title: Manipulação de Dados
 weight: 3
 output: md_document
 type: book
@@ -326,4 +326,4 @@ head(wrong)
 
 
 
-{{< cta cta_text="👉 Proceed to `dplyr` Manipulation" cta_link="../sec4" >}}
+{{< cta cta_text="👉 Seguir para Manipulação via `dplyr`" cta_link="../sec4" >}}

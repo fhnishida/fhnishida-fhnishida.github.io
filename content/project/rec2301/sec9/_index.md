@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Estimation with Panel Data
+linktitle: Otimização Numérica
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Estimation with Panel Data
+title: Otimização Numérica
 weight: 9
 output: md_document
 type: book
@@ -13,1324 +13,562 @@ type: book
 
 
 
-## Notações
-- Seção 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- A maioria das notações foram adaptadas de acordo com as notas de aula de Econometria I.
-
-Para a observação do indivíduo {{<math>}}$i \in \{1, ..., N\}${{</math>}} no período {{<math>}}$t \in \{1, ..., T\}${{</math>}}, podemos escrever o modelo a ser estimado como:
-
-{{<math>}}\[ y_{it} = \alpha + x'_{it} \beta + \varepsilon_{it} \]{{</math>}}
-em que {{<math>}}$y_{it}${{</math>}} é a variável dependente, {{<math>}}$x_{it}${{</math>}} é o vetor de {{<math>}}$K${{</math>}} covariadas, e o erro {{<math>}}$\varepsilon_{it}${{</math>}} pode ser escrito como:
-
-{{<math>}}\[ \varepsilon_{it} = u_i + \nu_{it},  \]{{</math>}}
-sendo {{<math>}}$u_i${{</math>}} o erro individual para o indivíduo {{<math>}}$i${{</math>}} e {{<math>}}$\nu_{it}${{</math>}} é o erro idiossincrático (residual).
-
-Definindo {{<math>}}$\gamma \equiv (\alpha, \beta)${{</math>}} e {{<math>}}$Z_{it} \equiv (1, x_{it})${{</math>}}, o modelo pode ser reescrito como
-{{<math>}}\[ y_{it} = z'_{it} \gamma + \varepsilon_{it}. \]{{</math>}}
-
-Para a amostra inteira, supondo que o painel é balanceado, isto é, que possui o mesmo número de observações ({{<math>}}$T${{</math>}}) para todos os indivíduos ({{<math>}}$i${{</math>}}), temos que
-{{<math>}}\[ \underbrace{y}_{NT \times 1} = \left( \begin{array}{c}
-    y_{11} \\ y_{12} \\ \vdots \\ y_{1T} \\ y_{21} \\ y_{22} \\ \vdots \\ y_{2T} \\ \vdots \\ y_{N1} \\ y_{N2} \\ \vdots \\ y_{NT}
-\end{array} \right) \qquad \text{ e } \qquad 
-\underbrace{X}_{NT \times K} = \left( \begin{array}{cccc}
-    x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
-    x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\
-    x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
-    x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
-    x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
-\end{array} \right)\]{{</math>}}
-
-Denotando {{<math>}}$\iota${{</math>}} um vetor de 1's de tamanho {{<math>}}$NT${{</math>}}, temos
-{{<math>}}\[ y = \alpha \iota + X \beta + \varepsilon \]{{</math>}}
-ou, usando {{<math>}}$Z \equiv (\iota,X)${{</math>}} e {{<math>}}$\gamma \equiv (\alpha, \beta)${{</math>}},
-{{<math>}}\[ y = Z \gamma + \varepsilon \]{{</math>}}
-
-
-## Transformações _between_ e _within_
-- Seção 2.1.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-
-Denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}, e {{<math>}}$\iota_q${{</math>}} um vetor de 1's de tamanho {{<math>}}$q${{</math>}}. 
-
-A matriz de transformação **inter-indivíduos (_between_)** é denotada por:
-{{<math>}}\[ B\ =\ I_N \otimes \iota_T (\iota'_T \iota_T)^{-1} \iota'_T \]{{</math>}}
-Note que a matriz {{<math>}}$B${{</math>}} é equivalente a {{<math>}}$N${{</math>}} nas notas de aula de Econometria I.
-
-
-Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
-
-{{<math>}}\begin{align*}
-    B &= \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) \otimes \left[ \left( \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right) \frac{1}{3} \left( \begin{array}{ccc} 1 & 1 & 1 \end{array} \right) \right] \\
-    &= \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) \otimes  \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right)  \\
-    &= \left( \begin{array}{cc} 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \\ 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \end{array} \right) \\
-    &= \left( \begin{array}{rrrrrr} 
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3
-    \end{array} \right)_{NT \times NT},
-\end{align*}{{</math>}}
-
-em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker. Então, temos
-{{<math>}}\[ (Bx^k)' = \left( \bar{x}^k_1, \cdots, \bar{x}^k_1, \bar{x}^k_2, \cdots, \bar{x}^k_2, \cdots,\bar{x}^k_N, \cdots, \bar{x}^k_N \right). \]{{</math>}}
-
-Para calcular no R, vamos definir:
-
-```r
-N = 2 # número de indivíduos
-T = 3 # números de períodos
-
-iota = matrix(rep(1, T), T, 1) # vetor coluna de 1's de tamanho T
-iota
-```
-
-```
-##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
-```
-
-```r
-I_N = diag(N) # matriz identidade de tamanho N
-I_N
-```
-
-```
-##      [,1] [,2]
-## [1,]    1    0
-## [2,]    0    1
-```
-
-Vamos obter {{<math>}}$\iota (\iota' \iota)^{-1} \iota'${{</math>}}
-
-```r
-# Para obter matriz T x T preenchida por 1/T, sendo T = 3, temos que:
-t(iota) %*% iota # produto interno de iotas = quantidade T
-```
-
-```
-##      [,1]
-## [1,]    3
-```
-
-```r
-solve(t(iota) %*% iota) # tomar a inversa = 1/T
-```
-
-```
-##           [,1]
-## [1,] 0.3333333
-```
-
-```r
-iota %*% solve(t(iota) %*% iota) %*% t(iota) # pré e pós-multiplicar por iotas
-```
-
-```
-##           [,1]      [,2]      [,3]
-## [1,] 0.3333333 0.3333333 0.3333333
-## [2,] 0.3333333 0.3333333 0.3333333
-## [3,] 0.3333333 0.3333333 0.3333333
-```
-
-Agora, vamos calcular {{<math>}}$B\ =\ I_N \otimes \iota (\iota' \iota)^{-1} \iota'${{</math>}} usando o operador de produto de Kronecker `%x%`:
-
-```r
-B = I_N %x% (iota %*% solve(t(iota) %*% iota) %*% t(iota))
-round(B, 3)
-```
-
-```
-##       [,1]  [,2]  [,3]  [,4]  [,5]  [,6]
-## [1,] 0.333 0.333 0.333 0.000 0.000 0.000
-## [2,] 0.333 0.333 0.333 0.000 0.000 0.000
-## [3,] 0.333 0.333 0.333 0.000 0.000 0.000
-## [4,] 0.000 0.000 0.000 0.333 0.333 0.333
-## [5,] 0.000 0.000 0.000 0.333 0.333 0.333
-## [6,] 0.000 0.000 0.000 0.333 0.333 0.333
-```
-
-Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz `B`
-
-```r
-K = 3 # número de covariadas
-X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
-Z = cbind(rep(1, N*T), X) # incluindo coluna de 1's
-Z
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    7   13
-## [2,]    1    2    8   14
-## [3,]    1    3    9   15
-## [4,]    1    4   10   16
-## [5,]    1    5   11   17
-## [6,]    1    6   12   18
-```
-
-```r
-B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    8   14
-## [2,]    1    2    8   14
-## [3,]    1    2    8   14
-## [4,]    1    5   11   17
-## [5,]    1    5   11   17
-## [6,]    1    5   11   17
-```
-Note que:
-
-- dada uma variável {{<math>}}$k${{</math>}}, temos um único valor (média) dentro de um mesmo indivíduo;
-- coluna 1's permaneceu igual após a transformação _between_.
-
-
-Já a matriz de transformação **intra-indivíduos (_within_)** é dada por:
-{{<math>}}\[ W\ =\ I_{NT} - B\ =\ I_{NT} - \left[ I_N \otimes \iota (\iota' \iota)^{-1} \iota' \right]. \]{{</math>}}
-
-Note que a matriz {{<math>}}$W${{</math>}} é equivalente a {{<math>}}$M${{</math>}} nas notas de aula de Econometria I.
-
-Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
-
-{{<math>}}\begin{align*}
-    W &= I_{NT} - B \\
-    &= \left( \begin{array}{cccccc} 
-        1 & 0 & 0 & 0 & 0 & 0 \\
-        0 & 1 & 0 & 0 & 0 & 0 \\
-        0 & 0 & 1 & 0 & 0 & 0 \\
-        0 & 0 & 0 & 1 & 0 & 0 \\
-        0 & 0 & 0 & 0 & 1 & 0 \\
-        0 & 0 & 0 & 0 & 0 & 1
-    \end{array} \right) - \left( \begin{array}{rrrrrr} 
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3
-    \end{array} \right) \\
-    &= \left( \begin{array}{rrrrrr} 
-         2/6 & -1/3 & -1/3 &    0 &    0 &    0 \\
-        -1/3 &  2/6 & -1/3 &    0 &    0 &    0 \\
-        -1/3 & -1/3 &  2/6 &    0 &    0 &    0 \\
-           0 &    0 &    0 &  2/6 & -1/3 & -1/3 \\
-           0 &    0 &    0 & -1/3 &  2/6 & -1/3 \\
-           0 &    0 &    0 & -1/3 & -1/3 &  2/6
-    \end{array} \right)_{NT \times NT}, 
-\end{align*}{{</math>}}
-
-
-```r
-I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
-W = I_NT - B # matriz de transformação within
-W
-```
-
-```
-##            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
-## [1,]  0.6666667 -0.3333333 -0.3333333  0.0000000  0.0000000  0.0000000
-## [2,] -0.3333333  0.6666667 -0.3333333  0.0000000  0.0000000  0.0000000
-## [3,] -0.3333333 -0.3333333  0.6666667  0.0000000  0.0000000  0.0000000
-## [4,]  0.0000000  0.0000000  0.0000000  0.6666667 -0.3333333 -0.3333333
-## [5,]  0.0000000  0.0000000  0.0000000 -0.3333333  0.6666667 -0.3333333
-## [6,]  0.0000000  0.0000000  0.0000000 -0.3333333 -0.3333333  0.6666667
-```
-
-```r
-round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    0   -1   -1   -1
-## [2,]    0    0    0    0
-## [3,]    0    1    1    1
-## [4,]    0   -1   -1   -1
-## [5,]    0    0    0    0
-## [6,]    0    1    1    1
-```
-Observe que:
-
-- dada uma variável {{<math>}}$k${{</math>}}, temos os desvios em relação à média de um mesmo indivíduo;
-- por isso, a amostra de tamanho {{<math>}}$NT${{</math>}}, torna-se uma amostra de {{<math>}}$N${{</math>}} observações distintas;
-- coluna 1's virou de 0's após a transformação _within_.
-- coluna de 0's, no R, ficou muito próxima de 0 ({{<math>}}$1,11 \times 10^{-16}${{</math>}}), então foi necessário arredondar.
-
-
-
-## Matriz de covariâncias dos erros
-- Seção 2.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-
-A matriz de covariâncias dos erros depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}\sigma^2_\nu${{</math>}}. Então:
-
-- Variância de um erro: 
-{{<math>}}\[ E(\varepsilon^2_{it}) = \sigma^2_u + \sigma^2_\nu \]{{</math>}}
-- Covariância de dois erros de um mesmo indivíduo {{<math>}}$i${{</math>}} em dos períodos  {{<math>}}$t \neq s${{</math>}}:
-{{<math>}}\[ E(\varepsilon_{it} \varepsilon_{is}) = \varepsilon^2_u \]{{</math>}}
-- Covariância entre dois diferentes indivíduos ({{<math>}}$i \neq j${{</math>}}): 
-{{<math>}}\[ E(\varepsilon_{it} \varepsilon_{jt}) = E(\varepsilon_{it} \varepsilon_{js}) = 0 \]{{</math>}}
-
-A matriz de variância dos erros pode ser expressa por:
-{{<math>}}\[ \Omega = \sigma^2_\nu I_{NT} + \sigma^2_u [I_N \otimes \iota (\iota'\iota)^{-1} \iota'] \]{{</math>}}
-ou, em termos de {{<math>}}$B${{</math>}} e {{<math>}}$W${{</math>}},
-{{<math>}}\[ \Omega = \sigma^2_\nu W + T \sigma^2_u B \]{{</math>}}
-
-
-## Estimadores OLS em painel
-- Supomos que ambos componentes de erros são não-correlacionados com as covariadas:
-{{<math>}}\[ E(u|x) = E(\nu|x) = 0 \]{{</math>}}
-- A variabilidade em um painel tem 2 componentes:
-    - a _between_ ou inter-indivíduos, em que a variabilidade das variáveis são mensuradas em médias individuais, como {{<math>}}$\bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$BZ${{</math>}}
-    - a _within_ ou intra-indivíduos, em que a variabilidade das variáveis são mensuradas em desvios das médias individuais, como {{<math>}}$z_{it} - \bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$WZ = Z - BZ${{</math>}}
-    - Lembre-se que {{<math>}}$z_i \equiv (1, X_i)${{</math>}} e {{<math>}}$Z \equiv (\iota, X)${{</math>}}
-- Há três estimadores por OLS que podem ser utilizados:
-    1. *Pooled OLS (MQE)*: usando a base de dados bruta (empilhada)
-    2. *Estimador Between*: usando as médias individuais
-    3. *Estimador Within (Efeitos Fixos)*: usando os desvios das médias individuais
-
-
-### Pooled OLS (MQE)
-- Seção 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-
-O modelo a ser estimado é
-{{<math>}}\[ y\ =\ Z\gamma + \varepsilon\ =\ \alpha \iota + X \beta + \varepsilon \]{{</math>}}
-
-- O estimador {{<math>}}$\hat{\gamma} = (\hat{\alpha}, \hat{\beta})${{</math>}} é dado por
-{{<math>}}\[ \hat{\gamma}_{OLS} = (Z'Z)^{-1} Z' y \]{{</math>}}
-- A matriz de covariâncias pode ser obtida usando
-{{<math>}}\[ V(\hat{\gamma}_{OLS}) = (Z'Z)^{-1} Z' \Omega Z (Z'Z)^{-1} \]{{</math>}}
-
-
-
-### Estimador _Between_
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$B = I_N \otimes \iota (\iota' \iota)^{-1} \iota'${{</math>}}:
-{{<math>}}\[ By\ =\ BZ\gamma + B\varepsilon\ =\ \alpha \iota + BX \beta + B\varepsilon \]{{</math>}}
-
-- O estimador {{<math>}}$\hat{\beta}${{</math>}} é dado por
-{{<math>}}\[ \hat{\gamma}_{B}\ =\ (Z' B Z )^{-1} Z' B y \]{{</math>}}
-- A matriz de covariâncias pode ser obtida usando
-
-{{<math>}}\begin{align*}
-    V(\hat{\gamma}_{B}) &= (Z'BZ)^{-1} Z' B\Omega B Z (Z'BZ)^{-1} \\
-    &= \sigma^2_l (Z' B Z)^{-1},
-\end{align*}{{</math>}}
-em que {{<math>}}\[\sigma^2_l = \sigma^2_\nu + T \sigma^2_u \]{{</math>}}
-
-- O estimador não-viesado de {{<math>}}$\sigma^2_l${{</math>}} é
-{{<math>}}\[ \hat{\sigma}^2_l = \frac{\hat{\varepsilon}' B \hat{\varepsilon}}{N-K-1} \]{{</math>}}
-
-- O estimador _between_ também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz _between_ ({{<math>}}$B${{</math>}}):
-{{<math>}}\[ \tilde{Z} \equiv BZ \qquad \text{ e } \qquad \tilde{y} = By \]{{</math>}} 
-tal que 
-{{<math>}}\[ \hat{\gamma} = ( \tilde{Z}' \tilde{Z} )^{-1} \tilde{Z}' \tilde{y} \]{{</math>}}
-e assim por diante.
-- Note que, a rotina padrão de OLS retorna {{<math>}}$\hat{\sigma}^2_l = \frac{\hat{\varepsilon}' B \hat{\varepsilon}}{NT-K-1}${{</math>}} e, portanto, é necessário fazer ajuste dos graus de liberdade multiplicando a matriz de covariâncias dos erros por {{<math>}}$(NT-K-1) / (N-K-1)${{</math>}}.  
-
-
-### Estimador _Within_ (Efeitos Fixos)
-- Também conhecido como estimador de **Efeitos Fixos**
-- Não assume que {{<math>}}$E(u | X) = 0${{</math>}}
-- Estima efeitos individuais para, "limpando" efeito inter-indivíduos nas demais covariadas
-
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$W = I_{NT} - B${{</math>}}:
-{{<math>}}\[ Wy\ =\ WZ\gamma + W\varepsilon\ =\ WX \beta + W\nu. \]{{</math>}}
-Note que a transformação within remove vetor de 1's associado ao intercepto, além das covariadas invariantes no tempo e o termo de erro individual {{<math>}}$u${{</math>}} (sobrando apenas {{<math>}}$\varepsilon = \nu${{</math>}}).
-
-- O estimador {{<math>}}$\hat{\beta}${{</math>}} é dado por
-{{<math>}}\[ \hat{\beta}_{W}\ =\ (X' W X )^{-1} X' W y \]{{</math>}}
-- A matriz de covariâncias pode ser obtida usando
-{{<math>}}\begin{align*}
-    V(\hat{\beta}_{W}) &= (X'WX)^{-1} X' W\Omega W X (X'WX)^{-1} \\
-    &= \sigma^2_\nu (X' W X)^{-1}.
-\end{align*}{{</math>}}
-
-- O estimador não-viesado de {{<math>}}$\sigma^2_\nu${{</math>}} é
-{{<math>}}\[ \hat{\sigma}^2_\nu = \frac{\hat{\varepsilon}' W \hat{\varepsilon}}{NT-K-N} \]{{</math>}}
-
-- O estimador _within_ também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz _within_ ({{<math>}}$W${{</math>}}):
-{{<math>}}\[ \tilde{Z} \equiv WZ \qquad \text{ e } \qquad \tilde{y} = Wy \]{{</math>}} 
-tal que 
-{{<math>}}\[ \hat{\gamma} = ( \tilde{Z}' \tilde{Z} )^{-1} \tilde{Z}' \tilde{y} \]{{</math>}}
-e assim por diante.
-- Note que, a rotina padrão de OLS retorna {{<math>}}$\hat{\sigma}^2_\nu = \frac{\hat{\varepsilon}' W \hat{\varepsilon}}{NT-K-1}${{</math>}} e, portanto, é necessário fazer ajuste dos graus de liberdade multiplicando a matriz de covariâncias dos erros por {{<math>}}$(NT-K-1) / (NT-K-N)${{</math>}}.
-
-
-### Estimação OLS
-#### Estimação via `plm()`
-Para ilustrar as estimações OLS dos estimadores vistos anteriormente, usaremos a base de dados `TobinQ` do pacote `pder`, que conta com dados de 188 firmas americanos por 35 anos (6580 observações).
+
+## [Extra] Otimização numérica
+- Essa seção tem o objetivo para dar uma intuição sobre métodos de otimização.
+- Veremos os métodos de _grid search_ e _steepest ascent_ que representam famílias de métodos de otimização.
+
+
+### _Grid Search_
+
+- O método mais simples de otimização numérica é o _grid search_ (discretização).
+- Como o R não lida com problemas com infinitos valores, uma forma lidar com isso é discretizando diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
+- Para cada possível combinação de parâmetros, calculam-se diversos valores a partir da função objetivo. De todos os valores calculados, escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
+- O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
+
+<center><img src="../grid_search.png"></center>
+
+
+- Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis), e menos sensível a chutes de valores iniciais. (ver método abaixo)
+- Porém, este método fica preciso apenas com maiores quantidades de pontos e, como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente (demora mais tempo para calcular).
+
+
+### _Steepest Ascent_
+
+
+- Conforme o número de parâmetros do modelo cresce, aumenta o número de possíveis combinações entre parâmetros e torna o processo computacional cada vez mais lento.
+- Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _steepest ascent_.
+- Seja {{<math>}}$\theta^{**}${{</math>}} o conjunto de parâmetros que maximiza globalmente a função objetivo:
+  1. Comece com algum valor inicial de parâmetro, {{<math>}}$\theta^0${{</math>}}
+  2. Calcula-se a derivada e avalia-se a possibilidade de "andar para cima" a um valor mais alto
+  3. Caso possa, ande na direção correta a {{<math>}}$\theta^1${{</math>}}
+  4. Repita os passos (2) e (3), andando para um novo {{<math>}}$\theta^2, \theta^3, ...${{</math>}} até
+  atingir um {{<math>}}$\theta^*${{</math>}} cuja função objetivo é máxima e cuja derivada é igual a zero.
+
+<center><img src="../steepest_ascent.png"></center>
+
+- Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
+    - No exemplo, se os chutes iniciais forem {{<math>}}$\theta^0_A${{</math>}} ou {{<math>}}$\theta^0_B${{</math>}}, então consegue atingir o máximo global.
+    - Já se o chute inicial for {{<math>}}$\theta^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}$\theta^*${{</math>}} (menor do que o máximo global em {{<math>}}$\theta^{**}${{</math>}}).
+- Por outro lado, é um método mais eficiente, pois calcula-se a função objetivo uma vez a cada passo e também tende a ser mais preciso nas estimações.
+
+
+</br>
+
+## [Extra] Encontrando MQO por diferentes estratégias
+- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) teoria da decisão, do (b) método dos momentos e da (c) máxima verossimilhança.
+- Em todas elas, usaremos um método de otimização, mas, diferente da seção anterior, queremos achar uma _dupla_ de parâmetros que otimizam uma função objetivo.
+
+
+### Base `mtcars`
+É necessário carregar o pacote `dplyr` para manipulação da base de dados abaixo.
 
 ```r
 library(dplyr)
 ```
 
-```
-## Warning: package 'dplyr' was built under R version 4.2.2
-```
+Usaremos dados extraídos da _Motor Trend_ US magazine de 1974, que analisa o
+consumo de combustível e 10 aspectos técnicos de 32 automóveis.
 
-```
-## 
-## Attaching package: 'dplyr'
-```
+No _R_, a base de dados já está incorporada ao programa e pode ser acessada pelo código `mtcars`, contendo a seguinte estrutura:
 
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
-data("TobinQ", package = "pder")
-summary(TobinQ %>% select(cusip, year, ikn, qn))
-```
-
-```
-##      cusip             year           ikn               qn          
-##  Min.   :  2824   Min.   :1951   Min.   :0.0000   Min.   :-68.8663  
-##  1st Qu.:212570   1st Qu.:1959   1st Qu.:0.1086   1st Qu.: -0.8254  
-##  Median :415690   Median :1968   Median :0.1530   Median :  0.3976  
-##  Mean   :437124   Mean   :1968   Mean   :0.1690   Mean   :  2.5053  
-##  3rd Qu.:690207   3rd Qu.:1977   3rd Qu.:0.2120   3rd Qu.:  2.9961  
-##  Max.   :984121   Max.   :1985   Max.   :0.8024   Max.   : 89.8933
-```
-- `cusip`: Identificador da empresa
-- `year`: Ano
-- `ikn`: Investimento dividido pelo capital
-- `qn`: Q de Tobin (razão entre valor da firma e o custo de reposição de seu capital físico). Se {{<math>}}$Q > 1${{</math>}}, então o lucro investimento é maior do que seu custo.
+> - _mpg_: milhas por galão
+> - _hp_: cavalos-vapor bruto
 
 Queremos estimar o seguinte modelo:
-{{<math>}}\[ \text{ikn} = \alpha + \text{qn} \beta + \varepsilon \]{{</math>}}
-
-
-Usaremos a função `plm()` (do pacote de mesmo nome) para estimar modelos lineares em dados em painel. Seus principais argumentos são:
-
-- `formula`: equação do modelo
-- `data`: base de dados em `data.frame` (precisa preencher `index`) ou `pdata.frame` (formato próprio do pacote que já indexa as colunas de indivíduos e de tempo)
-- `model`: estimador a ser computado 'pooling' (MQE), 'between', 'within' (Efeitos Fixos) e 'random' (Efeitos Aleatórios/GLS)
-- `index`: vetor de nomes dos identificadores de indivíduo e de tempo
+$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon $$
 
 
 ```r
-library(plm)
+## Regressao MQO
+lm(formula = mpg ~ hp + wt, data = mtcars)
 ```
 
 ```
-## 
-## Attaching package: 'plm'
-```
-
-```
-## The following objects are masked from 'package:dplyr':
-## 
-##     between, lag, lead
-```
-
-```r
-# Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-
-# Estimações
-Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
-Q.between = plm(ikn ~ qn, pTobinQ, model = "between")
-Q.within = plm(ikn ~ qn, pTobinQ, model = "within")
-
-summary(Q.within) # output da estimação within
-```
-
-```
-## Oneway (individual) effect Within Model
 ## 
 ## Call:
-## plm(formula = ikn ~ qn, data = pTobinQ, model = "within")
-## 
-## Balanced Panel: n = 188, T = 35, N = 6580
-## 
-## Residuals:
-##       Min.    1st Qu.     Median    3rd Qu.       Max. 
-## -0.2163093 -0.0452458 -0.0084941  0.0336543  0.6184391 
+## lm(formula = mpg ~ hp + wt, data = mtcars)
 ## 
 ## Coefficients:
-##      Estimate Std. Error t-value  Pr(>|t|)    
-## qn 0.00379195 0.00017264  21.964 < 2.2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Total Sum of Squares:    36.657
-## Residual Sum of Squares: 34.084
-## R-Squared:      0.070185
-## Adj. R-Squared: 0.042833
-## F-statistic: 482.412 on 1 and 6391 DF, p-value: < 2.22e-16
+## (Intercept)           hp           wt  
+##    37.22727     -0.03177     -3.87783
 ```
+
+
+### (a) Teoria da Decisão
+- Pela estratégia da teoria da decisão, queremos encontrar as estimativas, {{<math>}}$\hat{\beta}_0\ \text{e}\ \hat{\beta}_1 ${{</math>}}, que minimizam a soma dos desvios quadráticos:
+
+
+#### 1. Criar função perda que calcula a soma dos desvios quadráticos
+- A função para calcular a soma dos desvios quadráticos recebe como inputs:
+  - um **vetor** de possíveis estimativas {{<math>}}$\hat{\beta}_0${{</math>}}, {{<math>}}$\hat{\beta}_1${{</math>}}
+  - uma base de dados
 
 ```r
-# Resumindo 3 estimações em única tabela
-stargazer::stargazer(Q.pooling, Q.between, Q.within, type="text")
-```
-
-```
-## 
-## ========================================================================================
-##                                          Dependent variable:                            
-##              ---------------------------------------------------------------------------
-##                                                  ikn                                    
-##                         (1)                      (2)                      (3)           
-## ----------------------------------------------------------------------------------------
-## qn                   0.004***                 0.005***                 0.004***         
-##                      (0.0002)                  (0.001)                 (0.0002)         
-##                                                                                         
-## Constant             0.158***                 0.156***                                  
-##                       (0.001)                  (0.004)                                  
-##                                                                                         
-## ----------------------------------------------------------------------------------------
-## Observations           6,580                     188                     6,580          
-## R2                     0.111                    0.205                    0.070          
-## Adjusted R2            0.111                    0.201                    0.043          
-## F Statistic  824.663*** (df = 1; 6578) 47.908*** (df = 1; 186) 482.412*** (df = 1; 6391)
-## ========================================================================================
-## Note:                                                        *p<0.1; **p<0.05; ***p<0.01
-```
-- Observe que:
-    - as variáveis entram ns estimação sem nenhuma transformação as diferentes quantidades de observações e
-    - cada método possui diferentes graus de liberdade
-
-
-##### Estimando _Within_ e _Between_ via Pooled OLS
-- Nós podemos construir as variáveis de média e de desvios de média diretamente no data frame e estimar o _between_ e _within_ via (pooled) OLS
-
-```r
-TobinQ = TobinQ %>% group_by(cusip) %>% # agrupando por cusip
-    mutate(
-        ikn_bar = mean(ikn), # "transformação" between de ikn
-        qn_bar = mean(qn), # "transformação" between de qn
-        ikn_desv = ikn - ikn_bar, # "transformação" within de ikn
-        qn_desv = qn - qn_bar # "transformação" within de qn
-    ) %>% ungroup()
-
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-
-Q.pooling_between = plm(ikn_bar ~ qn_bar, pTobinQ, model = "pooling")
-
-summary(Q.pooling_between)$coef # between via pooled OLS
-```
-
-```
-##                Estimate   Std. Error   t-value Pr(>|t|)
-## (Intercept) 0.156013534 0.0006527827 238.99764        0
-## qn_bar      0.005184737 0.0001259600  41.16178        0
-```
-
-```r
-summary(Q.between)$coef # between
-```
-
-```
-##                Estimate   Std. Error   t-value     Pr(>|t|)
-## (Intercept) 0.156013534 0.0038820321 40.188625 1.227764e-93
-## qn          0.005184737 0.0007490711  6.921555 7.012814e-11
-```
-- Note que, embora as estimativas sejam as mesmas, acabamos subestimando os erros padrão e, portanto, superestimando os valores t.
-- Ao estimar o _between_ via pooled OLS, ele não faz os ajustes dos graus de liberdade nas variâncias das estimativas
-- Logo, vamos ajustar os graus de liberdade multiplicando a variância das estimativas por {{<math>}}$(NT - K - 1)${{</math>}} e dividindo por {{<math>}}$(N - K - 1)${{</math>}}
-
-```r
-std_error = summary(Q.pooling_between)$coef[, "Std. Error"]
-variance = std_error^2
-adj_variance = variance * (188*35 - 1 - 1) / (188 - 1 - 1)
-adj_std_error = sqrt(adj_variance)
-adj_std_error
-```
-
-```
-##  (Intercept)       qn_bar 
-## 0.0038820321 0.0007490711
-```
-
-
-##### Efeitos Fixos da Estimação _Within_
-- Para o estimador _within_, podemos usar a função `fixef()` para computar os efeitos individuais. É possível calcular 3 tipos por meio do argumento `type`:
-    - `level`: valor padrão que retorna os interceptos individuais ({{<math>}}$\hat{\alpha} + \hat{u}_{i}${{</math>}})
-    - `dfirst`: em desvios do 1º indivíduo ({{<math>}}$\hat{\alpha}${{</math>}} é o intercepto do 1º indivíduo)
-    - `dmean`: em desvios da média de efeitos individuais ({{<math>}}$\hat{\alpha}${{</math>}} é a média)
-
-
-```r
-# 6 primeiros efeitos individuais de cada tipo
-for (t in c("level", "dfirst", "dmean")) {
-    print( head( fixef(Q.within, type=t) ) )
+desv_quad = function(params, data) {
+  # Extraindo os parâmetros para objetos
+  beta_hat_0 = params[1]
+  beta_hat_1 = params[2]
+  
+  mpg_ajustado = beta_hat_0 + beta_hat_1*data$hp # valores ajustados
+  desvios = data$mpg - mpg_ajustado # desvios = observados - ajustados
+  sum(desvios^2)
 }
 ```
 
+
+#### 2. Otimização
+- Agora encontraremos os parâmetros que minimizam a função perda
+
+{{<math>}}$$ \underset{\hat{\beta}_0, \hat{\beta}_1}{\text{argmin}} \sum_{i=1}^{N}\hat{\varepsilon}^2 \quad = \quad \underset{\hat{\beta}_0, \hat{\beta}_1}{\text{argmin}} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $${{</math>}}
+
+- Para isto usaremos a função `optim()` que retorna os parâmetros que minimizam uma função (equivalente ao _argmin_):
+```yaml
+optim(par, fn, gr = NULL, ...,
+      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
+      lower = -Inf, upper = Inf,
+      control = list(), hessian = FALSE)
+
+par: Initial values for the parameters to be optimized over.
+fn: A function to be minimized (or maximized), with first argument the vector of parameters over which minimization is to take place. It should return a scalar result.
+method: The method to be used. See ‘Details’. Can be abbreviated.
+hessian: Logical. Should a numerically differentiated Hessian matrix be returned?
 ```
-##      2824      6284      9158     13716     17372     19411 
-## 0.1452896 0.1280547 0.2580836 0.1100110 0.1267251 0.1694891 
-##        6284        9158       13716       17372       19411       19519 
-## -0.01723488  0.11279400 -0.03527859 -0.01856442  0.02419952 -0.01038237 
-##         2824         6284         9158        13716        17372        19411 
-## -0.014213401 -0.031448285  0.098580596 -0.049491991 -0.032777823  0.009986116
-```
-- Note que, como o `dfirst` retorna valores em relação ao 1º indivíduo, este não aparece no output do `fixef()`, diferente dos demais.
-- No caso linear, o estimador _within_ é equivalente à estimação por OLS com inclusão de dummies para cada indivíduo:
-
-```r
-# Estimando OLS com dummies individuais - factor() tranforma cusip em var. categ.
-Q.dummies = lm(ikn ~ qn + factor(cusip), pTobinQ)
-
-# Comparando as estimativas de qn
-cbind(Q.within$coef, Q.dummies$coef["qn"])
-```
-
-```
-##           [,1]        [,2]
-## qn 0.003791948 0.003791948
-```
-
-```r
-# Comparando efeitos fixos (dfirst) e dummies
-cbind(head(fixef(Q.within, type="dfirst")),
-      Q.dummies$coef[3:8])
-```
-
-```
-##              [,1]        [,2]
-## 6284  -0.01723488 -0.01723488
-## 9158   0.11279400  0.11279400
-## 13716 -0.03527859 -0.03527859
-## 17372 -0.01856442 -0.01856442
-## 19411  0.02419952  0.02419952
-## 19519 -0.01038237 -0.01038237
-```
-
-
-#### Estimação Analítica Pooled OLS (MQE)
-Igual a estimação analítica de MQO vista anteriormente.
-
-
-#### Estimação Analítica _Between_
-
-```r
-data("TobinQ", package="pder")
-TobinQ = TobinQ %>% mutate(constant = 1) # criando vetor de 1's
-
-y = TobinQ %>% select(ikn) %>% as.matrix() # vetor y
-X = TobinQ %>% select(qn) %>% as.matrix() # vetor X
-Z = cbind(TobinQ$constant, X) # vetor Z = (iota, X)
-
-N = TobinQ %>% select(cusip) %>% unique() %>% nrow()
-T = TobinQ %>% select(year) %>% unique() %>% nrow()
-iota_T = rep(1, T)
-
-# Calculando matrizes de tranformação B e W
-B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-W = diag(N*T) - B
-```
-
-
-{{<math>}}\[ \hat{\gamma} = (\hat{\alpha}, \hat{\beta}) = (Z' B Z)^{-1} Z' By  \]{{</math>}}
+- Colocaremos como input:
+  - a função perda criada `desv_quad()`
+  - um chute inicial dos parâmetros
+    - Note que a estimação pode ser mais ou menos sensível ao valores iniciais, dependendo do método de otimização utilizado
+    - O mais comum é encontrar como chute inicial um vetor de zeros `c(0, 0, 0)`, por ser mais neutro em relação ao sinal das estimativas
+    - Em Econometria III, prof. Laurini recomendou usar método "Nelder-Mead" (padrão) com um chute inicial de zeros e, depois, usar suas estimativas como chute inicial para o método "BFGS".
+  - Por padrão, temos o argumento `hessian = FALSE`, coloque `TRUE` para calcularmos o erro padrão, estatística t e p-valor das estimativas
 
 
 ```r
-# vetor de estimativas gamma_hat = (alpha, beta)
-gamma_hat = solve(t(Z) %*% B %*% Z) %*% t(Z) %*% B %*% y
-gamma_hat
+# Estimação por BFGS
+theta_ini = c(0, 0, 0) # Chute inicial de beta_0, beta_1 e beta_2
+
+fit_ols2 = optim(par=theta_ini, fn=desv_quad, data=mtcars,
+                  method="BFGS", hessian=TRUE)
+fit_ols2
 ```
 
 ```
-##            ikn
-##    0.156013534
-## qn 0.005184737
-```
-
-
-{{<math>}}\[ \hat{y} = Z \hat{\gamma} \qquad \text{ e } \qquad  \hat{\varepsilon} = y - \hat{y} \]{{</math>}}
-
-```r
-# valores ajustados e erros
-y_hat = Z %*% gamma_hat
-e_hat = y - y_hat
-```
-
-
-{{<math>}}\[ \hat{\sigma}^2 = \frac{\hat{\varepsilon}' B \hat{\varepsilon}}{N-K-1} \]{{</math>}}
-
-```r
-## Estimando variancia do termo de erro
-sigma2_l = t(e_hat) %*% B %*% e_hat / (N - ncol(Z)) # N - K - 1 graus de liberdade!
-sigma2_l
-```
-
-```
-##            ikn
-## ikn 0.07598735
-```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _between_ para {{<math>}}$N - K - 1${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
-
-{{<math>}}\[ \widehat{V}(\hat{\gamma}) = \hat{\sigma}^2_l (Z'BZ)^{-1} \]{{</math>}}
-
-```r
-## Estimando a matriz de variancia/covariancia das estimativas gamma
-vcov_hat = c(sigma2_l) * solve(t(Z) %*% B %*% Z)
-vcov_hat
-```
-
-```
-##                             qn
-##     1.507017e-05 -1.405770e-06
-## qn -1.405770e-06  5.611075e-07
-```
-
-```r
-## Calculando erros padrao das estimativas gamma
-std_error = sqrt(diag(vcov_hat)) # Raiz da diagonal da matriz de covariâncias
-
-## Calculando estatisticas t das estimativas gamma
-t_stat = gamma_hat / std_error
-
-## Calculando p-valores das estimativas gamma
-p_value = 2 * pt(q = -abs(t_stat), df = N - ncol(Z))  # N - K - 1 graus de liberdade!
-
-## Organizando os resultados da regressao em uma matriz
-results = cbind(gamma_hat, std_error, t_stat, p_value)
-
-## Nomeando as colunas da matriz de resultados
-colnames(results) = c('Estimate', 'Std. Error', 't stat', 'Pr(>|t|)')
-results
-```
-
-```
-##       Estimate   Std. Error    t stat     Pr(>|t|)
-##    0.156013534 0.0038820321 40.188625 1.227764e-93
-## qn 0.005184737 0.0007490711  6.921555 7.012814e-11
-```
-
-```r
-summary(Q.between)$coef # comparando com estimado via plm()
-```
-
-```
-##                Estimate   Std. Error   t-value     Pr(>|t|)
-## (Intercept) 0.156013534 0.0038820321 40.188625 1.227764e-93
-## qn          0.005184737 0.0007490711  6.921555 7.012814e-11
-```
-
-
-#### Estimação Analítica _Within_
-(Exercício)
-
-
-## Estimadores GLS
-- Seção 2.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Ao contrário do estimador _within_ que retira os efeitos individuais, o estimador de **GLS** considera que os efeitos individuais como aleatórios a partir de uma distribuição específica.
-- Erros não são correlacionados com as covariadas, e são caracterizados por uma matriz de covariâncias {{<math>}}$\Omega${{</math>}}.
-- O estimador de GLS é dado por
-{{<math>}}\[ \hat{\gamma}_{GLS} = (Z' \Omega^{-1} Z)^{-1} (Z' \Omega^{-1} y) \tag{2.27} \]{{</math>}}
-
-- A variância do estimador é dada por
-{{<math>}}\[ V(\hat{\gamma}_{GLS}) = (Z' \Omega^{-1} Z)^{-1} \tag{2.28} \]{{</math>}}
-- A matriz {{<math>}}$\Omega${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_\nu${{</math>}}, temos:
-{{<math>}}\[ \Omega^p = (\sigma^2_l)^p B + (\sigma^2_\nu)^p W \tag{2.29} \]{{</math>}}
-
-- Lembre-se que {{<math>}}\[\sigma^2_l = \sigma^2_\nu + T \sigma^2_u \]{{</math>}}
-
-### GLS: junção Pooled OLS e _Within_
-- Combinação de Pooled OLS (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
-- Pode-se computar mais eficientemente por OLS, que necessita transformação das variáveis usando a matriz {{<math>}}$\Omega^{-0.5}${{</math>}}, tal que {{<math>}}$\Omega^{-0.5\prime}\Omega^{-0.5} = \Omega^{-1}${{</math>}}.
-- Denotando {{<math>}}$\tilde{y} \equiv \Omega^{-0.5}y${{</math>}} e {{<math>}}$\tilde{Z} \equiv \Omega^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
-{{<math>}}\begin{align*}
-    \hat{\gamma} &= (Z' \Omega^{-1} Z)^{-1} (Z' \Omega^{-1} y) \tag{2.27} \\
-    &= (Z' \Omega^{-0.5\prime} \Omega^{-0.5} Z)^{-1} (Z' \Omega^{-0.5}\Omega^{-0.5\prime} y) \\
-    &= (\tilde{Z}'\tilde{Z})^{-1} \tilde{Z} \tilde{y}
-\end{align*}{{</math>}}
-
-Usando (2.29), {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
-{{<math>}}\[ \Omega^{-0.5} = \frac{1}{\sigma_l} B + \frac{1}{\sigma_\nu} W \]{{</math>}}
-
-Essa transformação evidencia uma combinação linear entre as matrizes de transformação _between_ e _within_ ponderadas pelo inverso dos desvios padrão dos 2 componentes de erro ({{<math>}}$\sigma^2_\nu${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_\nu + \sigma^2_l)/T${{</math>}})
-
-Pré-multiplicando as variáveis por {{<math>}}$\sigma_\nu \Omega^{-0.5}${{</math>}} (ao invés de {{<math>}}$\Omega^{-0.5}${{</math>}} para simplificação e sem perda de generalidade), as covariadas transformadas para o indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}} são dadas por:
-{{<math>}}\[ \tilde{z}_{it}\ =\ \frac{\sigma_\nu}{\sigma_l} \bar{z}_{i\cdot} + (z_{it} - \bar{z}_{i\cdot})\ =\ z_{it} + \left(1 - \frac{\sigma_\nu}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot} \]{{</math>}}
-em que
-{{<math>}}\[ \theta\ \equiv\ 1 - \frac{\sigma_\nu}{\sigma_l}\ \equiv\ 1 - \phi \]{{</math>}}
-
-    
-Note que, quando:
-
-- {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} GLS se aproxima do estimador _within_
-- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} GLS se aproxima do pooled OLS
-
-
-### Estimação dos Componentes de Erro
-- Note que não temos {{<math>}}$\sigma^2_\nu${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_\nu + \sigma^2_l)/T${{</math>}} e, logo, {{<math>}}$\Omega${{</math>}} é desconhecido.
-- Se {{<math>}}$\varepsilon${{</math>}} fosse conhecido, então os estimadores para as duas variâncias seriam:
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\varepsilon' B \varepsilon}{N} \tag{2.34}\\
-    \hat{\sigma}^2_\nu &= \frac{\varepsilon' W \varepsilon}{N(T-1)} \tag{2.35}
-\end{align*}{{</math>}}
-- Como {{<math>}}$\varepsilon${{</math>}} é desconhecido, então usam-se resíduos de estimadores consistentes em seu lugar.
-- O estimador obtido por esse processo é chamado de FGLS (ou GLS Factível)
-- **Wallace e Hussain (1969)**: usam resíduos OLS
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\varepsilon}'_{OLS} B \hat{\varepsilon}_{OLS}}{N} \\
-    \hat{\sigma}^2_\nu &= \frac{\hat{\varepsilon}'_{OLS} W \hat{\varepsilon}_{OLS}}{N(T-1)}
-\end{align*}{{</math>}}
-- **Amemiya (1971)**: usam resíduos _within_
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\varepsilon}'_{W} B \hat{\varepsilon}_{W}}{N}\\
-    \hat{\sigma}^2_\nu &= \frac{\hat{\varepsilon}'_{W} W \hat{\varepsilon}_{W}}{N(T-1)}
-\end{align*}{{</math>}}
-Note que, a variância do efeito individual é sobre-estimado quando o modelo contém variáveis invariantes no tempo (somem com a transformação _within_)
-- **Hausman e Taylor (1981)**: propuseram ajuste ao método de Amemiya (1971), em que {{<math>}}$\hat{\varepsilon}_W${{</math>}} são regredidos em todas variáveis invariantes no tempo no modelo e são utilizados os resíduos dessa regressão, {{<math>}}$\hat{\varepsilon}_{HT}${{</math>}}.
-- **Swamy e Arora (1972)**: usam resíduos _between_ e _within_ para calcular, respectivamente, {{<math>}}$\hat{\sigma}^2_l${{</math>}} e {{<math>}}$\hat{\sigma}^2_\nu${{</math>}}
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\varepsilon}'_{B} B \hat{\varepsilon}_{B}}{N - K - 1}\\
-    \hat{\sigma}^2_\nu &= \frac{\hat{\varepsilon}'_{W} W \hat{\varepsilon}_{W}}{N(T-1) - K}
-\end{align*}{{</math>}}
-
-- **Nerlove (1971)**: computam {{<math>}}$\sigma^2_u${{</math>}} empírica dos efeitos fixos do modelo _within_
-
-{{<math>}}\begin{align*}
-    \hat{u}_i &= \bar{y}_{i\cdot} - \hat{\beta}_W \bar{x}_{i\cdot} \\
-    \hat{\sigma}^2_u &= \sum^N_{i=1}{(\hat{u}_i - \bar{\hat{u}}) / (N-1)} \\
-    \hat{\sigma}^2_\nu &= \frac{\hat{\varepsilon}'_W W \hat{\varepsilon}_W}{NT}
-\end{align*}{{</math>}}
-
-
-### Estimação GLS via `plm()`
-- Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via GLS
-- em `random.method` podemos escolher o método de cálculo dos parâmetros de erro:
-    1. `"walhus"` para Wallace e Hussain (1969)
-    2. `"amemiya"` para Amemiya (1971)
-    3. `"ht"` para Hausman e Taylor (1981)
-    4. `"swar"` para Swamy e Arora (1972) [padrão]
-    5. `"nerlove"` para Nerlove (1971)
-
-
-```r
-library(plm)
-data("TobinQ", package = "pder")
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-
-# Estimações GLS
-Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
-Q.amemiya = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "amemiya")
-Q.ht = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "ht")
-Q.swar = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "swar")
-Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
-
-summary(Q.walhus) # output da estimação GLS por Wallace e Hussain (1969)
-```
-
-```
-## Oneway (individual) effect Random Effect Model 
-##    (Wallace-Hussain's transformation)
+## $par
+## [1] 30.09886054 -0.06822828  0.00000000
 ## 
-## Call:
-## plm(formula = ikn ~ qn, data = pTobinQ, model = "random", random.method = "walhus")
+## $value
+## [1] 447.6743
 ## 
-## Balanced Panel: n = 188, T = 35, N = 6580
+## $counts
+## function gradient 
+##       31        5 
 ## 
-## Effects:
-##                    var  std.dev share
-## idiosyncratic 0.005342 0.073091 0.727
-## individual    0.002008 0.044814 0.273
-## theta: 0.7342
+## $convergence
+## [1] 0
 ## 
-## Residuals:
-##      Min.   1st Qu.    Median   3rd Qu.      Max. 
-## -0.233092 -0.047491 -0.010282  0.033577  0.621136 
+## $message
+## NULL
 ## 
-## Coefficients:
-##               Estimate Std. Error z-value  Pr(>|z|)    
-## (Intercept) 0.15932587 0.00341439  46.663 < 2.2e-16 ***
-## qn          0.00386263 0.00016825  22.957 < 2.2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## $hessian
+##      [,1]    [,2] [,3]
+## [1,]   64    9388    0
+## [2,] 9388 1668556    0
+## [3,]    0       0    0
+```
+
+
+
+### (b) Máxima verossimilhança
+- [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
+
+Para uma equação de regressão geral
+$$ y_i = \beta' X + \varepsilon $$
+supondo distribuição normal do termo de erro
+$$ \varepsilon \sim \mathcal{N}(0, \sigma^2), $$
+temos uma distribuição condicional de {{<math>}}$y${{</math>}} dada por
+$$ y | X \sim \mathcal{N}(\beta'X, \sigma^2). $$
+
+Logo, a função log-verossimilhança (condicional) é
+$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y | X, \beta, \sigma^2)}}. $$
+
+Em nosso exemplo, temos que estimar 4 parâmetros
+$$ \theta = \left( \beta_0, \beta_1, \beta_2, \sigma^2 \right). $$
+
+Podemos:
+
+- Tomar derivadas de {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)}${{</math>}} em relação a cada parâmetro e resolver as CPOs, ou
+- Maximizar {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)}${{</math>}} por otimização numérica.
+
+
+
+#### Otimização Numérica para MLE
+A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
+
+- Alguns valores inicias dos parâmetros, {{<math>}}$\theta^0${{</math>}}
+- Uma função que tome esses parâmetros como um argumento e calcule a 
+log-verossimilhança, {{<math>}}$\ln{L(\theta)}${{</math>}}.
+
+> Como `optim()` irá encontrar os parâmetros que minimizem a função objetivo, precisamos adaptar o output da função de log-verossimilhança (minimizaremos o negativo da log-lik).
+
+A função log-verossimilhança é dada por
+$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}, $$
+em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+$$ y_i | x_i \sim \mathcal{N}(\beta'x_i, \sigma^2) $$
+
+1. Construir matriz {{<math>}}$X${{</math>}} e vetor {{<math>}}$y${{</math>}}
+2. Calcular os valores ajustados de {{<math>}}$y${{</math>}}, {{<math>}}$\hat{y} - \beta'x_i${{</math>}}, que é a média de cada {{<math>}}$y_i${{</math>}}
+3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta, \sigma^2)${{</math>}}
+4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}${{</math>}}
+
+
+##### 1. Chute de valores iniciais para {{<math>}}$\beta_0, \beta_1, \beta_2${{</math>}} e {{<math>}}$\sigma^2${{</math>}}
+- Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
+
+```r
+params = c(35, -0.02, -3.5, 1)
+# (beta_0, beta_1 , beta_2, sigma2)
+```
+
+##### 2. Seleção da base de dados e variáveis
+
+```r
+## Adicionando colunas de 1's para o termo constante
+data = mtcars
+beta_0 = params[1]
+beta_1 = params[2]
+beta_2 = params[3]
+sigma2 = params[4]
+```
+
+##### 3. Cálculo dos valores ajustados e das densidades
+
+```r
+## Calculando valores ajustados de y
+y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
+```
+
+##### 4. Cálculo das densidades
+$$ f(y_i | x_i, \beta, \sigma^2) $$
+
+```r
+## Calculando os pdf's de cada outcome
+y_pdf = dnorm(data$mpg, mean = y_hat, sd = sqrt(sigma2))
+
+head(y_pdf) # Primeiros valores da densidade
+```
+
+```
+## [1] 0.01255811 0.08817854 0.03394076 0.39462606 0.29887241 0.01070560
+```
+
+```r
+prod(y_pdf) # Verossimilhança
+```
+
+```
+## [1] 2.331786e-67
+```
+
+- Para entender melhor o que estamos fazendo aqui, relembre que, na estimação por máxima verossimilhança, assume-se que
+`$$\varepsilon | X \sim N(0, \sigma^2)$$`
+- No exemplo abaixo, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
+
+<center><img src="../mle.jpg"></center>
+
+- Agora, vamos juntar o data frame `mtcars` com os valores ajustados `mpg_hat` e as densidades `y_pdf`:
+
+```r
+mpg_hat = y_hat # atribuindo y_hat a um objeto com nome mais adequado
+
+# Juntando as bases e visualizando os primeiros valores
+bd_joined = cbind(mtcars, mpg_hat, y_pdf) %>%
+  select(hp, wt, mpg, mpg_hat, y_pdf)
+head(bd_joined)
+```
+
+```
+##                    hp    wt  mpg mpg_hat      y_pdf
+## Mazda RX4         110 2.620 21.0 23.6300 0.01255811
+## Mazda RX4 Wag     110 2.875 21.0 22.7375 0.08817854
+## Datsun 710         93 2.320 22.8 25.0200 0.03394076
+## Hornet 4 Drive    110 3.215 21.4 21.5475 0.39462606
+## Hornet Sportabout 175 3.440 18.7 19.4600 0.29887241
+## Valiant           105 3.460 18.1 20.7900 0.01070560
+```
+- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
+
+```r
+# Criando gráfico para os 2 primeiros carros (Mazda RX4 e Mazda RX 4 Wag)
+qt_norm = seq(20, 27, by=0.1) # valores de mpg ("escores Z")
+
+# Mazda RX4
+pdf_norm1 = dnorm(qt_norm, mean=bd_joined$mpg_hat[1], sd=sqrt(sigma2)) # pdf
+plot(qt_norm, pdf_norm1, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4")
+abline(v=c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), col="red")
+text(c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), 0.2, 
+     c(expression(widehat(mpg)[1]), expression(mpg[1])), 
+     pos=2, srt=90, col="red")
+```
+
+<img src="/project/rec2301/sec9/_index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+```r
+# Mazda RX4 Wag 
+pdf_norm2 = dnorm(qt_norm, mean=bd_joined$mpg_hat[2], sd=sqrt(sigma2)) # pdf
+plot(qt_norm, pdf_norm2, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4 Wag")
+abline(v=c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), col="blue")
+text(c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), 0.2, 
+     c(expression(widehat(mpg)[2]), expression(mpg[2])), 
+     pos=2, srt=90, col="blue")
+```
+
+<img src="/project/rec2301/sec9/_index_files/figure-html/unnamed-chunk-10-2.png" width="672" />
+- Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
+
+
+##### 5. Calculando a Log-Verossimilhança
+$$ \mathcal{l}(\beta, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta, \sigma^2) \right]} $$
+
+```r
+## Calculando a log-verossimilhanca
+loglik = sum(log(y_pdf))
+loglik
+```
+
+```
+## [1] -153.4266
+```
+
+
+##### 6. Criando a Função de Log-Verossimilhança
+
+```r
+## Criando funcao para calcular log-verossimilhanca MQO 
+loglik_lm = function(params, data) {
+  # Pegando os parâmetros
+  beta_0 = params[1]
+  beta_1 = params[2]
+  beta_2 = params[3]
+  sigma2 = params[4]
+  
+  ## Calculando valores ajustados de y
+  y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
+  
+  ## Calculando os pdf's de cada outcome
+  y_pdf = dnorm(data$mpg, mean = y_hat, sd = sqrt(sigma2))
+  
+  ## Calculando a log-verossimilhanca
+  loglik = sum(log(y_pdf))
+  
+  ## Retornando o negativo da log-verossimilanca - optim() não maximiza
+  -loglik
+}
+```
+
+
+##### 7. Otimização
+
+Tendo a função objetivo, usaremos `optim()` para *minimizar*
+$$ -\ln{L(\beta, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}. $$
+Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (função`optim()` apenas minimiza).
+
+
+```r
+## Maximizando a função log-verossimilhança MQO
+mle = optim(par = c(0, 0, 0, 1), fn = loglik_lm, data = mtcars,
+              method = "BFGS", hessian = TRUE)
+
+## Mostrando os resultados da otimização
+mle
+```
+
+```
+## $par
+## [1] 37.227256 -0.031773 -3.877825  6.095146
 ## 
-## Total Sum of Squares:    37.912
-## Residual Sum of Squares: 35.1
-## R-Squared:      0.074179
-## Adj. R-Squared: 0.074038
-## Chisq: 527.045 on 1 DF, p-value: < 2.22e-16
-```
-Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa GLS é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de períodos ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
-
-
-
-```r
-# Resumindo 5 estimações em única tabela
-stargazer::stargazer(Q.walhus, Q.amemiya, Q.ht, Q.swar, Q.nerlove, type="text")
-```
-
-```
+## $value
+## [1] 74.32617
 ## 
-## ===================================================================
-##                               Dependent variable:                  
-##              ------------------------------------------------------
-##                                       ikn                          
-##                 (1)        (2)        (3)        (4)        (5)    
-## -------------------------------------------------------------------
-## qn            0.004***   0.004***   0.004***   0.004***   0.004*** 
-##               (0.0002)   (0.0002)   (0.0002)   (0.0002)   (0.0002) 
-##                                                                    
-## Constant      0.159***   0.159***   0.159***   0.159***   0.159*** 
-##               (0.003)    (0.003)    (0.003)    (0.003)    (0.004)  
-##                                                                    
-## -------------------------------------------------------------------
-## Observations   6,580      6,580      6,580      6,580      6,580   
-## R2             0.074      0.074      0.074      0.074      0.074   
-## Adjusted R2    0.074      0.074      0.074      0.074      0.074   
-## F Statistic  527.045*** 526.622*** 526.622*** 526.854*** 523.832***
-## ===================================================================
-## Note:                                   *p<0.1; **p<0.05; ***p<0.01
-```
-Os resultados são praticamente idênticos, assim como seus {{<math>}}$\theta${{</math>}}'s:
-
-
-```r
-# Podemos visualizar o theta usando ercomp()$theta
-ercomp(Q.walhus)$theta
-```
-
-```
-##        id 
-## 0.7342249
-```
-
-```r
-# Criaremos uma lista com todos objetos de estimação GLS
-Q.models = list(walhus = Q.walhus, amemiya = Q.amemiya, ht = Q.ht,
-                swar = Q.swar, nerlove = Q.nerlove)
-
-# Aplicaremos sapply() com a lista criada e a função ercomp()
-sapply(Q.models, function(model) ercomp(model)$theta)
-```
-
-```
-##  walhus.id amemiya.id      ht.id    swar.id nerlove.id 
-##  0.7342249  0.7361186  0.7361186  0.7350771  0.7489177
-```
-
-
-Observe que poderíamos ter obtido informações sobre as variâncias de covariadas por meio de `summary()` sobre uma variável no formato `pdata.frame`:
-
-```r
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year")) # transf. em pdata.frame
-summary(pTobinQ$qn) # resumo sobre variável qn
-```
-
-```
-## total sum of squares: 314349.9 
-##         id       time 
-## 0.43080609 0.09393499 
+## $counts
+## function gradient 
+##      105       41 
 ## 
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -68.8663  -0.8254   0.3976   2.5053   2.9961  89.8933
-```
-
-Também é possível verificar o mesmo para a variância do erro na estimação em GLS:
-
-```r
-ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
-```
-
-```
-##                    var  std.dev share
-## idiosyncratic 0.005333 0.073028 0.725
-## individual    0.002019 0.044930 0.275
-## theta: 0.7351
-```
-
-
-
-#### Estimação Analítica GLS
-- Aqui, faremos a estimação analítica do GLS usando o método de Wallace e Hussain (1969).
-- Consiste no uso dos desvios estimados por pooled OLS para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_\nu${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\Omega}^{-1}${{</math>}} para estimar por FGLS.
-- Para agilizar a estimação, vamos estimar o pooled OLS por `plm()`:
-
-```r
-library(plm)
-data("TobinQ", package = "pder")
-
-# Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-```
-
-- Obtendo {{<math>}}$\hat{\varepsilon}_{OLS}${{</math>}}
-
-
-```r
-# Estimação pooled OLS
-Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
-
-# obtendo os resíduos OLS
-e_OLS = Q.pooling$residuals %>% as.vector()
-head(e_OLS)
-```
-
-```
-## [1] -0.001032395 -0.011987475 -0.080212022 -0.061942582 -0.122186352
-## [6] -0.089377633
-```
-
-- Precisamos calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_\nu${{</math>}} e {{<math>}}$\hat{\sigma}^2_u${{</math>}}
-
-
-```r
-TobinQ = TobinQ %>% mutate(constant = 1) # criando vetor de 1's
-
-y = TobinQ %>% select(ikn) %>% as.matrix() # vetor y
-X = TobinQ %>% select(qn) %>% as.matrix() # vetor X
-Z = cbind(TobinQ$constant, X) # vetor Z = (iota, X)
-
-N = TobinQ %>% select(cusip) %>% unique() %>% nrow() # núm. indivíduos
-T = TobinQ %>% select(year) %>% unique() %>% nrow() # núm. períodos
-iota_T = rep(1, T)
-
-# Calculando matrizes de tranformação B e W
-B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-W = diag(N*T) - B
-
-# Calculando os termos de erro
-sigma2_l = (t(e_OLS) %*% B %*% e_OLS) / N
-sigma2_nu = (t(e_OLS) %*% W %*% e_OLS) / (N * (T-1))
-sigma2_u = (sigma2_l + sigma2_nu) / T
-
-sigmas2 = cbind(sigma2_l, sigma2_nu, sigma2_u)
-colnames(sigmas2) = c("sigma2_l", "sigma2_nu", "sigma2_u")
-sigmas2
-```
-
-```
-##        sigma2_l   sigma2_nu    sigma2_u
-## [1,] 0.07563169 0.005342349 0.002313544
-```
-
-- Agora, conseguimos calcular:
-{{<math>}}\[ \Omega^{-1} = \frac{1}{\sigma^2_l}B + \frac{1}{\sigma^2_\nu}W \]{{</math>}}
-
-```r
-Omega_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
-dim(Omega_1) # NT x NT
-```
-
-```
-## [1] 6580 6580
-```
-
-{{<math>}}\[ \hat{V}_{GLS} = (Z' \Omega^{-1} Z)^{-1} \]{{</math>}}
-
-
-```r
-## Estimando a matriz de variancia/covariancia das estimativas gamma
-vcov_hat = solve(t(Z) %*% Omega_1 %*% Z)
-
-# vetor de estimativas gamma_hat = (alpha, beta)
-gamma_hat = solve(t(Z) %*% Omega_1 %*% Z) %*% (t(Z) %*% Omega_1 %*% y)
-gamma_hat
-```
-
-```
-##            ikn
-##    0.159325869
-## qn 0.003862631
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL
+## 
+## $hessian
+##              [,1]         [,2]         [,3]         [,4]
+## [1,] 5.250080e+00 7.701211e+02 1.689082e+01 1.715961e-06
+## [2,] 7.701211e+02 1.368758e+05 2.702437e+03 2.252101e-04
+## [3,] 1.689082e+01 2.702437e+03 5.921123e+01 2.589928e-06
+## [4,] 1.715961e-06 2.252101e-04 2.589928e-06 4.306909e-01
 ```
 
 ```r
-## Calculando erros padrao das estimativas gamma
-std_err = sqrt(diag(vcov_hat)) # Raiz da diagonal da matriz de covariâncias
+## Calculando os erros padrão
+mle_se = mle$hessian %>% # hessiano
+  solve() %>% # toma a inversa para obter a matriz de var/cov
+  diag() %>% # pega a diagonal da matriz
+  sqrt() # calcula a raiz quadrada
 
-## Calculando estatisticas t das estimativas gamma
-t_stat = gamma_hat / std_err
-
-## Calculando p-valores das estimativas gamma
-p_value = 2 * pt(q = -abs(t_stat), df = nrow(Z) - ncol(Z))  # NT - K - 1 graus de liberdade
-
-## Organizando os resultados da regressao em uma matriz
-results_walhus = cbind(gamma_hat, std_err, t_stat, p_value)
-
-## Nomeando as colunas da matriz de resultados
-colnames(results_walhus) = c('Estimate', 'Std. Error', 't stat', 'Pr(>|t|)')
-rownames(results_walhus) = c("(Intercept)", "qn")
-results_walhus
+# Visualizando as estimativas e os erros padrão
+cbind(mle$par, mle_se)
 ```
 
 ```
-##                Estimate   Std. Error   t stat      Pr(>|t|)
-## (Intercept) 0.159325869 0.0034164422 46.63503  0.000000e+00
-## qn          0.003862631 0.0001683526 22.94370 3.904386e-112
+##                     mle_se
+## [1,] 37.227256 1.521988303
+## [2,] -0.031773 0.008595959
+## [3,] -3.877825 0.602339558
+## [4,]  6.095146 1.523762060
 ```
+
+
+### (c) Estimação por GMM
+- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
+- [Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)](https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199)
+
+
+- Para estimar via GMM precisamos construir vetores relacionados aos seguintes momentos:
+$$ E(\varepsilon) = 0 \qquad \text{ e } \qquad E(\varepsilon'X) = 0 $$
+em que {{<math>}}$X${{</math>}} é a matriz de covariadas e {{<math>}}$\varepsilon${{</math>}} é o desvio. Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.
+
+
+- Relembre que estamos usando a base de dados `mtcars` para estimar o modelo linear:
+$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon $$
+que relaciona o consumo de combustível (em milhas por galão - _mpg_) com a potência (_hp_) e o peso (em mil libras - _wt_) do carro.
+
+
+#### Otimização Numérica para GMM
+
+##### 1. Chute de valores iniciais para {{<math>}}$\beta_0${{</math>}}, {{<math>}}$\beta_1${{</math>}} e {{<math>}}$\beta_2${{</math>}}
+- Vamos criar um vetor com possíveis valores de {{<math>}}$\beta_0, \beta_1, \beta_2${{</math>}}:
 
 ```r
-summary(Q.walhus)$coef # comparando com estimado via plm()
-```
-
-```
-##                Estimate   Std. Error  z-value      Pr(>|z|)
-## (Intercept) 0.159325869 0.0034143937 46.66300  0.000000e+00
-## qn          0.003862631 0.0001682516 22.95747 1.240977e-116
-```
-
-## Comparativo dos Estimadores OLS e GLS - Exemplo
-- Seção 2.4.4 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Usado por Kinal e Lahiri (1993) 
-- Queremos estabelecer relação entre importações (_imports_) e produto nacional (_gnp_)
-
-```r
-data("ForeignTrade", package = "pder")
-FT = pdata.frame(ForeignTrade, index=c("country", "year"))
-
-# Variâncias 
-ercomp(imports ~ gnp, FT) # variância do erro na estimação GLS
-```
-
-```
-##                   var std.dev share
-## idiosyncratic 0.08634 0.29383 0.074
-## individual    1.07785 1.03820 0.926
-## theta: 0.9423
-```
-- Variância do erro da estimação GLS é dada por 93\% de variação inter-indivíduos
-- O estimador GLS remove grande parte da variação inter-indivíduos, pois subtrai, da covariada, 94\% da média individual:
-
-{{<math>}}\[ \tilde{z}_{it}\ =\ z_{it} + \left(1 - \frac{\sigma_\nu}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot}\ =\ z_{it} - 0,94 \bar{z}_{i\cdot} \]{{</math>}}
-
-
-```r
-# Estimações
-models = c("within", "random", "pooling", "between")
-sapply(models, function(x) round(
-    coef(summary(plm(imports ~ gnp, FT, model=x)))["gnp",], 4))
-```
-
-```
-##             within  random pooling between
-## Estimate    0.9024  0.7682  0.0637  0.0487
-## Std. Error  0.0346  0.0338  0.0168  0.0802
-## t-value    26.0616 22.7595  3.7789  0.6076
-## Pr(>|t|)    0.0000  0.0000  0.0002  0.5482
-```
-
-<center><img src="../example_panel-1.png"></center>
-
-- GLS e _within_ são bastante parecidos
-- OLS, que considera variação inter-indivíduos, é parecido com _between_
-
-## Estimador ML
-- Seção 3.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Uma alternativa aos estimadores de GLS é o de máxima verossimilhança (ML).
-- Assume-se que a distribuição dos dois componentes de erro são normais:
-{{<math>}}\[ u | X \sim N(0, \sigma^2_u) \quad \text{ e } \quad v | u, X \sim N(0, \sigma^2_\nu) \]{{</math>}}
-
-- O modelo a ser estimado é o
-{{<math>}}\[ y_{it} = \alpha \iota + \beta' x_i + u_i + \nu_{it} = \gamma' z_i + u_i + \nu_{it} \]{{</math>}}
-
-- Ao invés de estimar {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_\nu${{</math>}} para depois calcular {{<math>}}$\gamma${{</math>}}, ambos são estimados simultaneamente.
-
-- Denotando 
-{{<math>}}$\phi = \frac{\sigma_\nu}{\sigma_{l}},${{</math>}}
-a função de log-verossimilhança para um painel balanceado é:
-
-{{<math>}}\[ \ln{L} = -\frac{NT}{2} \ln{2\pi} - \frac{NT}{2}\ln{\sigma^2_\nu} + \frac{N}{2} \ln{\phi^2} - \frac{1}{2\sigma^2_\nu} \left( \varepsilon' W \varepsilon + \phi^2 \varepsilon' B \varepsilon \right) \]{{</math>}}
-
-Denotando 
-
-{{<math>}}\[\tilde{Z}\ \equiv\ (I - \phi B) Z\ =\ Z - \phi B Z\]{{</math>}}
-e resolvendo as CPO's da log-verossimilhança, segue que:
-
-{{<math>}}\begin{align*}
-    \hat{\gamma} &= (\tilde{Z}'\tilde{Z})^{-1} \tilde{Z}'\tilde{y} \tag{3.12} \\
-    \hat{\sigma}^2_\nu &= \frac{\hat{\varepsilon}' W \hat{\varepsilon} + \hat{\phi}^2 \hat{\varepsilon}' B \hat{\varepsilon}}{NT} \tag{3.13} \\
-    \hat{\phi}^2 &=\frac{\hat{\varepsilon}' W \hat{\varepsilon}}{(T-1) \hat{\varepsilon}'B\hat{\varepsilon}} \tag{3.14}
-\end{align*}{{</math>}}
-
-A estimação pode ser feita iterativamente por FIML (Full Information Maximum Likelihood):
-
-
-1. Chute inicial de {{<math>}}$\hat{\gamma}${{</math>}} (por exemplo, estimativa _within_)
-2. Calcular {{<math>}}$\hat{\phi}^2${{</math>}} usando (3.14)
-3. Calcular {{<math>}}$\hat{\gamma}${{</math>}} usando (3.12) 
-4. Verificar convergência: se não convergiu, volta para o passo 2, usando o {{<math>}}$\hat{\gamma}${{</math>}} calculado no passo 3.
-5. Calcular {{<math>}}$\sigma^2_\nu${{</math>}} usando (3.13)
-
-
-### Estimação ML via `pglm()`
-
-
-```r
-library(pglm)
 library(dplyr)
-data("TobinQ", package = "pder")
 
-# Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
+params = c(35, -0.02, -3.5)
+beta_0 = params[1]
+beta_1 = params[2]
+beta_2 = params[3]
+```
 
-# Estimação pooled OLS
-Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian")
-summary(Q.ml)
+##### 2. Seleção da base de dados e variáveis
+
+```r
+data = mtcars %>% mutate(constant=1) # Criando variável de constante
+
+## Selecionando colunas para X (covariadas) e convertendo para matrix
+X = data %>% 
+  select("constant", "hp", "wt") %>% 
+  as.matrix()
+
+## Selecionando variavel para y e convertendo para matrix
+y = data %>% 
+  select("mpg") %>% 
+  as.matrix()
+```
+
+##### 3. Cálculo dos valores ajustados e dos desvios
+
+```r
+## Valores ajustados e desvios
+y_hat = X %*% params
+# equivalente a: y_hat = beta_0 + beta_1 * X[,"hp"] + beta_2 * X[,"wt"]
+
+e = y - y_hat
+```
+
+##### 4. Criação da matriz de momentos
+- Note que {{<math>}}$E(\varepsilon' X)${{</math>}} é uma multiplicação matricial, mas a função `gmm()` exige que como input os vetores com multiplicação elemento a elemento do resíduo {{<math>}}$\varepsilon${{</math>}} com as covariadas {{<math>}}$X${{</math>}} (neste caso: constante, hp, wt)
+
+```r
+m = X * as.vector(e) # matriz de momentos (sem tomar esperança)
+head(m)
 ```
 
 ```
-## --------------------------------------------
-## Maximum Likelihood estimation
-## Newton-Raphson maximisation, 3 iterations
-## Return code 8: successive function values within relative tolerance limit (reltol)
-## Log-Likelihood: 7632.794 
-## 4  free parameters
-## Estimates:
-##              Estimate Std. error t value Pr(> t)    
-## (Intercept) 0.1593280  0.0034344   46.39  <2e-16 ***
-## qn          0.0038618  0.0001684   22.93  <2e-16 ***
-## sd.id       0.0450737  0.0025011   18.02  <2e-16 ***
-## sd.idios    0.0730233  0.0006452  113.17  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## --------------------------------------------
+##                   constant       hp         wt
+## Mazda RX4          -2.6300 -289.300 -6.8906000
+## Mazda RX4 Wag      -1.7375 -191.125 -4.9953125
+## Datsun 710         -2.2200 -206.460 -5.1504000
+## Hornet 4 Drive     -0.1475  -16.225 -0.4742125
+## Hornet Sportabout  -0.7600 -133.000 -2.6144000
+## Valiant            -2.6900 -282.450 -9.3074000
+```
+- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperança).
+- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
+- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1, \beta_2 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
+
+
+##### 5. Criação de função com os momentos
+- Vamos criar uma função que tem como input um vetor de parâmetros (`params`) e uma base de dados (`data`), e que retorna uma matriz em que cada coluna representa um momento.
+- Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
+
+```r
+mom_ols = function(params, data) {
+  ## Adicionando colunas de 1's para o termo constante
+  data = data %>% mutate(constant = 1)
+  
+  ## Selecionando colunas para X (covariadas) e convertendo para matrix
+  X = data %>% 
+    select("constant", "hp", "wt") %>% 
+    as.matrix()
+  
+  ## Selecionando variavel para y e convertendo para matrix
+  y = data %>% 
+    select("mpg") %>% 
+    as.matrix()
+  
+  ## Valores ajustados e desvios
+  y_hat = X %*% params
+  e = y - y_hat
+  
+  m = as.vector(e) * X # matriz de momentos (vetor - multiplicação por elemento)
+  m
+}
+```
+
+
+##### 6. Otimização via função `gmm()`
+- A função `gmm()`, assim como a `optim()`, recebe uma função como argumento.
+- No entanto, ao invés de retornar um valor, a função que entra no `gmm()` retorna uma matriz, cujas médias das colunas queremos aproximar de zero. 
+
+```r
+library(gmm)
+```
+
+```
+## Warning: package 'gmm' was built under R version 4.2.2
+```
+
+```
+## Carregando pacotes exigidos: sandwich
+```
+
+```
+## Warning: package 'sandwich' was built under R version 4.2.2
 ```
 
 ```r
-summary(Q.swar)$coef # Comparando com estimação GLS-swar
+gmm_lm = gmm(mom_ols, mtcars, c(0,0,0),
+             wmatrix = "optimal", # matriz de ponderação
+             optfct = "nlminb" # função de otimização
+             )
+
+summary(gmm_lm)$coefficients
 ```
 
 ```
-##                Estimate   Std. Error  z-value      Pr(>|z|)
-## (Intercept) 0.159326945 0.0034249012 46.52016  0.000000e+00
-## qn          0.003862202 0.0001682634 22.95331 1.365529e-116
-```
-- Note que o resultado por ML foi bem próximo ao do obtido por GLS
-
-
-## Testes de Presença de Efeitos Individuais
-
-### Breusch-Pagan
-
-- Seção 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- É um teste baseado em multiplicadores de Lagrange (LM) nos resíduos de OLS, em que {{<math>}}$H_0: \sigma^2_u = 0${{</math>}} (ausência de efeitos individuais)
-- A estatística teste é dada por 
-{{<math>}}\[ LM_u = \frac{NT}{2(T-1)} \left( T \frac{\hat{\varepsilon}' B_u \hat{\varepsilon}}{\hat{\varepsilon}' \hat{\varepsilon}} - 1 \right)^2  \]{{</math>}}
-que é assintoticamente distribuída como ua `\(\chi^2\)` com 1 grau de liberdade.
-- Há algumas variações deste teste:
-    - Breusch and Pagan (1980),
-    - Gourieroux et al. (1982),
-    - Honda (1985), e
-    - King and Wu (1997).
-
-
-
-### Testes F
-- Seção 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo _within_ {{<math>}}$\hat{\varepsilon}'_W\hat{\varepsilon}_W${{</math>}} e {{<math>}}$N(T-1) - K${{</math>}}, respectivamente.
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo pooled OLS {{<math>}}$\hat{\varepsilon}'_{OLS}\hat{\varepsilon}_{OLS}${{</math>}} e {{<math>}}$NT - K - 1${{</math>}}, respectivamente.
-- Sob hipótese nula de que não há efeitos individuais, a estatística teste é dada por
-{{<math>}}\[ \frac{\hat{\varepsilon}'_{OLS} W \hat{\varepsilon}_{OLS} - \hat{\varepsilon}'_W\hat{\varepsilon}_W}{\hat{\varepsilon}'_W W \hat{\varepsilon}_W} \frac{NT - K - N + 1}{N-1} \]{{</math>}}
-que segue uma distribuição F de Fisher-Snedecor com {{<math>}}$N-1${{</math>}} e {{<math>}}$NT - K - N + 1${{</math>}} graus de liberdade.
-
-
-### Aplicando no R
-
-```r
-data("TobinQ", package = "pder")
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-
-Q.within = plm(ikn ~ qn, pTobinQ, model = "within")
-Q.gls = plm(ikn ~ qn, pTobinQ, model = "random")
-Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
-
-# Teste de Breusch-Pagan/LM
-plmtest(Q.pooling, effect="individual") # Honda (1985)
+##             Estimate  Std. Error   t value      Pr(>|t|)
+## Theta[1] 37.22727054 1.477465796 25.196705 4.352959e-140
+## Theta[2] -0.03177295 0.007330972 -4.334070  1.463775e-05
+## Theta[3] -3.87783083 0.595735804 -6.509313  7.549526e-11
 ```
 
-```
-## 
-## 	Lagrange Multiplier Test - (Honda)
-## 
-## data:  ikn ~ qn
-## normal = 91.377, p-value < 2.2e-16
-## alternative hypothesis: significant effects
-```
-O teste LM (Breusch-Pagan) acusou efeitos individuais significativos.
-
-
-```r
-# Teste F
-pFtest(Q.within, Q.pooling)
-```
-
-```
-## 
-## 	F test for individual effects
-## 
-## data:  ikn ~ qn
-## F = 14.322, df1 = 187, df2 = 6391, p-value < 2.2e-16
-## alternative hypothesis: significant effects
-```
-Assim como o teste LM, Pelo teste F, observam-se efeitos individuais significativos.
-
-
-## Testes de Efeitos Correlacionados
-- Seção 4.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Continuamos assumindo que {{<math>}}$E(\nu|X) = 0${{</math>}}, em que {{<math>}}$\nu${{</math>}} é o termo de erro idiossincrático.
-- Nestes testes, verificamos se {{<math>}}$E(u|X) = 0${{</math>}}, ou seja, se os efeitos individuais são ou não são correlacionados com as covariadas.
-
-### Teste de Hausman
-- O princípio geral do teste de Hausman consiste em comparar dois modelos {{<math>}}$A${{</math>}}e {{<math>}}$B${{</math>}} tal que
-    - sob {{<math>}}$H_0${{</math>}}: {{<math>}}$A${{</math>}} e {{<math>}}$B${{</math>}} são ambos consistentes, mas {{<math>}}$B${{</math>}} é mais eficiente que {{<math>}}$A${{</math>}}
-    - sob {{<math>}}$H_1${{</math>}}: apenas {{<math>}}$A${{</math>}} é consistente
-- Se {{<math>}}$H_0${{</math>}} é verdadeiro, então os coeficientes dos dois modelos não devem divergir.
-- O teste é baseado em {{<math>}}$\hat{\beta}_A - \hat{\beta}_B${{</math>}} e Hausman mostrou que, sob {{<math>}}$H_0${{</math>}}, temos {{<math>}}$cov(\hat{\beta}_A, \hat{\beta}_B) = 0${{</math>}} e, logo, a variância dessa diferença é simplesmente {{<math>}}$V(\hat{\beta}_A - \hat{\beta}_B) = V(\hat{\beta}_A) - V(\hat{\beta}_B)${{</math>}}
-
-- No contexto de dados em painéis, compara-se o estimador _within_ (efeitos fixos) e o de GLS (efeitos aleatórios)
-- Quando {{<math>}}$E(u|X) = 0${{</math>}} ambos estimadores são consistentes, ou seja,
-{{<math>}}\[ \hat{q} \equiv \hat{\beta}_{GLS} - \hat{\beta}_W\ \overset{p}{\rightarrow}\ 0 \]{{</math>}}
-então é preferível usar o mais eficiente (GLS, pois usa ambas variações inter e intra-indivíduos).
-
-- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\beta}_{GLS} - \hat{\beta}_W \neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
-- A variância é dada por 
-{{<math>}}\begin{align*}
-    V(\hat{q}) &= V(\hat{\beta}_{GLS} - \hat{\beta}_W) = V(\hat{\beta}_{GLS}) + V(\hat{\beta}_W) - 2 cov(\hat{\beta}_{W}, \hat{\beta}_{GLS}) \\
-    &= \sigma^2_\nu (Z' W Z)^{-1} - (Z'\Omega^{-1} Z)^{-1}
-\end{align*}{{</math>}}
-- Logo, a estatística teste se torna
-{{<math>}}\[ \hat{q}'\ V(\hat{q})^{-1}\ \hat{q} \]{{</math>}}
-que, sob {{<math>}}$H_0${{</math>}}, é distribuida como {{<math>}}$\chi^2${{</math>}} com {{<math>}}$K${{</math>}} graus de liberdade.
-
-
-```r
-# Teste de Hausman
-phtest(Q.within, Q.gls)
-```
-
-```
-## 
-## 	Hausman Test
-## 
-## data:  ikn ~ qn
-## chisq = 3.3044, df = 1, p-value = 0.06909
-## alternative hypothesis: one model is inconsistent
-```
-Não se rejeita a hipótese nula de que ambos modelos são consistentes a 5\%.
-
-
-### Outros testes
-- Ver Croissant \& Millo (2018):
-    - Abordagem de Mundlak
-    - Abordagem de Chamberlain
 
 
 

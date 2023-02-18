@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Data Visualization
+linktitle: Visualização de Dados
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Data Visualization
+title: Visualização de Dados
 weight: 5
 output: md_document
 type: book
@@ -362,4 +362,4 @@ g + geom_point(aes(color=cyl), size=9, alpha=0.4) # colorindo por variável - pr
 
 
 
-{{< cta cta_text="👉 Proceed to Statistics Review" cta_link="../sec6" >}}
+{{< cta cta_text="👉 Seguir para Revisão de Estatística" cta_link="../sec6" >}}

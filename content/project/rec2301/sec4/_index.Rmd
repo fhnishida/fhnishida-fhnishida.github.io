@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: dplyr Manipulation
+linktitle: Manipulação via dplyr
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: dplyr Manipulation
+title: Manipulação via dplyr
 weight: 4
 output: md_document
 type: book
@@ -342,4 +342,5 @@ bd2 = bd2 %>% mutate(mass = rnorm(10)) # Criando uma variável mass
 full_join(bd1, bd2, by=c("name", "year"))
 ```
 
-{{< cta cta_text="👉 Proceed to Data Visualization" cta_link="../sec5" >}}
+
+{{< cta cta_text="👉 Seguir para Visualização de Dados" cta_link="../sec5" >}}

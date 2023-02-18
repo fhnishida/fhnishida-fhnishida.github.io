@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Data Manipulation
+linktitle: Manipulação de Dados
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Data Manipulation
+title: Manipulação de Dados
 weight: 3
 output: md_document
 type: book
@@ -352,8 +352,8 @@ x
 ## [1] 1 2 3 4 5
 ## 
 ## $b
-##  [1]  0.7189607  0.6740680  1.4350078 -0.7830463 -0.4085031  0.7012275
-##  [7] -1.3765189 -1.1023133  1.0380174  2.0286094
+##  [1]  0.18993857  0.35887312  0.05119241  0.64612554 -1.37369836 -0.41862369
+##  [7]  0.41233772 -0.44974287  0.37252688 -2.41036847
 ## 
 ## $c
 ## [1]  1  4 65  6
@@ -368,7 +368,7 @@ lapply(x, mean) # retorna médias de cada vetor dentro da lista
 ## [1] 3
 ## 
 ## $b
-## [1] 0.2925509
+## [1] -0.2621439
 ## 
 ## $c
 ## [1] 19
@@ -385,7 +385,7 @@ lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
 ## 
 ## $b
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.3765 -0.6894  0.6876  0.2926  0.9583  2.0286 
+## -2.4104 -0.4420  0.1206 -0.2621  0.3691  0.6461 
 ## 
 ## $c
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -412,7 +412,7 @@ sapply(x, mean) # retorna um vetor
 
 ```
 ##          a          b          c 
-##  3.0000000  0.2925509 19.0000000
+##  3.0000000 -0.2621439 19.0000000
 ```
 - Se o resultado for uma lista em que cada elemento tem mesmo comprimento, retorna uma matriz
 
@@ -422,12 +422,12 @@ sapply(x, summary) # retorna uma matriz
 
 ```
 ##         a          b     c
-## Min.    1 -1.3765189  1.00
-## 1st Qu. 2 -0.6894105  3.25
-## Median  3  0.6876477  5.00
-## Mean    3  0.2925509 19.00
-## 3rd Qu. 4  0.9582532 20.75
-## Max.    5  2.0286094 65.00
+## Min.    1 -2.4103685  1.00
+## 1st Qu. 2 -0.4419631  3.25
+## Median  3  0.1205655  5.00
+## Mean    3 -0.2621439 19.00
+## 3rd Qu. 4  0.3691134 20.75
+## Max.    5  0.6461255 65.00
 ```
 
 
@@ -957,4 +957,4 @@ head(wrong)
 
 
 
-{{< cta cta_text="👉 Proceed to `dplyr` Manipulation" cta_link="../sec4" >}}
+{{< cta cta_text="👉 Seguir para Manipulação via `dplyr`" cta_link="../sec4" >}}

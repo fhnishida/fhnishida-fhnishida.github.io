@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: dplyr Manipulation
+linktitle: Manipulação via dplyr
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: dplyr Manipulation
+title: Manipulação via dplyr
 weight: 4
 output: md_document
 type: book
@@ -827,15 +827,15 @@ bd1
 ##    name            year  mass
 ##    <chr>          <dbl> <dbl>
 ##  1 C-3PO           2021  75  
-##  2 C-3PO           2022  76.6
+##  2 C-3PO           2022  75.6
 ##  3 Darth Vader     2021 136  
 ##  4 Darth Vader     2022 135. 
 ##  5 Leia Organa     2021  49  
-##  6 Leia Organa     2022  49.3
+##  6 Leia Organa     2022  50.8
 ##  7 Luke Skywalker  2021  77  
-##  8 Luke Skywalker  2022  72.5
+##  8 Luke Skywalker  2022  77.8
 ##  9 R2-D2           2021  32  
-## 10 R2-D2           2022  32.6
+## 10 R2-D2           2022  33.8
 ```
 
 ```r
@@ -876,15 +876,15 @@ full_join(bd1, bd2, by=c("name", "year"))
 ##    name                year  mass height
 ##    <chr>              <dbl> <dbl>  <dbl>
 ##  1 C-3PO               2021  75    167  
-##  2 C-3PO               2022  76.6  170. 
+##  2 C-3PO               2022  75.6  170. 
 ##  3 Darth Vader         2021 136    202  
 ##  4 Darth Vader         2022 135.   206. 
 ##  5 Leia Organa         2021  49     NA  
-##  6 Leia Organa         2022  49.3   NA  
+##  6 Leia Organa         2022  50.8   NA  
 ##  7 Luke Skywalker      2021  77     NA  
-##  8 Luke Skywalker      2022  72.5   NA  
+##  8 Luke Skywalker      2022  77.8   NA  
 ##  9 R2-D2               2021  32     NA  
-## 10 R2-D2               2022  32.6   NA  
+## 10 R2-D2               2022  33.8   NA  
 ## 11 Beru Whitesun lars  2021  NA    165  
 ## 12 Beru Whitesun lars  2022  NA    168. 
 ## 13 Biggs Darklighter   2021  NA    183  
@@ -902,24 +902,25 @@ full_join(bd1, bd2, by=c("name", "year"))
 
 ```
 ## # A tibble: 16 × 5
-##    name                year mass.x height mass.y
-##    <chr>              <dbl>  <dbl>  <dbl>  <dbl>
-##  1 C-3PO               2021   75    167   -1.18 
-##  2 C-3PO               2022   76.6  170.  -0.767
-##  3 Darth Vader         2021  136    202   -0.285
-##  4 Darth Vader         2022  135.   206.  -0.385
-##  5 Leia Organa         2021   49     NA   NA    
-##  6 Leia Organa         2022   49.3   NA   NA    
-##  7 Luke Skywalker      2021   77     NA   NA    
-##  8 Luke Skywalker      2022   72.5   NA   NA    
-##  9 R2-D2               2021   32     NA   NA    
-## 10 R2-D2               2022   32.6   NA   NA    
-## 11 Beru Whitesun lars  2021   NA    165    0.870
-## 12 Beru Whitesun lars  2022   NA    168.  -1.21 
-## 13 Biggs Darklighter   2021   NA    183   -0.426
-## 14 Biggs Darklighter   2022   NA    187.  -1.48 
-## 15 R5-D4               2021   NA     97    0.987
-## 16 R5-D4               2022   NA     98.9  1.83
+##    name                year mass.x height    mass.y
+##    <chr>              <dbl>  <dbl>  <dbl>     <dbl>
+##  1 C-3PO               2021   75    167    0.362   
+##  2 C-3PO               2022   75.6  170.  -0.000761
+##  3 Darth Vader         2021  136    202    0.320   
+##  4 Darth Vader         2022  135.   206.  -1.53    
+##  5 Leia Organa         2021   49     NA   NA       
+##  6 Leia Organa         2022   50.8   NA   NA       
+##  7 Luke Skywalker      2021   77     NA   NA       
+##  8 Luke Skywalker      2022   77.8   NA   NA       
+##  9 R2-D2               2021   32     NA   NA       
+## 10 R2-D2               2022   33.8   NA   NA       
+## 11 Beru Whitesun lars  2021   NA    165    0.641   
+## 12 Beru Whitesun lars  2022   NA    168.  -0.138   
+## 13 Biggs Darklighter   2021   NA    183    0.238   
+## 14 Biggs Darklighter   2022   NA    187.  -0.259   
+## 15 R5-D4               2021   NA     97   -0.753   
+## 16 R5-D4               2022   NA     98.9  1.77
 ```
 
-{{< cta cta_text="👉 Proceed to Data Visualization" cta_link="../sec5" >}}
+
+{{< cta cta_text="👉 Seguir para Visualização de Dados" cta_link="../sec5" >}}
