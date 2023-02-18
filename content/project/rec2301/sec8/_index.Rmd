@@ -6,7 +6,7 @@ linktitle: Regressão Múltipla
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
 title: Regressão Múltipla
-weight: 9
+weight: 8
 output: md_document
 type: book
 ---
@@ -16,6 +16,12 @@ knitr::opts_chunk$set(echo = TRUE)
 # wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Aspire
 # wd = "~/../FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Nitro
 ```
+
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+```
+
 
 ### Estimação Analítica
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 2 (University of Massachusetts Amherst)
