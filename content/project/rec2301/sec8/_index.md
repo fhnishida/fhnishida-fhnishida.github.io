@@ -14,18 +14,14 @@ type: book
 
 
 
-
-```r
-library(dplyr)
-```
-
-
 ### Estimação Analítica
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 2 (University of Massachusetts Amherst)
 
 #### 1. Construir matrizes de covariadas {{<math>}}$X${{</math>}} e da variável dependente {{<math>}}$y${{</math>}}
 
 ```r
+library(dplyr)
+
 ## Criando reg_data a partir de variáveis de mtcars + uma coluna de 1's (p/ constante)
 reg_data = mtcars %>%
     select(mpg, hp, wt) %>%  # Selecionando as variáveis dependente e independentes
@@ -132,7 +128,7 @@ head(e)
 
 
 #### 5. Calcular a variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
-$$ \hat{\sigma}^2 = \frac{e'e}{n-k} $$
+$$ \hat{\sigma}^2 = \frac{\varepsilon'\varepsilon}{n-k} $$
 
 ```r
 ## Estimando variancia do termo de erro
