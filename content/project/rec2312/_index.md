@@ -1,5 +1,5 @@
 ---
-date: "2023-02-15T00:00:00Z"
+date: "2023-03-10T00:00:00Z"
 # external_link: https://www.fearp.usp.br/institucional/docentes/economia/2614-daniel-domingues-dos-santos.html
 image:
   # caption: Photo by Toa Heftiba on Unsplash

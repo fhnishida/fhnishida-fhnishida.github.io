@@ -14,6 +14,9 @@ type: book
 
 
 
+
+
+
 ### Estimação Analítica
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 2 (University of Massachusetts Amherst)
 
