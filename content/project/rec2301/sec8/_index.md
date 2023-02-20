@@ -13,7 +13,16 @@ type: book
 
 
 
+## Regressão Múltipla na Prática (via `lm()`)
 
+- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
+
+Considere o modelo multivariado:
+$$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + ... + \beta_k x_k + u \tag{3.1} $$
+
+- O til (`~`) separa a a variável dependente das variáveis independentes
+- As variáveis independentes precisam ser separadas por um `+`
+- A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()`
 
 
 

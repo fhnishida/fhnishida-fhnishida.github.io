@@ -47,6 +47,11 @@ type: book
 
 <center><img src="../steepest_ascent.png"></center>
 
+<video width="500px" height="500px" controls="controls"/>
+    <source src="../local-maxima.mp4" type="video/mp4">
+</video>
+
+
 - Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
     - No exemplo, se os chutes iniciais forem {{<math>}}$\theta^0_A${{</math>}} ou {{<math>}}$\theta^0_B${{</math>}}, então consegue atingir o máximo global.
     - Já se o chute inicial for {{<math>}}$\theta^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}$\theta^*${{</math>}} (menor do que o máximo global em {{<math>}}$\theta^{**}${{</math>}}).
@@ -542,15 +547,7 @@ library(gmm)
 ```
 
 ```
-## Warning: package 'gmm' was built under R version 4.2.2
-```
-
-```
 ## Carregando pacotes exigidos: sandwich
-```
-
-```
-## Warning: package 'sandwich' was built under R version 4.2.2
 ```
 
 ```r
