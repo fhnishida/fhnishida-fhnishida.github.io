@@ -21,12 +21,82 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
 
-Considere o modelo multivariado:
-$$ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + ... + \beta_k x_k + u \tag{3.1} $$
+- Para estimar um modelo multivariado no R, podemos usar a função `lm()`:
+  - O til (`~`) separa a a variável dependente das variáveis independentes
+  - As variáveis independentes precisam ser separadas por um `+`
+  - A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()` -- para retirá-la, precisa incluir a "variável independente" `0` na fórmula.
 
-- O til (`~`) separa a a variável dependente das variáveis independentes
-- As variáveis independentes precisam ser separadas por um `+`
-- A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()`
+
+#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Sejam as variáveis
+    - `colGPA` (_college GPA_): a nota média em um curso superior,
+    - `hsGPA` (_high school GPA_): a nota médio do ensino médio, e
+    - `ACT` (_achievement test score_): a nota de avaliação de conhecimentos para ingresso no ensino superior.
+- Usando a base `gpa1` do pacote `wooldridge`, vamos estimar o seguinte modelo:
+
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+
+```{r}
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
+
+# Estimando o modelo
+GPAres = lm(colGPA ~ hsGPA + ACT, data = gpa1)
+GPAres
+```
+
+- Podemos obter um resumo mais detalhado dos resultados usando a função `summary()`:
+```{r}
+summary(GPAres)
+```
+
+- Note que o {{<math>}}R$^2${{</math>}} é de 0,1764, ou seja, os dois regressores (`hsGPA` e `ACT`) explicam 17,64\% da variância da nota média em um curso superior (`colGPA`).
+
+
+
+## MQO na forma matricial
+
+### Notações
+
+- Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
+- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
+$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + u_i, \qquad i=1, 2, ..., N \tag{E.1} $$
+em que {{<math>}}$N${{</math>}} é o número de observações.
+
+- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
+{{<math>}}$$ \underset{1 \times K}{\mathbf{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
+
+- Note que o produto interno {{<math>}}$\mathbf{x}_i \boldsymbol{\beta}${{</math>}} é:
+
+{{<math>}}$$ \underset{1 \times 1}{\mathbf{x}_i \boldsymbol{\beta}} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] = 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K,$${{</math>}}
+
+- Logo, a equação (3.1) pode ser reescrita como
+
+$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\mathbf{x}_i \boldsymbol{\beta}} + u_i = \mathbf{x}_i \boldsymbol{\beta} + u_i, \qquad i=1, 2, ..., N \tag{E.2} $$
+
+- Considere {{<math>}}$\mathbf{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
+
+{{<math>}}$$ \underset{N \times (K+1)}{\mathbf{X}} = \left[ \begin{matrix} \mathbf{x}_1 \\ \mathbf{x}_2 \\ \vdots \\ \mathbf{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
+
+- Agora, podemos "empilhar" as equações (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
+
+{{<math>}}\begin{align} \mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \mathbf{u} &= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right] \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + u_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + u_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + u_N \end{matrix} \right] = \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] \tag{E.3} \end{align}{{</math>}}
+
+
+em que:
+{{<math>}}$$  \underset{N\times 1}{\mathbf{y}} = \left[ \begin{matrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right]  \qquad \text{e} \qquad \underset{N\times 1}{\mathbf{u}} = \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]. $${{</math>}}
+
+- O estimador de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} pode ser obtido pela seguinte fórmula (Wooldridge, 2006):
+
+$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{y} \tag{3.2} $$
+
+
+### Aplicando no R
+
+- No R, queremos encontrar as estimativas para {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}:
+  - Transposta...
+
 
 
 
