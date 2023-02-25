@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Otimização Numérica
+linktitle: Testes de Hipótese
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Otimização Numérica
+title: Testes de Hipótese
 weight: 9
 output: md_document
 type: book
@@ -13,421 +13,253 @@ type: book
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Aspire
+# wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Aspire
 # wd = "~/../FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Nitro
 ```
 
-
-## [Extra] Otimização numérica
-- Essa seção tem o objetivo para dar uma intuição sobre métodos de otimização.
-- Veremos os métodos de _grid search_ e _steepest ascent_ que representam famílias de métodos de otimização.
+- Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
 
 
-### _Grid Search_
+## Teste de Wald
+- Considere:
+  - {{<math>}}$G${{</math>}} o número de restrições lineares
+  - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$Q \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, contida por diversos vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., Q${{</math>}}
+  - Modelo multivariado:
+  
+  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + u$${{</math>}}
 
-- O método mais simples de otimização numérica é o _grid search_ (discretização).
-- Como o R não lida com problemas com infinitos valores, uma forma lidar com isso é discretizando diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
-- Para cada possível combinação de parâmetros, calculam-se diversos valores a partir da função objetivo. De todos os valores calculados, escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
-- O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
-
-<center><img src="../grid_search.png"></center>
-
-
-- Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis), e menos sensível a chutes de valores iniciais. (ver método abaixo)
-- Porém, este método fica preciso apenas com maiores quantidades de pontos e, como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente (demora mais tempo para calcular).
-
-
-### _Steepest Ascent_
-
-
-- Conforme o número de parâmetros do modelo cresce, aumenta o número de possíveis combinações entre parâmetros e torna o processo computacional cada vez mais lento.
-- Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _steepest ascent_.
-- Seja {{<math>}}$\theta^{**}${{</math>}} o conjunto de parâmetros que maximiza globalmente a função objetivo:
-  1. Comece com algum valor inicial de parâmetro, {{<math>}}$\theta^0${{</math>}}
-  2. Calcula-se a derivada e avalia-se a possibilidade de "andar para cima" a um valor mais alto
-  3. Caso possa, ande na direção correta a {{<math>}}$\theta^1${{</math>}}
-  4. Repita os passos (2) e (3), andando para um novo {{<math>}}$\theta^2, \theta^3, ...${{</math>}} até
-  atingir um {{<math>}}$\theta^*${{</math>}} cuja função objetivo é máxima e cuja derivada é igual a zero.
-
-<center><img src="../steepest_ascent.png"></center>
-
-<video width="500px" height="500px" controls="controls"/>
-    <source src="../local-maxima.mp4" type="video/mp4">
-</video>
+- A partir destas matrizes e vetores, é possível construir testes de hipótese na forma:
+{{<math>}}\begin{align}
+\text{H}_0: &\underset{G\times (K+1)}{\boldsymbol{R}} \underset{(K+1)\times 1}{\boldsymbol{\beta}} = \underset{G \times 1}{\boldsymbol{h}} \\
+\text{H}_0: &\left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \vdots \\ \boldsymbol{r}'_{G} \end{matrix} \right] \boldsymbol{\beta} = \left[ \begin{matrix} h_1 \\ h_2 \\ \vdots \\ h_G \end{matrix} \right] \\
+\text{H}_0: &\left\{ \begin{matrix} \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 \\ \boldsymbol{r}'_2 \boldsymbol{\beta} = h_2 \\ \vdots \\ \boldsymbol{r}'_G \boldsymbol{\beta} = h_G \end{matrix} \right.
+\end{align}{{</math>}}
 
 
-- Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
-    - No exemplo, se os chutes iniciais forem {{<math>}}$\theta^0_A${{</math>}} ou {{<math>}}$\theta^0_B${{</math>}}, então consegue atingir o máximo global.
-    - Já se o chute inicial for {{<math>}}$\theta^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}$\theta^*${{</math>}} (menor do que o máximo global em {{<math>}}$\theta^{**}${{</math>}}).
-- Por outro lado, é um método mais eficiente, pois calcula-se a função objetivo uma vez a cada passo e também tende a ser mais preciso nas estimações.
+
+### Uma restrição linear
+
+- Considere o modelo:
+  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$${{</math>}}
+
+- Logo, há {{<math>}}$K=2${{</math>}} variáveis explicativas (e há 3 parâmetros)
+- 1 restrição linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
+- Logo, neste caso específico, temos
+{{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
+
+
+#### Exemplo 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
+- Note que {{<math>}}$h_1 = 4${{</math>}}
+- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
+
+
+
+#### Exemplo 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
+- Note que {{<math>}}$h_1 = 2${{</math>}}
+- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
+
+
+#### Exemplo 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
+- Note que
+{{<math>}}$$\beta_1 = \beta_2 \iff \beta_1 - \beta_2 = 0 $${{</math>}}
+
+- Logo, {{<math>}}$h_1 = 0${{</math>}}
+- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $${{</math>}}
+
+
+#### Avaliando a hipótese nula com restrição única
+- Para o caso com uma única restrição, assumimos que 
+{{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)} r_1})$${{</math>}}
+
+- Calcula-se a estatística _t_:
+{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\hat{\sigma}^2 \boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)} r_1}}} $${{</math>}}
+
+- Note que, em pequenas amostras, precisamos assumir que {{<math>}}$ u|x \sim N(0; \sigma^2) ${{</math>}}
+- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística _t_ não pertencer ao intervalo de confiança.
+
+</br>
+
+
+### Múltiplas restrições lineares
+
+#### Exemplo 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
+- Note que {{<math>}}$h_1 = 0 \text{ e } h_2 = 2${{</math>}}
+- Os vetores {{<math>}}$r'_1 \text{ e } r'_2${{</math>}} podem ser escritos como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \quad \text{e} \quad r'_2 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
+
+- Logo, {{<math>}}$\boldsymbol{R}${{</math>}} é
+{{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \end{matrix} \right] = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \boldsymbol{R} \boldsymbol{\beta} = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = \left[ \begin{matrix} h_1 \\ h_2 \end{matrix} \right]\ \iff\ \text{H}_0:\ \left\{  \begin{matrix} \beta_1 &= 0 \\ \beta_1 + \beta_2 &= 2 \end{matrix} \right. $${{</math>}}
+
+
+#### Avaliando a hipótese nula com múltiplas restrições
+- Para o caso com _G_ restrições, assumimos que 
+{{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V_{\beta(x)} R'})$${{</math>}}
+
+- Calcula-se a estatística de Wald
+{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
+
+- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística {{<math>}}$ w(\hat{\boldsymbol{\beta}})${{</math>}} não pertencer ao intervalo de confiança (do zero ao valor crítico).
+
+</br>
+
+### Aplicando no R
+
+- Usaremos o pacote de dados `mlb1` (com estatísticas de jogadores de beisebol) do pacote `wooldridge`
+- Queremos estimar o modelo
+{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
+
+
+em que:
+  - `log(salary)`: log do salário de 1993
+  - `years`: anos jogando na 1ª divisão de beisebol americano
+  - `gamesyr`: média de jogos por ano
+  - `bavg`: média de rebatidas na carreira
+  - `hrunsyr`: média de _home runs_ por ano
+  - `rbisyr`: média de corridas impulsionadas por ano
+
+```{r}
+data(mlb1, package="wooldridge")
+
+# Estimando o modelo completo (irrestrito)
+res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
+round(summary(res.ur)$coef, 5) # coeficientes da estimação
+```
+
+- Note que, individualmente, as variáveis `bavg`, `hrunsyr` e `rbisyr` são estatisticamente não significantes.
+- Queremos avaliar se eles são estatisticamente significantes de forma conjunta, ou seja,
+{{<math>}}$$ \text{H}_0:\ \left\{ \begin{matrix} \beta_3 = 0 \\ \beta_4 = 0 \\ \beta_5 = 0\end{matrix} \right.   $${{</math>}}
+
+- Logo, temos que
+{{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \boldsymbol{r}'_3 \end{matrix} \right] = \left[ \begin{matrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \end{matrix} \right] $${{</math>}}
+
+
+#### Usando função `Wald.test()`
+
+```{r}
+# Extraindo matriz de variância-covariância do estimador
+V_bhat = vcov(res.ur)
+round(V_bhat, 5)
+
+# Calculando a estatística de Wald
+# install.packages("aod") # instalando o pacote necessário
+aod::wald.test(Sigma = V_bhat, # matriz de variância-covariância
+               b = coef(res.ur), # estimativas
+               Terms = 4:6, # posições dos parâmetros a serem testados
+               H0 = c(0, 0, 0) # Hipótese nula (tudo igual a zero)
+               )
+```
+
+- Observe que rejeitamos a hipótese nula e, portanto, os parâmetros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} são conjuntamente significantes.
+
+
+#### Calculando "na mão"
+
+- Estimando o modelo
+```{r}
+# Criando variavel log_salary
+mlb1$log_salary = log(mlb1$salary)
+name_y = "log_salary"
+names_X = c("years", "gamesyr", "bavg", "hrunsyr", "rbisyr")
+
+# Criando o vetor y
+y = as.matrix(mlb1[,name_y]) # transformando coluna de data frame em matriz
+
+# Criando a matriz de covariadas X com primeira coluna de 1's
+X = as.matrix( cbind( const=1, mlb1[,names_X] ) ) # juntando 1's com as covariadas
+
+# Pegando valores N e K
+N = nrow(mlb1)
+K = ncol(X) - 1
+
+# Estimando o modelo
+bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+round(bhat, 5)
+
+# Calculando os resíduos
+uhat = y - X %*% bhat
+
+# Variância do termo de erro
+sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+
+# Matriz de variância-covariância do estimador
+V_bhat = sig2hat * solve( t(X) %*% X )
+round(V_bhat, 5)
+```
+
+- Agora, vamos criar a matriz das restrições
+```{r}
+# Número de restrições
+G = 3
+
+# Matriz das restrições
+R = matrix(c(0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1),
+           nrow=G, byrow=TRUE)
+R
+
+# Vetor de constantes h
+h = matrix(c(0, 0, 0),
+           nrow=3, ncol=1)
+h
+```
+
+- Lembre-se que, por padrão, a função `matrix()` "preenche" a matrix por coluna.
+- No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento `byrow=TRUE`.
+- Calculando a estatística de Wald, dada por
+{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
+
+```{r}
+# Estatística de Wald
+w = t( R %*% bhat - h ) %*% solve( R %*% V_bhat %*% t(R) ) %*% (R %*% bhat - h)
+w
+
+# Encontrando valor crítico Qui-quadrado para 5% de signif.
+alpha = 0.05
+cv = qchisq(1-alpha, df=G)
+cv
+
+# Comparando estatística de Wald e valor crítico
+w > cv
+```
+
+- Como Estatística de Wald (= 28,65) é maior do que o valor crítico (= 7,81), então rejeitamos a hipótese nula conjunta de que todos parâmetros testados são iguais a zero.
+- Também poderíamos verificar o p-valor por meio da estatística de Wald:
+```{r}
+1 - pchisq(w, df=G)
+```
+
+- Como é menor do que 5%, rejeita-se a hipótese nula.
 
 
 </br>
 
-## [Extra] Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) teoria da decisão, do (b) método dos momentos e da (c) máxima verossimilhança.
-- Em todas elas, usaremos um método de otimização, mas, diferente da seção anterior, queremos achar uma _dupla_ de parâmetros que otimizam uma função objetivo.
 
+## Teste F
 
-### Base `mtcars`
-É necessário carregar o pacote `dplyr` para manipulação da base de dados abaixo.
-```{r message=FALSE, warning=FALSE}
-library(dplyr)
-```
+- [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
+- Uma outra forma de avaliar 
 
-Usaremos dados extraídos da _Motor Trend_ US magazine de 1974, que analisa o
-consumo de combustível e 10 aspectos técnicos de 32 automóveis.
-
-No _R_, a base de dados já está incorporada ao programa e pode ser acessada pelo código `mtcars`, contendo a seguinte estrutura:
-
-> - _mpg_: milhas por galão
-> - _hp_: cavalos-vapor bruto
-
-Queremos estimar o seguinte modelo:
-$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon $$
-
-```{r}
-## Regressao MQO
-lm(formula = mpg ~ hp + wt, data = mtcars)
-```
-
-
-### (a) Teoria da Decisão
-- Pela estratégia da teoria da decisão, queremos encontrar as estimativas, {{<math>}}$\hat{\beta}_0\ \text{e}\ \hat{\beta}_1 ${{</math>}}, que minimizam a soma dos desvios quadráticos:
-
-
-#### 1. Criar função perda que calcula a soma dos desvios quadráticos
-- A função para calcular a soma dos desvios quadráticos recebe como inputs:
-  - um **vetor** de possíveis estimativas {{<math>}}$\hat{\beta}_0${{</math>}}, {{<math>}}$\hat{\beta}_1${{</math>}}
-  - uma base de dados
-```{r}
-desv_quad = function(params, data) {
-  # Extraindo os parâmetros para objetos
-  beta_hat_0 = params[1]
-  beta_hat_1 = params[2]
-  
-  mpg_ajustado = beta_hat_0 + beta_hat_1*data$hp # valores ajustados
-  desvios = data$mpg - mpg_ajustado # desvios = observados - ajustados
-  sum(desvios^2)
-}
-```
-
-
-#### 2. Otimização
-- Agora encontraremos os parâmetros que minimizam a função perda
-
-{{<math>}}$$ \underset{\hat{\beta}_0, \hat{\beta}_1}{\text{argmin}} \sum_{i=1}^{N}\hat{\varepsilon}^2 \quad = \quad \underset{\hat{\beta}_0, \hat{\beta}_1}{\text{argmin}} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $${{</math>}}
-
-- Para isto usaremos a função `optim()` que retorna os parâmetros que minimizam uma função (equivalente ao _argmin_):
-```yaml
-optim(par, fn, gr = NULL, ...,
-      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
-      lower = -Inf, upper = Inf,
-      control = list(), hessian = FALSE)
-
-par: Initial values for the parameters to be optimized over.
-fn: A function to be minimized (or maximized), with first argument the vector of parameters over which minimization is to take place. It should return a scalar result.
-method: The method to be used. See ‘Details’. Can be abbreviated.
-hessian: Logical. Should a numerically differentiated Hessian matrix be returned?
-```
-- Colocaremos como input:
-  - a função perda criada `desv_quad()`
-  - um chute inicial dos parâmetros
-    - Note que a estimação pode ser mais ou menos sensível ao valores iniciais, dependendo do método de otimização utilizado
-    - O mais comum é encontrar como chute inicial um vetor de zeros `c(0, 0, 0)`, por ser mais neutro em relação ao sinal das estimativas
-    - Em Econometria III, prof. Laurini recomendou usar método "Nelder-Mead" (padrão) com um chute inicial de zeros e, depois, usar suas estimativas como chute inicial para o método "BFGS".
-  - Por padrão, temos o argumento `hessian = FALSE`, coloque `TRUE` para calcularmos o erro padrão, estatística t e p-valor das estimativas
-
-```{r}
-# Estimação por BFGS
-theta_ini = c(0, 0, 0) # Chute inicial de beta_0, beta_1 e beta_2
-
-fit_ols2 = optim(par=theta_ini, fn=desv_quad, data=mtcars,
-                  method="BFGS", hessian=TRUE)
-fit_ols2
-```
-
-
-
-### (b) Máxima verossimilhança
-- [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
-
-Para uma equação de regressão geral
-$$ y_i = \beta' X + \varepsilon $$
-supondo distribuição normal do termo de erro
-$$ \varepsilon \sim \mathcal{N}(0, \sigma^2), $$
-temos uma distribuição condicional de {{<math>}}$y${{</math>}} dada por
-$$ y | X \sim \mathcal{N}(\beta'X, \sigma^2). $$
-
-Logo, a função log-verossimilhança (condicional) é
-$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y | X, \beta, \sigma^2)}}. $$
-
-Em nosso exemplo, temos que estimar 4 parâmetros
-$$ \theta = \left( \beta_0, \beta_1, \beta_2, \sigma^2 \right). $$
-
-Podemos:
-
-- Tomar derivadas de {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)}${{</math>}} em relação a cada parâmetro e resolver as CPOs, ou
-- Maximizar {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)}${{</math>}} por otimização numérica.
-
-
-
-#### Otimização Numérica para MLE
-A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
-
-- Alguns valores inicias dos parâmetros, {{<math>}}$\theta^0${{</math>}}
-- Uma função que tome esses parâmetros como um argumento e calcule a 
-log-verossimilhança, {{<math>}}$\ln{L(\theta)}${{</math>}}.
-
-> Como `optim()` irá encontrar os parâmetros que minimizem a função objetivo, precisamos adaptar o output da função de log-verossimilhança (minimizaremos o negativo da log-lik).
-
-A função log-verossimilhança é dada por
-$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}, $$
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
-$$ y_i | x_i \sim \mathcal{N}(\beta'x_i, \sigma^2) $$
-
-1. Construir matriz {{<math>}}$X${{</math>}} e vetor {{<math>}}$y${{</math>}}
-2. Calcular os valores ajustados de {{<math>}}$y${{</math>}}, {{<math>}}$\hat{y} - \beta'x_i${{</math>}}, que é a média de cada {{<math>}}$y_i${{</math>}}
-3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta, \sigma^2)${{</math>}}
-4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}${{</math>}}
-
-
-##### 1. Chute de valores iniciais para {{<math>}}$\beta_0, \beta_1, \beta_2${{</math>}} e {{<math>}}$\sigma^2${{</math>}}
-- Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
-```{r}
-params = c(35, -0.02, -3.5, 1)
-# (beta_0, beta_1 , beta_2, sigma2)
-```
-
-##### 2. Seleção da base de dados e variáveis
-```{r}
-## Adicionando colunas de 1's para o termo constante
-data = mtcars
-beta_0 = params[1]
-beta_1 = params[2]
-beta_2 = params[3]
-sigma2 = params[4]
-```
-
-##### 3. Cálculo dos valores ajustados e das densidades
-```{r}
-## Calculando valores ajustados de y
-y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
-```
-
-##### 4. Cálculo das densidades
-$$ f(y_i | x_i, \beta, \sigma^2) $$
-```{r}
-## Calculando os pdf's de cada outcome
-y_pdf = dnorm(data$mpg, mean = y_hat, sd = sqrt(sigma2))
-
-head(y_pdf) # Primeiros valores da densidade
-prod(y_pdf) # Verossimilhança
-```
-
-- Para entender melhor o que estamos fazendo aqui, relembre que, na estimação por máxima verossimilhança, assume-se que
-$$\varepsilon | X \sim N(0, \sigma^2)$$
-- No exemplo abaixo, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
-
-<center><img src="../mle.jpg"></center>
-
-- Agora, vamos juntar o data frame `mtcars` com os valores ajustados `mpg_hat` e as densidades `y_pdf`:
-```{r}
-mpg_hat = y_hat # atribuindo y_hat a um objeto com nome mais adequado
-
-# Juntando as bases e visualizando os primeiros valores
-bd_joined = cbind(mtcars, mpg_hat, y_pdf) %>%
-  select(hp, wt, mpg, mpg_hat, y_pdf)
-head(bd_joined)
-```
-- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
-```{r}
-# Criando gráfico para os 2 primeiros carros (Mazda RX4 e Mazda RX 4 Wag)
-qt_norm = seq(20, 27, by=0.1) # valores de mpg ("escores Z")
-
-# Mazda RX4
-pdf_norm1 = dnorm(qt_norm, mean=bd_joined$mpg_hat[1], sd=sqrt(sigma2)) # pdf
-plot(qt_norm, pdf_norm1, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4")
-abline(v=c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), col="red")
-text(c(bd_joined$mpg_hat[1], bd_joined$mpg[1]), 0.2, 
-     c(expression(widehat(mpg)[1]), expression(mpg[1])), 
-     pos=2, srt=90, col="red")
-
-# Mazda RX4 Wag 
-pdf_norm2 = dnorm(qt_norm, mean=bd_joined$mpg_hat[2], sd=sqrt(sigma2)) # pdf
-plot(qt_norm, pdf_norm2, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4 Wag")
-abline(v=c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), col="blue")
-text(c(bd_joined$mpg_hat[2], bd_joined$mpg[2]), 0.2, 
-     c(expression(widehat(mpg)[2]), expression(mpg[2])), 
-     pos=2, srt=90, col="blue")
-```
-- Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
-
-
-##### 5. Calculando a Log-Verossimilhança
-$$ \mathcal{l}(\beta, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta, \sigma^2) \right]} $$
-```{r}
-## Calculando a log-verossimilhanca
-loglik = sum(log(y_pdf))
-loglik
-```
-
-
-##### 6. Criando a Função de Log-Verossimilhança
-```{r}
-## Criando funcao para calcular log-verossimilhanca MQO 
-loglik_lm = function(params, data) {
-  # Pegando os parâmetros
-  beta_0 = params[1]
-  beta_1 = params[2]
-  beta_2 = params[3]
-  sigma2 = params[4]
-  
-  ## Calculando valores ajustados de y
-  y_hat = beta_0 + beta_1*data$hp + beta_2*data$wt
-  
-  ## Calculando os pdf's de cada outcome
-  y_pdf = dnorm(data$mpg, mean = y_hat, sd = sqrt(sigma2))
-  
-  ## Calculando a log-verossimilhanca
-  loglik = sum(log(y_pdf))
-  
-  ## Retornando o negativo da log-verossimilanca - optim() não maximiza
-  -loglik
-}
-```
-
-
-##### 7. Otimização
-
-Tendo a função objetivo, usaremos `optim()` para *minimizar*
-$$ -\ln{L(\beta, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}. $$
-Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (função`optim()` apenas minimiza).
-
-```{r warning=FALSE}
-## Maximizando a função log-verossimilhança MQO
-mle = optim(par = c(0, 0, 0, 1), fn = loglik_lm, data = mtcars,
-              method = "BFGS", hessian = TRUE)
-
-## Mostrando os resultados da otimização
-mle
-
-## Calculando os erros padrão
-mle_se = mle$hessian %>% # hessiano
-  solve() %>% # toma a inversa para obter a matriz de var/cov
-  diag() %>% # pega a diagonal da matriz
-  sqrt() # calcula a raiz quadrada
-
-# Visualizando as estimativas e os erros padrão
-cbind(mle$par, mle_se)
-```
-
-
-### (c) Estimação por GMM
-- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
-- [Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)](https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199)
-
-
-- Para estimar via GMM precisamos construir vetores relacionados aos seguintes momentos:
-$$ E(\varepsilon) = 0 \qquad \text{ e } \qquad E(\varepsilon'X) = 0 $$
-em que {{<math>}}$X${{</math>}} é a matriz de covariadas e {{<math>}}$\varepsilon${{</math>}} é o desvio. Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.
-
-
-- Relembre que estamos usando a base de dados `mtcars` para estimar o modelo linear:
-$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \beta_2 \text{wt} + \varepsilon $$
-que relaciona o consumo de combustível (em milhas por galão - _mpg_) com a potência (_hp_) e o peso (em mil libras - _wt_) do carro.
-
-
-#### Otimização Numérica para GMM
-
-##### 1. Chute de valores iniciais para {{<math>}}$\beta_0${{</math>}}, {{<math>}}$\beta_1${{</math>}} e {{<math>}}$\beta_2${{</math>}}
-- Vamos criar um vetor com possíveis valores de {{<math>}}$\beta_0, \beta_1, \beta_2${{</math>}}:
-```{r}
-library(dplyr)
-
-params = c(35, -0.02, -3.5)
-beta_0 = params[1]
-beta_1 = params[2]
-beta_2 = params[3]
-```
-
-##### 2. Seleção da base de dados e variáveis
-```{r}
-data = mtcars %>% mutate(constant=1) # Criando variável de constante
-
-## Selecionando colunas para X (covariadas) e convertendo para matrix
-X = data %>% 
-  select("constant", "hp", "wt") %>% 
-  as.matrix()
-
-## Selecionando variavel para y e convertendo para matrix
-y = data %>% 
-  select("mpg") %>% 
-  as.matrix()
-```
-
-##### 3. Cálculo dos valores ajustados e dos desvios
-```{r}
-## Valores ajustados e desvios
-y_hat = X %*% params
-# equivalente a: y_hat = beta_0 + beta_1 * X[,"hp"] + beta_2 * X[,"wt"]
-
-e = y - y_hat
-```
-
-##### 4. Criação da matriz de momentos
-- Note que {{<math>}}$E(\varepsilon' X)${{</math>}} é uma multiplicação matricial, mas a função `gmm()` exige que como input os vetores com multiplicação elemento a elemento do resíduo {{<math>}}$\varepsilon${{</math>}} com as covariadas {{<math>}}$X${{</math>}} (neste caso: constante, hp, wt)
-```{r}
-m = X * as.vector(e) # matriz de momentos (sem tomar esperança)
-head(m)
-```
-- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperança).
-- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1, \beta_2 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
-
-
-##### 5. Criação de função com os momentos
-- Vamos criar uma função que tem como input um vetor de parâmetros (`params`) e uma base de dados (`data`), e que retorna uma matriz em que cada coluna representa um momento.
-- Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
-```{r}
-mom_ols = function(params, data) {
-  ## Adicionando colunas de 1's para o termo constante
-  data = data %>% mutate(constant = 1)
-  
-  ## Selecionando colunas para X (covariadas) e convertendo para matrix
-  X = data %>% 
-    select("constant", "hp", "wt") %>% 
-    as.matrix()
-  
-  ## Selecionando variavel para y e convertendo para matrix
-  y = data %>% 
-    select("mpg") %>% 
-    as.matrix()
-  
-  ## Valores ajustados e desvios
-  y_hat = X %*% params
-  e = y - y_hat
-  
-  m = as.vector(e) * X # matriz de momentos (vetor - multiplicação por elemento)
-  m
-}
-```
-
-
-##### 6. Otimização via função `gmm()`
-- A função `gmm()`, assim como a `optim()`, recebe uma função como argumento.
-- No entanto, ao invés de retornar um valor, a função que entra no `gmm()` retorna uma matriz, cujas médias das colunas queremos aproximar de zero. 
-```{r}
-library(gmm)
-
-gmm_lm = gmm(mom_ols, mtcars, c(0,0,0),
-             wmatrix = "optimal", # matriz de ponderação
-             optfct = "nlminb" # função de otimização
-             )
-
-summary(gmm_lm)$coefficients
-```
-
-
-
-
+{{< cta cta_text="👉 Seguir para Otimização Numérica" cta_link="../sec9" >}}

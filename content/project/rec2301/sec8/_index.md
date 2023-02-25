@@ -13,7 +13,11 @@ type: book
 
 
 
-## Regressão Múltipla na Prática (via `lm()`)
+
+
+## Estimação MQO multivariado
+
+### Regressão Múltipla na Prática (via `lm()`)
 
 - [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
 
@@ -52,7 +56,7 @@ GPAres
 ##    1.286328     0.453456     0.009426
 ```
 
-- Podemos obter um resumo mais detalhado dos resultados usando a função `summary()`:
+- Note que podemos ver mais detalhes da estimação usando a função `summary()` no objeto resultante da função `lm()`
 
 ```r
 summary(GPAres)
@@ -80,13 +84,14 @@ summary(GPAres)
 ## F-statistic: 14.78 on 2 and 138 DF,  p-value: 1.526e-06
 ```
 
-- Note que o {{<math>}}R$^2${{</math>}} é de 0,1764, ou seja, os dois regressores (`hsGPA` e `ACT`) explicam 17,64\% da variância da nota média em um curso superior (`colGPA`).
 
 
+### MQO na forma matricial
 
-## MQO na forma matricial
+- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
 
-### Notações
+
+#### Notações
 
 - Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
 - Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
@@ -94,215 +99,588 @@ $$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + u_i,
 em que {{<math>}}$N${{</math>}} é o número de observações.
 
 - Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
-{{<math>}}$$ \underset{1 \times K}{\mathbf{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
+{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
 
-- Note que o produto interno {{<math>}}$\mathbf{x}_i \boldsymbol{\beta}${{</math>}} é:
+- Note que o produto interno {{<math>}}$\boldsymbol{x}_i \boldsymbol{\beta}${{</math>}} é:
 
-{{<math>}}$$ \underset{1 \times 1}{\mathbf{x}_i \boldsymbol{\beta}} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] = 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K,$${{</math>}}
+{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
+&= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}{{</math>}}
 
-- Logo, a equação (3.1) pode ser reescrita como
+- Logo, a equação (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
 
-$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\mathbf{x}_i \boldsymbol{\beta}} + u_i = \mathbf{x}_i \boldsymbol{\beta} + u_i, \qquad i=1, 2, ..., N \tag{E.2} $$
+$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}_i \boldsymbol{\beta}} + u_i = \boldsymbol{x}_i \boldsymbol{\beta} + u_i, \tag{E.2} $$
 
-- Considere {{<math>}}$\mathbf{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
+- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
 
-{{<math>}}$$ \underset{N \times (K+1)}{\mathbf{X}} = \left[ \begin{matrix} \mathbf{x}_1 \\ \mathbf{x}_2 \\ \vdots \\ \mathbf{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
+{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \\ \vdots \\ \boldsymbol{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
 
 - Agora, podemos "empilhar" as equações (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
 
-{{<math>}}\begin{align} \mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \mathbf{u} &= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right] \\
-&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + u_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + u_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + u_N \end{matrix} \right] = \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] \tag{E.3} \end{align}{{</math>}}
-
-
-em que:
-{{<math>}}$$  \underset{N\times 1}{\mathbf{y}} = \left[ \begin{matrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right]  \qquad \text{e} \qquad \underset{N\times 1}{\mathbf{u}} = \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]. $${{</math>}}
-
-- O estimador de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} pode ser obtido pela seguinte fórmula (Wooldridge, 2006):
-
-$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{y} \tag{3.2} $$
-
-
-### Aplicando no R
-
-- No R, queremos encontrar as estimativas para {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}:
-  - Transposta...
+{{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{u} \tag{E.3} \\
+&= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]   \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + u_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + u_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + u_N \end{matrix} \right]\\
+&= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}{{</math>}}
 
 
 
+#### Estimação Analítica no R
 
-### Estimação Analítica
-- [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 2 (University of Massachusetts Amherst)
+##### Operações matriciais/vetoriais no R
+- Primeiro, vamos ver como realizar operações matriciais/vetoriais no R:
+  - **Transposta de uma matriz ou vetor**: função `t()`
+  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
+  - **Inversa de uma matriz (quadrada)**: função `solve()`
 
-#### 1. Construir matrizes de covariadas {{<math>}}$X${{</math>}} e da variável dependente {{<math>}}$y${{</math>}}
 
 ```r
-library(dplyr)
-
-## Criando reg_data a partir de variáveis de mtcars + uma coluna de 1's (p/ constante)
-reg_data = mtcars %>%
-    select(mpg, hp, wt) %>%  # Selecionando as variáveis dependente e independentes
-    mutate(constante = 1)  # Criando coluna de constante
-
-## Selecionando variáveis independentes no objeto X e convertendo em matriz (n x k)
-X = reg_data %>%
-    select(constante, hp, wt) %>%  # Selecionando as covariadas X (incluindo constante)
-    as.matrix()  # Transformando em matrix
-
-## Selecionando a variável dependente no objeto y e convertendo em matriz (n x 1)
-y = reg_data %>%
-    select(mpg) %>%  # Selecionando as covariadas X (incluindo constante)
-    as.matrix()  # Transformando em matrix
-
-## Visualização das primeiras linhas de y e X
-head(X)
+# Como exemplo, criaremos matriz A de dimensão 4x2
+A = matrix(1:8, nrow=4, ncol=2)
+A
 ```
 
 ```
-##                   constante  hp    wt
-## Mazda RX4                 1 110 2.620
-## Mazda RX4 Wag             1 110 2.875
-## Datsun 710                1  93 2.320
-## Hornet 4 Drive            1 110 3.215
-## Hornet Sportabout         1 175 3.440
-## Valiant                   1 105 3.460
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
 ```
 
 ```r
+# Transposta de A (2x4)
+t(A)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
+```
+
+```r
+# Produto matricial A'A (2x2)
+t(A) %*% A
+```
+
+```
+##      [,1] [,2]
+## [1,]   30   70
+## [2,]   70  174
+```
+
+```r
+# Inversa de A'A (2x2)
+solve( t(A) %*% A )
+```
+
+```
+##          [,1]     [,2]
+## [1,]  0.54375 -0.21875
+## [2,] -0.21875  0.09375
+```
+
+#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Queremos estimar o modelo:
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+
+- A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
+
+
+```r
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
+
+# Criando o vetor y
+y = as.matrix(gpa1[,"colGPA"]) # transformando coluna de data frame em matriz
 head(y)
 ```
 
 ```
-##                    mpg
-## Mazda RX4         21.0
-## Mazda RX4 Wag     21.0
-## Datsun 710        22.8
-## Hornet 4 Drive    21.4
-## Hornet Sportabout 18.7
-## Valiant           18.1
+##      [,1]
+## [1,]  3.0
+## [2,]  3.4
+## [3,]  3.0
+## [4,]  3.5
+## [5,]  3.6
+## [6,]  3.0
 ```
-
-
-#### 2. Estimador {{<math>}}$\hat{\beta}${{</math>}}
-O estimador de MQO é dado por:
-$$ \hat{\beta} = (X'X)^{-1} X' y $$
-
 
 ```r
-## Estimando os parametros beta
-beta_hat = solve(t(X) %*% X) %*% t(X) %*% y # solve() calcula a inversa
-beta_hat
+# Criando a matriz de covariadas X com primeira coluna de 1's
+X = cbind( const=1, gpa1[, c("hsGPA", "ACT")] ) # juntando 1's com as covariadas
+X = as.matrix(X) # transformando em matriz
+head(X)
 ```
 
 ```
-##                   mpg
-## constante 37.22727012
-## hp        -0.03177295
-## wt        -3.87783074
+##   const hsGPA ACT
+## 1     1   3.0  21
+## 2     1   3.2  24
+## 3     1   3.6  26
+## 4     1   3.5  27
+## 5     1   3.9  28
+## 6     1   3.4  25
 ```
-
-
-#### 3. Calcular os valores ajustados {{<math>}}$\hat{y}${{</math>}}
-$$ \hat{y} = X\hat{\beta} $$
 
 ```r
-## Calculando os valores ajustados de y
-y_hat = X %*% beta_hat
-colnames(y_hat) = "mpg_hat"
-head(y_hat)
+# Pegando valores N e K
+N = nrow(gpa1)
+N
 ```
 
 ```
-##                    mpg_hat
-## Mazda RX4         23.57233
-## Mazda RX4 Wag     22.58348
-## Datsun 710        25.27582
-## Hornet 4 Drive    21.26502
-## Hornet Sportabout 18.32727
-## Valiant           20.47382
+## [1] 141
 ```
-
-
-#### 4. Calcular os resíduos {{<math>}}$e${{</math>}}
-$$ \varepsilon = y - \hat{y} $$
 
 ```r
-## Calculando os residuos
-e = y - y_hat
-colnames(e) = "e"
-head(e)
+K = ncol(X) - 1
+K
 ```
 
 ```
-##                            e
-## Mazda RX4         -2.5723294
-## Mazda RX4 Wag     -1.5834826
-## Datsun 710        -2.4758187
-## Hornet 4 Drive     0.1349799
-## Hornet Sportabout  0.3727334
-## Valiant           -2.3738163
+## [1] 2
 ```
 
+##### 1. Estimativas de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
 
-#### 5. Calcular a variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
-$$ \hat{\sigma}^2 = \frac{\varepsilon'\varepsilon}{n-k} $$
+{{<math>}}$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} \tag{3.2} $${{</math>}}
+
+No R:
 
 ```r
-## Estimando variancia do termo de erro
-sigma2 = t(e) %*% e / (nrow(X) - ncol(X))
-sigma2
+bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+bhat
 ```
 
 ```
-##          e
-## e 6.725785
+##              [,1]
+## const 1.286327767
+## hsGPA 0.453455885
+## ACT   0.009426012
 ```
 
 
-#### 6. Calcular a matriz de covariâncias {{<math>}}$\widehat{cov}(\widehat{\beta})${{</math>}}
-$$ \widehat{cov}(\hat{\beta}) = \hat{\sigma}^2 (X'X)^{-1} $$
+##### 2. Valores ajustados/preditos {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}  $${{</math>}}
+
+No R:
 
 ```r
-## Estimando a matriz de variancia/covariancia das estimativas beta
-vcov_hat = c(sigma2) * solve(t(X) %*% X)
-vcov_hat
+yhat = X %*% bhat
+head(yhat)
 ```
 
 ```
-##               constante            hp          wt
-## constante  2.5561215917  1.484701e-04 -0.73594515
-## hp         0.0001484701  8.153566e-05 -0.00376369
-## wt        -0.7359451464 -3.763690e-03  0.40035167
+##       [,1]
+## 1 2.844642
+## 2 2.963611
+## 3 3.163845
+## 4 3.127926
+## 5 3.318734
+## 6 3.063728
 ```
 
 
-#### 7. Calcular erros padrão, estatísticas t, e p-valores
+##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{u}} = \boldsymbol{y} - \hat{\boldsymbol{y}} \tag{3.3}  $${{</math>}}
+
+No R:
 
 ```r
-## Calculando erros padrao das estimativas beta
-std_err = sqrt(diag(vcov_hat)) # Raiz da diagonal da matriz de covariâncias
-
-## Calculando estatisticas t das estimativas beta
-t_stat = beta_hat / std_err
-
-## Calculando p-valores das estimativas beta
-p_value = 2 * pt(q = -abs(t_stat), df = nrow(X) - ncol(X)) # 2 x acumulada até estatística t negativa
-
-## Organizando os resultados da regressao em uma matriz
-results = cbind(beta_hat, std_err, t_stat, p_value)
-
-## Nomeando as colunas da matriz de resultados
-colnames(results) = c('Estimate', 'Std. Error', 't stat', 'Pr(>|t|)')
-results
+uhat = y - yhat
+head(uhat)
 ```
 
 ```
-##              Estimate Std. Error    t stat     Pr(>|t|)
-## constante 37.22727012 1.59878754 23.284689 2.565459e-20
-## hp        -0.03177295 0.00902971 -3.518712 1.451229e-03
-## wt        -3.87783074 0.63273349 -6.128695 1.119647e-06
+##          [,1]
+## 1  0.15535832
+## 2  0.43638918
+## 3 -0.16384523
+## 4  0.37207430
+## 5  0.28126580
+## 6 -0.06372813
+```
+
+
+##### 4. Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
+
+{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+
+No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+sig2hat
+```
+
+```
+## [1] 0.1158148
+```
+
+
+##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
+
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
+
+No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+V_bhat = sig2hat * solve( t(X) %*% X )
+V_bhat
+```
+
+```
+##              const         hsGPA           ACT
+## const  0.116159717 -0.0226063687 -0.0015908486
+## hsGPA -0.022606369  0.0091801149 -0.0003570767
+## ACT   -0.001590849 -0.0003570767  0.0001161478
+```
+
+##### 6. Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
+É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
+
+```r
+se_bhat = sqrt( diag(V_bhat) )
+se_bhat
+```
+
+```
+##      const      hsGPA        ACT 
+## 0.34082212 0.09581292 0.01077719
+```
+
+
+##### Comparando estimações via `lm()` e analítica
+- Até agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
+
+```r
+cbind(bhat, se_bhat)
+```
+
+```
+##                      se_bhat
+## const 1.286327767 0.34082212
+## hsGPA 0.453455885 0.09581292
+## ACT   0.009426012 0.01077719
+```
+
+- E, portanto, ainda percisamos concluir a parte de inferência da estimação por meio do cálculo da estatística _t_ e do p-valor:
+
+```r
+summary(GPAres)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
 ```
 
 
 
+## Inferência MQO multivariado
 
-{{< cta cta_text="👉 Seguir para Otimização Numérica" cta_link="../sec9" >}}
+### O teste _t_
+
+- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
+
+- Após a estimação, é importante fazer testes de hipótese na forma
+$$ H_0: \ \beta_j = a_j \tag{4.1} $$
+tal que {{<math>}}$a_j${{</math>}} é uma constante, e {{<math>}}$j${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
+
+- A hipótese alternativa para teste bicaudal é dada por
+$$ H_1: \ \beta_j \neq a_j \tag{4.2} $$
+enquanto, para teste unicaudal, é
+$$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $$
+
+- Estas hipóteses podem ser convenientemente testas pelo test _t_:
+$$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
+
+- Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
+
+{{<math>}}\begin{align} 
+H_0: \ \beta_j=0, \qquad H_1: \ \beta_j\neq 0 \tag{4.5}\\
+t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+\end{align}{{</math>}}
+
+- Logo, 
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c, $${{</math>}}
+em que {{<math>}}$c${{</math>}} é o valor crítico para um nível de significância {{<math>}}$\alpha${{</math>}}.
+
+- Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor crítico {{<math>}}$c${{</math>}} tende a ficar próximo de 2 para quantidades razoáveis de graus de liberdade, e se aproxima ao valor crítico de 1,96 da distribuição normal.
+
+- Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
+
+{{<math>}}$$ p_{\hat{\beta}_j} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_j}|), \tag{4.7} $${{</math>}}
+em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
+
+- Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor (a probabilidade da estimativa ser igual a zero) for menor do que um nível de significância {{<math>}}$\alpha${{</math>}}:
+
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_j} \le \alpha $${{</math>}}
+
+- Uma terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
+$$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
+- Rejeitamos a hipótese nula, neste caso, quando `\(a_j\)` estiver fora do intervalo de confiança.
+
+</br>
+
+#### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_j = 0${{</math>}}.
+
+
+##### 7. Estatística _t_
+
+{{<math>}}$$ t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+$$ {{</math>}}
+
+No R:
+
+```r
+# Cálculo da estatística t
+t_bhat = bhat / se_bhat
+t_bhat
+```
+
+```
+##            [,1]
+## const 3.7741910
+## hsGPA 4.7327219
+## ACT   0.8746263
+```
+
+##### 8. Avaliando as hipóteses nulas
+
+```r
+# definição do nível de significância
+alpha = 0.05
+c = qt(1 - alpha/2, N-K-1) # valor crítico de teste bicaudal
+c
+```
+
+```
+## [1] 1.977304
+```
+
+```r
+# (A) Comparando estatística t com o valor crítico
+abs(t_bhat) > c # avaliando H0
+```
+
+```
+##        [,1]
+## const  TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
+# (B) Comparando p-valor com o nível de significância de 5%
+p_bhat = 2 * pt(-abs(t_bhat), N-K-1)
+round(p_bhat, 5) # arredondando para facilitar visualização
+```
+
+```
+##          [,1]
+## const 0.00024
+## hsGPA 0.00001
+## ACT   0.38330
+```
+
+```r
+p_bhat < 0.05 # avaliando H0
+```
+
+```
+##        [,1]
+## const  TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
+# (C) Verificando se zero (0) está fora do intervalo de confiança
+ci = cbind(bhat - c*se_bhat, bhat + c*se_bhat) # avaliando H0
+ci
+```
+
+```
+##              [,1]       [,2]
+## const  0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
+
+
+
+##### Comparando estimações via `lm()` e analítica
+
+- Resultados calculados analiticamente ("na mão")
+
+```r
+cbind(bhat, se_bhat, t_bhat, p_bhat) # coeficientes
+```
+
+```
+##                      se_bhat                       
+## const 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA 0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT   0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
+ci # intervalos de confiança
+```
+
+```
+##              [,1]       [,2]
+## const  0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
+
+- Resultado via função `lm()`
+
+```r
+summary(GPAres)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
+confint(GPAres)
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept)  0.61241898 1.96023655
+## hsGPA        0.26400467 0.64290710
+## ACT         -0.01188376 0.03073578
+```
+
+</br>
+
+## Informando os Resultados das Regressões
+
+- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
+- Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regressões usando a função `stargazer` do pacote de mesmo nome.
+
+
+#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores (Wooldridge, 2006)
+- Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
+
+$$ \log{\text{salary}} = \beta_0 + \beta_1. (\text{benefits/salary}) + \text{outros_fatores} + u $$
+
+- Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
+
+```r
+data(meap93, package="wooldridge") # carregando base de dados
+
+# Definindo nova variável
+meap93$b_s = meap93$benefits / meap93$salary
+```
+
+- Agora vamos estimar diversos modelos:
+  - Modelo 1: apenas `b_s` como regressor
+  - Modelo 2: inclui as variáveis explicativas `log(enroll)` e `log(staff)` no Modelo 1
+  - Modelo 3: inclui as variáveis explicativas `droprate` e `gradrate` no Modelo 2
+- Depois, vamos resumir os resultados em uma única tabela usando a função `stagazer()` pacote `stagazer`
+  - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
+  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
+  - `star.cutoffs=c(.05, .01, .001)` níveis de significância de 5%, 1% e 0,1%
+
+```r
+# Estimando os modelos
+model1 = lm(log(salary) ~ b_s, meap93)
+model2 = lm(log(salary) ~ b_s + log(enroll) + log(staff), meap93)
+model3 = lm(log(salary) ~ b_s + log(enroll) + log(staff) + droprate + gradrate, meap93)
+
+# Resumindo em uma tabela
+library(stargazer)
+```
+
+```
+## 
+## Please cite as:
+```
+
+```
+##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+```
+
+```
+##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer
+```
+
+```r
+stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
+          star.cutoffs=c(.05, .01, .001))
+```
+
+```
+## 
+## ============================================
+##                    Dependent variable:      
+##              -------------------------------
+##                        log(salary)          
+##                 (1)        (2)        (3)   
+## --------------------------------------------
+## b_s          -0.825***  -0.605***  -0.589***
+##               (0.200)    (0.165)    (0.165) 
+##                                             
+## log(enroll)              0.087***  0.088*** 
+##                          (0.007)    (0.007) 
+##                                             
+## log(staff)              -0.222***  -0.218***
+##                          (0.050)    (0.050) 
+##                                             
+## droprate                            -0.0003 
+##                                     (0.002) 
+##                                             
+## gradrate                             0.001  
+##                                     (0.001) 
+##                                             
+## Constant     10.523***  10.844***  10.738***
+##               (0.042)    (0.252)    (0.258) 
+##                                             
+## --------------------------------------------
+## Observations    408        408        408   
+## R2             0.040      0.353      0.361  
+## ============================================
+## Note:          *p<0.05; **p<0.01; ***p<0.001
+```
+
+- É comum que os resultados econométricos venham acompanhados de asteriscos (`*`), pois estes indicam que as estimativas são significantes a um certo nível de significância
+- Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
+
+
+</br>
+
+
+## Testes de Hipótese
+
+- Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
+- Considere:
+  - {{<math>}}$q${{</math>}} o número de restrições
+  - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{R}${{</math>}} uma matriz {{<math>}}$q \times (K+1)${{</math>}}
+    - Tal que é continutída por diversos vetores-linha 
+  - {{<math>}}$h${{</math>}} é um vetor de constantes {{<math>}}$q \times 1${{</math>}}
+
+### 
+
+
+
+
+
+</br>
+
+{{< cta cta_text="👉 Seguir para Testes de Hipótese" cta_link="../sec9" >}}

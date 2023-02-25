@@ -496,4 +496,4 @@ summary(CEOregres)
 
 
 
-{{< cta cta_text="👉 Seguir para Regressão Múltipla" cta_link="../sec8" >}}
+{{< cta cta_text="👉 Seguir para Regressão Múltipla - Estimação" cta_link="../sec8" >}}
