@@ -121,8 +121,8 @@ type: book
 
 ### Aplicando no R
 
-- Usaremos o pacote de dados `mlb1` (com estatísticas de jogadores de beisebol) do pacote `wooldridge`
-- Queremos estimar o modelo
+- Como exemplo, usaremos o pacote de dados `mlb1` com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)
+- Queremos estimar o modelo:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
 &\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
 
@@ -140,8 +140,8 @@ em que:
 data(mlb1, package="wooldridge")
 
 # Estimando o modelo completo (irrestrito)
-res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
-round(summary(res.ur)$coef, 5) # coeficientes da estimação
+resMLB = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
+round(summary(resMLB)$coef, 5) # coeficientes da estimação
 ```
 
 ```
@@ -167,7 +167,7 @@ round(summary(res.ur)$coef, 5) # coeficientes da estimação
 
 ```r
 # Extraindo matriz de variância-covariância do estimador
-V_bhat = vcov(res.ur)
+V_bhat = vcov(resMLB)
 round(V_bhat, 5)
 ```
 
@@ -185,7 +185,7 @@ round(V_bhat, 5)
 # Calculando a estatística de Wald
 # install.packages("aod") # instalando o pacote necessário
 aod::wald.test(Sigma = V_bhat, # matriz de variância-covariância
-               b = coef(res.ur), # estimativas
+               b = coef(resMLB), # estimativas
                Terms = 4:6, # posições dos parâmetros a serem testados
                H0 = c(0, 0, 0) # Hipótese nula (tudo igual a zero)
                )
@@ -314,8 +314,8 @@ w
 ```r
 # Encontrando valor crítico Qui-quadrado para 5% de signif.
 alpha = 0.05
-cv = qchisq(1-alpha, df=G)
-cv
+c = qchisq(1-alpha, df=G)
+c
 ```
 
 ```
@@ -324,7 +324,7 @@ cv
 
 ```r
 # Comparando estatística de Wald e valor crítico
-w > cv
+w > c
 ```
 
 ```
@@ -353,6 +353,135 @@ w > cv
 ## Teste F
 
 - [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
-- Uma outra forma de avaliar 
+- Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
+- Nele, estimamos dois modelos:
+  - Irrestrito: inclui todas as as variáveis explicativas de interesse
+  - Restrito: exclui algumas variáveis da estimação
+- O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
+- A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
+
+</br>
+
+- A estatística _F_ pode ser calculada por:
+
+{{<math>}}$$ F = \frac{\text{SQR}_{r} - \text{SQR}_{ur}}{\text{SQR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
+
+em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
+
+
+
+### Aplicando no R
+
+- Aqui, continuaremos usando a base de dados `mlb1` da Seção 4.5 de Wooldridge (2006)
+- O modelo irrestrito (com todas variáveis explicativas) é:
+{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
+
+- O modelo restrito (excluindo as variáveis) é:
+{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + u \end{align}{{</math>}}
+
+
+#### Usando função `linearHypothesis()`
+- É possível fazer o teste _F_ a partir da função `linearHypothesis()` do pacote `car`
+- Além de incluir o objeto resultante de uma estimação, é necessário incluir um vetor de texto com as restrições:
+
+
+```r
+# Estimando o modelo irrestrito
+res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
+
+# Criando vetor com as restrições
+myH0 = c("bavg = 0", "hrunsyr = 0", "rbisyr = 0")
+
+# Aplicando o teste F
+# install.packages("car") # instalando o pacote necessário
+car::linearHypothesis(res.ur, myH0)
+```
+
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## bavg = 0
+## hrunsyr = 0
+## rbisyr = 0
+## 
+## Model 1: restricted model
+## Model 2: log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr
+## 
+##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
+## 1    350 198.31                                  
+## 2    347 183.19  3    15.125 9.5503 4.474e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+- Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que é esperado)
+- Para avaliar a hipótese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estatística _F_ é maior do que um valor crítico (dado um nível de significância), ou avaliarmos se o p-valor é menor do que esse nível de significância.
+- É possível ver acima, pelo segundo critério, que rejeitamos a hipótese nula.
+- Podemos ver o valor crítico a 5% de significância via:
+
+
+```r
+qf(1-0.05, G, N-K-1)
+```
+
+```
+## [1] 2.630641
+```
+- Como 9,55 > 2,63, então rejeitamos a hipótese nula.
+
+
+#### Calculando "na mão"
+
+- Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para não ter que fazer todos passos da estimação duas vezes.
+
+
+```r
+# Estimando o modelo irrestrito
+res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
+
+# Estimando o modelo restrito
+res.r = lm(log(salary) ~ years + gamesyr, data=mlb1)
+
+# Extraindo os R2 dos resultados das estimações
+r2.ur = summary(res.ur)$r.squared
+r2.ur
+```
+
+```
+## [1] 0.6278028
+```
+
+```r
+r2.r = summary(res.r)$r.squared
+r2.r
+```
+
+```
+## [1] 0.5970716
+```
+
+```r
+# Calculando a estatística F
+F = ( r2.ur - r2.r ) / (1 - r2.ur) * (N-K-1) /  G
+F
+```
+
+```
+## [1] 9.550254
+```
+
+```r
+# p-valor do teste F
+1 - pf(F, G, N-K-1)
+```
+
+```
+## [1] 4.473708e-06
+```
+
+
+</br>
 
 {{< cta cta_text="👉 Seguir para Otimização Numérica" cta_link="../sec9" >}}
