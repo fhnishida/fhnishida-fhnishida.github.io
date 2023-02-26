@@ -400,20 +400,23 @@ $$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $
 - Estas hipóteses podem ser convenientemente testas pelo test _t_:
 $$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
 
-- Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
+- **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
 
 {{<math>}}\begin{align} 
 H_0: \ \beta_j=0, \qquad H_1: \ \beta_j\neq 0 \tag{4.5}\\
 t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
 \end{align}{{</math>}}
 
-- Logo, 
-{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c, $${{</math>}}
-em que {{<math>}}$c${{</math>}} é o valor crítico para um nível de significância {{<math>}}$\alpha${{</math>}}.
+- Há três formas de avaliar essa hipótese.
+- **(i)** A primeira é por meio da comparação da estatística _t_ com o valor crítico _c_, dado um nível de significância {{<math>}}$\alpha${{</math>}}:
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c. $${{</math>}}
+
 
 - Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor crítico {{<math>}}$c${{</math>}} tende a ficar próximo de 2 para quantidades razoáveis de graus de liberdade, e se aproxima ao valor crítico de 1,96 da distribuição normal.
 
-- Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
+</br>
+
+- **(ii)** Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
 
 {{<math>}}$$ p_{\hat{\beta}_j} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_j}|), \tag{4.7} $${{</math>}}
 em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
@@ -422,9 +425,12 @@ em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuiç
 
 {{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_j} \le \alpha $${{</math>}}
 
-- Uma terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
+
+</br>
+
+- **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
 $$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
-- Rejeitamos a hipótese nula, neste caso, quando `\(a_j\)` estiver fora do intervalo de confiança.
+- Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_j${{</math>}} estiver fora do intervalo de confiança.
 
 </br>
 
@@ -598,7 +604,7 @@ meap93$b_s = meap93$benefits / meap93$salary
   - `star.cutoffs=c(.05, .01, .001)` níveis de significância de 5%, 1% e 0,1%
 
 ```r
-# Estimando os modelos
+# Estimando os três modelos
 model1 = lm(log(salary) ~ b_s, meap93)
 model2 = lm(log(salary) ~ b_s + log(enroll) + log(staff), meap93)
 model3 = lm(log(salary) ~ b_s + log(enroll) + log(staff) + droprate + gradrate, meap93)
@@ -662,23 +668,7 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 - Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
 
 
-</br>
-
-
-## Testes de Hipótese
-
-- Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
-- Considere:
-  - {{<math>}}$q${{</math>}} o número de restrições
-  - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{R}${{</math>}} uma matriz {{<math>}}$q \times (K+1)${{</math>}}
-    - Tal que é continutída por diversos vetores-linha 
-  - {{<math>}}$h${{</math>}} é um vetor de constantes {{<math>}}$q \times 1${{</math>}}
-
-### 
-
-
-
+## Outros tópicos (...)
 
 
 </br>
