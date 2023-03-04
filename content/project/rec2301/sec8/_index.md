@@ -688,9 +688,9 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 - Vamos usar a base de dados `wage1` do pacote `wooldridge`
 - Vamos estimar o modelo:
 
-{{<math}}\begin{align}
+{{<math>}}\begin{align}
 \text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
-&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math}}
+&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math>}}
 em que:
 
 - `wage`: salário médio por hora
@@ -727,10 +727,63 @@ round( summary(reg71)$coef, 4 )
 
 #### Variáveis dummy para categrias múltiplas
 
-
 - [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
-- Quando uma variável 
+- Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
+- É necessário criar uma _dummy_ para cada categoria
+- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita
+  - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
+  - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
+  - Se houver outra dummy igual a 1, então última dummy é igual a 0
+- Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
 
+
+##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
+
+- Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo
+- Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
+- Vamos estimar o seguinte modelo:
+
+{{<math>}}$$`
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+em que:
+
+- `dif_fte`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
+
+```r
+# test = read.csv("https://fhnishida.netlify.app/rec2301/card1994.csv")
+data(Fastfood, package="loedata") # carregando a base de dados
+head(Fastfood) # olhando as 5 primeiras linhas
+```
+
+```
+##     id sheet after chain co_owned nj southj centralj northj pa1 pa2 shore type2
+## 1  461    46     0     1        0  0      0        0      0   1   0     0     1
+## 2  492    49     0     2        0  0      0        0      0   1   0     0     1
+## 3 5062   506     0     2        1  0      0        0      0   1   0     0     1
+## 4  564    56     0     4        1  0      0        0      0   1   0     0     1
+## 5  614    61     0     4        1  0      0        0      0   1   0     0     1
+## 6  624    62     0     4        1  0      0        0      0   1   0     0     1
+##   status2  date2 ncalls empft emppt nmgrs   fte dfte wage_st inctime firstinc
+## 1       1 111792      0  30.0  15.0     3 40.50   NA      NA      19       NA
+## 2       1 111292      0   6.5   6.5     4 13.75   NA      NA      26       NA
+## 3       1 111292      0   3.0   7.0     2  8.50   NA      NA      13     0.37
+## 4       1 111492      0  20.0  20.0     4 34.00   NA     5.0      26     0.10
+## 5       1 111492      0   6.0  26.0     5 24.00   NA     5.5      52     0.15
+## 6       1 111492      2   0.0  31.0     5 20.50   NA     5.0      26     0.07
+##   bonus pctaff meals open hrsopen psoda pfry pentree nregs nregs11 balanced
+## 1     1     NA     2  6.5    16.5  1.03 1.03    0.52     3       3        1
+## 2     0     NA     2 10.0    13.0  1.01 0.90    2.35     4       3        1
+## 3     0     30     2 11.0    10.0  0.95 0.74    2.33     3       3        1
+## 4     1      0     2 10.0    12.0  0.87 0.82    1.79     2       2        1
+## 5     1      0     3 10.0    12.0  0.87 0.77    1.65     2       2        1
+## 6     0     45     2 10.0    12.0  0.87 0.77    0.95     2       2        0
+```
 
 
 </br>

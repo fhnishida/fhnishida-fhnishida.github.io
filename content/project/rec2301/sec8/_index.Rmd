@@ -387,9 +387,9 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 - Vamos usar a base de dados `wage1` do pacote `wooldridge`
 - Vamos estimar o modelo:
 
-{{<math}}\begin{align}
+{{<math>}}\begin{align}
 \text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
-&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math}}
+&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math>}}
 em que:
 
 - `wage`: salário médio por hora
@@ -424,13 +424,25 @@ round( summary(reg71)$coef, 4 )
 - Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
 
 
+##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
 
-##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card & Krueger, 1994)
+- Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo
+- Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
+- Vamos estimar o seguinte modelo:
 
+{{<math>}}$$
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+em que:
+
+- `dif_fte`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 ```{r}
-# install.packages("loedata") # Instalando o pacote necessário
+# test = read.csv("https://fhnishida.netlify.app/rec2301/card1994.csv")
 data(Fastfood, package="loedata") # carregando a base de dados
 head(Fastfood) # olhando as 5 primeiras linhas
 ```
