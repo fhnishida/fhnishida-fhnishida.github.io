@@ -440,10 +440,27 @@ em que:
 - `hrsopen`: horas de funcionamento por dia
 
 
+```{r eval=FALSE, include=FALSE}
+# Criando a base de dados
+data(Fastfood, package="loedata")
+
+library(dplyr)
+card1994 = Fastfood %>% select(sheet, nj, after, chain, fte, hrsopen) %>%
+  tidyr::pivot_wider(
+    values_from = "fte", names_from = "after", 
+  ) %>% na.omit() %>% mutate(
+    diff_fte = `1` - `0`
+  )
+
+readr::write_csv(card1994, "card1994.csv")
+```
+
 ```{r}
 card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv")
 head(card1994) # olhando as 6 primeiras linhas
 ```
+
+
 
 
 </br>
