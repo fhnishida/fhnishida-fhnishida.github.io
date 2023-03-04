@@ -431,7 +431,7 @@ round( summary(reg71)$coef, 4 )
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$
-\text{diff_emptot} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
 em que:
 
 - `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992

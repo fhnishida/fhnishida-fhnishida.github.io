@@ -744,7 +744,7 @@ round( summary(reg71)$coef, 4 )
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$`
-\text{diff_emptot} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
 em que:
 
 - `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
@@ -760,13 +760,13 @@ head(card1994) # olhando as 6 primeiras linhas
 ```
 
 ```
-##    id        state emptot_feb92 emptot_nov92 chain  pct_fte wage_st hrsopen
-## 1  46 Pennsylvania        40.50         24.0    bk 74.07407      NA    16.5
-## 2  46 Pennsylvania        40.50         24.0    bk 14.58333    4.30    16.5
-## 3  49 Pennsylvania        13.75         11.5   kfc 47.27273      NA    13.0
-## 4  49 Pennsylvania        13.75         11.5   kfc  0.00000    4.45    13.0
-## 5 506 Pennsylvania         8.50         10.5   kfc 35.29412      NA    10.0
-## 6 506 Pennsylvania         8.50         10.5   kfc 28.57143    5.00    11.0
+##   X  id nj fte_feb92 fte_nov92 chain  pct_fte wage_st hrsopen
+## 1 1  46  0     40.50      24.0    bk 74.07407      NA    16.5
+## 2 2  46  0     40.50      24.0    bk 14.58333    4.30    16.5
+## 3 3  49  0     13.75      11.5   kfc 47.27273      NA    13.0
+## 4 4  49  0     13.75      11.5   kfc  0.00000    4.45    13.0
+## 5 5 506  0      8.50      10.5   kfc 35.29412      NA    10.0
+## 6 6 506  0      8.50      10.5   kfc 28.57143    5.00    11.0
 ```
 
 
