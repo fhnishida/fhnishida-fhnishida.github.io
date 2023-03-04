@@ -367,7 +367,73 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 - Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
 
 
-## Outros tópicos (...)
+</br>
+
+## Regressores Qualitativos
+
+- Muitas variáveis de interesse são qualitativas, ao invés de quantitativas.
+- Isso inclui variáveis como _sexo_, _raça_, _status de trabalho_, _estado civil_, _escolha de marca_, etc.
+
+
+### Variáveis Dummy
+
+- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
+- Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
+- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
+
+
+##### Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Vamos usar a base de dados `wage1` do pacote `wooldridge`
+- Vamos estimar o modelo:
+
+{{<math}}\begin{align}
+\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
+&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+```{r}
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+reg71 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg71)$coef, 4 )
+```
+
+- Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
+- Essa diferença é estatisticamente significane (p-valor de `female` é menor do que 5\%)
+
+
+
+#### Variáveis dummy para categrias múltiplas
+
+- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
+- Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
+- É necessário criar uma _dummy_ para cada categoria
+- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita
+  - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
+  - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
+  - Se houver outra dummy igual a 1, então última dummy é igual a 0
+- Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
+
+
+
+##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card & Krueger, 1994)
+
+
+
+```{r}
+# install.packages("loedata") # Instalando o pacote necessário
+data(Fastfood, package="loedata") # carregando a base de dados
+head(Fastfood) # olhando as 5 primeiras linhas
+```
 
 
 </br>

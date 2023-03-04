@@ -668,7 +668,69 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 - Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
 
 
-## Outros tópicos (...)
+</br>
+
+## Regressores Qualitativos
+
+- Muitas variáveis de interesse são qualitativas, ao invés de quantitativas.
+- Isso inclui variáveis como _sexo_, _raça_, _status de trabalho_, _estado civil_, _escolha de marca_, etc.
+
+
+### Variáveis Dummy
+
+- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
+- Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
+- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
+
+
+##### Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Vamos usar a base de dados `wage1` do pacote `wooldridge`
+- Vamos estimar o modelo:
+
+{{<math}}\begin{align}
+\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
+&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
+```r
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+reg71 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg71)$coef, 4 )
+```
+
+```
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -2.1097     0.7107 -2.9687   0.0031
+## female       -1.7832     0.2572 -6.9327   0.0000
+## educ          0.5263     0.0485 10.8412   0.0000
+## exper         0.1878     0.0357  5.2557   0.0000
+## expersq      -0.0038     0.0008 -4.9267   0.0000
+## tenure        0.2117     0.0492  4.3050   0.0000
+## tenursq      -0.0029     0.0017 -1.7473   0.0812
+```
+
+- Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
+- Essa diferença é estatisticamente significane (p-valor de `female` é menor do que 5\%)
+
+
+
+#### Variáveis dummy para categrias múltiplas
+
+
+- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
+- Quando uma variável 
+
 
 
 </br>

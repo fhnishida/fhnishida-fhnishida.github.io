@@ -67,7 +67,7 @@ wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc
 </br>
 
 ## Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) teoria da decisão, do (b) método dos momentos e da (c) máxima verossimilhança.
+- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) teoria da decisão (minimização da soma do quadrado dos resíduos), de (b) máxima verossimilhança e de (c) método dos momentos.
 - Em todas elas, usaremos um método de otimização, mas, diferente da seção anterior, queremos achar uma _dupla_ de parâmetros ({{<math>}}$ \beta_0 \text{ e } \beta_1${{</math>}}) que otimizam uma função objetivo.
 
 
