@@ -431,20 +431,18 @@ round( summary(reg71)$coef, 4 )
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$
-\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+\text{diff_emptot} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
 em que:
 
-- `dif_fte`: diferença de nº de empregados entre fev/1992 e nov/1992
-- `female`: dummy em que (1) mulher e (0) homem
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
-- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+- `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
+- `chain`: cadeia de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys``), e (4) Wendy's (`wendys`)
+- `hrsopen`: horas de funcionamento por dia
 
 
 ```{r}
-# test = read.csv("https://fhnishida.netlify.app/rec2301/card1994.csv")
-data(Fastfood, package="loedata") # carregando a base de dados
-head(Fastfood) # olhando as 5 primeiras linhas
+card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv")
+head(card1994) # olhando as 6 primeiras linhas
 ```
 
 

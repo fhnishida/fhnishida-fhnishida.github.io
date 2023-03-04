@@ -744,45 +744,29 @@ round( summary(reg71)$coef, 4 )
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$`
-\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+\text{diff_emptot} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
 em que:
 
-- `dif_fte`: diferença de nº de empregados entre fev/1992 e nov/1992
-- `female`: dummy em que (1) mulher e (0) homem
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
-- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+- `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
+- `chain`: cadeia de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys``), e (4) Wendy's (`wendys`)
+- `hrsopen`: horas de funcionamento por dia
 
 
 
 ```r
-# test = read.csv("https://fhnishida.netlify.app/rec2301/card1994.csv")
-data(Fastfood, package="loedata") # carregando a base de dados
-head(Fastfood) # olhando as 5 primeiras linhas
+card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv")
+head(card1994) # olhando as 6 primeiras linhas
 ```
 
 ```
-##     id sheet after chain co_owned nj southj centralj northj pa1 pa2 shore type2
-## 1  461    46     0     1        0  0      0        0      0   1   0     0     1
-## 2  492    49     0     2        0  0      0        0      0   1   0     0     1
-## 3 5062   506     0     2        1  0      0        0      0   1   0     0     1
-## 4  564    56     0     4        1  0      0        0      0   1   0     0     1
-## 5  614    61     0     4        1  0      0        0      0   1   0     0     1
-## 6  624    62     0     4        1  0      0        0      0   1   0     0     1
-##   status2  date2 ncalls empft emppt nmgrs   fte dfte wage_st inctime firstinc
-## 1       1 111792      0  30.0  15.0     3 40.50   NA      NA      19       NA
-## 2       1 111292      0   6.5   6.5     4 13.75   NA      NA      26       NA
-## 3       1 111292      0   3.0   7.0     2  8.50   NA      NA      13     0.37
-## 4       1 111492      0  20.0  20.0     4 34.00   NA     5.0      26     0.10
-## 5       1 111492      0   6.0  26.0     5 24.00   NA     5.5      52     0.15
-## 6       1 111492      2   0.0  31.0     5 20.50   NA     5.0      26     0.07
-##   bonus pctaff meals open hrsopen psoda pfry pentree nregs nregs11 balanced
-## 1     1     NA     2  6.5    16.5  1.03 1.03    0.52     3       3        1
-## 2     0     NA     2 10.0    13.0  1.01 0.90    2.35     4       3        1
-## 3     0     30     2 11.0    10.0  0.95 0.74    2.33     3       3        1
-## 4     1      0     2 10.0    12.0  0.87 0.82    1.79     2       2        1
-## 5     1      0     3 10.0    12.0  0.87 0.77    1.65     2       2        1
-## 6     0     45     2 10.0    12.0  0.87 0.77    0.95     2       2        0
+##    id        state emptot_feb92 emptot_nov92 chain  pct_fte wage_st hrsopen
+## 1  46 Pennsylvania        40.50         24.0    bk 74.07407      NA    16.5
+## 2  46 Pennsylvania        40.50         24.0    bk 14.58333    4.30    16.5
+## 3  49 Pennsylvania        13.75         11.5   kfc 47.27273      NA    13.0
+## 4  49 Pennsylvania        13.75         11.5   kfc  0.00000    4.45    13.0
+## 5 506 Pennsylvania         8.50         10.5   kfc 35.29412      NA    10.0
+## 6 506 Pennsylvania         8.50         10.5   kfc 28.57143    5.00    11.0
 ```
 
 
