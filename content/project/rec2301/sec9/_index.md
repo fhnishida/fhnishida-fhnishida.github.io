@@ -90,6 +90,98 @@ type: book
 - Note que, em pequenas amostras, precisamos assumir que {{<math>}}$ u|x \sim N(0; \sigma^2) ${{</math>}}
 - Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística _t_ não pertencer ao intervalo de confiança.
 
+
+
+##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+- Anteriormente, estimamos o seguinte modelo:
+
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} +\\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `married`: dummy em que (1) casado e (0) solteiro
+- `female*married`: interação (multiplicação) das _dummies_ `female` e `married`
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
+```r
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+res_7.14 = lm(lwage ~ female*married + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(res_7.14)$coef, 4 )
+```
+
+```
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)      0.3214     0.1000  3.2135   0.0014
+## female          -0.1104     0.0557 -1.9797   0.0483
+## married          0.2127     0.0554  3.8419   0.0001
+## educ             0.0789     0.0067 11.7873   0.0000
+## exper            0.0268     0.0052  5.1118   0.0000
+## expersq         -0.0005     0.0001 -4.8471   0.0000
+## tenure           0.0291     0.0068  4.3016   0.0000
+## tenursq         -0.0005     0.0002 -2.3056   0.0215
+## female:married  -0.3006     0.0718 -4.1885   0.0000
+```
+
+- Notamos que o efeito do casamento sobre mulheres é diferente do efeito sobre homens, pois o parâmetro de `female:married` ({{<math>}}$\delta_2${{</math>}}) é significante.
+- No entanto, para avaliar se o efeito do casamento sobre a mulher é significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}:
+
+
+```r
+car::linearHypothesis(res_7.14, "married + female:married = 0")
+```
+
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## married  + female:married = 0
+## 
+## Model 1: restricted model
+## Model 2: lwage ~ female * married + educ + exper + expersq + tenure + 
+##     tenursq
+## 
+##   Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
+## 1    518 80.404                              
+## 2    517 79.968  1   0.43629 2.8206 0.09366 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+```r
+# Extraindo objetos da regressão
+bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
+V_bhat = vcov(res_7.14) # matriz de variância-covariância do estimador
+N = nrow(wage1) # número de observações
+K = length(bhat) - 1 # número de covariadas
+uhat = residuals(res_7.14) # resíduos da regressão
+sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) ) # variância do termo de erro
+
+# Criando vetor-linha de restrição
+r1_prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1)
+h1 = 0
+
+# Fazendo teste t
+t = (r1_prime %*% bhat - h1) / sqrt(sig2hat * r1_prime %*% V_bhat %*% t(r1_prime))
+t
+```
+
+```
+##           [,1]
+## [1,] -4.270323
+```
+
+- Como {{<math>}}$|t| > 2${{</math>}} (valor crítico aproximada para nível de significância de 5\%), então rejeitamos a hipótese nula e concluímos que o efeito do casamento sobre o salário de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) é estatisticamente significante e é também negativo.
+
+
 </br>
 
 

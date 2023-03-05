@@ -217,6 +217,7 @@ summary(GPAres)$coef
 ```
 
 
+</br>
 
 ## Inferência MQO multivariado
 
@@ -403,8 +404,8 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-reg71 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(reg71)$coef, 4 )
+res_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(res_7.1)$coef, 4 )
 ```
 
 - Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
@@ -412,12 +413,12 @@ round( summary(reg71)$coef, 4 )
 
 
 
-#### Variáveis dummy para categrias múltiplas
+### Variáveis com múltiplas categorias
 
 - [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
 - Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
 - É necessário criar uma _dummy_ para cada categoria
-- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita
+- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
   - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
   - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
   - Se houver outra dummy igual a 1, então última dummy é igual a 0
@@ -436,7 +437,7 @@ em que:
 
 - `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
 - `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
-- `chain`: cadeia de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys``), e (4) Wendy's (`wendys`)
+- `chain`: rede de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys`), e (4) Wendy's (`wendys`)
 - `hrsopen`: horas de funcionamento por dia
 
 
@@ -450,7 +451,7 @@ card1994 = Fastfood %>% select(sheet, nj, after, chain, fte, hrsopen) %>%
     values_from = "fte", names_from = "after", 
   ) %>% na.omit() %>% mutate(
     diff_fte = `1` - `0`
-  )
+  ) %>% select(-`1`, -`0`)
 
 readr::write_csv(card1994, "card1994.csv")
 ```
@@ -460,9 +461,244 @@ card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv"
 head(card1994) # olhando as 6 primeiras linhas
 ```
 
+- Note que a variável categórica `chain` possui números ao invés dos nomes das redes de fast food.
+- Isto é comum nas bases de dados, já que números consomem menos espaço de armazenamento.
+- Caso você rode a estimação com a variável `chain` desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:
 
+```{r}
+lm(diff_fte ~ nj + hrsopen + chain, data=card1994)
+```
+
+- Note que a interpretação é que a mudança de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
+- Portanto, precisamos criar as _dummies_ das variáveis categóricas:
+
+```{r}
+# Criando dummies para cada variável
+card1994$bk = ifelse(card1994$chain==1, 1, 0)
+card1994$kfc = ifelse(card1994$chain==2, 1, 0)
+card1994$roys = ifelse(card1994$chain==3, 1, 0)
+card1994$wendys = ifelse(card1994$chain==4, 1, 0)
+
+# Visualizando as primeras linhas
+head(card1994)
+```
+
+- Também é possível criar _dummies_ mais facilmente usando o pacote `fastDummies`
+- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
+- Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
+
+```{r}
+lm(diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, data=card1994)
+```
+
+- Por padrão, o R já retira uma das categorias para servir como referência.
+- Aqui, a categoria `wendys` serve como referência às estimativas das demais _dummies_
+  - Em relação a `wendys`, o nº de empregados de:
+    - `bk` teve uma variação de empregados muito parecida (apenas 0,005 menor)
+    - `roys` teve uma diminuição (menos 1 empregado)
+    - `kfc` teve uma maior diminuição (menos 2 empregados)
+- Note que poderíamos usar como referência outra rede de fast food, deixando sua _dummy_ de fora da regressão.
+- Vamos deixar de fora a _dummy_ do `roys`:
+
+```{r}
+lm(diff_fte ~ nj + hrsopen + bk + kfc + wendys, data=card1994)
+```
+
+- Note agora que os parâmetros estão em relação à `roys``:
+  - estimativa de `kfc` que tinha ficado -2, agora está "menos" negativo (-1)
+  - estimativas de `bk` e de `wendys` possuem estimativas positivas (lembre-se que, em relação a `wendys`, a estimativa de `roys` foi negativo na regressão anterior)
+
+</br>
+
+- No R, na verdade, não é necessário criar _dummies_ de uma variável categórica para rodar uma regressão, caso ela esteja como _texto_ ou como _factor_
+
+- Criando variável da classe texto:
+```{r}
+card1994$chain_txt = as.character(card1994$chain) # criando variável texto
+head(card1994$chain_txt) # Visualizado os primeiros valores
+
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_txt, data=card1994)
+```
+
+- Observe que a função `lm()` retira a categoria que aparece primeiro no vetor de texto (`"1"`)
+- Usando como variável texto, não é possível selecionar facilmente qual categoria vai ser retirada da regressão
+- Para isto, podemos usar a classe de objeto `factor`:
+
+```{r}
+card1994$chain_fct = factor(card1994$chain) # criando variável factor
+levels(card1994$chain_fct) # verificando os níveis (categorias) da variável factor
+
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
+```
+
+- Note que a função `lm()` retira o primeiro nível da regressão (não necessariamente o que aparece primeiro na base de dados)
+- Podemos trocar a referência usando a função `relevel()` em uma variável _factor_
+```{r}
+card1994$chain_fct = relevel(card1994$chain_fct, ref="3") # referência roys
+levels(card1994$chain_fct) # verificando os níveis da variável factor
+
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
+```
+
+- Observe que o primeiro nível foi alterado para `"3"` e, portanto, essa categoria foi retirada na regressão
+
+
+
+### Transformando variáveis contínuas em categorias
+- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
+- Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
+
+```{r}
+# Definindo pontos de corte
+cutpts = c(0, 3, 6, 10)
+
+# Classificando o vetor 1:10 a partir dos pontos de corte
+cut(1:10, cutpts)
+```
+
+
+##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais (Wooldridge, 2006)
+
+- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
+- Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
+
+```{r}
+data(lawsch85, package="wooldridge") # carregando base de dados necessária
+
+# Definindo pontos de corte
+cutpts = c(0, 10, 25, 40, 60, 100, 175)
+
+# Criando variável com a classificação
+lawsch85$rankcat = cut(lawsch85$rank, cutpts)
+
+# Visualizando os 6 primeiros valores de rankcat
+head(lawsch85$rankcat)
+
+# Escolhendo a categoria de referência (acima de 100 até 175)
+lawsch85$rankcat = relevel(lawsch85$rankcat, '(100,175]')
+
+# Estimando o modelo
+res = lm(log(salary) ~ rankcat + LSAT + GPA + llibvol + lcost, data=lawsch85)
+round( summary(res)$coef, 5 )
+```
+
+- Note que, em relação às universidades em piores colocações (`(100,175]`), as melhores ranqueadas provêem salários de 13,16\% a 69,96\% superiores
+
+
+### Interações Envolvendo Variáveis Dummy
+
+#### Interações entre variáveis dummy
+- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
+- Seção 7. de Wooldridge (2006)
+- Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
+
+
+##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Retornemos à base de dados `wage1` do pacote `wooldridge`
+- Agora, vamos incluir a variável _dummy_ `married`
+
+- O modelo a ser estimado é:
+
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `married`: dummy em que (1) casado e (0) solteiro
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
+```{r}
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+res_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(res_7.11)$coef, 4 )
+```
+
+- Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29\% sobre o salário.
+- O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.
+- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
+  - `lwage ~ female + married + married:female` (o `:` cria apenas a interação), ou
+  - `lwage ~ female * married` (a "multiplicação" cria as dummies e a interação)
+
+- O modelo a ser estimado agora é:
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+
+```{r}
+# Estimando o modelo - forma (a)
+res_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
+               data=wage1)
+round( summary(res_7.14a)$coef, 4 )
+
+# Estimando o modelo - forma (b)
+res_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
+               data=wage1)
+round( summary(res_7.14b)$coef, 4 )
+```
+
+- Observe que, agora, o parâmetro de casado refere-se apenas aos homens (`married`) é positivo e significante de 21,27\%.
+- Já, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, é igual a -8,79\% (= 0,2127 - 0,3006)
+- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudança do estado civil (**intercepto**) é diferente entre mulheres e homens.
+- No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
+
+
+#### Considerando inclinações diferentes
+- Seção 7.4 de Wooldridge (2006)
+- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
+- Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
+
+
+
+##### Exemplo 7.10 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Retornemos à base de dados `wage1` do pacote `wooldridge`
+- Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
+- Então, incluiremos no modelo a interação entre a dummy `female` e os anos de educação (`educ`):
+
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
+&\beta_3 \text{exper} + \beta_4 \text{exper}^2 + \beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `female*educ`: interação entre a dummy `female` e anos de educação (`educ`)
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+```{r}
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+res_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
+              data=wage1)
+round( summary(res_7.17)$coef, 4 )
+```
+
+- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno a cada ano de educação (**inclinação**) é diferente entre mulheres e homens.
+- Pela estimação, nota-se que o incremento no salário das mulheres para cada ano a mais de educação é 0,56\% menor em relação aos homens:
+  - Homens aumentam 8,24\% (`educ`) o salário para cada ano de educação
+  - Mulheres aumentam 7,58\% (= 0,0824 - 0,0056) o salário para cada ano de educação
+- No entanto, essa diferença é estatisticamente não-significante a 5\% de significância.
+
+<img src="../example_interaction.png" alt="">
 
 
 </br>
+
 
 {{< cta cta_text="👉 Seguir para Testes de Hipótese" cta_link="../sec9" >}}
