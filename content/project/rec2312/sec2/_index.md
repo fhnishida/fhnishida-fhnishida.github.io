@@ -2,111 +2,705 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Testes de Hipótese
+linktitle: MQO
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Testes de Hipótese
-weight: 9
+title: Mínimos Quadrados Ordinários (MQO)
+weight: 2
 output: md_document
 type: book
 ---
 
 
 
-- Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
 
 
-## Teste de Wald
-- Considere:
-  - {{<math>}}$G${{</math>}} o número de restrições lineares
-  - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$Q \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, contida por diversos vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., Q${{</math>}}
-  - Modelo multivariado:
-  
-  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + u$${{</math>}}
+## Estimação MQO multivariado
 
-- A partir destas matrizes e vetores, é possível construir testes de hipótese na forma:
-{{<math>}}\begin{align}
-\text{H}_0: &\underset{G\times (K+1)}{\boldsymbol{R}} \underset{(K+1)\times 1}{\boldsymbol{\beta}} = \underset{G \times 1}{\boldsymbol{h}} \\
-\text{H}_0: &\left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \vdots \\ \boldsymbol{r}'_{G} \end{matrix} \right] \boldsymbol{\beta} = \left[ \begin{matrix} h_1 \\ h_2 \\ \vdots \\ h_G \end{matrix} \right] \\
-\text{H}_0: &\left\{ \begin{matrix} \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 \\ \boldsymbol{r}'_2 \boldsymbol{\beta} = h_2 \\ \vdots \\ \boldsymbol{r}'_G \boldsymbol{\beta} = h_G \end{matrix} \right.
+### Regressão via `lm()`
+
+- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
+
+- Para estimar um modelo multivariado no R, podemos usar a função `lm()`:
+  - O til (`~`) separa a variável dependente das variáveis independentes
+  - As variáveis independentes precisam ser separadas por um `+`
+  - A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()` -- para retirá-la, precisa incluir a "variável independente" `0` na fórmula.
+
+
+#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Sejam as variáveis
+    - `colGPA` (_college GPA_): a nota média em um curso superior,
+    - `hsGPA` (_high school GPA_): a nota médio do ensino médio, e
+    - `ACT` (_achievement test score_): a nota de avaliação de conhecimentos para ingresso no ensino superior.
+- Usando a base `gpa1` do pacote `wooldridge`, vamos estimar o seguinte modelo:
+
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+
+
+```r
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
+
+# Estimando o modelo
+GPAres = lm(colGPA ~ hsGPA + ACT, data = gpa1)
+GPAres
+```
+
+```
+## 
+## Call:
+## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+## 
+## Coefficients:
+## (Intercept)        hsGPA          ACT  
+##    1.286328     0.453456     0.009426
+```
+
+- Note que podemos ver mais detalhes da estimação usando a função `summary()` no objeto resultante da função `lm()`
+
+```r
+summary(GPAres)
+```
+
+```
+## 
+## Call:
+## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.85442 -0.24666 -0.02614  0.28127  0.85357 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 1.286328   0.340822   3.774 0.000238 ***
+## hsGPA       0.453456   0.095813   4.733 5.42e-06 ***
+## ACT         0.009426   0.010777   0.875 0.383297    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3403 on 138 degrees of freedom
+## Multiple R-squared:  0.1764,	Adjusted R-squared:  0.1645 
+## F-statistic: 14.78 on 2 and 138 DF,  p-value: 1.526e-06
+```
+
+
+#### EXTRAINDO (...)
+
+(...) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+### MQO na forma matricial
+
+- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
+
+
+#### Notações
+
+- Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
+- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
+$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + u_i, \qquad i=1, 2, ..., N \tag{E.1} $$
+em que {{<math>}}$N${{</math>}} é o número de observações.
+
+- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
+{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
+
+- Note que o produto interno {{<math>}}$\boldsymbol{x}_i \boldsymbol{\beta}${{</math>}} é:
+
+{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
+&= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}{{</math>}}
+
+- Logo, a equação (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
+
+$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}_i \boldsymbol{\beta}} + u_i = \boldsymbol{x}_i \boldsymbol{\beta} + u_i, \tag{E.2} $$
+
+- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
+
+{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \\ \vdots \\ \boldsymbol{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
+
+- Agora, podemos "empilhar" as equações (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
+
+{{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{u} \tag{E.3} \\
+&= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]   \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + u_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + u_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + u_N \end{matrix} \right]\\
+&= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}{{</math>}}
+
+
+
+#### Estimação Analítica no R
+
+##### Operações matriciais/vetoriais no R
+- Primeiro, vamos ver como realizar operações matriciais/vetoriais no R:
+  - **Transposta de uma matriz ou vetor**: função `t()`
+  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
+  - **Inversa de uma matriz (quadrada)**: função `solve()`
+
+
+```r
+# Como exemplo, criaremos matriz A de dimensão 4x2
+A = matrix(1:8, nrow=4, ncol=2)
+A
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+```
+
+```r
+# Transposta de A (2x4)
+t(A)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
+```
+
+```r
+# Produto matricial A'A (2x2)
+t(A) %*% A
+```
+
+```
+##      [,1] [,2]
+## [1,]   30   70
+## [2,]   70  174
+```
+
+```r
+# Inversa de A'A (2x2)
+solve( t(A) %*% A )
+```
+
+```
+##          [,1]     [,2]
+## [1,]  0.54375 -0.21875
+## [2,] -0.21875  0.09375
+```
+
+#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Queremos estimar o modelo:
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+
+- A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
+
+
+```r
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
+
+# Criando o vetor y
+y = as.matrix(gpa1[,"colGPA"]) # transformando coluna de data frame em matriz
+head(y)
+```
+
+```
+##      [,1]
+## [1,]  3.0
+## [2,]  3.4
+## [3,]  3.0
+## [4,]  3.5
+## [5,]  3.6
+## [6,]  3.0
+```
+
+```r
+# Criando a matriz de covariadas X com primeira coluna de 1's
+X = cbind( const=1, gpa1[, c("hsGPA", "ACT")] ) # juntando 1's com as covariadas
+X = as.matrix(X) # transformando em matriz
+head(X)
+```
+
+```
+##   const hsGPA ACT
+## 1     1   3.0  21
+## 2     1   3.2  24
+## 3     1   3.6  26
+## 4     1   3.5  27
+## 5     1   3.9  28
+## 6     1   3.4  25
+```
+
+```r
+# Pegando valores N e K
+N = nrow(gpa1)
+N
+```
+
+```
+## [1] 141
+```
+
+```r
+K = ncol(X) - 1
+K
+```
+
+```
+## [1] 2
+```
+
+##### 1. Estimativas de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} \tag{3.2} $${{</math>}}
+
+No R:
+
+```r
+bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+bhat
+```
+
+```
+##              [,1]
+## const 1.286327767
+## hsGPA 0.453455885
+## ACT   0.009426012
+```
+
+
+##### 2. Valores ajustados/preditos {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}  $${{</math>}}
+
+No R:
+
+```r
+yhat = X %*% bhat
+head(yhat)
+```
+
+```
+##       [,1]
+## 1 2.844642
+## 2 2.963611
+## 3 3.163845
+## 4 3.127926
+## 5 3.318734
+## 6 3.063728
+```
+
+
+##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{u}} = \boldsymbol{y} - \hat{\boldsymbol{y}} \tag{3.3}  $${{</math>}}
+
+No R:
+
+```r
+uhat = y - yhat
+head(uhat)
+```
+
+```
+##          [,1]
+## 1  0.15535832
+## 2  0.43638918
+## 3 -0.16384523
+## 4  0.37207430
+## 5  0.28126580
+## 6 -0.06372813
+```
+
+
+##### 4. Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
+
+{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+
+No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+sig2hat
+```
+
+```
+## [1] 0.1158148
+```
+
+
+##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
+
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
+
+No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+V_bhat = sig2hat * solve( t(X) %*% X )
+V_bhat
+```
+
+```
+##              const         hsGPA           ACT
+## const  0.116159717 -0.0226063687 -0.0015908486
+## hsGPA -0.022606369  0.0091801149 -0.0003570767
+## ACT   -0.001590849 -0.0003570767  0.0001161478
+```
+
+##### 6. Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
+É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
+
+```r
+se_bhat = sqrt( diag(V_bhat) )
+se_bhat
+```
+
+```
+##      const      hsGPA        ACT 
+## 0.34082212 0.09581292 0.01077719
+```
+
+
+##### Comparando estimações via `lm()` e analítica
+- Até agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
+
+```r
+cbind(bhat, se_bhat)
+```
+
+```
+##                      se_bhat
+## const 1.286327767 0.34082212
+## hsGPA 0.453455885 0.09581292
+## ACT   0.009426012 0.01077719
+```
+
+- E, portanto, ainda percisamos concluir a parte de inferência da estimação por meio do cálculo da estatística _t_ e do p-valor:
+
+```r
+summary(GPAres)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+
+</br>
+
+## Inferência MQO multivariado
+
+### O teste _t_
+
+- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
+
+- Após a estimação, é importante fazer testes de hipótese na forma
+$$ H_0: \ \beta_j = a_j \tag{4.1} $$
+tal que {{<math>}}$a_j${{</math>}} é uma constante, e {{<math>}}$j${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
+
+- A hipótese alternativa para teste bicaudal é dada por
+$$ H_1: \ \beta_j \neq a_j \tag{4.2} $$
+enquanto, para teste unicaudal, é
+$$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $$
+
+- Estas hipóteses podem ser convenientemente testas pelo test _t_:
+$$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
+
+- **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
+
+{{<math>}}\begin{align} 
+H_0: \ \beta_j=0, \qquad H_1: \ \beta_j\neq 0 \tag{4.5}\\
+t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
 \end{align}{{</math>}}
 
+- Há três formas de avaliar essa hipótese.
+- **(i)** A primeira é por meio da comparação da estatística _t_ com o valor crítico _c_, dado um nível de significância {{<math>}}$\alpha${{</math>}}:
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c. $${{</math>}}
 
 
-### Uma restrição linear
+- Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor crítico {{<math>}}$c${{</math>}} tende a ficar próximo de 2 para quantidades razoáveis de graus de liberdade, e se aproxima ao valor crítico de 1,96 da distribuição normal.
 
-- Considere o modelo:
-  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$${{</math>}}
+</br>
 
-- Logo, há {{<math>}}$K=2${{</math>}} variáveis explicativas (e há 3 parâmetros)
-- 1 restrição linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
-- Logo, neste caso específico, temos
-{{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
+- **(ii)** Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
 
+{{<math>}}$$ p_{\hat{\beta}_j} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_j}|), \tag{4.7} $${{</math>}}
+em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
 
-#### Exemplo 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
-- Note que {{<math>}}$h_1 = 4${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+- Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor (a probabilidade da estimativa ser igual a zero) for menor do que um nível de significância {{<math>}}$\alpha${{</math>}}:
 
-{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
-
-- Então, a hipótese nula é
-{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_j} \le \alpha $${{</math>}}
 
 
+</br>
 
-#### Exemplo 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
-- Note que {{<math>}}$h_1 = 2${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+- **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
+$$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
+- Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_j${{</math>}} estiver fora do intervalo de confiança.
 
-{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
+</br>
 
-- Então, a hipótese nula é
-{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
-
-
-#### Exemplo 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
-- Note que
-{{<math>}}$$\beta_1 = \beta_2 \iff \beta_1 - \beta_2 = 0 $${{</math>}}
-
-- Logo, {{<math>}}$h_1 = 0${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
-
-{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $${{</math>}}
-
-- Então, a hipótese nula é
-{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $${{</math>}}
+#### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_j = 0${{</math>}}.
 
 
+##### 7. Estatística _t_
 
-#### Aplicando no R
+{{<math>}}$$ t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+$$ {{</math>}}
 
-#### Avaliando a hipótese nula com restrição única
-- Para o caso com uma única restrição, assumimos que 
-{{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)} r_1})$${{</math>}}
+No R:
 
-- Calcula-se a estatística _t_:
-{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)}} \boldsymbol{r}_1}} $${{</math>}}
+```r
+# Cálculo da estatística t
+t_bhat = bhat / se_bhat
+t_bhat
+```
 
-- Note que, em pequenas amostras, precisamos assumir que {{<math>}}$ u|x \sim N(0; \sigma^2) ${{</math>}}
-- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística _t_ não pertencer ao intervalo de confiança.
+```
+##            [,1]
+## const 3.7741910
+## hsGPA 4.7327219
+## ACT   0.8746263
+```
+
+##### 8. Avaliando as hipóteses nulas
+
+```r
+# definição do nível de significância
+alpha = 0.05
+c = qt(1 - alpha/2, N-K-1) # valor crítico de teste bicaudal
+c
+```
+
+```
+## [1] 1.977304
+```
+
+```r
+# (A) Comparando estatística t com o valor crítico
+abs(t_bhat) > c # avaliando H0
+```
+
+```
+##        [,1]
+## const  TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
+# (B) Comparando p-valor com o nível de significância de 5%
+p_bhat = 2 * pt(-abs(t_bhat), N-K-1)
+round(p_bhat, 5) # arredondando para facilitar visualização
+```
+
+```
+##          [,1]
+## const 0.00024
+## hsGPA 0.00001
+## ACT   0.38330
+```
+
+```r
+p_bhat < 0.05 # avaliando H0
+```
+
+```
+##        [,1]
+## const  TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
+# (C) Verificando se zero (0) está fora do intervalo de confiança
+ci = cbind(bhat - c*se_bhat, bhat + c*se_bhat) # avaliando H0
+ci
+```
+
+```
+##              [,1]       [,2]
+## const  0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
 
 
 
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
-- Anteriormente, estimamos o seguinte modelo:
+##### Comparando estimações via `lm()` e analítica
+
+- Resultados calculados analiticamente ("na mão")
+
+```r
+cbind(bhat, se_bhat, t_bhat, p_bhat) # coeficientes
+```
+
+```
+##                      se_bhat                       
+## const 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA 0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT   0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
+ci # intervalos de confiança
+```
+
+```
+##              [,1]       [,2]
+## const  0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
+
+- Resultado via função `lm()`
+
+```r
+summary(GPAres)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
+confint(GPAres)
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept)  0.61241898 1.96023655
+## hsGPA        0.26400467 0.64290710
+## ACT         -0.01188376 0.03073578
+```
+
+</br>
+
+## Informando os Resultados das Regressões
+
+- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
+- Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regressões usando a função `stargazer` do pacote de mesmo nome.
+
+
+#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores (Wooldridge, 2006)
+- Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
+
+$$ \log{\text{salary}} = \beta_0 + \beta_1. (\text{benefits/salary}) + \text{outros_fatores} + u $$
+
+- Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
+
+```r
+data(meap93, package="wooldridge") # carregando base de dados
+
+# Definindo nova variável
+meap93$b_s = meap93$benefits / meap93$salary
+```
+
+- Agora vamos estimar diversos modelos:
+  - Modelo 1: apenas `b_s` como regressor
+  - Modelo 2: inclui as variáveis explicativas `log(enroll)` e `log(staff)` no Modelo 1
+  - Modelo 3: inclui as variáveis explicativas `droprate` e `gradrate` no Modelo 2
+- Depois, vamos resumir os resultados em uma única tabela usando a função `stagazer()` pacote `stagazer`
+  - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
+  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
+  - `star.cutoffs=c(.05, .01, .001)` níveis de significância de 5%, 1% e 0,1%
+
+```r
+# Estimando os três modelos
+model1 = lm(log(salary) ~ b_s, meap93)
+model2 = lm(log(salary) ~ b_s + log(enroll) + log(staff), meap93)
+model3 = lm(log(salary) ~ b_s + log(enroll) + log(staff) + droprate + gradrate, meap93)
+
+# Resumindo em uma tabela
+library(stargazer)
+```
+
+```
+## 
+## Please cite as:
+```
+
+```
+##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+```
+
+```
+##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer
+```
+
+```r
+stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
+          star.cutoffs=c(.05, .01, .001))
+```
+
+```
+## 
+## ============================================
+##                    Dependent variable:      
+##              -------------------------------
+##                        log(salary)          
+##                 (1)        (2)        (3)   
+## --------------------------------------------
+## b_s          -0.825***  -0.605***  -0.589***
+##               (0.200)    (0.165)    (0.165) 
+##                                             
+## log(enroll)              0.087***  0.088*** 
+##                          (0.007)    (0.007) 
+##                                             
+## log(staff)              -0.222***  -0.218***
+##                          (0.050)    (0.050) 
+##                                             
+## droprate                            -0.0003 
+##                                     (0.002) 
+##                                             
+## gradrate                             0.001  
+##                                     (0.001) 
+##                                             
+## Constant     10.523***  10.844***  10.738***
+##               (0.042)    (0.252)    (0.258) 
+##                                             
+## --------------------------------------------
+## Observations    408        408        408   
+## R2             0.040      0.353      0.361  
+## ============================================
+## Note:          *p<0.05; **p<0.01; ***p<0.001
+```
+
+- É comum que os resultados econométricos venham acompanhados de asteriscos (`*`), pois estes indicam que as estimativas são significantes a um certo nível de significância
+- Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
+
+
+</br>
+
+## Regressores Qualitativos
+
+- Muitas variáveis de interesse são qualitativas, ao invés de quantitativas.
+- Isso inclui variáveis como _sexo_, _raça_, _status de trabalho_, _estado civil_, _escolha de marca_, etc.
+
+
+### Variáveis Dummy
+
+- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
+- Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
+- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
+
+
+##### Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Vamos usar a base de dados `wage1` do pacote `wooldridge`
+- Vamos estimar o modelo:
 
 {{<math>}}\begin{align}
-\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} +\\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
+&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math>}}
 em que:
 
 - `wage`: salário médio por hora
 - `female`: dummy em que (1) mulher e (0) homem
-- `married`: dummy em que (1) casado e (0) solteiro
-- `female*married`: interação (multiplicação) das _dummies_ `female` e `married`
 - `educ`: anos de educação
 - `exper`: anos de experiência (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
@@ -117,8 +711,392 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-res_7.14 = lm(lwage ~ female*married + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(res_7.14)$coef, 4 )
+res_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(res_7.1)$coef, 4 )
+```
+
+```
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -2.1097     0.7107 -2.9687   0.0031
+## female       -1.7832     0.2572 -6.9327   0.0000
+## educ          0.5263     0.0485 10.8412   0.0000
+## exper         0.1878     0.0357  5.2557   0.0000
+## expersq      -0.0038     0.0008 -4.9267   0.0000
+## tenure        0.2117     0.0492  4.3050   0.0000
+## tenursq      -0.0029     0.0017 -1.7473   0.0812
+```
+
+- Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
+- Essa diferença é estatisticamente significane (p-valor de `female` é menor do que 5\%)
+
+
+
+### Variáveis com múltiplas categorias
+
+- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
+- Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
+- É necessário criar uma _dummy_ para cada categoria
+- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
+  - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
+  - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
+  - Se houver outra dummy igual a 1, então última dummy é igual a 0
+- Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
+
+
+##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
+
+- Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo
+- Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
+- Vamos estimar o seguinte modelo:
+
+{{<math>}}$$`
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+em que:
+
+- `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
+- `chain`: rede de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys`), e (4) Wendy's (`wendys`)
+- `hrsopen`: horas de funcionamento por dia
+
+
+
+
+
+```r
+card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv")
+head(card1994) # olhando as 6 primeiras linhas
+```
+
+```
+##   sheet nj chain hrsopen diff_fte
+## 1    46  0     1    16.5   -16.50
+## 2    49  0     2    13.0    -2.25
+## 3    56  0     4    12.0   -14.00
+## 4    61  0     4    12.0    11.50
+## 5   445  0     1    18.0   -41.50
+## 6   451  0     1    24.0    13.00
+```
+
+- Note que a variável categórica `chain` possui números ao invés dos nomes das redes de fast food.
+- Isto é comum nas bases de dados, já que números consomem menos espaço de armazenamento.
+- Caso você rode a estimação com a variável `chain` desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:
+
+
+```r
+lm(diff_fte ~ nj + hrsopen + chain, data=card1994)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen        chain  
+##     0.40284      4.61869     -0.28458     -0.06462
+```
+
+- Note que a interpretação é que a mudança de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
+- Portanto, precisamos criar as _dummies_ das variáveis categóricas:
+
+
+```r
+# Criando dummies para cada variável
+card1994$bk = ifelse(card1994$chain==1, 1, 0)
+card1994$kfc = ifelse(card1994$chain==2, 1, 0)
+card1994$roys = ifelse(card1994$chain==3, 1, 0)
+card1994$wendys = ifelse(card1994$chain==4, 1, 0)
+
+# Visualizando as primeras linhas
+head(card1994)
+```
+
+```
+##   sheet nj chain hrsopen diff_fte bk kfc roys wendys
+## 1    46  0     1    16.5   -16.50  1   0    0      0
+## 2    49  0     2    13.0    -2.25  0   1    0      0
+## 3    56  0     4    12.0   -14.00  0   0    0      1
+## 4    61  0     4    12.0    11.50  0   0    0      1
+## 5   445  0     1    18.0   -41.50  1   0    0      0
+## 6   451  0     1    24.0    13.00  1   0    0      0
+```
+
+- Também é possível criar _dummies_ mais facilmente usando o pacote `fastDummies`
+- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
+- Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
+
+
+```r
+lm(diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, data=card1994)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, 
+##     data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen           bk          kfc         roys  
+##    2.097621     4.859363    -0.388792    -0.005512    -1.997213    -1.010903  
+##      wendys  
+##          NA
+```
+
+- Por padrão, o R já retira uma das categorias para servir como referência.
+- Aqui, a categoria `wendys` serve como referência às estimativas das demais _dummies_
+  - Em relação a `wendys`, o nº de empregados de:
+    - `bk` teve uma variação de empregados muito parecida (apenas 0,005 menor)
+    - `roys` teve uma diminuição (menos 1 empregado)
+    - `kfc` teve uma maior diminuição (menos 2 empregados)
+- Note que poderíamos usar como referência outra rede de fast food, deixando sua _dummy_ de fora da regressão.
+- Vamos deixar de fora a _dummy_ do `roys`:
+
+
+```r
+lm(diff_fte ~ nj + hrsopen + bk + kfc + wendys, data=card1994)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + bk + kfc + wendys, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen           bk          kfc       wendys  
+##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
+```
+
+- Note agora que os parâmetros estão em relação à `roys``:
+  - estimativa de `kfc` que tinha ficado -2, agora está "menos" negativo (-1)
+  - estimativas de `bk` e de `wendys` possuem estimativas positivas (lembre-se que, em relação a `wendys`, a estimativa de `roys` foi negativo na regressão anterior)
+
+</br>
+
+- No R, na verdade, não é necessário criar _dummies_ de uma variável categórica para rodar uma regressão, caso ela esteja como _texto_ ou como _factor_
+
+- Criando variável da classe texto:
+
+```r
+card1994$chain_txt = as.character(card1994$chain) # criando variável texto
+head(card1994$chain_txt) # Visualizado os primeiros valores
+```
+
+```
+## [1] "1" "2" "4" "4" "1" "1"
+```
+
+```r
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_txt, data=card1994)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain_txt, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen   chain_txt2   chain_txt3   chain_txt4  
+##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
+```
+
+- Observe que a função `lm()` retira a categoria que aparece primeiro no vetor de texto (`"1"`)
+- Usando como variável texto, não é possível selecionar facilmente qual categoria vai ser retirada da regressão
+- Para isto, podemos usar a classe de objeto `factor`:
+
+
+```r
+card1994$chain_fct = factor(card1994$chain) # criando variável factor
+levels(card1994$chain_fct) # verificando os níveis (categorias) da variável factor
+```
+
+```
+## [1] "1" "2" "3" "4"
+```
+
+```r
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain_fct, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen   chain_fct2   chain_fct3   chain_fct4  
+##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
+```
+
+- Note que a função `lm()` retira o primeiro nível da regressão (não necessariamente o que aparece primeiro na base de dados)
+- Podemos trocar a referência usando a função `relevel()` em uma variável _factor_
+
+```r
+card1994$chain_fct = relevel(card1994$chain_fct, ref="3") # referência roys
+levels(card1994$chain_fct) # verificando os níveis da variável factor
+```
+
+```
+## [1] "3" "1" "2" "4"
+```
+
+```r
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
+```
+
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain_fct, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen   chain_fct1   chain_fct2   chain_fct4  
+##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
+```
+
+- Observe que o primeiro nível foi alterado para `"3"` e, portanto, essa categoria foi retirada na regressão
+
+
+
+### Transformando variáveis contínuas em categorias
+- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
+- Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
+
+
+```r
+# Definindo pontos de corte
+cutpts = c(0, 3, 6, 10)
+
+# Classificando o vetor 1:10 a partir dos pontos de corte
+cut(1:10, cutpts)
+```
+
+```
+##  [1] (0,3]  (0,3]  (0,3]  (3,6]  (3,6]  (3,6]  (6,10] (6,10] (6,10] (6,10]
+## Levels: (0,3] (3,6] (6,10]
+```
+
+
+##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais (Wooldridge, 2006)
+
+- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
+- Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
+
+
+```r
+data(lawsch85, package="wooldridge") # carregando base de dados necessária
+
+# Definindo pontos de corte
+cutpts = c(0, 10, 25, 40, 60, 100, 175)
+
+# Criando variável com a classificação
+lawsch85$rankcat = cut(lawsch85$rank, cutpts)
+
+# Visualizando os 6 primeiros valores de rankcat
+head(lawsch85$rankcat)
+```
+
+```
+## [1] (100,175] (100,175] (25,40]   (40,60]   (60,100]  (60,100] 
+## Levels: (0,10] (10,25] (25,40] (40,60] (60,100] (100,175]
+```
+
+```r
+# Escolhendo a categoria de referência (acima de 100 até 175)
+lawsch85$rankcat = relevel(lawsch85$rankcat, '(100,175]')
+
+# Estimando o modelo
+res = lm(log(salary) ~ rankcat + LSAT + GPA + llibvol + lcost, data=lawsch85)
+round( summary(res)$coef, 5 )
+```
+
+```
+##                 Estimate Std. Error  t value Pr(>|t|)
+## (Intercept)      9.16530    0.41142 22.27699  0.00000
+## rankcat(0,10]    0.69957    0.05349 13.07797  0.00000
+## rankcat(10,25]   0.59354    0.03944 15.04926  0.00000
+## rankcat(25,40]   0.37508    0.03408 11.00536  0.00000
+## rankcat(40,60]   0.26282    0.02796  9.39913  0.00000
+## rankcat(60,100]  0.13159    0.02104  6.25396  0.00000
+## LSAT             0.00569    0.00306  1.85793  0.06551
+## GPA              0.01373    0.07419  0.18500  0.85353
+## llibvol          0.03636    0.02602  1.39765  0.16467
+## lcost            0.00084    0.02514  0.03347  0.97336
+```
+
+- Note que, em relação às universidades em piores colocações (`(100,175]`), as melhores ranqueadas provêem salários de 13,16\% a 69,96\% superiores
+
+
+### Interações Envolvendo Variáveis Dummy
+
+#### Interações entre variáveis dummy
+- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
+- Seção 7. de Wooldridge (2006)
+- Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
+
+
+##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Retornemos à base de dados `wage1` do pacote `wooldridge`
+- Agora, vamos incluir a variável _dummy_ `married`
+
+- O modelo a ser estimado é:
+
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `married`: dummy em que (1) casado e (0) solteiro
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
+
+```r
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+res_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(res_7.11)$coef, 4 )
+```
+
+```
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   0.4178     0.0989  4.2257   0.0000
+## female       -0.2902     0.0361 -8.0356   0.0000
+## married       0.0529     0.0408  1.2985   0.1947
+## educ          0.0792     0.0068 11.6399   0.0000
+## exper         0.0270     0.0053  5.0609   0.0000
+## expersq      -0.0005     0.0001 -4.8135   0.0000
+## tenure        0.0313     0.0068  4.5700   0.0000
+## tenursq      -0.0006     0.0002 -2.4475   0.0147
+```
+
+- Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29\% sobre o salário.
+- O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.
+- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
+  - `lwage ~ female + married + married:female` (o `:` cria apenas a interação), ou
+  - `lwage ~ female * married` (a "multiplicação" cria as dummies e a interação)
+
+- O modelo a ser estimado agora é:
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+
+
+```r
+# Estimando o modelo - forma (a)
+res_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
+               data=wage1)
+round( summary(res_7.14a)$coef, 4 )
 ```
 
 ```
@@ -134,502 +1112,90 @@ round( summary(res_7.14)$coef, 4 )
 ## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
 
-- Notamos que o efeito do casamento sobre mulheres é diferente do efeito sobre homens, pois o parâmetro de `female:married` ({{<math>}}$\delta_2${{</math>}}) é significante.
-- No entanto, para avaliar se o efeito do casamento sobre a mulher é significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}.
-- Como tem apenas uma restrição, a hipótese pode ser avaliada por teste _t_:
-
-<img src="../t_test.png" alt="">
-
-
 ```r
-# Extraindo objetos da regressão
-bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
-Vbhat = vcov(res_7.14) # matriz de variância-covariância do estimador
-N = nrow(wage1) # número de observações
-K = length(bhat) - 1 # número de covariadas
-uhat = residuals(res_7.14) # resíduos da regressão
-
-# Criando vetor-linha de restrição
-r1prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1) # vetor restrição
-h1 = 0 # constante da H0
-G = 1 # número de restrições
-
-# Fazendo teste t
-t = (r1prime %*% bhat - h1) / sqrt(r1prime %*% Vbhat %*% t(r1prime))
-abs(t)
+# Estimando o modelo - forma (b)
+res_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
+               data=wage1)
+round( summary(res_7.14b)$coef, 4 )
 ```
 
 ```
-##          [,1]
-## [1,] 1.679475
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)      0.3214     0.1000  3.2135   0.0014
+## female          -0.1104     0.0557 -1.9797   0.0483
+## married          0.2127     0.0554  3.8419   0.0001
+## educ             0.0789     0.0067 11.7873   0.0000
+## exper            0.0268     0.0052  5.1118   0.0000
+## expersq         -0.0005     0.0001 -4.8471   0.0000
+## tenure           0.0291     0.0068  4.3016   0.0000
+## tenursq         -0.0005     0.0002 -2.3056   0.0215
+## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
 
-```r
-# Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
-c = qt(1 - 0.05/2, df=N-K-1)
-c
-```
-
-```
-## [1] 1.964563
-```
-
-```r
-# Calculando o p-valor
-p = pt(-abs(t), N-K-1) * 2
-p
-```
-
-```
-##            [,1]
-## [1,] 0.09366368
-```
-
-- Como {{<math>}}$|t| < 2${{</math>}} (valor crítico aproximada para nível de significância de 5\%), então não rejeitamos a hipótese nula e concluímos que o efeito do casamento sobre o salário de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) é estatisticamente não-significante.
-
-- Também podemos fazer o mesmo pelo teste de Wald, mas avaliando a estatística pela distribuição {{<math>}}$\chi^2${{</math>}} com 1 grau de liberdade (pois há apenas {{<math>}}$G=1${{</math>}} restrição)
-- Lembre-se também que usa-se o teste qui-quadrado unicaudal à direita.
+- Observe que, agora, o parâmetro de casado refere-se apenas aos homens (`married`) é positivo e significante de 21,27\%.
+- Já, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, é igual a -8,79\% (= 0,2127 - 0,3006)
+- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudança do estado civil (**intercepto**) é diferente entre mulheres e homens.
+- No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
 
 
-<img src="../chisq_test.png" alt="">
+#### Considerando inclinações diferentes
+- Seção 7.4 de Wooldridge (2006)
+- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
+- Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
 
 
 
-```r
-# Calculando estatística de Wald
-aux = r1prime %*% bhat - h1 # R \beta - h
-w = t(aux) %*% solve( r1prime %*% Vbhat %*% t(r1prime)) %*% aux
-w
-```
+##### Exemplo 7.10 - Equação do Log do Salário-Hora (Wooldridge, 2006)
 
-```
-##          [,1]
-## [1,] 2.820636
-```
+- Retornemos à base de dados `wage1` do pacote `wooldridge`
+- Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
+- Então, incluiremos no modelo a interação entre a dummy `female` e os anos de educação (`educ`):
 
-```r
-# Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
-c = qchisq(1-0.05, df=G)
-c
-```
-
-```
-## [1] 3.841459
-```
-
-```r
-# Calculando p-valor de w
-p = 1 - pchisq(w, df=G)
-p
-```
-
-```
-##            [,1]
-## [1,] 0.09305951
-```
-
-
-</br>
-
-
-### Múltiplas restrições lineares
-
-#### Exemplo 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
-- Note que {{<math>}}$h_1 = 0 \text{ e } h_2 = 2${{</math>}}
-- Os vetores {{<math>}}$r'_1 \text{ e } r'_2${{</math>}} podem ser escritos como
-
-{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \quad \text{e} \quad r'_2 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
-
-- Logo, {{<math>}}$\boldsymbol{R}${{</math>}} é
-{{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \end{matrix} \right] = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
-
-- Então, a hipótese nula é
-{{<math>}}$$\text{H}_0:\ \boldsymbol{R} \boldsymbol{\beta} = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = \left[ \begin{matrix} h_1 \\ h_2 \end{matrix} \right]\ \iff\ \text{H}_0:\ \left\{  \begin{matrix} \beta_1 &= 0 \\ \beta_1 + \beta_2 &= 2 \end{matrix} \right. $${{</math>}}
-
-
-#### Avaliando a hipótese nula com múltiplas restrições
-- Para o caso com _G_ restrições, assumimos que 
-{{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V_{\beta(x)} R'})$${{</math>}}
-
-- Calcula-se a estatística de Wald
-{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
-
-- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística {{<math>}}$ w(\hat{\boldsymbol{\beta}})${{</math>}} não pertencer ao intervalo de confiança (do zero ao valor crítico).
-
-</br>
-
-### Aplicando no R
-
-- Como exemplo, usaremos o pacote de dados `mlb1` com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)
-- Queremos estimar o modelo:
-{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
-&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
-
-
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
+&\beta_3 \text{exper} + \beta_4 \text{exper}^2 + \beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \end{align}{{</math>}}
 em que:
-  - `log(salary)`: log do salário de 1993
-  - `years`: anos jogando na 1ª divisão de beisebol americano
-  - `gamesyr`: média de jogos por ano
-  - `bavg`: média de rebatidas na carreira
-  - `hrunsyr`: média de _home runs_ por ano
-  - `rbisyr`: média de corridas impulsionadas por ano
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `female*educ`: interação entre a dummy `female` e anos de educação (`educ`)
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 ```r
-data(mlb1, package="wooldridge")
-
-# Estimando o modelo completo (irrestrito)
-resMLB = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
-round(summary(resMLB)$coef, 5) # coeficientes da estimação
-```
-
-```
-##             Estimate Std. Error  t value Pr(>|t|)
-## (Intercept) 11.19242    0.28882 38.75184  0.00000
-## years        0.06886    0.01211  5.68430  0.00000
-## gamesyr      0.01255    0.00265  4.74244  0.00000
-## bavg         0.00098    0.00110  0.88681  0.37579
-## hrunsyr      0.01443    0.01606  0.89864  0.36947
-## rbisyr       0.01077    0.00717  1.50046  0.13440
-```
-
-- Note que, individualmente, as variáveis `bavg`, `hrunsyr` e `rbisyr` são estatisticamente não significantes.
-- Queremos avaliar se eles são estatisticamente significantes de forma conjunta, ou seja,
-{{<math>}}$$ \text{H}_0:\ \left\{ \begin{matrix} \beta_3 = 0 \\ \beta_4 = 0 \\ \beta_5 = 0\end{matrix} \right.   $${{</math>}}
-
-- Logo, temos que
-{{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \boldsymbol{r}'_3 \end{matrix} \right] = \left[ \begin{matrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \end{matrix} \right] $${{</math>}}
-
-
-#### Usando função `Wald.test()`
-
-
-```r
-# Extraindo matriz de variância-covariância do estimador
-Vbhat = vcov(resMLB)
-round(Vbhat, 5)
-```
-
-```
-##             (Intercept)    years  gamesyr     bavg  hrunsyr   rbisyr
-## (Intercept)     0.08342  0.00001 -0.00027 -0.00029 -0.00148  0.00082
-## years           0.00001  0.00015 -0.00001  0.00000 -0.00002  0.00001
-## gamesyr        -0.00027 -0.00001  0.00001  0.00000  0.00002 -0.00002
-## bavg           -0.00029  0.00000  0.00000  0.00000  0.00000  0.00000
-## hrunsyr        -0.00148 -0.00002  0.00002  0.00000  0.00026 -0.00010
-## rbisyr          0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
-```
-
-```r
-# Calculando a estatística de Wald
-# install.packages("aod") # instalando o pacote necessário
-aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
-               b = coef(resMLB), # estimativas
-               Terms = 4:6, # posições dos parâmetros a serem testados
-               H0 = c(0, 0, 0) # Hipótese nula (tudo igual a zero)
-               )
-```
-
-```
-## Wald test:
-## ----------
-## 
-## Chi-squared test:
-## X2 = 28.7, df = 3, P(> X2) = 2.7e-06
-```
-
-```r
-# Wald test for the effect of root
-# aod::wald.test(b = coef(resMLB), Sigma = vcov(resMLB), L=R, H0=h)
-```
-
-- Observe que rejeitamos a hipótese nula e, portanto, os parâmetros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} são conjuntamente significantes.
-
-
-#### Calculando "na mão"
-
-- Estimando o modelo
-
-```r
-# Criando variavel log_salary
-mlb1$log_salary = log(mlb1$salary)
-name_y = "log_salary"
-names_X = c("years", "gamesyr", "bavg", "hrunsyr", "rbisyr")
-
-# Criando o vetor y
-y = as.matrix(mlb1[,name_y]) # transformando coluna de data frame em matriz
-
-# Criando a matriz de covariadas X com primeira coluna de 1's
-X = as.matrix( cbind( const=1, mlb1[,names_X] ) ) # juntando 1's com as covariadas
-
-# Pegando valores N e K
-N = nrow(mlb1)
-K = ncol(X) - 1
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
 
 # Estimando o modelo
-bhat = solve( t(X) %*% X ) %*% t(X) %*% y
-round(bhat, 5)
+res_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
+              data=wage1)
+round( summary(res_7.17)$coef, 4 )
 ```
 
 ```
-##             [,1]
-## const   11.19242
-## years    0.06886
-## gamesyr  0.01255
-## bavg     0.00098
-## hrunsyr  0.01443
-## rbisyr   0.01077
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   0.3888     0.1187  3.2759   0.0011
+## female       -0.2268     0.1675 -1.3536   0.1764
+## educ          0.0824     0.0085  9.7249   0.0000
+## exper         0.0293     0.0050  5.8860   0.0000
+## expersq      -0.0006     0.0001 -5.3978   0.0000
+## tenure        0.0319     0.0069  4.6470   0.0000
+## tenursq      -0.0006     0.0002 -2.5089   0.0124
+## female:educ  -0.0056     0.0131 -0.4260   0.6703
 ```
 
-```r
-# Calculando os resíduos
-uhat = y - X %*% bhat
+- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno a cada ano de educação (**inclinação**) é diferente entre mulheres e homens.
+- Pela estimação, nota-se que o incremento no salário das mulheres para cada ano a mais de educação é 0,56\% menor em relação aos homens:
+  - Homens aumentam 8,24\% (`educ`) o salário para cada ano de educação
+  - Mulheres aumentam 7,58\% (= 0,0824 - 0,0056) o salário para cada ano de educação
+- No entanto, essa diferença é estatisticamente não-significante a 5\% de significância.
 
-# Variância do termo de erro
-S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
-
-# Matriz de variância-covariância do estimador
-Vbhat = S2 * solve( t(X) %*% X )
-round(Vbhat, 5)
-```
-
-```
-##            const    years  gamesyr     bavg  hrunsyr   rbisyr
-## const    0.08342  0.00001 -0.00027 -0.00029 -0.00148  0.00082
-## years    0.00001  0.00015 -0.00001  0.00000 -0.00002  0.00001
-## gamesyr -0.00027 -0.00001  0.00001  0.00000  0.00002 -0.00002
-## bavg    -0.00029  0.00000  0.00000  0.00000  0.00000  0.00000
-## hrunsyr -0.00148 -0.00002  0.00002  0.00000  0.00026 -0.00010
-## rbisyr   0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
-```
-
-- Agora, vamos criar a matriz das restrições
-
-```r
-# Número de restrições
-G = 3
-
-# Matriz das restrições
-R = matrix(c(0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
-             0, 0, 0, 0, 0, 1),
-           nrow=G, byrow=TRUE)
-R
-```
-
-```
-##      [,1] [,2] [,3] [,4] [,5] [,6]
-## [1,]    0    0    0    1    0    0
-## [2,]    0    0    0    0    1    0
-## [3,]    0    0    0    0    0    1
-```
-
-```r
-# Vetor de constantes h
-h = matrix(c(0, 0, 0),
-           nrow=3, ncol=1)
-h
-```
-
-```
-##      [,1]
-## [1,]    0
-## [2,]    0
-## [3,]    0
-```
-
-- Lembre-se que, por padrão, a função `matrix()` "preenche" a matrix por coluna.
-- No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento `byrow=TRUE`.
-- Calculando a estatística de Wald, dada por
-{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
-
-
-```r
-# Estatística de Wald
-w = t( R %*% bhat - h ) %*% solve( R %*% Vbhat %*% t(R) ) %*% (R %*% bhat - h)
-w
-```
-
-```
-##          [,1]
-## [1,] 28.65076
-```
-
-```r
-# Encontrando valor crítico Qui-quadrado para 5% de signif.
-alpha = 0.05
-c = qchisq(1-alpha, df=G)
-c
-```
-
-```
-## [1] 7.814728
-```
-
-```r
-# Comparando estatística de Wald e valor crítico
-w > c
-```
-
-```
-##      [,1]
-## [1,] TRUE
-```
-
-- Como Estatística de Wald (= 28,65) é maior do que o valor crítico (= 7,81), então rejeitamos a hipótese nula conjunta de que todos parâmetros testados são iguais a zero.
-- Também poderíamos verificar o p-valor por meio da estatística de Wald:
-
-```r
-1 - pchisq(w, df=G)
-```
-
-```
-##              [,1]
-## [1,] 2.651604e-06
-```
-
-- Como é menor do que 5%, rejeita-se a hipótese nula.
+<img src="../example_interaction.png" alt="">
 
 
 </br>
 
 
-## Teste F
-
-- [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
-- Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
-- Nele, estimamos dois modelos:
-  - Irrestrito: inclui todas as as variáveis explicativas de interesse
-  - Restrito: exclui algumas variáveis da estimação
-- O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
-- A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
-
-</br>
-
-- A estatística _F_ pode ser calculada por:
-
-{{<math>}}$$ F = \frac{\text{SQR}_{r} - \text{SQR}_{ur}}{\text{SQR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
-
-em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
-
-- Depois, avalia-se a estatística _F_ a partir de um teste unicaudal à direita em uma distribuição _F_:
-
-<img src="../F_test.png" alt="">
-
-
-
-### Aplicando no R
-
-- Aqui, continuaremos usando a base de dados `mlb1` da Seção 4.5 de Wooldridge (2006)
-- O modelo irrestrito (com todas variáveis explicativas) é:
-{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
-&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
-
-- O modelo restrito (excluindo as variáveis) é:
-{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + u \end{align}{{</math>}}
-
-
-#### Usando função `linearHypothesis()`
-- É possível fazer o teste _F_ a partir da função `linearHypothesis()` do pacote `car`
-- Além de incluir o objeto resultante de uma estimação, é necessário incluir um vetor de texto com as restrições:
-
-
-```r
-# Estimando o modelo irrestrito
-res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
-
-# Criando vetor com as restrições
-myH0 = c("bavg = 0", "hrunsyr = 0", "rbisyr = 0")
-
-# Aplicando o teste F
-# install.packages("car") # instalando o pacote necessário
-car::linearHypothesis(res.ur, myH0)
-```
-
-```
-## Linear hypothesis test
-## 
-## Hypothesis:
-## bavg = 0
-## hrunsyr = 0
-## rbisyr = 0
-## 
-## Model 1: restricted model
-## Model 2: log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr
-## 
-##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-## 1    350 198.31                                  
-## 2    347 183.19  3    15.125 9.5503 4.474e-06 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-- Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que é esperado)
-- Para avaliar a hipótese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estatística _F_ é maior do que um valor crítico (dado um nível de significância), ou avaliarmos se o p-valor é menor do que esse nível de significância.
-- É possível ver acima, pelo segundo critério, que rejeitamos a hipótese nula.
-- Podemos ver o valor crítico a 5% de significância via:
-
-
-```r
-qf(1-0.05, G, N-K-1)
-```
-
-```
-## [1] 2.630641
-```
-- Como 9,55 > 2,63, então rejeitamos a hipótese nula.
-
-
-#### Calculando "na mão"
-
-- Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para não ter que fazer todos passos da estimação duas vezes.
-
-
-```r
-# Estimando o modelo irrestrito
-res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
-
-# Estimando o modelo restrito
-res.r = lm(log(salary) ~ years + gamesyr, data=mlb1)
-
-# Extraindo os R2 dos resultados das estimações
-r2.ur = summary(res.ur)$r.squared
-r2.ur
-```
-
-```
-## [1] 0.6278028
-```
-
-```r
-r2.r = summary(res.r)$r.squared
-r2.r
-```
-
-```
-## [1] 0.5970716
-```
-
-```r
-# Calculando a estatística F
-F = ( r2.ur - r2.r ) / (1 - r2.ur) * (N-K-1) /  G
-F
-```
-
-```
-## [1] 9.550254
-```
-
-```r
-# p-valor do teste F
-1 - pf(F, G, N-K-1)
-```
-
-```
-## [1] 4.473708e-06
-```
-
-
-</br>
-
-{{< cta cta_text="👉 Seguir para Otimização Numérica" cta_link="../sec9" >}}
+{{< cta cta_text="👉 Seguir para Revisão | Testes de Hipótese" cta_link="../sec2" >}}
