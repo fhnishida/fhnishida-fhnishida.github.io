@@ -9,7 +9,7 @@ tags:
 - Undergraduate
 title: Econometrics II (Spring 2023)
 type: book
-linktitle: Avisos
+linktitle: Início
 weight: 1
 icon: book
 iconpack: fs

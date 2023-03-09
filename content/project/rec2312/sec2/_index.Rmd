@@ -6,7 +6,7 @@ linktitle: Testes de Hipótese
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
 title: Testes de Hipótese
-weight: 9
+weight: 2
 output: md_document
 type: book
 ---
@@ -437,4 +437,4 @@ F
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Otimização Numérica" cta_link="../sec9" >}}
+{{< cta cta_text="👉 Seguir para Otimização Numérica" cta_link="../sec3" >}}

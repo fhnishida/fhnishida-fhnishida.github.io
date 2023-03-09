@@ -176,24 +176,24 @@ head(uhat)
 ```
 
 
-##### 4. Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
+##### 4. Variância do termo de erro {{<math>}}$S^2${{</math>}}
 
-{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+{{<math>}}$$ S^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
 
-No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 ```{r}
-sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) )
-sig2hat
+S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+S2
 ```
 
 
 ##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
 
-No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 ```{r}
-V_bhat = sig2hat * solve( t(X) %*% X )
+V_bhat = S2 * solve( t(X) %*% X )
 V_bhat
 ```
 
@@ -652,6 +652,7 @@ round( summary(res_7.14b)$coef, 4 )
 - Já, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, é igual a -8,79\% (= 0,2127 - 0,3006)
 - Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudança do estado civil (**intercepto**) é diferente entre mulheres e homens.
 - No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
+
 
 
 #### Considerando inclinações diferentes

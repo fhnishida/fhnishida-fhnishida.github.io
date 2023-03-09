@@ -2,11 +2,11 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regressão Múltipla
+linktitle: MQO
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Regressão Múltipla
-weight: 8
+title: Mínimos Quadrados Ordinários (MQO)
+weight: 1
 output: md_document
 type: book
 ---
@@ -14,6 +14,703 @@ type: book
 
 
 
+## Revisão de R
+
+### Operações básicas
+
+```r
+# Soma
+1 + 1
+```
+
+```
+## [1] 2
+```
+
+```r
+# Subtração
+2 - 3
+```
+
+```
+## [1] -1
+```
+
+```r
+# Multiplicação
+2 * 3
+```
+
+```
+## [1] 6
+```
+
+```r
+# Divisão
+6 / 4
+```
+
+```
+## [1] 1.5
+```
+
+
+### Objetos básicos
+ - [Data types, R objects and attributes (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/OS8hs/data-types-r-objects-and-attributes)
+ 
+Para criar um objeto, atribuímos algo (neste caso, um valor) a um nome por meio do operador de atribuição `<-` ou `=`:
+
+```r
+obj1 <- 5
+obj2 = 5 + 2
+```
+
+Note que ambos objetos foram criados e aparecem no quadrante superior/direito (_Environment_). Agora, podemos imprimir os seus valores executando o nome do objeto
+
+```r
+obj1
+```
+
+```
+## [1] 5
+```
+ou imprimindo explicitamente por meio da função `print()`:
+
+```r
+print(obj2)
+```
+
+```
+## [1] 7
+```
+
+Note que, podemos alterar um objeto atribuindo algo novo a ele:
+
+```r
+obj1 = 3
+obj1
+```
+
+```
+## [1] 3
+```
+
+É possível visualizar o tipo de objeto usando a função `class()`:
+
+```r
+class(obj1)
+```
+
+```
+## [1] "numeric"
+```
+
+Logo, `obj1` é um número real. Há 5 tipos de classes de objetos "atômicos" (que contêm apenas 1 valor):
+
+ - `character`: texto
+ - `numeric`: número real
+ - `integer`: número inteiro
+ - `complex`: número complexo
+ - `logical`: verdadeiro/falso (1 ou 0)
+ 
+
+```r
+num_inteiro = 3L # para número inteiro, usar sufixo L
+num_inteiro
+```
+
+```
+## [1] 3
+```
+
+```r
+class(num_inteiro)
+```
+
+```
+## [1] "integer"
+```
+
+```r
+texto = "Oi"
+texto
+```
+
+```
+## [1] "Oi"
+```
+
+```r
+class(texto)
+```
+
+```
+## [1] "character"
+```
+
+```r
+boolean1 = TRUE # poderia escrever T
+boolean1
+```
+
+```
+## [1] TRUE
+```
+
+```r
+class(boolean1)
+```
+
+```
+## [1] "logical"
+```
+
+```r
+boolean2 = FALSE # poderia escrever F
+boolean2
+```
+
+```
+## [1] FALSE
+```
+
+```r
+class(boolean2)
+```
+
+```
+## [1] "logical"
+```
+
+#### Expressões lógicas/booleanas
+São expressões que retornam o valor Verdadeiro ou Falso:
+
+```r
+2 < 20 # TRUE
+```
+
+```
+## [1] TRUE
+```
+
+```r
+15 >= 19 # FALSE
+```
+
+```
+## [1] FALSE
+```
+
+```r
+100 == 10^2 # TRUE
+```
+
+```
+## [1] TRUE
+```
+
+```r
+100 != 20*5 # FALSE
+```
+
+```
+## [1] FALSE
+```
+
+É possível escrever expressões compostas utilizando `|` (ou) e `&` (e):
+
+```r
+x = 20 # atribuindo 20 a x
+
+# Expressões lógicas compostas
+x < 0 | x^2 > 100 # TRUE se UMA das expressões for TRUE
+```
+
+```
+## [1] TRUE
+```
+
+```r
+x < 0 & x^2 > 100 # TRUE se TODAS expressões for TRUE
+```
+
+```
+## [1] FALSE
+```
+
+
+> **Tabela de Precedência de Operadores**
+> 
+> - Nível 6 - potenciação: `^`
+> - Nível 5 - multiplicação: `*`, `/`
+> - Nível 4 - adição: `+`, `-`
+> - Nível 3 - relacional: `==`, `!=`, `<=`, `>=`, `>`, `<`
+> - Nível 2 - lógico: `&` (e)
+> - Nível 1 - lógico: `|` (ou)
+
+- **Níveis 4 a 6**: são utilizados para CALCULAR valores
+- **Nível 3**: é usado para relacionar 2 valores para CRIAR UMA expressão lógica
+- **Níveis 1 e 2**: são usados para JUNTAR expressões lógicas
+
+
+
+### Vetores e Matrizes
+
+- Depois das 5 classes de objetos apresentadas acima, as mais básicas são vetores e matrizes, que possuem mais de um elemento dentro do objeto.
+- Ambos necessariamente exigem que os seus elementos sejam da mesma classe. 
+
+
+#### Vetores
+- [Data types - Vectors and lists (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/wkAHm/data-types-vectors-and-lists)
+- Podemos criar um vetor usando a função `c()` e incluindo os valores separados por `,`:
+
+```r
+x = c(0.5, 0.6) # numeric
+x = c(TRUE, FALSE) # logical
+x = c("a", "b", "c") # character
+x = 9:12 # integer (é igual a c(9, 10, 11, 12))
+```
+
+
+#### Matrizes
+Matrizes são vetores (e, portanto, possuem elementos de mesma classe) com atributo de _dimensão_ (nº linhas por nº colunas). Uma matriz pode ser criada usando a função `matrix()`:
+
+```yaml
+matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, ...)
+
+data: an optional data vector (including a list or expression vector).
+nrow: the desired number of rows.
+ncol: the desired number of columns.
+byrow: logical. If FALSE (the default) the matrix is filled by columns, otherwise the matrix is filled by rows.
+```
+
+
+```r
+m = matrix(nrow=2, ncol=3) # matriz vazia
+m
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]   NA   NA   NA
+## [2,]   NA   NA   NA
+```
+
+É possível construir uma matriz "preenchida" incluindo um vetor com (nº linhas {{<math>}}$\times${{</math>}} nº colunas) elementos. 
+
+```r
+m = matrix(1:6, nrow=2, ncol=3)
+m
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+```
+
+
+Os elementos do vetor `1:6` preenchem primeiro todas linhas de uma coluna para, depois, preencher a próxima coluna (_column-wise_). Para preencher por linha, usamos o argumento `byrow=TRUE`:
+
+```r
+m = matrix(1:6, nrow=2, ncol=3, byrow=TRUE)
+m
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+```
+
+
+Note que muitas vezes é redundante informar ambos números de linhas e de colunas:
+
+```r
+m = matrix(1:6, nrow=2, byrow=TRUE)
+m
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+```
+
+Podemos criar vetores-linha ou vetores-coluna inserindo, respectivamente, `nrow=1` e `ncol=1`:Ç
+
+```r
+# vetor-linha
+m = matrix(1:3, nrow=1)
+m
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+```
+
+```r
+# vetor-coluna
+m = matrix(1:3, ncol=1)
+m
+```
+
+```
+##      [,1]
+## [1,]    1
+## [2,]    2
+## [3,]    3
+```
+
+
+
+</br>
+
+Outra maneira de criar matrizes é juntando vetores em colunas (_column-binding_) ou em linhas (_row-binding_), usando as funções `cbind()` e `rbind()`, respectivamente:
+
+
+```r
+# Criando 2 vetores
+x = 1:3
+y = 10:12
+
+# Criando/Visualizando matrizes
+A = cbind(x, y) # juntando vetores por coluna
+A
+```
+
+```
+##      x  y
+## [1,] 1 10
+## [2,] 2 11
+## [3,] 3 12
+```
+
+```r
+B = rbind(x, y) # juntando vetores por linha
+B
+```
+
+```
+##   [,1] [,2] [,3]
+## x    1    2    3
+## y   10   11   12
+```
+
+
+#### Operações matriciais
+- [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
+- Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor
+
+```r
+x = matrix(1:4, ncol=1)
+y = matrix(6:9, ncol=1)
+
+x + y # soma de cada elemento na mesma posição
+```
+
+```
+##      [,1]
+## [1,]    7
+## [2,]    9
+## [3,]   11
+## [4,]   13
+```
+
+```r
+x + 2 # soma de de cada elemento com um mesmo escalar
+```
+
+```
+##      [,1]
+## [1,]    3
+## [2,]    4
+## [3,]    5
+## [4,]    6
+```
+
+```r
+x * y # multiplicação de cada elemento na mesma posição
+```
+
+```
+##      [,1]
+## [1,]    6
+## [2,]   14
+## [3,]   24
+## [4,]   36
+```
+
+```r
+x / y # divisão de cada elemento na mesma posição
+```
+
+```
+##           [,1]
+## [1,] 0.1666667
+## [2,] 0.2857143
+## [3,] 0.3750000
+## [4,] 0.4444444
+```
+- Para fazer o produto vetorial usa-se `%*%`. Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna.
+
+```r
+t(x) %*% y # Produto interno: x vetor-linha / y vetor-coluna
+```
+
+```
+##      [,1]
+## [1,]   80
+```
+
+```r
+x %*% t(y) # Produto externo: x vetor-coluna / y vetor-linha
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    6    7    8    9
+## [2,]   12   14   16   18
+## [3,]   18   21   24   27
+## [4,]   24   28   32   36
+```
+
+- O mesmo é válido para matrizes:
+
+```r
+x = matrix(1:4, nrow=2, ncol=2)
+x
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+```
+
+```r
+y = matrix(10, nrow=2, ncol=2)
+y
+```
+
+```
+##      [,1] [,2]
+## [1,]   10   10
+## [2,]   10   10
+```
+
+```r
+x + y # Soma de elementos na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]   11   13
+## [2,]   12   14
+```
+
+```r
+x + 2 # Soma de cada elemento da matriz com um mesmo escalar
+```
+
+```
+##      [,1] [,2]
+## [1,]    3    5
+## [2,]    4    6
+```
+
+```r
+x * y # Multiplicação de elementos na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]   10   30
+## [2,]   20   40
+```
+
+```r
+x %*% y # Multplicação matricial
+```
+
+```
+##      [,1] [,2]
+## [1,]   40   40
+## [2,]   60   60
+```
+
+
+
+### Data frames
+- [Data types - Data frames (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/kz1Lh/data-types-data-frames)
+
+- Diferente de matrizes, cada elemento de um _data frame_ pode ser de uma classe diferente 
+- Normalmente um data frame é "criado" a partir da leitura de uma base de dados em .txt ou .csv via `read.table()` ou `read.csv()`
+
+
+#### Importando de arquivos
+- [Reading tabular data (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/bQ5B9/reading-tabular-data)
+- Para leitura de base de dados, as funções mais utilizadas são `read.table()` e `read.csv()`
+- O `read.table()` tem o seguinte argumentos (que também podem ser visto nas demais funções de leitura de base de dados):
+    - `file`: caminho/endereço do arquivo, incluindo a sua extensão
+    - `header`: `TRUE` ou `FALSE` indicando se a 1ª linha da base de dados é um cabeçalho
+    - `sep`: indica como as colunas são separadas
+    - `stringAsFactors`: `TRUE` ou `FALSE` se as variáveis de texto devem ser transformadas em _factors_.
+```r
+data_txt = read.table("mtcars.txt") # também lê .csv
+data_csv = read.csv("mtcars.csv")
+```
+- Caso queira testar, faça download das bases: [mtcars.txt](../mtcars.txt) e [mtcars.csv](../mtcars.csv)
+- Note que, caso você não tenha definido o diretório de trabalho, é necessário informar o caminho/endereço inteiro do arquivo que você quer importar:
+
+```r
+data = read.csv("C:/Users/Fabio/OneDrive/FEA-RP/mtcars.csv")
+data = read.csv("https://fhnishida.netlify.app/project/rec2312/mtcars.csv")
+```
+
+#### Importando de pacotes
+(...) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+(...) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+## Extraindo Subconjuntos
+- [Subsetting - Basics (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/JDoLX/subsetting-basics)
+- Há 3 operadores básicos para extrair subconjuntos de objetos no R:
+    - `[]`: retorna um "sub-objeto" da mesma classe do objeto original
+    - `[[]]`: usado para extrair elementos de uma lista ou data frame, em que o "sub-objeto" não é necessariamente da mesma classe do objeto original
+    - `$`: usado para extrair elemento de uma lista ou data frame pelo nome
+
+
+### Extraindo subconjuntos
+
+```r
+x = c(1, 2, 3, 3, 4, 1)
+x[1] # extraindo o 1º elemento de x
+```
+
+```
+## [1] 1
+```
+
+```r
+x[1:4] # extraindo do 1º ao 4º elemento de x
+```
+
+```
+## [1] 1 2 3 3
+```
+
+- Note que, ao fazer uma expressão lógica com um vetor, obtemos um _vetor lógico_
+
+```r
+x > 1
+```
+
+```
+## [1] FALSE  TRUE  TRUE  TRUE  TRUE FALSE
+```
+- Usando o operador `[]`, podemos extrair um subconjunto do vetor `x` usando uma condição. Por exemplo, vamos extrair apenas valores maiores do que 1:
+
+```r
+x[x > 1]
+```
+
+```
+## [1] 2 3 3 4
+```
+
+```r
+x[c(F, T, T, T, T, F)] # Equivalente ao x[x > 1] - Extrair apenas TRUE's
+```
+
+```
+## [1] 2 3 3 4
+```
+
+
+#### Subconjunto de matrizes e de data frames
+- [Subsetting - Matrices (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/4gSc1/subsetting-matrices)
+- Para extrair um pedaço de uma matriz ou de um data frame, indicamos as linhas e as colunas dentro do operador `[]`
+
+```r
+x = matrix(1:6, 2, 3)
+x
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+```
+
+```r
+x[1, 2] # linha 1 e coluna 2 da matriz x
+```
+
+```
+## [1] 3
+```
+
+```r
+x[1:2, 2:3] # linha 1 e colunas 2 e 3 da matriz x
+```
+
+```
+##      [,1] [,2]
+## [1,]    3    5
+## [2,]    4    6
+```
+- É possível selecionar linhas/colunas usando um vetor lógico (`TRUE`'s e `FALSE`'s) de mesmo comprimento da dimensão:
+
+```r
+x[, c(F, T, T)] # vet. lógico selecionando as 2 últimas colunas
+```
+
+```
+##      [,1] [,2]
+## [1,]    3    5
+## [2,]    4    6
+```
+- Podemos selecionar linhas ou colunas inteiras ao não informar os índices:
+
+```r
+x[1, ] # linha 1 e todas colunas
+```
+
+```
+## [1] 1 3 5
+```
+
+```r
+x[, 2] # todas linhas e coluna 2
+```
+
+```
+## [1] 3 4
+```
+- Note que, quando o subconjunto é um valor único ou um vetor, o objeto retornado deixa de ser uma matriz. Podemos forçar a se manter como matriz usando o argumento `drop= FALSE`
+
+```r
+x[1, 2, drop = FALSE]
+```
+
+```
+##      [,1]
+## [1,]    3
+```
+
+
+#### Extraindo subconjunto de data frames
+(...) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+(...) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+</br>
 
 ## Estimação MQO multivariado
 
@@ -305,15 +1002,15 @@ head(uhat)
 ```
 
 
-##### 4. Variância do termo de erro {{<math>}}$S^2${{</math>}}
+##### 4. Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
 
-{{<math>}}$$ S^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
 
-No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 
 ```r
-S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
-S2
+sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+sig2hat
 ```
 
 ```
@@ -323,12 +1020,12 @@ S2
 
 ##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
 
-No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 
 ```r
-V_bhat = S2 * solve( t(X) %*% X )
+V_bhat = sig2hat * solve( t(X) %*% X )
 V_bhat
 ```
 
@@ -1133,7 +1830,6 @@ round( summary(res_7.14b)$coef, 4 )
 - No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
 
 
-
 #### Considerando inclinações diferentes
 - Seção 7.4 de Wooldridge (2006)
 - [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
@@ -1194,4 +1890,4 @@ round( summary(res_7.17)$coef, 4 )
 </br>
 
 
-{{< cta cta_text="👉 Seguir para Testes de Hipótese" cta_link="../sec9" >}}
+{{< cta cta_text="👉 Seguir para Revisão | Testes de Hipótese" cta_link="../sec2" >}}
