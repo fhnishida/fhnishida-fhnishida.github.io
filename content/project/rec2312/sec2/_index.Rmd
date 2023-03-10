@@ -38,42 +38,51 @@ knitr::opts_chunk$set(echo = TRUE)
     - `ACT` (_achievement test score_): a nota de avaliação de conhecimentos para ingresso no ensino superior.
 - Usando a base `gpa1` do pacote `wooldridge`, vamos estimar o seguinte modelo:
 
-$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + \varepsilon $$
 
 ```{r}
 # Acessando a base de dados gpa1
 data(gpa1, package = "wooldridge")
 
-# Estimando o modelo
+# Estimando o modelo e atribuindo a um objeto
 GPAres = lm(colGPA ~ hsGPA + ACT, data = gpa1)
 GPAres
 ```
 
-- Note que podemos ver mais detalhes da estimação usando a função `summary()` no objeto resultante da função `lm()`
+
+#### Coeficientes, Valores Ajustados e Resíduos
+- [Seção 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
+
+- Podemos usar a função `coef()` para extrairmos um vetor com as estimativas da regressão, {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
 ```{r}
-summary(GPAres)
+coef(GPAres)
+```
+
+- Além disso, podemos extrair os valores ajustados/preditos ({{<math>}}$\hat{\boldsymbol{y}}${{</math>}}) e os resíduos ({{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}}) usando, respectivamente, as funções `fitted()` e `resid()`:
+
+```{r}
+fitted(GPAres)[1:6] # 6 primeiros valores ajustados
+resid(GPAres)[1:6] # 6 primeiros resíduos
+```
+
+- Podemos extrair informações mais detalhadas do objeto resultante da regressão (`lm()`) por meio da função `summary()`:
+```{r}
+summary(GPAres) # informações detalhadas da regressão
+summary(GPAres)$coef # estimativas, erro padrão, estatística t e p-valor
 ```
 
 
-#### EXTRAINDO (...)
-
-(...) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
 ### MQO na forma matricial
-
 - [Seção 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
 
 
 #### Notações
-
 - Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
 - Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
 $$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + u_i, \qquad i=1, 2, ..., N \tag{E.1} $$
 em que {{<math>}}$N${{</math>}} é o número de observações.
 
-- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
+- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha das variáveis explicativas da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
 {{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
 
 - Note que o produto interno {{<math>}}$\boldsymbol{x}_i \boldsymbol{\beta}${{</math>}} é:
@@ -101,30 +110,10 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x
 
 #### Estimação Analítica no R
 
-##### Operações matriciais/vetoriais no R
-- Primeiro, vamos ver como realizar operações matriciais/vetoriais no R:
-  - **Transposta de uma matriz ou vetor**: função `t()`
-  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
-  - **Inversa de uma matriz (quadrada)**: função `solve()`
-
-```{r}
-# Como exemplo, criaremos matriz A de dimensão 4x2
-A = matrix(1:8, nrow=4, ncol=2)
-A
-
-# Transposta de A (2x4)
-t(A)
-
-# Produto matricial A'A (2x2)
-t(A) %*% A
-
-# Inversa de A'A (2x2)
-solve( t(A) %*% A )
-```
 
 #### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
 - Queremos estimar o modelo:
-$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + \varepsilon $$
 
 - A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
 
@@ -161,7 +150,7 @@ bhat
 
 ##### 2. Valores ajustados/preditos {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}  $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{y}}  = \boldsymbol{X} \hat{\boldsymbol{\beta}} \quad \iff \quad \left[ \begin{matrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right]   $${{</math>}}
 
 No R:
 ```{r}
@@ -170,42 +159,42 @@ head(yhat)
 ```
 
 
-##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
+##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{u}} = \boldsymbol{y} - \hat{\boldsymbol{y}} \tag{3.3}  $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} = \left[ \begin{matrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] - \left[ \begin{matrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{matrix} \right] \tag{3.3}  $${{</math>}}
 
 No R:
 ```{r}
-uhat = y - yhat
-head(uhat)
+ehat = y - yhat
+head(ehat)
 ```
 
 
-##### 4. Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
+##### 4. Variância do termo de erro {{<math>}}$s^2${{</math>}}
 
-{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+{{<math>}}$$ s^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{N-K-1} \tag{3.4}  $${{</math>}}
 
-No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$s^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 ```{r}
-sig2hat = as.numeric( t(uhat) %*% uhat / (N-K-1) )
-sig2hat
+s2 = as.numeric( t(ehat) %*% ehat / (N-K-1) )
+s2
 ```
 
 
 ##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
+{{<math>}}\begin{align} \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) &= s^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5} \\
+&= \left[ \begin{matrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots & cov(\hat{\beta}_0, \hat{\beta}_K) \\ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1) & \cdots & cov(\hat{\beta}_1, \hat{\beta}_K) \\ \vdots & \vdots & \ddots & \vdots \\ cov(\hat{\beta}_0, \hat{\beta}_K) & cov(\hat{\beta}_1, \hat{\beta}_K) & \cdots & var(\hat{\beta}_K) \end{matrix} \right]  \end{align} {{</math>}}
 
-No R, como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 ```{r}
-V_bhat = sig2hat * solve( t(X) %*% X )
-V_bhat
+Vbhat = s2 * solve( t(X) %*% X )
+Vbhat
 ```
 
 ##### 6. Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
 É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
 ```{r}
-se_bhat = sqrt( diag(V_bhat) )
+se_bhat = sqrt( diag(Vbhat) )
 se_bhat
 ```
 
@@ -231,58 +220,60 @@ summary(GPAres)$coef
 - [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
 
 - Após a estimação, é importante fazer testes de hipótese na forma
-$$ H_0: \ \beta_j = a_j \tag{4.1} $$
-tal que {{<math>}}$a_j${{</math>}} é uma constante, e {{<math>}}$j${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
+$$ H_0: \ \beta_k = a_k \tag{4.1} $$
+tal que {{<math>}}$a_k${{</math>}} é uma constante, e {{<math>}}$k${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
 
 - A hipótese alternativa para teste bicaudal é dada por
-$$ H_1: \ \beta_j \neq a_j \tag{4.2} $$
+$$ H_1: \ \beta_k \neq a_k \tag{4.2} $$
 enquanto, para teste unicaudal, é
-$$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $$
+$$ H_1: \ \beta_k > a_k \qquad \text{ou} \qquad H_1: \ \beta_k < a_k \tag{4.3} $$
 
 - Estas hipóteses podem ser convenientemente testas pelo test _t_:
-$$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
+$$ t = \frac{\hat{\beta}_k - a_k}{\text{se}(\hat{\beta}_k)} \tag{4.4} $$
 
-- **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
+- Frequentemente, realizamos teste bicaudal com {{<math>}}$a_k=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_k${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
 
 {{<math>}}\begin{align} 
-H_0: \ \beta_j=0, \qquad H_1: \ \beta_j\neq 0 \tag{4.5}\\
-t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+H_0: \ \beta_k=0, \qquad H_1: \ \beta_k\neq 0 \tag{4.5}\\
+t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 \end{align}{{</math>}}
 
 - Há três formas de avaliar essa hipótese.
 - **(i)** A primeira é por meio da comparação da estatística _t_ com o valor crítico _c_, dado um nível de significância {{<math>}}$\alpha${{</math>}}:
-{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c. $${{</math>}}
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_k} | > c. $${{</math>}}
 
 
 - Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor crítico {{<math>}}$c${{</math>}} tende a ficar próximo de 2 para quantidades razoáveis de graus de liberdade, e se aproxima ao valor crítico de 1,96 da distribuição normal.
 
-</br>
 
-- **(ii)** Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
+<img src="../t_test.png" alt="">
 
-{{<math>}}$$ p_{\hat{\beta}_j} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_j}|), \tag{4.7} $${{</math>}}
+
+- **(ii)** Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_k${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_k = 0${{</math>}}).
+
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
 
 - Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor (a probabilidade da estimativa ser igual a zero) for menor do que um nível de significância {{<math>}}$\alpha${{</math>}}:
 
-{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_j} \le \alpha $${{</math>}}
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_k} \le \alpha $${{</math>}}
 
 
 </br>
 
 - **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
-$$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
-- Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_j${{</math>}} estiver fora do intervalo de confiança.
+$$ \hat{\beta}_k\ \pm\ c . \text{se}(\hat{\beta}_k) \tag{4.8} $$
+- Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_k${{</math>}} estiver fora do intervalo de confiança.
 
 </br>
 
 #### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
-- Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_j = 0${{</math>}}.
+- Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_k = 0${{</math>}}.
 
 
 ##### 7. Estatística _t_
 
-{{<math>}}$$ t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+{{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 No R:
@@ -330,50 +321,6 @@ confint(GPAres)
 
 </br>
 
-## Informando os Resultados das Regressões
-
-- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
-- Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regressões usando a função `stargazer` do pacote de mesmo nome.
-
-
-#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores (Wooldridge, 2006)
-- Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
-
-$$ \log{\text{salary}} = \beta_0 + \beta_1. (\text{benefits/salary}) + \text{outros_fatores} + u $$
-
-- Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
-```{r}
-data(meap93, package="wooldridge") # carregando base de dados
-
-# Definindo nova variável
-meap93$b_s = meap93$benefits / meap93$salary
-```
-
-- Agora vamos estimar diversos modelos:
-  - Modelo 1: apenas `b_s` como regressor
-  - Modelo 2: inclui as variáveis explicativas `log(enroll)` e `log(staff)` no Modelo 1
-  - Modelo 3: inclui as variáveis explicativas `droprate` e `gradrate` no Modelo 2
-- Depois, vamos resumir os resultados em uma única tabela usando a função `stagazer()` pacote `stagazer`
-  - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
-  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
-  - `star.cutoffs=c(.05, .01, .001)` níveis de significância de 5%, 1% e 0,1%
-```{r warning=FALSE}
-# Estimando os três modelos
-model1 = lm(log(salary) ~ b_s, meap93)
-model2 = lm(log(salary) ~ b_s + log(enroll) + log(staff), meap93)
-model3 = lm(log(salary) ~ b_s + log(enroll) + log(staff) + droprate + gradrate, meap93)
-
-# Resumindo em uma tabela
-library(stargazer)
-stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
-          star.cutoffs=c(.05, .01, .001))
-```
-
-- É comum que os resultados econométricos venham acompanhados de asteriscos (`*`), pois estes indicam que as estimativas são significantes a um certo nível de significância
-- Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
-
-
-</br>
 
 ## Regressores Qualitativos
 
@@ -437,7 +384,7 @@ round( summary(res_7.1)$coef, 4 )
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$
-\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + \varepsilon $${{</math>}}
 em que:
 
 - `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
@@ -552,48 +499,7 @@ lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 
 
 
-### Transformando variáveis contínuas em categorias
-- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
-- Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
-
-```{r}
-# Definindo pontos de corte
-cutpts = c(0, 3, 6, 10)
-
-# Classificando o vetor 1:10 a partir dos pontos de corte
-cut(1:10, cutpts)
-```
-
-
-##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais (Wooldridge, 2006)
-
-- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
-- Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
-
-```{r}
-data(lawsch85, package="wooldridge") # carregando base de dados necessária
-
-# Definindo pontos de corte
-cutpts = c(0, 10, 25, 40, 60, 100, 175)
-
-# Criando variável com a classificação
-lawsch85$rankcat = cut(lawsch85$rank, cutpts)
-
-# Visualizando os 6 primeiros valores de rankcat
-head(lawsch85$rankcat)
-
-# Escolhendo a categoria de referência (acima de 100 até 175)
-lawsch85$rankcat = relevel(lawsch85$rankcat, '(100,175]')
-
-# Estimando o modelo
-res = lm(log(salary) ~ rankcat + LSAT + GPA + llibvol + lcost, data=lawsch85)
-round( summary(res)$coef, 5 )
-```
-
-- Note que, em relação às universidades em piores colocações (`(100,175]`), as melhores ranqueadas provêem salários de 13,16\% a 69,96\% superiores
-
-
-### Interações Envolvendo Variáveis Dummy
+### Interações Envolvendo Dummies
 
 #### Interações entre variáveis dummy
 - [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
