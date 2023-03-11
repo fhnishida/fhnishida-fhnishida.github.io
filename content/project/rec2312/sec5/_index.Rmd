@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: MQ2E
+linktitle: Equações Simultâneas
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Mínimos Quadrados em 2 Estágios
+title: Equações Simultâneas
 weight: 5
 output: md_document
 type: book
@@ -18,7 +18,34 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+## Notações
+
+- [Seção 16.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/257)
+
+
+
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Equações Simultâneas" cta_link="../sec6" >}}
+
+## Estimação por MQ2E
+
+- [Seção 16.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/258)
+
+
+
+
+</br>
+
+
+## Estimação Conjunta do Sistema
+
+- [Seção 16.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/259)
+
+
+
+
+</br>
+
+
+{{< cta cta_text="👉 Seguir para Estimação com Dados em Painel" cta_link="../sec6" >}}
