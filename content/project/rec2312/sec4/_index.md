@@ -11,11 +11,7 @@ output: md_document
 type: book
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-# wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Aspire
-# wd = "~/../FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Nitro
-```
+
 
 - Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
 
@@ -120,13 +116,27 @@ em que:
 
 
 
-```{r}
+
+```r
 # Carregando a base de dados necessária
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
 res_7.14 = lm(lwage ~ female*married + educ + exper + expersq + tenure + tenursq, data=wage1)
 round( summary(res_7.14)$coef, 5 )
+```
+
+```
+##                Estimate Std. Error  t value Pr(>|t|)
+## (Intercept)     0.32138    0.10001  3.21349  0.00139
+## female         -0.11035    0.05574 -1.97966  0.04827
+## married         0.21268    0.05536  3.84188  0.00014
+## educ            0.07891    0.00669 11.78733  0.00000
+## exper           0.02680    0.00524  5.11183  0.00000
+## expersq        -0.00054    0.00011 -4.84710  0.00000
+## tenure          0.02909    0.00676  4.30161  0.00002
+## tenursq        -0.00053    0.00023 -2.30555  0.02153
+## female:married -0.30059    0.07177 -4.18846  0.00003
 ```
 
 - Notamos que o efeito do casamento sobre mulheres é diferente do efeito sobre homens, pois o parâmetro de `female:married` ({{<math>}}$\delta_2${{</math>}}) é significante.
@@ -140,8 +150,32 @@ round( summary(res_7.14)$coef, 5 )
 <img src="../t_test.png" alt="">
 
 - Observe que a matriz de variância/covariância das estimativas ({{<math>}}$V_{\hat{\beta}}${{</math>}}) é:
-```{r}
+
+```r
 round(vcov(res_7.14), 5)
+```
+
+```
+##                (Intercept)   female  married     educ    exper expersq tenure
+## (Intercept)        0.01000 -0.00188 -0.00084 -0.00058 -0.00013       0  3e-05
+## female            -0.00188  0.00311  0.00183  0.00001 -0.00001       0  0e+00
+## married           -0.00084  0.00183  0.00306 -0.00003 -0.00008       0 -3e-05
+## educ              -0.00058  0.00001 -0.00003  0.00004  0.00000       0  0e+00
+## exper             -0.00013 -0.00001 -0.00008  0.00000  0.00003       0 -1e-05
+## expersq            0.00000  0.00000  0.00000  0.00000  0.00000       0  0e+00
+## tenure             0.00003  0.00000 -0.00003  0.00000 -0.00001       0  5e-05
+## tenursq            0.00000  0.00000  0.00000  0.00000  0.00000       0  0e+00
+## female:married     0.00165 -0.00308 -0.00274  0.00000  0.00000       0  4e-05
+##                tenursq female:married
+## (Intercept)          0        0.00165
+## female               0       -0.00308
+## married              0       -0.00274
+## educ                 0        0.00000
+## exper                0        0.00000
+## expersq              0        0.00000
+## tenure               0        0.00004
+## tenursq              0        0.00000
+## female:married       0        0.00515
 ```
 em que as diagonais são as variâncias das estimativas e os demais elementos são as covariâncias entre as estimativas:
 {{<math>}}$$ V_{\hat{\beta}} = \left[ \begin{matrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots & cov(\hat{\beta}_0, \hat{\beta}_K) \\ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1) & \cdots & cov(\hat{\beta}_1, \hat{\beta}_K) \\ \vdots & \vdots & \ddots & \vdots \\ cov(\hat{\beta}_0, \hat{\beta}_K) & cov(\hat{\beta}_1, \hat{\beta}_K) & \cdots & var(\hat{\beta}_K) \end{matrix} \right]  $$ {{</math>}}
@@ -163,7 +197,8 @@ cov(\hat{\beta}_2, \hat{\delta}_2) = -0.00274 $$ {{</math>}}
 
 - O mesmo pode ser feito vetorialmente:
 
-```{r}
+
+```r
 # Extraindo objetos da regressão
 bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
 Vbhat = vcov(res_7.14) # matriz de variância-covariância do estimador
@@ -179,18 +214,52 @@ G = 1 # número de restrições
 # Calculando a estatística t
 t_numer = r1prime %*% bhat - h1 # numerador de t
 t_numer
+```
+
+```
+##             [,1]
+## [1,] -0.08791739
+```
+
+```r
 t_denom = sqrt( r1prime %*% Vbhat %*% t(r1prime) ) # denominador de t
 t_denom
+```
+
+```
+##            [,1]
+## [1,] 0.05234814
+```
+
+```r
 t = t_numer / t_denom # estatistica t
 t
+```
 
+```
+##           [,1]
+## [1,] -1.679475
+```
+
+```r
 # Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
 c = qt(1 - 0.05/2, df=N-K-1)
 c
+```
 
+```
+## [1] 1.964563
+```
+
+```r
 # Calculando o p-valor
 p = pt(-abs(t), N-K-1) * 2
 p
+```
+
+```
+##            [,1]
+## [1,] 0.09366368
 ```
 
 - O valor ficou um pouco diferente por arredondamento
@@ -206,19 +275,38 @@ p
 <img src="../chisq_test.png" alt="">
 
 
-```{r}
+
+```r
 # Calculando estatística de Wald
 aux = r1prime %*% bhat - h1 # R \beta - h
 w = t(aux) %*% solve( r1prime %*% Vbhat %*% t(r1prime)) %*% aux
 w
+```
 
+```
+##          [,1]
+## [1,] 2.820636
+```
+
+```r
 # Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
 c = qchisq(1-0.05, df=G)
 c
+```
 
+```
+## [1] 3.841459
+```
+
+```r
 # Calculando p-valor de w
 p = 1 - pchisq(w, df=G)
 p
+```
+
+```
+##            [,1]
+## [1,] 0.09305951
 ```
 
 
@@ -267,12 +355,23 @@ em que:
   - `hrunsyr`: média de _home runs_ por ano
   - `rbisyr`: média de corridas impulsionadas por ano
 
-```{r}
+
+```r
 data(mlb1, package="wooldridge")
 
 # Estimando o modelo completo (irrestrito)
 resMLB = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 round(summary(resMLB)$coef, 5) # coeficientes da estimação
+```
+
+```
+##             Estimate Std. Error  t value Pr(>|t|)
+## (Intercept) 11.19242    0.28882 38.75184  0.00000
+## years        0.06886    0.01211  5.68430  0.00000
+## gamesyr      0.01255    0.00265  4.74244  0.00000
+## bavg         0.00098    0.00110  0.88681  0.37579
+## hrunsyr      0.01443    0.01606  0.89864  0.36947
+## rbisyr       0.01077    0.00717  1.50046  0.13440
 ```
 
 - Note que, individualmente, as variáveis `bavg`, `hrunsyr` e `rbisyr` são estatisticamente não significantes.
@@ -285,11 +384,24 @@ round(summary(resMLB)$coef, 5) # coeficientes da estimação
 
 #### Usando função `wald.test()`
 
-```{r}
+
+```r
 # Extraindo matriz de variância-covariância do estimador
 Vbhat = vcov(resMLB)
 round(Vbhat, 5)
+```
 
+```
+##             (Intercept)    years  gamesyr     bavg  hrunsyr   rbisyr
+## (Intercept)     0.08342  0.00001 -0.00027 -0.00029 -0.00148  0.00082
+## years           0.00001  0.00015 -0.00001  0.00000 -0.00002  0.00001
+## gamesyr        -0.00027 -0.00001  0.00001  0.00000  0.00002 -0.00002
+## bavg           -0.00029  0.00000  0.00000  0.00000  0.00000  0.00000
+## hrunsyr        -0.00148 -0.00002  0.00002  0.00000  0.00026 -0.00010
+## rbisyr          0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
+```
+
+```r
 # Número de restrições
 G = 3
 
@@ -299,16 +411,33 @@ R = matrix(c(0, 0, 0, 1, 0, 0,
              0, 0, 0, 0, 0, 1),
            nrow=G, byrow=TRUE)
 R
+```
 
+```
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    0    0    0    1    0    0
+## [2,]    0    0    0    0    1    0
+## [3,]    0    0    0    0    0    1
+```
+
+```r
 # Vetor de constantes h
 h = matrix(c(0, 0, 0), ncol=1)
 h
 ```
 
+```
+##      [,1]
+## [1,]    0
+## [2,]    0
+## [3,]    0
+```
+
 - Lembre-se que, por padrão, a função `matrix()` "preenche" a matrix por coluna.
 - No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento `byrow=TRUE`.
 
-```{r}
+
+```r
 # Calculando a estatística de Wald
 # install.packages("aod") # instalando o pacote necessário
 aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
@@ -316,7 +445,14 @@ aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
                L = R, # matriz de restrições
                H0 = h # Hipótese nula (tudo igual a zero)
                )
+```
 
+```
+## Wald test:
+## ----------
+## 
+## Chi-squared test:
+## X2 = 28.7, df = 3, P(> X2) = 2.7e-06
 ```
 
 - Observe que rejeitamos a hipótese nula e, portanto, os parâmetros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} são conjuntamente significantes.
@@ -325,7 +461,8 @@ aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
 #### Calculando "na mão"
 
 - Estimando o modelo
-```{r}
+
+```r
 # Criando variavel log_salary
 mlb1$log_salary = log(mlb1$salary)
 name_y = "log_salary"
@@ -344,7 +481,19 @@ K = ncol(X) - 1
 # Estimando o modelo
 bhat = solve( t(X) %*% X ) %*% t(X) %*% y
 round(bhat, 5)
+```
 
+```
+##             [,1]
+## const   11.19242
+## years    0.06886
+## gamesyr  0.01255
+## bavg     0.00098
+## hrunsyr  0.01443
+## rbisyr   0.01077
+```
+
+```r
 # Calculando os resíduos
 uhat = y - X %*% bhat
 
@@ -356,28 +505,63 @@ Vbhat = S2 * solve( t(X) %*% X )
 round(Vbhat, 5)
 ```
 
+```
+##            const    years  gamesyr     bavg  hrunsyr   rbisyr
+## const    0.08342  0.00001 -0.00027 -0.00029 -0.00148  0.00082
+## years    0.00001  0.00015 -0.00001  0.00000 -0.00002  0.00001
+## gamesyr -0.00027 -0.00001  0.00001  0.00000  0.00002 -0.00002
+## bavg    -0.00029  0.00000  0.00000  0.00000  0.00000  0.00000
+## hrunsyr -0.00148 -0.00002  0.00002  0.00000  0.00026 -0.00010
+## rbisyr   0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
+```
+
 - Calculando a estatística de Wald, dada por
 {{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
 
-```{r}
+
+```r
 # Estatística de Wald
 w = t( R %*% bhat - h ) %*% solve( R %*% Vbhat %*% t(R) ) %*% (R %*% bhat - h)
 w
+```
 
+```
+##          [,1]
+## [1,] 28.65076
+```
+
+```r
 # Encontrando valor crítico Qui-quadrado para 5% de signif.
 alpha = 0.05
 c = qchisq(1-alpha, df=G)
 c
+```
 
+```
+## [1] 7.814728
+```
+
+```r
 # Encontrando p-valor
 p = 1 - pchisq(w, df=G)
 p
 ```
 
+```
+##              [,1]
+## [1,] 2.651604e-06
+```
+
 - Como Estatística de Wald (= 28,65) é maior do que o valor crítico (= 7,81), então rejeitamos a hipótese nula conjunta de que todos parâmetros testados são iguais a zero.
 - Também poderíamos verificar o p-valor por meio da estatística de Wald:
-```{r}
+
+```r
 1 - pchisq(w, df=G)
+```
+
+```
+##              [,1]
+## [1,] 2.651604e-06
 ```
 
 - Como é menor do que 5%, rejeita-se a hipótese nula.
@@ -425,7 +609,8 @@ em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 - É possível fazer o teste _F_ a partir da função `linearHypothesis()` do pacote `car`
 - Além de incluir o objeto resultante de uma estimação, é necessário incluir um vetor de texto com as restrições:
 
-```{r}
+
+```r
 # Estimando o modelo irrestrito
 res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 
@@ -437,13 +622,36 @@ myH0 = c("bavg = 0", "hrunsyr = 0", "rbisyr = 0")
 car::linearHypothesis(res.ur, myH0)
 ```
 
+```
+## Linear hypothesis test
+## 
+## Hypothesis:
+## bavg = 0
+## hrunsyr = 0
+## rbisyr = 0
+## 
+## Model 1: restricted model
+## Model 2: log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr
+## 
+##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
+## 1    350 198.31                                  
+## 2    347 183.19  3    15.125 9.5503 4.474e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
 - Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que é esperado)
 - Para avaliar a hipótese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estatística _F_ é maior do que um valor crítico (dado um nível de significância), ou avaliarmos se o p-valor é menor do que esse nível de significância.
 - É possível ver acima, pelo segundo critério, que rejeitamos a hipótese nula.
 - Podemos ver o valor crítico a 5% de significância via:
 
-```{r}
+
+```r
 qf(1-0.05, G, N-K-1)
+```
+
+```
+## [1] 2.630641
 ```
 - Como 9,55 > 2,63, então rejeitamos a hipótese nula.
 
@@ -452,7 +660,8 @@ qf(1-0.05, G, N-K-1)
 
 - Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para não ter que fazer todos passos da estimação duas vezes.
 
-```{r}
+
+```r
 # Estimando o modelo irrestrito
 res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 
@@ -462,18 +671,41 @@ res.r = lm(log(salary) ~ years + gamesyr, data=mlb1)
 # Extraindo os R2 dos resultados das estimações
 r2.ur = summary(res.ur)$r.squared
 r2.ur
+```
+
+```
+## [1] 0.6278028
+```
+
+```r
 r2.r = summary(res.r)$r.squared
 r2.r
+```
 
+```
+## [1] 0.5970716
+```
+
+```r
 # Calculando a estatística F
 F = ( r2.ur - r2.r ) / (1 - r2.ur) * (N-K-1) /  G
 F
+```
 
+```
+## [1] 9.550254
+```
+
+```r
 # p-valor do teste F
 1 - pf(F, G, N-K-1)
+```
+
+```
+## [1] 4.473708e-06
 ```
 
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec4" >}}
+{{< cta cta_text="👉 Seguir para Variável Instrumental" cta_link="../sec4" >}}

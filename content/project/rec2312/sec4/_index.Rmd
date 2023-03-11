@@ -476,4 +476,4 @@ F
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec4" >}}
+{{< cta cta_text="👉 Seguir para Variável Instrumental" cta_link="../sec4" >}}
