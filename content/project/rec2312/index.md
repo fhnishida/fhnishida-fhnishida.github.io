@@ -40,6 +40,6 @@ Página do curso (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.
 
 ## Gravações das Monitorias
 
-- **Monitoria 1 (13/03)**: Revisão de Programação em R | [Script](../monitoria01.R)
+- **Monitoria 1 (13/03)**: Revisão de Programação em R | [Script](monitoria01.R)
     
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SS-NLIn9gJk/hqdefault.jpg)](https://www.youtube.com/watch?v=SS-NLIn9gJk)
