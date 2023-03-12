@@ -2,7 +2,7 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: VI
+linktitle: Variáveis Instrumentais
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
 title: Variáveis Instrumentais
@@ -14,7 +14,7 @@ type: book
 
 
 
-## Variaveis Instrumentais em Regressão Simples
+## Variáveis Instrumentais em Regressão Simples
 
 - [Seção 15.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/247)
 
@@ -24,7 +24,7 @@ type: book
 </br>
 
 
-## Variaveis Instrumentais em Regressão Múltipla
+## Variáveis Instrumentais em Regressão Múltipla
 
 - [Seção 15.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/249)
 
