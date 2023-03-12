@@ -20,3 +20,26 @@ Página do curso (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.
 
 {{< cta cta_text="👉 Seguir para Revisão de R" cta_link="sec1" >}}
 
+
+
+
+</br>
+
+## Listas de Exercícios
+
+### Listas Teóricas
+- 
+
+
+
+### Listas Práticas
+- 
+
+
+</br>
+
+## Gravações das Monitorias
+
+- **Monitoria 1 (13/03)**: Introdução ao R, Operações básicas e Objetos (simples e vetores) | [Script](../monitoria01.R)
+    
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SS-NLIn9gJk/hqdefault.jpg)](https://www.youtube.com/watch?v=SS-NLIn9gJk)
