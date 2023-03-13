@@ -43,3 +43,9 @@ Página do curso (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.
 - **Monitoria 1 (13/03)**: Revisão de Programação em R | [Script](monitoria01.R)
     
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SS-NLIn9gJk/hqdefault.jpg)](https://www.youtube.com/watch?v=SS-NLIn9gJk)
+
+
+- **Monitoria 2 (20/03)**: Mínimos Quadrados Ordinários | [Script](monitoria02.R)
+    
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5ye1mOJFe6k/hqdefault.jpg)](https://www.youtube.com/watch?v=5ye1mOJFe6k)
+
