@@ -16,9 +16,11 @@ weight: 1
 
 Sejam bem-vindas(os) ao conteúdo de Monitoria da disciplina de Econometria II!
 
-Página do curso (prof. Daniel Domingues dos Santos):  [...]()
+Página do curso (prof. Daniel Domingues dos Santos):  [https://edisciplinas.usp.br/course/view.php?id=108687](https://edisciplinas.usp.br/course/view.php?id=108687)
 
-Caso tenham dúvidas, podem enviar e-mail para fabio.nishida@usp.br
+Caso tenham dúvidas, podem enviar e-mail para: fabio.nishida@usp.br
+
+Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.com/qtr-upxi-nwu](https://meet.google.com/qtr-upxi-nwu)
 
 
 
