@@ -4,7 +4,7 @@ date: "2023-03-08T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on IV, Panel Data and Logit/Probit.
+summary: Undergraduate TA Sessions on Panel Data and IV.
 tags:
 - Undergraduate
 title: Econometrics II (Spring 2023)
@@ -35,9 +35,9 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Listas de Exercícios
 
+
 ### Listas Teóricas
 - 
-
 
 
 ### Listas Práticas
