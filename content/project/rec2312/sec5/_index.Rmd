@@ -328,3 +328,5 @@ TravelMode3 = TravelMode2 %>%
 TravelMode3 %>% head(10)
 ```
 
+
+{{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec6" >}}

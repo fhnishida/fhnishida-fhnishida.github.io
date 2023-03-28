@@ -164,4 +164,4 @@ round( summary(reg.iv)$coef, 5 )
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Equações Simultâneas" cta_link="../sec5" >}}
+{{< cta cta_text="👉 Seguir para Equações Simultâneas" cta_link="../sec7" >}}

@@ -633,3 +633,5 @@ TravelMode3 %>% head(10)
 ## #   variable names ¹​wait_bus, ²​wait_car, ³​vcost_air, ⁴​vcost_train, ⁵​vcost_bus
 ```
 
+
+{{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec6" >}}

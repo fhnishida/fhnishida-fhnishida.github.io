@@ -44,4 +44,3 @@ type: book
 </br>
 
 
-{{< cta cta_text="👉 Seguir para Estimação com Dados em Painel" cta_link="../sec6" >}}
