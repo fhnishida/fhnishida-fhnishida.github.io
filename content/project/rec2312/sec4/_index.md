@@ -70,12 +70,9 @@ Denote {{<math>}}$\boldsymbol{\iota}${{</math>}} um vetor-coluna de 1's de taman
 
 Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}}, segue que
 {{<math>}}\[ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} \]{{</math>}}
-ou, usando {{<math>}}$\boldsymbol{Z} \equiv (\boldsymbol{\iota},X)${{</math>}} e {{<math>}}$\boldsymbol{\gamma} \equiv (\alpha, \boldsymbol{\beta})${{</math>}},
-{{<math>}}\[ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}, \]{{</math>}}
+ou, usando
 
-em que:
-
-{{<math>}}$$ \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} \equiv \left[ \begin{array}{c} \alpha \\ \boldsymbol{\beta} \end{array} \right] = \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \qquad \text{ e } \qquad 
+{{<math>}}$$ \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} \equiv \left[ \begin{array}{c} \alpha \\ \boldsymbol{\beta} \end{array} \right] = \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e } \quad 
 \underbrace{\boldsymbol{Z}}_{NT \times (K+1)} \equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
   = \left[ \begin{array}{cccc}
     x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
@@ -91,7 +88,10 @@ em que:
     x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
     \vdots & \vdots & \ddots & \vdots \\
     x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
-\end{array} \right] $$ {{</math>}}
+\end{array} \right], $$ {{</math>}}
+
+podemos reescrever como
+{{<math>}}\[ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}. \]{{</math>}}
 
 
 </br>
