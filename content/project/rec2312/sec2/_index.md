@@ -604,8 +604,8 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-reg_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(reg_7.1)$coef, 4 )
+reg_7.5 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg_7.5)$coef, 4 )
 ```
 
 ```
