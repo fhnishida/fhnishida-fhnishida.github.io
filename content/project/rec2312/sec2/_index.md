@@ -643,10 +643,10 @@ round( summary(reg_7.5)$coef, 4 )
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$`
-\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + \varepsilon $${{</math>}}
+ \text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + \varepsilon $${{</math>}}
 em que:
 
-- `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `diff_fte`: diferença de nº total de empregados entre fev/1992 e nov/1992
 - `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
 - `chain`: rede de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys`), e (4) Wendy's (`wendys`)
 - `hrsopen`: horas de funcionamento por dia
