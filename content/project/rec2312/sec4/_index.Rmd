@@ -40,30 +40,30 @@ sendo {{<math>}}$u_i${{</math>}} o erro individual para o indivíduo {{<math>}}$
 Empilhando as equações (1) para todo indivíduo {{<math>}}$i = 1, 2, ..., N${{</math>}} e todo período {{<math>}}$t = 1, 2, ..., T ${{</math>}}, temos
 
 {{<math>}}$$ \underbrace{\boldsymbol{y}}_{NT \times 1} = \left[ \begin{array}{c}
-    y_{11} \\ y_{12} \\ \vdots \\ y_{1T} \\ y_{21} \\ y_{22} \\ \vdots \\ y_{2T} \\ \vdots \\ y_{N1} \\ y_{N2} \\ \vdots \\ y_{NT}
+    y_{11} \\ y_{12} \\ \vdots \\ y_{1T} \\\hline y_{21} \\ y_{22} \\ \vdots \\ y_{2T} \\\hline \vdots \\\hline y_{N1} \\ y_{N2} \\ \vdots \\ y_{NT}
 \end{array} \right] \qquad \text{ e } \qquad 
 \underbrace{\boldsymbol{X}}_{NT \times K} = \left[ \begin{array}{c}
-    \boldsymbol{x}'_{11} \\ \boldsymbol{x}'_{12} \\ \vdots \\ \boldsymbol{x}'_{1T} \\
-    \boldsymbol{x}'_{21} \\ \boldsymbol{x}'_{22} \\ \vdots \\ \boldsymbol{x}'_{2T} \\
-    \vdots \\
+    \boldsymbol{x}'_{11} \\ \boldsymbol{x}'_{12} \\ \vdots \\ \boldsymbol{x}'_{1T} \\\hline
+    \boldsymbol{x}'_{21} \\ \boldsymbol{x}'_{22} \\ \vdots \\ \boldsymbol{x}'_{2T} \\\hline
+    \vdots \\\hline
     \boldsymbol{x}'_{N1} \\ \boldsymbol{x}'_{N2} \\ \vdots \\ \boldsymbol{x}'_{NT} 
     \end{array} \right]
   = \left[ \begin{array}{cccc}
     x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
     x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
     \vdots & \vdots & \ddots & \vdots \\
-    x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\
+    x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\\hline
     x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
     x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
     \vdots & \vdots & \ddots & \vdots \\
-    x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\
-    \vdots & \vdots & \ddots & \vdots \\
+    x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\\hline
+    \vdots & \vdots & \ddots & \vdots \\\hline
     x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
     x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
     \vdots & \vdots & \ddots & \vdots \\
     x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
 \end{array} \right] $$ {{</math>}}
-
+As linhas horizontais foram inseridas apenas para facilitar a visualização dos valores referentes a cada indivíduo {{<math>}}$i${{</math>}}.
 
 
 Note que o modelo anterior não possui uma constante, {{<math>}}$\alpha${{</math>}}. Podemos incluir uma constante no modelo (1) e reescrever esse novo modelo como:
@@ -78,18 +78,18 @@ Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$
 ou, usando
 
 {{<math>}}$$ \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} \equiv
-  = \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e } \quad 
+ \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e } \quad 
 \underbrace{\boldsymbol{Z}}_{NT \times (K+1)} \equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
   = \left[ \begin{array}{cccc}
     1 & x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
     1 & x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
-    1 & x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\
+    1 & x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\ \hline
     1 & x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
     1 & x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\
-    1 & x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\ 
+    1 & x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\ \hline
+    \vdots & \vdots & \vdots & \ddots & \vdots \\ \hline
     1 & x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
     1 & x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
@@ -118,7 +118,7 @@ Denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p$
 
 
 A matriz de transformação **inter-indivíduos (_between_)** é denotada por:
-{{<math>}}$$ \boldsymbol{B}\ =\ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T $${{</math>}}
+{{<math>}}$$ \boldsymbol{B}\ =\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
 Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é equivalente a {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II.
 
 Pré-multiplicando {{<math>}}$\boldsymbol{Z}${{</math>}} pela matriz de transformação {{<math>}}$\boldsymbol{B}${{</math>}}, "preenchemos" a matriz com as médias para cada {{<math>}}$i${{</math>}} e cada coluna (variável):
@@ -250,7 +250,7 @@ Note que:
 
 
 Já a matriz de transformação **intra-indivíduos (_within_)** é dada por:
-{{<math>}}$$ \boldsymbol{W}\ =\ \boldsymbol{I}_{NT} - \boldsymbol{B}\ =\ \boldsymbol{I}_{NT} - \left[ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \right]. $${{</math>}}
+{{<math>}}$$ \boldsymbol{W}\ =\ \boldsymbol{I}_{NT} - \boldsymbol{B}\ =\ \boldsymbol{I}_{NT} - \Big[ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big]. $${{</math>}}
 
 Note que a matriz {{<math>}}$\boldsymbol{W}${{</math>}} é equivalente a {{<math>}}$M${{</math>}} nas notas de aula de Econometria II.
 
@@ -314,7 +314,7 @@ A matriz de covariâncias dos erros depende apenas de dois parâmetros: {{<math>
 
 A matriz de variância dos erros pode ser expressa por:
 {{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] $${{</math>}}
-ou, em termos de {{<math>}}$B${{</math>}} e {{<math>}}$W${{</math>}},
+ou, em termos de {{<math>}}$\boldsymbol{B}${{</math>}} e {{<math>}}$\boldsymbol{W}${{</math>}},
 {{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{W} + T \sigma^2_u \boldsymbol{B} $${{</math>}}
 
 
@@ -364,7 +364,7 @@ em que {{<math>}}$$\sigma^2_l = \sigma^2_v + T \sigma^2_u $${{</math>}}
 {{<math>}}$$ \hat{\sigma}^2_l = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}}{N-K-1} $${{</math>}}
 
 - O estimador _between_ também pode ser estimado por MQO, transformando as variáveis por pré-multiplicação da matriz _between_ ({{<math>}}$B${{</math>}}):
-{{<math>}}$$ \tilde{\boldsymbol{Z}} \equiv BZ \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} = By $${{</math>}} 
+{{<math>}}$$ \tilde{\boldsymbol{Z}} \equiv \boldsymbol{BZ} \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} = \boldsymbol{By} $${{</math>}} 
 tal que 
 {{<math>}}$$ \hat{\boldsymbol{\gamma}} = ( \tilde{\boldsymbol{Z}}' \tilde{\boldsymbol{Z}} )^{-1} \tilde{\boldsymbol{Z}}' \tilde{\boldsymbol{y}} $${{</math>}}
 e assim por diante.
@@ -420,7 +420,7 @@ Usaremos a função `plm()` (do pacote de mesmo nome) para estimar modelos linea
 
 - `formula`: equação do modelo
 - `data`: base de dados em `data.frame` (precisa preencher `index`) ou `pdata.frame` (formato próprio do pacote que já indexa as colunas de indivíduos e de tempo)
-- `model`: estimador a ser computado 'pooling' (MQE), 'between', 'within' (Efeitos Fixos) e 'random' (Efeitos Aleatórios/GLS)
+- `model`: estimador a ser computado 'pooling' (MQE), 'between', 'within' (Efeitos Fixos) e 'random' (Efeitos Aleatórios/MQG)
 - `index`: vetor de nomes dos identificadores de indivíduo e de tempo
 
 ```{r warning=FALSE}
@@ -581,22 +581,22 @@ summary(Q.between)$coef # comparando com estimado via plm()
 
 </br>
 
-## Estimadores GLS
+## Estimadores MQG
 - Seção 2.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Ao contrário do estimador _within_ que retira os efeitos individuais, o estimador de **GLS** considera que os efeitos individuais como aleatórios a partir de uma distribuição específica.
+- Ao contrário do estimador _within_ que retira os efeitos individuais, o estimador de **MQG** considera que os efeitos individuais como aleatórios a partir de uma distribuição específica.
 - Erros não são correlacionados com as covariadas, e são caracterizados por uma matriz de covariâncias {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
-- O estimador de GLS é dado por
-{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{GLS} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} $${{</math>}}
+- O estimador de MQG é dado por
+{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{MQG} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} $${{</math>}}
 
 - A variância do estimador é dada por
-{{<math>}}$$ V(\hat{\boldsymbol{\gamma}}_{GLS}) = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} \tag{2.28} $${{</math>}}
+{{<math>}}$$ V(\hat{\boldsymbol{\gamma}}_{MQG}) = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} \tag{2.28} $${{</math>}}
 - A matriz {{<math>}}$\boldsymbol{\Sigma}${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, temos:
 {{<math>}}$$ \boldsymbol{\Sigma}^p = (\sigma^2_l)^p \boldsymbol{B} + (\sigma^2_v)^p \boldsymbol{W} \tag{2.29} $${{</math>}}
 
 - Lembre-se que {{<math>}}$$\sigma^2_l = \sigma^2_v + T \sigma^2_u $${{</math>}}
 
-### GLS: junção Pooled MQO e _Within_
-- Combinação de Pooled MQO (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
+### MQG: junção MQE e _Within_
+- Combinação de MQE (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
 - Pode-se computar mais eficientemente por MQO, que necessita transformação das variáveis usando a matriz {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, tal que {{<math>}}$\boldsymbol{\Sigma}^{-0.5\prime}\boldsymbol{\Sigma}^{-0.5} = \boldsymbol{\Sigma}^{-1}${{</math>}}.
 - Denotando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{Z}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
 {{<math>}}\begin{align*}
@@ -618,8 +618,8 @@ em que
     
 Note que, quando:
 
-- {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} GLS se aproxima do estimador _within_
-- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} GLS se aproxima do pooled MQO
+- {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} MQG se aproxima do estimador _within_
+- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} MQG se aproxima do pooled MQO
 
 
 ### Estimação dos Componentes de Erro
@@ -630,7 +630,7 @@ Note que, quando:
     \hat{\sigma}^2_v &= \frac{\varepsilon' \boldsymbol{W} \varepsilon}{N(T-1)} \tag{2.35}
 \end{align*}{{</math>}}
 - Como {{<math>}}$\varepsilon${{</math>}} é desconhecido, então usam-se resíduos de estimadores consistentes em seu lugar.
-- O estimador obtido por esse processo é chamado de FGLS (ou GLS Factível)
+- O estimador obtido por esse processo é chamado de FMQG (ou MQG Factível)
 - **Wallace e Hussain (1969)**: usam resíduos MQO
 {{<math>}}\begin{align*}
     \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{MQO}}{N} \\
@@ -658,8 +658,8 @@ Note que, a variância do efeito individual é sobre-estimado quando o modelo co
 \end{align*}{{</math>}}
 
 
-### Estimação GLS via `plm()`
-- Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via GLS
+### Estimação MQG via `plm()`
+- Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via MQG
 - em `random.method` podemos escolher o método de cálculo dos parâmetros de erro:
     1. `"walhus"` para Wallace e Hussain (1969)
     2. `"amemiya"` para Amemiya (1971)
@@ -672,16 +672,16 @@ library(plm)
 data("TobinQ", package = "pder")
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimações GLS
+# Estimações MQG
 Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
 Q.amemiya = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "amemiya")
 Q.ht = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "ht")
 Q.swar = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "swar")
 Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
 
-summary(Q.walhus) # output da estimação GLS por Wallace e Hussain (1969)
+summary(Q.walhus) # output da estimação MQG por Wallace e Hussain (1969)
 ```
-Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa GLS é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de períodos ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
+Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa MQG é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de períodos ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
 
 
 ```{r}
@@ -694,7 +694,7 @@ Os resultados são praticamente idênticos, assim como seus {{<math>}}$\theta${{
 # Podemos visualizar o theta usando ercomp()$theta
 ercomp(Q.walhus)$theta
 
-# Criaremos uma lista com todos objetos de estimação GLS
+# Criaremos uma lista com todos objetos de estimação MQG
 Q.models = list(walhus = Q.walhus, amemiya = Q.amemiya, ht = Q.ht,
                 swar = Q.swar, nerlove = Q.nerlove)
 
@@ -709,16 +709,16 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year")) # transf. em pdata.frame
 summary(pTobinQ$qn) # resumo sobre variável qn
 ```
 
-Também é possível verificar o mesmo para a variância do erro na estimação em GLS:
+Também é possível verificar o mesmo para a variância do erro na estimação em MQG:
 ```{r}
 ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
 ```
 
 
 
-#### Estimação Analítica GLS
-- Aqui, faremos a estimação analítica do GLS usando o método de Wallace e Hussain (1969).
-- Consiste no uso dos desvios estimados por pooled MQO para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} para estimar por FGLS.
+#### Estimação Analítica MQG
+- Aqui, faremos a estimação analítica do MQG usando o método de Wallace e Hussain (1969).
+- Consiste no uso dos desvios estimados por pooled MQO para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} para estimar por FMQG.
 - Para agilizar a estimação, vamos estimar o pooled MQO por `plm()`:
 ```{r}
 library(plm)
@@ -773,7 +773,7 @@ Omega_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
 dim(Omega_1) # NT x NT
 ```
 
-{{<math>}}$$ \hat{V}_{GLS} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} $${{</math>}}
+{{<math>}}$$ \hat{V}_{MQG} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} $${{</math>}}
 
 ```{r}
 ## Estimando a matriz de variancia/covariancia das estimativas gamma
@@ -806,7 +806,7 @@ summary(Q.walhus)$coef # comparando com estimado via plm()
 
 </br>
 
-## Comparativo dos Estimadores MQO e GLS - Exemplo
+## Comparativo dos Estimadores MQO e MQG - Exemplo
 - Seção 2.4.4 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - Usado por Kinal e Lahiri (1993) 
 - Queremos estabelecer relação entre importações (_imports_) e produto nacional (_gnp_)
@@ -815,10 +815,10 @@ data("ForeignTrade", package = "pder")
 FT = pdata.frame(ForeignTrade, index=c("country", "year"))
 
 # Variâncias 
-ercomp(imports ~ gnp, FT) # variância do erro na estimação GLS
+ercomp(imports ~ gnp, FT) # variância do erro na estimação MQG
 ```
-- Variância do erro da estimação GLS é dada por 93\% de variação inter-indivíduos
-- O estimador GLS remove grande parte da variação inter-indivíduos, pois subtrai, da covariada, 94\% da média individual:
+- Variância do erro da estimação MQG é dada por 93\% de variação inter-indivíduos
+- O estimador MQG remove grande parte da variação inter-indivíduos, pois subtrai, da covariada, 94\% da média individual:
 
 {{<math>}}$$ \tilde{z}_{it}\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot}\ =\ z_{it} - 0,94 \bar{z}_{i\cdot} $${{</math>}}
 
@@ -831,12 +831,15 @@ sapply(models, function(x) round(
 
 <center><img src="../example_panel-1.png"></center>
 
-- GLS e _within_ são bastante parecidos
+- MQG e _within_ são bastante parecidos
 - MQO, que considera variação inter-indivíduos, é parecido com _between_
 
-## Estimador ML
+
+</br>
+
+## Estimador de Máxima Verossimilhança (MV)
 - Seção 3.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Uma alternativa aos estimadores de GLS é o de máxima verossimilhança (ML).
+- Uma alternativa aos estimadores de MQG é o de máxima verossimilhança (ML).
 - Assume-se que a distribuição dos dois componentes de erro são normais:
 {{<math>}}$$ u | X \sim N(0, \sigma^2_u) \quad \text{ e } \quad v | u, X \sim N(0, \sigma^2_v) $${{</math>}}
 
@@ -872,7 +875,7 @@ A estimação pode ser feita iterativamente por FIML (Full Information Maximum L
 5. Calcular {{<math>}}$\sigma^2_v${{</math>}} usando (3.13)
 
 
-### Estimação ML via `pglm()`
+### Estimação MV via `pglm()`
 
 ```{r message=FALSE, warning=FALSE}
 library(pglm)
@@ -886,9 +889,9 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian")
 summary(Q.ml)
 
-summary(Q.swar)$coef # Comparando com estimação GLS-swar
+summary(Q.swar)$coef # Comparando com estimação MQG-swar
 ```
-- Note que o resultado por ML foi bem próximo ao do obtido por GLS
+- Note que o resultado por ML foi bem próximo ao do obtido por MQG
 
 
 </br>
@@ -954,15 +957,15 @@ Assim como o teste LM, Pelo teste F, observam-se efeitos individuais significati
 - Se {{<math>}}$H_0${{</math>}} é verdadeiro, então os coeficientes dos dois modelos não devem divergir.
 - O teste é baseado em {{<math>}}$\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B${{</math>}} e Hausman mostrou que, sob {{<math>}}$H_0${{</math>}}, temos {{<math>}}$cov(\hat{\boldsymbol{\beta}}_A, \hat{\boldsymbol{\beta}}_B) = 0${{</math>}} e, logo, a variância dessa diferença é simplesmente {{<math>}}$V(\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B) = V(\hat{\boldsymbol{\beta}}_A) - V(\hat{\boldsymbol{\beta}}_B)${{</math>}}
 
-- No contexto de dados em painéis, compara-se o estimador _within_ (efeitos fixos) e o de GLS (efeitos aleatórios)
+- No contexto de dados em painéis, compara-se o estimador _within_ (efeitos fixos) e o de MQG (efeitos aleatórios)
 - Quando {{<math>}}$E(u|X) = 0${{</math>}} ambos estimadores são consistentes, ou seja,
-{{<math>}}$$ \hat{q} \equiv \hat{\boldsymbol{\beta}}_{GLS} - \hat{\boldsymbol{\beta}}_W\ \overset{p}{\rightarrow}\ 0 $${{</math>}}
-então é preferível usar o mais eficiente (GLS, pois usa ambas variações inter e intra-indivíduos).
+{{<math>}}$$ \hat{q} \equiv \hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W\ \overset{p}{\rightarrow}\ 0 $${{</math>}}
+então é preferível usar o mais eficiente (MQG, pois usa ambas variações inter e intra-indivíduos).
 
-- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{GLS} - \hat{\boldsymbol{\beta}}_W \neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
+- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W \neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
 - A variância é dada por 
 {{<math>}}\begin{align*}
-    V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{GLS} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{GLS}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{W}, \hat{\boldsymbol{\beta}}_{GLS}) \\
+    V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{MQG}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{W}, \hat{\boldsymbol{\beta}}_{MQG}) \\
     &= \sigma^2_v (Z' \boldsymbol{W} Z)^{-1} - (Z'\boldsymbol{\Sigma}^{-1} Z)^{-1}
 \end{align*}{{</math>}}
 - Logo, a estatística teste se torna
@@ -975,6 +978,9 @@ phtest(Q.within, Q.gls)
 ```
 Não se rejeita a hipótese nula de que ambos modelos são consistentes a 5\%.
 
+
+
+</br>
 
 
 {{< cta cta_text="👉 Seguir para Manipulação de Dados em Painel" cta_link="../sec5" >}}
