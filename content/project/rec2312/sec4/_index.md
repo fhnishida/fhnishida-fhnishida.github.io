@@ -30,7 +30,7 @@ em que {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor-coluna de {{<math>}
 
 e o erro {{<math>}}$\varepsilon_{it}${{</math>}} pode ser escrito como:
 
-{{<math>}}\[ \varepsilon_{it} = u_i + v_{it},  \]{{</math>}}
+{{<math>}}$$ \varepsilon_{it} = u_i + v_{it},  $${{</math>}}
 sendo {{<math>}}$u_i${{</math>}} o erro individual para o indivíduo {{<math>}}$i${{</math>}} e {{<math>}}$v_{it}${{</math>}} é o erro idiossincrático (residual).
 
 Empilhando as equações (1) para todo indivíduo {{<math>}}$i = 1, 2, ..., N${{</math>}} e todo período {{<math>}}$t = 1, 2, ..., T ${{</math>}}, temos
@@ -39,10 +39,10 @@ Empilhando as equações (1) para todo indivíduo {{<math>}}$i = 1, 2, ..., N${{
     y_{11} \\ y_{12} \\ \vdots \\ y_{1T} \\ y_{21} \\ y_{22} \\ \vdots \\ y_{2T} \\ \vdots \\ y_{N1} \\ y_{N2} \\ \vdots \\ y_{NT}
 \end{array} \right] \qquad \text{ e } \qquad 
 \underbrace{\boldsymbol{X}}_{NT \times K} = \left[ \begin{array}{c}
-    \boldsymbol{x}'_{11} \\ \boldsymbol{x}'_{12} \\ \vdots \\ \boldsymbol{x}'_{1K} \\
-    \boldsymbol{x}'_{21} \\ \boldsymbol{x}'_{22} \\ \vdots \\ \boldsymbol{x}'_{2K} \\
+    \boldsymbol{x}'_{11} \\ \boldsymbol{x}'_{12} \\ \vdots \\ \boldsymbol{x}'_{1T} \\
+    \boldsymbol{x}'_{21} \\ \boldsymbol{x}'_{22} \\ \vdots \\ \boldsymbol{x}'_{2T} \\
     \vdots \\
-    \boldsymbol{x}'_{N1} \\ \boldsymbol{x}'_{N2} \\ \vdots \\ \boldsymbol{x}'_{NK} 
+    \boldsymbol{x}'_{N1} \\ \boldsymbol{x}'_{N2} \\ \vdots \\ \boldsymbol{x}'_{NT} 
     \end{array} \right]
   = \left[ \begin{array}{cccc}
     x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
@@ -65,64 +65,140 @@ Empilhando as equações (1) para todo indivíduo {{<math>}}$i = 1, 2, ..., N${{
 Note que o modelo anterior não possui uma constante, {{<math>}}$\alpha${{</math>}}. Podemos incluir uma constante no modelo (1) e reescrever esse novo modelo como:
 {{<math>}} \begin{align} y_{it} &= 1.\alpha + \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{2} \end{align} {{</math>}}
 
-Denote {{<math>}}$\boldsymbol{\iota}${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$NT${{</math>}}:
-{{<math>}}$$ \boldsymbol{\iota} = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right] $${{</math>}}
+Denote {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
+{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}
+Para não poluir as equações, quando o subscrito for omitido, considere {{<math>}}$q = NT${{</math>}}.
 
 Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}}, segue que
-{{<math>}}\[ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} \]{{</math>}}
+{{<math>}}$$ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
 ou, usando
 
-{{<math>}}$$ \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} \equiv \left[ \begin{array}{c} \alpha \\ \boldsymbol{\beta} \end{array} \right] = \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e } \quad 
+{{<math>}}$$ \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} \equiv
+  = \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e } \quad 
 \underbrace{\boldsymbol{Z}}_{NT \times (K+1)} \equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
   = \left[ \begin{array}{cccc}
-    x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
-    x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\
-    x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
-    x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
-    x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
+    1 & x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
+    1 & x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\
+    1 & x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
+    1 & x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
+    1 & x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
 \end{array} \right], $$ {{</math>}}
 
 podemos reescrever como
-{{<math>}}\[ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}. \]{{</math>}}
+{{<math>}}$$ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}. $${{</math>}}
 
 
 </br>
+
 ## Transformações _between_ e _within_
 - Seção 2.1.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
-Denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}, e {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor de 1's de tamanho {{<math>}}$q${{</math>}}. 
+Denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}:
+
+{{<math>}}$$ \boldsymbol{I}_p= \left[ \begin{array}{cccc}
+    1 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & 0 & \cdots & 0 \\
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1
+\end{array} \right]_{p \times p}, $$ {{</math>}}
+
+
 
 A matriz de transformação **inter-indivíduos (_between_)** é denotada por:
-{{<math>}}\[ B\ =\ I_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \]{{</math>}}
-Note que a matriz {{<math>}}$B${{</math>}} é equivalente a {{<math>}}$N${{</math>}} nas notas de aula de Econometria I.
+{{<math>}}$$ \boldsymbol{B}\ =\ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T $${{</math>}}
+Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é equivalente a {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II.
 
+Pré-multiplicando {{<math>}}$\boldsymbol{Z}${{</math>}} pela matriz de transformação {{<math>}}$\boldsymbol{B}${{</math>}}, "preenchemos" a matriz com as médias para cada {{<math>}}$i${{</math>}} e cada coluna (variável):
+
+{{<math>}}$$ \boldsymbol{BZ} = \left[ \begin{matrix} 
+1 & \bar{\boldsymbol{x}}^1_1 & \bar{\boldsymbol{x}}^2_1 & \cdots & \bar{\boldsymbol{x}}^K_1 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_1 & \bar{\boldsymbol{x}}^2_1 & \cdots & \bar{\boldsymbol{x}}^K_1 \\
+1 & \bar{\boldsymbol{x}}^1_2 & \bar{\boldsymbol{x}}^2_2 & \cdots & \bar{\boldsymbol{x}}^K_2 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_2 & \bar{\boldsymbol{x}}^2_2 & \cdots & \bar{\boldsymbol{x}}^K_2 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_N & \bar{\boldsymbol{x}}^2_N & \cdots & \bar{\boldsymbol{x}}^K_N \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_N & \bar{\boldsymbol{x}}^2_N & \cdots & \bar{\boldsymbol{x}}^K_N
+\end{matrix} \right]_{NT \times (K+1)} $${{</math>}}
+
+</br>
 
 Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
 
 {{<math>}}\begin{align*}
-    B &= \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) \otimes \left[ \left( \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right) \frac{1}{3} \left( \begin{array}{ccc} 1 & 1 & 1 \end{array} \right) \right] \\
-    &= \left( \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right) \otimes  \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right)  \\
-    &= \left( \begin{array}{cc} 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \\ 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \end{array} \right) \\
-    &= \left( \begin{array}{rrrrrr} 
+    \boldsymbol{B} &= \boldsymbol{I}_2 \otimes \boldsymbol{\iota}_3 (\boldsymbol{\iota}'_3 \boldsymbol{\iota}_3)^{-1} \boldsymbol{\iota}'_3 \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \left( \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \right)^{-1} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \left( 3 \right)^{-1} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \frac{1}{3} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right]_{2 \times 2}  \otimes  \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right)_{3 \times 3}  \\
+    &= \left[ \begin{array}{cc} 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \\ 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \end{array} \right] \\
+    &= \left[ \begin{array}{rrrrrr} 
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
         0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
         0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
         0 & 0 & 0 & 1/3 & 1/3 & 1/3
-    \end{array} \right)_{NT \times NT},
+    \end{array} \right]_{6 \times 6},
 \end{align*}{{</math>}}
 
-em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker. Então, temos
-{{<math>}}\[ (Bx^k)' = \left( \bar{x}^k_1, \cdots, \bar{x}^k_1, \bar{x}^k_2, \cdots, \bar{x}^k_2, \cdots,\bar{x}^k_N, \cdots, \bar{x}^k_N \right). \]{{</math>}}
+em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker.
+
+Por exemplo, suponha a matriz {{<math>}}$\boldsymbol{Z}${{</math>}}: 
+
+{{<math>}}$$ \boldsymbol{Z} = \left[ \begin{matrix} 
+1 & 1 & 7 & 13 \\
+1 & 2 & 8 & 14 \\
+1 & 3 & 9 & 15 \\ \hline
+1 & 4 & 10 & 16 \\
+1 & 5 & 11 & 17 \\
+1 & 6 & 12 & 18
+\end{matrix} \right]_{6 \times 4} $${{</math>}}
+
+Note que a linha horizontal na matriz acima foi colocada apenas para deixar claro que as três primeiras linhas correspondem ao mesmo indivíduo {{<math>}}$i=1${{</math>}}, e as três últimas correspondem ao indivíduo {{<math>}}$i=2${{</math>}}. São três linhas para cada um, pois assumimos {{<math>}}$t=1,2,3${{</math>}} períodos.
+
+Logo, temos:
+
+{{<math>}}\begin{align} \boldsymbol{BZ} &=  
+\left[ \begin{array}{rrrrrr} 
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3
+    \end{array} \right] \left[ \begin{matrix} 
+1 & 1 & 7 & 13 \\
+1 & 2 & 8 & 14 \\
+1 & 3 & 9 & 15 \\
+1 & 4 & 10 & 16 \\
+1 & 5 & 11 & 17 \\
+1 & 6 & 12 & 18
+\end{matrix} \right] \\
+&= \left[ \begin{matrix} 
+1 & 2 & 8 & 14 \\
+1 & 2 & 8 & 14 \\
+1 & 2 & 8 & 14 \\ \hline
+1 & 5 & 11 & 17 \\
+1 & 5 & 11 & 17 \\
+1 & 5 & 11 & 17
+\end{matrix} \right]_{6 \times 4} \end{align}{{</math>}}
+
+Note que, para cada indivíduo {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{</math>}}, os elementos foram "preenchidos" com a média dos valores em {{<math>}}$t=1,2,3${{</math>}}.
+
+
+</br>
 
 Para calcular no R, vamos definir:
 
@@ -130,8 +206,8 @@ Para calcular no R, vamos definir:
 N = 2 # número de indivíduos
 T = 3 # números de períodos
 
-iota = matrix(rep(1, T), T, 1) # vetor coluna de 1's de tamanho T
-iota
+iota_T = matrix(rep(1, T), T, 1) # vetor coluna de 1's de tamanho T
+iota_T
 ```
 
 ```
@@ -152,11 +228,11 @@ I_N
 ## [2,]    0    1
 ```
 
-Vamos obter {{<math>}}$\boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}}
+Vamos obter {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
 
 ```r
 # Para obter matriz T x T preenchida por 1/T, sendo T = 3, temos que:
-t(iota) %*% iota # produto interno de iotas = quantidade T
+t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
 ```
 
 ```
@@ -165,7 +241,7 @@ t(iota) %*% iota # produto interno de iotas = quantidade T
 ```
 
 ```r
-solve(t(iota) %*% iota) # tomar a inversa = 1/T
+solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
 ```
 
 ```
@@ -174,7 +250,7 @@ solve(t(iota) %*% iota) # tomar a inversa = 1/T
 ```
 
 ```r
-iota %*% solve(t(iota) %*% iota) %*% t(iota) # pré e pós-multiplicar por iotas
+iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar por iotas
 ```
 
 ```
@@ -184,10 +260,10 @@ iota %*% solve(t(iota) %*% iota) %*% t(iota) # pré e pós-multiplicar por iotas
 ## [3,] 0.3333333 0.3333333 0.3333333
 ```
 
-Agora, vamos calcular {{<math>}}$B\ =\ I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}} usando o operador de produto de Kronecker `%x%`:
+Agora, vamos calcular {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}} usando o operador de produto de Kronecker `%x%`:
 
 ```r
-B = I_N %x% (iota %*% solve(t(iota) %*% iota) %*% t(iota))
+B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 round(B, 3)
 ```
 
@@ -206,7 +282,7 @@ Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz
 ```r
 K = 3 # número de covariadas
 X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
-Z = cbind(rep(1, N*T), X) # incluindo coluna de 1's
+Z = cbind(1, X) # incluindo coluna de 1's
 Z
 ```
 
@@ -233,44 +309,48 @@ B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
 ## [5,]    1    5   11   17
 ## [6,]    1    5   11   17
 ```
-Note que:
 
+Note que:
+- a coluna de 1's permaneceu igual após a transformação _between_.
 - dada uma variável {{<math>}}$k${{</math>}}, temos um único valor (média) dentro de um mesmo indivíduo;
-- coluna 1's permaneceu igual após a transformação _between_.
+- por isso, a amostra com {{<math>}}$NT${{</math>}} observações distintas possui, agora, apenas {{<math>}}$N${{</math>}} observações distintas
+
+
+</br>
 
 
 Já a matriz de transformação **intra-indivíduos (_within_)** é dada por:
-{{<math>}}\[ W\ =\ I_{NT} - B\ =\ I_{NT} - \left[ I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}' \right]. \]{{</math>}}
+{{<math>}}$$ \boldsymbol{W}\ =\ \boldsymbol{I}_{NT} - \boldsymbol{B}\ =\ \boldsymbol{I}_{NT} - \left[ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \right]. $${{</math>}}
 
-Note que a matriz {{<math>}}$W${{</math>}} é equivalente a {{<math>}}$M${{</math>}} nas notas de aula de Econometria I.
+Note que a matriz {{<math>}}$\boldsymbol{W}${{</math>}} é equivalente a {{<math>}}$M${{</math>}} nas notas de aula de Econometria II.
 
 Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
 
 {{<math>}}\begin{align*}
-    W &= I_{NT} - B \\
-    &= \left( \begin{array}{cccccc} 
+    \boldsymbol{W} &= \boldsymbol{I}_{6} - \boldsymbol{B} \\
+    &= \left[ \begin{array}{cccccc} 
         1 & 0 & 0 & 0 & 0 & 0 \\
         0 & 1 & 0 & 0 & 0 & 0 \\
         0 & 0 & 1 & 0 & 0 & 0 \\
         0 & 0 & 0 & 1 & 0 & 0 \\
         0 & 0 & 0 & 0 & 1 & 0 \\
         0 & 0 & 0 & 0 & 0 & 1
-    \end{array} \right) - \left( \begin{array}{rrrrrr} 
+    \end{array} \right] - \left[ \begin{array}{rrrrrr} 
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
         0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
         0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
         0 & 0 & 0 & 1/3 & 1/3 & 1/3
-    \end{array} \right) \\
-    &= \left( \begin{array}{rrrrrr} 
+    \end{array} \right] \\
+    &= \left[ \begin{array}{rrrrrr} 
          2/6 & -1/3 & -1/3 &    0 &    0 &    0 \\
         -1/3 &  2/6 & -1/3 &    0 &    0 &    0 \\
         -1/3 & -1/3 &  2/6 &    0 &    0 &    0 \\
            0 &    0 &    0 &  2/6 & -1/3 & -1/3 \\
            0 &    0 &    0 & -1/3 &  2/6 & -1/3 \\
            0 &    0 &    0 & -1/3 & -1/3 &  2/6
-    \end{array} \right)_{NT \times NT}, 
+    \end{array} \right]_{6 \times 6}, 
 \end{align*}{{</math>}}
 
 
@@ -306,80 +386,81 @@ round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo
 Observe que:
 
 - dada uma variável {{<math>}}$k${{</math>}}, temos os desvios em relação à média de um mesmo indivíduo;
-- por isso, a amostra de tamanho {{<math>}}$NT${{</math>}}, torna-se uma amostra de {{<math>}}$N${{</math>}} observações distintas;
 - coluna 1's virou de 0's após a transformação _within_.
 - coluna de 0's, no R, ficou muito próxima de 0 ({{<math>}}$1,11 \times 10^{-16}${{</math>}}), então foi necessário arredondar.
 
 
 </br>
+
 ## Matriz de covariâncias dos erros
 - Seção 2.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
 A matriz de covariâncias dos erros depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}. Então:
 
 - Variância de um erro: 
-{{<math>}}\[ E(\varepsilon^2_{it}) = \sigma^2_u + \sigma^2_v \]{{</math>}}
+{{<math>}}$$ E(\varepsilon^2_{it}) = \sigma^2_u + \sigma^2_v $${{</math>}}
 - Covariância de dois erros de um mesmo indivíduo {{<math>}}$i${{</math>}} em dos períodos  {{<math>}}$t \neq s${{</math>}}:
-{{<math>}}\[ E(\varepsilon_{it} \varepsilon_{is}) = \varepsilon^2_u \]{{</math>}}
+{{<math>}}$$ E(\varepsilon_{it} \varepsilon_{is}) = \varepsilon^2_u $${{</math>}}
 - Covariância entre dois diferentes indivíduos ({{<math>}}$i \neq j${{</math>}}): 
-{{<math>}}\[ E(\varepsilon_{it} \varepsilon_{jt}) = E(\varepsilon_{it} \varepsilon_{js}) = 0 \]{{</math>}}
+{{<math>}}$$ E(\varepsilon_{it} \varepsilon_{jt}) = E(\varepsilon_{it} \varepsilon_{js}) = 0 $${{</math>}}
 
 A matriz de variância dos erros pode ser expressa por:
-{{<math>}}\[ \Sigma = \sigma^2_v I_{NT} + \sigma^2_u [I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] \]{{</math>}}
+{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] $${{</math>}}
 ou, em termos de {{<math>}}$B${{</math>}} e {{<math>}}$W${{</math>}},
-{{<math>}}\[ \Sigma = \sigma^2_v W + T \sigma^2_u B \]{{</math>}}
+{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{W} + T \sigma^2_u \boldsymbol{B} $${{</math>}}
 
 
 </br>
-## Estimadores OLS em painel
+
+## Estimadores MQO em painel
 - Supomos que ambos componentes de erros são não-correlacionados com as covariadas:
-{{<math>}}\[ E(u|x) = E(v|x) = 0 \]{{</math>}}
+{{<math>}}$$ E(u|X) = E(v|X) = 0 $${{</math>}}
 - A variabilidade em um painel tem 2 componentes:
     - a _between_ ou inter-indivíduos, em que a variabilidade das variáveis são mensuradas em médias individuais, como {{<math>}}$\bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$BZ${{</math>}}
-    - a _within_ ou intra-indivíduos, em que a variabilidade das variáveis são mensuradas em desvios das médias individuais, como {{<math>}}$z_{it} - \bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$WZ = Z - BZ${{</math>}}
-    - Lembre-se que {{<math>}}$z_i \equiv (1, X_i)${{</math>}} e {{<math>}}$Z \equiv (\boldsymbol{\iota}, X)${{</math>}}
-- Há três estimadores por OLS que podem ser utilizados:
-    1. *Pooled OLS (MQE)*: usando a base de dados bruta (empilhada)
+    - a _within_ ou intra-indivíduos, em que a variabilidade das variáveis são mensuradas em desvios das médias individuais, como {{<math>}}$z_{it} - \bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$\boldsymbol{WZ} = \boldsymbol{Z} - \boldsymbol{BZ}${{</math>}}
+    - Lembre-se que {{<math>}}$\boldsymbol{Z} \equiv (\boldsymbol{\iota}, X)${{</math>}}
+- Há três estimadores por MQO que podem ser utilizados:
+    1. *Mínimos Quadrados Empilhados (MQE)*: usando a base de dados bruta (empilhada)
     2. *Estimador Between*: usando as médias individuais
     3. *Estimador Within (Efeitos Fixos)*: usando os desvios das médias individuais
 
 
-### Pooled OLS (MQE)
+### Mínimos Quadrados Empilhados (MQE)
 - Seção 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
 O modelo a ser estimado é
-{{<math>}}\[ y\ =\ Z\gamma + \varepsilon\ =\ \alpha \boldsymbol{\iota} + X \beta + \varepsilon \]{{</math>}}
+{{<math>}}$$ \boldsymbol{y}\ =\ \boldsymbol{Z\gamma} + \boldsymbol{\varepsilon}\ =\ \boldsymbol{\alpha} \boldsymbol{\iota} + \boldsymbol{X \beta} + \boldsymbol{\varepsilon} $${{</math>}}
 
-- O estimador {{<math>}}$\hat{\gamma} = (\hat{\alpha}, \hat{\beta})${{</math>}} é dado por
-{{<math>}}\[ \hat{\gamma}_{OLS} = (Z'Z)^{-1} Z' y \]{{</math>}}
+- O estimador {{<math>}}$\hat{\boldsymbol{\gamma}} = (\hat{\alpha}, \hat{\boldsymbol{\beta}})${{</math>}} é dado por
+{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{MQO} = (\boldsymbol{Z}'\boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{y} $${{</math>}}
 - A matriz de covariâncias pode ser obtida usando
-{{<math>}}\[ V(\hat{\gamma}_{OLS}) = (Z'Z)^{-1} Z' \Sigma Z (Z'Z)^{-1} \]{{</math>}}
+{{<math>}}$$ V(\hat{\boldsymbol{\gamma}}_{MQO}) = (\boldsymbol{Z}'\boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{\Sigma} \boldsymbol{Z} (\boldsymbol{Z}'\boldsymbol{Z})^{-1} $${{</math>}}
 
 
 
 ### Estimador _Between_
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$B = I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}}:
-{{<math>}}\[ By\ =\ BZ\gamma + B\varepsilon\ =\ \alpha \boldsymbol{\iota} + BX \beta + B\varepsilon \]{{</math>}}
+O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{B} = \boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}}:
+{{<math>}}$$ \boldsymbol{By}\ =\ \boldsymbol{BZ\gamma} + \boldsymbol{B\varepsilon}\ =\ \alpha \boldsymbol{\iota} + \boldsymbol{BX} \boldsymbol{\beta} + \boldsymbol{B\varepsilon} $${{</math>}}
 
-- O estimador {{<math>}}$\hat{\beta}${{</math>}} é dado por
-{{<math>}}\[ \hat{\gamma}_{B}\ =\ (Z' B Z )^{-1} Z' B y \]{{</math>}}
+- O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} é dado por
+{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{B}\ =\ (\boldsymbol{Z}' \boldsymbol{B} \boldsymbol{Z} )^{-1} \boldsymbol{Z}' \boldsymbol{B} y $${{</math>}}
 - A matriz de covariâncias pode ser obtida usando
 
 {{<math>}}\begin{align*}
-    V(\hat{\gamma}_{B}) &= (Z'BZ)^{-1} Z' B\Sigma B Z (Z'BZ)^{-1} \\
-    &= \sigma^2_l (Z' B Z)^{-1},
+    V(\hat{\boldsymbol{\gamma}}_{B}) &= (\boldsymbol{Z}'\boldsymbol{BZ})^{-1} \boldsymbol{Z}' \boldsymbol{B}\boldsymbol{\Sigma} \boldsymbol{B} \boldsymbol{Z} (\boldsymbol{Z}'\boldsymbol{BZ})^{-1} \\
+    &= \sigma^2_l (\boldsymbol{Z}' \boldsymbol{B} \boldsymbol{Z})^{-1},
 \end{align*}{{</math>}}
-em que {{<math>}}\[\sigma^2_l = \sigma^2_v + T \sigma^2_u \]{{</math>}}
+em que {{<math>}}$$\sigma^2_l = \sigma^2_v + T \sigma^2_u $${{</math>}}
 
 - O estimador não-viesado de {{<math>}}$\sigma^2_l${{</math>}} é
-{{<math>}}\[ \hat{\sigma}^2_l = \frac{\hat{\varepsilon}' B \hat{\varepsilon}}{N-K-1} \]{{</math>}}
+{{<math>}}$$ \hat{\sigma}^2_l = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}}{N-K-1} $${{</math>}}
 
-- O estimador _between_ também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz _between_ ({{<math>}}$B${{</math>}}):
-{{<math>}}\[ \tilde{Z} \equiv BZ \qquad \text{ e } \qquad \tilde{y} = By \]{{</math>}} 
+- O estimador _between_ também pode ser estimado por MQO, transformando as variáveis por pré-multiplicação da matriz _between_ ({{<math>}}$B${{</math>}}):
+{{<math>}}$$ \tilde{\boldsymbol{Z}} \equiv BZ \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} = By $${{</math>}} 
 tal que 
-{{<math>}}\[ \hat{\gamma} = ( \tilde{Z}' \tilde{Z} )^{-1} \tilde{Z}' \tilde{y} \]{{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\gamma}} = ( \tilde{\boldsymbol{Z}}' \tilde{\boldsymbol{Z}} )^{-1} \tilde{\boldsymbol{Z}}' \tilde{\boldsymbol{y}} $${{</math>}}
 e assim por diante.
-- Note que, a rotina padrão de OLS retorna {{<math>}}$\hat{\sigma}^2_l = \frac{\hat{\varepsilon}' B \hat{\varepsilon}}{NT-K-1}${{</math>}} e, portanto, é necessário fazer ajuste dos graus de liberdade multiplicando a matriz de covariâncias dos erros por {{<math>}}$(NT-K-1) / (N-K-1)${{</math>}}.  
+- Note que, a rotina padrão de MQO retorna {{<math>}}$\hat{\sigma}^2_l = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}}{NT-K-1}${{</math>}} e, portanto, é necessário fazer ajuste dos graus de liberdade multiplicando a matriz de covariâncias dos erros por {{<math>}}$(NT-K-1) / (N-K-1)${{</math>}}.  
 
 
 ### Estimador _Within_ (Efeitos Fixos)
@@ -387,32 +468,32 @@ e assim por diante.
 - Não assume que {{<math>}}$E(u | X) = 0${{</math>}}
 - Estima efeitos individuais para, "limpando" efeito inter-indivíduos nas demais covariadas
 
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$W = I_{NT} - B${{</math>}}:
-{{<math>}}\[ Wy\ =\ WZ\gamma + W\varepsilon\ =\ WX \beta + Wv. \]{{</math>}}
+O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B}${{</math>}}:
+{{<math>}}$$ \boldsymbol{Wy}\ =\ \boldsymbol{WZ\gamma} + \boldsymbol{W\varepsilon}\ =\ \boldsymbol{WX \beta} + \boldsymbol{Wv}. $${{</math>}}
 Note que a transformação within remove vetor de 1's associado ao intercepto, além das covariadas invariantes no tempo e o termo de erro individual {{<math>}}$u${{</math>}} (sobrando apenas {{<math>}}$\varepsilon = v${{</math>}}).
 
-- O estimador {{<math>}}$\hat{\beta}${{</math>}} é dado por
-{{<math>}}\[ \hat{\beta}_{W}\ =\ (X' W X )^{-1} X' W y \]{{</math>}}
+- O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} é dado por
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{W}\ =\ (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 - A matriz de covariâncias pode ser obtida usando
 {{<math>}}\begin{align*}
-    V(\hat{\beta}_{W}) &= (X'WX)^{-1} X' W\Sigma W X (X'WX)^{-1} \\
-    &= \sigma^2_v (X' W X)^{-1}.
+    V(\hat{\boldsymbol{\beta}}_{W}) &= (\boldsymbol{X}'\boldsymbol{WX})^{-1} \boldsymbol{X}' \boldsymbol{W}\boldsymbol{\Sigma} \boldsymbol{W} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{WX})^{-1} \\
+    &= \sigma^2_v (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1}.
 \end{align*}{{</math>}}
 
 - O estimador não-viesado de {{<math>}}$\sigma^2_v${{</math>}} é
-{{<math>}}\[ \hat{\sigma}^2_v = \frac{\hat{\varepsilon}' W \hat{\varepsilon}}{NT-K-N} \]{{</math>}}
+{{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{NT-K-N} $${{</math>}}
 
-- O estimador _within_ também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz _within_ ({{<math>}}$W${{</math>}}):
-{{<math>}}\[ \tilde{Z} \equiv WZ \qquad \text{ e } \qquad \tilde{y} = Wy \]{{</math>}} 
+- O estimador _within_ também pode ser estimado por MQO, transformando as variáveis por pré-multiplicação da matriz _within_ ({{<math>}}$W${{</math>}}):
+{{<math>}}$$ \tilde{\boldsymbol{Z}} \equiv \boldsymbol{WZ} \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} = \boldsymbol{Wy} $${{</math>}} 
 tal que 
-{{<math>}}\[ \hat{\gamma} = ( \tilde{Z}' \tilde{Z} )^{-1} \tilde{Z}' \tilde{y} \]{{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\gamma}} = ( \tilde{\boldsymbol{Z}}' \tilde{\boldsymbol{Z}} )^{-1} \tilde{\boldsymbol{Z}}' \tilde{\boldsymbol{y}} $${{</math>}}
 e assim por diante.
-- Note que, a rotina padrão de OLS retorna {{<math>}}$\hat{\sigma}^2_v = \frac{\hat{\varepsilon}' W \hat{\varepsilon}}{NT-K-1}${{</math>}} e, portanto, é necessário fazer ajuste dos graus de liberdade multiplicando a matriz de covariâncias dos erros por {{<math>}}$(NT-K-1) / (NT-K-N)${{</math>}}.
+- Note que, a rotina padrão de MQO retorna {{<math>}}$\hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{NT-K-1}${{</math>}} e, portanto, é necessário fazer ajuste dos graus de liberdade multiplicando a matriz de covariâncias dos erros por {{<math>}}$(NT-K-1) / (NT-K-N)${{</math>}}.
 
 
-### Estimação OLS
+### Estimação MQO
 #### Estimação via `plm()`
-Para ilustrar as estimações OLS dos estimadores vistos anteriormente, usaremos a base de dados `TobinQ` do pacote `pder`, que conta com dados de 188 firmas americanos por 35 anos (6580 observações).
+Para ilustrar as estimações MQO dos estimadores vistos anteriormente, usaremos a base de dados `TobinQ` do pacote `pder`, que conta com dados de 188 firmas americanos por 35 anos (6580 observações).
 
 ```r
 library(dplyr)
@@ -455,7 +536,7 @@ summary(TobinQ %>% select(cusip, year, ikn, qn))
 - `qn`: Q de Tobin (razão entre valor da firma e o custo de reposição de seu capital físico). Se {{<math>}}$Q > 1${{</math>}}, então o lucro investimento é maior do que seu custo.
 
 Queremos estimar o seguinte modelo:
-{{<math>}}\[ \text{ikn} = \alpha + \text{qn} \beta + \varepsilon \]{{</math>}}
+{{<math>}}$$ \text{ikn} = \alpha + \text{qn} \beta + \varepsilon $${{</math>}}
 
 
 Usaremos a função `plm()` (do pacote de mesmo nome) para estimar modelos lineares em dados em painel. Seus principais argumentos são:
@@ -550,8 +631,8 @@ stargazer::stargazer(Q.pooling, Q.between, Q.within, type="text")
     - cada método possui diferentes graus de liberdade
 
 
-##### Estimando _Within_ e _Between_ via Pooled OLS
-- Nós podemos construir as variáveis de média e de desvios de média diretamente no data frame e estimar o _between_ e _within_ via (pooled) OLS
+##### Estimando _Within_ e _Between_ via Pooled MQO
+- Nós podemos construir as variáveis de média e de desvios de média diretamente no data frame e estimar o _between_ e _within_ via (pooled) MQO
 
 ```r
 TobinQ = TobinQ %>% group_by(cusip) %>% # agrupando por cusip
@@ -566,7 +647,7 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
 Q.pooling_between = plm(ikn_bar ~ qn_bar, pTobinQ, model = "pooling")
 
-summary(Q.pooling_between)$coef # between via pooled OLS
+summary(Q.pooling_between)$coef # between via pooled MQO
 ```
 
 ```
@@ -585,7 +666,7 @@ summary(Q.between)$coef # between
 ## qn          0.005184737 0.0007490711  6.921555 7.012814e-11
 ```
 - Note que, embora as estimativas sejam as mesmas, acabamos subestimando os erros padrão e, portanto, superestimando os valores t.
-- Ao estimar o _between_ via pooled OLS, ele não faz os ajustes dos graus de liberdade nas variâncias das estimativas
+- Ao estimar o _between_ via pooled MQO, ele não faz os ajustes dos graus de liberdade nas variâncias das estimativas
 - Logo, vamos ajustar os graus de liberdade multiplicando a variância das estimativas por {{<math>}}$(NT - K - 1)${{</math>}} e dividindo por {{<math>}}$(N - K - 1)${{</math>}}
 
 ```r
@@ -625,10 +706,10 @@ for (t in c("level", "dfirst", "dmean")) {
 ## -0.014213401 -0.031448285  0.098580596 -0.049491991 -0.032777823  0.009986116
 ```
 - Note que, como o `dfirst` retorna valores em relação ao 1º indivíduo, este não aparece no output do `fixef()`, diferente dos demais.
-- No caso linear, o estimador _within_ é equivalente à estimação por OLS com inclusão de dummies para cada indivíduo:
+- No caso linear, o estimador _within_ é equivalente à estimação por MQO com inclusão de dummies para cada indivíduo:
 
 ```r
-# Estimando OLS com dummies individuais - factor() tranforma cusip em var. categ.
+# Estimando MQO com dummies individuais - factor() tranforma cusip em var. categ.
 Q.dummies = lm(ikn ~ qn + factor(cusip), pTobinQ)
 
 # Comparando as estimativas de qn
@@ -657,7 +738,7 @@ cbind(head(fixef(Q.within, type="dfirst")),
 ```
 
 
-#### Estimação Analítica Pooled OLS (MQE)
+#### Estimação Analítica Pooled MQO (MQE)
 Igual a estimação analítica de MQO vista anteriormente.
 
 
@@ -669,19 +750,19 @@ TobinQ = TobinQ %>% mutate(constant = 1) # criando vetor de 1's
 
 y = TobinQ %>% select(ikn) %>% as.matrix() # vetor y
 X = TobinQ %>% select(qn) %>% as.matrix() # vetor X
-Z = cbind(TobinQ$constant, X) # vetor Z = (iota, X)
+Z = cbind(TobinQ$constant, X) # vetor \boldsymbol{Z} = (iota, X)
 
 N = TobinQ %>% select(cusip) %>% unique() %>% nrow()
 T = TobinQ %>% select(year) %>% unique() %>% nrow()
 iota_T = rep(1, T)
 
-# Calculando matrizes de tranformação B e W
+# Calculando matrizes de tranformação \boldsymbol{B} e W
 B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = diag(N*T) - B
 ```
 
 
-{{<math>}}\[ \hat{\gamma} = (\hat{\alpha}, \hat{\beta}) = (Z' B Z)^{-1} Z' By  \]{{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\gamma}} = (\hat{\alpha}, \hat{\boldsymbol{\beta}}) = (\boldsymbol{Z}' \boldsymbol{B} \boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{By}  $${{</math>}}
 
 
 ```r
@@ -697,7 +778,7 @@ gamma_hat
 ```
 
 
-{{<math>}}\[ \hat{y} = Z \hat{\gamma} \qquad \text{ e } \qquad  \hat{\varepsilon} = y - \hat{y} \]{{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{Z} \hat{\boldsymbol{\gamma}} \qquad \text{ e } \qquad  \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} $${{</math>}}
 
 ```r
 # valores ajustados e erros
@@ -706,7 +787,7 @@ e_hat = y - y_hat
 ```
 
 
-{{<math>}}\[ \hat{\sigma}^2 = \frac{\hat{\varepsilon}' B \hat{\varepsilon}}{N-K-1} \]{{</math>}}
+{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}}{N-K-1} $${{</math>}}
 
 ```r
 ## Estimando variancia do termo de erro
@@ -720,7 +801,7 @@ sigma2_l
 ```
 **IMPORTANTE**: Ajustar os graus de liberdade do estimador _between_ para {{<math>}}$N - K - 1${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
 
-{{<math>}}\[ \widehat{V}(\hat{\gamma}) = \hat{\sigma}^2_l (Z'BZ)^{-1} \]{{</math>}}
+{{<math>}}$$ \widehat{V}(\hat{\boldsymbol{\gamma}}) = \hat{\sigma}^2_l (\boldsymbol{Z}'\boldsymbol{BZ})^{-1} $${{</math>}}
 
 ```r
 ## Estimando a matriz de variancia/covariancia das estimativas gamma
@@ -774,80 +855,81 @@ summary(Q.between)$coef # comparando com estimado via plm()
 
 
 </br>
+
 ## Estimadores GLS
 - Seção 2.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - Ao contrário do estimador _within_ que retira os efeitos individuais, o estimador de **GLS** considera que os efeitos individuais como aleatórios a partir de uma distribuição específica.
-- Erros não são correlacionados com as covariadas, e são caracterizados por uma matriz de covariâncias {{<math>}}$\Sigma${{</math>}}.
+- Erros não são correlacionados com as covariadas, e são caracterizados por uma matriz de covariâncias {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
 - O estimador de GLS é dado por
-{{<math>}}\[ \hat{\gamma}_{GLS} = (Z' \Sigma^{-1} Z)^{-1} (Z' \Sigma^{-1} y) \tag{2.27} \]{{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{GLS} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} $${{</math>}}
 
 - A variância do estimador é dada por
-{{<math>}}\[ V(\hat{\gamma}_{GLS}) = (Z' \Sigma^{-1} Z)^{-1} \tag{2.28} \]{{</math>}}
-- A matriz {{<math>}}$\Sigma${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, temos:
-{{<math>}}\[ \Sigma^p = (\sigma^2_l)^p B + (\sigma^2_v)^p W \tag{2.29} \]{{</math>}}
+{{<math>}}$$ V(\hat{\boldsymbol{\gamma}}_{GLS}) = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} \tag{2.28} $${{</math>}}
+- A matriz {{<math>}}$\boldsymbol{\Sigma}${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, temos:
+{{<math>}}$$ \boldsymbol{\Sigma}^p = (\sigma^2_l)^p \boldsymbol{B} + (\sigma^2_v)^p \boldsymbol{W} \tag{2.29} $${{</math>}}
 
-- Lembre-se que {{<math>}}\[\sigma^2_l = \sigma^2_v + T \sigma^2_u \]{{</math>}}
+- Lembre-se que {{<math>}}$$\sigma^2_l = \sigma^2_v + T \sigma^2_u $${{</math>}}
 
-### GLS: junção Pooled OLS e _Within_
-- Combinação de Pooled OLS (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
-- Pode-se computar mais eficientemente por OLS, que necessita transformação das variáveis usando a matriz {{<math>}}$\Sigma^{-0.5}${{</math>}}, tal que {{<math>}}$\Sigma^{-0.5\prime}\Sigma^{-0.5} = \Sigma^{-1}${{</math>}}.
-- Denotando {{<math>}}$\tilde{y} \equiv \Sigma^{-0.5}y${{</math>}} e {{<math>}}$\tilde{Z} \equiv \Sigma^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
+### GLS: junção Pooled MQO e _Within_
+- Combinação de Pooled MQO (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
+- Pode-se computar mais eficientemente por MQO, que necessita transformação das variáveis usando a matriz {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, tal que {{<math>}}$\boldsymbol{\Sigma}^{-0.5\prime}\boldsymbol{\Sigma}^{-0.5} = \boldsymbol{\Sigma}^{-1}${{</math>}}.
+- Denotando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{Z}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
 {{<math>}}\begin{align*}
-    \hat{\gamma} &= (Z' \Sigma^{-1} Z)^{-1} (Z' \Sigma^{-1} y) \tag{2.27} \\
-    &= (Z' \Sigma^{-0.5\prime} \Sigma^{-0.5} Z)^{-1} (Z' \Sigma^{-0.5}\Sigma^{-0.5\prime} y) \\
-    &= (\tilde{Z}'\tilde{Z})^{-1} \tilde{Z} \tilde{y}
+    \hat{\boldsymbol{\gamma}} &= (Z' \boldsymbol{\Sigma}^{-1} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-1} y) \tag{2.27} \\
+    &= (Z' \boldsymbol{\Sigma}^{-0.5\prime} \boldsymbol{\Sigma}^{-0.5} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-0.5}\boldsymbol{\Sigma}^{-0.5\prime} y) \\
+    &= (\tilde{\boldsymbol{Z}}'\tilde{\boldsymbol{Z}})^{-1} \tilde{\boldsymbol{Z}} \tilde{\boldsymbol{y}}
 \end{align*}{{</math>}}
 
 Usando (2.29), {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
-{{<math>}}\[ \Sigma^{-0.5} = \frac{1}{\sigma_l} B + \frac{1}{\sigma_v} W \]{{</math>}}
+{{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = \frac{1}{\sigma_l} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} $${{</math>}}
 
 Essa transformação evidencia uma combinação linear entre as matrizes de transformação _between_ e _within_ ponderadas pelo inverso dos desvios padrão dos 2 componentes de erro ({{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_l)/T${{</math>}})
 
-Pré-multiplicando as variáveis por {{<math>}}$\sigma_v \Sigma^{-0.5}${{</math>}} (ao invés de {{<math>}}$\Sigma^{-0.5}${{</math>}} para simplificação e sem perda de generalidade), as covariadas transformadas para o indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}} são dadas por:
-{{<math>}}\[ \tilde{z}_{it}\ =\ \frac{\sigma_v}{\sigma_l} \bar{z}_{i\cdot} + (z_{it} - \bar{z}_{i\cdot})\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot} \]{{</math>}}
+Pré-multiplicando as variáveis por {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} (ao invés de {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}} para simplificação e sem perda de generalidade), as covariadas transformadas para o indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}} são dadas por:
+{{<math>}}$$ \tilde{z}_{it}\ =\ \frac{\sigma_v}{\sigma_l} \bar{z}_{i\cdot} + (z_{it} - \bar{z}_{i\cdot})\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot} $${{</math>}}
 em que
-{{<math>}}\[ \theta\ \equiv\ 1 - \frac{\sigma_v}{\sigma_l}\ \equiv\ 1 - \phi \]{{</math>}}
+{{<math>}}$$ \theta\ \equiv\ 1 - \frac{\sigma_v}{\sigma_l}\ \equiv\ 1 - \phi $${{</math>}}
 
     
 Note que, quando:
 
 - {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} GLS se aproxima do estimador _within_
-- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} GLS se aproxima do pooled OLS
+- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} GLS se aproxima do pooled MQO
 
 
 ### Estimação dos Componentes de Erro
-- Note que não temos {{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_l)/T${{</math>}} e, logo, {{<math>}}$\Sigma${{</math>}} é desconhecido.
+- Note que não temos {{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_l)/T${{</math>}} e, logo, {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é desconhecido.
 - Se {{<math>}}$\varepsilon${{</math>}} fosse conhecido, então os estimadores para as duas variâncias seriam:
 {{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\varepsilon' B \varepsilon}{N} \tag{2.34}\\
-    \hat{\sigma}^2_v &= \frac{\varepsilon' W \varepsilon}{N(T-1)} \tag{2.35}
+    \hat{\sigma}^2_l &= \frac{\varepsilon' \boldsymbol{B} \varepsilon}{N} \tag{2.34}\\
+    \hat{\sigma}^2_v &= \frac{\varepsilon' \boldsymbol{W} \varepsilon}{N(T-1)} \tag{2.35}
 \end{align*}{{</math>}}
 - Como {{<math>}}$\varepsilon${{</math>}} é desconhecido, então usam-se resíduos de estimadores consistentes em seu lugar.
 - O estimador obtido por esse processo é chamado de FGLS (ou GLS Factível)
-- **Wallace e Hussain (1969)**: usam resíduos OLS
+- **Wallace e Hussain (1969)**: usam resíduos MQO
 {{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\varepsilon}'_{OLS} B \hat{\varepsilon}_{OLS}}{N} \\
-    \hat{\sigma}^2_v &= \frac{\hat{\varepsilon}'_{OLS} W \hat{\varepsilon}_{OLS}}{N(T-1)}
+    \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{MQO}}{N} \\
+    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{MQO}}{N(T-1)}
 \end{align*}{{</math>}}
 - **Amemiya (1971)**: usam resíduos _within_
 {{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\varepsilon}'_{W} B \hat{\varepsilon}_{W}}{N}\\
-    \hat{\sigma}^2_v &= \frac{\hat{\varepsilon}'_{W} W \hat{\varepsilon}_{W}}{N(T-1)}
+    \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{W} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{W}}{N}\\
+    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{W} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{W}}{N(T-1)}
 \end{align*}{{</math>}}
 Note que, a variância do efeito individual é sobre-estimado quando o modelo contém variáveis invariantes no tempo (somem com a transformação _within_)
-- **Hausman e Taylor (1981)**: propuseram ajuste ao método de Amemiya (1971), em que {{<math>}}$\hat{\varepsilon}_W${{</math>}} são regredidos em todas variáveis invariantes no tempo no modelo e são utilizados os resíduos dessa regressão, {{<math>}}$\hat{\varepsilon}_{HT}${{</math>}}.
+- **Hausman e Taylor (1981)**: propuseram ajuste ao método de Amemiya (1971), em que {{<math>}}$\hat{\boldsymbol{\varepsilon}}_W${{</math>}} são regredidos em todas variáveis invariantes no tempo no modelo e são utilizados os resíduos dessa regressão, {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{HT}${{</math>}}.
 - **Swamy e Arora (1972)**: usam resíduos _between_ e _within_ para calcular, respectivamente, {{<math>}}$\hat{\sigma}^2_l${{</math>}} e {{<math>}}$\hat{\sigma}^2_v${{</math>}}
 {{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\varepsilon}'_{B} B \hat{\varepsilon}_{B}}{N - K - 1}\\
-    \hat{\sigma}^2_v &= \frac{\hat{\varepsilon}'_{W} W \hat{\varepsilon}_{W}}{N(T-1) - K}
+    \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{B} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{B}}{N - K - 1}\\
+    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{W} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{W}}{N(T-1) - K}
 \end{align*}{{</math>}}
 
 - **Nerlove (1971)**: computam {{<math>}}$\sigma^2_u${{</math>}} empírica dos efeitos fixos do modelo _within_
 
 {{<math>}}\begin{align*}
-    \hat{u}_i &= \bar{y}_{i\cdot} - \hat{\beta}_W \bar{x}_{i\cdot} \\
+    \hat{u}_i &= \bar{y}_{i\cdot} - \hat{\boldsymbol{\beta}}_W \bar{x}_{i\cdot} \\
     \hat{\sigma}^2_u &= \sum^N_{i=1}{(\hat{u}_i - \bar{\hat{u}}) / (N-1)} \\
-    \hat{\sigma}^2_v &= \frac{\hat{\varepsilon}'_W W \hat{\varepsilon}_W}{NT}
+    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_W \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_W}{NT}
 \end{align*}{{</math>}}
 
 
@@ -1000,8 +1082,8 @@ ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
 
 #### Estimação Analítica GLS
 - Aqui, faremos a estimação analítica do GLS usando o método de Wallace e Hussain (1969).
-- Consiste no uso dos desvios estimados por pooled OLS para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\Sigma}^{-1}${{</math>}} para estimar por FGLS.
-- Para agilizar a estimação, vamos estimar o pooled OLS por `plm()`:
+- Consiste no uso dos desvios estimados por pooled MQO para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} para estimar por FGLS.
+- Para agilizar a estimação, vamos estimar o pooled MQO por `plm()`:
 
 ```r
 library(plm)
@@ -1011,16 +1093,16 @@ data("TobinQ", package = "pder")
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 ```
 
-- Obtendo {{<math>}}$\hat{\varepsilon}_{OLS}${{</math>}}
+- Obtendo {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{MQO}${{</math>}}
 
 
 ```r
-# Estimação pooled OLS
+# Estimação pooled MQO
 Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
 
-# obtendo os resíduos OLS
-e_OLS = Q.pooling$residuals %>% as.vector()
-head(e_OLS)
+# obtendo os resíduos MQO
+e_MQO = Q.pooling$residuals %>% as.vector()
+head(e_MQO)
 ```
 
 ```
@@ -1047,8 +1129,8 @@ B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = diag(N*T) - B
 
 # Calculando os termos de erro
-sigma2_l = (t(e_OLS) %*% B %*% e_OLS) / N
-sigma2_nu = (t(e_OLS) %*% W %*% e_OLS) / (N * (T-1))
+sigma2_l = (t(e_MQO) %*% B %*% e_MQO) / N
+sigma2_nu = (t(e_MQO) %*% W %*% e_MQO) / (N * (T-1))
 sigma2_u = (sigma2_l + sigma2_nu) / T
 
 sigmas2 = cbind(sigma2_l, sigma2_nu, sigma2_u)
@@ -1062,7 +1144,7 @@ sigmas2
 ```
 
 - Agora, conseguimos calcular:
-{{<math>}}\[ \Sigma^{-1} = \frac{1}{\sigma^2_l}B + \frac{1}{\sigma^2_v}W \]{{</math>}}
+{{<math>}}$$ \boldsymbol{\Sigma}^{-1} = \frac{1}{\sigma^2_l}B + \frac{1}{\sigma^2_v}\boldsymbol{W} $${{</math>}}
 
 ```r
 Omega_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
@@ -1073,7 +1155,7 @@ dim(Omega_1) # NT x NT
 ## [1] 6580 6580
 ```
 
-{{<math>}}\[ \hat{V}_{GLS} = (Z' \Sigma^{-1} Z)^{-1} \]{{</math>}}
+{{<math>}}$$ \hat{V}_{GLS} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} $${{</math>}}
 
 
 ```r
@@ -1128,7 +1210,8 @@ summary(Q.walhus)$coef # comparando com estimado via plm()
 
 
 </br>
-## Comparativo dos Estimadores OLS e GLS - Exemplo
+
+## Comparativo dos Estimadores MQO e GLS - Exemplo
 - Seção 2.4.4 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - Usado por Kinal e Lahiri (1993) 
 - Queremos estabelecer relação entre importações (_imports_) e produto nacional (_gnp_)
@@ -1150,7 +1233,7 @@ ercomp(imports ~ gnp, FT) # variância do erro na estimação GLS
 - Variância do erro da estimação GLS é dada por 93\% de variação inter-indivíduos
 - O estimador GLS remove grande parte da variação inter-indivíduos, pois subtrai, da covariada, 94\% da média individual:
 
-{{<math>}}\[ \tilde{z}_{it}\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot}\ =\ z_{it} - 0,94 \bar{z}_{i\cdot} \]{{</math>}}
+{{<math>}}$$ \tilde{z}_{it}\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_l} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot}\ =\ z_{it} - 0,94 \bar{z}_{i\cdot} $${{</math>}}
 
 
 ```r
@@ -1171,43 +1254,43 @@ sapply(models, function(x) round(
 <center><img src="../example_panel-1.png"></center>
 
 - GLS e _within_ são bastante parecidos
-- OLS, que considera variação inter-indivíduos, é parecido com _between_
+- MQO, que considera variação inter-indivíduos, é parecido com _between_
 
 ## Estimador ML
 - Seção 3.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - Uma alternativa aos estimadores de GLS é o de máxima verossimilhança (ML).
 - Assume-se que a distribuição dos dois componentes de erro são normais:
-{{<math>}}\[ u | X \sim N(0, \sigma^2_u) \quad \text{ e } \quad v | u, X \sim N(0, \sigma^2_v) \]{{</math>}}
+{{<math>}}$$ u | X \sim N(0, \sigma^2_u) \quad \text{ e } \quad v | u, X \sim N(0, \sigma^2_v) $${{</math>}}
 
 - O modelo a ser estimado é o
-{{<math>}}\[ y_{it} = \alpha \boldsymbol{\iota} + \beta' x_i + u_i + v_{it} = \gamma' z_i + u_i + v_{it} \]{{</math>}}
+{{<math>}}$$ y_{it} = \alpha \boldsymbol{\iota} + \beta' x_i + u_i + v_{it} = \boldsymbol{\gamma}' z_i + u_i + v_{it} $${{</math>}}
 
-- Ao invés de estimar {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}} para depois calcular {{<math>}}$\gamma${{</math>}}, ambos são estimados simultaneamente.
+- Ao invés de estimar {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}} para depois calcular {{<math>}}$\boldsymbol{\gamma}${{</math>}}, ambos são estimados simultaneamente.
 
 - Denotando 
 {{<math>}}$\phi = \frac{\sigma_v}{\sigma_{l}},${{</math>}}
 a função de log-verossimilhança para um painel balanceado é:
 
-{{<math>}}\[ \ln{L} = -\frac{NT}{2} \ln{2\pi} - \frac{NT}{2}\ln{\sigma^2_v} + \frac{N}{2} \ln{\phi^2} - \frac{1}{2\sigma^2_v} \left( \varepsilon' W \varepsilon + \phi^2 \varepsilon' B \varepsilon \right) \]{{</math>}}
+{{<math>}}$$ \ln{L} = -\frac{NT}{2} \ln{2\pi} - \frac{NT}{2}\ln{\sigma^2_v} + \frac{N}{2} \ln{\phi^2} - \frac{1}{2\sigma^2_v} \left( \varepsilon' \boldsymbol{W} \varepsilon + \phi^2 \varepsilon' \boldsymbol{B} \varepsilon \right) $${{</math>}}
 
 Denotando 
 
-{{<math>}}\[\tilde{Z}\ \equiv\ (I - \phi B) Z\ =\ Z - \phi B Z\]{{</math>}}
+{{<math>}}$$\tilde{\boldsymbol{Z}}\ \equiv\ (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{Z}\ =\ \boldsymbol{Z} - \phi \boldsymbol{B} \boldsymbol{Z}$${{</math>}}
 e resolvendo as CPO's da log-verossimilhança, segue que:
 
 {{<math>}}\begin{align*}
-    \hat{\gamma} &= (\tilde{Z}'\tilde{Z})^{-1} \tilde{Z}'\tilde{y} \tag{3.12} \\
-    \hat{\sigma}^2_v &= \frac{\hat{\varepsilon}' W \hat{\varepsilon} + \hat{\phi}^2 \hat{\varepsilon}' B \hat{\varepsilon}}{NT} \tag{3.13} \\
-    \hat{\phi}^2 &=\frac{\hat{\varepsilon}' W \hat{\varepsilon}}{(T-1) \hat{\varepsilon}'B\hat{\varepsilon}} \tag{3.14}
+    \hat{\boldsymbol{\gamma}} &= (\tilde{\boldsymbol{Z}}'\tilde{\boldsymbol{Z}})^{-1} \tilde{\boldsymbol{Z}}'\tilde{\boldsymbol{y}} \tag{3.12} \\
+    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}} + \hat{\phi}^2 \hat{\boldsymbol{\varepsilon}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}}{NT} \tag{3.13} \\
+    \hat{\phi}^2 &=\frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{(T-1) \hat{\boldsymbol{\varepsilon}}'\boldsymbol{B}\hat{\boldsymbol{\varepsilon}}} \tag{3.14}
 \end{align*}{{</math>}}
 
 A estimação pode ser feita iterativamente por FIML (Full Information Maximum Likelihood):
 
 
-1. Chute inicial de {{<math>}}$\hat{\gamma}${{</math>}} (por exemplo, estimativa _within_)
+1. Chute inicial de {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} (por exemplo, estimativa _within_)
 2. Calcular {{<math>}}$\hat{\phi}^2${{</math>}} usando (3.14)
-3. Calcular {{<math>}}$\hat{\gamma}${{</math>}} usando (3.12) 
-4. Verificar convergência: se não convergiu, volta para o passo 2, usando o {{<math>}}$\hat{\gamma}${{</math>}} calculado no passo 3.
+3. Calcular {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} usando (3.12) 
+4. Verificar convergência: se não convergiu, volta para o passo 2, usando o {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} calculado no passo 3.
 5. Calcular {{<math>}}$\sigma^2_v${{</math>}} usando (3.13)
 
 
@@ -1222,7 +1305,7 @@ data("TobinQ", package = "pder")
 # Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimação pooled OLS
+# Estimação pooled MQO
 Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian")
 summary(Q.ml)
 ```
@@ -1258,14 +1341,15 @@ summary(Q.swar)$coef # Comparando com estimação GLS-swar
 
 
 </br>
+
 ## Testes de Presença de Efeitos Individuais
 
 ### Breusch-Pagan
 
 - Seção 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- É um teste baseado em multiplicadores de Lagrange (LM) nos resíduos de OLS, em que {{<math>}}$H_0: \sigma^2_u = 0${{</math>}} (ausência de efeitos individuais)
+- É um teste baseado em multiplicadores de Lagrange (LM) nos resíduos de MQO, em que {{<math>}}$H_0: \sigma^2_u = 0${{</math>}} (ausência de efeitos individuais)
 - A estatística teste é dada por 
-{{<math>}}\[ LM_u = \frac{NT}{2(T-1)} \left( T \frac{\hat{\varepsilon}' B_u \hat{\varepsilon}}{\hat{\varepsilon}' \hat{\varepsilon}} - 1 \right)^2  \]{{</math>}}
+{{<math>}}$$ LM_u = \frac{NT}{2(T-1)} \left( T \frac{\hat{\boldsymbol{\varepsilon}}' B_u \hat{\boldsymbol{\varepsilon}}}{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}} - 1 \right)^2  $${{</math>}}
 que é assintoticamente distribuída como ua `\(\chi^2\)` com 1 grau de liberdade.
 - Há algumas variações deste teste:
     - Breusch and Pagan (1980),
@@ -1277,10 +1361,10 @@ que é assintoticamente distribuída como ua `\(\chi^2\)` com 1 grau de liberdad
 
 ### Testes F
 - Seção 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo _within_ {{<math>}}$\hat{\varepsilon}'_W\hat{\varepsilon}_W${{</math>}} e {{<math>}}$N(T-1) - K${{</math>}}, respectivamente.
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo pooled OLS {{<math>}}$\hat{\varepsilon}'_{OLS}\hat{\varepsilon}_{OLS}${{</math>}} e {{<math>}}$NT - K - 1${{</math>}}, respectivamente.
+- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo _within_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W${{</math>}} e {{<math>}}$N(T-1) - K${{</math>}}, respectivamente.
+- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo pooled MQO {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_{MQO}\hat{\boldsymbol{\varepsilon}}_{MQO}${{</math>}} e {{<math>}}$NT - K - 1${{</math>}}, respectivamente.
 - Sob hipótese nula de que não há efeitos individuais, a estatística teste é dada por
-{{<math>}}\[ \frac{\hat{\varepsilon}'_{OLS} W \hat{\varepsilon}_{OLS} - \hat{\varepsilon}'_W\hat{\varepsilon}_W}{\hat{\varepsilon}'_W W \hat{\varepsilon}_W} \frac{NT - K - N + 1}{N-1} \]{{</math>}}
+{{<math>}}$$ \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{MQO} - \hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W}{\hat{\boldsymbol{\varepsilon}}'_W \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_W} \frac{NT - K - N + 1}{N-1} $${{</math>}}
 que segue uma distribuição F de Fisher-Snedecor com {{<math>}}$N-1${{</math>}} e {{<math>}}$NT - K - N + 1${{</math>}} graus de liberdade.
 
 
@@ -1326,6 +1410,7 @@ Assim como o teste LM, Pelo teste F, observam-se efeitos individuais significati
 
 
 </br>
+
 ## Testes de Efeitos Correlacionados
 - Seção 4.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - Continuamos assumindo que {{<math>}}$E(v|X) = 0${{</math>}}, em que {{<math>}}$v${{</math>}} é o termo de erro idiossincrático.
@@ -1336,21 +1421,21 @@ Assim como o teste LM, Pelo teste F, observam-se efeitos individuais significati
     - sob {{<math>}}$H_0${{</math>}}: {{<math>}}$A${{</math>}} e {{<math>}}$B${{</math>}} são ambos consistentes, mas {{<math>}}$B${{</math>}} é mais eficiente que {{<math>}}$A${{</math>}}
     - sob {{<math>}}$H_1${{</math>}}: apenas {{<math>}}$A${{</math>}} é consistente
 - Se {{<math>}}$H_0${{</math>}} é verdadeiro, então os coeficientes dos dois modelos não devem divergir.
-- O teste é baseado em {{<math>}}$\hat{\beta}_A - \hat{\beta}_B${{</math>}} e Hausman mostrou que, sob {{<math>}}$H_0${{</math>}}, temos {{<math>}}$cov(\hat{\beta}_A, \hat{\beta}_B) = 0${{</math>}} e, logo, a variância dessa diferença é simplesmente {{<math>}}$V(\hat{\beta}_A - \hat{\beta}_B) = V(\hat{\beta}_A) - V(\hat{\beta}_B)${{</math>}}
+- O teste é baseado em {{<math>}}$\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B${{</math>}} e Hausman mostrou que, sob {{<math>}}$H_0${{</math>}}, temos {{<math>}}$cov(\hat{\boldsymbol{\beta}}_A, \hat{\boldsymbol{\beta}}_B) = 0${{</math>}} e, logo, a variância dessa diferença é simplesmente {{<math>}}$V(\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B) = V(\hat{\boldsymbol{\beta}}_A) - V(\hat{\boldsymbol{\beta}}_B)${{</math>}}
 
 - No contexto de dados em painéis, compara-se o estimador _within_ (efeitos fixos) e o de GLS (efeitos aleatórios)
 - Quando {{<math>}}$E(u|X) = 0${{</math>}} ambos estimadores são consistentes, ou seja,
-{{<math>}}\[ \hat{q} \equiv \hat{\beta}_{GLS} - \hat{\beta}_W\ \overset{p}{\rightarrow}\ 0 \]{{</math>}}
+{{<math>}}$$ \hat{q} \equiv \hat{\boldsymbol{\beta}}_{GLS} - \hat{\boldsymbol{\beta}}_W\ \overset{p}{\rightarrow}\ 0 $${{</math>}}
 então é preferível usar o mais eficiente (GLS, pois usa ambas variações inter e intra-indivíduos).
 
-- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\beta}_{GLS} - \hat{\beta}_W \neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
+- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{GLS} - \hat{\boldsymbol{\beta}}_W \neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
 - A variância é dada por 
 {{<math>}}\begin{align*}
-    V(\hat{q}) &= V(\hat{\beta}_{GLS} - \hat{\beta}_W) = V(\hat{\beta}_{GLS}) + V(\hat{\beta}_W) - 2 cov(\hat{\beta}_{W}, \hat{\beta}_{GLS}) \\
-    &= \sigma^2_v (Z' W Z)^{-1} - (Z'\Sigma^{-1} Z)^{-1}
+    V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{GLS} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{GLS}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{W}, \hat{\boldsymbol{\beta}}_{GLS}) \\
+    &= \sigma^2_v (Z' \boldsymbol{W} Z)^{-1} - (Z'\boldsymbol{\Sigma}^{-1} Z)^{-1}
 \end{align*}{{</math>}}
 - Logo, a estatística teste se torna
-{{<math>}}\[ \hat{q}'\ V(\hat{q})^{-1}\ \hat{q} \]{{</math>}}
+{{<math>}}$$ \hat{q}'\ V(\hat{q})^{-1}\ \hat{q} $${{</math>}}
 que, sob {{<math>}}$H_0${{</math>}}, é distribuida como {{<math>}}$\chi^2${{</math>}} com {{<math>}}$K${{</math>}} graus de liberdade.
 
 
