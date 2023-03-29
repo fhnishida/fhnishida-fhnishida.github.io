@@ -604,8 +604,8 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-res_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(res_7.1)$coef, 4 )
+reg_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg_7.1)$coef, 4 )
 ```
 
 ```
@@ -888,8 +888,8 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-res_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(res_7.11)$coef, 4 )
+reg_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg_7.11)$coef, 4 )
 ```
 
 ```
@@ -918,9 +918,9 @@ round( summary(res_7.11)$coef, 4 )
 
 ```r
 # Estimando o modelo - forma (a)
-res_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
+reg_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
                data=wage1)
-round( summary(res_7.14a)$coef, 4 )
+round( summary(reg_7.14a)$coef, 4 )
 ```
 
 ```
@@ -938,9 +938,9 @@ round( summary(res_7.14a)$coef, 4 )
 
 ```r
 # Estimando o modelo - forma (b)
-res_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
+reg_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
                data=wage1)
-round( summary(res_7.14b)$coef, 4 )
+round( summary(reg_7.14b)$coef, 4 )
 ```
 
 ```
@@ -993,9 +993,9 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-res_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
+reg_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
               data=wage1)
-round( summary(res_7.17)$coef, 4 )
+round( summary(reg_7.17)$coef, 4 )
 ```
 
 ```

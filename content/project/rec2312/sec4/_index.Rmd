@@ -77,9 +77,9 @@ Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$
 {{<math>}}$$ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
 ou, usando
 
-{{<math>}}$$ \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} \equiv
- \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e } \quad 
-\underbrace{\boldsymbol{Z}}_{NT \times (K+1)} \equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
+{{<math>}}\begin{align} \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} &\equiv \left[ \begin{array}{c} \alpha \\ \boldsymbol{\beta} \end{array} \right] = 
+ \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e }\\ 
+\underbrace{\boldsymbol{Z}}_{NT \times (K+1)} &\equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
   = \left[ \begin{array}{cccc}
     1 & x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
     1 & x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
@@ -94,7 +94,7 @@ ou, usando
     1 & x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
     1 & x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
-\end{array} \right], $$ {{</math>}}
+\end{array} \right], \end{align} {{</math>}}
 
 podemos reescrever como
 {{<math>}}$$ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}. $${{</math>}}
@@ -977,7 +977,6 @@ que, sob {{<math>}}$H_0${{</math>}}, é distribuida como {{<math>}}$\chi^2${{</m
 phtest(Q.within, Q.gls)
 ```
 Não se rejeita a hipótese nula de que ambos modelos são consistentes a 5\%.
-
 
 
 </br>
