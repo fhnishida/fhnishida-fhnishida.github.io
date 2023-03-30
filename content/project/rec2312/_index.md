@@ -30,8 +30,6 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 {{< cta cta_text="👉 Seguir para Revisão de R" cta_link="sec1" >}}
 
-
-
 </br>
 
 ## Gravações das Monitorias
