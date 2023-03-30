@@ -29,20 +29,6 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 
 
-
-</br>
-
-## Listas de Exercícios
-
-
-### Listas Teóricas
-- 
-
-
-### Listas Práticas
-- 
-
-
 </br>
 
 ## Gravações das Monitorias
