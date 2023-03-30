@@ -47,9 +47,9 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
-- **Monitoria 1 (16/03)**: Revisão de Programação em R | [Script](monitoria01.R)
+- **Monitoria 3 (30/03)**: MQO com Variáveis Categóricas | [Script](monitoria03.R)
     
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SS-NLIn9gJk/hqdefault.jpg)](https://www.youtube.com/watch?v=SS-NLIn9gJk)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/AH4FIVMNDYM/hqdefault.jpg)](https://www.youtube.com/watch?v=AH4FIVMNDYM)
 
 
 - **Monitoria 2 (23/03)**: Mínimos Quadrados Ordinários | [Script](monitoria02.R)
@@ -57,6 +57,6 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5ye1mOJFe6k/hqdefault.jpg)](https://www.youtube.com/watch?v=5ye1mOJFe6k)
 
 
-- **Monitoria 3 (30/03)**: MQO com Variáveis Categóricas | [Script](monitoria03.R)
+- **Monitoria 1 (16/03)**: Revisão de Programação em R | [Script](monitoria01.R)
     
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/AH4FIVMNDYM/hqdefault.jpg)](https://www.youtube.com/watch?v=AH4FIVMNDYM)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SS-NLIn9gJk/hqdefault.jpg)](https://www.youtube.com/watch?v=SS-NLIn9gJk)
