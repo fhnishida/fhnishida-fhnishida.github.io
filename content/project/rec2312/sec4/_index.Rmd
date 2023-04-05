@@ -257,14 +257,14 @@ Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é chamada de  {{<math>}
     &= \left[ \begin{array}{cc} 1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1 \end{array} \right]_{N \times N}  \otimes  \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right)_{T \times T}  \\
     &= \left[ \begin{array}{ccc} 1 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\
     \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) & \cdots & 0 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) \\ \vdots & \ddots & \vdots \\ 0 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) & \cdots & 1 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) \end{array} \right] \\
-    &= \left[ \begin{array}{rrrrrr} 
-        1/T & 1/T & 1/T & \cdots & 0 & 0 & 0 \\
-        1/T & 1/T & 1/T & \cdots & 0 & 0 & 0 \\
-        1/T & 1/T & 1/T & \cdots & 0 & 0 & 0 \\
-        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
-        0 & 0 & 0 & \cdots & 1/T & 1/T & 1/T \\
-        0 & 0 & 0 & \cdots & 1/T & 1/T & 1/T \\
-        0 & 0 & 0 & \cdots & 1/T & 1/T & 1/T
+    &= \left[ \begin{array}{rrr|r|rrr} 
+        1/T & \cdots & 1/T & \cdots & 0 & \cdots & 0 \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        1/T & \cdots & 1/T & \cdots & 0 & \cdots & 0 \\\hline
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\\hline
+        0 & \cdots & 0 & \cdots & 1/T & \cdots & 1/T \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        0 & \cdots & 0 & \cdots & 1/T & \cdots & 1/T
     \end{array} \right]_{NT \times NT},
 \end{align}{{</math>}}
 
