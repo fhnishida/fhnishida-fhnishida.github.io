@@ -236,9 +236,26 @@ Agora, para **dados em painel**, como visto acima, possuímos duas variâncias d
 
 {{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] $${{</math>}}
 
-Note que o primeiro termo da soma cria uma diagonal principal de {{<math>}}$\sigma^2_v${{</math>}}. Então, agora "só" precisamos somar {{<math>}}$\sigma^2_u${{</math>}} "na proximidade" dessa diagonal.
+Note que o primeiro termo da soma cria uma diagonal principal de {{<math>}}$\sigma^2_v${{</math>}}.
 
-Por enquanto, vamos ignorar {{<math>}}$\sigma^2_u${{</math>}} e vamos chamar a parte entre colchetes de matriz de transformação **inter-indivíduos (_between_)**:
+{{<math>}}\begin{align}
+\sigma^2_v \boldsymbol{I}_{NT} &= \sigma^2_v \left[ \begin{array}{cccc} 
+1 & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1
+\end{array} \right] \\
+  &= \left[ \begin{array}{cccc} 
+\sigma^2_v & 0 & \cdots & 0 \\
+0 & \sigma^2_v & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2_v
+\end{array} \right]_{NT \times NT} \end{align}{{</math>}}
+
+
+Agora, "só" precisamos somar {{<math>}}$\sigma^2_u${{</math>}} "na proximidade" dessa diagonal.
+
+Por enquanto, vamos ignorar {{<math>}}$T \sigma^2_u${{</math>}} e vamos chamar a parte entre colchetes de matriz de transformação **inter-indivíduos (_between_)**:
 
 {{<math>}}$$ \boldsymbol{B}\ \equiv\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
 
@@ -264,7 +281,53 @@ Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é chamada de  {{<math>}
     \end{array} \right]_{NT \times NT},
 \end{align}{{</math>}}
 
-em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker.
+em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker. Agora, ao multiplicar por {{<math>}}$T \sigma^2_u${{</math>}}, todos elementos {{<math>}}$1/T${{</math>}} tornam-se {{<math>}}$\sigma^2_u${{</math>}}:
+
+{{<math>}}$$ 
+    T \sigma^2_u \boldsymbol{B} = \left[ \begin{array}{rrr|r|rrr} 
+        \sigma^2_u & \cdots & \sigma^2_u & \cdots & 0 & \cdots & 0 \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        \sigma^2_u & \cdots & \sigma^2_u & \cdots & 0 & \cdots & 0 \\\hline
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\\hline
+        0 & \cdots & 0 & \cdots & \sigma^2_u & \cdots & \sigma^2_u \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        0 & \cdots & 0 & \cdots & \sigma^2_u & \cdots & \sigma^2_u
+    \end{array} \right]_{NT \times NT},
+`$${{</math>}}
+
+
+Somando os dois termos, conseguimos obter a matriz de covariâncias dos erros:
+
+{{<math>}}\begin{align}
+    \boldsymbol{\Sigma} &= \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u \boldsymbol{B} \\
+    &= \left[ \begin{array}{cccc} 
+\sigma^2_v & 0 & \cdots & 0 \\
+0 & \sigma^2_v & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2_v
+\end{array} \right] + \left[ \begin{array}{ccc|c|ccc} 
+        \sigma^2_u & \cdots & \sigma^2_u & \cdots & 0 & \cdots & 0 \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        \sigma^2_u & \cdots & \sigma^2_u & \cdots & 0 & \cdots & 0 \\\hline
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\\hline
+        0 & \cdots & 0 & \cdots & \sigma^2_u & \cdots & \sigma^2_u \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        0 & \cdots & 0 & \cdots & \sigma^2_u & \cdots & \sigma^2_u
+    \end{array} \right] \\
+    &= \left[ \begin{array}{ccc|c|ccc} 
+        \sigma^2_u + \sigma^2_v & \cdots & \sigma^2_u & \cdots & 0 & \cdots & 0 \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        \sigma^2_u & \cdots & \sigma^2_u + \sigma^2_v & \cdots & 0 & \cdots & 0 \\\hline
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\\hline
+        0 & \cdots & 0 & \cdots & \sigma^2_u + \sigma^2_v & \cdots & \sigma^2_u \\
+        \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
+        0 & \cdots & 0 & \cdots & \sigma^2_u & \cdots & \sigma^2_u + \sigma^2_v
+    \end{array} \right]
+\end{align}{{</math>}}
+
+
+
+**[RETIRAR EXEMPLO - FAZER NO R!!!!!!!!!!!!!!!!]**
 
 #### Exemplo
 Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
