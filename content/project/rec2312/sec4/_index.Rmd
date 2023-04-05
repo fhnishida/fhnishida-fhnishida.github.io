@@ -124,7 +124,7 @@ A matriz de covariâncias dos erros relaciona um termo de erro, {{<math>}}$\vare
 Na matriz de covariância de erro, cada linha representa um {{<math>}}$\varepsilon_{it}${{</math>}} e cada coluna representa um {{<math>}}$\varepsilon_{jt}${{</math>}}. Seus elementos representam a covariância entre 
 {{<math>}}$\varepsilon_{it}${{</math>}} e {{<math>}}$\varepsilon_{jt}${{</math>}}, sendo que pode haver {{<math>}}$\varepsilon_{it} = \varepsilon_{jt}${{</math>}} (que, neste caso, torna-se variância):
 
-{{<math>}}$$ \underset{NT \times NT}{\boldsymbol{\Sigma}} =$${{</math>}}
+{{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{NT \times NT}{\boldsymbol{\Sigma}} =$${{</math>}}
 {{<math>}}$$ \left[ \tiny \begin{array}{cccc|ccc|c|ccc}
 var(\varepsilon_{{\color{red}1}1}) & cov(\varepsilon_{{\color{red}1}1}, \varepsilon_{{\color{red}1}2}) & \cdots & cov(\varepsilon_{{\color{red}1}1}, \varepsilon_{{\color{red}1}T}) & cov(\varepsilon_{{\color{red}1}1}, \varepsilon_{{\color{red}2}1}) & \cdots & cov(\varepsilon_{{\color{red}1}1}, \varepsilon_{{\color{red}2}T}) & \cdots & cov(\varepsilon_{{\color{red}1}1}, \varepsilon_{{\color{red}N}1}) & \cdots & cov(\varepsilon_{{\color{red}1}1}, \varepsilon_{{\color{red}N}T}) \\
 cov(\varepsilon_{{\color{red}1}2}, \varepsilon_{{\color{red}1}1}) & var(\varepsilon_{{\color{red}1}2}) & \cdots & cov(\varepsilon_{{\color{red}1}2}, \varepsilon_{{\color{red}1}T}) & cov(\varepsilon_{{\color{red}1}2}, \varepsilon_{{\color{red}2}1}) & \cdots & cov(\varepsilon_{{\color{red}1}2}, \varepsilon_{{\color{red}2}T}) & \cdots & cov(\varepsilon_{{\color{red}1}2}, \varepsilon_{{\color{red}N}1}) & \cdots & cov(\varepsilon_{{\color{red}1}2}, \varepsilon_{{\color{red}N}T}) \\
@@ -187,7 +187,7 @@ Logo, {{<math>}}$\boldsymbol{\Sigma}_{ij} = \boldsymbol{0}${{</math>}} (matriz d
 
 Logo, podemos reescrever (1) como
 
-{{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{NT \times NT}{\boldsymbol{\Sigma}} = \left[ \begin{matrix} 
+{{<math>}}$$ \underset{NT \times NT}{\boldsymbol{\Sigma}} = \left[ \begin{matrix} 
 \boldsymbol{\Sigma}_1 & \boldsymbol{0} & \cdots & \boldsymbol{0} \\
 \boldsymbol{0} & \boldsymbol{\Sigma}_2 & \cdots & \boldsymbol{0} \\
 \vdots & \vdots & \ddots & \vdots \\
@@ -241,6 +241,9 @@ Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<
     0 & 0 & 0 & \cdots & 1
 \end{array} \right]_{p \times p}, $$ {{</math>}}
 
+e considere {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
+{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}.
+
 
 Com dados em **corte transversal**, era fácil calcular a matriz de covariâncias dos erros, pois só havia um termo de erro e, portanto, tínhamos {{<math>}}$\sigma^2${{</math>}} apenas na diagonal principal:
 
@@ -262,7 +265,7 @@ Com dados em **corte transversal**, era fácil calcular a matriz de covariância
 
 Agora, para **dados em painel**, como visto acima, possuímos duas variâncias de termos de erro, sendo que {{<math>}}$\sigma^2_v${{</math>}} aparece na diagonal principal, cujos elementos (e seus "vizinhos") precisam ser somados por {{<math>}}$\sigma^2_u${{</math>}}. Logo, a matriz de covariâncias dos erros com dados em painel pode ser escrita na forma matricial como:
 
-{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] \tag{4} $${{</math>}}
+{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T] \tag{4} $${{</math>}}
 
 Note que o primeiro termo da soma cria uma diagonal principal de {{<math>}}$\sigma^2_v${{</math>}}.
 
@@ -381,12 +384,62 @@ Assumindo {{<math>}}$\sigma^2_u = 2${{</math>}} e {{<math>}}$\sigma^2_v = 3${{</
     \end{array} \right]
 $${{</math>}}
 
-No R...
 
+</br>
+
+
+Para calcular no R, vamos definir:
 ```{r}
-
+N = 2 # número de indivíduos
+T = 3 # números de períodos
+sig2u = 2 # variância do termo de erro do indivíduo
+sig2v = 3 # variância do termo de erro idiossincrático 
 ```
 
+
+O primeiro termo de {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é
+```{r}
+I_NT = diag(N*T) # matriz identidade de tamanho NT
+I_NT
+
+termo1 = sig2v * I_NT
+termo1
+```
+
+Para o 2º termo de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, temos que criar a matriz identidade e o vetor de 1's primeiro:
+```{r}
+iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
+iota_T
+
+I_N = diag(N) # matriz identidade de tamanho N
+I_N
+```
+
+Vamos obter {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
+```{r}
+# Para obter matriz T x T preenchida por 1/T, sendo T = 3, temos que:
+t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
+solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
+iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar por iotas
+```
+
+Agora, vamos calcular {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}} usando o operador de produto de Kronecker `%x%`:
+```{r}
+B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
+round(B, 3)
+```
+
+Multiplicando {{<math>}}$\boldsymbol{B}${{</math>}} por {{<math>}}$T \sigma^2_u${{</math>}}, obtemos o 2º termo de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}:
+```{r}
+termo2 = T * sig2u * B
+termo2
+```
+
+Então, a matriz de covariâncias dos erros é dada por:
+```{r}
+Sigma = termo1 + termo2
+Sigma
+```
 
 
 
@@ -591,9 +644,7 @@ ou, em termos de {{<math>}}$\boldsymbol{B}${{</math>}} e {{<math>}}$\boldsymbol{
 Note que o modelo anterior não possui uma constante, {{<math>}}$\alpha${{</math>}}. Podemos incluir uma constante no modelo (1) e reescrever esse novo modelo como:
 {{<math>}} \begin{align} y_{it} &= 1.\alpha + \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{2} \end{align} {{</math>}}
 
-Denote {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
-{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}
-Para não poluir as equações, quando o subscrito for omitido, considere {{<math>}}$q = NT${{</math>}}.
+
 
 Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}}, segue que
 {{<math>}}$$ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
@@ -718,32 +769,6 @@ Note que, para cada indivíduo {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{
 
 
 </br>
-
-Para calcular no R, vamos definir:
-```{r}
-N = 2 # número de indivíduos
-T = 3 # números de períodos
-
-iota_T = matrix(rep(1, T), T, 1) # vetor coluna de 1's de tamanho T
-iota_T
-
-I_N = diag(N) # matriz identidade de tamanho N
-I_N
-```
-
-Vamos obter {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
-```{r}
-# Para obter matriz T x T preenchida por 1/T, sendo T = 3, temos que:
-t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
-solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
-iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar por iotas
-```
-
-Agora, vamos calcular {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}} usando o operador de produto de Kronecker `%x%`:
-```{r}
-B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-round(B, 3)
-```
 
 Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz `B`
 ```{r}
