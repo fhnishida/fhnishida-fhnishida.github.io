@@ -17,20 +17,68 @@ knitr::opts_chunk$set(echo = TRUE)
 # wd = "~/../FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Nitro
 ```
 
-## Notações
+
+## Estrutura dos Dados
+
 - Seção 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - A maioria das notações foram adaptadas de acordo com as notas de aula de Econometria I.
 
-Para a observação do indivíduo {{<math>}}$i \in \{1, ..., N\}${{</math>}} no período {{<math>}}$t \in \{1, ..., T\}${{</math>}}, podemos escrever o modelo a ser estimado como:
+
+### Corte Transversal
+Até agora, utilizamos bases de dados em corte transversal (ou _cross-section_, em inglês), ou seja, em que cada linha representava um indivíduo {{<math>}}$i  = 1, ..., N${{</math>}} e nela observávamos as realizações da variável dependente {{<math>}}$y${{</math>}} e das {{<math>}}$K${{</math>}} variáveis explicativas:
+
+<img src="../data_crosssection.png" alt="">
+
+
+#### Exemplo
+Considerando {{<math>}}$N = 4${{</math>}} indivíduos e {{<math>}}$K = 2${{</math>}} covariadas, segue o exemplo:
+
+<img src="../data_crosssection_example.png" alt="">
+
+
+
+### Painel
+Também é comum utilizarmos dados em painel, isto é, uma base de dados em que observamos os indivíduos {{<math>}}$i = 1, ..., N${{</math>}} nos {{<math>}}$t = 1, ..., T${{</math>}} períodos.
+
+Este tipo de estrutura de dado permite, além de fazer comparações inter-indivíduos (_between_), avaliar diferenças intra-indivíduos (_within_) a partir das variações ocorridas ao longo do tempo para um mesmo indivíduo.
+
+Os dados em painel podem estar dispostos de duas formas: longa ou curta.
+
+
+##### Painel longo (_long_, em inglês)
+Aqui, cada indivíduo aparece em {{<math>}}$T${{</math>}} linhas. Cada observação é indicada pela dupla {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}} (variáveis-chave da base de dados). Essa é a forma padrão utilizada em Econometria.
+
+<img src="../data_panellong.png" alt="">
+
+
+##### Painel curto (_wide_, em inglês)
+Na forma curta, as informações das variáveis dependentes e independentes aparecem repetidamente por {{<math>}}$T${{</math>}} vezes, sendo que cada repetição corresponde a um dos {{<math>}}$T${{</math>}} períodos:
+
+<img src="../data_panelwide.png" alt="">
+
+
+
+#### Exemplos
+Como exemplo, consideramos {{<math>}}$N = 4${{</math>}} indivíduos e {{<math>}}$K = 2${{</math>}} covariadas e {{<math>}}$T = 2${{</math>}} períodos. As bases de dados em paineis longo e curto, respectivamente, teriam as seguintes estruturas:
+
+<img src="../data_panellong_example.png" alt="">
+
+<img src="../data_panelwide_example.png" alt="">
+
+
+
+## Modelo em Painel
+
+Para a observação do indivíduo {{<math>}}$i \in \{1, ..., N\}${{</math>}} no período {{<math>}}$t \in \{1, ..., T\}${{</math>}}, podemos escrever o modelo como:
 
 {{<math>}}$$ y_{it} = \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{1} $$ {{</math>}}
 em que {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor-coluna de {{<math>}}$K${{</math>}} parâmetros
 
 {{<math>}}$$ \boldsymbol{\beta} = \left[ \begin{array}{c} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right], $${{</math>}}
 
-{{<math>}}$y_{it}${{</math>}} é a variável dependente, {{<math>}}$\boldsymbol{x}'_{it}${{</math>}} é o vetor-linha de dimensão {{<math>}}$K${{</math>}}:
+{{<math>}}$y_{it}${{</math>}} é a variável dependente, {{<math>}}$\boldsymbol{x}'_{it}${{</math>}} é o vetor-linha de dimensão {{<math>}}$K+1${{</math>}}:
 
-{{<math>}}$$ \boldsymbol{x}'_{it} = \left[ \begin{array}{c} x^1_{it} & x^2_{it} & \cdots & x^K_{it} \end{array} \right],  $${{</math>}}
+{{<math>}}$$ \boldsymbol{x}'_{it} = \left[ \begin{array}{c} 1 & x^1_{it} & x^2_{it} & \cdots & x^K_{it} \end{array} \right],  $${{</math>}}
 
 e o erro {{<math>}}$\varepsilon_{it}${{</math>}} pode ser escrito como:
 
@@ -41,71 +89,125 @@ Empilhando as equações (1) para todo indivíduo {{<math>}}$i = 1, 2, ..., N${{
 
 {{<math>}}$$ \underbrace{\boldsymbol{y}}_{NT \times 1} = \left[ \begin{array}{c}
     y_{11} \\ y_{12} \\ \vdots \\ y_{1T} \\\hline y_{21} \\ y_{22} \\ \vdots \\ y_{2T} \\\hline \vdots \\\hline y_{N1} \\ y_{N2} \\ \vdots \\ y_{NT}
-\end{array} \right] \qquad \text{ e } \qquad 
+\end{array} \right] \quad \text{ e } \quad 
 \underbrace{\boldsymbol{X}}_{NT \times K} = \left[ \begin{array}{c}
     \boldsymbol{x}'_{11} \\ \boldsymbol{x}'_{12} \\ \vdots \\ \boldsymbol{x}'_{1T} \\\hline
     \boldsymbol{x}'_{21} \\ \boldsymbol{x}'_{22} \\ \vdots \\ \boldsymbol{x}'_{2T} \\\hline
     \vdots \\\hline
     \boldsymbol{x}'_{N1} \\ \boldsymbol{x}'_{N2} \\ \vdots \\ \boldsymbol{x}'_{NT} 
     \end{array} \right]
-  = \left[ \begin{array}{cccc}
-    x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
-    x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\\hline
-    x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
-    x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\\hline
-    \vdots & \vdots & \ddots & \vdots \\\hline
-    x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
-    x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
-\end{array} \right] $$ {{</math>}}
-As linhas horizontais foram inseridas apenas para facilitar a visualização dos valores referentes a cada indivíduo {{<math>}}$i${{</math>}}.
-
-
-Note que o modelo anterior não possui uma constante, {{<math>}}$\alpha${{</math>}}. Podemos incluir uma constante no modelo (1) e reescrever esse novo modelo como:
-{{<math>}} \begin{align} y_{it} &= 1.\alpha + \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{2} \end{align} {{</math>}}
-
-Denote {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
-{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}
-Para não poluir as equações, quando o subscrito for omitido, considere {{<math>}}$q = NT${{</math>}}.
-
-Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}}, segue que
-{{<math>}}$$ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
-ou, usando
-
-{{<math>}}\begin{align} \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} &\equiv \left[ \begin{array}{c} \alpha \\ \boldsymbol{\beta} \end{array} \right] = 
- \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e }\\ 
-\underbrace{\boldsymbol{Z}}_{NT \times (K+1)} &\equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
-  = \left[ \begin{array}{cccc}
+  = \left[ \begin{array}{ccccc}
     1 & x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
     1 & x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
-    1 & x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\ \hline
+    1 & x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\\hline
     1 & x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
     1 & x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\ 
-    1 & x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\ \hline
-    \vdots & \vdots & \vdots & \ddots & \vdots \\ \hline
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\\hline
+    \vdots & \vdots & \vdots & \ddots & \vdots \\\hline
     1 & x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
     1 & x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
     \vdots & \vdots & \vdots & \ddots & \vdots \\
     1 & x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
-\end{array} \right], \end{align} {{</math>}}
-
-podemos reescrever como
-{{<math>}}$$ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}. $${{</math>}}
+\end{array} \right] $$ {{</math>}}
+As linhas horizontais foram inseridas apenas para facilitar a visualização dos valores referentes a cada indivíduo {{<math>}}$i${{</math>}}.
 
 
 </br>
 
-## Transformações _between_ e _within_
-- Seção 2.1.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+## Matriz de covariâncias dos erros
+- Seção 2.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
-Denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}:
+
+A matriz de covariâncias dos erros pode ser expressa por:
+
+{{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{NT \times NT}{\boldsymbol{\Sigma}} = \left[ \begin{matrix} 
+\boldsymbol{\Sigma}_1 & \boldsymbol{\Sigma}_{12} & \cdots & \boldsymbol{\Sigma}_{1N} \\
+\boldsymbol{\Sigma}_{12} & \boldsymbol{\Sigma}_{2} & \cdots & \boldsymbol{\Sigma}_{2N} \\
+\vdots & \vdots & \ddots & \vdots \\
+\boldsymbol{\Sigma}_{1N} & \boldsymbol{\Sigma}_{2N} & \cdots & \boldsymbol{\Sigma}_{N}
+\end{matrix} \right] \tag{1} $${{</math>}}
+
+
+em que, quando {{<math>}}$i = j${{</math>}}, temos
+
+{{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_i} = \left[ \begin{matrix} 
+var(\varepsilon_{i1}) & cov(\varepsilon_{i1}, \varepsilon_{i2}) & \cdots & cov(\varepsilon_{i1}, \varepsilon_{iT}) \\
+cov(\varepsilon_{i1}, \varepsilon_{i2}) & var(\varepsilon_{i2}) & \cdots & cov(\varepsilon_{i2}, \varepsilon_{iT}) \\
+\vdots & \vdots & \ddots & \vdots \\
+cov(\varepsilon_{i1}, \varepsilon_{iT}) & cov(\varepsilon_{i2}, \varepsilon_{iT}) & \cdots & var(\varepsilon_{iT})
+\end{matrix} \right] \tag{2} $${{</math>}}
+
+
+e, quando {{<math>}}$i \neq j${{</math>}}, temos
+{{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_{ij}} = \left[ \begin{matrix} 
+cov(\varepsilon_{i1}, \varepsilon_{j1}) & cov(\varepsilon_{i1}, \varepsilon_{j2}) & \cdots & cov(\varepsilon_{i1}, \varepsilon_{jT}) \\
+cov(\varepsilon_{i1}, \varepsilon_{j2}) & cov(\varepsilon_{i2}, \varepsilon_{j2}) & \cdots & cov(\varepsilon_{i2}, \varepsilon_{jT}) \\
+\vdots & \vdots & \ddots & \vdots \\
+cov(\varepsilon_{i1}, \varepsilon_{jT}) & cov(\varepsilon_{i2}, \varepsilon_{jT}) & \cdots & cov(\varepsilon_{iT}, \varepsilon_{jT})
+\end{matrix} \right]. \tag{3} $${{</math>}}
+
+
+Como assumimos amostra aleatória em que a covariância entre dois indivíduos distintos {{<math>}}($i \neq j$){{</math>}} é  
+{{<math>}}$$ cov(\varepsilon_{it}, \varepsilon_{jt}) = cov(\varepsilon_{it}, \varepsilon_{js}) = 0, $${{</math>}}
+
+logo, {{<math>}}$\boldsymbol{\Sigma}_{ij}${{</math>}} em (3) é uma matriz de zeros, indicada por {{<math>}}$\boldsymbol{0}${{</math>}} (zero em negrito):
+{{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_{ij}} =  \underset{T \times T}{\boldsymbol{0}} = \left[ \begin{matrix} 
+0 & 0 & \cdots & 0 \\
+0 & 0 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 0
+\end{matrix} \right] $${{</math>}}
+
+
+Logo, podemos reescrever (1) como
+
+{{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{NT \times NT}{\boldsymbol{\Sigma}} = \left[ \begin{matrix} 
+\boldsymbol{\Sigma}_1 & \boldsymbol{0} & \cdots & \boldsymbol{0} \\
+\boldsymbol{0} & \boldsymbol{\Sigma}_2 & \cdots & \boldsymbol{0} \\
+\vdots & \vdots & \ddots & \vdots \\
+\boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{\Sigma}_N
+\end{matrix} \right]. \tag{1'} $${{</math>}}
+
+Como também assumimos que a matriz de covariâncias dos erros do indivíduo {{<math>}}$i${{</math>}} depende apenas dos parâmetros {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, já que:
+
+- Variância de um erro: {{<math>}}$ var(\varepsilon_{it}) = \sigma^2_u + \sigma^2_v ${{</math>}}
+- Covariância de dois erros de um mesmo indivíduo {{<math>}}$i${{</math>}} em dois períodos  {{<math>}}$t \neq s${{</math>}}: {{<math>}}$ cov(\varepsilon_{it}, \varepsilon_{is}) = \sigma^2_u ${{</math>}}
+
+Substituindo em (2), segue que
+
+{{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_i} = \left[ \begin{array}{cccc} 
+\sigma^2_u + \sigma^2_v & \sigma^2_u & \cdots & \sigma^2_u \\
+\sigma^2_u & \sigma^2_u + \sigma^2_v & \cdots & \sigma^2_u \\
+\vdots & \vdots & \ddots & \vdots \\
+\sigma^2_u & \sigma^2_u & \cdots & \sigma^2_u + \sigma^2_v
+\end{array} \right] \tag{2'} $${{</math>}}
+
+
+#### Exemplo
+Utilizando (2'), podemos reescrever (1') sem utilizar matrizes {{<math>}}$\boldsymbol{\Sigma}_i${{</math>}} e {{<math>}}$\boldsymbol{0}${{</math>}}. Por simplicidade, considere que {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}. Logo, a matriz de covariâncias dos erros pode ser escrita como;
+
+{{<math>}}\begin{align} \underset{6 \times 6}{\boldsymbol{\Sigma}}
+&= \left[ \begin{array}{cc}
+\boldsymbol{\Sigma}_1 & \boldsymbol{0} \\
+\boldsymbol{0} & \boldsymbol{\Sigma}_2
+\end{array} \right] \\
+&= \left[ \begin{array} {ccc|ccc}
+\sigma^2_u + \sigma^2_v & \sigma^2_u & \sigma^2_u & 0 & 0 & 0 \\
+\sigma^2_u & \sigma^2_u + \sigma^2_v & \sigma^2_u & 0 & 0 & 0 \\
+\sigma^2_u & \sigma^2_u & \sigma^2_u + \sigma^2_v & 0 & 0 & 0\\ \hline
+0 & 0 & 0 & \sigma^2_u + \sigma^2_v & \sigma^2_u & \sigma^2_u \\
+0 & 0 & 0 & \sigma^2_u & \sigma^2_u + \sigma^2_v & \sigma^2_u \\
+0 & 0 & 0 & \sigma^2_u & \sigma^2_u & \sigma^2_u + \sigma^2_v \\
+\end{array} \right] \end{align} {{</math>}}
+
+Note que acima foram utilizadas linhas verticais e horizontais apenas para facilitar a visualização dos elementos que substituíram cada matriz.
+
+
+### Calculando no R
+
+Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}:
 
 {{<math>}}$$ \boldsymbol{I}_p= \left[ \begin{array}{cccc}
     1 & 0 & 0 & \cdots & 0 \\
@@ -116,28 +218,59 @@ Denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p$
 \end{array} \right]_{p \times p}, $$ {{</math>}}
 
 
+Com dados em **corte transversal**, era fácil calcular a matriz de covariâncias dos erros, pois só havia um termo de erro e, portanto, tínhamos {{<math>}}$\sigma^2${{</math>}} apenas na diagonal principal:
 
-A matriz de transformação **inter-indivíduos (_between_)** é denotada por:
-{{<math>}}$$ \boldsymbol{B}\ =\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
-Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é equivalente a {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II.
+{{<math>}}\begin{align}
+\boldsymbol{\Sigma}_{MQO} &= \sigma^2 \boldsymbol{I}_N \\
+  &= \sigma^2 \left[ \begin{array}{cccc} 
+1 & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1
+\end{array} \right] \\
+  &= \left[ \begin{array}{cccc} 
+\sigma^2 & 0 & \cdots & 0 \\
+0 & \sigma^2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2
+\end{array} \right]_{N \times N} \end{align}{{</math>}}
 
-Pré-multiplicando {{<math>}}$\boldsymbol{Z}${{</math>}} pela matriz de transformação {{<math>}}$\boldsymbol{B}${{</math>}}, "preenchemos" a matriz com as médias para cada {{<math>}}$i${{</math>}} e cada coluna (variável):
 
-{{<math>}}$$ \boldsymbol{BZ} = \left[ \begin{matrix} 
-1 & \bar{\boldsymbol{x}}^1_1 & \bar{\boldsymbol{x}}^2_1 & \cdots & \bar{\boldsymbol{x}}^K_1 \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-1 & \bar{\boldsymbol{x}}^1_1 & \bar{\boldsymbol{x}}^2_1 & \cdots & \bar{\boldsymbol{x}}^K_1 \\
-1 & \bar{\boldsymbol{x}}^1_2 & \bar{\boldsymbol{x}}^2_2 & \cdots & \bar{\boldsymbol{x}}^K_2 \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-1 & \bar{\boldsymbol{x}}^1_2 & \bar{\boldsymbol{x}}^2_2 & \cdots & \bar{\boldsymbol{x}}^K_2 \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-1 & \bar{\boldsymbol{x}}^1_N & \bar{\boldsymbol{x}}^2_N & \cdots & \bar{\boldsymbol{x}}^K_N \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-1 & \bar{\boldsymbol{x}}^1_N & \bar{\boldsymbol{x}}^2_N & \cdots & \bar{\boldsymbol{x}}^K_N
-\end{matrix} \right]_{NT \times (K+1)} $${{</math>}}
+Agora, para **dados em painel**, como visto acima, possuímos duas variâncias de termos de erro, sendo que {{<math>}}$\sigma^2_v${{</math>}} aparece na diagonal principal, cujos elementos (e seus "vizinhos") precisam ser somados por {{<math>}}$\sigma^2_u${{</math>}}. Logo, a matriz de variâncias dos erros com dados em painel pode ser escrita na forma matricial como:
 
-</br>
+{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] $${{</math>}}
 
+Note que o primeiro termo da soma cria uma diagonal principal de {{<math>}}$\sigma^2_v${{</math>}}. Então, agora "só" precisamos somar {{<math>}}$\sigma^2_u${{</math>}} "na proximidade" dessa diagonal.
+
+Por enquanto, vamos ignorar {{<math>}}$\sigma^2_u${{</math>}} e vamos chamar a parte entre colchetes de matriz de transformação **inter-indivíduos (_between_)**:
+
+{{<math>}}$$ \boldsymbol{B}\ \equiv\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
+
+Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é chamada de  {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II (2021).
+
+{{<math>}}\begin{align}
+    \boldsymbol{B} &\equiv \boldsymbol{I}_{N} \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \\
+    &= \left[ \begin{array}{cc} 1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ \vdots \\ 1 \end{array} \right] \left( \left[ \begin{array}{ccc} 1 & \cdots & 1 \end{array} \right] \left[ \begin{array}{c} 1 \\ \vdots \\ 1 \end{array} \right] \right)^{-1} \left[ \begin{array}{ccc} 1 & \cdots & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ \vdots \\ 1 \end{array} \right] \left( T \right)^{-1} \left[ \begin{array}{ccc} 1 & \cdots & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ \vdots \\ 1 \end{array} \right] \frac{1}{T} \left[ \begin{array}{ccc} 1 & \cdots & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1 \end{array} \right] \otimes \left( \frac{1}{T}  \left[ \begin{array}{c} 1 & \cdots & 1 \\ \vdots & \ddots & \vdots \\ 1 & \cdots & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1 \end{array} \right]_{N \times N}  \otimes  \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right)_{T \times T}  \\
+    &= \left[ \begin{array}{ccc} 1 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\
+    \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) & \cdots & 0 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) \\ \vdots & \ddots & \vdots \\ 0 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) & \cdots & 1 \left( \begin{array}{ccc} 1/T & \cdots & 1/T \\ \vdots & \ddots & \vdots\\ 1/T & \cdots & 1/T \end{array} \right) \end{array} \right] \\
+    &= \left[ \begin{array}{rrrrrr} 
+        1/T & 1/T & 1/T & \cdots & 0 & 0 & 0 \\
+        1/T & 1/T & 1/T & \cdots & 0 & 0 & 0 \\
+        1/T & 1/T & 1/T & \cdots & 0 & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+        0 & 0 & 0 & \cdots & 1/T & 1/T & 1/T \\
+        0 & 0 & 0 & \cdots & 1/T & 1/T & 1/T \\
+        0 & 0 & 0 & \cdots & 1/T & 1/T & 1/T
+    \end{array} \right]_{NT \times NT},
+\end{align}{{</math>}}
+
+em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker.
+
+#### Exemplo
 Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
 
 {{<math>}}\begin{align*}
@@ -145,6 +278,7 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
     &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \left( \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \right)^{-1} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
     &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \left( 3 \right)^{-1} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
     &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \frac{1}{3} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \frac{1}{3}  \left[ \begin{array}{c} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{array} \right] \right) \\
     &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right]_{2 \times 2}  \otimes  \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right)_{3 \times 3}  \\
     &= \left[ \begin{array}{cc} 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \\ 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \end{array} \right] \\
     &= \left[ \begin{array}{rrrrrr} 
@@ -157,165 +291,6 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
     \end{array} \right]_{6 \times 6},
 \end{align*}{{</math>}}
 
-em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker.
-
-Por exemplo, suponha a matriz {{<math>}}$\boldsymbol{Z}${{</math>}}: 
-
-{{<math>}}$$ \boldsymbol{Z} = \left[ \begin{matrix} 
-1 & 1 & 7 & 13 \\
-1 & 2 & 8 & 14 \\
-1 & 3 & 9 & 15 \\ \hline
-1 & 4 & 10 & 16 \\
-1 & 5 & 11 & 17 \\
-1 & 6 & 12 & 18
-\end{matrix} \right]_{6 \times 4} $${{</math>}}
-
-Note que a linha horizontal na matriz acima foi colocada apenas para deixar claro que as três primeiras linhas correspondem ao mesmo indivíduo {{<math>}}$i=1${{</math>}}, e as três últimas correspondem ao indivíduo {{<math>}}$i=2${{</math>}}. São três linhas para cada um, pois assumimos {{<math>}}$t=1,2,3${{</math>}} períodos.
-
-Logo, temos:
-
-{{<math>}}\begin{align} \boldsymbol{BZ} &=  
-\left[ \begin{array}{rrrrrr} 
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3
-    \end{array} \right] \left[ \begin{matrix} 
-1 & 1 & 7 & 13 \\
-1 & 2 & 8 & 14 \\
-1 & 3 & 9 & 15 \\
-1 & 4 & 10 & 16 \\
-1 & 5 & 11 & 17 \\
-1 & 6 & 12 & 18
-\end{matrix} \right] \\
-&= \left[ \begin{matrix} 
-1 & 2 & 8 & 14 \\
-1 & 2 & 8 & 14 \\
-1 & 2 & 8 & 14 \\ \hline
-1 & 5 & 11 & 17 \\
-1 & 5 & 11 & 17 \\
-1 & 5 & 11 & 17
-\end{matrix} \right]_{6 \times 4} \end{align}{{</math>}}
-
-Note que, para cada indivíduo {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{</math>}}, os elementos foram "preenchidos" com a média dos valores em {{<math>}}$t=1,2,3${{</math>}}.
-
-
-</br>
-
-Para calcular no R, vamos definir:
-```{r}
-N = 2 # número de indivíduos
-T = 3 # números de períodos
-
-iota_T = matrix(rep(1, T), T, 1) # vetor coluna de 1's de tamanho T
-iota_T
-
-I_N = diag(N) # matriz identidade de tamanho N
-I_N
-```
-
-Vamos obter {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
-```{r}
-# Para obter matriz T x T preenchida por 1/T, sendo T = 3, temos que:
-t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
-solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
-iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar por iotas
-```
-
-Agora, vamos calcular {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}} usando o operador de produto de Kronecker `%x%`:
-```{r}
-B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-round(B, 3)
-```
-
-Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz `B`
-```{r}
-K = 3 # número de covariadas
-X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
-Z = cbind(1, X) # incluindo coluna de 1's
-Z
-
-B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
-```
-
-Note que:
-- a coluna de 1's permaneceu igual após a transformação _between_.
-- dada uma variável {{<math>}}$k${{</math>}}, temos um único valor (média) dentro de um mesmo indivíduo;
-- por isso, a amostra com {{<math>}}$NT${{</math>}} observações distintas possui, agora, apenas {{<math>}}$N${{</math>}} observações distintas
-
-
-</br>
-
-
-Já a matriz de transformação **intra-indivíduos (_within_)** é dada por:
-{{<math>}}$$ \boldsymbol{W}\ =\ \boldsymbol{I}_{NT} - \boldsymbol{B}\ =\ \boldsymbol{I}_{NT} - \Big[ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big]. $${{</math>}}
-
-Note que a matriz {{<math>}}$\boldsymbol{W}${{</math>}} é equivalente a {{<math>}}$M${{</math>}} nas notas de aula de Econometria II.
-
-Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
-
-{{<math>}}\begin{align*}
-    \boldsymbol{W} &= \boldsymbol{I}_{6} - \boldsymbol{B} \\
-    &= \left[ \begin{array}{cccccc} 
-        1 & 0 & 0 & 0 & 0 & 0 \\
-        0 & 1 & 0 & 0 & 0 & 0 \\
-        0 & 0 & 1 & 0 & 0 & 0 \\
-        0 & 0 & 0 & 1 & 0 & 0 \\
-        0 & 0 & 0 & 0 & 1 & 0 \\
-        0 & 0 & 0 & 0 & 0 & 1
-    \end{array} \right] - \left[ \begin{array}{rrrrrr} 
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
-        0 & 0 & 0 & 1/3 & 1/3 & 1/3
-    \end{array} \right] \\
-    &= \left[ \begin{array}{rrrrrr} 
-         2/6 & -1/3 & -1/3 &    0 &    0 &    0 \\
-        -1/3 &  2/6 & -1/3 &    0 &    0 &    0 \\
-        -1/3 & -1/3 &  2/6 &    0 &    0 &    0 \\
-           0 &    0 &    0 &  2/6 & -1/3 & -1/3 \\
-           0 &    0 &    0 & -1/3 &  2/6 & -1/3 \\
-           0 &    0 &    0 & -1/3 & -1/3 &  2/6
-    \end{array} \right]_{6 \times 6}, 
-\end{align*}{{</math>}}
-
-```{r}
-I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
-W = I_NT - B # matriz de transformação within
-W
-```
-```{r}
-round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
-```
-Observe que:
-
-- dada uma variável {{<math>}}$k${{</math>}}, temos os desvios em relação à média de um mesmo indivíduo;
-- coluna 1's virou de 0's após a transformação _within_.
-- coluna de 0's, no R, ficou muito próxima de 0 ({{<math>}}$1,11 \times 10^{-16}${{</math>}}), então foi necessário arredondar.
-
-
-</br>
-
-## Matriz de covariâncias dos erros
-- Seção 2.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-
-A matriz de covariâncias dos erros depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}. Então:
-
-- Variância de um erro: 
-{{<math>}}$$ E(\varepsilon^2_{it}) = \sigma^2_u + \sigma^2_v $${{</math>}}
-- Covariância de dois erros de um mesmo indivíduo {{<math>}}$i${{</math>}} em dos períodos  {{<math>}}$t \neq s${{</math>}}:
-{{<math>}}$$ E(\varepsilon_{it} \varepsilon_{is}) = \varepsilon^2_u $${{</math>}}
-- Covariância entre dois diferentes indivíduos ({{<math>}}$i \neq j${{</math>}}): 
-{{<math>}}$$ E(\varepsilon_{it} \varepsilon_{jt}) = E(\varepsilon_{it} \varepsilon_{js}) = 0 $${{</math>}}
-
-A matriz de variância dos erros pode ser expressa por:
-{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] $${{</math>}}
-ou, em termos de {{<math>}}$\boldsymbol{B}${{</math>}} e {{<math>}}$\boldsymbol{W}${{</math>}},
-{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{W} + T \sigma^2_u \boldsymbol{B} $${{</math>}}
 
 
 </br>
@@ -503,6 +478,246 @@ cbind(head(fixef(Q.within, type="dfirst")),
 
 #### Estimação Analítica Pooled MQO (MQE)
 Igual a estimação analítica de MQO vista anteriormente.
+
+
+## Estimadores _Between_ e _Within_
+
+(...)
+
+A matriz de variância dos erros pode ser expressa por:
+{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}'\boldsymbol{\iota})^{-1} \boldsymbol{\iota}'] $${{</math>}}
+ou, em termos de {{<math>}}$\boldsymbol{B}${{</math>}} e {{<math>}}$\boldsymbol{W}${{</math>}},
+{{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{W} + T \sigma^2_u \boldsymbol{B} $${{</math>}}
+
+
+### Modelo em Painel (2)
+Note que o modelo anterior não possui uma constante, {{<math>}}$\alpha${{</math>}}. Podemos incluir uma constante no modelo (1) e reescrever esse novo modelo como:
+{{<math>}} \begin{align} y_{it} &= 1.\alpha + \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{2} \end{align} {{</math>}}
+
+Denote {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
+{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}
+Para não poluir as equações, quando o subscrito for omitido, considere {{<math>}}$q = NT${{</math>}}.
+
+Empilhando todas equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}}, segue que
+{{<math>}}$$ \boldsymbol{y} = \boldsymbol{\iota} \alpha + X \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
+ou, usando
+
+{{<math>}}\begin{align} \underbrace{\boldsymbol{\gamma}}_{(K+1) \times 1} &\equiv \left[ \begin{array}{c} \alpha \\ \boldsymbol{\beta} \end{array} \right] = 
+ \left[ \begin{array}{c} \alpha \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right] \quad \text{ e }\\ 
+\underbrace{\boldsymbol{Z}}_{NT \times (K+1)} &\equiv \left[ \begin{array}{c} \boldsymbol{\iota} & \boldsymbol{X} \end{array} \right]
+  = \left[ \begin{array}{cccc}
+    1 & x^1_{11} & x^2_{11} & \cdots & x^K_{11} \\
+    1 & x^1_{12} & x^2_{12} & \cdots & x^K_{12} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{1T} & x^2_{1T} & \cdots & x^K_{1T} \\ \hline
+    1 & x^1_{21} & x^2_{21} & \cdots & x^K_{21} \\
+    1 & x^1_{22} & x^2_{22} & \cdots & x^K_{22} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\ 
+    1 & x^1_{2T} & x^2_{2T} & \cdots & x^K_{2T} \\ \hline
+    \vdots & \vdots & \vdots & \ddots & \vdots \\ \hline
+    1 & x^1_{N1} & x^2_{N1} & \cdots & x^K_{N1} \\
+    1 & x^1_{N2} & x^2_{N2} & \cdots & x^K_{N2} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
+\end{array} \right], \end{align} {{</math>}}
+
+podemos reescrever como
+{{<math>}}$$ \boldsymbol{y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}. $${{</math>}}
+
+
+</br>
+
+## Transformações _between_ e _within_
+- Seção 2.1.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+
+
+
+
+
+A matriz de transformação **inter-indivíduos (_between_)** é denotada por:
+{{<math>}}$$ \boldsymbol{B}\ =\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
+Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é equivalente a {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II.
+
+Pré-multiplicando {{<math>}}$\boldsymbol{Z}${{</math>}} pela matriz de transformação {{<math>}}$\boldsymbol{B}${{</math>}}, "preenchemos" a matriz com as médias para cada {{<math>}}$i${{</math>}} e cada coluna (variável):
+
+{{<math>}}$$ \boldsymbol{BZ} = \left[ \begin{matrix} 
+1 & \bar{\boldsymbol{x}}^1_1 & \bar{\boldsymbol{x}}^2_1 & \cdots & \bar{\boldsymbol{x}}^K_1 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_1 & \bar{\boldsymbol{x}}^2_1 & \cdots & \bar{\boldsymbol{x}}^K_1 \\
+1 & \bar{\boldsymbol{x}}^1_2 & \bar{\boldsymbol{x}}^2_2 & \cdots & \bar{\boldsymbol{x}}^K_2 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_2 & \bar{\boldsymbol{x}}^2_2 & \cdots & \bar{\boldsymbol{x}}^K_2 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_N & \bar{\boldsymbol{x}}^2_N & \cdots & \bar{\boldsymbol{x}}^K_N \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \bar{\boldsymbol{x}}^1_N & \bar{\boldsymbol{x}}^2_N & \cdots & \bar{\boldsymbol{x}}^K_N
+\end{matrix} \right]_{NT \times (K+1)} $${{</math>}}
+
+</br>
+
+Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
+
+{{<math>}}\begin{align*}
+    \boldsymbol{B} &= \boldsymbol{I}_2 \otimes \boldsymbol{\iota}_3 (\boldsymbol{\iota}'_3 \boldsymbol{\iota}_3)^{-1} \boldsymbol{\iota}'_3 \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \left( \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \right)^{-1} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \left( 3 \right)^{-1} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \left[ \begin{array}{c} 1 \\ 1 \\ 1 \end{array} \right] \frac{1}{3} \left[ \begin{array}{ccc} 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right] \otimes \left( \frac{1}{3}  \left[ \begin{array}{c} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{array} \right] \right) \\
+    &= \left[ \begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array} \right]_{2 \times 2}  \otimes  \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right)_{3 \times 3}  \\
+    &= \left[ \begin{array}{cc} 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \\ 0 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) & 1 \left( \begin{array}{ccc} 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \\ 1/3 & 1/3 & 1/3 \end{array} \right) \end{array} \right] \\
+    &= \left[ \begin{array}{rrrrrr} 
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3
+    \end{array} \right]_{6 \times 6},
+\end{align*}{{</math>}}
+
+em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker.
+
+Por exemplo, suponha a matriz {{<math>}}$\boldsymbol{Z}${{</math>}}: 
+
+{{<math>}}$$ \boldsymbol{Z} = \left[ \begin{matrix} 
+1 & 1 & 7 & 13 \\
+1 & 2 & 8 & 14 \\
+1 & 3 & 9 & 15 \\ \hline
+1 & 4 & 10 & 16 \\
+1 & 5 & 11 & 17 \\
+1 & 6 & 12 & 18
+\end{matrix} \right]_{6 \times 4} $${{</math>}}
+
+Note que a linha horizontal na matriz acima foi colocada apenas para deixar claro que as três primeiras linhas correspondem ao mesmo indivíduo {{<math>}}$i=1${{</math>}}, e as três últimas correspondem ao indivíduo {{<math>}}$i=2${{</math>}}. São três linhas para cada um, pois assumimos {{<math>}}$t=1,2,3${{</math>}} períodos.
+
+Logo, temos:
+
+{{<math>}}\begin{align} \boldsymbol{BZ} &=  
+\left[ \begin{array}{rrrrrr} 
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3
+    \end{array} \right] \left[ \begin{matrix} 
+1 & 1 & 7 & 13 \\
+1 & 2 & 8 & 14 \\
+1 & 3 & 9 & 15 \\
+1 & 4 & 10 & 16 \\
+1 & 5 & 11 & 17 \\
+1 & 6 & 12 & 18
+\end{matrix} \right] \\
+&= \left[ \begin{matrix} 
+1 & 2 & 8 & 14 \\
+1 & 2 & 8 & 14 \\
+1 & 2 & 8 & 14 \\ \hline
+1 & 5 & 11 & 17 \\
+1 & 5 & 11 & 17 \\
+1 & 5 & 11 & 17
+\end{matrix} \right]_{6 \times 4} \end{align}{{</math>}}
+
+Note que, para cada indivíduo {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{</math>}}, os elementos foram "preenchidos" com a média dos valores em {{<math>}}$t=1,2,3${{</math>}}.
+
+
+</br>
+
+Para calcular no R, vamos definir:
+```{r}
+N = 2 # número de indivíduos
+T = 3 # números de períodos
+
+iota_T = matrix(rep(1, T), T, 1) # vetor coluna de 1's de tamanho T
+iota_T
+
+I_N = diag(N) # matriz identidade de tamanho N
+I_N
+```
+
+Vamos obter {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
+```{r}
+# Para obter matriz T x T preenchida por 1/T, sendo T = 3, temos que:
+t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
+solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
+iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar por iotas
+```
+
+Agora, vamos calcular {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}} usando o operador de produto de Kronecker `%x%`:
+```{r}
+B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
+round(B, 3)
+```
+
+Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz `B`
+```{r}
+K = 3 # número de covariadas
+X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
+Z = cbind(1, X) # incluindo coluna de 1's
+Z
+
+B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
+```
+
+Note que:
+- a coluna de 1's permaneceu igual após a transformação _between_.
+- dada uma variável {{<math>}}$k${{</math>}}, temos um único valor (média) dentro de um mesmo indivíduo;
+- por isso, a amostra com {{<math>}}$NT${{</math>}} observações distintas possui, agora, apenas {{<math>}}$N${{</math>}} observações distintas
+
+
+</br>
+
+
+Já a matriz de transformação **intra-indivíduos (_within_)** é dada por:
+{{<math>}}$$ \boldsymbol{W}\ =\ \boldsymbol{I}_{NT} - \boldsymbol{B}\ =\ \boldsymbol{I}_{NT} - \Big[ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big]. $${{</math>}}
+
+Note que a matriz {{<math>}}$\boldsymbol{W}${{</math>}} é equivalente a {{<math>}}$M${{</math>}} nas notas de aula de Econometria II.
+
+Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
+
+{{<math>}}\begin{align*}
+    \boldsymbol{W} &= \boldsymbol{I}_{6} - \boldsymbol{B} \\
+    &= \left[ \begin{array}{cccccc} 
+        1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 1
+    \end{array} \right] - \left[ \begin{array}{rrrrrr} 
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3 \\
+        0 & 0 & 0 & 1/3 & 1/3 & 1/3
+    \end{array} \right] \\
+    &= \left[ \begin{array}{rrrrrr} 
+         2/6 & -1/3 & -1/3 &    0 &    0 &    0 \\
+        -1/3 &  2/6 & -1/3 &    0 &    0 &    0 \\
+        -1/3 & -1/3 &  2/6 &    0 &    0 &    0 \\
+           0 &    0 &    0 &  2/6 & -1/3 & -1/3 \\
+           0 &    0 &    0 & -1/3 &  2/6 & -1/3 \\
+           0 &    0 &    0 & -1/3 & -1/3 &  2/6
+    \end{array} \right]_{6 \times 6}, 
+\end{align*}{{</math>}}
+
+```{r}
+I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
+W = I_NT - B # matriz de transformação within
+W
+```
+```{r}
+round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
+```
+Observe que:
+
+- dada uma variável {{<math>}}$k${{</math>}}, temos os desvios em relação à média de um mesmo indivíduo;
+- coluna 1's virou de 0's após a transformação _within_.
+- coluna de 0's, no R, ficou muito próxima de 0 ({{<math>}}$1,11 \times 10^{-16}${{</math>}}), então foi necessário arredondar.
+
+
+
+
 
 
 #### Estimação Analítica _Between_
@@ -769,18 +984,18 @@ sigmas2
 - Agora, conseguimos calcular:
 {{<math>}}$$ \boldsymbol{\Sigma}^{-1} = \frac{1}{\sigma^2_l}B + \frac{1}{\sigma^2_v}\boldsymbol{W} $${{</math>}}
 ```{r}
-Omega_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
-dim(Omega_1) # NT x NT
+Sigma_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
+dim(Sigma_1) # NT x NT
 ```
 
 {{<math>}}$$ \hat{V}_{MQG} = (\boldsymbol{Z}' \boldsymbol{\Sigma}^{-1} \boldsymbol{Z})^{-1} $${{</math>}}
 
 ```{r}
 ## Estimando a matriz de variancia/covariancia das estimativas gamma
-vcov_hat = solve(t(Z) %*% Omega_1 %*% Z)
+vcov_hat = solve(t(Z) %*% Sigma_1 %*% Z)
 
 # vetor de estimativas gamma_hat = (alpha, beta)
-gamma_hat = solve(t(Z) %*% Omega_1 %*% Z) %*% (t(Z) %*% Omega_1 %*% y)
+gamma_hat = solve(t(Z) %*% Sigma_1 %*% Z) %*% (t(Z) %*% Sigma_1 %*% y)
 gamma_hat
 
 ## Calculando erros padrao das estimativas gamma
