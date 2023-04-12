@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Dados em Painel
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: Estimação com Dados em Painel.
 title: Estimação com Dados em Painel
 weight: 4
 output: md_document
@@ -562,18 +561,18 @@ O modelo a ser estimado é
 - O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} de MQE (igual ao de MQO) é dado por
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{MQE} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
 
-- Assumindo que {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, logo a matriz de covariâncias do estimador é calculada como
-{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{MQE}) 
-= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\ 
-= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \left[ \sigma^2_\varepsilon \boldsymbol{I} \right] \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
-= \sigma^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{I} \boldsymbol{X}  (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
-= \sigma^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
-= \hat{\sigma}^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
+- Assumindo que {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, logo a matriz de variância-covariância do estimador é calculada como
+{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{MQE}) 
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\ 
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \left[ \sigma^2_\varepsilon \boldsymbol{I} \right] \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \sigma^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{I} \boldsymbol{X}  (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \sigma^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \hat{\sigma}^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \end{align}{{</math>}}
 
 - No entanto, se {{<math>}}$\boldsymbol{X}${{</math>}} não for exógeno a {{<math>}}$\varepsilon = u + v${{</math>}}, então o estimador de MQE será viesado.
 
 
-- A matriz de covariâncias do estimador é dada por
+- A matriz de variância-covariância do estimador é dada por
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{MQE}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
   - Note que ela não se reduz a {{<math>}}$ V(\hat{\boldsymbol{\gamma}}_{MQ0}) = \sigma^2 \boldsymbol{I} ${{</math>}} como nos casos com dados em corte transversal, já que provavelmente existe correlação entre observações de um mesmo indivíduos ao longo do tempo em um painel.
 
@@ -667,6 +666,155 @@ stargazer::stargazer(Q.pooling, Q.ols, type="text") # output da estimação MQE
 #### Estimação Analítica de MQE
 A estimação analítica do MQE é equivalente ao MQO vista anteriormente, mas no contexto de dados em painel. A principal diferença é que o número de graus de liberdade é {{<math>}}$NT - K - 1${{</math>}} (pois possui {{<math>}}$$NT$${{</math>}} observações, ao invés de {{<math>}}$N${{</math>}} na estrutura de corte transversal)
 
+a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
+
+```r
+# Criando o vetor y
+y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+head(y)
+```
+
+```
+##            [,1]
+## [1,] 0.20488372
+## [2,] 0.19974634
+## [3,] 0.11033265
+## [4,] 0.12583384
+## [5,] 0.06819211
+## [6,] 0.09540332
+```
+
+```r
+# Criando a matriz de covariadas X com primeira coluna de 1's
+X = cbind( 1, TobinQ[, "qn"] ) # juntando 1's com as covariadas
+X = as.matrix(X) # transformando em matriz
+head(X)
+```
+
+```
+##      [,1]      [,2]
+## [1,]    1 10.910007
+## [2,]    1 12.234629
+## [3,]    1  7.410110
+## [4,]    1  6.779812
+## [5,]    1  7.372266
+## [6,]    1  6.097779
+```
+
+```r
+# Pegando valores N, T e K
+N = length( unique(TobinQ$cusip) )
+N # nº de indivíduos i
+```
+
+```
+## [1] 188
+```
+
+```r
+T = length( unique(TobinQ$year) )
+T # nº de períodos t
+```
+
+```
+## [1] 35
+```
+
+```r
+K = ncol(X) - 1
+K # nº de covariadas
+```
+
+```
+## [1] 1
+```
+
+b) Estimativas de MQE {{<math>}}$\hat{\boldsymbol{\beta}}_{MQE}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{MQE} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
+
+```r
+bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+bhat
+```
+
+```
+##            [,1]
+## [1,] 0.15799969
+## [2,] 0.00439197
+```
+
+c) Valores ajustados/preditos {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}} $${{</math>}}
+
+
+```r
+yhat = X %*% bhat
+head(yhat)
+```
+
+```
+##           [,1]
+## [1,] 0.2059161
+## [2,] 0.2117338
+## [3,] 0.1905447
+## [4,] 0.1877764
+## [5,] 0.1903785
+## [6,] 0.1847810
+```
+
+d) Resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} $${{</math>}}
+
+
+```r
+ehat = y - yhat
+head(ehat)
+```
+
+```
+##              [,1]
+## [1,] -0.001032395
+## [2,] -0.011987475
+## [3,] -0.080212022
+## [4,] -0.061942582
+## [5,] -0.122186352
+## [6,] -0.089377633
+```
+
+e) Variância do termo de erro {{<math>}}$\sigma^2_\varepsilon${{</math>}}
+
+{{<math>}}$$ \sigma^2_\varepsilon = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{NT-K-1}$${{</math>}}
+
+Como {{<math>}}$\sigma^2_\varepsilon${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+sig2e = as.numeric( t(ehat) %*% ehat / (N-K-1) )
+sig2e
+```
+
+```
+## [1] 0.2600379
+```
+
+f) Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}} (ou {{<math>}}$V_{\hat{\beta}}${{</math>}})
+
+{{<math>}}\begin{align} \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) &= s^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5} \\
+&= \left[ \begin{matrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots & cov(\hat{\beta}_0, \hat{\beta}_K) \\ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1) & \cdots & cov(\hat{\beta}_1, \hat{\beta}_K) \\ \vdots & \vdots & \ddots & \vdots \\ cov(\hat{\beta}_0, \hat{\beta}_K) & cov(\hat{\beta}_1, \hat{\beta}_K) & \cdots & var(\hat{\beta}_K) \end{matrix} \right]  \end{align} {{</math>}}
+
+
+```r
+Vbhat = sig2e * solve( t(X) %*% X )
+Vbhat
+```
+
+```
+##               [,1]          [,2]
+## [1,]  4.471174e-05 -2.072486e-06
+## [2,] -2.072486e-06  8.272244e-07
+```
 
 
 
@@ -807,34 +955,12 @@ Note que, para cada indivíduo {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{
 Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz `B`
 
 ```r
-K = 3 # número de covariadas
-X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
-Z = cbind(1, X) # incluindo coluna de 1's
-Z
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    1    1    7   13
-## [2,]    1    2    8   14
-## [3,]    1    3    9   15
-## [4,]    1    4   10   16
-## [5,]    1    5   11   17
-## [6,]    1    6   12   18
-```
-
-```r
-B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    8   14
-## [2,]    1    2    8   14
-## [3,]    1    2    8   14
-## [4,]    1    5   11   17
-## [5,]    1    5   11   17
-## [6,]    1    5   11   17
+# K = 3 # número de covariadas
+# X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
+# Z = cbind(1, X) # incluindo coluna de 1's
+# Z
+# 
+# B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
 ```
 
 Note que:
@@ -882,33 +1008,12 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
 
 
 ```r
-I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
-W = I_NT - B # matriz de transformação within
-W
-```
-
-```
-##            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
-## [1,]  0.6666667 -0.3333333 -0.3333333  0.0000000  0.0000000  0.0000000
-## [2,] -0.3333333  0.6666667 -0.3333333  0.0000000  0.0000000  0.0000000
-## [3,] -0.3333333 -0.3333333  0.6666667  0.0000000  0.0000000  0.0000000
-## [4,]  0.0000000  0.0000000  0.0000000  0.6666667 -0.3333333 -0.3333333
-## [5,]  0.0000000  0.0000000  0.0000000 -0.3333333  0.6666667 -0.3333333
-## [6,]  0.0000000  0.0000000  0.0000000 -0.3333333 -0.3333333  0.6666667
-```
-
-```r
-round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    0   -1   -1   -1
-## [2,]    0    0    0    0
-## [3,]    0    1    1    1
-## [4,]    0   -1   -1   -1
-## [5,]    0    0    0    0
-## [6,]    0    1    1    1
+# I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
+# W = I_NT - B # matriz de transformação within
+# W
+# ```
+# ```{r}
+# round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
 ```
 Observe que:
 

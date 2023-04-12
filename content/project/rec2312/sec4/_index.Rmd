@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Dados em Painel
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: Estimação com Dados em Painel.
 title: Estimação com Dados em Painel
 weight: 4
 output: md_document
@@ -733,12 +732,12 @@ Note que, para cada indivíduo {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{
 
 Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz `B`
 ```{r}
-K = 3 # número de covariadas
-X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
-Z = cbind(1, X) # incluindo coluna de 1's
-Z
-
-B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
+# K = 3 # número de covariadas
+# X = matrix(1:(N*T*K), N*T, K) # matriz covariadas NT x K
+# Z = cbind(1, X) # incluindo coluna de 1's
+# Z
+# 
+# B %*% Z # matriz de médias das covariadas dado indivíduo (NT x K)
 ```
 
 Note que:
@@ -785,12 +784,12 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
 \end{align*}{{</math>}}
 
 ```{r}
-I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
-W = I_NT - B # matriz de transformação within
-W
-```
-```{r}
-round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
+# I_NT = diag(N*T) # matriz identidade com NT elementos na diagonal
+# W = I_NT - B # matriz de transformação within
+# W
+# ```
+# ```{r}
+# round(W %*% Z, 3) # matriz de desvios das médias das covariadas dado indivíduo (NT x K)
 ```
 Observe que:
 
