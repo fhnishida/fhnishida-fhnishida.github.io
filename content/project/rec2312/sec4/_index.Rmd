@@ -3,7 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Dados em Painel
-summary: Estimação com Dados em Painel.
+summary: It covers topics such as hypothesis testing, panel data manipulation using tidyr, instrumental variables, and simultaneous equations. The page also includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I.
 title: Estimação com Dados em Painel
 weight: 4
 output: md_document
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ### Corte Transversal
-Até agora, utilizamos bases de dados em corte transversal (ou _cross-section_, em inglês), ou seja, em que cada linha representava um indivíduo {{<math>}}$i  = 1, ..., N${{</math>}} e nela observávamos as realizações da variável dependente {{<math>}}$y${{</math>}} e das {{<math>}}$K${{</math>}} variáveis explicativas:
+Até agora, utilizamos bases de dados em corte transversal (ou _cross-section_, em inglês), ou seja, em que cada linha representava um indivíduo {{<math>}}$i  = 1, ..., N${{</math>}} e observamos as realizações da variável dependente {{<math>}}$y${{</math>}} e das variáveis explicativas {{<math>}}$k = 1, 2, ..., K${{</math>}}:
 
 <img src="../data_crosssection.png" alt="">
 
