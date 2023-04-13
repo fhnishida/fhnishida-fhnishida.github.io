@@ -289,7 +289,7 @@ sections:
       country_code: BR
       postcode: "- 14040-905"
       region: SP, Brazil 
-      street: Av. Bandeirantes, 3900
+      street: 3900 Bandeirantes Avenue
     # appointment_url: https://calendly.com
     autolink: true
     contact_links:
