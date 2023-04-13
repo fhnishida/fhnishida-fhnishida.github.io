@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: R Toolkit
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: This page is a tutorial on using R Toolkit. It covers topics such as installing R and R Studio, working with R packages, using R Markdown, and more. The tutorial is based on courses from the Data Science specialization at Johns Hopkins University available on Coursera. It provides detailed instructions and examples to help users learn how to use R for data manipulation, visualization, and analysis.
 title: R Toolkit
 weight: 1
 output: md_document
@@ -15,27 +14,35 @@ type: book
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-- Baseado, principalmente, nos cursos da [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da universidade John Hopkins (disponível no Coursera).
-- Em cada tema abordado serão citadas as fontes, além de incluir aos vídeos dos cursos citados acima para que possam aprofundar nos estudos.
-- Alunos USP conseguem fazer determinados cursos/especializações e pegar o certificado sem pagar: [_Universidade de São Paulo BR on Coursera_](https://www.coursera.org/programs/universidade-de-sao-paulo-br-on-coursera-mvxtw?currentTab=CATALOG&fbclid=IwAR3dT_SDYfjT2FWH06mUcSb8V_z4F9aT_1c6MHHQ3gdiDQ9X9mdRhMcsbOk)
+Principais referências desse material de Econometria com R:
+
+- Cursos da [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da John Hopkins.
+  - É possível "participar como ouvinte" (_audit course_) desses cursos, o que permite acessar a todo material (mas não pode fazer os testes e ganhar os certificados de conclusão). 
+- Livro ["_Using R for Introductory Econometrics_" de Heiss (2020)](http://www.urfie.net/) (versão online gratuita)
+- [Livro "_Panel Data Econometrics with R_" de Croissant e Millo (2018)](https://www.amazon.com.br/Panel-Data-Econometrics-R-English-ebook/dp/B07GCY35N3)
 
 
-## Installing R
+</br>
+
+## Instalando R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Instalação da base do R ([CRAN](https://cran.r-project.org))
-    - Download R for Windows > base > Download R X.X.X for Windows
-    - Se o computador for 64-bits, opte pela versão 64-bits (é mais rápida)
+1. Instalação da base do R ([CRAN - R for Windows](https://cran.r-project.org/bin/windows/base/))
+    - Download R X.X.X for Windows
+    - Se o computador for 64-bits, opte pela versão 64-bits
 
-2. Instalação do Rtools ([CRAN](https://cran.r-project.org))
-    - Download R for Windows > Rtools > Installing Rtools > rtools40-x86_XX.exe
+2. Instalação do Rtools ([CRAN](https://cran.r-project.org/bin/windows/Rtools/))
+    - RTools X.X > Rtools installer
     - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessários em alguns pacotes no R
 
 3. Instalação do RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
     - Download RStudio Desktop
     - É uma interface de usuário para facilitar o uso do R
 
-## Using R Studio
+
+</br>
+
+## Usando R Studio
 - [RStudio Tour (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
 
 RStudio é dividido em 4 quadrantes:
@@ -48,7 +55,8 @@ RStudio é dividido em 4 quadrantes:
 > **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão num tempo mais longo)<br/>  
 Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
 
-### Diretório de trabalho (_Working Directory_)
+
+### Diretório de trabalho
 Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).
 
 > Session > Set Working Directory > Choose Directory...
@@ -71,7 +79,8 @@ setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRETO!
 
 Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
 
-### Executando comandos no R
+
+### Executando comandos
 - Execução direta no console: escreva `1 + 1` no console e dê \<Enter\>
 ```{r}
 1 + 1
@@ -108,14 +117,17 @@ rnorm(mean=0, n=10, sd=1)
 ```
 
 
-## R Packages
+</br>
+
+## Pacotes no R
 - Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
-- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos economistas (principalmente econometristas) já desenvolvem e disponibilizam pacotes com as implementações de seus novos métodos (por exemplo, Dif-in-Dif com múltiplos períodos de [Callaway e Sant'Anna (2021)](https://bcallaway11.github.io/did/articles/did-basics.html)
+- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos estatísticos/econometristas já desenvolvem e disponibilizam seus próprios pacotes em sites, como CRAN e Github.
 - A instalação de um pacote só precisa ser feita uma única vez.
 - No entanto, caso você atualize uma nova versão do R, é necessário instalar novamente todos os pacotes.
 - Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de indivíduos (normalmente disponibilizados no GitHub)
-- O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes novos e defasados, garante qualidade dos pacotes disponibilizados
+- O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes, garante qualidade dos pacotes disponibilizados
 - Tome cuidado com pacotes disponibilizados por individuos! É possível executar, dentro do R, códigos para criar e apagar arquivos, por exemplo.
+
 
 ### Instalação via CRAN
 > quadrante inferior/direito > Packages > Install > (Nomes dos pacotes)
@@ -158,8 +170,9 @@ dplyr::select(.data, ...) # do pacote dplyr
 > quadrante inferior/direito > Packages > Update > Select All > Install Updates
 
 
+</br>
 
-## Help
+## Ajuda
 - Caso saiba o nome da função, é possível olhar sua documentação escrevendo `?<nome_da_funcao>` (como visto anteriormente)
 - Caso saiba o nome do pacote, em alguns casos funciona `?<nome_do_pacote>`, mas o ideal é buscar sua documentação no CRAN (diretamente no site ou via Google)
 - Por exemplo, podemos acessar a página do [pacote `dplyr` no CRAN](https://cran.r-project.org/web/packages/dplyr/index.html):
@@ -187,8 +200,25 @@ browseVignettes("dplyr") # Abrirá uma página com vignettes no seu navegador
 <center><img src="../stackoverflow_help.png"></center>
 
 
+### ChatGPT e Bing Chat
 
-## GitHub Sync
+- É possível ter um assistente para aprender a usar o R usando o chatbots como ChatGPT ([https://chat.openai.com](https://chat.openai.com)) e Bing Chat ([https://www.bing.com/chat](https://www.bing.com/chat)).
+- Ambos ChatGPT e Bing Chat são alimentados por um modelo de linguagem grande (LLN) criado pela OpenAI, que são treinados com trilhões de documentos (páginas de internet, livros, artigos, etc.) e conseguem gerar textos baseados em contexto.
+- A diferença entre os dois é que o ChatGPT utiliza o modelo GPT 3.5-turbo, enquanto o Bing Chat usa o GPT-4 e está ligado à internet.
+- Especificamente para programação, gera-se respostas confiáveis a perguntas feitas ao chatbot, tornando-o uma ferramenta interessante para auxiliar o aprendizado no R.
+
+
+<center><img src="../ChatGPT.png"></center>
+
+
+
+<center><img src="../BingChat.png"></center>
+
+
+
+</br>
+
+## Sincronização no GitHub
 Não será detalhado aqui, mas é algo interessante para olhar.
 
 - [Criação de projetos](https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r)
@@ -196,6 +226,9 @@ Não será detalhado aqui, mas é algo interessante para olhar.
 - [GitHub e Git](https://www.coursera.org/learn/data-scientists-tools/lecture/VOh24/github-and-git)
 - [Projetos sob controle de versões](https://www.coursera.org/learn/data-scientists-tools/lecture/wbfrX/projects-under-version-control)
 
+
+
+</br>
 
 ## R Markdown
 Markdown é uma sintaxe de formatação simples para criar documento HTML, PDF ou Word.
@@ -247,7 +280,7 @@ Por exemplo:
 
 ````yaml
 ```{r pressure, echo = FALSE}`r ''`
-plot(pressure) # Gráfico da base de dados 'pressure'
+plot(pressure) # Gráfico da base de dados `pressure`
 ```
 ````
 
