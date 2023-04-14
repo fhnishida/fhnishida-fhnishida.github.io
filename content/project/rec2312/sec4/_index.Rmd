@@ -580,23 +580,8 @@ e) Variância do termo de erro {{<math>}}$\sigma^2_\varepsilon${{</math>}}
 
 Como {{<math>}}$\sigma^2_\varepsilon${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 ```{r}
-# 
 sig2e = as.numeric( t(ehat) %*% ehat / (N*T-K-1) )
-
-# 
-iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
-I_N = diag(N) # matriz identidade de tamanho N
-I_NT = diag(N*T) # matriz identidade de tamanho NT
-B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-W = I_NT - B
-
-sig2v = as.numeric( t(ehat) %*% W %*% ehat ) / (N*(T-1)) 
-sig2v
-
-sig2u = (as.numeric( t(ehat) %*% B %*% ehat / N ) - sig2v) / T
-sig2u
-
-Sigma = sig2v * I_NT + T * sig2u * B
+sig2e
 ```
 
 f) Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}} (ou {{<math>}}$V_{\hat{\beta}}${{</math>}})
@@ -605,13 +590,8 @@ f) Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}
 &= \left[ \begin{matrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots & cov(\hat{\beta}_0, \hat{\beta}_K) \\ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1) & \cdots & cov(\hat{\beta}_1, \hat{\beta}_K) \\ \vdots & \vdots & \ddots & \vdots \\ cov(\hat{\beta}_0, \hat{\beta}_K) & cov(\hat{\beta}_1, \hat{\beta}_K) & \cdots & var(\hat{\beta}_K) \end{matrix} \right]  \end{align} {{</math>}}
 
 ```{r}
-bread = solve( t(X) %*% X )
-meat = t(X) %*% Sigma %*% X
-Vbhat = bread %*% meat %*% bread
+Vbhat = sig2e * solve( t(X) %*% X )
 Vbhat
-
-# Vbhat = sig2e * solve( t(X) %*% X )
-# Vbhat
 ```
 
 
@@ -640,15 +620,14 @@ i) P-valor
 
 ```{r}
 # p-valor
-p_bhat = 2 * pt(-abs(t_bhat), N-K-1)
-round(p_bhat, 5) # arredondando para facilitar visualização
+p_bhat = 2 * pt(-abs(t_bhat), N*T-K-1)
+p_bhat
 ```
 
 j) Tabela-resumo
 ```{r}
-cbind(bhat, se_bhat, t_bhat, p_bhat) # coeficientes
-summary(Q.pooling)$coef
-summary(Q.ols)$coef
+cbind(bhat, se_bhat, t_bhat, p_bhat) # resultado via álgebra matricial
+summary(Q.pooling)$coef # resultado via plm() ou lm()
 ```
 
 
