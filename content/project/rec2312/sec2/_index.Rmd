@@ -262,7 +262,7 @@ em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuiç
 </br>
 
 - **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
-$$ \hat{\beta}_k\ \pm\ c . \text{se}(\hat{\beta}_k) \tag{4.8} $$
+{{<math>}}$$ \hat{\beta}_k\ \pm\ c . \text{se}(\hat{\beta}_k) \tag{4.8} $${{</math>}}
 - Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_k${{</math>}} estiver fora do intervalo de confiança.
 
 </br>
