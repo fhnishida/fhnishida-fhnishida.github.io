@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Data Manipulation
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: It covers topics such as data manipulation, apply functions, etc.
 title: Data Manipulation
 weight: 3
 output: md_document
@@ -13,6 +12,8 @@ type: book
 
 
 
+
+</br>
 
 ## Resumindo dados
 
@@ -23,9 +24,8 @@ type: book
 
 ```r
 # data() # lista de base de dados presentes no R
-bd_air = airquality # Atribuindo a base a um outro objeto
 
-dim(bd_air) # Verificar tamanho da base (linhas x colunas)
+dim(airquality) # Verificar tamanho da base (linhas x colunas)
 ```
 
 ```
@@ -33,7 +33,7 @@ dim(bd_air) # Verificar tamanho da base (linhas x colunas)
 ```
 
 ```r
-head(bd_air) # Visualizando as 6 primeiras linhas
+head(airquality) # Visualizando as 6 primeiras linhas
 ```
 
 ```
@@ -47,7 +47,7 @@ head(bd_air) # Visualizando as 6 primeiras linhas
 ```
 
 ```r
-tail(bd_air) # Visualizando as 6 últimas linhas
+tail(airquality) # Visualizando as 6 últimas linhas
 ```
 
 ```
@@ -65,7 +65,7 @@ tail(bd_air) # Visualizando as 6 últimas linhas
     - algumas de suas observações.
 
 ```r
-str(bd_air)
+str(airquality)
 ```
 
 ```
@@ -77,73 +77,12 @@ str(bd_air)
 ##  $ Month  : int  5 5 5 5 5 5 5 5 5 5 ...
 ##  $ Day    : int  1 2 3 4 5 6 7 8 9 10 ...
 ```
-- Podemos ver as **categorias/valores únicos** para cada variável combinando `apply()` e `unique()`
 
-```r
-apply(bd_air, 2, unique)
-```
-
-```
-## $Ozone
-##  [1]  41  36  12  18  NA  28  23  19   8   7  16  11  14  34   6  30   1   4  32
-## [20]  45 115  37  29  71  39  21  20  13 135  49  64  40  77  97  85  10  27  48
-## [39]  35  61  79  63  80 108  52  82  50  59   9  78  66 122  89 110  44  65  22
-## [58]  31 168  73  76 118  84  96  91  47  24  46
-## 
-## $Solar.R
-##   [1] 190 118 149 313  NA 299  99  19 194 256 290 274  65 334 307  78 322  44
-##  [19]   8 320  25  92  66 266  13 252 223 279 286 287 242 186 220 264 127 273
-##  [37] 291 323 259 250 148 332 191 284  37 120 137 150  59  91 135  47  98  31
-##  [55] 138 269 248 236 101 175 314 276 267 272 139  48 260 285 187   7 258 295
-##  [73] 294  81  82 213 275 253 254  83  24  77 255 229 207 222 192 157  64  71
-##  [91]  51 115 244  36 212 238 215 153 203 225 237 188 167 197 183 189  95 230
-## [109] 112 224  27 201  14  49  20 193 145 131
-## 
-## $Wind
-##  [1]  7.4  8.0 12.6 11.5 14.3 14.9  8.6 13.8 20.1  6.9  9.7  9.2 10.9 13.2 12.0
-## [16] 18.4 16.6  5.7 16.1 20.7 10.3  6.3  1.7  4.6  4.1  5.1  4.0 15.5  3.4  2.3
-## [31]  2.8
-## 
-## $Temp
-##  [1] 67 72 74 62 56 66 65 59 61 69 68 58 64 57 73 81 79 76 78 84 85 82 87 90 93
-## [26] 92 80 77 75 83 88 89 91 86 97 94 96 71 63 70
-## 
-## $Month
-## [1] 5 6 7 8 9
-## 
-## $Day
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-## [26] 26 27 28 29 30 31
-```
-- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
-
-```r
-head( is.na(bd_air) ) # 6 primeiras linhas aplicando is.na()
-```
-
-```
-##      Ozone Solar.R  Wind  Temp Month   Day
-## [1,] FALSE   FALSE FALSE FALSE FALSE FALSE
-## [2,] FALSE   FALSE FALSE FALSE FALSE FALSE
-## [3,] FALSE   FALSE FALSE FALSE FALSE FALSE
-## [4,] FALSE   FALSE FALSE FALSE FALSE FALSE
-## [5,]  TRUE    TRUE FALSE FALSE FALSE FALSE
-## [6,] FALSE    TRUE FALSE FALSE FALSE FALSE
-```
-
-```r
-apply(is.na(bd_air), 2, sum) # somando cada coluna de TRUE/FALSE
-```
-
-```
-##   Ozone Solar.R    Wind    Temp   Month     Day 
-##      37       7       0       0       0       0
-```
 
 - Para fazer um **resumo** de todas as variáveis da base, podemos usar a função `summary()` que, para variáveis numéricas, calcula a média e os quartis, e mostra a quantidade de `NA`.
 
 ```r
-summary(bd_air)
+summary(airquality)
 ```
 
 ```
@@ -167,38 +106,15 @@ summary(bd_air)
 - Também podemos calcular os **quantis** via `quantile()`
 
 ```r
-quantile(bd_air$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
+quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
 ```
 
 ```
 ##     0%    25%    50%    75%   100% 
 ##   1.00  18.00  31.50  63.25 168.00
 ```
-- Outra maneira de verificarmos quartis/médias de variáveis numéricas de um data frame inteiro é utilizando o `summary()`
 
-```r
-summary(bd_air)
-```
-
-```
-##      Ozone           Solar.R           Wind             Temp      
-##  Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
-##  1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
-##  Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
-##  Mean   : 42.13   Mean   :185.9   Mean   : 9.958   Mean   :77.88  
-##  3rd Qu.: 63.25   3rd Qu.:258.8   3rd Qu.:11.500   3rd Qu.:85.00  
-##  Max.   :168.00   Max.   :334.0   Max.   :20.700   Max.   :97.00  
-##  NA's   :37       NA's   :7                                       
-##      Month            Day      
-##  Min.   :5.000   Min.   : 1.0  
-##  1st Qu.:6.000   1st Qu.: 8.0  
-##  Median :7.000   Median :16.0  
-##  Mean   :6.993   Mean   :15.8  
-##  3rd Qu.:8.000   3rd Qu.:23.0  
-##  Max.   :9.000   Max.   :31.0  
-## 
-```
-- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a quantidade de cada valor:
+- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a contagem de cada categoria/possível valor:
 
 ```r
 summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
@@ -217,7 +133,7 @@ summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
 - Para variáveis de texto, pode ser interessante fazer uma **tabela com a contagem** de cada possível categoria de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
 
 ```r
-table(CO2$Type, useNA="ifany") # mostrando os NA's
+table(CO2$Type) # contagem
 ```
 
 ```
@@ -227,7 +143,7 @@ table(CO2$Type, useNA="ifany") # mostrando os NA's
 ```
 
 ```r
-prop.table(table(CO2$Type, useNA="ifany"))
+prop.table(table(CO2$Type)) # percentual
 ```
 
 ```
@@ -235,15 +151,10 @@ prop.table(table(CO2$Type, useNA="ifany"))
 ##      Quebec Mississippi 
 ##         0.5         0.5
 ```
+- Também podemos incluir mais uma variável em `table()` para visualizar a contagem considerando 2 variáveis:
 
 ```r
-# table(bd_air$Month, useNA="ifany") # mostrando os NA's
-# prop.table(table(bd_air$Month, useNA="ifany"))
-```
-- Também podemos incluir mais uma variável em `table()` para verificar alguma relação entre categorias de 2 variáveis:
-
-```r
-table(CO2$Type, CO2$Treatment, useNA="ifany")
+table(CO2$Type, CO2$Treatment)
 ```
 
 ```
@@ -256,265 +167,11 @@ table(CO2$Type, CO2$Treatment, useNA="ifany")
 
 ### Família de funções _apply_
 Veremos uma família de funções _apply_ que permitem executar comandos em loop de maneira compacta:
-
+- `apply`: aplica uma função sobre as margens (linha ou coluna) de uma matrix/array
 - `lapply`: loop sobre uma lista e avalia uma função em cada elemento
     - função auxiliar `split` é útil ao ser utilizada em conjunto da `lapply`
 - `sapply`: mesmo que o `lapply`, mas simplifica o resultado
-- `apply`: aplica uma função sobre as margens de um array
-- `tapply`: aplica uma função sobre subconjuntos de um vetor
-- `mapply`: versão multivariada do `lapply`
 
-
-
-#### Função `lapply()`
-- [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
-- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
-```yaml
-lapply(X, FUN, ...)
-
-X: a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.
-FUN: the function to be applied to each element of X: see ‘Details’. In the case of functions like +, %*%, the function name must be backquoted or quoted.
-... : optional arguments to FUN.
-```
-
-```r
-x = list(a=1:5, b=rnorm(10))
-lapply(x, mean)
-```
-
-```
-## $a
-## [1] 3
-## 
-## $b
-## [1] 0.1811774
-```
-
-- `lapply` transforma o objeto em uma _lista_ (caso o input não seja), em que cada elemento possui um único elemento
-
-```r
-nada = function(x) {
-    x # Retorna o próprio input
-}
-
-x = 1:4 # Vetor de 1 a 4 (será transformado em lista no lapply)
-lapply(x, nada)
-```
-
-```
-## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] 2
-## 
-## [[3]]
-## [1] 3
-## 
-## [[4]]
-## [1] 4
-```
-
-- `lapply` sempre retorna uma _lista_ como output. Como exemplo, usaremos a função `runif(n, min = 0, max = 1)` para gerar `n` números aleatórios:
-
-```r
-runif(2) # Gerando 2 números aleatórios
-```
-
-```
-## [1] 0.1113281 0.9929968
-```
-
-```r
-x = 1:4 # Vetor de 1 a 4 (será transformado em lista no lapply)
-lapply(x, runif, min=0, max=10) # 2 últimos argumentos são do runif
-```
-
-```
-## [[1]]
-## [1] 9.379888
-## 
-## [[2]]
-## [1] 9.6735639 0.8669249
-## 
-## [[3]]
-## [1] 2.164407 9.456436 2.328907
-## 
-## [[4]]
-## [1] 7.477810 5.285687 0.104373 8.515065
-```
-- Podemos usar funções _anônimas_ diretamente no `lapply`. Como exemplo, criaremos uma função que nos dá a 1ª coluna de uma matriz ou data frame:
-
-```r
-# Criando lista com 2 matrizes
-x = list(a=matrix(1:4, 2, 2), b=matrix(1:6, 3, 2))
-x
-```
-
-```
-## $a
-##      [,1] [,2]
-## [1,]    1    3
-## [2,]    2    4
-## 
-## $b
-##      [,1] [,2]
-## [1,]    1    4
-## [2,]    2    5
-## [3,]    3    6
-```
-
-```r
-# Pegando as primeiras colunas de cada matriz da lista x
-lapply(x, function(matriz){matriz[, 1]})
-```
-
-```
-## $a
-## [1] 1 2
-## 
-## $b
-## [1] 1 2 3
-```
-
-
-#### Função `sapply()`
-Similar ao `lapply`, mas `sapply` tenta simplificar o output:
-
-- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
-
-```r
-x = list(a=1:4, b=rnorm(10), c=rnorm(20, 1), d=rnorm(100, 5))
-x
-```
-
-```
-## $a
-## [1] 1 2 3 4
-## 
-## $b
-##  [1] -0.21610574 -0.97108951  1.68259261 -0.12865000 -0.08334878 -0.83481958
-##  [7]  0.64761992  0.18924061 -0.53054334  0.44676470
-## 
-## $c
-##  [1]  1.73989018  1.34523064 -0.73744472  1.06151639 -0.45828939 -0.96174829
-##  [7]  0.93398228  1.16983881 -0.12595436  1.29907706  0.16595615  1.86566350
-## [13]  1.21483561  0.60455413  0.73105070  1.72503256 -0.70760704  1.53017945
-## [19]  0.23769058 -0.07554978
-## 
-## $d
-##   [1] 6.855607 5.488126 5.024970 6.009348 4.790753 5.802058 3.828160 5.779809
-##   [9] 5.916214 4.194923 5.332374 5.177802 4.480470 5.469126 6.121904 3.980890
-##  [17] 4.807726 5.327855 6.885399 4.152185 5.424979 5.288392 4.880616 5.079893
-##  [25] 3.023848 5.036732 4.906447 4.593549 4.801337 4.038599 5.141096 4.774386
-##  [33] 4.172098 6.027729 4.863399 3.564551 2.042716 6.149485 4.807177 6.196434
-##  [41] 5.899489 4.364786 3.967900 5.725262 4.936987 5.649913 4.087649 4.835788
-##  [49] 2.469787 4.246403 4.151857 4.812076 4.460613 4.861645 5.665196 4.921816
-##  [57] 5.071720 4.204036 4.340819 3.634342 5.426358 4.262405 4.735916 3.846533
-##  [65] 4.964891 3.074182 6.074368 4.290392 5.302245 5.351094 3.667713 4.917442
-##  [73] 5.271698 5.890924 5.889949 6.179949 3.953928 5.825286 5.181080 2.595980
-##  [81] 6.903621 4.544088 3.922943 4.686767 5.332001 5.365233 6.339160 7.095514
-##  [89] 5.850198 5.211662 5.096951 5.426635 4.802737 4.528869 6.458017 5.948422
-##  [97] 4.398253 5.427282 5.140636 4.433847
-```
-
-```r
-lapply(x, mean) # retorna uma lista
-```
-
-```
-## $a
-## [1] 2.5
-## 
-## $b
-## [1] 0.02016609
-## 
-## $c
-## [1] 0.6278952
-## 
-## $d
-## [1] 4.961624
-```
-
-```r
-sapply(x, mean) # retorna um vetor
-```
-
-```
-##          a          b          c          d 
-## 2.50000000 0.02016609 0.62789522 4.96162413
-```
-- Se o resultado for uma lista em que cada elemento tem mesmo comprimento ($>1$), retorna uma matriz
-
-```r
-x = 1:4
-
-tabuada = function(a) {
-    a * 1:10
-}
-tabuada(2)
-```
-
-```
-##  [1]  2  4  6  8 10 12 14 16 18 20
-```
-
-```r
-lapply(x, tabuada) # retorna uma lista
-```
-
-```
-## [[1]]
-##  [1]  1  2  3  4  5  6  7  8  9 10
-## 
-## [[2]]
-##  [1]  2  4  6  8 10 12 14 16 18 20
-## 
-## [[3]]
-##  [1]  3  6  9 12 15 18 21 24 27 30
-## 
-## [[4]]
-##  [1]  4  8 12 16 20 24 28 32 36 40
-```
-
-```r
-sapply(x, tabuada) # retorna uma matrix
-```
-
-```
-##       [,1] [,2] [,3] [,4]
-##  [1,]    1    2    3    4
-##  [2,]    2    4    6    8
-##  [3,]    3    6    9   12
-##  [4,]    4    8   12   16
-##  [5,]    5   10   15   20
-##  [6,]    6   12   18   24
-##  [7,]    7   14   21   28
-##  [8,]    8   16   24   32
-##  [9,]    9   18   27   36
-## [10,]   10   20   30   40
-```
-
-- Caso contrário, retorna uma lista (assim como `lapply`)
-
-```r
-x = 1:4
-sapply(x, runif, min=0, max=10) # retorna igual ao lapply
-```
-
-```
-## [[1]]
-## [1] 6.682068
-## 
-## [[2]]
-## [1] 1.203194 1.897882
-## 
-## [[3]]
-## [1] 6.2797823 0.8035368 1.8652477
-## 
-## [[4]]
-## [1] 2.910035 9.111850 3.728092 3.894041
-```
 
 
 #### Função `apply()`
@@ -564,19 +221,29 @@ apply(x, 2, mean) # médias das colunas
     - `rowMeans = apply(x, 1, mean)`
     - `colSums = apply(x, 2, sum)`
     - `colMeans = apply(x, 2, mean)`
-- Podemos também calcular os quantis de uma matriz usando a função `quantile()`
-```yaml
-quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, type = 7, digits = 7, ...)
-
-x: numeric vector whose sample quantiles are wanted, or an object of a class for which a method has been defined (see also ‘details’). NA and NaN values are not allowed in numeric vectors unless na.rm is TRUE.
-probs: numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that range are accepted and moved to the nearby endpoint.)
-na.rm: logical; if true, any NA and NaN's are removed from x before the quantiles are computed.
-```
+- Podemos, por exemplo, também calcular os quantis de uma matriz usando a função `quantile()`
 
 ```r
 x = matrix(1:50, 10, 5) # matriz 20x10 - 200 números ~ N(0, 1)
-apply(x, 2, quantile, probs=c(0, .25, .5, .75, 1))
+x
+```
+
+```
+##       [,1] [,2] [,3] [,4] [,5]
+##  [1,]    1   11   21   31   41
+##  [2,]    2   12   22   32   42
+##  [3,]    3   13   23   33   43
+##  [4,]    4   14   24   34   44
+##  [5,]    5   15   25   35   45
+##  [6,]    6   16   26   36   46
+##  [7,]    7   17   27   37   47
+##  [8,]    8   18   28   38   48
+##  [9,]    9   19   29   39   49
+## [10,]   10   20   30   40   50
+```
+
+```r
+apply(x, 2, quantile) # obtendo os quantis de cada coluna
 ```
 
 ```
@@ -587,158 +254,186 @@ apply(x, 2, quantile, probs=c(0, .25, .5, .75, 1))
 ## 75%   7.75 17.75 27.75 37.75 47.75
 ## 100% 10.00 20.00 30.00 40.00 50.00
 ```
+- Com também podemos verificar quais são os valores únicos de cada variável em um data frame combinando `apply()` e `unique()`
+
+```r
+apply(mtcars, 2, unique)
+```
+
+```
+## $mpg
+##  [1] 21.0 22.8 21.4 18.7 18.1 14.3 24.4 19.2 17.8 16.4 17.3 15.2 10.4 14.7 32.4
+## [16] 30.4 33.9 21.5 15.5 13.3 27.3 26.0 15.8 19.7 15.0
+## 
+## $cyl
+## [1] 6 4 8
+## 
+## $disp
+##  [1] 160.0 108.0 258.0 360.0 225.0 146.7 140.8 167.6 275.8 472.0 460.0 440.0
+## [13]  78.7  75.7  71.1 120.1 318.0 304.0 350.0 400.0  79.0 120.3  95.1 351.0
+## [25] 145.0 301.0 121.0
+## 
+## $hp
+##  [1] 110  93 175 105 245  62  95 123 180 205 215 230  66  52  65  97 150  91 113
+## [20] 264 335 109
+## 
+## $drat
+##  [1] 3.90 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.07 2.93 3.00 3.23 4.08 4.93 4.22
+## [16] 3.70 3.73 4.43 3.77 3.62 3.54 4.11
+## 
+## $wt
+##  [1] 2.620 2.875 2.320 3.215 3.440 3.460 3.570 3.190 3.150 4.070 3.730 3.780
+## [13] 5.250 5.424 5.345 2.200 1.615 1.835 2.465 3.520 3.435 3.840 3.845 1.935
+## [25] 2.140 1.513 3.170 2.770 2.780
+## 
+## $qsec
+##  [1] 16.46 17.02 18.61 19.44 20.22 15.84 20.00 22.90 18.30 18.90 17.40 17.60
+## [13] 18.00 17.98 17.82 17.42 19.47 18.52 19.90 20.01 16.87 17.30 15.41 17.05
+## [25] 16.70 16.90 14.50 15.50 14.60 18.60
+## 
+## $vs
+## [1] 0 1
+## 
+## $am
+## [1] 1 0
+## 
+## $gear
+## [1] 4 3 5
+## 
+## $carb
+## [1] 4 1 2 3 6 8
+```
 
 
-#### Função `mapply()`
-- [Loop functions - mapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/EBnAr/loop-functions-mapply)
-- Versão multivariada de apply. Antes incluímos apenas um vetor `x` para aplicar na função, agora iremos incluir 2 ou mais vetores.
-- Por isso, `mapply` tem como primeiro argumento a função `FUN`, já que podemos ter diversos vetores como input
+- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
+
+```r
+head( is.na(airquality) ) # 6 primeiras linhas aplicando is.na()
+```
+
+```
+##      Ozone Solar.R  Wind  Temp Month   Day
+## [1,] FALSE   FALSE FALSE FALSE FALSE FALSE
+## [2,] FALSE   FALSE FALSE FALSE FALSE FALSE
+## [3,] FALSE   FALSE FALSE FALSE FALSE FALSE
+## [4,] FALSE   FALSE FALSE FALSE FALSE FALSE
+## [5,]  TRUE    TRUE FALSE FALSE FALSE FALSE
+## [6,] FALSE    TRUE FALSE FALSE FALSE FALSE
+```
+
+```r
+apply(is.na(airquality), 2, sum) # somando cada coluna de TRUE/FALSE
+```
+
+```
+##   Ozone Solar.R    Wind    Temp   Month     Day 
+##      37       7       0       0       0       0
+```
+
+
+#### Função `lapply()`
+- [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
+- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
 ```yaml
-mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-       USE.NAMES = TRUE)
+lapply(X, FUN, ...)
 
-FUN: function to apply, found via match.fun.
-...	: arguments to vectorize over (vectors or lists of strictly positive length, or all of zero length). See also ‘Details’.
-MoreArgs: a list of other arguments to FUN.
-SIMPLIFY: logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply.
-```
-- Note que, agora, precisamos incluir os argumento da função por meio de uma _lista_ no argumento `MoreArgs`
-- Como exemplo, usaremos a função `rep(x, n)` que cria um vetor com o objeto `x` repetido `n` vezes (**são necessário 2 argumentos**)
-
-```r
-rep(1, 5)
-```
-
-```
-## [1] 1 1 1 1 1
+X: a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.
+FUN: the function to be applied to each element of X: see ‘Details’. In the case of functions like +, %*%, the function name must be backquoted or quoted.
+... : optional arguments to FUN.
 ```
 
 ```r
-# Criando uma lista com números repetidos
-list(rep(1, 4), rep(2, 3), rep(3, 2), rep(4, 1))
-```
-
-```
-## [[1]]
-## [1] 1 1 1 1
-## 
-## [[2]]
-## [1] 2 2 2
-## 
-## [[3]]
-## [1] 3 3
-## 
-## [[4]]
-## [1] 4
-```
-
-```r
-# Podemos fazer o mesmo usando a função mapply
-mapply(rep, 1:4, 4:1)
-```
-
-```
-## [[1]]
-## [1] 1 1 1 1
-## 
-## [[2]]
-## [1] 2 2 2
-## 
-## [[3]]
-## [1] 3 3
-## 
-## [[4]]
-## [1] 4
-```
-
-
-#### Função `tapply()`
-- [Loop functions - tapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/w98BR/loop-functions-tapply)
-- Função `tapply` é uma versão do `apply` em que há um output para cada grupo/categoria.
-- Para usá-la, precisamos inserir tanto um vetor de valores `x`, quanto um vetor de índices dos grupos/categoria.
-```yaml
-tapply(X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
-
-X: an R object for which a split method exists. Typically vector-like, allowing subsetting with [.
-INDEX: a list of one or more factors, each of same length as X. The elements are coerced to factors by as.factor.
-FUN: a function (or name of a function) to be applied, or NULL. In the case of functions like +, %*%, etc., the function name must be backquoted or quoted. If FUN is NULL, tapply returns a vector which can be used to subscript the multi-way array tapply normally produces.
-```
-- Como exemplo, calcularemos a média de `x` para 4 grupos
-
-```r
-x = rnorm(20)
-grupos = rep(c("a", "b", "c", "d"), 5)
-data.frame(x, grupos)
-```
-
-```
-##              x grupos
-## 1   2.05251635      a
-## 2   0.68439407      b
-## 3  -0.10708538      c
-## 4   0.33016375      d
-## 5  -0.15718981      a
-## 6   0.53950765      b
-## 7   0.35038245      c
-## 8  -1.54859850      d
-## 9   0.54545584      a
-## 10 -1.60592663      b
-## 11 -0.12440885      c
-## 12  0.35225385      d
-## 13  1.20333115      a
-## 14 -0.19702869      b
-## 15 -0.90921778      c
-## 16 -1.75239003      d
-## 17 -0.90467547      a
-## 18  0.02880877      b
-## 19 -1.26653683      c
-## 20  0.02085600      d
-```
-
-```r
-tapply(x, grupos, mean)
-```
-
-```
-##          a          b          c          d 
-##  0.5478876 -0.1100490 -0.4113733 -0.5195430
-```
-
-
-#### Função `split()`
-- [Loop functions - split (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/2VYGZ/loop-functions-split)
-- Assim como o `tapply`, divide em grupos, mas retorna apenas uma lista com elementos correspondentes aos grupos e seus valores
-
-```r
-split(x, grupos)
+# Criando uma lista com vetor de dimensões distintas
+x = list(a=1:5, b=rnorm(10), c=c(1, 4, 65, 6))
+x
 ```
 
 ```
 ## $a
-## [1]  2.0525164 -0.1571898  0.5454558  1.2033311 -0.9046755
+## [1] 1 2 3 4 5
 ## 
 ## $b
-## [1]  0.68439407  0.53950765 -1.60592663 -0.19702869  0.02880877
+##  [1] -0.4065510 -0.7055778  0.4551578 -0.2625857  2.0219192  0.7335969
+##  [7]  0.8401919  0.8662408 -0.7483527  1.1777023
 ## 
 ## $c
-## [1] -0.1070854  0.3503825 -0.1244088 -0.9092178 -1.2665368
-## 
-## $d
-## [1]  0.3301638 -1.5485985  0.3522539 -1.7523900  0.0208560
+## [1]  1  4 65  6
 ```
-- Depois de separar em uma lista, podemos usar o `lapply` ou `sapply` (é como se fosse aplicar o `tapply`, mas em 2 etapas)
 
 ```r
-sapply(split(x, grupos), mean)
+lapply(x, mean) # retorna médias de cada vetor dentro da lista
 ```
 
 ```
-##          a          b          c          d 
-##  0.5478876 -0.1100490 -0.4113733 -0.5195430
+## $a
+## [1] 3
+## 
+## $b
+## [1] 0.3971742
+## 
+## $c
+## [1] 19
+```
+
+```r
+lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
+```
+
+```
+## $a
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       1       2       3       3       4       5 
+## 
+## $b
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -0.7484 -0.3706  0.5944  0.3972  0.8597  2.0219 
+## 
+## $c
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    3.25    5.00   19.00   20.75   65.00
+```
+
+```r
+class(lapply(x, mean)) # classe do objeto retornado pelo lapply
+```
+
+```
+## [1] "list"
+```
+
+
+#### Função `sapply()`
+Similar ao `lapply`, mas `sapply` tenta simplificar o output:
+
+- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
+
+```r
+sapply(x, mean) # retorna um vetor
+```
+
+```
+##          a          b          c 
+##  3.0000000  0.3971742 19.0000000
+```
+- Se o resultado for uma lista em que cada elemento tem mesmo comprimento, retorna uma matriz
+
+```r
+sapply(x, summary) # retorna uma matriz
+```
+
+```
+##         a          b     c
+## Min.    1 -0.7483527  1.00
+## 1st Qu. 2 -0.3705597  3.25
+## Median  3  0.5943773  5.00
+## Mean    3  0.3971742 19.00
+## 3rd Qu. 4  0.8597286 20.75
+## Max.    5  2.0219192 65.00
 ```
 
 
 
+</br>
 
 ## Manipulando dados
 
@@ -1146,13 +841,14 @@ x
 ## 6 -0.4771927 -0.9983864 -0.7762539  0.06445882  0.9594941
 ```
 
+
 #### Mesclando base de dados com `merge()`
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
 - Podemos juntar base de dados a partir de uma variável-chave que aparece em ambas bases.
 - Como exemplo, utilizaremos duas bases de dados de respostas a perguntas ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) e de correções feitas por seus pares ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
 
 ```r
-solutions = read.csv("https://fhnishida-rec5004.netlify.app/docs/solutions.csv")
+solutions = read.csv("https://fhnishida.netlify.app/project/rec5004/solutions.csv")
 head(solutions)
 ```
 
@@ -1167,7 +863,7 @@ head(solutions)
 ```
 
 ```r
-reviews = read.csv("https://fhnishida-rec5004.netlify.app/docs/reviews.csv")
+reviews = read.csv("https://fhnishida.netlify.app/project/rec5004/reviews.csv")
 head(reviews)
 ```
 

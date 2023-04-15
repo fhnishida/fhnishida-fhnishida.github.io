@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Data Manipulation
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: It covers topics such as data manipulation, apply functions, etc.
 title: Data Manipulation
 weight: 3
 output: md_document
@@ -16,6 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+</br>
+
 ## Resumindo dados
 
 ### Funções básicas
@@ -24,142 +25,51 @@ knitr::opts_chunk$set(echo = TRUE)
 - Verificaremos o **dimensões** da base com `dim()` e visualizaremos as 6 **primeiras** e **últimas** linhas da base via `head()` e `tail()`, respectivamente.
 ```{r}
 # data() # lista de base de dados presentes no R
-bd_air = airquality # Atribuindo a base a um outro objeto
 
-dim(bd_air) # Verificar tamanho da base (linhas x colunas)
-head(bd_air) # Visualizando as 6 primeiras linhas
-tail(bd_air) # Visualizando as 6 últimas linhas
+dim(airquality) # Verificar tamanho da base (linhas x colunas)
+head(airquality) # Visualizando as 6 primeiras linhas
+tail(airquality) # Visualizando as 6 últimas linhas
 ```
 - Usando `str()`, podemos visualizar a **estrutura** da base:
     - todas a variáveis (colunas),
     - a classe de cada uma delas e
     - algumas de suas observações.
 ```{r}
-str(bd_air)
+str(airquality)
 ```
-- Podemos ver as **categorias/valores únicos** para cada variável combinando `apply()` e `unique()`
-```{r}
-apply(bd_air, 2, unique)
-```
-- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
-```{r}
-head( is.na(bd_air) ) # 6 primeiras linhas aplicando is.na()
-apply(is.na(bd_air), 2, sum) # somando cada coluna de TRUE/FALSE
-```
+
 
 - Para fazer um **resumo** de todas as variáveis da base, podemos usar a função `summary()` que, para variáveis numéricas, calcula a média e os quartis, e mostra a quantidade de `NA`.
 ```{r}
-summary(bd_air)
+summary(airquality)
 ```
 - Também podemos calcular os **quantis** via `quantile()`
 ```{r}
-quantile(bd_air$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
+quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
 ```
-- Outra maneira de verificarmos quartis/médias de variáveis numéricas de um data frame inteiro é utilizando o `summary()`
-```{r}
-summary(bd_air)
-```
-- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a quantidade de cada valor:
+
+- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a contagem de cada categoria/possível valor:
 ```{r}
 summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
 ```
 - Para variáveis de texto, pode ser interessante fazer uma **tabela com a contagem** de cada possível categoria de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
 ```{r}
-table(CO2$Type, useNA="ifany") # mostrando os NA's
-prop.table(table(CO2$Type, useNA="ifany"))
-# table(bd_air$Month, useNA="ifany") # mostrando os NA's
-# prop.table(table(bd_air$Month, useNA="ifany"))
+table(CO2$Type) # contagem
+prop.table(table(CO2$Type)) # percentual
 ```
-- Também podemos incluir mais uma variável em `table()` para verificar alguma relação entre categorias de 2 variáveis:
+- Também podemos incluir mais uma variável em `table()` para visualizar a contagem considerando 2 variáveis:
 ```{r}
-table(CO2$Type, CO2$Treatment, useNA="ifany")
+table(CO2$Type, CO2$Treatment)
 ```
 
 
 ### Família de funções _apply_
 Veremos uma família de funções _apply_ que permitem executar comandos em loop de maneira compacta:
-
+- `apply`: aplica uma função sobre as margens (linha ou coluna) de uma matrix/array
 - `lapply`: loop sobre uma lista e avalia uma função em cada elemento
     - função auxiliar `split` é útil ao ser utilizada em conjunto da `lapply`
 - `sapply`: mesmo que o `lapply`, mas simplifica o resultado
-- `apply`: aplica uma função sobre as margens de um array
-- `tapply`: aplica uma função sobre subconjuntos de um vetor
-- `mapply`: versão multivariada do `lapply`
 
-
-
-#### Função `lapply()`
-- [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
-- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
-```yaml
-lapply(X, FUN, ...)
-
-X: a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.
-FUN: the function to be applied to each element of X: see ‘Details’. In the case of functions like +, %*%, the function name must be backquoted or quoted.
-... : optional arguments to FUN.
-```
-```{r}
-x = list(a=1:5, b=rnorm(10))
-lapply(x, mean)
-```
-
-- `lapply` transforma o objeto em uma _lista_ (caso o input não seja), em que cada elemento possui um único elemento
-```{r}
-nada = function(x) {
-    x # Retorna o próprio input
-}
-
-x = 1:4 # Vetor de 1 a 4 (será transformado em lista no lapply)
-lapply(x, nada)
-```
-
-- `lapply` sempre retorna uma _lista_ como output. Como exemplo, usaremos a função `runif(n, min = 0, max = 1)` para gerar `n` números aleatórios:
-```{r}
-runif(2) # Gerando 2 números aleatórios
-
-x = 1:4 # Vetor de 1 a 4 (será transformado em lista no lapply)
-lapply(x, runif, min=0, max=10) # 2 últimos argumentos são do runif
-```
-- Podemos usar funções _anônimas_ diretamente no `lapply`. Como exemplo, criaremos uma função que nos dá a 1ª coluna de uma matriz ou data frame:
-```{r}
-# Criando lista com 2 matrizes
-x = list(a=matrix(1:4, 2, 2), b=matrix(1:6, 3, 2))
-x
-
-# Pegando as primeiras colunas de cada matriz da lista x
-lapply(x, function(matriz){matriz[, 1]})
-```
-
-
-#### Função `sapply()`
-Similar ao `lapply`, mas `sapply` tenta simplificar o output:
-
-- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
-```{r}
-x = list(a=1:4, b=rnorm(10), c=rnorm(20, 1), d=rnorm(100, 5))
-x
-
-lapply(x, mean) # retorna uma lista
-sapply(x, mean) # retorna um vetor
-```
-- Se o resultado for uma lista em que cada elemento tem mesmo comprimento ($>1$), retorna uma matriz
-```{r}
-x = 1:4
-
-tabuada = function(a) {
-    a * 1:10
-}
-tabuada(2)
-
-lapply(x, tabuada) # retorna uma lista
-sapply(x, tabuada) # retorna uma matrix
-```
-
-- Caso contrário, retorna uma lista (assim como `lapply`)
-```{r}
-x = 1:4
-sapply(x, runif, min=0, max=10) # retorna igual ao lapply
-```
 
 
 #### Função `apply()`
@@ -186,81 +96,64 @@ apply(x, 2, mean) # médias das colunas
     - `rowMeans = apply(x, 1, mean)`
     - `colSums = apply(x, 2, sum)`
     - `colMeans = apply(x, 2, mean)`
-- Podemos também calcular os quantis de uma matriz usando a função `quantile()`
-```yaml
-quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, type = 7, digits = 7, ...)
-
-x: numeric vector whose sample quantiles are wanted, or an object of a class for which a method has been defined (see also ‘details’). NA and NaN values are not allowed in numeric vectors unless na.rm is TRUE.
-probs: numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that range are accepted and moved to the nearby endpoint.)
-na.rm: logical; if true, any NA and NaN's are removed from x before the quantiles are computed.
-```
+- Podemos, por exemplo, também calcular os quantis de uma matriz usando a função `quantile()`
 ```{r}
 x = matrix(1:50, 10, 5) # matriz 20x10 - 200 números ~ N(0, 1)
-apply(x, 2, quantile, probs=c(0, .25, .5, .75, 1))
+x
+
+
+apply(x, 2, quantile) # obtendo os quantis de cada coluna
+```
+- Com também podemos verificar quais são os valores únicos de cada variável em um data frame combinando `apply()` e `unique()`
+```{r}
+apply(mtcars, 2, unique)
+``` 
+
+
+- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
+```{r}
+head( is.na(airquality) ) # 6 primeiras linhas aplicando is.na()
+apply(is.na(airquality), 2, sum) # somando cada coluna de TRUE/FALSE
 ```
 
 
-#### Função `mapply()`
-- [Loop functions - mapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/EBnAr/loop-functions-mapply)
-- Versão multivariada de apply. Antes incluímos apenas um vetor `x` para aplicar na função, agora iremos incluir 2 ou mais vetores.
-- Por isso, `mapply` tem como primeiro argumento a função `FUN`, já que podemos ter diversos vetores como input
+#### Função `lapply()`
+- [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
+- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
 ```yaml
-mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
-       USE.NAMES = TRUE)
+lapply(X, FUN, ...)
 
-FUN: function to apply, found via match.fun.
-...	: arguments to vectorize over (vectors or lists of strictly positive length, or all of zero length). See also ‘Details’.
-MoreArgs: a list of other arguments to FUN.
-SIMPLIFY: logical or character string; attempt to reduce the result to a vector, matrix or higher dimensional array; see the simplify argument of sapply.
+X: a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.
+FUN: the function to be applied to each element of X: see ‘Details’. In the case of functions like +, %*%, the function name must be backquoted or quoted.
+... : optional arguments to FUN.
 ```
-- Note que, agora, precisamos incluir os argumento da função por meio de uma _lista_ no argumento `MoreArgs`
-- Como exemplo, usaremos a função `rep(x, n)` que cria um vetor com o objeto `x` repetido `n` vezes (**são necessário 2 argumentos**)
 ```{r}
-rep(1, 5)
+# Criando uma lista com vetor de dimensões distintas
+x = list(a=1:5, b=rnorm(10), c=c(1, 4, 65, 6))
+x
 
-# Criando uma lista com números repetidos
-list(rep(1, 4), rep(2, 3), rep(3, 2), rep(4, 1))
+lapply(x, mean) # retorna médias de cada vetor dentro da lista
+lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
 
-# Podemos fazer o mesmo usando a função mapply
-mapply(rep, 1:4, 4:1)
+class(lapply(x, mean)) # classe do objeto retornado pelo lapply
 ```
 
 
-#### Função `tapply()`
-- [Loop functions - tapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/w98BR/loop-functions-tapply)
-- Função `tapply` é uma versão do `apply` em que há um output para cada grupo/categoria.
-- Para usá-la, precisamos inserir tanto um vetor de valores `x`, quanto um vetor de índices dos grupos/categoria.
-```yaml
-tapply(X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
+#### Função `sapply()`
+Similar ao `lapply`, mas `sapply` tenta simplificar o output:
 
-X: an R object for which a split method exists. Typically vector-like, allowing subsetting with [.
-INDEX: a list of one or more factors, each of same length as X. The elements are coerced to factors by as.factor.
-FUN: a function (or name of a function) to be applied, or NULL. In the case of functions like +, %*%, etc., the function name must be backquoted or quoted. If FUN is NULL, tapply returns a vector which can be used to subscript the multi-way array tapply normally produces.
-```
-- Como exemplo, calcularemos a média de `x` para 4 grupos
+- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
 ```{r}
-x = rnorm(20)
-grupos = rep(c("a", "b", "c", "d"), 5)
-data.frame(x, grupos)
-
-tapply(x, grupos, mean)
+sapply(x, mean) # retorna um vetor
 ```
-
-
-#### Função `split()`
-- [Loop functions - split (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/2VYGZ/loop-functions-split)
-- Assim como o `tapply`, divide em grupos, mas retorna apenas uma lista com elementos correspondentes aos grupos e seus valores
+- Se o resultado for uma lista em que cada elemento tem mesmo comprimento, retorna uma matriz
 ```{r}
-split(x, grupos)
-```
-- Depois de separar em uma lista, podemos usar o `lapply` ou `sapply` (é como se fosse aplicar o `tapply`, mas em 2 etapas)
-```{r}
-sapply(split(x, grupos), mean)
+sapply(x, summary) # retorna uma matriz
 ```
 
 
 
+</br>
 
 ## Manipulando dados
 
@@ -381,15 +274,16 @@ x = rbind(x, z)
 x
 ```
 
+
 #### Mesclando base de dados com `merge()`
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
 - Podemos juntar base de dados a partir de uma variável-chave que aparece em ambas bases.
 - Como exemplo, utilizaremos duas bases de dados de respostas a perguntas ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) e de correções feitas por seus pares ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
 ```{r}
-solutions = read.csv("https://fhnishida-rec5004.netlify.app/docs/solutions.csv")
+solutions = read.csv("https://fhnishida.netlify.app/project/rec5004/solutions.csv")
 head(solutions)
 
-reviews = read.csv("https://fhnishida-rec5004.netlify.app/docs/reviews.csv")
+reviews = read.csv("https://fhnishida.netlify.app/project/rec5004/reviews.csv")
 head(reviews)
 ```
 - Note que:

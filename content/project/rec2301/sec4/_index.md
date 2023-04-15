@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Manipulação via dplyr
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: The page provides an introduction to the dplyr package and its functions for column manipulation (select, rename, mutate), row manipulation (filter, arrange), and grouping of rows (summarize). The page also includes examples of using these functions with the Star Wars dataset. Additionally, the page discusses the use of the pipe operator (%>%) and join functions for merging data frames.
 title: Manipulação via dplyr
 weight: 4
 output: md_document
@@ -35,10 +34,6 @@ library("dplyr") # Carregando pacote
 ```
 
 ```
-## Warning: package 'dplyr' was built under R version 4.2.2
-```
-
-```
 ## 
 ## Attaching package: 'dplyr'
 ```
@@ -61,17 +56,16 @@ head(starwars) # olhando primeiras linhas da base contida no pacote
 
 ```
 ## # A tibble: 6 × 14
-##   name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##   <chr>         <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> <chr>  <chr>  
-## 1 Luke Skywal…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
-## 2 C-3PO           167    75 <NA>    gold    yellow    112   none  mascu… Tatooi…
-## 3 R2-D2            96    32 <NA>    white,… red        33   none  mascu… Naboo  
-## 4 Darth Vader     202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-## 5 Leia Organa     150    49 brown   light   brown      19   fema… femin… Aldera…
-## 6 Owen Lars       178   120 brown,… light   blue       52   male  mascu… Tatooi…
-## # … with 4 more variables: species <chr>, films <list>, vehicles <list>,
-## #   starships <list>, and abbreviated variable names ¹​hair_color, ²​skin_color,
-## #   ³​eye_color, ⁴​birth_year, ⁵​homeworld
+##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
+##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
+## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
+## 3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
+## 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
+## 5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
+## 6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 
 
@@ -92,21 +86,21 @@ starwars1
 
 ```
 ## # A tibble: 31 × 14
-##    name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##    <chr>        <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> <chr>  <chr>  
-##  1 Luke Skywa…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
-##  2 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-##  3 Leia Organa    150    49 brown   light   brown      19   fema… femin… Aldera…
-##  4 Owen Lars      178   120 brown,… light   blue       52   male  mascu… Tatooi…
-##  5 Beru White…    165    75 brown   light   blue       47   fema… femin… Tatooi…
-##  6 Biggs Dark…    183    84 black   light   brown      24   male  mascu… Tatooi…
-##  7 Obi-Wan Ke…    182    77 auburn… fair    blue-g…    57   male  mascu… Stewjon
-##  8 Anakin Sky…    188    84 blond   fair    blue       41.9 male  mascu… Tatooi…
-##  9 Wilhuff Ta…    180    NA auburn… fair    blue       64   male  mascu… Eriadu 
-## 10 Han Solo       180    80 brown   fair    brown      29   male  mascu… Corell…
-## # … with 21 more rows, 4 more variables: species <chr>, films <list>,
-## #   vehicles <list>, starships <list>, and abbreviated variable names
-## #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld
+##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
+##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+##  1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+##  2 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+##  3 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+##  4 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+##  5 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+##  6 Biggs D…    183    84 black      light      brown           24   male  mascu…
+##  7 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+##  8 Anakin …    188    84 blond      fair       blue            41.9 male  mascu…
+##  9 Wilhuff…    180    NA auburn, g… fair       blue            64   male  mascu…
+## 10 Han Solo    180    80 brown      fair       brown           29   male  mascu…
+## # ℹ 21 more rows
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 
 ```r
@@ -116,21 +110,21 @@ starwars[starwars$species == "Human" & starwars$height >= 100, ]
 
 ```
 ## # A tibble: 39 × 14
-##    name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##    <chr>        <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> <chr>  <chr>  
-##  1 Luke Skywa…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
-##  2 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-##  3 Leia Organa    150    49 brown   light   brown      19   fema… femin… Aldera…
-##  4 Owen Lars      178   120 brown,… light   blue       52   male  mascu… Tatooi…
-##  5 Beru White…    165    75 brown   light   blue       47   fema… femin… Tatooi…
-##  6 Biggs Dark…    183    84 black   light   brown      24   male  mascu… Tatooi…
-##  7 Obi-Wan Ke…    182    77 auburn… fair    blue-g…    57   male  mascu… Stewjon
-##  8 Anakin Sky…    188    84 blond   fair    blue       41.9 male  mascu… Tatooi…
-##  9 Wilhuff Ta…    180    NA auburn… fair    blue       64   male  mascu… Eriadu 
-## 10 Han Solo       180    80 brown   fair    brown      29   male  mascu… Corell…
-## # … with 29 more rows, 4 more variables: species <chr>, films <list>,
-## #   vehicles <list>, starships <list>, and abbreviated variable names
-## #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld
+##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
+##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+##  1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+##  2 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+##  3 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+##  4 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+##  5 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+##  6 Biggs D…    183    84 black      light      brown           24   male  mascu…
+##  7 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+##  8 Anakin …    188    84 blond      fair       blue            41.9 male  mascu…
+##  9 Wilhuff…    180    NA auburn, g… fair       blue            64   male  mascu…
+## 10 Han Solo    180    80 brown      fair       brown           29   male  mascu…
+## # ℹ 29 more rows
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 
 ## Organize linhas com `arrange()`
@@ -151,21 +145,21 @@ starwars2
 
 ```
 ## # A tibble: 31 × 14
-##    name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##    <chr>        <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> <chr>  <chr>  
-##  1 Leia Organa    150    49 brown   light   brown        19 fema… femin… Aldera…
-##  2 Mon Mothma     150    NA auburn  fair    blue         48 fema… femin… Chandr…
-##  3 Cordé          157    NA brown   light   brown        NA fema… femin… Naboo  
-##  4 Shmi Skywa…    163    NA black   fair    brown        72 fema… femin… Tatooi…
-##  5 Beru White…    165    75 brown   light   blue         47 fema… femin… Tatooi…
-##  6 Padmé Amid…    165    45 brown   light   brown        46 fema… femin… Naboo  
-##  7 Dormé          165    NA brown   light   brown        NA fema… femin… Naboo  
-##  8 Jocasta Nu     167    NA white   fair    blue         NA fema… femin… Corusc…
-##  9 Wedge Anti…    170    77 brown   fair    hazel        21 male  mascu… Corell…
-## 10 Palpatine      170    75 grey    pale    yellow       82 male  mascu… Naboo  
-## # … with 21 more rows, 4 more variables: species <chr>, films <list>,
-## #   vehicles <list>, starships <list>, and abbreviated variable names
-## #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld
+##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
+##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+##  1 Leia Or…    150    49 brown      light      brown             19 fema… femin…
+##  2 Mon Mot…    150    NA auburn     fair       blue              48 fema… femin…
+##  3 Cordé       157    NA brown      light      brown             NA fema… femin…
+##  4 Shmi Sk…    163    NA black      fair       brown             72 fema… femin…
+##  5 Beru Wh…    165    75 brown      light      blue              47 fema… femin…
+##  6 Padmé A…    165    45 brown      light      brown             46 fema… femin…
+##  7 Dormé       165    NA brown      light      brown             NA fema… femin…
+##  8 Jocasta…    167    NA white      fair       blue              NA fema… femin…
+##  9 Wedge A…    170    77 brown      fair       hazel             21 male  mascu…
+## 10 Palpati…    170    75 grey       pale       yellow            82 male  mascu…
+## # ℹ 21 more rows
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 
 
@@ -191,20 +185,20 @@ starwars3
 
 ```
 ## # A tibble: 31 × 10
-##    name        height  mass hair_…¹ skin_…² eye_c…³ sex   gender homew…⁴ species
-##    <chr>        <int> <dbl> <chr>   <chr>   <chr>   <chr> <chr>  <chr>   <chr>  
-##  1 Leia Organa    150    49 brown   light   brown   fema… femin… Aldera… Human  
-##  2 Mon Mothma     150    NA auburn  fair    blue    fema… femin… Chandr… Human  
-##  3 Cordé          157    NA brown   light   brown   fema… femin… Naboo   Human  
-##  4 Shmi Skywa…    163    NA black   fair    brown   fema… femin… Tatooi… Human  
-##  5 Beru White…    165    75 brown   light   blue    fema… femin… Tatooi… Human  
-##  6 Padmé Amid…    165    45 brown   light   brown   fema… femin… Naboo   Human  
-##  7 Dormé          165    NA brown   light   brown   fema… femin… Naboo   Human  
-##  8 Jocasta Nu     167    NA white   fair    blue    fema… femin… Corusc… Human  
-##  9 Wedge Anti…    170    77 brown   fair    hazel   male  mascu… Corell… Human  
-## 10 Palpatine      170    75 grey    pale    yellow  male  mascu… Naboo   Human  
-## # … with 21 more rows, and abbreviated variable names ¹​hair_color, ²​skin_color,
-## #   ³​eye_color, ⁴​homeworld
+##    name      height  mass hair_color skin_color eye_color sex   gender homeworld
+##    <chr>      <int> <dbl> <chr>      <chr>      <chr>     <chr> <chr>  <chr>    
+##  1 Leia Org…    150    49 brown      light      brown     fema… femin… Alderaan 
+##  2 Mon Moth…    150    NA auburn     fair       blue      fema… femin… Chandrila
+##  3 Cordé        157    NA brown      light      brown     fema… femin… Naboo    
+##  4 Shmi Sky…    163    NA black      fair       brown     fema… femin… Tatooine 
+##  5 Beru Whi…    165    75 brown      light      blue      fema… femin… Tatooine 
+##  6 Padmé Am…    165    45 brown      light      brown     fema… femin… Naboo    
+##  7 Dormé        165    NA brown      light      brown     fema… femin… Naboo    
+##  8 Jocasta …    167    NA white      fair       blue      fema… femin… Coruscant
+##  9 Wedge An…    170    77 brown      fair       hazel     male  mascu… Corellia 
+## 10 Palpatine    170    75 grey       pale       yellow    male  mascu… Naboo    
+## # ℹ 21 more rows
+## # ℹ 1 more variable: species <chr>
 ```
 - Note que o `select()` pode não funcionar corretamente se o pacote `MASS` estiver ativo. Caso esteja, retire a seleção do pacote `MASS` no quadrante inferior/direito em 'Packages' (ou digite `detach("package:MASS", unload = TRUE)`)
 - Uma outra forma de fazer a seleção de coluna é combinando com `starts_with()` e `ends_with()`, que resulta na seleção de colunas que se iniciam e terminam com um texto dado
@@ -261,20 +255,20 @@ starwars4
 
 ```
 ## # A tibble: 31 × 10
-##    name        height  mass hairc…¹ skinc…² eyeco…³ sex   gender homew…⁴ species
-##    <chr>        <int> <dbl> <chr>   <chr>   <chr>   <chr> <chr>  <chr>   <chr>  
-##  1 Leia Organa    150    49 brown   light   brown   fema… femin… Aldera… Human  
-##  2 Mon Mothma     150    NA auburn  fair    blue    fema… femin… Chandr… Human  
-##  3 Cordé          157    NA brown   light   brown   fema… femin… Naboo   Human  
-##  4 Shmi Skywa…    163    NA black   fair    brown   fema… femin… Tatooi… Human  
-##  5 Beru White…    165    75 brown   light   blue    fema… femin… Tatooi… Human  
-##  6 Padmé Amid…    165    45 brown   light   brown   fema… femin… Naboo   Human  
-##  7 Dormé          165    NA brown   light   brown   fema… femin… Naboo   Human  
-##  8 Jocasta Nu     167    NA white   fair    blue    fema… femin… Corusc… Human  
-##  9 Wedge Anti…    170    77 brown   fair    hazel   male  mascu… Corell… Human  
-## 10 Palpatine      170    75 grey    pale    yellow  male  mascu… Naboo   Human  
-## # … with 21 more rows, and abbreviated variable names ¹​haircolor, ²​skincolor,
-## #   ³​eyecolor, ⁴​homeworld
+##    name         height  mass haircolor skincolor eyecolor sex   gender homeworld
+##    <chr>         <int> <dbl> <chr>     <chr>     <chr>    <chr> <chr>  <chr>    
+##  1 Leia Organa     150    49 brown     light     brown    fema… femin… Alderaan 
+##  2 Mon Mothma      150    NA auburn    fair      blue     fema… femin… Chandrila
+##  3 Cordé           157    NA brown     light     brown    fema… femin… Naboo    
+##  4 Shmi Skywal…    163    NA black     fair      brown    fema… femin… Tatooine 
+##  5 Beru Whites…    165    75 brown     light     blue     fema… femin… Tatooine 
+##  6 Padmé Amida…    165    45 brown     light     brown    fema… femin… Naboo    
+##  7 Dormé           165    NA brown     light     brown    fema… femin… Naboo    
+##  8 Jocasta Nu      167    NA white     fair      blue     fema… femin… Coruscant
+##  9 Wedge Antil…    170    77 brown     fair      hazel    male  mascu… Corellia 
+## 10 Palpatine       170    75 grey      pale      yellow   male  mascu… Naboo    
+## # ℹ 21 more rows
+## # ℹ 1 more variable: species <chr>
 ```
 
 
@@ -303,20 +297,20 @@ starwars5
 
 ```
 ## # A tibble: 31 × 12
-##      BMI dummy name    height  mass hairc…¹ skinc…² eyeco…³ sex   gender homew…⁴
-##    <dbl> <dbl> <chr>    <dbl> <dbl> <chr>   <chr>   <chr>   <chr> <chr>  <chr>  
-##  1  21.8     1 Leia O…   1.5     49 brown   light   brown   fema… femin… Aldera…
-##  2  NA       1 Mon Mo…   1.5     NA auburn  fair    blue    fema… femin… Chandr…
-##  3  NA       1 Cordé     1.57    NA brown   light   brown   fema… femin… Naboo  
-##  4  NA       1 Shmi S…   1.63    NA black   fair    brown   fema… femin… Tatooi…
-##  5  27.5     1 Beru W…   1.65    75 brown   light   blue    fema… femin… Tatooi…
-##  6  16.5     1 Padmé …   1.65    45 brown   light   brown   fema… femin… Naboo  
-##  7  NA       1 Dormé     1.65    NA brown   light   brown   fema… femin… Naboo  
-##  8  NA       1 Jocast…   1.67    NA white   fair    blue    fema… femin… Corusc…
-##  9  26.6     1 Wedge …   1.7     77 brown   fair    hazel   male  mascu… Corell…
-## 10  26.0     1 Palpat…   1.7     75 grey    pale    yellow  male  mascu… Naboo  
-## # … with 21 more rows, 1 more variable: species <chr>, and abbreviated variable
-## #   names ¹​haircolor, ²​skincolor, ³​eyecolor, ⁴​homeworld
+##      BMI dummy name       height  mass haircolor skincolor eyecolor sex   gender
+##    <dbl> <dbl> <chr>       <dbl> <dbl> <chr>     <chr>     <chr>    <chr> <chr> 
+##  1  21.8     1 Leia Orga…   1.5     49 brown     light     brown    fema… femin…
+##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema… femin…
+##  3  NA       1 Cordé        1.57    NA brown     light     brown    fema… femin…
+##  4  NA       1 Shmi Skyw…   1.63    NA black     fair      brown    fema… femin…
+##  5  27.5     1 Beru Whit…   1.65    75 brown     light     blue     fema… femin…
+##  6  16.5     1 Padmé Ami…   1.65    45 brown     light     brown    fema… femin…
+##  7  NA       1 Dormé        1.65    NA brown     light     brown    fema… femin…
+##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema… femin…
+##  9  26.6     1 Wedge Ant…   1.7     77 brown     fair      hazel    male  mascu…
+## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu…
+## # ℹ 21 more rows
+## # ℹ 2 more variables: homeworld <chr>, species <chr>
 ```
 
 ## Operador Pipe `%>%`
@@ -329,17 +323,16 @@ filter(starwars, species=="Droid") # sem operador pipe
 
 ```
 ## # A tibble: 6 × 14
-##   name   height  mass hair_color skin_color eye_c…¹ birth…² sex   gender homew…³
-##   <chr>   <int> <dbl> <chr>      <chr>      <chr>     <dbl> <chr> <chr>  <chr>  
-## 1 C-3PO     167    75 <NA>       gold       yellow      112 none  mascu… Tatooi…
-## 2 R2-D2      96    32 <NA>       white, bl… red          33 none  mascu… Naboo  
-## 3 R5-D4      97    32 <NA>       white, red red          NA none  mascu… Tatooi…
-## 4 IG-88     200   140 none       metal      red          15 none  mascu… <NA>   
-## 5 R4-P17     96    NA none       silver, r… red, b…      NA none  femin… <NA>   
-## 6 BB8        NA    NA none       none       black        NA none  mascu… <NA>   
-## # … with 4 more variables: species <chr>, films <list>, vehicles <list>,
-## #   starships <list>, and abbreviated variable names ¹​eye_color, ²​birth_year,
-## #   ³​homeworld
+##   name   height  mass hair_color skin_color  eye_color birth_year sex   gender  
+##   <chr>   <int> <dbl> <chr>      <chr>       <chr>          <dbl> <chr> <chr>   
+## 1 C-3PO     167    75 <NA>       gold        yellow           112 none  masculi…
+## 2 R2-D2      96    32 <NA>       white, blue red               33 none  masculi…
+## 3 R5-D4      97    32 <NA>       white, red  red               NA none  masculi…
+## 4 IG-88     200   140 none       metal       red               15 none  masculi…
+## 5 R4-P17     96    NA none       silver, red red, blue         NA none  feminine
+## 6 BB8        NA    NA none       none        black             NA none  masculi…
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 
 ```r
@@ -348,17 +341,16 @@ starwars %>% filter(species=="Droid") # com operador pipe
 
 ```
 ## # A tibble: 6 × 14
-##   name   height  mass hair_color skin_color eye_c…¹ birth…² sex   gender homew…³
-##   <chr>   <int> <dbl> <chr>      <chr>      <chr>     <dbl> <chr> <chr>  <chr>  
-## 1 C-3PO     167    75 <NA>       gold       yellow      112 none  mascu… Tatooi…
-## 2 R2-D2      96    32 <NA>       white, bl… red          33 none  mascu… Naboo  
-## 3 R5-D4      97    32 <NA>       white, red red          NA none  mascu… Tatooi…
-## 4 IG-88     200   140 none       metal      red          15 none  mascu… <NA>   
-## 5 R4-P17     96    NA none       silver, r… red, b…      NA none  femin… <NA>   
-## 6 BB8        NA    NA none       none       black        NA none  mascu… <NA>   
-## # … with 4 more variables: species <chr>, films <list>, vehicles <list>,
-## #   starships <list>, and abbreviated variable names ¹​eye_color, ²​birth_year,
-## #   ³​homeworld
+##   name   height  mass hair_color skin_color  eye_color birth_year sex   gender  
+##   <chr>   <int> <dbl> <chr>      <chr>       <chr>          <dbl> <chr> <chr>   
+## 1 C-3PO     167    75 <NA>       gold        yellow           112 none  masculi…
+## 2 R2-D2      96    32 <NA>       white, blue red               33 none  masculi…
+## 3 R5-D4      97    32 <NA>       white, red  red               NA none  masculi…
+## 4 IG-88     200   140 none       metal       red               15 none  masculi…
+## 5 R4-P17     96    NA none       silver, red red, blue         NA none  feminine
+## 6 BB8        NA    NA none       none        black             NA none  masculi…
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 - Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está sendo aplicada automaticamente via `%>%`).
 - Note que, desde a subseção com a função `filter()` até `mutate()` fomos "acumulando" as alterações em novos data frames, ou seja, o último data frame `starwars5` é a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
@@ -382,20 +374,20 @@ starwars5
 
 ```
 ## # A tibble: 31 × 12
-##      BMI dummy name    height  mass hairc…¹ skinc…² eyeco…³ sex   gender homew…⁴
-##    <dbl> <dbl> <chr>    <dbl> <dbl> <chr>   <chr>   <chr>   <chr> <chr>  <chr>  
-##  1  21.8     1 Leia O…   1.5     49 brown   light   brown   fema… femin… Aldera…
-##  2  NA       1 Mon Mo…   1.5     NA auburn  fair    blue    fema… femin… Chandr…
-##  3  NA       1 Cordé     1.57    NA brown   light   brown   fema… femin… Naboo  
-##  4  NA       1 Shmi S…   1.63    NA black   fair    brown   fema… femin… Tatooi…
-##  5  27.5     1 Beru W…   1.65    75 brown   light   blue    fema… femin… Tatooi…
-##  6  16.5     1 Padmé …   1.65    45 brown   light   brown   fema… femin… Naboo  
-##  7  NA       1 Dormé     1.65    NA brown   light   brown   fema… femin… Naboo  
-##  8  NA       1 Jocast…   1.67    NA white   fair    blue    fema… femin… Corusc…
-##  9  26.6     1 Wedge …   1.7     77 brown   fair    hazel   male  mascu… Corell…
-## 10  26.0     1 Palpat…   1.7     75 grey    pale    yellow  male  mascu… Naboo  
-## # … with 21 more rows, 1 more variable: species <chr>, and abbreviated variable
-## #   names ¹​haircolor, ²​skincolor, ³​eyecolor, ⁴​homeworld
+##      BMI dummy name       height  mass haircolor skincolor eyecolor sex   gender
+##    <dbl> <dbl> <chr>       <dbl> <dbl> <chr>     <chr>     <chr>    <chr> <chr> 
+##  1  21.8     1 Leia Orga…   1.5     49 brown     light     brown    fema… femin…
+##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema… femin…
+##  3  NA       1 Cordé        1.57    NA brown     light     brown    fema… femin…
+##  4  NA       1 Shmi Skyw…   1.63    NA black     fair      brown    fema… femin…
+##  5  27.5     1 Beru Whit…   1.65    75 brown     light     blue     fema… femin…
+##  6  16.5     1 Padmé Ami…   1.65    45 brown     light     brown    fema… femin…
+##  7  NA       1 Dormé        1.65    NA brown     light     brown    fema… femin…
+##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema… femin…
+##  9  26.6     1 Wedge Ant…   1.7     77 brown     fair      hazel    male  mascu…
+## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu…
+## # ℹ 21 more rows
+## # ℹ 2 more variables: homeworld <chr>, species <chr>
 ```
 - Usando o operador pipe `%>%` várias vezes, podemos ir pegando o output resultante da aplicação de uma função e jogar como input da função seguinte. Reescreveremos o código acima "em única linha" com `%>%`, chegando ao mesmo data frame de `starwars5`
 
@@ -417,20 +409,20 @@ starwars_pipe
 
 ```
 ## # A tibble: 31 × 12
-##      BMI dummy name    height  mass hairc…¹ skinc…² eyeco…³ sex   gender homew…⁴
-##    <dbl> <dbl> <chr>    <dbl> <dbl> <chr>   <chr>   <chr>   <chr> <chr>  <chr>  
-##  1  21.8     1 Leia O…   1.5     49 brown   light   brown   fema… femin… Aldera…
-##  2  NA       1 Mon Mo…   1.5     NA auburn  fair    blue    fema… femin… Chandr…
-##  3  NA       1 Cordé     1.57    NA brown   light   brown   fema… femin… Naboo  
-##  4  NA       1 Shmi S…   1.63    NA black   fair    brown   fema… femin… Tatooi…
-##  5  27.5     1 Beru W…   1.65    75 brown   light   blue    fema… femin… Tatooi…
-##  6  16.5     1 Padmé …   1.65    45 brown   light   brown   fema… femin… Naboo  
-##  7  NA       1 Dormé     1.65    NA brown   light   brown   fema… femin… Naboo  
-##  8  NA       1 Jocast…   1.67    NA white   fair    blue    fema… femin… Corusc…
-##  9  26.6     1 Wedge …   1.7     77 brown   fair    hazel   male  mascu… Corell…
-## 10  26.0     1 Palpat…   1.7     75 grey    pale    yellow  male  mascu… Naboo  
-## # … with 21 more rows, 1 more variable: species <chr>, and abbreviated variable
-## #   names ¹​haircolor, ²​skincolor, ³​eyecolor, ⁴​homeworld
+##      BMI dummy name       height  mass haircolor skincolor eyecolor sex   gender
+##    <dbl> <dbl> <chr>       <dbl> <dbl> <chr>     <chr>     <chr>    <chr> <chr> 
+##  1  21.8     1 Leia Orga…   1.5     49 brown     light     brown    fema… femin…
+##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema… femin…
+##  3  NA       1 Cordé        1.57    NA brown     light     brown    fema… femin…
+##  4  NA       1 Shmi Skyw…   1.63    NA black     fair      brown    fema… femin…
+##  5  27.5     1 Beru Whit…   1.65    75 brown     light     blue     fema… femin…
+##  6  16.5     1 Padmé Ami…   1.65    45 brown     light     brown    fema… femin…
+##  7  NA       1 Dormé        1.65    NA brown     light     brown    fema… femin…
+##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema… femin…
+##  9  26.6     1 Wedge Ant…   1.7     77 brown     fair      hazel    male  mascu…
+## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu…
+## # ℹ 21 more rows
+## # ℹ 2 more variables: homeworld <chr>, species <chr>
 ```
 
 ```r
@@ -480,17 +472,16 @@ head(starwars)
 
 ```
 ## # A tibble: 6 × 14
-##   name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##   <chr>         <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> <chr>  <chr>  
-## 1 Luke Skywal…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
-## 2 C-3PO           167    75 <NA>    gold    yellow    112   none  mascu… Tatooi…
-## 3 R2-D2            96    32 <NA>    white,… red        33   none  mascu… Naboo  
-## 4 Darth Vader     202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-## 5 Leia Organa     150    49 brown   light   brown      19   fema… femin… Aldera…
-## 6 Owen Lars       178   120 brown,… light   blue       52   male  mascu… Tatooi…
-## # … with 4 more variables: species <chr>, films <list>, vehicles <list>,
-## #   starships <list>, and abbreviated variable names ¹​hair_color, ²​skin_color,
-## #   ³​eye_color, ⁴​birth_year, ⁵​homeworld
+##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
+##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
+## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
+## 3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
+## 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
+## 5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
+## 6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 
 ```r
@@ -500,17 +491,16 @@ head(grouped_sw) # agrupado por sexo
 ```
 ## # A tibble: 6 × 14
 ## # Groups:   sex [3]
-##   name         height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
-##   <chr>         <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> <chr>  <chr>  
-## 1 Luke Skywal…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
-## 2 C-3PO           167    75 <NA>    gold    yellow    112   none  mascu… Tatooi…
-## 3 R2-D2            96    32 <NA>    white,… red        33   none  mascu… Naboo  
-## 4 Darth Vader     202   136 none    white   yellow     41.9 male  mascu… Tatooi…
-## 5 Leia Organa     150    49 brown   light   brown      19   fema… femin… Aldera…
-## 6 Owen Lars       178   120 brown,… light   blue       52   male  mascu… Tatooi…
-## # … with 4 more variables: species <chr>, films <list>, vehicles <list>,
-## #   starships <list>, and abbreviated variable names ¹​hair_color, ²​skin_color,
-## #   ³​eye_color, ⁴​birth_year, ⁵​homeworld
+##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
+##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
+## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
+## 3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
+## 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
+## 5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
+## 6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
+## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## #   vehicles <list>, starships <list>
 ```
 - O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observações
 
@@ -523,21 +513,20 @@ starwars %>%
 
 ```
 ## # A tibble: 10 × 15
-##    mean_mass sex    name     height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ gender
-##        <dbl> <chr>  <chr>     <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> 
-##  1      97.3 male   Luke Sk…    172    77 blond   fair    blue       19   mascu…
-##  2      97.3 none   C-3PO       167    75 <NA>    gold    yellow    112   mascu…
-##  3      97.3 none   R2-D2        96    32 <NA>    white,… red        33   mascu…
-##  4      97.3 male   Darth V…    202   136 none    white   yellow     41.9 mascu…
-##  5      97.3 female Leia Or…    150    49 brown   light   brown      19   femin…
-##  6      97.3 male   Owen La…    178   120 brown,… light   blue       52   mascu…
-##  7      97.3 female Beru Wh…    165    75 brown   light   blue       47   femin…
-##  8      97.3 none   R5-D4        97    32 <NA>    white,… red        NA   mascu…
-##  9      97.3 male   Biggs D…    183    84 black   light   brown      24   mascu…
-## 10      97.3 male   Obi-Wan…    182    77 auburn… fair    blue-g…    57   mascu…
-## # … with 5 more variables: homeworld <chr>, species <chr>, films <list>,
-## #   vehicles <list>, starships <list>, and abbreviated variable names
-## #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year
+##    mean_mass sex   name  height  mass hair_color skin_color eye_color birth_year
+##        <dbl> <chr> <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl>
+##  1      97.3 male  Luke…    172    77 blond      fair       blue            19  
+##  2      97.3 none  C-3PO    167    75 <NA>       gold       yellow         112  
+##  3      97.3 none  R2-D2     96    32 <NA>       white, bl… red             33  
+##  4      97.3 male  Dart…    202   136 none       white      yellow          41.9
+##  5      97.3 fema… Leia…    150    49 brown      light      brown           19  
+##  6      97.3 male  Owen…    178   120 brown, gr… light      blue            52  
+##  7      97.3 fema… Beru…    165    75 brown      light      blue            47  
+##  8      97.3 none  R5-D4     97    32 <NA>       white, red red             NA  
+##  9      97.3 male  Bigg…    183    84 black      light      brown           24  
+## 10      97.3 male  Obi-…    182    77 auburn, w… fair       blue-gray       57  
+## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
+## #   films <list>, vehicles <list>, starships <list>
 ```
 - Note que todos os valores de `mean_mass` são iguais. Agora, agruparemos por `sex` antes de fazer a soma:
 
@@ -552,21 +541,20 @@ starwars %>%
 
 ```
 ## # A tibble: 10 × 15
-##    mean_mass sex    name     height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ gender
-##        <dbl> <chr>  <chr>     <int> <dbl> <chr>   <chr>   <chr>     <dbl> <chr> 
-##  1      81.0 male   Luke Sk…    172    77 blond   fair    blue       19   mascu…
-##  2      69.8 none   C-3PO       167    75 <NA>    gold    yellow    112   mascu…
-##  3      69.8 none   R2-D2        96    32 <NA>    white,… red        33   mascu…
-##  4      81.0 male   Darth V…    202   136 none    white   yellow     41.9 mascu…
-##  5      54.7 female Leia Or…    150    49 brown   light   brown      19   femin…
-##  6      81.0 male   Owen La…    178   120 brown,… light   blue       52   mascu…
-##  7      54.7 female Beru Wh…    165    75 brown   light   blue       47   femin…
-##  8      69.8 none   R5-D4        97    32 <NA>    white,… red        NA   mascu…
-##  9      81.0 male   Biggs D…    183    84 black   light   brown      24   mascu…
-## 10      81.0 male   Obi-Wan…    182    77 auburn… fair    blue-g…    57   mascu…
-## # … with 5 more variables: homeworld <chr>, species <chr>, films <list>,
-## #   vehicles <list>, starships <list>, and abbreviated variable names
-## #   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year
+##    mean_mass sex   name  height  mass hair_color skin_color eye_color birth_year
+##        <dbl> <chr> <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl>
+##  1      81.0 male  Luke…    172    77 blond      fair       blue            19  
+##  2      69.8 none  C-3PO    167    75 <NA>       gold       yellow         112  
+##  3      69.8 none  R2-D2     96    32 <NA>       white, bl… red             33  
+##  4      81.0 male  Dart…    202   136 none       white      yellow          41.9
+##  5      54.7 fema… Leia…    150    49 brown      light      brown           19  
+##  6      81.0 male  Owen…    178   120 brown, gr… light      blue            52  
+##  7      54.7 fema… Beru…    165    75 brown      light      blue            47  
+##  8      69.8 none  R5-D4     97    32 <NA>       white, red red             NA  
+##  9      81.0 male  Bigg…    183    84 black      light      brown           24  
+## 10      81.0 male  Obi-…    182    77 auburn, w… fair       blue-gray       57  
+## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
+## #   films <list>, vehicles <list>, starships <list>
 ```
 - Note que, agora, a coluna `mean_mass` tem valores diferentes de acordo com o sexo da observação.
 - Isso é útil em algumas aplicações econômicas em que consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observação (e.g. morador) pertence.
@@ -636,7 +624,7 @@ starwars %>% group_by(sex, hair_color) %>%
 ##  8 male           auburn, grey      1        180      NaN  
 ##  9 male           auburn, white     1        182       77  
 ## 10 male           black             9        176.      81.0
-## # … with 13 more rows
+## # ℹ 13 more rows
 ```
 - Para agrupar variáveis **contínuas**, precisamos definir intervalos usando a função `cut()`
 ```yaml
@@ -827,13 +815,13 @@ bd1
 ##    name            year  mass
 ##    <chr>          <dbl> <dbl>
 ##  1 C-3PO           2021  75  
-##  2 C-3PO           2022  75.6
+##  2 C-3PO           2022  75.5
 ##  3 Darth Vader     2021 136  
 ##  4 Darth Vader     2022 135. 
 ##  5 Leia Organa     2021  49  
-##  6 Leia Organa     2022  50.8
+##  6 Leia Organa     2022  51.3
 ##  7 Luke Skywalker  2021  77  
-##  8 Luke Skywalker  2022  77.8
+##  8 Luke Skywalker  2022  75.4
 ##  9 R2-D2           2021  32  
 ## 10 R2-D2           2022  33.8
 ```
@@ -876,13 +864,13 @@ full_join(bd1, bd2, by=c("name", "year"))
 ##    name                year  mass height
 ##    <chr>              <dbl> <dbl>  <dbl>
 ##  1 C-3PO               2021  75    167  
-##  2 C-3PO               2022  75.6  170. 
+##  2 C-3PO               2022  75.5  170. 
 ##  3 Darth Vader         2021 136    202  
 ##  4 Darth Vader         2022 135.   206. 
 ##  5 Leia Organa         2021  49     NA  
-##  6 Leia Organa         2022  50.8   NA  
+##  6 Leia Organa         2022  51.3   NA  
 ##  7 Luke Skywalker      2021  77     NA  
-##  8 Luke Skywalker      2022  77.8   NA  
+##  8 Luke Skywalker      2022  75.4   NA  
 ##  9 R2-D2               2021  32     NA  
 ## 10 R2-D2               2022  33.8   NA  
 ## 11 Beru Whitesun lars  2021  NA    165  
@@ -902,24 +890,24 @@ full_join(bd1, bd2, by=c("name", "year"))
 
 ```
 ## # A tibble: 16 × 5
-##    name                year mass.x height    mass.y
-##    <chr>              <dbl>  <dbl>  <dbl>     <dbl>
-##  1 C-3PO               2021   75    167    0.362   
-##  2 C-3PO               2022   75.6  170.  -0.000761
-##  3 Darth Vader         2021  136    202    0.320   
-##  4 Darth Vader         2022  135.   206.  -1.53    
-##  5 Leia Organa         2021   49     NA   NA       
-##  6 Leia Organa         2022   50.8   NA   NA       
-##  7 Luke Skywalker      2021   77     NA   NA       
-##  8 Luke Skywalker      2022   77.8   NA   NA       
-##  9 R2-D2               2021   32     NA   NA       
-## 10 R2-D2               2022   33.8   NA   NA       
-## 11 Beru Whitesun lars  2021   NA    165    0.641   
-## 12 Beru Whitesun lars  2022   NA    168.  -0.138   
-## 13 Biggs Darklighter   2021   NA    183    0.238   
-## 14 Biggs Darklighter   2022   NA    187.  -0.259   
-## 15 R5-D4               2021   NA     97   -0.753   
-## 16 R5-D4               2022   NA     98.9  1.77
+##    name                year mass.x height mass.y
+##    <chr>              <dbl>  <dbl>  <dbl>  <dbl>
+##  1 C-3PO               2021   75    167    1.04 
+##  2 C-3PO               2022   75.5  170.  -1.36 
+##  3 Darth Vader         2021  136    202   -0.329
+##  4 Darth Vader         2022  135.   206.   1.07 
+##  5 Leia Organa         2021   49     NA   NA    
+##  6 Leia Organa         2022   51.3   NA   NA    
+##  7 Luke Skywalker      2021   77     NA   NA    
+##  8 Luke Skywalker      2022   75.4   NA   NA    
+##  9 R2-D2               2021   32     NA   NA    
+## 10 R2-D2               2022   33.8   NA   NA    
+## 11 Beru Whitesun lars  2021   NA    165    0.248
+## 12 Beru Whitesun lars  2022   NA    168.  -0.581
+## 13 Biggs Darklighter   2021   NA    183   -0.613
+## 14 Biggs Darklighter   2022   NA    187.   0.286
+## 15 R5-D4               2021   NA     97   -0.138
+## 16 R5-D4               2022   NA     98.9  0.723
 ```
 
 

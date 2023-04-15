@@ -3,8 +3,9 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: R Programming
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: The page also contains a table of contents for his R programming project, which includes topics such as basic operations, objects in R, logical/boolean expressions, vectors, matrices, lists, data frames, extracting subsets, removing missing values (NA), vector/matrix operations, basic statistics on vectors and matrices, control structures (conditional (if), repetition (for), repetition (while)), and examples of optimization of univariate and bivariate functions.
+
+
 title: R Programming
 weight: 2
 output: md_document
@@ -13,6 +14,8 @@ type: book
 
 
 
+
+</br>
 
 ## Operações básicas
 
@@ -87,6 +90,8 @@ type: book
 ## [1] 2
 ```
 
+
+</br>
 
 ## Objetos no R
  - [Data types, R objects and attributes (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/OS8hs/data-types-r-objects-and-attributes)
@@ -230,221 +235,6 @@ print(boolean3)
 ## [1] FALSE
 ```
 
-### Textos
-- Só será abordado um conteúdo bem básico para trabalhar com texto.
-- Para mais conteúdo:
-    - [Editing text variables (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/drpnT/editing-text-variables)
-    - [Regular expressions I (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/bNiON/regular-expressions-i)
-    - [Regular expressions II (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/QvbWt/regular-expressions-ii)
-- Para extrair parte de um texto, usamos a função `substr()`
-```yaml
-substr(x, start, stop)
-
-x: a character vector.
-start: integer. The first element to be replaced.
-stop: integer. The last element to be replaced.
-```
-
-
-```r
-substr("shampoo", 1, 3) # extraindo caracteres 1 a 3 do texto
-```
-
-```
-## [1] "sha"
-```
-
-```r
-substr(110521, 4, 6) # também pode ser feito em números (torn-se texto)
-```
-
-```
-## [1] "521"
-```
-- Isto pode ser interessante, por exemplo, com códigos de localidades do IBGE:
-
-```r
-cod_distrito = 110001515 # Distrito de Filadélfia d'Oeste
-substr(cod_distrito, 1, 7) # Município de Alta Floresta d'Oeste
-```
-
-```
-## [1] "1100015"
-```
-
-```r
-substr(cod_distrito, 1, 2) # UF Rondônia
-```
-
-```
-## [1] "11"
-```
-- Eventualmente, uma base de dados pode vir com os códigos de UF, município e distrito de forma separada e precisamos juntar os códigos:
-
-```r
-cod_uf = 11
-cod_municipio = 15
-cod_distrito = 15
-```
-- No entanto, como o código parcial do município veio como número, precisamos adicionar uma certa quantidade de zeros na frente para ficar com 5 caracteres e ficar no padrão do IBGE. Para fazer isso, usamos a função `sprintf()` com a formatação `fmt="%05d"` (número com 5 dígitos)
-```yaml
-sprintf(fmt, ...)
-
-fmt: a character vector of format strings, each of up to 8192 bytes.
-...	: values to be passed into fmt. Only logical, integer, real and character vectors are supported, but some coercion will be done. Up to 100.
-```
-
-```r
-sprintf("%05d", cod_municipio)
-```
-
-```
-## [1] "00015"
-```
-- Agora, para juntar textos (podendo incluir números), usamos as funções `paste0()` e `paste()`. A diferença entre eles é que o `paste0()` não incluir um separador entre os textos, e o `paste()` inclui um separador (o padrão é um espaço):
-
-```r
-paste0(cod_uf, sprintf("%05d", cod_municipio), cod_distrito)
-```
-
-```
-## [1] "110001515"
-```
-
-```r
-paste(cod_uf, sprintf("%05d", cod_municipio), cod_distrito)
-```
-
-```
-## [1] "11 00015 15"
-```
-
-
-### Datas e horários
-- [Dates and times (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/yl7BO/dates-and-times)
-- [Working with dates (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/0rohY/working-with-dates)
-- R usa uma representação especial para datas e horários
-- Datas são representadas na classe `Date`
-    - São armazenadas internamente como _número de dias_ desde 1970-01-01
-    - Para transformar um texto em uma data, usamos a função `as.Date()`
-    
-
-```r
-x = as.Date("1970-01-01")
-class(x)
-```
-
-```
-## [1] "Date"
-```
-
-```r
-x
-```
-
-```
-## [1] "1970-01-01"
-```
-
-```r
-unclass(x) # Dia 0
-```
-
-```
-## [1] 0
-```
-
-```r
-unclass(as.Date("1969-12-31")) # Dia -1
-```
-
-```
-## [1] -1
-```
-
-- Horários são representadas na classe `POSIXct` (apenas um _integer_ bem grande) ou `POSIXlt` (_lista_ guarda mais informações - dia da semana, dia do ano, mês, dia do mês)
-     - São armazenadas internamente como _número de segundos_ desde:
-        - **1970**-01-01, se `POSIXct`
-        - **1900**-01-01, se `POSIXlt`
-
-
-```r
-## POSIXct
-x = as.POSIXct("1970-01-01")
-x
-```
-
-```
-## [1] "1970-01-01 -03"
-```
-
-```r
-class(x)
-```
-
-```
-## [1] "POSIXct" "POSIXt"
-```
-
-```r
-unclass(x) # Nº de segundos desde 1970-01-01 (dado fuso horário)
-```
-
-```
-## [1] 10800
-## attr(,"tzone")
-## [1] ""
-```
-
-```r
-## POSIXlt
-p = as.POSIXlt("1970-01-01")
-class(p)
-```
-
-```
-## [1] "POSIXlt" "POSIXt"
-```
-
-```r
-unclass(p) # informações desde 1900
-```
-
-```
-## $sec
-## [1] 0
-## 
-## $min
-## [1] 0
-## 
-## $hour
-## [1] 0
-## 
-## $mday
-## [1] 1
-## 
-## $mon
-## [1] 0
-## 
-## $year
-## [1] 70
-## 
-## $wday
-## [1] 4
-## 
-## $yday
-## [1] 0
-## 
-## $isdst
-## [1] 0
-## 
-## $zone
-## [1] "-03"
-## 
-## $gmtoff
-## [1] NA
-```
-
 
 ### Expressões lógicas/booleanas
 São expressões que retornam o valor Verdadeiro ou Falso:
@@ -490,7 +280,7 @@ T + F + T + F + F # soma de 1's (TRUE) e 0's (FALSE)
 ```
 
 ```r
-100 == 10**2
+100 == 10^2
 ```
 
 ```
@@ -509,7 +299,7 @@ T + F + T + F + F # soma de 1's (TRUE) e 0's (FALSE)
 
 ```r
 x = 20
-x < 0 | x**2 > 100
+x < 0 | x^2 > 100
 ```
 
 ```
@@ -517,7 +307,7 @@ x < 0 | x**2 > 100
 ```
 
 ```r
-x < 0 & x**2 > 100
+x < 0 & x^2 > 100
 ```
 
 ```
@@ -547,25 +337,6 @@ x = 9:12 # integer (é igual a c(9, 10, 11, 12))
 x = c(1+0i, 2+4i) # complex
 ```
 
-
-Também é possível criar um vetor "em branco" usando a função `vector()` e definindo a classe dos seus elementos junto de seu tamanho:
-
-```yaml
-vector(mode = "logical", length = 0)
-
-mode: character string naming an atomic mode or "list" or "expression" or (except for vector) "any". Currently, is.vector() allows any type (see typeof) for mode, and when mode is not "any", is.vector(x, mode) is almost the same as typeof(x) == mode.
-length: a non-negative integer specifying the desired length. For a long vector, i.e., length > .Machine$integer.max, it has to be of type "double". Supplying an argument of length other than one is an error
-```
-
-
-```r
-x = vector(mode="numeric", length=10)
-x
-```
-
-```
-##  [1] 0 0 0 0 0 0 0 0 0 0
-```
 
 Se utilizarmos a função `c()` com elementos de classes diferentes, o R transforma a classe do objeto para o "mais geral":
 
@@ -598,7 +369,7 @@ class(y)
 
 > **Note que**:
 >
-> character `\(>\)` complex `\(>\)` numeric `\(>\)` integer `\(>\)` logical
+> character > complex > numeric > integer > logical
 
 Também podemos forçar a mudança de classe de objeto para a classe "menos geral", o que acaba transformando:
 
@@ -716,39 +487,6 @@ rep(c("a", "b"), 2) # repetição do vetor c("a", "b")
 ## [1] "a" "b" "a" "b"
 ```
 
-### Listas
-Já uma lista permite que os valores pertençam a classes distintas, inclusive podendo conter um vetor como elemento. Ela pode ser criada por meio da função `list()`:
-
-```r
-x = list(1, "a", TRUE, 1+4i, c(0.5, 0.6))
-x
-```
-
-```
-## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] "a"
-## 
-## [[3]]
-## [1] TRUE
-## 
-## [[4]]
-## [1] 1+4i
-## 
-## [[5]]
-## [1] 0.5 0.6
-```
-
-```r
-class(x)
-```
-
-```
-## [1] "list"
-```
-
 
 ### Matrizes
 Matrizes são vetores (e, portanto, possuem elementos de mesma classe) com atributo de _dimensão_ (nº linhas por nº colunas). Uma matriz pode ser criada usando a função `matrix()`:
@@ -787,7 +525,6 @@ m
 ## [2,]    2    4    6
 ```
 
-> **ATENÇÃO**: No Python, você informa os valores da matriz por linha (_row-wise_).
 
 Outra maneira de criar matrizes é juntando vetores em colunas (_column-binding_) ou em linhas (_row-binding_), usando as funções `cbind()` e `rbind()`, respectivamente:
 
@@ -824,77 +561,37 @@ rbind(x, y)
 ```
 
 
-### Fatores
-- [Data types - Factors (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/Eidkq/data-types-factors)
-
-- _Factor_ é uma classe de objeto que representa uma variável categórica, em que cada possível valor é considerado uma categoria/nível (_level_) distinto.
-- Por exemplo, ao usar factor em uma variável de sexo/gênero, os valores "masculino" e "feminino" podem ser considerados como níveis (_levels_) 1 e 2, por exemplo.
-- Isso é especialmente interessante em regressões (via `lm()` ou `glm()`), pois
-    - quando esse _factor_ é colocado como variável explicativa, o R já considera cada nível como uma _dummy_, e
-    - para evitar multicolinearidade perfeita, retira-se automaticamente o 1º nível (no exemplo, portanto, manteria apenas uma _dummy_ de "feminino" na regressão).
-- Para criar um _factor_, usa-se a função `factor()`
-```yaml
-factor(x = character(), levels, ...)
-
-x: a vector of data, usually taking a small number of distinct values.
-levels: an optional vector of the unique values (as character strings) that x might have taken. The default is the unique set of values taken by as.character(x), sorted into increasing order of x. Note that this set can be specified as smaller than sort(unique(x)).
-```
-
+### Listas
+Já uma lista permite que os valores pertençam a classes distintas, inclusive podendo conter um vetor como elemento. Ela pode ser criada por meio da função `list()`:
 
 ```r
-texto = c("yes", "yes", "no", "maybe", "yes", "no")
-x = factor(texto)
+x = list(1, "a", TRUE, 1+4i, c(0.5, 0.6))
 x
 ```
 
 ```
-## [1] yes   yes   no    maybe yes   no   
-## Levels: maybe no yes
+## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] "a"
+## 
+## [[3]]
+## [1] TRUE
+## 
+## [[4]]
+## [1] 1+4i
+## 
+## [[5]]
+## [1] 0.5 0.6
 ```
 
 ```r
-unclass(x) # Visualizar como o factor é representado em níveis
+class(x)
 ```
 
 ```
-## [1] 3 3 2 1 3 2
-## attr(,"levels")
-## [1] "maybe" "no"    "yes"
-```
-
-- Note que, quando transformamos o vetor `texto` em factor, considerou automaticamente que "maybe" é o 1º nível, "no" é o 2º nível e "yes" é o 3º nível.
-- Eventualmente, queremos definir "yes" como 1º nível do _factor_ para que, por exemplo, seja o nível desconsiderado numa regressão (para evitar multicolinearidade perfeita).
-- Para isto, podemos usar incluir o argumento `levels = ...` quando transformar um vetor em _factor_ usando a função `factor`
-- Ou, também, utilizar a função `relevel()` em um _factor_ existente
-
-```yaml
-relevel(x, ref, ...)
-
-x: an unordered factor.
-ref: the reference level, typically a string.
-```
-
-
-```r
-y = factor(texto, levels=c("yes", "no", "maybe"))
-unclass(y)
-```
-
-```
-## [1] 1 1 2 3 1 2
-## attr(,"levels")
-## [1] "yes"   "no"    "maybe"
-```
-
-```r
-x = relevel(x, ref="yes")
-unclass(x)
-```
-
-```
-## [1] 1 1 3 2 1 3
-## attr(,"levels")
-## [1] "yes"   "maybe" "no"
+## [1] "list"
 ```
 
 
@@ -957,7 +654,7 @@ ncol(x) # Número de colunas de x
 data_txt = read.table("mtcars.txt") # também lê .csv
 data_csv = read.csv("mtcars.csv")
 ```
-- Caso queira testar, faça download das bases: [mtcars.txt](https://fhnishida.github.io/fearp/eco1/mtcars.txt) e [mtcars.csv](https://fhnishida.github.io/fearp/eco1/mtcars.csv)
+- Caso queira testar, faça download das bases: [mtcars.txt](../mtcars.txt) e [mtcars.csv](../mtcars.csv)
 - Note que, caso você não tenha definido o diretório de trabalho, é necessário informar o caminho/endereço inteiro do arquivo que você quer importar:
 ```r
 data = read.table("C:/Users/Fabio/OneDrive/FEA-RP/mtcars.csv")
@@ -982,7 +679,9 @@ Caso queira testar, faça download da base [mtcars.xlsx](../mtcars.xlsx)
 > Caso queira testar, faça download das bases: [mtcars_br.csv](../mtcars_br.csv) e [mtcars_br.xlsx](../mtcars_br.xlsx)
 
 
-## Subsetting
+</br>
+
+## Extraindo Subconjuntos
 - [Subsetting - Basics (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/JDoLX/subsetting-basics)
 - Há 3 operadores básicos para extrair subconjuntos de objetos no R:
     - `[]`: retorna um "sub-objeto" da mesma classe do objeto original
@@ -990,7 +689,7 @@ Caso queira testar, faça download da base [mtcars.xlsx](../mtcars.xlsx)
     - `$`: usado para extrair elemento de uma lista ou data frame pelo nome
 
 
-### Subsetting vector
+### Subconjunto de vetores
 
 ```r
 x = c(1, 2, 3, 3, 4, 1)
@@ -1009,9 +708,8 @@ x[1:4] # extraindo do 1º ao 4º elemento de x
 ## [1] 1 2 3 3
 ```
 
-> **ATENÇÃO**: Diferente do Python, em que a numeração se inicia no 0, a numeração dos elementos no R se inicia no 1.
 
-- Note que, ao fazer uma expressão lógica com um vetor, obtemos um outro vetor, chamado de _índice lógico_
+- Note que, ao fazer uma expressão lógica com um vetor, obtemos um _vetor lógico_
 
 ```r
 x > 1
@@ -1038,7 +736,7 @@ x[c(F, T, T, T, T, F)] # Equivalente ao x[x > 1] - Extrair apenas TRUE's
 ## [1] 2 3 3 4
 ```
 
-### Subsetting list
+### Subconjunto de listas
 - [Subsetting - Lists (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/hVKHm/subsetting-lists)
 - Note que, diferente do vetor, para acessar um valor/elemento de uma lista é necessário utilizar `[[]]` com o número da posição do elemento da lista
 
@@ -1056,7 +754,7 @@ x
 ```
 
 ```r
-x[1] # retorna uma lista $foo
+x[1] # retorna a lista foo
 ```
 
 ```
@@ -1073,7 +771,7 @@ class(x[1])
 ```
 
 ```r
-x[[1]] # retorna um vetor de classe numeric
+x[[1]] # retorna o vetor foo de classe numeric
 ```
 
 ```
@@ -1123,7 +821,7 @@ x$foo
 ```
 
 
-### Subsetting matrix and data frame
+### Subconjunto de matrizes e de data frames
 - [Subsetting - Matrices (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/4gSc1/subsetting-matrices)
 - Para extrair um pedaço de uma matriz ou de um data frame, indicamos as linhas e as colunas dentro do operador `[]`
 
@@ -1194,7 +892,7 @@ x[1, 2, drop = FALSE]
 ## [1,]    3
 ```
 
-### Removing `NA`s
+### Removendo valores ausentes (`NA`)
 - [Subsetting - Removing missing values (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/Qy8bH/subsetting-removing-missing-values)
 - Remover dados faltantes é uma ação comum quando manipulamos bases de dados
 - Para verificar quais dados são `NA`, usa-se a função `is.na()`
@@ -1225,6 +923,8 @@ x[ !is.na(x) ]
 ## [1] 1 2 4
 ```
 
+
+</br>
 
 ## Operações vetoriais/matriciais
 - [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
@@ -1267,17 +967,17 @@ x / y # divisão de cada elemento na mesma posição
 - Para fazer o produto vetorial usa-se `%*%`. Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna.
 
 ```r
-x %*% y
+# Operações vetoriais
+x %*% y # x vetor-linha / y vetor-coluna
 ```
 
 ```
 ##      [,1]
 ## [1,]   80
 ```
-- Para transpor um vetor ou uma matriz, pode-se transformar em um vetor linha ou coluna via `matrix()`, ou é possível transpor usando  a função `t()`.
 
 ```r
-x %*% t(y) # x vetor-coluna / y vetor-linha
+x %*% t(y) # x vetor-coluna / y vetor-linha (só altera o segundo)
 ```
 
 ```
@@ -1287,10 +987,11 @@ x %*% t(y) # x vetor-coluna / y vetor-linha
 ## [3,]   18   21   24   27
 ## [4,]   24   28   32   36
 ```
+- Também pode-se "forçar" um vetor em linha ou em coluna via função `matrix()`.
 
 ```r
 # Transformando vetores em objetos matriz
-x_col = matrix(x, ncol=1)
+x_col = matrix(x, ncol=1) # vetor-coluna
 x_col
 ```
 
@@ -1313,7 +1014,8 @@ y_lin
 ```
 
 ```r
-x_col %*% y_lin
+# Operações vetoriais
+x_col %*% y_lin # x vetor-linha / y vetor-coluna 
 ```
 
 ```
@@ -1322,6 +1024,15 @@ x_col %*% y_lin
 ## [2,]   12   14   16   18
 ## [3,]   18   21   24   27
 ## [4,]   24   28   32   36
+```
+
+```r
+t(x_col) %*% t(y_lin) # x vetor-linha / y vetor-coluna 
+```
+
+```
+##      [,1]
+## [1,]   80
 ```
 - O mesmo é válido para matrizes:
 
@@ -1387,10 +1098,10 @@ x %*% y # Multplicação matricial
 ## [2,]   60   60
 ```
 
-> Note que essas operações matemáticas são equivalentes às realizadas apenas quando as matrizes são transformadas em `numpy.array` no Python.
 
+</br>
 
-## Estatísticas básicas
+## Estatísticas básicas em vetores e matrizes
 - **Valores Absolutos**: `abs()`
 
 ```r
@@ -1540,6 +1251,78 @@ mean(x, na.rm=TRUE) # Excluindo valores ausentes
 ## [1] 1.2
 ```
 
+
+### Exemplo: Otimização de função univariada
+- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x) = x^2 + 4x - 4${{</math>}}, ou seja,
+    $$ \text{arg} \min_x (x^2 + 4x - 4) $$
+- Ver no [Wolfram](https://www.wolframalpha.com/input?i=solve+x%5E2+%2B+4x+-+4+%3D+0)
+- Para resolver numericamente, podemos chutar diversos valores de {{<math>}}$x${{</math>}} e pegar o menor valor
+- Primeiro, vamos construir um vetor com diversos valores de {{<math>}}$x${{</math>}} no intervalo {{<math>}}$[-5, 5]${{</math>}}.
+
+```r
+x_grid = seq(-5, 5, length=20)
+x_grid
+```
+
+```
+##  [1] -5.0000000 -4.4736842 -3.9473684 -3.4210526 -2.8947368 -2.3684211
+##  [7] -1.8421053 -1.3157895 -0.7894737 -0.2631579  0.2631579  0.7894737
+## [13]  1.3157895  1.8421053  2.3684211  2.8947368  3.4210526  3.9473684
+## [19]  4.4736842  5.0000000
+```
+- Agora, vamos calcular o valor de {{<math>}}$f(x)${{</math>}} para cada possível {{<math>}}$x${{</math>}}
+
+```r
+fx = x_grid^2 + 4*x_grid - 4 
+```
+- Note que cada elemento calculado em `fx_grid` corresponde a um {{<math>}}$x${{</math>}} na mesma posição/índice em `x_grid`
+
+```r
+head( cbind(x=x_grid, fx=fx), 6) # mostrando os 6 primeiros valores
+```
+
+```
+##              x        fx
+## [1,] -5.000000  1.000000
+## [2,] -4.473684 -1.880886
+## [3,] -3.947368 -4.207756
+## [4,] -3.421053 -5.980609
+## [5,] -2.894737 -7.199446
+## [6,] -2.368421 -7.864266
+```
+- Agora, vamos ver o valor e a *posição* de {{<math>}}$x${{</math>}} que minimiza a função:
+
+```r
+min(fx) # f(x) mínimo
+```
+
+```
+## [1] -7.975069
+```
+
+```r
+argmin_index = which.min(fx) # índice de x que maximiza
+argmin_index
+```
+
+```
+## [1] 7
+```
+- Para recuperar o valor de {{<math>}}$x${{</math>}} que minimiza {{<math>}}$f(x)${{</math>}}, precisamos usar o índice encontrado para encontrar no vetor `x_grid`:
+
+```r
+x_grid[argmin_index]
+```
+
+```
+## [1] -1.842105
+```
+- Observe que podemos aumentar a precisão aumentando o número de possíveis valores de {{<math>}}$x${{</math>}} no `x_grid`. Por outro lado, em contas mais complexas, pode elevar muito o tempo de execução do comando.
+
+
+
+</br>
+
 ## Estruturas de controle
 - Estruturas de controle no R permitem o controle do fluxo do programa
 
@@ -1589,66 +1372,7 @@ y
 ```
 ## [1] 5
 ```
-- mas existem funções mais práticas para atribuir valor a um objeto a partir de uma condição:
-    - função `ifelse()` (útil para 2 possíveis valores)
-    
-```yaml
-ifelse(test, yes, no)
 
-test: an object which can be coerced to logical mode.
-yes: return values for true elements of test.
-no: return values for false elements of test.
-```
-
-
-```r
-x = 5
-y = ifelse(x > 10, yes=10, no=5)
-y
-```
-
-```
-## [1] 5
-```
-
-- função `case_when()` do pacote `dplyr` (útil para mais do que 2 possíveis valores)
-
-```yaml
-case_when(...)
-
-... : A sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value.
-```
-    
-
-```r
-x = 5
-y = dplyr::case_when(
-    x > 10 ~ 10,
-    x >  0 ~  5,
-    TRUE   ~  0  # Else
-)
-y
-```
-
-```
-## [1] 5
-```
-
-- note que, no `case_when()`, se não deixarmos claros todas os possíveis casos e, por acaso, cair num caso não declarado, a função retorna o valor `NA`
-    
-
-```r
-x = 5
-y = dplyr::case_when(
-    x > 10 ~ 10,
-    x <= 0 ~  0
-)
-y
-```
-
-```
-## [1] NA
-```
 
 ### Repetição (`for`)
 - [Control structures - For loops (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/baydC/control-structures-for-loops)
@@ -1700,11 +1424,12 @@ for (val in sequencia) {
 ## [1] 25
 ```
 
+
 ### Repetição (`while`)
 - [Control structures - While loops (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/WWXg6/control-structures-while-loops)
 - Diferente do `for`, a repetição via `while` exige que uma variável de indicação já esteja criada previamente antes de entrar no loop
 - Isto se dá, pois os loops (inclusive o primeiro) só serão realizados se uma condição for verdadeira
-- Note que, por não seguir uma sequência de elemento dentro de um vetor (como no `for`), **é necessário que a variável indicadora seja atualizada a cada iteração para que a repetição não seja feita infinitamente**.
+- Note que, por não seguir uma sequência de elemento dentro de um vetor (como no `for`), **é necessário que a variável de indicação seja atualizada a cada iteração para que a repetição não seja feita infinitamente**.
 - Um forma comum de executar o `while` é definindo a variável de indicação como um contador, isto é, ir contando a quantidade de loops realizados e parar em uma determinada quantidade
 
 ```r
@@ -1729,19 +1454,12 @@ while (contador <= 10) {
 ## [1] 9
 ## [1] 10
 ```
-- Uma outra maneira é, ao invés de aumentar em uma unidade por loop, a variável indicadora ser calculada e ela convergir ou ultrapassar algum limite. No exemplo abaixo, a cada loop da `distancia` diminuirá pela metade e irá parar num valor bem próximo de 0 (algum valor menor do que `\(10^{-3}\)`)
+- Uma alternativa à variável de indicação que funciona como contador: valor a ser calculado em cada iteração até convergir (chegar a um valor muito pequeno) ou ultrapassar algum valor limite. No exemplo abaixo, a cada loop da variável de indicação `distancia` diminuirá pela metade e irá parar num valor bem próximo de 0 (algum valor menor do que `\(10^{-3}\)`)
 
 ```r
 distancia = 10
-tolerancia = 1e-3
-tolerancia
-```
+tolerancia = 1e-3 # = 1 x 10^(-3) = 0.001
 
-```
-## [1] 0.001
-```
-
-```r
 while (distancia > tolerancia) {
     distancia = distancia / 2
 }
@@ -1754,7 +1472,7 @@ distancia
 ```
 
 
-### Exemplo: Tabuada
+### Exemplo 1: Tabuada
 - É comum o uso de uma estrutura de repetição dentro de outra estrutura de repetição (repetições encaixadas).
 - Como exemplo, será criada uma matriz vazia e esta será preenchida com a tabela de tabuada
 
@@ -1781,9 +1499,11 @@ tabuada
 ```r
 # Preenchimento da matriz de tabuada
 for (linha in 1:10) {
+    # Dado um valor de linha, preenche todas colunas
     for (coluna in 1:10) {
         tabuada[linha, coluna] = linha * coluna
     }
+    # Terminada todas colunas (de 1 a 10), começa novo loop na próxima linha
 }
 tabuada
 ```
@@ -1802,161 +1522,95 @@ tabuada
 ## [10,]   10   20   30   40   50   60   70   80   90   100
 ```
 
-
-## Simulação
-<!-- Funções para distribuições de probabilidade no R: -->
-
-<!-- - `rnorm`: gera amostra aleatória normal, dada uma média e dado um desvio padrão -->
-<!-- - `dnorm`: avalia a densidade de probabilidade normal (dada média e desvio padrão) em um ponto (ou num vetor de pontos) -->
-<!-- - `pnorm`: avalia a função de distribuição acumulada para uma distribuição normal -->
-<!-- - `rpois`: gera amostra aleatória Poisson, dada uma taxa -->
-
-### Números aleatórios
-Para cada função de distribuição de probabilidade (Normal, Poisson, Binomial, Exponencial, Gamma, etc.), há normalmente quatro funções associadas que utilizam os seguintes prefixos:
-
-- `d`: densidade
-- `r`: geração de números aleatórios
-- `p`: distribuição acumulada
-- `q`: quantil
-
-Portanto, para a distribuição normal, temos as seguintes funções:
-```yaml
-dnorm(x, mean = 0, sd = 1, log = FALSE)
-pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
-qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
-rnorm(n, mean = 0, sd = 1)
-
-x, q: vector of quantiles.
-p: vector of probabilities.
-n: number of observations. If length(n) > 1, the length is taken to be the number required.
-mean: vector of means.
-sd: vector of standard deviations.
-log, log.p: logical; if TRUE, probabilities p are given as log(p).
-lower.tail: logical; if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
-```
-- Para reproduzir resultados, podemos usar a função `set.seed()` que, dado um número inteiro, faz com que a função `rnorm()` sempre gere os mesmos número aleatórios.
+### Exemplo 2: Otimização de função bivariada
+- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja,
+    $$ \text{arg} \min_{x, z} (x^2 + 4z^2 - 4) $$
+- Primeiro, vamos criar vetores de possíveis valores de `\(x\)` e `\(z\)`.
 
 ```r
-# definindo seed
-set.seed(2022)
-rnorm(5)
+x_grid = seq(-5, 5, length=11)
+z_grid = seq(-6, 6, length=11)
 ```
-
-```
-## [1]  0.9001420 -1.1733458 -0.8974854 -1.4445014 -0.3310136
-```
+- Agora, vamos criar uma matriz em que cada linha representa um valor de {{<math>}}$x${{</math>}} e cada coluna representa um valor de {{<math>}}$z${{</math>}}:
 
 ```r
-# sem definir seed
-rnorm(5)
+# Criando matriz para preencher
+fxz = matrix(NA, length(x_grid), length(z_grid))
+
+# Nomeando linhas e colunas
+rownames(fxz) = x_grid
+colnames(fxz) = z_grid
+
+fxz
 ```
 
 ```
-## [1] -2.9006290 -1.0592557  0.2779547  0.7494859  0.2415825
+##    -6 -4.8 -3.6 -2.4 -1.2  0 1.2 2.4 3.6 4.8  6
+## -5 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## -4 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## -3 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## -2 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## -1 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## 0  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## 1  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## 2  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## 3  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## 4  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
+## 5  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
 ```
+- Agora, vamos preencher cada possível combinação usando a estrutura de repetição dentro de outra repetição.
+
 
 ```r
-# definindo seed
-set.seed(2022)
-rnorm(5)
+# Preenchimento da matriz fxz
+for (lin_x in 1:length(x_grid)) {
+    for (lin_z in 1:length(z_grid)) {
+        fxz[lin_x, lin_z] = x_grid[lin_x]^2 + 4*z_grid[lin_z]^2 -4
+    }
+}
+fxz
 ```
 
 ```
-## [1]  0.9001420 -1.1733458 -0.8974854 -1.4445014 -0.3310136
+##     -6   -4.8  -3.6  -2.4  -1.2  0   1.2   2.4   3.6    4.8   6
+## -5 165 113.16 72.84 44.04 26.76 21 26.76 44.04 72.84 113.16 165
+## -4 156 104.16 63.84 35.04 17.76 12 17.76 35.04 63.84 104.16 156
+## -3 149  97.16 56.84 28.04 10.76  5 10.76 28.04 56.84  97.16 149
+## -2 144  92.16 51.84 23.04  5.76  0  5.76 23.04 51.84  92.16 144
+## -1 141  89.16 48.84 20.04  2.76 -3  2.76 20.04 48.84  89.16 141
+## 0  140  88.16 47.84 19.04  1.76 -4  1.76 19.04 47.84  88.16 140
+## 1  141  89.16 48.84 20.04  2.76 -3  2.76 20.04 48.84  89.16 141
+## 2  144  92.16 51.84 23.04  5.76  0  5.76 23.04 51.84  92.16 144
+## 3  149  97.16 56.84 28.04 10.76  5 10.76 28.04 56.84  97.16 149
+## 4  156 104.16 63.84 35.04 17.76 12 17.76 35.04 63.84 104.16 156
+## 5  165 113.16 72.84 44.04 26.76 21 26.76 44.04 72.84 113.16 165
 ```
-
-
-#### Simulando um modelo linear
-- [Simulating a linear model (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model)
-- Suponha o modelo linear:
-$$ y = 0,5 + 2x + \varepsilon, \qquad \varepsilon \sim N(0, 2^2) $$
-- Assuma também que `\(x \sim N(0, 1^2), \beta_0 = 0.5\)` e `\(\beta_1 = 2\)`:
+- Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`:
 
 ```r
-set.seed(2022)
-x = rnorm(100)
-e = rnorm(100, 0, 2)
-
-y = 0.5 + 2*x + e
-head(y, 10)
+argmin_index = which(fxz==min(fxz), arr.ind = TRUE)
+argmin_index
 ```
 
 ```
-##  [1]  1.864507212 -4.281986960 -2.803127733 -2.006542439  1.932538373
-##  [6] -3.121601205 -0.227562617  0.007171963  2.527003695  3.465565859
+##   row col
+## 0   6   6
 ```
 
 ```r
-summary(y) # resumo da variável y
+argmin_x = x_grid[argmin_index[1]] # aplicando índice de x em x_grid
+argmin_z = z_grid[argmin_index[2]] # aplicando índice de z em z_grid
+
+paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a função f(x,z).")
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -5.8760 -1.9534  0.5354  0.3737  2.6069  7.4756
+## [1] "O par (x = 0, z = 0) minimizam a função f(x,z)."
 ```
 
-```r
-plot(x, y) # Figura de x contra y
-```
-
-<img src="/project/rec5004/sec2/_index_files/figure-html/unnamed-chunk-70-1.png" width="672" />
 
 
-### Amostragem aleatória
-- [Simulation - Random sampling (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/ykXUb/simulation-random-sampling)
-- Para fazer uma amostragem a partir de um dado vetor, usamos a função `sample()`
-```yaml
-sample(x, size, replace = FALSE, prob = NULL)
-
-x: either a vector of one or more elements from which to choose, or a positive integer. See ‘Details.’
-n: a positive number, the number of items to choose from.
-size: a non-negative integer giving the number of items to choose.
-replace: should sampling be with replacement?
-prob: a vector of probability weights for obtaining the elements of the vector being sampled.
-```
-
-```r
-set.seed(2022)
-sample(1:10, 4) # Amostragem definindo seed
-```
-
-```
-## [1] 4 3 6 7
-```
-
-```r
-sample(1:10, 4) # Amostragem sem definir seed
-```
-
-```
-## [1] 4 6 7 9
-```
-
-```r
-sample(letters, 5) # Amostragem de 5 letras
-```
-
-```
-## [1] "i" "n" "x" "g" "r"
-```
-
-```r
-sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
-```
-
-```
-##  [1]  7  6  5  1  3 10  2  4  8  9
-```
-
-```r
-sample(1:10, replace = TRUE) # Amostragem com reposição
-```
-
-```
-##  [1] 6 7 6 5 4 8 3 4 2 2
-```
-- Note que, por padrão, a função `sample()` amostra sem reposição.
-
+</br>
 
 ## Criando funções
 - [Your first R function (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/BM3dR/your-first-r-function)
@@ -2007,6 +1661,8 @@ above(vetor, 14) # todos acima de 14
 ```
 ## [1] 15 16 17 18 19 20
 ```
+
+
 
 
 
