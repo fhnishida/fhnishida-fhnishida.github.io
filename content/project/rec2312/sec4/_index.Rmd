@@ -230,7 +230,7 @@ Note que acima foram utilizadas linhas verticais e horizontais apenas para facil
 
 ### Calculando no R
 
-Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}:
+Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p \times p${{</math>}}:
 
 {{<math>}}$$ \boldsymbol{I}_p= \left[ \begin{array}{cccc}
     1 & 0 & 0 & \cdots & 0 \\

@@ -3,7 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Dados em Painel
-summary: It covers topics such as hypothesis testing, panel data manipulation using tidyr, instrumental variables, and simultaneous equations. The page also includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I.
+summary: This page includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I.
 title: Estimação com Dados em Painel
 weight: 4
 output: md_document
@@ -69,7 +69,7 @@ Para a observação do indivíduo {{<math>}}$i \in \{1, ..., N\}${{</math>}} no 
 {{<math>}}$$ y_{it} = \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{1} $$ {{</math>}}
 em que {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor-coluna de {{<math>}}$K${{</math>}} parâmetros
 
-{{<math>}}$$ \boldsymbol{\beta} = \left[ \begin{array}{c} \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right], $${{</math>}}
+{{<math>}}$$ \boldsymbol{\beta} = \left[ \begin{array}{c} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right], $${{</math>}}
 
 {{<math>}}$y_{it}${{</math>}} é a variável dependente, {{<math>}}$\boldsymbol{x}'_{it}${{</math>}} é o vetor-linha de dimensão {{<math>}}$K+1${{</math>}}:
 
@@ -226,7 +226,7 @@ Note que acima foram utilizadas linhas verticais e horizontais apenas para facil
 
 ### Calculando no R
 
-Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p${{</math>}}:
+Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p \times p${{</math>}}:
 
 {{<math>}}$$ \boldsymbol{I}_p= \left[ \begin{array}{cccc}
     1 & 0 & 0 & \cdots & 0 \\
@@ -553,7 +553,7 @@ Sigma
 
 ## Mínimos Quadrados Empilhados (MQE)
 - Seção 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Mínimos Quadrados Empilhados (_Pooled_ ou _Pooling_, em inglês) usa a base de dados bruta (empilhada), ou seja, trata cada linha de base de dados como observações "de indivíduos diferentes" (enquanto sabemos que há {{<math>}}$ T `\({{</math>}} observações de um mesmo indivíduo {{<math>}}\)` i ${{</math>}})
+- Mínimos Quadrados Empilhados (_Pooled_ ou _Pooling_, em inglês) usa a base de dados bruta (empilhada), ou seja, trata cada linha de base de dados como observações "de indivíduos diferentes" (enquanto sabemos que há {{<math>}}$T${{</math>}} observações de um mesmo indivíduo {{<math>}}$i${{</math>}}).
 
 O modelo a ser estimado é
 {{<math>}}$$ \boldsymbol{y}\ =\ \boldsymbol{X\beta} + \boldsymbol{\varepsilon} $${{</math>}}
@@ -574,7 +574,7 @@ O modelo a ser estimado é
 
 - A matriz de variância-covariância do estimador é dada por
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{MQE}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
-  - Note que ela não se reduz a {{<math>}}$ V(\hat{\boldsymbol{\gamma}}_{MQ0}) = \sigma^2 \boldsymbol{I} ${{</math>}} como nos casos com dados em corte transversal, já que provavelmente existe correlação entre observações de um mesmo indivíduos ao longo do tempo em um painel.
+  - Note que ela não se reduz a {{<math>}}$ V(\hat{\boldsymbol{\gamma}}_{MQO}) = \sigma^2 \boldsymbol{I} ${{</math>}}, se existir correlação entre observações de um mesmo indivíduo ao longo do tempo em um painel.
 
 
 
@@ -629,10 +629,10 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
 # Estimação MQE
 Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
-Q.ols = lm(ikn ~ qn, TobinQ) # também pode ser feito diretamente por lm()
+Q.ols = lm(ikn ~ qn, TobinQ)
 
-# Comparando estimações
-stargazer::stargazer(Q.pooling, Q.ols, type="text") # output da estimação MQE
+# Comparando ambos outputs
+stargazer::stargazer(Q.pooling, Q.ols, type="text")
 ```
 
 ```
@@ -791,12 +791,12 @@ e) Variância do termo de erro {{<math>}}$\sigma^2_\varepsilon${{</math>}}
 Como {{<math>}}$\sigma^2_\varepsilon${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 
 ```r
-sig2e = as.numeric( t(ehat) %*% ehat / (N-K-1) )
+sig2e = as.numeric( t(ehat) %*% ehat / (N*T-K-1) )
 sig2e
 ```
 
 ```
-## [1] 0.2600379
+## [1] 0.007352851
 ```
 
 f) Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}} (ou {{<math>}}$V_{\hat{\beta}}${{</math>}})
@@ -812,11 +812,80 @@ Vbhat
 
 ```
 ##               [,1]          [,2]
-## [1,]  4.471174e-05 -2.072486e-06
-## [2,] -2.072486e-06  8.272244e-07
+## [1,]  1.264272e-06 -5.860176e-08
+## [2,] -5.860176e-08  2.339066e-08
 ```
 
 
+g) Erros-padrão do estimador
+{{<math>}}$$\text{se}(\hat{\boldsymbol{\beta}})$${{</math>}}
+É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
+
+```r
+se_bhat = sqrt( diag(Vbhat) )
+se_bhat
+```
+
+```
+## [1] 0.001124399 0.000152940
+```
+
+h) Estatística _t_
+
+{{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
+$$ {{</math>}}
+
+
+```r
+# Cálculo da estatística t
+t_bhat = bhat / se_bhat
+t_bhat
+```
+
+```
+##           [,1]
+## [1,] 140.51928
+## [2,]  28.71694
+```
+
+i) P-valor
+
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+
+
+```r
+# p-valor
+p_bhat = 2 * pt(-abs(t_bhat), N*T-K-1)
+p_bhat
+```
+
+```
+##               [,1]
+## [1,]  0.000000e+00
+## [2,] 5.789663e-171
+```
+
+j) Tabela-resumo
+
+```r
+cbind(bhat, se_bhat, t_bhat, p_bhat) # resultado via álgebra matricial
+```
+
+```
+##                     se_bhat                        
+## [1,] 0.15799969 0.001124399 140.51928  0.000000e+00
+## [2,] 0.00439197 0.000152940  28.71694 5.789663e-171
+```
+
+```r
+summary(Q.pooling)$coef # resultado via plm() ou lm()
+```
+
+```
+##               Estimate  Std. Error   t-value      Pr(>|t|)
+## (Intercept) 0.15799969 0.001124399 140.51928  0.000000e+00
+## qn          0.00439197 0.000152940  28.71694 5.789663e-171
+```
 
 
 ## Estimadores _Between_ e _Within_
