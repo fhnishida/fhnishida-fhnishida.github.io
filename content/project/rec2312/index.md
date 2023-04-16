@@ -32,7 +32,7 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
-- **Monitoria 4 (13/04)**: Dados em Painel - Estrutura e Matriz de Covariâncias dos Erros | [Script](monitoria04.R)
+- **Monitoria 4 (13/04)**: Dados em Painel e Matriz de Covariâncias dos Erros | [Script](monitoria04.R)
     
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/6hZqBAGTNTc/hqdefault.jpg)](https://www.youtube.com/watch?v=6hZqBAGTNTc)
 
