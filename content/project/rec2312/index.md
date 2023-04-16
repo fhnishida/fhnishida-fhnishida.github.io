@@ -32,6 +32,10 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+- **Monitoria 4 (13/04)**: Dados em Painel - Estrutura e Matriz de Covariâncias dos Erros | [Script](monitoria04.R)
+    
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/6hZqBAGTNTc/hqdefault.jpg)](https://www.youtube.com/watch?v=6hZqBAGTNTc)
+
 - **Monitoria 3 (30/03)**: MQO com Variáveis Categóricas | [Script](monitoria03.R)
     
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/AH4FIVMNDYM/hqdefault.jpg)](https://www.youtube.com/watch?v=AH4FIVMNDYM)
