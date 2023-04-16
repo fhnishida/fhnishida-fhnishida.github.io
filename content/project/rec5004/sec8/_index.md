@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: tidyr Panel Data Manipulation
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: tidyr Panel Data Manipulation
+linktitle: Multiple Regression
+summary: This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed. 
+title: Multiple Regression
 weight: 8
 output: md_document
 type: book
@@ -14,666 +13,1181 @@ type: book
 
 
 
-## Manipulação de dados em painel
-- Para o que estamos estudando, é normalmente exigido que os dados estejam
-    - no formato _long_: para cada indivíduo, temos uma linha para cada período;
-    - _balanceados_: o tamanho da amostra é {{<math>}}$N \times T${{</math>}}, com {{<math>}}$N${{</math>}} indivíduos e {{<math>}}$T${{</math>}} períodos; e
-    - devidamente ordenados por indivíduos e, depois, por tempo.
+## Estimação MQO multivariado
 
-<center><img src="../panel-example.jpg"></center>
+### Regressão Múltipla via `lm()`
 
-- Em muitos casos, as informações são disponibilizadas em várias bases de dados de cortes transversais (_cross sections_), então é necessário estruturar a base de dados em painel.
-- Isso por ser feito no R de, pelo menos, duas formas:
-    - empilhando as bases de dados e filtrando apenas indivíduos que aparecem em todos períodos; ou
-    - fazendo a junção interna (_inner join_) das bases por indivíduo e transformando do formato _wide_ para o _long_.
-- Como exemplo, usaremos a PNAD Contínua que é publicada trimestralmente e possui o pacote `PNADcIBGE` que auxilia na sua utilização.
-- Os dados podem ser obtidos via`read_pnadc(microdata, input_txt)` que necessita que você faça download das **bases de dados** e do **txt com informações das variáveis (_input_txt_)** no [FTP do IBGE](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2021):
+- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
 
-```r
-# install.packages("PNADcIBGE")
-library(PNADcIBGE)
-```
+- Para estimar um modelo multivariado no R, podemos usar a função `lm()`:
+  - O til (`~`) separa a a variável dependente das variáveis independentes
+  - As variáveis independentes precisam ser separadas por um `+`
+  - A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()` -- para retirá-la, precisa incluir a "variável independente" `0` na fórmula.
 
-```
-## Warning: package 'PNADcIBGE' was built under R version 4.2.2
-```
+
+#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Sejam as variáveis
+    - `colGPA` (_college GPA_): a nota média em um curso superior,
+    - `hsGPA` (_high school GPA_): a nota médio do ensino médio, e
+    - `ACT` (_achievement test score_): a nota de avaliação de conhecimentos para ingresso no ensino superior.
+- Usando a base `gpa1` do pacote `wooldridge`, vamos estimar o seguinte modelo:
+
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+
 
 ```r
-library(dplyr)
-```
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
 
-```
-## Warning: package 'dplyr' was built under R version 4.2.2
+# Estimando o modelo
+GPAres = lm(colGPA ~ hsGPA + ACT, data = gpa1)
+GPAres
 ```
 
 ```
 ## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
+## Call:
+## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
 ## 
-##     filter, lag
+## Coefficients:
+## (Intercept)        hsGPA          ACT  
+##    1.286328     0.453456     0.009426
+```
+
+- Note que podemos ver mais detalhes da estimação usando a função `summary()` no objeto resultante da função `lm()`
+
+```r
+summary(GPAres)
 ```
 
 ```
-## The following objects are masked from 'package:base':
 ## 
-##     intersect, setdiff, setequal, union
+## Call:
+## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.85442 -0.24666 -0.02614  0.28127  0.85357 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 1.286328   0.340822   3.774 0.000238 ***
+## hsGPA       0.453456   0.095813   4.733 5.42e-06 ***
+## ACT         0.009426   0.010777   0.875 0.383297    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3403 on 138 degrees of freedom
+## Multiple R-squared:  0.1764,	Adjusted R-squared:  0.1645 
+## F-statistic: 14.78 on 2 and 138 DF,  p-value: 1.526e-06
 ```
-- O arquivo compactado .zip é cerca de 12\% do arquivo descompactado .txt (133mb {{<math>}}$\times${{</math>}} 1,08gb). Para não precisar manter o arquivo .txt no computador, podemos usar a função `unz()` para descompactar arquivos temporariamente:
+
+
+
+### MQO na forma matricial
+
+- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
+
+
+#### Notações
+
+- Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
+- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
+$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + u_i, \qquad i=1, 2, ..., N \tag{E.1} $$
+em que {{<math>}}$N${{</math>}} é o número de observações.
+
+- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
+{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
+
+- Note que o produto interno {{<math>}}$\boldsymbol{x}_i \boldsymbol{\beta}${{</math>}} é:
+
+{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
+&= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}{{</math>}}
+
+- Logo, a equação (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
+
+$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}_i \boldsymbol{\beta}} + u_i = \boldsymbol{x}_i \boldsymbol{\beta} + u_i, \tag{E.2} $$
+
+- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
+
+{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \\ \vdots \\ \boldsymbol{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
+
+- Agora, podemos "empilhar" as equações (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
+
+{{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{u} \tag{E.3} \\
+&= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]   \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + u_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + u_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + u_N \end{matrix} \right]\\
+&= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}{{</math>}}
+
+
+
+#### Estimação Analítica no R
+
+##### Operações matriciais/vetoriais no R
+- Primeiro, vamos ver como realizar operações matriciais/vetoriais no R:
+  - **Transposta de uma matriz ou vetor**: função `t()`
+  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
+  - **Inversa de uma matriz (quadrada)**: função `solve()`
+
+
+```r
+# Como exemplo, criaremos matriz A de dimensão 4x2
+A = matrix(1:8, nrow=4, ncol=2)
+A
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+```
+
+```r
+# Transposta de A (2x4)
+t(A)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
+```
+
+```r
+# Produto matricial A'A (2x2)
+t(A) %*% A
+```
+
+```
+##      [,1] [,2]
+## [1,]   30   70
+## [2,]   70  174
+```
+
+```r
+# Inversa de A'A (2x2)
+solve( t(A) %*% A )
+```
+
+```
+##          [,1]     [,2]
+## [1,]  0.54375 -0.21875
+## [2,] -0.21875  0.09375
+```
+
+#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Queremos estimar o modelo:
+$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
+
+- A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
+
+
+```r
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
+
+# Criando o vetor y
+y = as.matrix(gpa1[,"colGPA"]) # transformando coluna de data frame em matriz
+head(y)
+```
+
+```
+##      [,1]
+## [1,]  3.0
+## [2,]  3.4
+## [3,]  3.0
+## [4,]  3.5
+## [5,]  3.6
+## [6,]  3.0
+```
+
+```r
+# Criando a matriz de covariadas X com primeira coluna de 1's
+X = cbind( const=1, gpa1[, c("hsGPA", "ACT")] ) # juntando 1's com as covariadas
+X = as.matrix(X) # transformando em matriz
+head(X)
+```
+
+```
+##   const hsGPA ACT
+## 1     1   3.0  21
+## 2     1   3.2  24
+## 3     1   3.6  26
+## 4     1   3.5  27
+## 5     1   3.9  28
+## 6     1   3.4  25
+```
+
+```r
+# Pegando valores N e K
+N = nrow(gpa1)
+N
+```
+
+```
+## [1] 141
+```
+
+```r
+K = ncol(X) - 1
+K
+```
+
+```
+## [1] 2
+```
+
+##### 1. Estimativas de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} \tag{3.2} $${{</math>}}
+
+No R:
+
+```r
+bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+bhat
+```
+
+```
+##              [,1]
+## const 1.286327767
+## hsGPA 0.453455885
+## ACT   0.009426012
+```
+
+
+##### 2. Valores ajustados/preditos {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}  $${{</math>}}
+
+No R:
+
+```r
+yhat = X %*% bhat
+head(yhat)
+```
+
+```
+##       [,1]
+## 1 2.844642
+## 2 2.963611
+## 3 3.163845
+## 4 3.127926
+## 5 3.318734
+## 6 3.063728
+```
+
+
+##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
+
+{{<math>}}$$ \hat{\boldsymbol{u}} = \boldsymbol{y} - \hat{\boldsymbol{y}} \tag{3.3}  $${{</math>}}
+
+No R:
+
+```r
+uhat = y - yhat
+head(uhat)
+```
+
+```
+##          [,1]
+## 1  0.15535832
+## 2  0.43638918
+## 3 -0.16384523
+## 4  0.37207430
+## 5  0.28126580
+## 6 -0.06372813
+```
+
+
+##### 4. Variância do termo de erro {{<math>}}$S^2${{</math>}}
+
+{{<math>}}$$ S^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+
+No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+S2
+```
+
+```
+## [1] 0.1158148
+```
+
+
+##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
+
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
+
+No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+
+```r
+V_bhat = S2 * solve( t(X) %*% X )
+V_bhat
+```
+
+```
+##              const         hsGPA           ACT
+## const  0.116159717 -0.0226063687 -0.0015908486
+## hsGPA -0.022606369  0.0091801149 -0.0003570767
+## ACT   -0.001590849 -0.0003570767  0.0001161478
+```
+
+##### 6. Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
+É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
+
+```r
+se_bhat = sqrt( diag(V_bhat) )
+se_bhat
+```
+
+```
+##      const      hsGPA        ACT 
+## 0.34082212 0.09581292 0.01077719
+```
+
+
+##### Comparando estimações via `lm()` e analítica
+- Até agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
+
+```r
+cbind(bhat, se_bhat)
+```
+
+```
+##                      se_bhat
+## const 1.286327767 0.34082212
+## hsGPA 0.453455885 0.09581292
+## ACT   0.009426012 0.01077719
+```
+
+- E, portanto, ainda percisamos concluir a parte de inferência da estimação por meio do cálculo da estatística _t_ e do p-valor:
+
+```r
+summary(GPAres)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+
+</br>
+
+## Inferência MQO multivariado
+
+### O teste _t_
+
+- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
+
+- Após a estimação, é importante fazer testes de hipótese na forma
+$$ H_0: \ \beta_j = a_j \tag{4.1} $$
+tal que {{<math>}}$a_j${{</math>}} é uma constante, e {{<math>}}$j${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
+
+- A hipótese alternativa para teste bicaudal é dada por
+$$ H_1: \ \beta_j \neq a_j \tag{4.2} $$
+enquanto, para teste unicaudal, é
+$$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $$
+
+- Estas hipóteses podem ser convenientemente testas pelo test _t_:
+$$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
+
+- **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
+
+{{<math>}}\begin{align} 
+H_0: \ \beta_j=0, \qquad H_1: \ \beta_j\neq 0 \tag{4.5}\\
+t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+\end{align}{{</math>}}
+
+- Há três formas de avaliar essa hipótese.
+- **(i)** A primeira é por meio da comparação da estatística _t_ com o valor crítico _c_, dado um nível de significância {{<math>}}$\alpha${{</math>}}:
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c. $${{</math>}}
+
+
+- Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor crítico {{<math>}}$c${{</math>}} tende a ficar próximo de 2 para quantidades razoáveis de graus de liberdade, e se aproxima ao valor crítico de 1,96 da distribuição normal.
+
+</br>
+
+- **(ii)** Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
+
+{{<math>}}$$ p_{\hat{\beta}_j} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_j}|), \tag{4.7} $${{</math>}}
+em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
+
+- Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor (a probabilidade da estimativa ser igual a zero) for menor do que um nível de significância {{<math>}}$\alpha${{</math>}}:
+
+{{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_j} \le \alpha $${{</math>}}
+
+
+</br>
+
+- **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
+$$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
+- Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_j${{</math>}} estiver fora do intervalo de confiança.
+
+</br>
+
+#### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+- Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_j = 0${{</math>}}.
+
+
+##### 7. Estatística _t_
+
+{{<math>}}$$ t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
+$$ {{</math>}}
+
+No R:
+
+```r
+# Cálculo da estatística t
+t_bhat = bhat / se_bhat
+t_bhat
+```
+
+```
+##            [,1]
+## const 3.7741910
+## hsGPA 4.7327219
+## ACT   0.8746263
+```
+
+##### 8. Avaliando as hipóteses nulas
+
+```r
+# definição do nível de significância
+alpha = 0.05
+c = qt(1 - alpha/2, N-K-1) # valor crítico de teste bicaudal
+c
+```
+
+```
+## [1] 1.977304
+```
+
+```r
+# (A) Comparando estatística t com o valor crítico
+abs(t_bhat) > c # avaliando H0
+```
+
+```
+##        [,1]
+## const  TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
+# (B) Comparando p-valor com o nível de significância de 5%
+p_bhat = 2 * pt(-abs(t_bhat), N-K-1)
+round(p_bhat, 5) # arredondando para facilitar visualização
+```
+
+```
+##          [,1]
+## const 0.00024
+## hsGPA 0.00001
+## ACT   0.38330
+```
+
+```r
+p_bhat < 0.05 # avaliando H0
+```
+
+```
+##        [,1]
+## const  TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
+# (C) Verificando se zero (0) está fora do intervalo de confiança
+ci = cbind(bhat - c*se_bhat, bhat + c*se_bhat) # avaliando H0
+ci
+```
+
+```
+##              [,1]       [,2]
+## const  0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
+
+
+
+##### Comparando estimações via `lm()` e analítica
+
+- Resultados calculados analiticamente ("na mão")
+
+```r
+cbind(bhat, se_bhat, t_bhat, p_bhat) # coeficientes
+```
+
+```
+##                      se_bhat                       
+## const 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA 0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT   0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
+ci # intervalos de confiança
+```
+
+```
+##              [,1]       [,2]
+## const  0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
+
+- Resultado via função `lm()`
+
+```r
+summary(GPAres)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
+confint(GPAres)
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept)  0.61241898 1.96023655
+## hsGPA        0.26400467 0.64290710
+## ACT         -0.01188376 0.03073578
+```
+
+</br>
+
+## Informando os Resultados das Regressões
+
+- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
+- Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regressões usando a função `stargazer` do pacote de mesmo nome.
+
+
+#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores (Wooldridge, 2006)
+- Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
+
+$$ \log{\text{salary}} = \beta_0 + \beta_1. (\text{benefits/salary}) + \text{outros_fatores} + u $$
+
+- Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
+
+```r
+data(meap93, package="wooldridge") # carregando base de dados
+
+# Definindo nova variável
+meap93$b_s = meap93$benefits / meap93$salary
+```
+
+- Agora vamos estimar diversos modelos:
+  - Modelo 1: apenas `b_s` como regressor
+  - Modelo 2: inclui as variáveis explicativas `log(enroll)` e `log(staff)` no Modelo 1
+  - Modelo 3: inclui as variáveis explicativas `droprate` e `gradrate` no Modelo 2
+- Depois, vamos resumir os resultados em uma única tabela usando a função `stagazer()` pacote `stagazer`
+  - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
+  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
+  - `star.cutoffs=c(.05, .01, .001)` níveis de significância de 5%, 1% e 0,1%
+
+```r
+# Estimando os três modelos
+model1 = lm(log(salary) ~ b_s, meap93)
+model2 = lm(log(salary) ~ b_s + log(enroll) + log(staff), meap93)
+model3 = lm(log(salary) ~ b_s + log(enroll) + log(staff) + droprate + gradrate, meap93)
+
+# Resumindo em uma tabela
+library(stargazer)
+```
+
+```
+## 
+## Please cite as:
+```
+
+```
+##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+```
+
+```
+##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer
+```
+
+```r
+stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
+          star.cutoffs=c(.05, .01, .001))
+```
+
+```
+## 
+## ============================================
+##                    Dependent variable:      
+##              -------------------------------
+##                        log(salary)          
+##                 (1)        (2)        (3)   
+## --------------------------------------------
+## b_s          -0.825***  -0.605***  -0.589***
+##               (0.200)    (0.165)    (0.165) 
+##                                             
+## log(enroll)              0.087***  0.088*** 
+##                          (0.007)    (0.007) 
+##                                             
+## log(staff)              -0.222***  -0.218***
+##                          (0.050)    (0.050) 
+##                                             
+## droprate                            -0.0003 
+##                                     (0.002) 
+##                                             
+## gradrate                             0.001  
+##                                     (0.001) 
+##                                             
+## Constant     10.523***  10.844***  10.738***
+##               (0.042)    (0.252)    (0.258) 
+##                                             
+## --------------------------------------------
+## Observations    408        408        408   
+## R2             0.040      0.353      0.361  
+## ============================================
+## Note:          *p<0.05; **p<0.01; ***p<0.001
+```
+
+- É comum que os resultados econométricos venham acompanhados de asteriscos (`*`), pois estes indicam que as estimativas são significantes a um certo nível de significância
+- Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
+
+
+</br>
+
+## Regressores Qualitativos
+
+- Muitas variáveis de interesse são qualitativas, ao invés de quantitativas.
+- Isso inclui variáveis como _sexo_, _raça_, _status de trabalho_, _estado civil_, _escolha de marca_, etc.
+
+
+### Variáveis Dummy
+
+- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
+- Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
+- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
+
+
+##### Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Vamos usar a base de dados `wage1` do pacote `wooldridge`
+- Vamos estimar o modelo:
+
+{{<math>}}\begin{align}
+\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
+&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
+```r
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+reg_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg_7.1)$coef, 4 )
+```
+
+```
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -2.1097     0.7107 -2.9687   0.0031
+## female       -1.7832     0.2572 -6.9327   0.0000
+## educ          0.5263     0.0485 10.8412   0.0000
+## exper         0.1878     0.0357  5.2557   0.0000
+## expersq      -0.0038     0.0008 -4.9267   0.0000
+## tenure        0.2117     0.0492  4.3050   0.0000
+## tenursq      -0.0029     0.0017 -1.7473   0.0812
+```
+
+- Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
+- Essa diferença é estatisticamente significane (p-valor de `female` é menor do que 5\%)
+
+
+
+### Variáveis com múltiplas categorias
+
+- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
+- Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
+- É necessário criar uma _dummy_ para cada categoria
+- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
+  - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
+  - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
+  - Se houver outra dummy igual a 1, então última dummy é igual a 0
+- Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
+
+
+##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
+
+- Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo
+- Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
+- Vamos estimar o seguinte modelo:
+
+{{<math>}}$$`
+\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
+em que:
+
+- `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
+- `chain`: rede de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys`), e (4) Wendy's (`wendys`)
+- `hrsopen`: horas de funcionamento por dia
+
+
 
 
 
 ```r
-# Descompactando as bases da PNADc e carregando no R
-pnad_012021 = read_pnadc(unz("PNADC_012021_20220224.zip", "PNADC_012021.txt"),
-                         input_txt = "input_PNADC_trimestral.txt")
-
-pnad_022021 = read_pnadc(unz("PNADC_022021_20220224.zip", "PNADC_022021.txt"),
-                         input_txt = "input_PNADC_trimestral.txt")
-```
-- Ou também via `get_pnadc(year, quarter = NULL, design = TRUE)`, que faz o download diretamente do R e atribui para um objeto. É necessário informar a data da pesquisa (ano e trimestre) e, para retornar um data frame, altere o argumento para `design = FALSE` (caso contrário, irá retornar um objeto do tipo `survey.design`). Além disso, constrói automaticamente colunas com deflatores:
-```r
-# OU Carregando as bases da PNADc via get_pnadc()
-pnad_012021 = get_pnadc(year=2021, quarter=1, design=FALSE)
-pnad_022021 = get_pnadc(year=2021, quarter=2, design=FALSE)
-
+card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv")
+head(card1994) # olhando as 6 primeiras linhas
 ```
 
-- Para identificar um indivíduo na base do PNAD, o IBGE usa as seguintes [variáveis-chave](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
-    - _UPA_: Unidade Primária de Amostragem / UF (2) + Nº Sequencial (6) + DV (1)
-    - _V1008_: Número do domicílio (01 a 14)
-    - _V1014_: Painel/Grupo de amostra (01 a 99)
-    - _V2003_: Número de ordem (01 a 30)
-- Pesquisadores do Ipea ([Teixeira Júnior et al., 2020](http://repositorio.ipea.gov.br/bitstream/11058/9951/1/bmt_67_nt_pesos_longitudinais.pdf)) usam mais algumas variáveis-chave invariantes no tempo para tornar esse 
-    - _V2007_: Sexo
-    - _V2008_/_V20081_/_V20082_: Data de nascimento (dia/mês/ano)
-- Além disso, vamos adicionar mais algumas variáveis:
-    - _invariante no tempo_:
-        - _UF_: Unidade da Federação
-    - _variantes no tempo_:
-        - _V2009_: Idade (em anos)
-        - _VD4020_: Rendimento mensal efetivo de todos os trabalhos para pessoas de 14 anos ou mais de idade
+```
+##   sheet nj chain hrsopen diff_fte
+## 1    46  0     1    16.5   -16.50
+## 2    49  0     2    13.0    -2.25
+## 3    56  0     4    12.0   -14.00
+## 4    61  0     4    12.0    11.50
+## 5   445  0     1    18.0   -41.50
+## 6   451  0     1    24.0    13.00
+```
+
+- Note que a variável categórica `chain` possui números ao invés dos nomes das redes de fast food.
+- Isto é comum nas bases de dados, já que números consomem menos espaço de armazenamento.
+- Caso você rode a estimação com a variável `chain` desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:
 
 
 ```r
-# Boas práticas (pricipalmente usando base de dados grandes):
-# - Não manipular o objeto em que você carregou a base de dados -> crie um novo
-# - Selecione apenas as variáveis que for utilizar
-
-lista_var = c("Trimestre", "UPA", "V1008", "V1014", "V2003", "V2007", "V2008",
-              "V20081", "V20082", "UF", "V2009", "VD4020")
-
-# Selecionando e renomeando variáveis, e filtrando apenas maiores de 14 anos 
-pnad_1 = pnad_012021 %>% select(all_of(lista_var)) %>%
-    rename(DOMIC = V1008, PAINEL = V1014, ORDEM = V2003, SEXO = V2007, 
-           DIA_NASC = V2008, MES_NASC = V20081, ANO_NASC = V20082, 
-           IDADE = V2009, RENDA = VD4020) %>%
-    filter(IDADE >= 14)
-
-pnad_2 = pnad_022021 %>% select(all_of(lista_var)) %>%
-    rename(DOMIC = V1008, PAINEL = V1014, ORDEM = V2003, SEXO = V2007, 
-           DIA_NASC = V2008, MES_NASC = V20081, ANO_NASC = V20082, 
-           IDADE = V2009, RENDA = VD4020) %>%
-    filter(IDADE >= 14)
+lm(diff_fte ~ nj + hrsopen + chain, data=card1994)
 ```
 
+```
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen        chain  
+##     0.40284      4.61869     -0.28458     -0.06462
+```
 
+- Note que a interpretação é que a mudança de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
+- Portanto, precisamos criar as _dummies_ das variáveis categóricas:
 
-### Empilhando bases de dados e filtrando indivíduos que aparecem em todos os períodos
-- Primeiro, empilharemos as bases de dados usando `rbind()`. É necessário garantir que tenham o mesmo número de colunas e estas sejam da mesma classe (_character_, _numeric_, etc.):
 
 ```r
-pnad_bind = rbind(pnad_1, pnad_2)
-head(pnad_bind)
+# Criando dummies para cada variável
+card1994$bk = ifelse(card1994$chain==1, 1, 0)
+card1994$kfc = ifelse(card1994$chain==2, 1, 0)
+card1994$roys = ifelse(card1994$chain==3, 1, 0)
+card1994$wendys = ifelse(card1994$chain==4, 1, 0)
+
+# Visualizando as primeras linhas
+head(card1994)
 ```
 
 ```
-## # A tibble: 6 × 12
-##   Trimestre UPA     DOMIC PAINEL ORDEM SEXO  DIA_N…¹ MES_N…² ANO_N…³ UF    IDADE
-##   <chr>     <chr>   <chr> <chr>  <chr> <chr> <chr>   <chr>   <chr>   <chr> <dbl>
-## 1 1         110000… 01    08     01    2     16      05      1981    11       39
-## 2 1         110000… 01    08     02    2     12      06      2000    11       20
-## 3 1         110000… 01    08     03    2     15      05      2004    11       16
-## 4 1         110000… 01    08     04    1     26      07      1947    11       73
-## 5 1         110000… 01    08     05    2     15      08      1961    11       59
-## 6 1         110000… 02    08     01    2     11      07      1983    11       37
-## # … with 1 more variable: RENDA <dbl>, and abbreviated variable names
-## #   ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
-```
-- Note que a 2ª observação não corresponde à mesma pessoa da 1º linha. Vamos criar uma variável `ID`, juntando informações de todas variáveis-chave, e rearranjar a base de dados de acordo com ela e o trimestre:
-
-```r
-pnad_bind = pnad_bind %>% mutate(
-    ID = paste0(UPA, DOMIC, PAINEL, ORDEM, SEXO, DIA_NASC, MES_NASC, ANO_NASC)
-    ) %>% select(ID, everything()) %>% # reordenando variáveis, começando com ID
-    arrange(ID, Trimestre)
-head(pnad_bind, 10)
+##   sheet nj chain hrsopen diff_fte bk kfc roys wendys
+## 1    46  0     1    16.5   -16.50  1   0    0      0
+## 2    49  0     2    13.0    -2.25  0   1    0      0
+## 3    56  0     4    12.0   -14.00  0   0    0      1
+## 4    61  0     4    12.0    11.50  0   0    0      1
+## 5   445  0     1    18.0   -41.50  1   0    0      0
+## 6   451  0     1    24.0    13.00  1   0    0      0
 ```
 
-```
-## # A tibble: 10 × 13
-##    ID       Trime…¹ UPA   DOMIC PAINEL ORDEM SEXO  DIA_N…² MES_N…³ ANO_N…⁴ UF   
-##    <chr>    <chr>   <chr> <chr> <chr>  <chr> <chr> <chr>   <chr>   <chr>   <chr>
-##  1 1100000… 1       1100… 01    08     01    2     16      05      1981    11   
-##  2 1100000… 1       1100… 01    08     02    2     12      06      2000    11   
-##  3 1100000… 1       1100… 01    08     03    2     15      05      2004    11   
-##  4 1100000… 1       1100… 01    08     04    1     26      07      1947    11   
-##  5 1100000… 1       1100… 01    08     05    2     15      08      1961    11   
-##  6 1100000… 1       1100… 02    08     01    2     11      07      1983    11   
-##  7 1100000… 2       1100… 02    08     01    2     11      07      1983    11   
-##  8 1100000… 1       1100… 02    08     02    1     99      99      9999    11   
-##  9 1100000… 2       1100… 02    08     02    1     99      99      9999    11   
-## 10 1100000… 1       1100… 03    08     01    2     09      03      1976    11   
-## # … with 2 more variables: IDADE <dbl>, RENDA <dbl>, and abbreviated variable
-## #   names ¹​Trimestre, ²​DIA_NASC, ³​MES_NASC, ⁴​ANO_NASC
-```
-- Observe que o base de dados em painel não está balanceada, ou seja, nem todos os indivíduos aparecem nos 2 trimestres. Portanto, vamos criar um objeto auxiliar com a contagem de vezes que o `ID` aparece em `pnad_bind`
+- Também é possível criar _dummies_ mais facilmente usando o pacote `fastDummies`
+- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
+- Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
+
 
 ```r
-cont_ID = pnad_bind %>% group_by(ID) %>% summarise(cont = n())
-head(cont_ID, 10)
+lm(diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, data=card1994)
 ```
 
 ```
-## # A tibble: 10 × 2
-##    ID                        cont
-##    <chr>                    <int>
-##  1 110000016010801216051981     1
-##  2 110000016010802212062000     1
-##  3 110000016010803215052004     1
-##  4 110000016010804126071947     1
-##  5 110000016010805215081961     1
-##  6 110000016020801211071983     2
-##  7 110000016020802199999999     2
-##  8 110000016030801209031976     2
-##  9 110000016030802103092000     2
-## 10 110000016030804118091954     2
-```
-- Em `cont_ID`, vamos filtrar apenas os caso que aparecem 2 vezes
-
-```r
-cont_ID = cont_ID %>% filter(cont == 2)
-head(cont_ID, 10)
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, 
+##     data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen           bk          kfc         roys  
+##    2.097621     4.859363    -0.388792    -0.005512    -1.997213    -1.010903  
+##      wendys  
+##          NA
 ```
 
-```
-## # A tibble: 10 × 2
-##    ID                        cont
-##    <chr>                    <int>
-##  1 110000016020801211071983     2
-##  2 110000016020802199999999     2
-##  3 110000016030801209031976     2
-##  4 110000016030802103092000     2
-##  5 110000016030804118091954     2
-##  6 110000016040801105081969     2
-##  7 110000016040802215011976     2
-##  8 110000016040803110071994     2
-##  9 110000016040804217051997     2
-## 10 110000016050801105071965     2
-```
-- Voltando para a base `pnad_bind`, vamos filtrar apenas ID's que aparecem no vetor `cont_ID$ID`:
+- Por padrão, o R já retira uma das categorias para servir como referência.
+- Aqui, a categoria `wendys` serve como referência às estimativas das demais _dummies_
+  - Em relação a `wendys`, o nº de empregados de:
+    - `bk` teve uma variação de empregados muito parecida (apenas 0,005 menor)
+    - `roys` teve uma diminuição (menos 1 empregado)
+    - `kfc` teve uma maior diminuição (menos 2 empregados)
+- Note que poderíamos usar como referência outra rede de fast food, deixando sua _dummy_ de fora da regressão.
+- Vamos deixar de fora a _dummy_ do `roys`:
+
 
 ```r
-pnad_bind = pnad_bind %>% filter(ID %in% cont_ID$ID)
-head(pnad_bind)
+lm(diff_fte ~ nj + hrsopen + bk + kfc + wendys, data=card1994)
 ```
 
 ```
-## # A tibble: 6 × 13
-##   ID        Trime…¹ UPA   DOMIC PAINEL ORDEM SEXO  DIA_N…² MES_N…³ ANO_N…⁴ UF   
-##   <chr>     <chr>   <chr> <chr> <chr>  <chr> <chr> <chr>   <chr>   <chr>   <chr>
-## 1 11000001… 1       1100… 02    08     01    2     11      07      1983    11   
-## 2 11000001… 2       1100… 02    08     01    2     11      07      1983    11   
-## 3 11000001… 1       1100… 02    08     02    1     99      99      9999    11   
-## 4 11000001… 2       1100… 02    08     02    1     99      99      9999    11   
-## 5 11000001… 1       1100… 03    08     01    2     09      03      1976    11   
-## 6 11000001… 2       1100… 03    08     01    2     09      03      1976    11   
-## # … with 2 more variables: IDADE <dbl>, RENDA <dbl>, and abbreviated variable
-## #   names ¹​Trimestre, ²​DIA_NASC, ³​MES_NASC, ⁴​ANO_NASC
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + bk + kfc + wendys, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen           bk          kfc       wendys  
+##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
+```
+
+- Note agora que os parâmetros estão em relação à `roys``:
+  - estimativa de `kfc` que tinha ficado -2, agora está "menos" negativo (-1)
+  - estimativas de `bk` e de `wendys` possuem estimativas positivas (lembre-se que, em relação a `wendys`, a estimativa de `roys` foi negativo na regressão anterior)
+
+</br>
+
+- No R, na verdade, não é necessário criar _dummies_ de uma variável categórica para rodar uma regressão, caso ela esteja como _texto_ ou como _factor_
+
+- Criando variável da classe texto:
+
+```r
+card1994$chain_txt = as.character(card1994$chain) # criando variável texto
+head(card1994$chain_txt) # Visualizado os primeiros valores
+```
+
+```
+## [1] "1" "2" "4" "4" "1" "1"
 ```
 
 ```r
-N = pnad_bind$ID %>% unique() %>% length() # Nº de indivíduos únicos
-T = pnad_bind$Trimestre %>% unique() %>% length() # Nº de trimestre únicos
-paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_txt, data=card1994)
 ```
 
 ```
-## [1] "N = 174468, T = 2, NT = 348936"
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain_txt, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen   chain_txt2   chain_txt3   chain_txt4  
+##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
 ```
 
+- Observe que a função `lm()` retira a categoria que aparece primeiro no vetor de texto (`"1"`)
+- Usando como variável texto, não é possível selecionar facilmente qual categoria vai ser retirada da regressão
+- Para isto, podemos usar a classe de objeto `factor`:
 
-### Juntado as bases e transformando de _wide_ para _long_
-- Agora, juntaremos a base usando a função `inner_join()` que apenas mantém indivíduos que aparecem em ambas bases de dados:
-
-```r
-pnad_joined = inner_join(pnad_1, pnad_2, 
-                         by=c("UPA", "DOMIC", "PAINEL", "ORDEM", "SEXO",
-                              "DIA_NASC", "MES_NASC", "ANO_NASC"),
-                         suffix=c("_1", "_2")) # evite usar . como separador
-colnames(pnad_joined) # nomes das colunas
-```
-
-```
-##  [1] "Trimestre_1" "UPA"         "DOMIC"       "PAINEL"      "ORDEM"      
-##  [6] "SEXO"        "DIA_NASC"    "MES_NASC"    "ANO_NASC"    "UF_1"       
-## [11] "IDADE_1"     "RENDA_1"     "Trimestre_2" "UF_2"        "IDADE_2"    
-## [16] "RENDA_2"
-```
 
 ```r
-dim(pnad_joined) # dimensões da base de dados
+card1994$chain_fct = factor(card1994$chain) # criando variável factor
+levels(card1994$chain_fct) # verificando os níveis (categorias) da variável factor
 ```
 
 ```
-## [1] 174468     16
-```
-- Note que obtivemos a base no formato _wide_ (1 linha para cada indivíduo) e as informações relativas aos 2 períodos (1º e 2º trimestres de 2021) estão em colunas:
-    - Os sufixos foram utilizamos para duplicar colunas de informações contidas em ambas bases (e que não foram inseridas no argumento `by`).
-    - A variável invariante no tempo _UF_ foi duplicada, então seria interessante incluí-la também como uma ``variável-chave''
-
-```r
-pnad_joined = inner_join(pnad_1, pnad_2, 
-                         by=c("UPA", "DOMIC", "PAINEL", "ORDEM", "SEXO",
-                              "DIA_NASC", "MES_NASC", "ANO_NASC", "UF"),
-                         suffix=c("_1", "_2")) # evite usar . como separador
-colnames(pnad_joined) # nomes das colunas
-```
-
-```
-##  [1] "Trimestre_1" "UPA"         "DOMIC"       "PAINEL"      "ORDEM"      
-##  [6] "SEXO"        "DIA_NASC"    "MES_NASC"    "ANO_NASC"    "UF"         
-## [11] "IDADE_1"     "RENDA_1"     "Trimestre_2" "IDADE_2"     "RENDA_2"
+## [1] "1" "2" "3" "4"
 ```
 
 ```r
-dim(pnad_joined) # dimensões da base de dados
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 ```
 
 ```
-## [1] 174468     15
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain_fct, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen   chain_fct2   chain_fct3   chain_fct4  
+##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
 ```
-- Observe que temos uma única coluna _UF_ agora e o número de observações manteve-se inalterado, pois os domicílios da amostra de fato não alteraram suas UFs entre estes trimestres.
-    - Caso alterasse o número de linhas, a variável invariante no tempo possui algumas observações que alteraram entre os períodos e estas foram excluídas da amostra.
-- Também podemos retirar as colunas "Trimestre.1" e "Trimestre.2":
 
-```r
-pnad_joined = pnad_joined %>% select(-Trimestre_1, -Trimestre_2)
-```
-- Estando no formato _wide_, precisamos transformar para o formato _long_
-
-
-#### Transformando a base de _wide_ para _long_ via `tidyr`
-- [Pivoting (_tidyr_)](https://tidyr.tidyverse.org/articles/pivot.html)
-
-- Para fazer transformações em _wide_ ou _long_ usaremos o pacote `tidyr` e suas funções `pivot_longer()`, `pivot_wider()` e `separate()`
+- Note que a função `lm()` retira o primeiro nível da regressão (não necessariamente o que aparece primeiro na base de dados)
+- Podemos trocar a referência usando a função `relevel()` em uma variável _factor_
 
 ```r
-library(tidyr)
+card1994$chain_fct = relevel(card1994$chain_fct, ref="3") # referência roys
+levels(card1994$chain_fct) # verificando os níveis da variável factor
 ```
 
 ```
-## Warning: package 'tidyr' was built under R version 4.2.2
+## [1] "3" "1" "2" "4"
 ```
-- `pivot_longer()`: transforma várias colunas em duas: de nomes e de valores (aumenta o nº de linhas e diminui o de colunas)
-```yaml
-pivot_longer(
-  data,
-  cols,
-  names_to = "name",
-  values_to = "value"
-  ...
-)
-```
-- `pivot_wider()`: transforma nomes (valores únicos) de uma variável em várias colunas (aumenta o nº de colunas e diminui o de linhas)
-```yaml
-pivot_wider(
-  data,
-  names_from = name,
-  values_from = value,
-  values_fill = NULL
-  ...
-)
-```
-- `separate()`: divide uma coluna em outras a partir de um caracter ``separador''
-```yaml
-separate(
-  data,
-  col,
-  into,
-  sep = "[^[:alnum:]]+"
-  ...
-)
-```
-
-- Primeiro, vamos transformar as colunas variantes no tempo (com sufixos `_1` ou `_2`) em duas colunas
 
 ```r
-library(tidyr)
-pnad_joined2 = pnad_joined %>%
-    pivot_longer(
-        cols = c(ends_with("_1"), ends_with("_2") ),
-        names_to = "VAR_TRI", # nome da coluna que vão os nomes das colunas antigas
-        values_to = "VALUE" # nome da coluna com os valores das colunas transformadas
-    )
-head(pnad_joined2)
+# Estimando do modelo
+lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 ```
 
 ```
-## # A tibble: 6 × 11
-##   UPA       DOMIC PAINEL ORDEM SEXO  DIA_N…¹ MES_N…² ANO_N…³ UF    VAR_TRI VALUE
-##   <chr>     <chr> <chr>  <chr> <chr> <chr>   <chr>   <chr>   <chr> <chr>   <dbl>
-## 1 110000016 02    08     01    2     11      07      1983    11    IDADE_1    37
-## 2 110000016 02    08     01    2     11      07      1983    11    RENDA_1    NA
-## 3 110000016 02    08     01    2     11      07      1983    11    IDADE_2    37
-## 4 110000016 02    08     01    2     11      07      1983    11    RENDA_2    NA
-## 5 110000016 02    08     02    1     99      99      9999    11    IDADE_1    31
-## 6 110000016 02    08     02    1     99      99      9999    11    RENDA_1    NA
-## # … with abbreviated variable names ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
+## 
+## Call:
+## lm(formula = diff_fte ~ nj + hrsopen + chain_fct, data = card1994)
+## 
+## Coefficients:
+## (Intercept)           nj      hrsopen   chain_fct1   chain_fct2   chain_fct4  
+##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
 ```
-- Note que, ao invés de ter 2 linhas por indivíduo, temos 4 (pois temos 2 variáveis variantes no tempo).
-- Precisamos jogar metade das linhas de volta para colunas. Vamos usar a função `separate()` para separar _VAR.TRI_ (com 4 valores únicos: _IDADE_1_, _IDADE_2_, _RENDA_1_ e _RENDA_2_) em 2 colunas: _VAR_ (2 valores únicos: _IDADE_ e _RENDA_) e _TRI_ (2 valores únicos: _1_ e _2_).
+
+- Observe que o primeiro nível foi alterado para `"3"` e, portanto, essa categoria foi retirada na regressão
+
+
+
+### Transformando variáveis contínuas em categorias
+- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
+- Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
+
 
 ```r
-pnad_joined3 = pnad_joined2[1:100,] %>%
-    separate(
-        col = "VAR_TRI",
-        into = c("VAR", "TRI"), # nomes das colunas separadas
-        sep = "_" # caracter que separa as valores da coluna VAR_TRI
-    )
-head(pnad_joined3)
+# Definindo pontos de corte
+cutpts = c(0, 3, 6, 10)
+
+# Classificando o vetor 1:10 a partir dos pontos de corte
+cut(1:10, cutpts)
 ```
 
 ```
-## # A tibble: 6 × 12
-##   UPA   DOMIC PAINEL ORDEM SEXO  DIA_N…¹ MES_N…² ANO_N…³ UF    VAR   TRI   VALUE
-##   <chr> <chr> <chr>  <chr> <chr> <chr>   <chr>   <chr>   <chr> <chr> <chr> <dbl>
-## 1 1100… 02    08     01    2     11      07      1983    11    IDADE 1        37
-## 2 1100… 02    08     01    2     11      07      1983    11    RENDA 1        NA
-## 3 1100… 02    08     01    2     11      07      1983    11    IDADE 2        37
-## 4 1100… 02    08     01    2     11      07      1983    11    RENDA 2        NA
-## 5 1100… 02    08     02    1     99      99      9999    11    IDADE 1        31
-## 6 1100… 02    08     02    1     99      99      9999    11    RENDA 1        NA
-## # … with abbreviated variable names ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
+##  [1] (0,3]  (0,3]  (0,3]  (3,6]  (3,6]  (3,6]  (6,10] (6,10] (6,10] (6,10]
+## Levels: (0,3] (3,6] (6,10]
 ```
 
-- Para finalizar, vamos transformar a coluna _VAR_ (com 2 valores únicos: _IDADE_ e _RENDA_) em 2 colunas (_IDADE_ e _RENDA_):
+
+##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais (Wooldridge, 2006)
+
+- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
+- Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
+
 
 ```r
-pnad_joined4 = pnad_joined3 %>%
-    pivot_wider(
-        names_from = "VAR",
-        values_from = "VALUE"
-    )
-pnad_joined4 %>% select(TRI, everything()) %>% head(20)
+data(lawsch85, package="wooldridge") # carregando base de dados necessária
+
+# Definindo pontos de corte
+cutpts = c(0, 10, 25, 40, 60, 100, 175)
+
+# Criando variável com a classificação
+lawsch85$rankcat = cut(lawsch85$rank, cutpts)
+
+# Visualizando os 6 primeiros valores de rankcat
+head(lawsch85$rankcat)
 ```
 
 ```
-## # A tibble: 20 × 12
-##    TRI   UPA       DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_N…¹ ANO_N…² UF    IDADE
-##    <chr> <chr>     <chr> <chr>  <chr> <chr> <chr>    <chr>   <chr>   <chr> <dbl>
-##  1 1     110000016 02    08     01    2     11       07      1983    11       37
-##  2 2     110000016 02    08     01    2     11       07      1983    11       37
-##  3 1     110000016 02    08     02    1     99       99      9999    11       31
-##  4 2     110000016 02    08     02    1     99       99      9999    11       31
-##  5 1     110000016 03    08     01    2     09       03      1976    11       44
-##  6 2     110000016 03    08     01    2     09       03      1976    11       45
-##  7 1     110000016 03    08     02    1     03       09      2000    11       20
-##  8 2     110000016 03    08     02    1     03       09      2000    11       20
-##  9 1     110000016 03    08     04    1     18       09      1954    11       66
-## 10 2     110000016 03    08     04    1     18       09      1954    11       66
-## 11 1     110000016 04    08     01    1     05       08      1969    11       51
-## 12 2     110000016 04    08     01    1     05       08      1969    11       51
-## 13 1     110000016 04    08     02    2     15       01      1976    11       44
-## 14 2     110000016 04    08     02    2     15       01      1976    11       45
-## 15 1     110000016 04    08     03    1     10       07      1994    11       26
-## 16 2     110000016 04    08     03    1     10       07      1994    11       26
-## 17 1     110000016 04    08     04    2     17       05      1997    11       23
-## 18 2     110000016 04    08     04    2     17       05      1997    11       23
-## 19 1     110000016 05    08     01    1     05       07      1965    11       55
-## 20 2     110000016 05    08     01    1     05       07      1965    11       55
-## # … with 1 more variable: RENDA <dbl>, and abbreviated variable names
-## #   ¹​MES_NASC, ²​ANO_NASC
+## [1] (100,175] (100,175] (25,40]   (40,60]   (60,100]  (60,100] 
+## Levels: (0,10] (10,25] (25,40] (40,60] (60,100] (100,175]
 ```
-
-
-#### Extra: Criação de dummies via `pivot_wider()`
-- Primeiro, é necessário criar uma coluna de 1's
-- Depois usar a função `pivot_wider()`, indicando a variável categórica e a coluna de 1's, preenchendo os NA's com zero (`fill = 0`) :
 
 ```r
-dummies_sexo = pnad_1 %>% mutate(const = 1) %>% # criando coluna de 1's
-    pivot_wider(names_from = SEXO,
-                values_from = const,
-                values_fill = 0)
-head(dummies_sexo)
+# Escolhendo a categoria de referência (acima de 100 até 175)
+lawsch85$rankcat = relevel(lawsch85$rankcat, '(100,175]')
+
+# Estimando o modelo
+res = lm(log(salary) ~ rankcat + LSAT + GPA + llibvol + lcost, data=lawsch85)
+round( summary(res)$coef, 5 )
 ```
 
 ```
-## # A tibble: 6 × 13
-##   Trimestre UPA     DOMIC PAINEL ORDEM DIA_N…¹ MES_N…² ANO_N…³ UF    IDADE RENDA
-##   <chr>     <chr>   <chr> <chr>  <chr> <chr>   <chr>   <chr>   <chr> <dbl> <dbl>
-## 1 1         110000… 01    08     01    16      05      1981    11       39  1045
-## 2 1         110000… 01    08     02    12      06      2000    11       20  1045
-## 3 1         110000… 01    08     03    15      05      2004    11       16    NA
-## 4 1         110000… 01    08     04    26      07      1947    11       73    NA
-## 5 1         110000… 01    08     05    15      08      1961    11       59    NA
-## 6 1         110000… 02    08     01    11      07      1983    11       37    NA
-## # … with 2 more variables: `2` <dbl>, `1` <dbl>, and abbreviated variable names
-## #   ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
+##                 Estimate Std. Error  t value Pr(>|t|)
+## (Intercept)      9.16530    0.41142 22.27699  0.00000
+## rankcat(0,10]    0.69957    0.05349 13.07797  0.00000
+## rankcat(10,25]   0.59354    0.03944 15.04926  0.00000
+## rankcat(25,40]   0.37508    0.03408 11.00536  0.00000
+## rankcat(40,60]   0.26282    0.02796  9.39913  0.00000
+## rankcat(60,100]  0.13159    0.02104  6.25396  0.00000
+## LSAT             0.00569    0.00306  1.85793  0.06551
+## GPA              0.01373    0.07419  0.18500  0.85353
+## llibvol          0.03636    0.02602  1.39765  0.16467
+## lcost            0.00084    0.02514  0.03347  0.97336
 ```
 
+- Note que, em relação às universidades em piores colocações (`(100,175]`), as melhores ranqueadas provêem salários de 13,16\% a 69,96\% superiores
 
-#### Outro exemplo 1: _wide_ para _long_
-- A base de dados abaixo possui informações de 5 condados com suas repectivas áreas territoriais, proporções de adultos com ensino superior e nº de vagas de emprego em 4 anos distintos:
+
+### Interações Envolvendo Variáveis Dummy
+
+#### Interações entre variáveis dummy
+- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
+- Seção 7. de Wooldridge (2006)
+- Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
+
+
+##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Retornemos à base de dados `wage1` do pacote `wooldridge`
+- Agora, vamos incluir a variável _dummy_ `married`
+
+- O modelo a ser estimado é:
+
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `married`: dummy em que (1) casado e (0) solteiro
+- `educ`: anos de educação
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
+
 
 ```r
-bd_counties = data.frame(
-    county = c("Autauga", "Baldwin", "Barbour", "Bibb", "Blount"),
-    area = c(599, 1578, 891, 625, 639),
-    college_1970 = c(.064, .065, .073, .042, .027),
-    college_1980 = c(.121, .121, .092, .049, .053),
-    college_1990 = c(.145, .168, .118, .047, .070),
-    college_2000 = c(.180, .231, .109, .071, .096),
-    jobs_1970 = c(6853, 19749, 9448, 3965, 7587),
-    jobs_1980 = c(11278, 27861, 9755, 4276, 9490),
-    jobs_1990 = c(11471, 40809, 12163, 5564, 11811),
-    jobs_2000 = c(16289, 70247, 15197, 6098, 16503)
-)
-bd_counties
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+reg_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg_7.11)$coef, 4 )
 ```
 
 ```
-##    county area college_1970 college_1980 college_1990 college_2000 jobs_1970
-## 1 Autauga  599        0.064        0.121        0.145        0.180      6853
-## 2 Baldwin 1578        0.065        0.121        0.168        0.231     19749
-## 3 Barbour  891        0.073        0.092        0.118        0.109      9448
-## 4    Bibb  625        0.042        0.049        0.047        0.071      3965
-## 5  Blount  639        0.027        0.053        0.070        0.096      7587
-##   jobs_1980 jobs_1990 jobs_2000
-## 1     11278     11471     16289
-## 2     27861     40809     70247
-## 3      9755     12163     15197
-## 4      4276      5564      6098
-## 5      9490     11811     16503
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   0.4178     0.0989  4.2257   0.0000
+## female       -0.2902     0.0361 -8.0356   0.0000
+## married       0.0529     0.0408  1.2985   0.1947
+## educ          0.0792     0.0068 11.6399   0.0000
+## exper         0.0270     0.0053  5.0609   0.0000
+## expersq      -0.0005     0.0001 -4.8135   0.0000
+## tenure        0.0313     0.0068  4.5700   0.0000
+## tenursq      -0.0006     0.0002 -2.4475   0.0147
 ```
-- Queremos estruturar a base de dados de modo que, para cada condado, tenhamos 4 linhas (cada uma corresponde a um dos anos: 1970, 1980, 1990 ou 2020). Portanto, teremos 5 colunas: _county_, _year_, _area_, _college_ e _jobs_. Começamos transformando as colunas cujos nomes iniciam com `college_` e com `jobs_` em linhas via `pivot_longer()`:
+
+- Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29\% sobre o salário.
+- O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.
+- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
+  - `lwage ~ female + married + married:female` (o `:` cria apenas a interação), ou
+  - `lwage ~ female * married` (a "multiplicação" cria as dummies e a interação)
+
+- O modelo a ser estimado agora é:
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+
 
 ```r
-bd_counties2 = bd_counties %>%
-    pivot_longer(
-        cols = c( starts_with("college_"), starts_with("jobs_") ),
-        names_to = "var_year", # nome da coluna que vão os nomes das colunas antigas
-        values_to = "value" # nome da coluna com os valores das colunas transformadas
-    )
-head(bd_counties2, 10)
+# Estimando o modelo - forma (a)
+reg_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
+               data=wage1)
+round( summary(reg_7.14a)$coef, 4 )
 ```
 
 ```
-## # A tibble: 10 × 4
-##    county   area var_year         value
-##    <chr>   <dbl> <chr>            <dbl>
-##  1 Autauga   599 college_1970     0.064
-##  2 Autauga   599 college_1980     0.121
-##  3 Autauga   599 college_1990     0.145
-##  4 Autauga   599 college_2000     0.18 
-##  5 Autauga   599 jobs_1970     6853    
-##  6 Autauga   599 jobs_1980    11278    
-##  7 Autauga   599 jobs_1990    11471    
-##  8 Autauga   599 jobs_2000    16289    
-##  9 Baldwin  1578 college_1970     0.065
-## 10 Baldwin  1578 college_1980     0.121
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)      0.3214     0.1000  3.2135   0.0014
+## female          -0.1104     0.0557 -1.9797   0.0483
+## married          0.2127     0.0554  3.8419   0.0001
+## educ             0.0789     0.0067 11.7873   0.0000
+## exper            0.0268     0.0052  5.1118   0.0000
+## expersq         -0.0005     0.0001 -4.8471   0.0000
+## tenure           0.0291     0.0068  4.3016   0.0000
+## tenursq         -0.0005     0.0002 -2.3056   0.0215
+## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
-- Note que, para cada condado, há duas linhas para cada ano, já que há 2 que variam no tempo (_college_ e _jobs_). Precisamos tirar essa duplicidade de anos. Começamos usando a função `separate()` para separar a variável `var_year` em duas colunas (que chamaremos de `var` e `year`):
 
 ```r
-bd_counties3 = bd_counties2 %>%
-    separate(
-        col = "var_year",
-        into = c("var", "year"), # nomes das colunas separadas
-        sep = "_" # caracter que separa as valores na coluna antiga "var_year" 
-    )
-head(bd_counties3, 10)
+# Estimando o modelo - forma (b)
+reg_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
+               data=wage1)
+round( summary(reg_7.14b)$coef, 4 )
 ```
 
 ```
-## # A tibble: 10 × 5
-##    county   area var     year      value
-##    <chr>   <dbl> <chr>   <chr>     <dbl>
-##  1 Autauga   599 college 1970      0.064
-##  2 Autauga   599 college 1980      0.121
-##  3 Autauga   599 college 1990      0.145
-##  4 Autauga   599 college 2000      0.18 
-##  5 Autauga   599 jobs    1970   6853    
-##  6 Autauga   599 jobs    1980  11278    
-##  7 Autauga   599 jobs    1990  11471    
-##  8 Autauga   599 jobs    2000  16289    
-##  9 Baldwin  1578 college 1970      0.065
-## 10 Baldwin  1578 college 1980      0.121
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)      0.3214     0.1000  3.2135   0.0014
+## female          -0.1104     0.0557 -1.9797   0.0483
+## married          0.2127     0.0554  3.8419   0.0001
+## educ             0.0789     0.0067 11.7873   0.0000
+## exper            0.0268     0.0052  5.1118   0.0000
+## expersq         -0.0005     0.0001 -4.8471   0.0000
+## tenure           0.0291     0.0068  4.3016   0.0000
+## tenursq         -0.0005     0.0002 -2.3056   0.0215
+## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
-- Agora, transformaremos a coluna `var` em 2 colunas (`college`, `jobs`), usando a função `pivot_wider()`:
+
+- Observe que, agora, o parâmetro de casado refere-se apenas aos homens (`married`) é positivo e significante de 21,27\%.
+- Já, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, é igual a -8,79\% (= 0,2127 - 0,3006)
+- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudança do estado civil (**intercepto**) é diferente entre mulheres e homens.
+- No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
+
+
+
+#### Considerando inclinações diferentes
+- Seção 7.4 de Wooldridge (2006)
+- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
+- Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
+
+
+
+##### Exemplo 7.10 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+
+- Retornemos à base de dados `wage1` do pacote `wooldridge`
+- Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
+- Então, incluiremos no modelo a interação entre a dummy `female` e os anos de educação (`educ`):
+
+{{<math>}}\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
+&\beta_3 \text{exper} + \beta_4 \text{exper}^2 + \beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \end{align}{{</math>}}
+em que:
+
+- `wage`: salário médio por hora
+- `female`: dummy em que (1) mulher e (0) homem
+- `educ`: anos de educação
+- `female*educ`: interação entre a dummy `female` e anos de educação (`educ`)
+- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+
 
 ```r
-bd_counties4 = bd_counties3 %>%
-    pivot_wider(
-        names_from = "var",
-        values_from = "value"
-    )
-bd_counties4 %>% select(county, year, everything()) %>% head(10)
+# Carregando a base de dados necessária
+data(wage1, package="wooldridge")
+
+# Estimando o modelo
+reg_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
+              data=wage1)
+round( summary(reg_7.17)$coef, 4 )
 ```
 
 ```
-## # A tibble: 10 × 5
-##    county  year   area college  jobs
-##    <chr>   <chr> <dbl>   <dbl> <dbl>
-##  1 Autauga 1970    599   0.064  6853
-##  2 Autauga 1980    599   0.121 11278
-##  3 Autauga 1990    599   0.145 11471
-##  4 Autauga 2000    599   0.18  16289
-##  5 Baldwin 1970   1578   0.065 19749
-##  6 Baldwin 1980   1578   0.121 27861
-##  7 Baldwin 1990   1578   0.168 40809
-##  8 Baldwin 2000   1578   0.231 70247
-##  9 Barbour 1970    891   0.073  9448
-## 10 Barbour 1980    891   0.092  9755
-```
-- Observe que, se só houvesse uma variável variante no tempo, não seria necessário usar o `pivot_wider()`, pois haveria 1 linha para cada ano para cada condado.
-
-
-#### Outro exemplo 2: _long_ para _wide_
-- Usaremos agora a base de dados `TravelMode` do pacote `AER` que possui 840 observações em que 210 indivíduos escolhem um modo de viagem entre 4 opções: carro, aéreo, trem ou ônibus.
-- Note que cada um dos 210 indivíduos aparecem em 4 linhas, em que cada um corresponde a um dos modos de viagem.
-- Há variáveis específicas de
-    - indivíduo (_individual_, _income_ e _size_) que são repetidas nas 4 linhas em que aparece, e
-    - escolha (_choice_, _wait_, _vcost_, _travel_ e _gcost_) que variam de acordo com os modos de viagem.
-
-```r
-data("TravelMode", package = "AER")
-head(TravelMode, 8)
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   0.3888     0.1187  3.2759   0.0011
+## female       -0.2268     0.1675 -1.3536   0.1764
+## educ          0.0824     0.0085  9.7249   0.0000
+## exper         0.0293     0.0050  5.8860   0.0000
+## expersq      -0.0006     0.0001 -5.3978   0.0000
+## tenure        0.0319     0.0069  4.6470   0.0000
+## tenursq      -0.0006     0.0002 -2.5089   0.0124
+## female:educ  -0.0056     0.0131 -0.4260   0.6703
 ```
 
-```
-##   individual  mode choice wait vcost travel gcost income size
-## 1          1   air     no   69    59    100    70     35    1
-## 2          1 train     no   34    31    372    71     35    1
-## 3          1   bus     no   35    25    417    70     35    1
-## 4          1   car    yes    0    10    180    30     35    1
-## 5          2   air     no   64    58     68    68     30    2
-## 6          2 train     no   44    31    354    84     30    2
-## 7          2   bus     no   53    25    399    85     30    2
-## 8          2   car    yes    0    11    255    50     30    2
-```
-- Agora, vamos fazer com que haja apenas uma linha por indivíduo, retirando a coluna _mode_ e gerando diversas colunas para cada possível modo de viagem.
+- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno a cada ano de educação (**inclinação**) é diferente entre mulheres e homens.
+- Pela estimação, nota-se que o incremento no salário das mulheres para cada ano a mais de educação é 0,56\% menor em relação aos homens:
+  - Homens aumentam 8,24\% (`educ`) o salário para cada ano de educação
+  - Mulheres aumentam 7,58\% (= 0,0824 - 0,0056) o salário para cada ano de educação
+- No entanto, essa diferença é estatisticamente não-significante a 5\% de significância.
 
-```r
-TravelMode2 = TravelMode %>% 
-    pivot_wider(
-        names_from = "mode",
-        values_from = c("choice":"gcost") # variáveis específicas do modo
-    )
-head(TravelMode2)
-```
-
-```
-## # A tibble: 6 × 23
-##   individ…¹ income  size choic…² choic…³ choic…⁴ choic…⁵ wait_…⁶ wait_…⁷ wait_…⁸
-##   <fct>      <int> <int> <fct>   <fct>   <fct>   <fct>     <int>   <int>   <int>
-## 1 1             35     1 no      no      no      yes          69      34      35
-## 2 2             30     2 no      no      no      yes          64      44      53
-## 3 3             40     1 no      no      no      yes          69      34      35
-## 4 4             70     3 no      no      no      yes          64      44      53
-## 5 5             45     2 no      no      no      yes          64      44      53
-## 6 6             20     1 no      yes     no      no           69      40      35
-## # … with 13 more variables: wait_car <int>, vcost_air <int>, vcost_train <int>,
-## #   vcost_bus <int>, vcost_car <int>, travel_air <int>, travel_train <int>,
-## #   travel_bus <int>, travel_car <int>, gcost_air <int>, gcost_train <int>,
-## #   gcost_bus <int>, gcost_car <int>, and abbreviated variable names
-## #   ¹​individual, ²​choice_air, ³​choice_train, ⁴​choice_bus, ⁵​choice_car,
-## #   ⁶​wait_air, ⁷​wait_train, ⁸​wait_bus
-```
-- Note que, para cada modo de viagem, foram criadas 5 colunas, que correspondem às 5 variáveis específicas de escolha. No total, foram retiradas 6 colunas (_mode_ + 5 variáveis específicas de escolha) e foram criadas 20 (4 modos {{<math>}}$\times${{</math>}} 5 variáveis específicas de escolha) colunas.
-- Em algumas aplicações econométricas (e.g. logit multinomial) é necessário que haja apenas uma coluna indicando a escolha da opção. Então, criaremos a coluna `choice` indicando qual opção escolheu (_air_, _train_, _bus_ ou _car_) e vamos retirar as 4 colunas que começam com "choice_":
-
-```r
-TravelMode3 = TravelMode2 %>% 
-    mutate(
-        choice = case_when(
-            choice_air == "yes" ~ "air",
-            choice_train == "yes" ~ "train",
-            choice_bus == "yes" ~ "bus",
-            choice_car == "yes" ~ "car"
-        )
-    ) %>% select(individual, choice, 
-                 starts_with("wait_"), starts_with("vcost_"),
-                 starts_with("travel_"), starts_with("gcost_")
-                 )
-
-TravelMode3 %>% head(10)
-```
-
-```
-## # A tibble: 10 × 18
-##    individual choice wait_air wait_train wait_…¹ wait_…² vcost…³ vcost…⁴ vcost…⁵
-##    <fct>      <chr>     <int>      <int>   <int>   <int>   <int>   <int>   <int>
-##  1 1          car          69         34      35       0      59      31      25
-##  2 2          car          64         44      53       0      58      31      25
-##  3 3          car          69         34      35       0     115      98      53
-##  4 4          car          64         44      53       0      49      26      21
-##  5 5          car          64         44      53       0      60      32      26
-##  6 6          train        69         40      35       0      59      20      13
-##  7 7          air          45         34      35       0     148     111      66
-##  8 8          car          69         34      35       0     121      52      50
-##  9 9          car          69         34      35       0      59      31      25
-## 10 10         car          69         34      35       0      58      31      25
-## # … with 9 more variables: vcost_car <int>, travel_air <int>,
-## #   travel_train <int>, travel_bus <int>, travel_car <int>, gcost_air <int>,
-## #   gcost_train <int>, gcost_bus <int>, gcost_car <int>, and abbreviated
-## #   variable names ¹​wait_bus, ²​wait_car, ³​vcost_air, ⁴​vcost_train, ⁵​vcost_bus
-```
+<img src="../example_interaction.png" alt="">
 
 
 
-{{< cta cta_text="👉 Proceed to Estimation with Panel Data" cta_link="../sec9" >}}
+{{< cta cta_text="👉 Proceed to Hypothesis Testing" cta_link="../sec9" >}}

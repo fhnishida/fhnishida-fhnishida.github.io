@@ -2,11 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Revisão de Estatística
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Revisão de Estatística
-weight: 6
+linktitle: Distribuições
+summary: The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations.
+title: Distribuições
+weight: 5
 output: md_document
 type: book
 ---
@@ -14,7 +13,7 @@ type: book
 
 
 - A parte de Econometria no R é baseada no livro de Florian Heiss "Using R for Introductory Econometrics" (2ª edição, 2020)
-    - Aplicar no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)
+    - Aplica no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)
     - É possível ler gratuitamente a versão online em: <http://www.urfie.net>
     - Há também uma versão de Python do livro em: <http://www.upfie.net>
 - A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote `wooldridge`:
@@ -22,10 +21,6 @@ type: book
 ```r
 # install.packages("wooldridge")
 library(wooldridge)
-```
-
-```
-## Warning: package 'wooldridge' was built under R version 4.2.2
 ```
 
 
@@ -199,7 +194,7 @@ sample(letters, 5) # Amostragem de 5 letras
 ```
 
 ```
-## [1] "d" "a" "f" "u" "r"
+## [1] "w" "n" "m" "j" "h"
 ```
 
 ```r
@@ -207,7 +202,7 @@ sample(1:10, 4) # Amostragem de 4 números de 1 a 10
 ```
 
 ```
-## [1] 1 6 8 7
+## [1]  5 10  8  6
 ```
 
 ```r
@@ -215,7 +210,7 @@ sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
 ```
 
 ```
-##  [1]  9  7  8  1  5  4  6  3 10  2
+##  [1]  2 10  6  1  5  9  7  3  4  8
 ```
 
 ```r
@@ -223,7 +218,7 @@ sample(1:10, replace = TRUE) # Amostragem com reposição
 ```
 
 ```
-##  [1]  1  3  1 10  3  9  2  4  1  9
+##  [1]  2  9  9  4  5  1 10  1  4  5
 ```
 - Note que, por padrão, a função `sample()` faz a amostragem sem reposição.
 
@@ -237,7 +232,7 @@ sample(1:6, 1) # amostra um número dentro do vetor 1:6
 ```
 
 ```
-## [1] 2
+## [1] 4
 ```
 - Vamos jogar 500 vezes o dado (usando função `replicate()`) e verificar sua distribuição:
 
@@ -249,7 +244,7 @@ table(amostra) # tabela com contagem das jogadas
 ```
 ## amostra
 ##  1  2  3  4  5  6 
-## 84 72 84 84 78 98
+## 74 85 83 99 78 81
 ```
 
 ```r
@@ -266,7 +261,7 @@ mean(sample(1:6, 2))
 ```
 
 ```
-## [1] 3
+## [1] 3.5
 ```
 - Fazendo isso 500 vezes, temos:
 
@@ -278,7 +273,7 @@ table(amostra) # tabela com contagem das médias de 2 jogadas
 ```
 ## amostra
 ##   1 1.5   2 2.5   3 3.5   4 4.5   5 5.5   6 
-##  15  24  33  68  69  69  78  65  41  23  15
+##  10  27  47  61  71  83  61  44  42  33  21
 ```
 
 ```r
@@ -313,7 +308,7 @@ rnorm(5) # gerando 5 números aleatórios
 ```
 
 ```
-## [1]  0.5241859 -0.3773606  1.0515419  0.5259273  1.0263234
+## [1] -0.8829037 -0.5396110  0.3302621  0.4478966 -0.5543385
 ```
 
 - Para reproduzir resultados que usem números aleatórios, podemos definir "sementes" usando a função `set.seed()` e informando um número inteiro. Isso também é válido para a função `sample()`.

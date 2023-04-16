@@ -2,11 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Revisão de Estatística
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Revisão de Estatística
-weight: 6
+linktitle: Distribuições
+summary: The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations.
+title: Distribuições
+weight: 5
 output: md_document
 type: book
 ---
@@ -16,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 - A parte de Econometria no R é baseada no livro de Florian Heiss "Using R for Introductory Econometrics" (2ª edição, 2020)
-    - Aplicar no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)
+    - Aplica no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)
     - É possível ler gratuitamente a versão online em: <http://www.urfie.net>
     - Há também uma versão de Python do livro em: <http://www.upfie.net>
 - A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote `wooldridge`:

@@ -1,0 +1,26 @@
+---
+date: "2018-09-09T00:00:00Z"
+# icon: book
+# icon_pack: fas
+linktitle: Panel Data
+summary: Panel Data Regression.
+title: Panel Data
+weight: 10
+output: md_document
+type: book
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Aspire
+# wd = "~/../FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Nitro
+```
+
+
+
+
+</br>
+
+{{< cta cta_text="👉 Proceed to Instrumental Variable" cta_link="../sec11" >}}
+
+

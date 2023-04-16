@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Otimização Numérica
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed.
 title: (Extra) Otimização Numérica
 weight: 10
 output: md_document
@@ -16,7 +15,7 @@ type: book
 
 ## Otimização numérica
 - Essa seção tem o objetivo para dar uma intuição sobre métodos de otimização.
-- Veremos os métodos de _grid search_ e _steepest ascent_ que representam famílias de métodos de otimização.
+- Veremos os métodos de _grid search_ e _gradient ascent_ (_descent_) que representam famílias de métodos de otimização.
 
 
 ### _Grid Search_
@@ -33,24 +32,24 @@ type: book
 - Porém, este método fica preciso apenas com maiores quantidades de pontos e, como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente (demora mais tempo para calcular).
 
 
-### _Steepest Ascent_
+### _Gradient Ascent (Descent)_
 
 
 - Conforme o número de parâmetros do modelo cresce, aumenta o número de possíveis combinações entre parâmetros e torna o processo computacional cada vez mais lento.
-- Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _steepest ascent_.
-- Queremos encontrar o {{<math>}}$\theta^{**}${{</math>}} que é o parâmetro que maximiza globalmente a função objetivo
+- Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _gradient ascent_ (_descent_).
+- Queremos encontrar o {{<math>}}${\theta}^{**}${{</math>}} que é o parâmetro que maximiza globalmente a função objetivo
 - Passos para encontrar um máximo:
-  1. Comece com algum valor inicial de parâmetro, {{<math>}}$\theta^0${{</math>}}
+  1. Comece com algum valor inicial de parâmetro, {{<math>}}${\theta}^0${{</math>}}
   2. Calcula-se a derivada e avalia-se a possibilidade de "andar para cima" a um valor mais alto
-  3. Caso possa, ande na direção correta a {{<math>}}$\theta^1${{</math>}}
-  4. Repita os passos (2) e (3), andando para um novo {{<math>}}$\theta^2, \theta^3, ...${{</math>}} até atingir um ponto máximo cuja derivada é igual a zero.
+  3. Caso possa, ande na direção correta a {{<math>}}${\theta}^1${{</math>}}
+  4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} até atingir um ponto máximo cuja derivada é igual a zero.
 
 <center><img src="../steepest_ascent.png"></center>
 
 
 - Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
-    - No exemplo, se os chutes iniciais forem {{<math>}}$\theta^0_A${{</math>}} ou {{<math>}}$\theta^0_B${{</math>}}, então consegue atingir o máximo global.
-    - Já se o chute inicial for {{<math>}}$\theta^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}$\theta^*${{</math>}} (menor do que o máximo global em {{<math>}}$\theta^{**}${{</math>}}).
+    - No exemplo, se os chutes iniciais forem {{<math>}}${\theta}^0_A${{</math>}} ou {{<math>}}${\theta}^0_B${{</math>}}, então consegue atingir o máximo global.
+    - Já se o chute inicial for {{<math>}}${\theta}^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}${\theta}^*${{</math>}} (menor do que o máximo global em {{<math>}}${\theta}^{**}${{</math>}}).
 
 
 <video width="500px" height="500px" controls="controls"/>
@@ -60,11 +59,12 @@ type: book
 - Por outro lado, é um método mais eficiente, pois calcula-se a função objetivo uma vez a cada passo, além de ser mais preciso nas estimações.
 
 
+
 </br>
 
 ## Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) teoria da decisão (minimização da soma do quadrado dos resíduos), de (b) máxima verossimilhança e de (c) método dos momentos.
-- Em todas elas, usaremos um método de otimização, mas, diferente da seção anterior, queremos achar uma _dupla_ de parâmetros ({{<math>}}$ \beta_0 \text{ e } \beta_1${{</math>}}) que otimizam uma função objetivo.
+- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) minimização da função perda, de (b) máxima verossimilhança e de (c) método dos momentos.
+- Em cada uma delas, usaremos uma função objetivo distinta para encontrar o vetor com dois parâmetros, {{<math>}}$ \boldsymbol{\theta} = \{ \beta_0, \beta_1 \} ${{</math>}}, que a otimiza. No R, vamos chamar esse vetor de `params`.
 
 
 ### Base `mtcars`
@@ -83,47 +83,49 @@ No _R_, a base de dados já está incorporada ao programa e pode ser acessada pe
 > - _hp_: cavalos-vapor bruto
 
 Queremos estimar o seguinte modelo:
-$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + u $$
+{{<math>}} $$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon $$ {{</math>}}
 
 
 ```r
 ## Regressao MQO
-lm(formula = mpg ~ hp, data = mtcars)
+reg = lm(formula = mpg ~ hp, data = mtcars)
+summary(reg)$coef
 ```
 
 ```
-## 
-## Call:
-## lm(formula = mpg ~ hp, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           hp  
-##    30.09886     -0.06823
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 30.09886054  1.6339210 18.421246 6.642736e-18
+## hp          -0.06822828  0.0101193 -6.742389 1.787835e-07
 ```
 
 
-### (a) Teoria da Decisão
-- A função objetivo adotada pela Teoria da Decisão é a **função de soma dos quadrados dos resíduos**
-- Por essa estratégia da teoria da decisão, queremos encontrar as estimativas, {{<math>}}$\hat{\beta}_0\ \text{e}\ \hat{\beta}_1 ${{</math>}}, que **minimizam** essa função.
+
+### (a) Minimização da função perda
+- A função perda adotada pela Teoria da Decisão é a **função de soma dos quadrados dos resíduos**
+- Por essa estratégia, queremos encontrar as estimativas, {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}, que **minimizam** essa função.
 
 
-#### 1. Criar função perda que calcula a soma dos desvios quadráticos
-- A função para calcular a soma dos desvios quadráticos recebe como inputs:
-  - um **vetor** de possíveis valores para {{<math>}}$\hat{\beta}_0${{</math>}}, {{<math>}}$\hat{\beta}_1${{</math>}}
+#### 1. Criar função perda que calcula a soma dos resíduos quadráticos
+- A função para calcular a soma dos resíduos quadráticos recebe como inputs:
+  - um **vetor** de possíveis valores {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}
   - um **texto** com o nome da variável dependente
   - um **vetor de texto** com os nomes dos regressores
   - uma base de dados
 
 ```r
-resid_quad = function(params, yname, Xnames, data) {
-  # Extraindo os parâmetros para objetos
-  bhat = matrix(params, ncol=1)
-  y = as.matrix(data[,yname])
-  X = as.matrix( cbind(const=1, data[,Xnames]) )
+resid_quad = function(params, yname, xname, data) {
+  # Extraindo as variáveis da base em vetores
+  y = as.matrix(data[yname])
+  x = as.matrix(data[xname])
   
-  yhat = X %*% bhat # valores ajustados
-  uhat = y - yhat # desvios = observados - ajustados
-  sum(uhat^2)
+  # Extraindo os parâmetros de params
+  b0 = params[1]
+  b1 = params[2]
+  sig2 = params[3]
+  
+  yhat = b0 + b1 * x # valores ajustados
+  e_hat = y - yhat # desvios = observados - ajustados
+  sum(e_hat^2)
 }
 ```
 
@@ -156,10 +158,10 @@ hessian: Logical. Should a numerically differentiated Hessian matrix be returned
 
 ```r
 # Estimação por BFGS
-theta_ini = c(0, 0) # Chute inicial de beta_0, beta_1 e beta_2
+theta_ini = c(0, 0) # Chute inicial de b0, b1
 
 fit_ols2 = optim(par=theta_ini, fn=resid_quad, 
-                 yname="mpg", Xnames="hp", data=mtcars,
+                 yname="mpg", xname="hp", data=mtcars,
                  method="BFGS", hessian=TRUE)
 fit_ols2
 ```
@@ -189,31 +191,46 @@ fit_ols2
 
 
 
-### (b) Máxima verossimilhança
+### (b) Máxima Verossimilhança
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
 - A função objetivo é a função de verossimilhança e, ao contrário da função de soma de quadrado dos resíduos, queremos maximizá-la
 - Em nosso exemplo, temos que estimar 3 parâmetros
-$$ \theta = \left( \beta_0, \beta_1, \sigma^2 \right). $$
+
+{{<math>}}$$ \boldsymbol{\theta} = \left\{ \beta_0, \beta_1, \sigma^2 \right\}. $${{</math>}}
 
 
-#### Otimização Numérica para MLE
+
+#### Otimização Numérica para Máxima Verossimilhança
 A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
 
-- Alguns valores inicias dos parâmetros, {{<math>}}$\theta^0 = \{ \beta_0, \beta_1, \sigma^2 \}${{</math>}}
+- Alguns valores inicias dos parâmetros, {{<math>}}$\boldsymbol{\theta}^0 = \{ \beta_0, \beta_1, \sigma^2 \}${{</math>}}
 - Uma função que tome esses parâmetros como um argumento e calcule a 
-log-verossimilhança, {{<math>}}$\ln{L(\theta)}${{</math>}}.
+log-verossimilhança, {{<math>}}$\ln{L(\boldsymbol{\theta})}${{</math>}}.
 
 > Como `optim()` irá encontrar os parâmetros que minimizem a função objetivo, precisamos adaptar o output da função de log-verossimilhança (minimizaremos o negativo da log-lik).
 
 A função log-verossimilhança é dada por
-$$ \ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}, $$
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
-$$ y_i | x_i \sim \mathcal{N}(x_i \beta, \sigma^2) $$
+{{<math>}}$$ \ln{L(\beta_0, \beta_1, \sigma^2 | y, x)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}, $${{</math>}}
 
-1. Construir matriz {{<math>}}$X${{</math>}} e vetor {{<math>}}$y${{</math>}}
+em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+
+{{<math>}}$$ y_i | x_i \sim \mathcal{N}(\beta_0 + \beta_1 x_i, \sigma^2) $${{</math>}}
+
+o que implica que 
+
+{{<math>}}$$\varepsilon_i | x_i \sim N(0, \sigma^2)$${{</math>}}
+
+<center><img src="../mle.jpg"></center>
+
+- Acima, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
+
+
+Passos para estimar uma regressão por máxima verossimilhança:
+
+1. Chutar valores iniciais de 
 2. Calcular os valores ajustados, {{<math>}}$\hat{y}${{</math>}}
-3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta, \sigma^2)${{</math>}}
-4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta, \sigma^2 | y, X)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}${{</math>}}
+3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta_0, \beta_1, \sigma^2)${{</math>}}
+4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta_0, \beta_1, \sigma^2 | y, x)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}${{</math>}}
 
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\beta_0, \beta_1${{</math>}} e {{<math>}}$\sigma^2${{</math>}}
@@ -221,114 +238,108 @@ $$ y_i | x_i \sim \mathcal{N}(x_i \beta, \sigma^2) $$
 
 ```r
 params = c(30, -0.06, 1)
-# (beta_0, beta_1 , sigma2)
+# (b0, b1 , sig2)
 ```
 
 ##### 2. Seleção da base de dados e variáveis
 
 ```r
-## Adicionando colunas de 1's para o termo constante
+## Inicializando
 yname = "mpg"
-Xnames = "hp"
+xname = "hp"
 data = mtcars
 
-bhat = matrix(params[1:(length(params)-1)], ncol=1)
-sigma2 = params[length(params)]
-y = as.matrix(data[,yname])
-X = as.matrix( cbind(const=1, data[,Xnames]) )
+# Extraindo as variáveis da base em vetores
+y = as.matrix(data[yname])
+x = as.matrix(data[xname])
+
+# Extraindo os parâmetros de params
+b0 = params[1]
+b1 = params[2]
+sig2 = params[3]
 ```
 
 ##### 3. Cálculo dos valores ajustados e das densidades
 
 ```r
 ## Calculando valores ajustados de y
-yhat = X %*% bhat
+yhat = b0 + b1 * x
+head(yhat)
+```
+
+```
+##                      hp
+## Mazda RX4         23.40
+## Mazda RX4 Wag     23.40
+## Datsun 710        24.42
+## Hornet 4 Drive    23.40
+## Hornet Sportabout 19.50
+## Valiant           23.70
 ```
 
 ##### 4. Cálculo das densidades
-$$ f(y_i | x_i, \beta, \sigma^2) $$
+{{<math>}}$$ f(y_i | x_i, \beta_0, \beta_1, \sigma^2) $${{</math>}}
 
 ```r
-## Calculando os pdf's de cada outcome
-ypdf = dnorm(y, mean = yhat, sd = sqrt(sigma2))
+## Calculando os pdf's de cada linha
+ypdf = dnorm(y, mean = yhat, sd = sqrt(sig2))
 
-head(ypdf) # Primeiros valores da densidade
+head(round(ypdf, 4)) # Primeiros valores da densidade
 ```
 
 ```
-##              [,1]
-## [1,] 2.239453e-02
-## [2,] 2.239453e-02
-## [3,] 1.074061e-01
-## [4,] 5.399097e-02
-## [5,] 2.896916e-01
-## [6,] 6.182621e-08
+##                      mpg
+## Mazda RX4         0.0224
+## Mazda RX4 Wag     0.0224
+## Datsun 710        0.1074
+## Hornet 4 Drive    0.0540
+## Hornet Sportabout 0.2897
+## Valiant           0.0000
 ```
 
 ```r
-prod(ypdf) # Verossimilhança
+sum(ypdf) # Verossimilhança
+```
+
+```
+## [1] 2.447628
+```
+
+```r
+prod(ypdf) # Log-Verossimilhança
 ```
 
 ```
 ## [1] 2.201994e-121
 ```
-
-- Para entender melhor o que estamos fazendo aqui, relembre que, na estimação por máxima verossimilhança, assume-se que
-`$$u | X \sim N(0, \sigma^2)$$`
-
-- No exemplo abaixo, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$u${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
-
-<center><img src="../mle.jpg"></center>
-
-- Agora, vamos juntar o data frame `mtcars` com os valores ajustados `mpg_hat` e as densidades `y_pdf`:
+- Agora, vamos juntar visualizar os 6 primeiros elementos dos objetos trabalhados:
 
 ```r
 # Juntando as bases e visualizando os primeiros valores
-head( data.frame(y, X, yhat, ypdf) )
+tab = cbind(y, x, yhat, round(ypdf, 4)) # arredondando ypdf (4 dígitos)
+colnames(tab) = c("y", "x", "yhat", "ypdf") # renomeando colunas
+head(tab)
 ```
 
 ```
-##      y const  V2  yhat         ypdf
-## 1 21.0     1 110 23.40 2.239453e-02
-## 2 21.0     1 110 23.40 2.239453e-02
-## 3 22.8     1  93 24.42 1.074061e-01
-## 4 21.4     1 110 23.40 5.399097e-02
-## 5 18.7     1 175 19.50 2.896916e-01
-## 6 18.1     1 105 23.70 6.182621e-08
+##                      y   x  yhat   ypdf
+## Mazda RX4         21.0 110 23.40 0.0224
+## Mazda RX4 Wag     21.0 110 23.40 0.0224
+## Datsun 710        22.8  93 24.42 0.1074
+## Hornet 4 Drive    21.4 110 23.40 0.0540
+## Hornet Sportabout 18.7 175 19.50 0.2897
+## Valiant           18.1 105 23.70 0.0000
 ```
 - Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
-
-```r
-# Criando gráfico para os 2 primeiros carros (Mazda RX4 e Mazda RX 4 Wag)
-qt_norm = seq(20, 27, by=0.1) # valores de mpg ("escores Z")
-
-# Mazda RX4
-pdf_norm1 = dnorm(qt_norm, mean=yhat[1], sd=sqrt(sigma2)) # pdf
-plot(qt_norm, pdf_norm1, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4")
-abline(v=c(yhat[1], y[1]), col="red")
-text(c(yhat[1], y[1]), 0.2, 
-     c(expression(widehat(mpg)[1]), expression(mpg[1])), 
-     pos=2, srt=90, col="red")
-```
-
-<img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
-
-```r
-# Mazda RX4 Wag 
-pdf_norm2 = dnorm(qt_norm, mean=yhat[2], sd=sqrt(sigma2)) # pdf
-plot(qt_norm, pdf_norm2, type="l", xlab="mpg", ylab="densidade", main="Mazda RX4 Wag")
-abline(v=c(yhat[2], y[2]), col="blue")
-text(c(yhat[2], y[2]), 0.2, 
-     c(expression(widehat(mpg)[2]), expression(mpg[2])), 
-     pos=2, srt=90, col="blue")
-```
-
-<img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-2.png" width="672" />
+<img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-2.png" width="672" /><img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-3.png" width="672" />
 - Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
 
 
 ##### 5. Calculando a Log-Verossimilhança
-$$ \mathcal{l}(\beta, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta, \sigma^2) \right]} $$
+
+A log-verossimilhança é a soma do log de todas probabilidades:
+
+{{<math>}}$$ \mathcal{l}(\beta_0, \beta_1, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta_0, \beta_1, \sigma^2) \right]} $${{</math>}}
 
 ```r
 ## Calculando a log-verossimilhanca
@@ -343,20 +354,26 @@ loglik
 
 ##### 6. Criando a Função de Log-Verossimilhança
 
+Juntando tudo que fizemos anteriormente, podemos criar uma função no R que calcular a função de log-verossimilhança.
+
+
 ```r
 ## Criando funcao para calcular log-verossimilhanca MQO 
-loglik_lm = function(params, yname, Xnames, data) {
-  # Pegando os parâmetros
-  bhat = matrix(params[1:(length(params)-1)], ncol=1)
-  sigma2 = params[length(params)]
-  y = as.matrix(data[,yname])
-  X = as.matrix( cbind(const=1, data[,Xnames]) )
+loglik_lm = function(params, yname, xname, data) {
+  # Extraindo as variáveis da base em vetores
+  y = as.matrix(data[yname])
+  x = as.matrix(data[xname])
+  
+  # Extraindo os parâmetros de params
+  b0 = params[1]
+  b1 = params[2]
+  sig2 = params[3]
   
   ## Calculando valores ajustados de y
-  yhat = X %*% bhat
+  yhat = b0 + b1 * x
   
-  ## Calculando os pdf's de cada outcome
-  ypdf = dnorm(y, mean = yhat, sd = sqrt(sigma2))
+  ## Calculando os pdf's de cada linha
+  ypdf = dnorm(y, mean = yhat, sd = sqrt(sig2))
   
   ## Calculando a log-verossimilhanca
   loglik = sum(log(ypdf))
@@ -370,14 +387,16 @@ loglik_lm = function(params, yname, Xnames, data) {
 ##### 7. Otimização
 
 Tendo a função objetivo, usaremos `optim()` para *minimizar*
-$$ -\ln{L(\beta, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta, \sigma^2)}}. $$
+
+{{<math>}}$$ -\ln{L(\beta_0, \beta_1, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}. $${{</math>}}
+
 Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (função`optim()` apenas minimiza).
 
 
 ```r
 ## Maximizando a função log-verossimilhança MQO
 mle = optim(par = c(0, 0, 1), fn = loglik_lm,
-            yname = "mpg", Xnames = "hp", data = mtcars,
+            yname = "mpg", xname = "hp", data = mtcars,
               method = "BFGS", hessian = TRUE)
 
 ## Mostrando os resultados da otimização
@@ -425,74 +444,106 @@ cbind(mle$par, mle_se)
 ```
 
 
-### (c) Estimação por GMM
+### (c) Método dos Momentos
 - [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
 - [Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)](https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199)
 
 
 - Para estimar via GMM precisamos construir vetores relacionados aos seguintes momentos:
-$$ E(u) = 0 \qquad \text{ e } \qquad E(u'X) = 0 $$
-em que {{<math>}}$X${{</math>}} é a matriz de covariadas e {{<math>}}$u${{</math>}} é o desvio. Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.
 
+{{<math>}}$$ E(\boldsymbol{\varepsilon}) = 0 \qquad \text{ e } \qquad E(\boldsymbol{\varepsilon}' \boldsymbol{x}) = 0 $${{</math>}}
 
-- Relembre que estamos usando a base de dados `mtcars` para estimar o modelo linear:
-$$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + u $$
-que relaciona o consumo de combustível (em milhas por galão - _mpg_) com a potência (_hp_) do carro.
+Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM. Os análogos amostrais são
+
+{{<math>}}$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i.x_i} = 0 $${{</math>}}
+
+Podemos calcular os dois momentos amostrais em uma única multiplicação matricial. Considere:
+
+{{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \qquad \text{e} \qquad \boldsymbol{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix} $${{</math>}}
+
+Vamos juntar uma coluna de 1's com {{<math>}}$\boldsymbol{x}${{</math>}} e definir a matriz:
+{{<math>}}$$ \boldsymbol{X} = \begin{bmatrix} 1 & \varepsilon_1 \\ 1 & \varepsilon_2 \\ \vdots & \vdots \\ 1 & \varepsilon_N \end{bmatrix} $${{</math>}}
+
+Fazendo a multiplicação matricia entre {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}}, temos:
+
+{{<math>}}$$ \hat{\boldsymbol{\varepsilon}}' \boldsymbol{X}\ =\ \begin{bmatrix} \varepsilon_1 & \varepsilon_2 & \cdots & \varepsilon_N \end{bmatrix} \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}\ =\ \begin{bmatrix}  \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}} & \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}.x_i} \end{bmatrix} $${{</math>}}
+
+Note que o vetor resultante são exatamente os momentos amostrais.
+
 
 
 #### Otimização Numérica para GMM
 
-##### 1. Chute de valores iniciais para {{<math>}}$\beta_0${{</math>}}, {{<math>}}$\beta_1${{</math>}} e {{<math>}}$\beta_2${{</math>}}
-- Vamos criar um vetor com possíveis valores de {{<math>}}$\beta_0, \beta_1, \beta_2${{</math>}}:
+##### 1. Chute de valores iniciais para {{<math>}}$\beta_0${{</math>}} e {{<math>}}$\beta_1${{</math>}}
+- Vamos criar um vetor com possíveis valores de {{<math>}}$\beta_0, \beta_1${{</math>}}:
 
 ```r
-library(dplyr)
-
 params = c(30, -0.06)
 yname = "mpg"
-Xnames = "hp"
+xname = "hp"
 data = mtcars
 ```
 
 ##### 2. Seleção da base de dados e variáveis
 
 ```r
-## Selecionando os parâmetros e variáveis
-bhat = matrix(params, ncol=1)
-y = as.matrix(data[,yname])
-X = as.matrix( cbind(const=1, data[,Xnames]) )
+# Extraindo as variáveis da base em vetores
+y = as.matrix(data[yname])
+x = as.matrix(data[xname])
+X = cbind(1, x)
+
+# Extraindo os parâmetros de params
+b0 = params[1]
+b1 = params[2]
+sig2 = params[3]
 ```
 
-##### 3. Cálculo dos valores ajustados e dos desvios
+##### 3. Cálculo dos valores ajustados e dos resíduos
 
 ```r
-## Valores ajustados e desvios
-yhat = X %*% bhat
-# equivalente a: y_hat = beta_0 + beta_1 * X[,"hp"]
+## Valores ajustados de y
+yhat = b0 + b1 * x
 
-uhat = y - yhat
+## Resíduos
+e_hat = y - yhat
 ```
+
 
 ##### 4. Criação da matriz de momentos
-- Note que {{<math>}}$E(u' X)${{</math>}} é uma multiplicação matricial, mas a função `gmm()` exige que como input os vetores com multiplicação elemento a elemento do resíduo {{<math>}}$u${{</math>}} com as covariadas {{<math>}}$X${{</math>}} (neste caso: constante, hp, wt)
+- Note que {{<math>}}$\hat{\boldsymbol{\varepsilon}}' X${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz com **multiplicação elemento a elemento** do resíduo {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com as covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante e hp), na forma:
+
+{{<math>}}$$ \hat{\boldsymbol{\varepsilon}} \times \boldsymbol{X}\ =\ \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \times \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}\ =\ \begin{bmatrix} \varepsilon_1 & \varepsilon_1.x_1  \\ \varepsilon_2 & \varepsilon_2.x_2 \\ \vdots & \vdots \\ \varepsilon_N & \varepsilon_N.x_N \end{bmatrix} $${{</math>}}
+Note que, para fazer o GMM no R, não devemos tirar a média de cada coluna (a própria função `gmm()` fará isso).
+
+
 
 ```r
-m = X * as.vector(uhat) # matriz de momentos (sem tomar esperança)
-head(m)
+# Matriz de momentos
+m = as.numeric(e_hat) * X 
+head(m) # 6 primeiras linhas
 ```
 
 ```
-##      const        
-## [1,] -2.40 -264.00
-## [2,] -2.40 -264.00
-## [3,] -1.62 -150.66
-## [4,] -2.00 -220.00
-## [5,] -0.80 -140.00
-## [6,] -5.60 -588.00
+##                              hp
+## Mazda RX4         -2.40 -264.00
+## Mazda RX4 Wag     -2.40 -264.00
+## Datsun 710        -1.62 -150.66
+## Hornet 4 Drive    -2.00 -220.00
+## Hornet Sportabout -0.80 -140.00
+## Valiant           -5.60 -588.00
 ```
-- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$u${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(u)=0${{</math>}} (mas sem tomar a esperança).
-- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(u'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1, \beta_2 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
+
+```r
+apply(m, 2, sum) # média de cada coluna
+```
+
+```
+##                hp 
+##   -35.46 -6400.62
+```
+- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperança).
+- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
+- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
 
 
 ##### 5. Criação de função com os momentos
@@ -504,20 +555,28 @@ mom_ols = function(params, list) {
   # No GMM, só pode ter 1 input que não sejam os parâmetros
   # Por isso, foi incluído uma lista com 3 argumentos
   yname = list[[1]]
-  Xnames = list[[2]]
+  xname = list[[2]]
   data = list[[3]]
   
-  ## Selecionando os parâmetros e variáveis
-  bhat = matrix(params, ncol=1)
-  y = as.matrix(data[,yname])
-  X = as.matrix( cbind(const=1, data[,Xnames]) )
+  # Extraindo as variáveis da base em vetores
+  y = as.matrix(data[yname])
+  x = as.matrix(data[xname])
+  X = cbind(1, x)
   
-  ## Valores ajustados e desvios
-  yhat = X %*% bhat
-  uhat = y - yhat
+  # Extraindo os parâmetros de params
+  b0 = params[1]
+  b1 = params[2]
+  sig2 = params[3]
   
-  m = X * as.vector(uhat) # matriz de momentos (vetor - multiplicação por elemento)
-  m
+  ## Valores ajustados de y
+  yhat = b0 + b1 * x
+  
+  ## Resíduos
+  e_hat = y - yhat
+  
+  ## Matriz de momentos
+  m = as.numeric(e_hat) * X
+  m # output da função
 }
 ```
 
@@ -535,7 +594,9 @@ library(gmm)
 ```
 
 ```r
-gmm_lm = gmm(g=mom_ols, x=list(yname="mpg", Xnames="hp", data=mtcars), t0=c(0,0),
+gmm_lm = gmm(g=mom_ols, 
+             x=list(yname="mpg", xname="hp", data=mtcars), # argumentos função
+             t0=c(0,0), # chute inicial de params
              wmatrix = "optimal", # matriz de ponderação
              optfct = "nlminb" # função de otimização
              )
@@ -548,7 +609,6 @@ summary(gmm_lm)$coefficients
 ## Theta[1] 30.09886038 2.53115147 11.891371 1.312350e-32
 ## Theta[2] -0.06822828 0.01540378 -4.429319 9.453096e-06
 ```
-
 
 
 

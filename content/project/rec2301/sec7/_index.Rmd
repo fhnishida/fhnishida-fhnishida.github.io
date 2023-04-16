@@ -3,8 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Regressão Simples
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
+summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
 title: Regressão Simples
 weight: 7
 output: md_document
@@ -496,4 +495,4 @@ summary(CEOregres)
 
 
 
-{{< cta cta_text="👉 Seguir para Regressão Múltipla - Estimação" cta_link="../sec8" >}}
+{{< cta cta_text="👉 Seguir para Regressão Múltipla" cta_link="../sec8" >}}

@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Data Visualization
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Data Visualization
+linktitle: Distributions
+summary: The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations.
+title: Distributions
 weight: 5
 output: md_document
 type: book
@@ -15,225 +14,317 @@ type: book
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-- [Exploratory graphs - Part 1 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/ilRAK/exploratory-graphs-part-1)
-- [Base plotting system - Part 2 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/m4P1I/base-plotting-system-part-2)
-- [Base plotting demonstration (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/yUFDH/base-plotting-demonstration)
 
-- [Aplicações R Base (The R Graph Gallery)](https://r-graph-gallery.com/base-R.html)
-- Objetivos dos gráficos em análise de dados:
-    1. Entender as propriedades dos dados
-    2. Encontrar padrões nos dados
-    3. Sugerir estratégias de modelagem
-    4. Analisar "bugs"
-    5. Comunicar resultados
-    
-
-## Análise Exploratória de Dados (EDA)
-- Os gráficos para análise exploratória abrangem os 4 primeiros objetivos, ou seja, não são para comunicar um resultado final do seu trabalho.
-- Características:
-    1. Feitas rapidamente e em grande quantidade
-    2. O objetivo é o entendimento dos dados
-    3. Eixos/legendas normalmente são retiradas
-    4. Cores/tamanhos são primariamente usadas para informação
-- Principais gráficos simples:
-    a. Diagrama de caixa (_Boxplot_)
-    b. Histogramas
-    c. Gráfico de barra (_Barplot_)
-    d. Gráfico de dispersão (_Scatterplot_)
-
-Como exemplo, usaremos dados da Agência de Proteção Ambiental dos EUA (EPA), [avgpm25.csv](https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv), que informa a quantidade de poluição por partícula fina (PM2.5). A média anual de PM2.5 que não pode exceder 12 $\mu g/m^3$. 
-
+- A parte de Econometria no R é baseada no livro de Florian Heiss "Using R for Introductory Econometrics" (2ª edição, 2020)
+    - Aplica no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)
+    - É possível ler gratuitamente a versão online em: <http://www.urfie.net>
+    - Há também uma versão de Python do livro em: <http://www.upfie.net>
+- A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote `wooldridge`:
 ```{r}
-library(dplyr)
-pollution = read.csv("https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv")
-summary(pollution)
-```
-
-### Diagrama de caixa (_Boxplot_)
-- Apresenta mínimo, máximo, os quartis e outliers.
-```{r}
-boxplot(pollution$pm25, col="blue")
-abline(h=12, col="red") # Linha horizontal no valor 12
-```
-- Para múltiplos boxplots, usamos `<variável_numérica> ~ <variável categórica>`:
-
-```{r}
-boxplot(pollution$pm25 ~ pollution$region, col="blue")
-abline(h=12, col="red") # Linha horizontal no valor 12
+# install.packages("wooldridge")
+library(wooldridge)
 ```
 
 
 
-### Histograma
-```{r}
-hist(pollution$pm25, col="green")
+## Distribuições
+- [Seção 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
+- [Probability Distributions in R (Examples): PDF, CDF & Quantile Function (Statistics Globe)](https://statisticsglobe.com/probability-distributions-in-r)
+- [Basic Probability Distributions in R (Greg Graham)](https://rstudio-pubs-static.s3.amazonaws.com/100906_8e3a32dd11c14b839468db756cee7400.html)
 
-hist(pollution$pm25, col="green", breaks=100) # 100 quebras
-rug(pollution$pm25) # Traços dos valores da amostra abaixo do histograma 
-abline(v=12, col="red") # Linha vertical no valor 12
+
+- As funções relacionadas a distribuições são dadas por `<prefixo><nome da distribuição>`
+- Existem 4 prefixos que indicam qual ação será realizada:
+    - `d`: retorna uma probabilidade a partir de uma função de densidade de probabilidade (fdp)
+    - `p`: retorna uma probabilidade acumulada a partir de uma função de distribuição acumulada (fda)
+    - `q`: retorna uma estatística da distribuição (quantil) dada uma probabilidade acumulada
+    - `r`: gera números aleatórios dada a distribuição
+- Existem diversas distribuições disponíveis no R:
+    - `norm`: Normal
+    - `bern`: Bernoulli (pacote `Rlab`)
+    - `binom`: Binomial
+    - `pois`: Poisson
+    - `chisq`: Qui-Quadrado ({{<math>}}$\chi^2${{</math>}})
+    - `t`: t-Student
+    - `f`: F
+    - `unif`: Uniforme
+    - `weibull`: Weibull
+    - `gamma`: Gamma
+    - `logis`: Logística
+    - `exp`: Exponencial
+- Seguem as principais distribuições e suas respectivas funções:
+
+| **Distribuição**   | **Densidade de Probabilidade** | **Distribuição Acumulada** | **Quantil**             |
+|--------------------|--------------------------------|----------------------------|-------------------------|
+| Normal             | `dnorm(x, mean, sd)`           | `pnorm(q, mean, sd)`       | `qnorm(p, mean, sd)`    |
+| Qui-Quadrado       | `dchisq(x, df)`                | `pchisq(q, df)`            | `qchisq(p, df)`         |
+| t-Student          | `dt(x, df)`                    | `pt(q, df)`                | `qt(p, df)`             |
+| F                  | `df(x, df1, df2)`              | `pf(q, df1, df2)`          | `qf(p, df1, df2)`       |
+| Binomial           | `dbinom(x, size, prob)`        | `pbinom(q, size, prob)`    | `qbinom(p, size, prob)` |
+
+em que `x` e `q` são estatísticas de cada distribuição (quantis), e `p` é probabilidade.
+
+
+### Distribuição Normal
+- Considere uma normal padrão, {{<math>}}$N(\mu=0, \sigma=1)${{</math>}}, e escores padrão {{<math>}}$Z=-1,96 \text{ e } 1,96${{</math>}} (para intervalo de confiança de {{<math>}}$\approx 5\%${{</math>}}):
+
+<center><img src="../standard-normal-distribution-with-critical-values.webp"></center>
+
+- [`d`]: Densidade a partir de uma fdp, dada estatística (escore padrão):
+```{r}
+dnorm(1.96, mean=0, sd=1) # probabilidade para escore padrão de 1,96
+dnorm(-1.96, mean=0, sd=1) # probabilidade para escore padrão de -1,96
 ```
-- Podemos colocar mais de um gráfico numa figura usando a função `par(mfrow, mar)`:
+
+- [`p`]: Probabilidade acumulada a partir de uma fda, dada estatística (escore padrão):
 ```{r}
-par(mfrow=c(2, 1), mar=c(4, 4, 2, 1)) # Criando figura com 2 linhas e 1 coluna + margens
-
-pol_west = pollution %>% filter(region == "west")
-pol_east = pollution %>% filter(region == "east")
-
-hist(pol_west$pm25, col="green")
-hist(pol_east$pm25, col="green")
+pnorm(1.96, mean=0, sd=1) # probabilidade acumulada para escore padrão de 1,96
+pnorm(-1.96, mean=0, sd=1) # probabilidade acumulada para escore padrão de -1,96
 ```
 
-- Note que você precisa usar `par(mfrow=c(1, 1))` para voltar a incluir apenas 1 gráfico na figura. 
-
-
-### Gráfico de barra (_Barplot_)
+Logo, a probabilidade de que uma variável aleatória com distribuição normal padrão esteja com valor entre -1,96 e 1,96 é de 95\%
 ```{r}
-barplot(table(pollution$region), col="wheat",
-        main="Nº de países em cada região")
-```
-
-
-
-### Gráfico de dispersão (_Scatterplot_)
-- Gera gráficos sob 2 dimensões
-```{r}
-plot(pollution$latitude, pollution$pm25)
-abline(h=12, lwd=1.5, lty=2, col="red")
-abline(lm(pm25 ~ latitude, data=pollution), col="blue")
-```
-
-```{r}
-par(mfrow=c(1, 2), mar=c(4, 4, 2, 1)) # Criando figura com 1 linha e 2 colunas + margens
-
-plot(pol_west$latitude, pol_west$pm25, main="West")
-plot(pol_east$latitude, pol_east$pm25, main="East")
-```
-
-- Também é possível adicionar objetos gráficos e textos no gráfico gerado por `plot()`:
-    - `abline()`: adiciona linhas horizontal, vertical ou de regressão
-    - `points()`: adiciona pontos ao gráfico
-    - `lines()`: adiciona linhas ao gráfico
-    - `text()`: adiciona texto ao gráfico
-    - `title()`: adiciona anotações aos eixos, título, subtítulo e margem exterior
-    - `mtext()`: adiciona texto às margens (interna e externa) do gráfico
-    - `axis()`: adiciona traços/rótulos aos eixos
-
-```{r}
-par(mfrow=c(1, 1)) # Retornando ao padrão
-
-air_may = airquality %>% filter(Month==5)
-air_other = airquality %>% filter(Month!=5)
-
-plot(airquality$Wind, airquality$Ozone, main="Ozone and Wind in NYC")
-points(air_may$Wind, air_may$Ozone, col="blue")
-points(air_other$Wind, air_other$Ozone, col="red")
-legend("topright", pch=1, col=c("blue", "red"), legend=c("May", "Other Months"))
+pnorm(1.96, mean=0, sd=1) - pnorm(-1.96, mean=0, sd=1)
 ```
 
 
-Alguns parâmetros gráficos importantes:
-
-- `pch`: símbolo dos pontos gráficos (padrão é círculo)
-- `lty`: tipo da linha (padrão é linha sólida, mais pode ser pontilhado, etc.)
-- `lwd`: grossura da linha (integer)
-- `col`: cor, especificada como número, texto ou código hex (função `colors()` dá um vetor de cores por nome)
-- `xlab`: rótulo do eixo x
-- `ylab`: rótulo do eixo y
-- `par()`: função que especifica parâmetros *globais* que afetam todas figuras:
-    - `las`: orientação dos rótulos 
-    - `bg`: cor de fundo
-    - `mar`: tamanho da margem
-    - `oma`: tamanho da margem externa (padrão é 0)
-    - `mfrow`: número de gráficos por linha
-    - `mfcol`: número de gráficos por coluna
-
-
-
-## Grammar of Graphics (`ggplot2`)
-- [_ggplot2_ - Part 3 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/idcsq/ggplot2-part-3)
-- [_ggplot2_ - Part 4 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/cj6RA/ggplot2-part-4)
-- [_ggplot2_ Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
-- [Aplicações _ggplot2_ (The R Graph Gallery)](https://r-graph-gallery.com/ggplot2-package.html)
-
-
-- Componentes básicos do `ggplot2`:
-    - um **data frame**
-    - estética (**aesthetics**): como os dados são mapeados (tamanho, forma, cor)
-    - objetos geométricos (**geoms**): pontos, linhas, formas
-    - **facets**: para gráficos condicionais
-- Ao invés de criar um gráfico diretamente, os gráficos do `ggplot2` são construídos em camadas (layers)
-
-
-
-1. Data Frame
+- [`q`]: Estatística (escore padrão) a partir de um quantil:
 ```{r}
-head(mtcars)
+qnorm(0.975, mean=0, sd=1) # quantil dada o quantil de 97,5%
+qnorm(0.025, mean=0, sd=1) # quantil dada o quantil de 2,5%
 ```
 
-2. Base do Gráfico (`ggplot()`)
-    - dados que serão incluídos no gráfico
-    - toda vez que for incluir uma variável, é necessário precisa usar a função `aes()` sobre elas
+Podemos criar gráficos usando a função `curve( function(x), from, to )`, na qual inserimos uma função com um `x` arbitrário e seus limites mínimo e máximo (`from` e `to`):
 ```{r}
-library(ggplot2)
-g = ggplot(data=mtcars, aes(mpg, wt)) # Criando a base do gráfico
-g
+# pdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3
+curve(dnorm(x, mean=0, sd=1), from=-3, to=3)
+
+# cdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3
+curve(pnorm(x, mean=0, sd=1), from=-3, to=3)
+
+# quantil de normal padrão com probabilidade acumulada no intervalo 0 e 1
+curve(qnorm(x, mean=0, sd=1), from=0, to=1)
 ```
 
-3. Layer geomético (`geom`)
-    - incluindos formas, linhas e pontos
-    - caso não sejam informadas novas variáveis, a função para criar um objeto geométrico irá usar as variáveis-base definidas na função `ggplot()` inicial
-    - Junta-se a base do gráfico com outras layers usando o sinal `+`
+
+### Distribuição t-Student
+- Criaremos gráficos com diversos graus de liberdade
+- Quanto maior os graus de liberdade, mais se aproxima de uma normal padrão
+
 ```{r}
-g + geom_point()
+curve(dnorm(x, mean=0, sd=1), from=-3, to=3, pch=".") # fdp normal padrão
+
+for (n in c(10, 5, 3, 2)) {
+    curve(dt(x, df=n), from=-3, to=3, col=n, add=T) # fdp t-student
+}
 ```
 
-4. Layer de suavização/tendência (`smooth`)
+
+
+## Simulação
+
+### Amostragem aleatória
+- [Simulation - Random sampling (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/ykXUb/simulation-random-sampling)
+- Para fazer uma amostragem a partir de um dado vetor, usamos a função `sample()`
 ```yaml
-geom_smooth(
-  mapping = NULL, data = NULL, ...,
-  method = NULL, formula = NULL, se = TRUE, level = 0.95
-)
+sample(x, size, replace = FALSE, prob = NULL)
 
-mapping: Set of aesthetic mappings created by aes() or aes_(). If specified and inherit.aes = TRUE (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping.
-data: The data to be displayed in this layer. If NULL, the default, the data is inherited from the plot data as specified in the call to ggplot().
-method: Smoothing method (function) to use, accepts either NULL or a character vector, e.g. "lm", "glm", "gam", "loess" or a function (...).
-formula: Formula to use in smoothing function, eg. y ~ x, y ~ poly(x, 2), y ~ log(x).
-se: Display confidence interval around smooth? (TRUE by default, see level to control.)
-level: Level of confidence interval to use (0.95 by default).
+x: either a vector of one or more elements from which to choose, or a positive integer. See ‘Details.’
+n: a positive number, the number of items to choose from.
+size: a non-negative integer giving the number of items to choose.
+replace: should sampling be with replacement?
+prob: a vector of probability weights for obtaining the elements of the vector being sampled.
 ```
-
 ```{r}
-g + geom_point() + geom_smooth(method="lm") # suavização a partir de OLS
+sample(letters, 5) # Amostragem de 5 letras
+
+sample(1:10, 4) # Amostragem de 4 números de 1 a 10
+
+sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
+
+sample(1:10, replace = TRUE) # Amostragem com reposição
 ```
+- Note que, por padrão, a função `sample()` faz a amostragem sem reposição.
 
 
-
-5. Layers condicionais
-Facets (usar `cyl`)
-
+#### Visualizando a Lei dos Grandes Números (LGN)
+- Podemos usar a amostragem para simular jogadas de dado não viesado.
+- Vamos jogar uma vez o dado:
 ```{r}
-g + geom_point() + geom_smooth(method="lm") + facet_grid(. ~ cyl) # agrupando por nº cilindros horizontalmente
-g + geom_point() + geom_smooth(method="lm") + facet_grid(cyl ~ .) # agrupando por nº cilindros verticalmente
+sample(1:6, 1) # amostra um número dentro do vetor 1:6
 ```
-
-6. Anotações
-    - Rótulos: `xlab()`, `ylab()`, `labs()`, `ggtitle()`
-    - Cada _geom_ tem opções para modificar, mas use `theme()` para opções globais do gráfico. Use `?theme` e veja a quantidade de configurações você pode fazer no seu gráfico.
-    - Se quiser temas pré-definidos, há 2 templates padrão `theme_gray()` e `theme_bw()` (preto/branco). Também é possível usar outros usando o pacote `ggthemes`.
+- Vamos jogar 500 vezes o dado (usando função `replicate()`) e verificar sua distribuição:
 ```{r}
-g + geom_point() + ggthemes::theme_economist() + 
-    ylab("Peso (libras)") + xlab("Milhas por galão") +
-    ggtitle("Milhas por galão X Peso do carro")
+amostra = replicate(500, expr=sample(1:6, 1))
+table(amostra) # tabela com contagem das jogadas
+
+# Gráfico
+plot(table(amostra), type="h")
 ```
-
-
-7. Modificando Estética
-    - Dentro de cada _geom_, podemos definir a cor (`color`), o tamanho (`size`) e a transparência (`alpha`)
+- Note que não podemos usar a função `rep()` com simulação, pois ele sortearia um número e replicaria esse mesmo número 500 vezes.
+- Agora, vamos jogar 2 vezes o dado e fazer a média entre eles
 ```{r}
-g + geom_point(color="steelblue", size=9, alpha=0.4)
-g + geom_point(aes(color=cyl), size=9, alpha=0.4) # colorindo por variável - precisa usar aes()
+mean(sample(1:6, 2))
+```
+- Fazendo isso 500 vezes, temos:
+```{r}
+amostra = replicate(500, mean(sample(1:6, 2, replace=T)))
+table(amostra) # tabela com contagem das médias de 2 jogadas
+
+# Gráfico
+plot(table(amostra), type="h")
+```
+
+- Note que, ao repetir 500 vezes, o cálcilo da média de 2 jogadas de dado, começou a dar mais peso para médias próximas à média populacional (3,5), mas ainda tem densidade nos valores mais extremos (1 e 6)
+- Foi necessário usar o argumento `replace=TRUE` para ter "reposição" dos números do dado
+- Calculando 500 vezes a média de {{<math>}}$N=100${{</math>}} jogadas de dado, temos:
+```{r}
+N = 100
+amostra = replicate(500, mean(sample(1:6, N, replace=T)))
+
+# Gráfico
+plot(table(amostra), type="h", xlim=c(1,6))
+```
+
+- Note que, quanto maior {{<math>}}$N${{</math>}}, a concentração das médias das amostragens se concentraram ainda mais próximo da média populacional (3,5). Além disso, a densidade de médias mais distantes ficaram praticamente nulas.
+
+
+### Geração de números aleatórios
+- Para gerar números aleatórios, usaremos o prefixo `r` junto de uma distribuição.
+```{r}
+rnorm(5) # gerando 5 números aleatórios
+```
+
+- Para reproduzir resultados que usem números aleatórios, podemos definir "sementes" usando a função `set.seed()` e informando um número inteiro. Isso também é válido para a função `sample()`.
+```{r}
+# definindo seed
+set.seed(2022)
+rnorm(5)
+
+# sem definir seed
+rnorm(5)
+
+# definindo seed
+set.seed(2022)
+rnorm(5)
+```
+
+## Intervalos de Confiança
+- [Subseção 1.8.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/71)
+- No Apêndice C.5 de Wooldridge (2006, em português), são construídos intervalos de confiança de 95\%.
+- Para uma população normalmente distribuída com média {{<math>}}$\mu${{</math>}} e variância {{<math>}}$\sigma^2${{</math>}}, o intervalo de confiança com significância de $\alpha$ é dado por:
+
+$$ \text{IC}_\alpha = \left[\bar{y} - C_{\alpha/2}.se(\bar{y}),\quad \bar{y} + C_{\alpha/2}.se(\bar{y})\right] \tag{1.2} $$
+em que:
+
+- {{<math>}}$\bar{y}${{</math>}}: média amostral
+- {{<math>}}$se(\bar{y}) = \frac{s}{\sqrt{n}}${{</math>}}: erro padrão de {{<math>}}$\bar{y}${{</math>}}
+- {{<math>}}$s${{</math>}}: desvio padrão de {{<math>}}$\bar{y}${{</math>}}
+- {{<math>}}$n${{</math>}}: tamanho da amostra
+- {{<math>}}$C_{\alpha/2}${{</math>}}: é o valor crítico do quantil de {{<math>}}$(1-\alpha/2)${{</math>}} da distribuição {{<math>}}$t_{n-1}${{</math>}}.
+    - Por exemplo, para {{<math>}}$\alpha = 5\%${{</math>}}, usa-se o quantil 97,5\% ({{<math>}}$= 1 - 5\%/2${{</math>}}).
+    - Quando o número de graus de liberdade é grande, a distribuição _t_ se aproxima ao de uma normal padrão. Logo, para um intervalo de confiança de 95\%, o valor crítico é {{<math>}}$C_{2,5\%} \approx 1,96${{</math>}}
+
+
+#### Exemplo C.2: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006)
+
+- Holzer, Block, Cheatham e Knott (1993) estudaram os efeitos de subsídios de treinamentos corporativos sobre a produtividade dos trabalhadores
+- Para isto, avaliou-se a "taxa de refugo", isto é, a quantidade de itens descartados a cada 100 itens produzidos.
+- Entre 1987 e 1988, houve treinamento corporativo em 20 empresas e queremos saber se ele teve efeito sobre a taxa de refugo, ou seja, a diferença entre as médias dos anos foi estatisticamente significante (diferente de 0).
+- Comecemos criando vetores de taxa de refugos das 20 empresas para os anos de 1987 (_SR87_) e de 1988 (_SR88_):
+```{r}
+SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
+         1, .45, 5.03, 8, 9, 18, .28, 7, 3.97)
+SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5, 
+         .61, 6.7, 4, 7, 19, .2, 5, 3.83)
+```
+- Criando o vetor das variações das taxas de refugo e extraindo estatísticas:
+```{r}
+Change = SR88 - SR87 # vetor de variações
+n = length(Change) # quantidade de empresas/tamanho do vetor Variacao
+avgChange = mean(Change) # média do vetor Variacao
+sdChange = sd(Change) # desvio padrão do vetor Variacao
+```
+- Calculando o erro padrão e o valor crítico para intervalo de confiança de 95\%:
+```{r}
+se = sdChange / sqrt(n) # erro padrão
+CV = qt(.975, n-1) # valor crítico para intervalo de confiança de 95%
+```
+- Finalmente, calcula-se o intervalo de confiança usando (1.2)
+```{r}
+c(avgChange - CV*se, avgChange + CV*se) # limites inferior e superior do intervalo
+
+# também poderíamos escrever o intervalo mais sucintamente:
+avgChange + CV * c(-se, se)
+```
+- Note que o valor 0 está fora do intervalo de confiança de 95\% e, portanto, conclui-se que houve alteração na taxa de refugo (houve efeito negativo estatisticamente significante).
+
+
+## Teste _t_ e p-valores
+- [Subseções 1.8.2 e 1.8.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/74)
+- Apêndice C.6 de Wooldridge (2006, em português)
+
+- A estatística _t_ para testar uma hipótese sobre uma variável aleatória {{<math>}}$y${{</math>}} normalmente distribuída com média {{<math>}}$\bar{y}${{</math>}} é dado pela equação C.35 (Wooldridge, 2006). Dada a hipótese nula {{<math>}}$H_0: \bar{y} = \mu_0${{</math>}},
+$$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $$
+
+- Para rejeitarmos a hipótese nula, o módulo da estatística _t_ precisa ser maior do que o valor crítico, dado um nível de significância {{<math>}}$\alpha${{</math>}}.
+- Por exemplo, ao nível de significância {{<math>}}$\alpha = 5\%${{</math>}} e com uma grande amostra (e, portanto, a distribuição _t_ se aproxima a de uma normal padrão), rejeitamos a hipótese nula se
+$$ |t| \ge 1,96 \approx \text{valor crítico ao nível de significância de 5%} $$
+
+- A vantagem de utilizar o p-valor é a sua conveniência, pois pode-se compará-lo diretamente com o nível de significância.
+- Para testes _t_ bicaudais, a fórmula do p-valor é dado por (Wooldridge, 2006, equação C.42):
+$$ p = 2.Pr(T_{n-1} > |t|) = 2.[1 - F_{t_{n-1}}(|t|)] $$
+em que {{<math>}}$F_{t_{n-1}}(\cdot)${{</math>}} é a fda da distribuição {{<math>}}$t_{n-1}${{</math>}}.
+
+<center><img src="../t-student_test.png"></center>
+
+- Rejeitamos a hipótese nula se o p-valor for menor do que o nível de significância {{<math>}}$\alpha${{</math>}}.
+
+
+#### Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006)
+- Continuação do exemplo C.2
+- Considerando teste bicaudal (diferente dos livros), podemos calcular a estatística _t_
+```{r}
+# Estatística t para H0: mu = 0
+t = (avgChange - 0) / se
+print(paste0("estatística t = ", abs(t), " > ", CV, " = valor crítico"))
+```
+- Como estatística _t_ é maior do que o valor crítico, rejeitamos {{<math>}}$H_0${{</math>}} a nível de significância de 5\%.
+- De forma equivalente, podemos calcular o p-valor:
+```{r}
+p = 2 * (1 - pt(abs(t), n-1))
+print(paste0("p-valor = ", p, " < 0.05 = nível de significância"))
+```
+- Como o p-valor é maior do que {{<math>}}$\alpha = 5\%${{</math>}}, rejeitamos {{<math>}}$H_0${{</math>}}.
+
+
+### Cálculos via `t.test()`
+```yaml
+t.test(x, y = NULL,
+       alternative = c("two.sided", "less", "greater"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95, ...)
+
+x: (non-empty) numeric vector of data values.
+alternative: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
+mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
+conf.level: confidence level of the interval.
+```
+- Note que incluiremos um vetor de valor no argmento `x` e, por padrão, a função considera um teste bicaudal, testando a {{<math>}}$H_0${{</math>}} se média verdadeira é igual a zero e com intervalo de confiança de 95\%.
+- Retornando aos exemplos C.2 e C.6 ("Efeito de subsídios de treinamento corporativo sobre a produtividade"), temos:
+```{r}
+testresults = t.test(Change)
+testresults
+```
+- Dentro do objeto de resultado do teste, temos as seguintes informações:
+```{r}
+names(testresults)
+```
+- Podemos, por exemplo, acessar o p-valor usando:
+```{r}
+testresults$p.value
 ```
 
 
 
-{{< cta cta_text="👉 Proceed to Distributions" cta_link="../sec6" >}}
+{{< cta cta_text="👉 Proceed to OLS Estimation" cta_link="../sec7" >}}

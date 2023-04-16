@@ -2,10 +2,8 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: R Programming
+linktitle: Programming
 summary: The page also contains a table of contents for his R programming project, which includes topics such as basic operations, objects in R, logical/boolean expressions, vectors, matrices, lists, data frames, extracting subsets, removing missing values (NA), vector/matrix operations, basic statistics on vectors and matrices, control structures (conditional (if), repetition (for), repetition (while)), and examples of optimization of univariate and bivariate functions.
-
-
 title: R Programming
 weight: 2
 output: md_document
