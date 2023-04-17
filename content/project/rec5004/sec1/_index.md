@@ -17,7 +17,7 @@ Principais referências desse material de Econometria com R:
 - Cursos da [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da John Hopkins.
   - É possível "participar como ouvinte" (_audit course_) desses cursos, o que permite acessar a todo material (mas não pode fazer os testes e ganhar os certificados de conclusão). 
 - Livro ["_Using R for Introductory Econometrics_" de Heiss (2020)](http://www.urfie.net/) (versão online gratuita)
-- [Livro "_Panel Data Econometrics with R_" de Croissant e Millo (2018)](https://www.amazon.com.br/Panel-Data-Econometrics-R-English-ebook/dp/B07GCY35N3)
+- Livro ["_Panel Data Econometrics with R_" de Croissant e Millo (2018)](https://www.amazon.com.br/Panel-Data-Econometrics-R-English-ebook/dp/B07GCY35N3)
 
 
 </br>
@@ -27,11 +27,11 @@ Principais referências desse material de Econometria com R:
 
 1. Instalação da base do R ([CRAN - R for Windows](https://cran.r-project.org/bin/windows/base/))
     - Download R X.X.X for Windows
-    - Se o computador for 64-bits, opte pela versão 64-bits
+    - Se o computador for 64-bits, opte pela versão 64-bits (+ rápido)
 
 2. Instalação do Rtools ([CRAN](https://cran.r-project.org/bin/windows/Rtools/))
     - RTools X.X > Rtools installer
-    - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessários em alguns pacotes no R
+    - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessárias para o funcionamento de alguns pacotes no R
 
 3. Instalação do RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
     - Download RStudio Desktop
@@ -50,7 +50,7 @@ RStudio é dividido em 4 quadrantes:
 - inferior/esquerdo: console - executar os comandos e ver resultados (é o R "bruto")
 - inferior/direito: arquivos/gráficos/pacotes/ajuda
 
-> **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão num tempo mais longo)<br/>  
+> **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão durante o uso prolongado do software)<br/>  
 Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
 
 
@@ -75,7 +75,7 @@ setwd("C:/Users/Fabio/OneDrive/FEA-RP") # CORRETO!
 setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRETO!
 ```
 
-Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
+Você pode trocar _backslash_ (/) por _slash_(\\), ou  por dois _backslashs_ (\\\\).
 
 
 ### Executando comandos
@@ -95,16 +95,9 @@ rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
 ```
 
 ```
-##  [1]  1.27795003 -0.14574907 -0.64967504 -0.66568500 -0.24312491  1.03415984
-##  [7] -0.75444176 -0.05452605 -0.27491621 -0.94091876
+##  [1] -0.3354053 -0.2486518  1.1404801 -0.2051025  0.1158528  1.0338784
+##  [7] -0.8861476  0.7802029  0.2180055  0.6639438
 ```
-
-```r
-hist(rnorm(n=1000, mean=0, sd=1))  # Histograma dos números gerados
-```
-
-<img src="/project/rec5004/sec1/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
-
 
 
 ### Ajuda para comandos
@@ -115,13 +108,13 @@ hist(rnorm(n=1000, mean=0, sd=1))  # Histograma dos números gerados
 ```yaml
 rnorm(n, mean = 0, sd = 1)
 
-n: number of observations. If length(n) > 1, the length is taken to be the number required.
+n: number of observations.
 mean: vector of means.
 sd: vector of standard deviations.
 ```
 
 - Note acima em "Usage" que já há valores pré-definidos para `mean = 0` e `sd = 1`. Portanto, se você só informar o `n`, a função irá funcionar, considerando os valores pré-definidos para os demais argumentos.
-- É possível escrever o código sem os nomes dos argumentos, mas devem ser inseridos na mesma ordem do descrito na Ajuda.
+- É possível escrever o código sem os nomes dos argumentos, mas devem ser inseridos na mesma ordem pré-definida da função.
 ```r
 rnorm(10, 0, 1)
 ```
@@ -135,12 +128,12 @@ rnorm(mean=0, n=10, sd=1)
 
 ## Pacotes no R
 - Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
-- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos estatísticos/econometristas já desenvolvem e disponibilizam seus próprios pacotes em sites, como CRAN e Github.
+- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos estatísticos/econometristas desenvolvem e disponibilizam seus próprios pacotes na internet.
 - A instalação de um pacote só precisa ser feita uma única vez.
 - No entanto, caso você atualize uma nova versão do R, é necessário instalar novamente todos os pacotes.
 - Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de indivíduos (normalmente disponibilizados no GitHub)
 - O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes, garante qualidade dos pacotes disponibilizados
-- Tome cuidado com pacotes disponibilizados por individuos! É possível executar, dentro do R, códigos para criar e apagar arquivos, por exemplo.
+- Tome cuidado com pacotes disponibilizados por individuos desconhecidos: pode haver códigos maliciosos!
 
 
 ### Instalação via CRAN
@@ -150,25 +143,34 @@ rnorm(mean=0, n=10, sd=1)
 install.packages("ggplot2") # Pacote para criar graficos
 ```
 
-### Instalação via GitHub
+### Usando pacotes
+
+Depois de instalar o pacote desejado, você precisa carregá-lo à sua sessão no R. Isto pode ser feito de duas formas
+
+1. Usar `library(nome_do_pacote)`
+2. Chamar o pacote indiretamente por meio de uma função contida no pacote `<nome_do_pacote>::<funcao_do_pacote>`
+
+
+#### Exemplo: Instalando pacotes do Github
+
+- Github é um site que programadores podem disponibilizar e armazenar arquivos, como códigos, bases de dados, pacotes de R, etc.
+- É possível instalar um pacote disponibilizado no Github diretamente do R.
 - Primeiro, é necessário instalar o pacote `devtools`
 ```r
 install.packages("devtools")
 ```
 - Depois, é preciso obter o nome do author (do GitHub) e nome do pacote. Como exemplo, iremos baixar o pacote `dplyr` do autor `hadley` (este pacote, na realidade, pode ser baixado direto do CRAN).
-- Para executar uma função de um pacote, podemos usar `<pacote>::<funcao>`
 ```r
+# 2) chamando o pacote indiretamente
 devtools::install_github("hadley/dplyr")
-```
 
-- Ou é possível carregar o pacote no ambiente e, depois, chamar a função do pacote carregado
-```r
+# 1) carregando pacote e depois usando sua função
 library(devtools)
 install_github("hadley/dplyr")
 ```
 
-- CUIDADO! Ao carregar varios pacotes, talvez tenha 2 funções com mesmo nome
-    - R prioriza a função do pacote carregado por último
+- CUIDADO! Ao carregar vários pacotes, talvez sejam carregadas suas funções com mesmo nome
+    - Neste caso, o R prioriza a função do pacote carregada por último
 
 ```r
 library(dplyr) # Pacote para manipulacao de base de dados
@@ -206,9 +208,10 @@ library(MASS) # Normalmente nao eh carregado diretamente (via outro pacote)
 ##     select
 ```
 
-- Uma forma de contornar o problema é usar `<pacote>::<funcao>`
+- Uma forma de contornar o problema é usar `<nome_do_pacote>::<funcao_do_pacote>`
 ```r
-select(obj) # do pacote MASS
+select(...) # do pacote MASS
+MASS:select(...) # do pacote MASS
 dplyr::select(.data, ...) # do pacote dplyr
 ```
 
@@ -223,19 +226,14 @@ dplyr::select(.data, ...) # do pacote dplyr
 - Caso saiba o nome do pacote, em alguns casos funciona `?<nome_do_pacote>`, mas o ideal é buscar sua documentação no CRAN (diretamente no site ou via Google)
 - Por exemplo, podemos acessar a página do [pacote `dplyr` no CRAN](https://cran.r-project.org/web/packages/dplyr/index.html):
 - Nela é possível ver a partir de qual versão do R funciona, os pacotes necessários para o seu funcionamento (Imports), os autores e sites.
-- Em Documentação, é possível ver o seu 'Reference manual' onde são expostos o objetivo do pacotes e as funções, incluindo explicações de seu funcionamento.
+- Em 'Documentation', é possível ver o seu 'Reference manual' onde são expostos o objetivo do pacotes e as funções, incluindo explicações de seu funcionamento.
 
 <center><img src="../dplyr_cran.png"></center>
 
 
-- Além disso, pode ser interessante ver aplicações do pacote e suas funções nas 'vignettes'. Normalmente são expostas de maneira que podem ser replicadas no seu computador, o que acaba auxiliando na sua aplicação (verificar estrutura de base de dados necessária, sintaxes, etc.). Também pode ser acessada diretamente do R usando a função `browseVignettes()`:
+- Além disso, pode ser interessante ver aplicações do pacote e suas funções nas 'vignettes'. Normalmente são expostas de maneira que podem ser replicadas no seu computador, o que acaba auxiliando na sua aplicação (verificar estrutura de base de dados necessária, sintaxes, etc.). 
 
-    
-```r
-browseVignettes("dplyr") # Abrirá uma página com vignettes no seu navegador
-```
-
-- Caso não saiba quais funções/pacotes são utilizados para resolver um problema, muitas vezes é possível encontrar a solução no Google utilizando palavras-chave (preferencialmente em inglês) junto de "R".
+- Caso não saiba quais funções/pacotes são utilizados para fazer algo, muitas vezes é possível encontrar a solução no Google utilizando palavras-chave (preferencialmente em inglês) junto de "R".
 
 <center><img src="../google_help.png"></center>
 
@@ -249,7 +247,7 @@ browseVignettes("dplyr") # Abrirá uma página com vignettes no seu navegador
 ### ChatGPT e Bing Chat
 
 - É possível ter um assistente para aprender a usar o R usando o chatbots como ChatGPT ([https://chat.openai.com](https://chat.openai.com)) e Bing Chat ([https://www.bing.com/chat](https://www.bing.com/chat)).
-- Ambos ChatGPT e Bing Chat são alimentados por um modelo de linguagem grande (LLN) criado pela OpenAI, que são treinados com trilhões de documentos (páginas de internet, livros, artigos, etc.) e conseguem gerar textos baseados em contexto.
+- Ambos ChatGPT e Bing Chat são alimentados por um modelo de linguagem natural (LLN) criado pela OpenAI, que são treinados com trilhões de documentos (páginas de internet, livros, artigos, etc.) e conseguem gerar textos baseados em contexto.
 - A diferença entre os dois é que o ChatGPT utiliza o modelo GPT 3.5-turbo, enquanto o Bing Chat usa o GPT-4 e está ligado à internet.
 - Especificamente para programação, gera-se respostas confiáveis a perguntas feitas ao chatbot, tornando-o uma ferramenta interessante para auxiliar o aprendizado no R.
 
@@ -439,8 +437,8 @@ colocar 2 cifrões (`$`) de cada lado da expressão, assim como no LaTeX.
 
 output:
 
-- Para incluir uma expressão em LaTeX no meio do texto, como `\(\alpha + \beta + \gamma\)`, usa-se cifrão (`$`) único em cada lado.
-- Para destacar uma expressão, como `$$\alpha + \beta + \gamma, \tag{1}$$` é necessário colocar 2 cifrões (`$`) de cada lado da expressão, assim como no LaTeX.
+- Para incluir uma expressão em LaTeX no meio do texto, como {{<math>}}$\alpha + \beta + \gamma${{</math>}}, usa-se cifrão (`$`) único em cada lado.
+- Para destacar uma expressão, como {{<math>}}$$\alpha + \beta + \gamma, \tag{1}$${{</math>}} é necessário colocar 2 cifrões (`$`) de cada lado da expressão, assim como no LaTeX.
 
 
 Para aprender a usar LaTeX:
