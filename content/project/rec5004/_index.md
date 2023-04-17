@@ -28,4 +28,13 @@ Feel free to contact us if you have any question:
 
 {{< cta cta_text="👉 Proceed to R Toolkit" cta_link="sec1" >}}
 
+</br>
+
+
+## Gravações das Monitorias
+
+- **Monitoria 1 (14/04)**: Ferramentas do R | [Script](monitoria01.R)
+    
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/VlL4SfQN88I/hqdefault.jpg)](https://www.youtube.com/watch?v=VlL4SfQN88I)
+
 
