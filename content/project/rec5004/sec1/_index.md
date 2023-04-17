@@ -25,11 +25,11 @@ Principais referências desse material de Econometria com R:
 ## Instalando R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Instalação da base do R ([CRAN - R for Windows](https://cran.r-project.org/bin/windows/base/))
+1. Instalação da base do R ([CRAN](https://cran.r-project.org/))
     - Download R X.X.X for Windows
     - Se o computador for 64-bits, opte pela versão 64-bits (+ rápido)
 
-2. Instalação do Rtools ([CRAN](https://cran.r-project.org/bin/windows/Rtools/))
+2. Instalação do Rtools ([CRAN](https://cran.r-project.org/))
     - RTools X.X > Rtools installer
     - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessárias para o funcionamento de alguns pacotes no R
 
@@ -95,8 +95,8 @@ rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
 ```
 
 ```
-##  [1] -0.3354053 -0.2486518  1.1404801 -0.2051025  0.1158528  1.0338784
-##  [7] -0.8861476  0.7802029  0.2180055  0.6639438
+##  [1]  0.70143921  0.62622352 -2.43105248 -1.37197530  0.53581775 -1.66196220
+##  [7] -0.09034954 -0.18229396  0.22264535  0.80023880
 ```
 
 

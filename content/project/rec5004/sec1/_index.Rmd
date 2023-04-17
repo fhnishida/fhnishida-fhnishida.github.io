@@ -27,11 +27,11 @@ Principais referências desse material de Econometria com R:
 ## Instalando R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Instalação da base do R ([CRAN - R for Windows](https://cran.r-project.org/bin/windows/base/))
+1. Instalação da base do R ([CRAN](https://cran.r-project.org/))
     - Download R X.X.X for Windows
     - Se o computador for 64-bits, opte pela versão 64-bits (+ rápido)
 
-2. Instalação do Rtools ([CRAN](https://cran.r-project.org/bin/windows/Rtools/))
+2. Instalação do Rtools ([CRAN](https://cran.r-project.org/))
     - RTools X.X > Rtools installer
     - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessárias para o funcionamento de alguns pacotes no R
 
