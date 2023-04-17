@@ -30,7 +30,7 @@ Feel free to contact us if you have any question:
 
 ## Gravações das Monitorias
 
-- **Monitoria 1 (14/04)**: Ferramentas do R | [Script](monitoria01.R)
+- **Monitoria 1**: Ferramentas do R | [Script](monitoria01.R)
     
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/VlL4SfQN88I/hqdefault.jpg)](https://www.youtube.com/watch?v=VlL4SfQN88I)
 
