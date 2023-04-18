@@ -115,7 +115,7 @@ As linhas horizontais foram inseridas apenas para facilitar a visualização dos
 
 </br>
 
-## Matriz de covariâncias dos erros
+## Matriz de Covariâncias dos Erros
 - Seção 2.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
 A matriz de covariâncias dos erros relaciona um termo de erro, {{<math>}}$\varepsilon_{it}${{</math>}}, com todos os demais termos de erro {{<math>}}$\varepsilon_{js}${{</math>}}, para todo {{<math>}}$j = 1, ..., N${{</math>}} e todo {{<math>}}$a = 1, ..., T${{</math>}}.
@@ -208,7 +208,7 @@ Substituindo em (2), segue que
 \end{array} \right] \tag{2'} $${{</math>}}
 
 
-#### Exemplo
+##### Exemplo
 Por simplicidade, considere que {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}. Logo, a matriz de covariâncias dos erros pode ser escrita como;
 
 {{<math>}}\begin{align} \underset{6 \times 6}{\boldsymbol{\Sigma}}
@@ -228,7 +228,7 @@ Por simplicidade, considere que {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3$
 Note que acima foram utilizadas linhas verticais e horizontais apenas para facilitar a visualização dos elementos que substituíram cada matriz.
 
 
-### Calculando no R
+#### Calculando no R
 
 Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p \times p${{</math>}}:
 
@@ -241,13 +241,13 @@ Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<
 \end{array} \right]_{p \times p}, $$ {{</math>}}
 
 e considere {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
-{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}.
+{{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}
 
 
 Com dados em **corte transversal**, era fácil calcular a matriz de covariâncias dos erros, pois só havia um termo de erro e, portanto, tínhamos {{<math>}}$\sigma^2${{</math>}} apenas na diagonal principal:
 
 {{<math>}}\begin{align}
-\boldsymbol{\Sigma}_{MQO} &= \sigma^2 \boldsymbol{I}_N \\
+\boldsymbol{\Sigma}_{\scriptscriptstyle{MQO}} &= \sigma^2 \boldsymbol{I}_N \\
   &= \sigma^2 \left[ \begin{array}{cccc} 
 1 & 0 & \cdots & 0 \\
 0 & 1 & \cdots & 0 \\
@@ -356,32 +356,29 @@ Somando os dois termos de (4), conseguimos obter a matriz de covariâncias dos e
 \end{align}{{</math>}}
 
 
-#### Exemplo
+##### Exemplo
 Considere o caso com {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}. Vamos, então, obter a seguinte matriz de covariâncias dos erros:
 
-{{<math>}}$$
-    \boldsymbol{\Sigma} = \left[ \begin{array}{ccc|ccc} 
+{{<math>}}$$\boldsymbol{\Sigma} = \left[ \begin{array}{ccc|ccc} 
         \sigma^2_u + \sigma^2_v & \sigma^2_u & \sigma^2_u & 0 & 0 & 0 \\
         \sigma^2_u & \sigma^2_u + \sigma^2_v & \sigma^2_u & 0 & 0 & 0 \\
         \sigma^2_u & \sigma^2_u & \sigma^2_u + \sigma^2_v & 0 & 0 & 0 \\\hline
         0 & 0 & 0 & \sigma^2_u + \sigma^2_v & \sigma^2_u & \sigma^2_u \\
         0 & 0 & 0 & \sigma^2_u & \sigma^2_u + \sigma^2_v & \sigma^2_u \\
         0 & 0 & 0 & \sigma^2_u & \sigma^2_u & \sigma^2_u + \sigma^2_v
-    \end{array} \right]
-$${{</math>}}
+    \end{array} \right]$${{</math>}}
 
 Assumindo {{<math>}}$\sigma^2_u = 2${{</math>}} e {{<math>}}$\sigma^2_v = 3${{</math>}}, segue que
 
-{{<math>}}$$
-    \boldsymbol{\Sigma} = \left[ \begin{array}{ccc|ccc} 
+{{<math>}}$$\boldsymbol{\Sigma} = \left[ \begin{array}{ccc|ccc} 
         5 & 2 & 2 & 0 & 0 & 0 \\
         2 & 5 & 2 & 0 & 0 & 0 \\
         2 & 2 & 5 & 0 & 0 & 0 \\\hline
         0 & 0 & 0 & 5 & 2 & 2 \\
         0 & 0 & 0 & 2 & 5 & 2 \\
         0 & 0 & 0 & 2 & 2 & 5
-    \end{array} \right]
-$${{</math>}}
+    \end{array} \right]$${{</math>}}
+
 
 
 </br>
@@ -442,47 +439,107 @@ Sigma
 
 
 
+
+### Estimação dos Componentes de Erro
+- Note que não temos {{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u${{</math>}} e, logo, {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é desconhecido.
+
+- Primeiro, considere a **matriz de transformação _within_**, dada por
+
+{{<math>}}$$ \boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B} $${{</math>}}
+
+- Se {{<math>}}$\boldsymbol{\varepsilon}${{</math>}} fosse conhecido, então poderíamos estimar as duas variâncias usando:
+
+{{<math>}}\begin{align*}
+    \hat{\sigma}^2_v &= \frac{\boldsymbol{\varepsilon}' \boldsymbol{W} \boldsymbol{\varepsilon}}{N(T-1)} \tag{2.35} \\
+    \\
+    \hat{\sigma}^2_v + T \hat{\sigma}^2_u &= \frac{\boldsymbol{\varepsilon}' \boldsymbol{B} \boldsymbol{\varepsilon}}{N} \tag{2.34} \\
+    \hat{\sigma}^2_u &= \frac{1}{T} \left( \frac{\boldsymbol{\varepsilon}' \boldsymbol{B} \boldsymbol{\varepsilon}}{N} - \hat{\sigma}^2_v \right)
+\end{align*}{{</math>}}
+
+- Como {{<math>}}$\boldsymbol{\varepsilon}${{</math>}} é desconhecido, então podemos usar resíduos de estimadores consistentes em seu lugar.
+- O estimador obtido por esse processo é chamado de MQGF (ou MQG Factível)
+- **Wallace e Hussain (1969)**: usam resíduos MQO
+
+{{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}}{N(T-1)} 
+    \quad \text{ e } \quad 
+    \hat{\sigma}^2_u =\frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}}{N} - \hat{\sigma}^2_v \right)$${{</math>}}
+
+- **Amemiya (1971)**: usa resíduos _within_
+{{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{N(T-1)}
+    \quad \text{ e } \quad
+    \hat{\sigma}^2_u = \frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{N} - \hat{\sigma}^2_v \right)$${{</math>}}
+    
+- **Hausman e Taylor (1981)**: propuseram ajuste ao método de Amemiya (1971), em que {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}${{</math>}} são regredidos em todas variáveis invariantes no tempo no modelo e são utilizados os resíduos dessa regressão, {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{HT}}${{</math>}}.
+
+- **Swamy e Arora (1972)**: usam resíduos _between_ e _within_ para calcular:
+{{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{N(T-1) - K}
+    \quad \text{ e } \quad
+    \hat{\sigma}^2_u = \frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{B}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{B}}}{N - K - 1} - \hat{\sigma}^2_v \right)$${{</math>}}
+    
+- **Nerlove (1971)**: computa {{<math>}}$\sigma^2_u${{</math>}} empírica dos efeitos fixos do modelo _within_
+
+{{<math>}}\begin{align*}
+    \hat{u}_i &= \bar{y}_{i\cdot} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}\bar{x}_{i\cdot} \\
+    \hat{\sigma}^2_u &= \sum^N_{i=1}{(\hat{u}_i - \bar{\hat{u}}) / (N-1)} \\
+    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}}\boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{NT}
+\end{align*}{{</math>}}
+
+
+Após obter {{<math>}}$\hat{\sigma}^2_u${{</math>}} e {{<math>}}$\hat{\sigma}^2_v${{</math>}}, só precisamos calcular {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}:
+
+- Note que podemos reescrever
+{{<math>}}\begin{align} \hat{\boldsymbol{\Sigma}} &= \hat{\sigma}^2_v \boldsymbol{I}_{NT} + T \hat{\sigma}^2_u \boldsymbol{B}\\ 
+&= \hat{\sigma}^2_v (\boldsymbol{W} + \boldsymbol{B}) + T \hat{\sigma}^2_u \boldsymbol{B}\\ 
+&= \hat{\sigma}^2_v \boldsymbol{W} + \hat{\sigma}^2_v \boldsymbol{B} + T \hat{\sigma}^2_u \boldsymbol{B}\\ 
+&= \hat{\sigma}^2_v \boldsymbol{W} + (\hat{\sigma}^2_v + T \hat{\sigma}^2_u) \boldsymbol{B}
+\end{align}{{</math>}}
+em que {{<math>}}$\boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B} \iff \boldsymbol{I}_{NT} = \boldsymbol{W} + \boldsymbol{B} ${{</math>}}
+
+- Isso pode ser generalizado para:
+{{<math>}}$$ \hat{\boldsymbol{\Sigma}}^p = (\hat{\sigma}^2_v)^p \boldsymbol{W} + (\hat{\sigma}^2_v + T \hat{\sigma}^2_u)^p \boldsymbol{B}, \tag{2.29} $${{</math>}}
+em que {{<math>}}$p${{</math>}} é um escalar.
+
+
+
 </br>
 
-## Estimadores MQO em painel
-- Supomos que ambos componentes de erros são não-correlacionados com as covariadas:
-{{<math>}}$$ E(u|X) = E(v|X) = 0 $${{</math>}}
-- A variabilidade em um painel tem 2 componentes:
-    - a _between_ ou inter-indivíduos, em que a variabilidade das variáveis são mensuradas em médias individuais, como {{<math>}}$\bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$BZ${{</math>}}
-    - a _within_ ou intra-indivíduos, em que a variabilidade das variáveis são mensuradas em desvios das médias individuais, como {{<math>}}$z_{it} - \bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$\boldsymbol{WX} = \boldsymbol{X} - \boldsymbol{BX}${{</math>}}
-    - Lembre-se que {{<math>}}$\boldsymbol{X} \equiv (\boldsymbol{\iota}, X)${{</math>}}
-- Há três estimadores por MQO que podem ser utilizados:
-    1. *Mínimos Quadrados Empilhados (MQE)*: usando a base de dados bruta (empilhada)
-    2. *Estimador Between*: usando as médias individuais
-    3. *Estimador Within (Efeitos Fixos)*: usando os desvios das médias individuais
+<!-- ## Estimadores MQO em painel -->
+<!-- - Supomos que ambos componentes de erros são não-correlacionados com as covariadas: -->
+<!-- {{<math>}}$$ E(u|X) = E(v|X) = 0 $${{</math>}} -->
+<!-- - A variabilidade em um painel tem 2 componentes: -->
+<!--     - a _between_ ou inter-indivíduos, em que a variabilidade das variáveis são mensuradas em médias individuais, como {{<math>}}$\bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$BZ${{</math>}} -->
+<!--     - a _within_ ou intra-indivíduos, em que a variabilidade das variáveis são mensuradas em desvios das médias individuais, como {{<math>}}$z_{it} - \bar{z}_i${{</math>}} ou na forma matricial {{<math>}}$\boldsymbol{WX} = \boldsymbol{X} - \boldsymbol{BX}${{</math>}} -->
+<!--     - Lembre-se que {{<math>}}$\boldsymbol{X} \equiv (\boldsymbol{\iota}, X)${{</math>}} -->
+<!-- - Há três estimadores por MQO que podem ser utilizados: -->
+<!--     1. *Mínimos Quadrados Empilhados (MQE)*: usando a base de dados bruta (empilhada) -->
+<!--     2. *Estimador Between*: usando as médias individuais -->
+<!--     3. *Estimador Within (Efeitos Fixos)*: usando os desvios das médias individuais -->
 
 
 
 ## Mínimos Quadrados Empilhados (MQE)
 - Seção 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Mínimos Quadrados Empilhados (_Pooled_ ou _Pooling_, em inglês) usa a base de dados bruta (empilhada), ou seja, trata cada linha de base de dados como observações "de indivíduos diferentes" (enquanto sabemos que há {{<math>}}$T${{</math>}} observações de um mesmo indivíduo {{<math>}}$i${{</math>}}).
+- Mínimos Quadrados Empilhados (MQE) faz a estimação igual ao MQO, porém a inferência considera {{<math>}}$\boldsymbol{\Sigma} \neq \sigma^2 \boldsymbol{I}${{</math>}}, considera correlação entre as observações de um mesmo indivíduo {{<math>}}$i${{</math>}}.
+
 
 O modelo a ser estimado é
-{{<math>}}$$ \boldsymbol{y}\ =\ \boldsymbol{X\beta} + \boldsymbol{\varepsilon} $${{</math>}}
+{{<math>}}$$ \boldsymbol{y} = \boldsymbol{X\beta} + \boldsymbol{\varepsilon} $${{</math>}}
+
 
 - O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} de MQE (igual ao de MQO) é dado por
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{MQE} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQE}} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
 
-- Assumindo que {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, logo a matriz de variância-covariância do estimador é calculada como
-{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{MQE}) 
+- Note que a matriz de variância-covariância do estimador de MQO, que supõe {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, simplifica para:
+
+{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) 
 &= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\ 
-&= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \left[ \sigma^2_\varepsilon \boldsymbol{I} \right] \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
-&= \sigma^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{I} \boldsymbol{X}  (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
-&= \sigma^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
-&= \hat{\sigma}^2_\varepsilon (\boldsymbol{X}'\boldsymbol{X})^{-1} \end{align}{{</math>}}
-
-- No entanto, se {{<math>}}$\boldsymbol{X}${{</math>}} não for exógeno a {{<math>}}$\varepsilon = u + v${{</math>}}, então o estimador de MQE será viesado.
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \left[ \sigma^2 \boldsymbol{I} \right] \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \sigma^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \end{align}{{</math>}}
 
 
-- A matriz de variância-covariância do estimador é dada por
-{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{MQE}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
-  - Note que ela não se reduz a {{<math>}}$ V(\hat{\boldsymbol{\gamma}}_{MQO}) = \sigma^2 \boldsymbol{I} ${{</math>}}, se existir correlação entre observações de um mesmo indivíduo ao longo do tempo em um painel.
-
+- A matriz de variância-covariância do estimador de MQE, que considera a correlação entre observações de um mesmo indivíduo, é dada por
+{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQE}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
 
 
 ### Estimação via `plm()`
@@ -507,6 +564,8 @@ Usaremos a função `plm()` (do pacote de mesmo nome) para estimar modelos linea
 - `model`: estimador a ser computado 'pooling' (MQE), 'between', 'within' (Efeitos Fixos) ou 'random' (Efeitos Aleatórios/MQG)
 - `index`: vetor de nomes das colunas dos identificadores de indivíduo e de tempo
 
+Note que a estimação do MQE (_pooled_) via `plm()`, faz a estimação considerando {{<math>}}$\boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I}${{</math>}} e, portanto, estará erroneamente desconsiderando as correlações entre erros de um mesmo indivíduo:
+
 ```{r warning=FALSE}
 library(plm)
 
@@ -522,9 +581,16 @@ stargazer::stargazer(Q.pooling, Q.ols, type="text")
 ```
 
 
+- Logo, precisamos fazer a inferência considerando uma matriz de covariâncias dos erros apropriada. Para isto, vamos usar a função `vcovBK()` inserindo como argumento o objeto de resultado da regressão:
+```{r}
+# Inferência com matriz de covariâncias dos erros para painel
+summary(Q.pooling, vcov=vcovBK)$coef
+```
+
+
 
 #### Estimação Analítica de MQE
-A estimação analítica do MQE é equivalente ao MQO vista anteriormente, mas no contexto de dados em painel. A principal diferença é que o número de graus de liberdade é {{<math>}}$NT - K - 1${{</math>}} (pois possui {{<math>}}$$NT$${{</math>}} observações, ao invés de {{<math>}}$N${{</math>}} na estrutura de corte transversal)
+A estimação analítica do MQE é equivalente ao MQO vista anteriormente, mas no contexto de dados em painel. A principal diferença é que o número de graus de liberdade é {{<math>}}$NT - K - 1${{</math>}} (pois possui {{<math>}}$NT${{</math>}} observações, ao invés de {{<math>}}$N${{</math>}} na estrutura de corte transversal)
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
 ```{r}
@@ -548,9 +614,9 @@ K = ncol(X) - 1
 K # nº de covariadas
 ```
 
-b) Estimativas de MQE {{<math>}}$\hat{\boldsymbol{\beta}}_{MQE}${{</math>}}
+b) Estimativas de MQE {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQE}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{MQE} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQE}} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
 ```{r}
 bhat = solve( t(X) %*% X ) %*% t(X) %*% y
 bhat
@@ -574,36 +640,64 @@ ehat = y - yhat
 head(ehat)
 ```
 
-e) Variância do termo de erro {{<math>}}$\sigma^2_\varepsilon${{</math>}}
+e) Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
 
-{{<math>}}$$ \sigma^2_\varepsilon = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{NT-K-1}$${{</math>}}
+{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{NT-K-1}$${{</math>}}
 
-Como {{<math>}}$\sigma^2_\varepsilon${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+Como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 ```{r}
-sig2e = as.numeric( t(ehat) %*% ehat / (N*T-K-1) )
-sig2e
+sig2hat = as.numeric( t(ehat) %*% ehat / (N*T-K-1) )
+sig2hat
 ```
 
-f) Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}} (ou {{<math>}}$V_{\hat{\beta}}${{</math>}})
 
-{{<math>}}\begin{align} \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) &= s^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5} \\
-&= \left[ \begin{matrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots & cov(\hat{\beta}_0, \hat{\beta}_K) \\ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1) & \cdots & cov(\hat{\beta}_1, \hat{\beta}_K) \\ \vdots & \vdots & \ddots & \vdots \\ cov(\hat{\beta}_0, \hat{\beta}_K) & cov(\hat{\beta}_1, \hat{\beta}_K) & \cdots & var(\hat{\beta}_K) \end{matrix} \right]  \end{align} {{</math>}}
+f) Matriz de variância-covariância dos erros
+{{<math>}}\begin{align} \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}}{N(T-1)} \\
+    \hat{\sigma}^2_u &=\frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}}{N} - \hat{\sigma}^2_v \right) \\
+    \hat{\boldsymbol{\Sigma}} &= \hat{\sigma}^2_v \boldsymbol{W} + (\hat{\sigma}^2_v + T \hat{\sigma}^2_u) \boldsymbol{B}
+\end{align}{{</math>}}
 
 ```{r}
-Vbhat = sig2e * solve( t(X) %*% X )
+# Criando matrizes between e within
+iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
+I_N = diag(N) # matriz identidade de tamanho N
+I_NT = diag(N*T) # matriz identidade de tamanho NT
+
+B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
+W = I_NT - B
+
+# Calculando variâncias dos termos de erro (Wallace & Hussain)
+sig2v = as.numeric( (t(ehat) %*% W %*% ehat) / (N*(T-1)) )
+sig2u = as.numeric( (1/T) * ( (t(ehat) %*% B %*% ehat)/N - sig2v ) )
+
+# Calculando a Matriz de Covariâncias dos Erros
+Sigma = sig2v * W + (sig2v + T*sig2u) * B
+```
+
+
+
+g) Matriz de variância-covariância do estimador
+
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
+
+```{r}
+# Calculando a Matriz de variância-covariância dos estimadores
+bread = solve( t(X) %*% X )
+meat = t(X) %*% Sigma %*% X
+Vbhat = bread %*% meat %*% bread # sandwich
 Vbhat
 ```
 
 
-g) Erros-padrão do estimador
-{{<math>}}$$\text{se}(\hat{\boldsymbol{\beta}})$${{</math>}}
+h) Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
+
 É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
 ```{r}
 se_bhat = sqrt( diag(Vbhat) )
 se_bhat
 ```
 
-h) Estatística _t_
+i) Estatística _t_
 
 {{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
@@ -614,9 +708,9 @@ t_bhat = bhat / se_bhat
 t_bhat
 ```
 
-i) P-valor
+j) P-valor
 
-{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 ```{r}
 # p-valor
@@ -624,12 +718,209 @@ p_bhat = 2 * pt(-abs(t_bhat), N*T-K-1)
 p_bhat
 ```
 
-j) Tabela-resumo
+k) Tabela-resumo
 ```{r}
-cbind(bhat, se_bhat, t_bhat, p_bhat) # resultado via álgebra matricial
-summary(Q.pooling)$coef # resultado via plm() ou lm()
+cbind(bhat, se_bhat, t_bhat, p_bhat) # resultado MQE correto
+summary(Q.pooling)$coef # resultado MQO via plm() ou lm()
+summary(Q.pooling, vcov=vcovBK)$coef # com matriz cov erros ajustada
 ```
 
+
+</br>
+
+
+## Estimadores MQG
+
+- Seção 2.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Ao contrário do estimador _within_ que retira os efeitos individuais, o estimador de **MQG** considera que os efeitos individuais como aleatórios a partir de uma distribuição específica.
+- Erros não são correlacionados com as covariadas, e são caracterizados pela matriz de covariâncias dos erros {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
+- O estimador de MQG é dado por
+{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{MQG} = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} $${{</math>}}
+
+- A variância do estimador é dada por
+{{<math>}}$$ V(\hat{\boldsymbol{\gamma}}_{MQG}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} \tag{2.28} $${{</math>}}
+- Lembre-se que a matriz {{<math>}}$\boldsymbol{\Sigma}${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, temos:
+{{<math>}}$$ \boldsymbol{\Sigma}^p = (\sigma^2_\varepsilon)^p \boldsymbol{B} + (\sigma^2_v)^p \boldsymbol{W} \tag{2.29} $${{</math>}}
+
+
+### MQG: junção MQE e _Within_
+- Combinação de MQE (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
+- Pode-se computar mais eficientemente por MQO, que necessita transformação das variáveis usando a matriz {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, tal que {{<math>}}$\boldsymbol{\Sigma}^{-0.5\prime}\boldsymbol{\Sigma}^{-0.5} = \boldsymbol{\Sigma}^{-1}${{</math>}}.
+- Denotando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
+{{<math>}}\begin{align*}
+    \hat{\boldsymbol{\gamma}} &= (Z' \boldsymbol{\Sigma}^{-1} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-1} y) \tag{2.27} \\
+    &= (Z' \boldsymbol{\Sigma}^{-0.5\prime} \boldsymbol{\Sigma}^{-0.5} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-0.5}\boldsymbol{\Sigma}^{-0.5\prime} y) \\
+    &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}} \tilde{\boldsymbol{y}}
+\end{align*}{{</math>}}
+
+Usando (2.29), {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
+{{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = \frac{1}{\sigma_\varepsilon} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} $${{</math>}}
+
+Essa transformação evidencia uma combinação linear entre as matrizes de transformação _between_ e _within_ ponderadas pelo inverso dos desvios padrão dos 2 componentes de erro ({{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_\varepsilon)/T${{</math>}})
+
+Pré-multiplicando as variáveis por {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} (ao invés de {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}} para simplificação e sem perda de generalidade), as covariadas transformadas para o indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}} são dadas por:
+{{<math>}}$$ \tilde{z}_{it}\ =\ \frac{\sigma_v}{\sigma_\varepsilon} \bar{z}_{i\cdot} + (z_{it} - \bar{z}_{i\cdot})\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_\varepsilon} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot} $${{</math>}}
+em que
+{{<math>}}$$ \theta\ \equiv\ 1 - \frac{\sigma_v}{\sigma_\varepsilon}\ \equiv\ 1 - \phi $${{</math>}}
+
+    
+Note que, quando:
+
+- {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} MQG se aproxima do estimador _within_; e
+- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} MQG se aproxima do pooled MQO
+
+
+
+### Estimação MQG via `plm()`
+- Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via MQG
+- em `random.method` podemos escolher o método de cálculo dos parâmetros de erro:
+    1. `"walhus"` para Wallace e Hussain (1969)
+    2. `"amemiya"` para Amemiya (1971)
+    3. `"ht"` para Hausman e Taylor (1981)
+    4. `"swar"` para Swamy e Arora (1972) [padrão]
+    5. `"nerlove"` para Nerlove (1971)
+
+```{r}
+library(plm)
+data("TobinQ", package = "pder")
+pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
+
+# Estimações MQG
+Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
+Q.amemiya = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "amemiya")
+Q.ht = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "ht")
+Q.swar = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "swar")
+Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
+
+summary(Q.walhus) # output da estimação MQG por Wallace e Hussain (1969)
+```
+Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa MQG é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de períodos ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
+
+
+```{r}
+# Resumindo 5 estimações em única tabela
+stargazer::stargazer(Q.walhus, Q.amemiya, Q.ht, Q.swar, Q.nerlove, type="text")
+```
+Os resultados são praticamente idênticos, assim como seus {{<math>}}$\theta${{</math>}}'s:
+
+```{r}
+# Podemos visualizar o theta usando ercomp()$theta
+ercomp(Q.walhus)$theta
+
+# Criaremos uma lista com todos objetos de estimação MQG
+Q.models = list(walhus = Q.walhus, amemiya = Q.amemiya, ht = Q.ht,
+                swar = Q.swar, nerlove = Q.nerlove)
+
+# Aplicaremos sapply() com a lista criada e a função ercomp()
+sapply(Q.models, function(model) ercomp(model)$theta)
+```
+
+
+Observe que poderíamos ter obtido informações sobre as variâncias de covariadas por meio de `summary()` sobre uma variável no formato `pdata.frame`:
+```{r}
+pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year")) # transf. em pdata.frame
+summary(pTobinQ$qn) # resumo sobre variável qn
+```
+
+Também é possível verificar o mesmo para a variância do erro na estimação em MQG:
+```{r}
+ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
+```
+
+
+
+#### Estimação Analítica MQG
+- Aqui, faremos a estimação analítica do MQG usando o método de Wallace e Hussain (1969).
+- Consiste no uso dos desvios estimados por pooled MQO para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} para estimar por MQGF.
+- Para agilizar a estimação, vamos estimar o pooled MQO por `plm()`:
+```{r}
+library(plm)
+library(dplyr)
+
+data("TobinQ", package = "pder")
+
+# Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
+pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
+```
+
+- Obtendo {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}
+
+```{r}
+# Estimação pooled MQO
+Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
+
+# obtendo os resíduos MQO
+e_MQO = Q.pooling$residuals %>% as.vector()
+head(e_MQO)
+```
+
+- Precisamos calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} e {{<math>}}$\hat{\sigma}^2_u${{</math>}}
+
+```{r}
+TobinQ = TobinQ %>% mutate(constant = 1) # criando vetor de 1's
+
+y = TobinQ %>% select(ikn) %>% as.matrix() # vetor y
+X = TobinQ %>% select(qn) %>% as.matrix() # vetor X
+Z = cbind(TobinQ$constant, X) # vetor Z = (iota, X)
+
+N = TobinQ %>% select(cusip) %>% unique() %>% nrow() # núm. indivíduos
+T = TobinQ %>% select(year) %>% unique() %>% nrow() # núm. períodos
+iota_T = rep(1, T)
+
+# Calculando matrizes de tranformação B e W
+B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
+W = diag(N*T) - B
+
+# Calculando os termos de erro
+sigma2_l = (t(e_MQO) %*% B %*% e_MQO) / N
+sigma2_nu = (t(e_MQO) %*% W %*% e_MQO) / (N * (T-1))
+sigma2_u = (sigma2_l + sigma2_nu) / T
+
+sigmas2 = cbind(sigma2_l, sigma2_nu, sigma2_u)
+colnames(sigmas2) = c("sigma2_l", "sigma2_nu", "sigma2_u")
+sigmas2
+```
+
+- Agora, conseguimos calcular:
+{{<math>}}$$ \boldsymbol{\Sigma}^{-1} = \frac{1}{\sigma^2_\varepsilon}B + \frac{1}{\sigma^2_v}\boldsymbol{W} $${{</math>}}
+```{r}
+Sigma_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
+dim(Sigma_1) # NT x NT
+```
+
+{{<math>}}$$ \hat{V}_{MQG} = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
+
+```{r}
+## Estimando a matriz de variancia/covariancia das estimativas gamma
+vcov_hat = solve(t(Z) %*% Sigma_1 %*% Z)
+
+# vetor de estimativas gamma_hat = (alpha, beta)
+gamma_hat = solve(t(Z) %*% Sigma_1 %*% Z) %*% (t(Z) %*% Sigma_1 %*% y)
+gamma_hat
+
+## Calculando erros padrao das estimativas gamma
+std_err = sqrt(diag(vcov_hat)) # Raiz da diagonal da matriz de covariâncias
+
+## Calculando estatisticas t das estimativas gamma
+t_stat = gamma_hat / std_err
+
+## Calculando p-valores das estimativas gamma
+p_value = 2 * pt(q = -abs(t_stat), df = nrow(Z) - ncol(Z))  # NT - K - 1 graus de liberdade
+
+## Organizando os resultados da regressao em uma matriz
+results_walhus = cbind(gamma_hat, std_err, t_stat, p_value)
+
+## Nomeando as colunas da matriz de resultados
+colnames(results_walhus) = c('Estimate', 'Std. Error', 't stat', 'Pr(>|t|)')
+rownames(results_walhus) = c("(Intercept)", "qn")
+results_walhus
+
+summary(Q.walhus)$coef # comparando com estimado via plm()
+```
+
+
+
+</br>
 
 ## Estimadores _Between_ e _Within_
 
@@ -671,8 +962,6 @@ podemos reescrever como
 
 ### Transformações _between_ e _within_
 - Seção 2.1.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-
-
 
 
 
@@ -838,11 +1127,11 @@ O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{B}
 {{<math>}}$$ \boldsymbol{By}\ =\ \boldsymbol{BX\gamma} + \boldsymbol{B\varepsilon}\ =\ \alpha \boldsymbol{\iota} + \boldsymbol{BX} \boldsymbol{\beta} + \boldsymbol{B\varepsilon} $${{</math>}}
 
 - O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} é dado por
-{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{B}\ =\ (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B} y $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{\scriptscriptstyle{B}}\ =\ (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B} y $${{</math>}}
 - A matriz de covariâncias pode ser obtida usando
 
 {{<math>}}\begin{align*}
-    V(\hat{\boldsymbol{\gamma}}_{B}) &= (\boldsymbol{X}'\boldsymbol{BX})^{-1} \boldsymbol{X}' \boldsymbol{B}\boldsymbol{\Sigma} \boldsymbol{B} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{BX})^{-1} \\
+    V(\hat{\boldsymbol{\gamma}}_{\scriptscriptstyle{B}}) &= (\boldsymbol{X}'\boldsymbol{BX})^{-1} \boldsymbol{X}' \boldsymbol{B}\boldsymbol{\Sigma} \boldsymbol{B} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{BX})^{-1} \\
     &= \sigma^2_\varepsilon (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{X})^{-1},
 \end{align*}{{</math>}}
 em que {{<math>}}$$\sigma^2_\varepsilon = \sigma^2_v + T \sigma^2_u $${{</math>}}
@@ -868,10 +1157,10 @@ O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{W}
 Note que a transformação within remove vetor de 1's associado ao intercepto, além das covariadas invariantes no tempo e o termo de erro individual {{<math>}}$u${{</math>}} (sobrando apenas {{<math>}}$\varepsilon = v${{</math>}}).
 
 - O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} é dado por
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{W}\ =\ (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}\ =\ (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 - A matriz de covariâncias pode ser obtida usando
 {{<math>}}\begin{align*}
-    V(\hat{\boldsymbol{\beta}}_{W}) &= (\boldsymbol{X}'\boldsymbol{WX})^{-1} \boldsymbol{X}' \boldsymbol{W}\boldsymbol{\Sigma} \boldsymbol{W} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{WX})^{-1} \\
+    V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}) &= (\boldsymbol{X}'\boldsymbol{WX})^{-1} \boldsymbol{X}' \boldsymbol{W}\boldsymbol{\Sigma} \boldsymbol{W} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{WX})^{-1} \\
     &= \sigma^2_v (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1}.
 \end{align*}{{</math>}}
 
@@ -906,9 +1195,9 @@ stargazer::stargazer(Q.pooling, Q.between, Q.within, type="text")
     - cada método possui diferentes graus de liberdade
 
 
-### Estimando _Within_ e _Between_ via Pooled MQO
+### Estimando _Within_ e _Between_ via MQO
 
-Nós podemos construir as variáveis de média e de desvios de média diretamente no data frame e estimar o _between_ e _within_ via (pooled) MQO
+Nós podemos construir as variáveis de média e de desvios de média diretamente no data frame e estimar o _between_ e _within_ via MQO
 
 ```{r}
 library(dplyr)
@@ -925,7 +1214,7 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
 Q.pooling_between = plm(ikn_bar ~ qn_bar, pTobinQ, model = "pooling")
 
-summary(Q.pooling_between)$coef # between via pooled MQO
+summary(Q.pooling_between)$coef # between via MQO
 summary(Q.between)$coef # between
 ```
 - Note que, embora as estimativas sejam as mesmas, acabamos subestimando os erros padrão e, portanto, superestimando os valores t.
@@ -983,7 +1272,7 @@ N = TobinQ %>% select(cusip) %>% unique() %>% nrow()
 T = TobinQ %>% select(year) %>% unique() %>% nrow()
 iota_T = rep(1, T)
 
-# Calculando matrizes de tranformação \boldsymbol{B} e W
+# Calculando matrizes de tranformação B e W
 B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = diag(N*T) - B
 ```
@@ -1042,234 +1331,6 @@ summary(Q.between)$coef # comparando com estimado via plm()
 
 #### Estimação Analítica _Within_
 (Exercício)
-
-
-</br>
-
-
-## Estimadores MQG
-
-- Seção 2.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Ao contrário do estimador _within_ que retira os efeitos individuais, o estimador de **MQG** considera que os efeitos individuais como aleatórios a partir de uma distribuição específica.
-- Erros não são correlacionados com as covariadas, e são caracterizados pela matriz de covariâncias dos erros {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
-- O estimador de MQG é dado por
-{{<math>}}$$ \hat{\boldsymbol{\gamma}}_{MQG} = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} $${{</math>}}
-
-- A variância do estimador é dada por
-{{<math>}}$$ V(\hat{\boldsymbol{\gamma}}_{MQG}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} \tag{2.28} $${{</math>}}
-- A matriz {{<math>}}$\boldsymbol{\Sigma}${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, temos:
-{{<math>}}$$ \boldsymbol{\Sigma}^p = (\sigma^2_\varepsilon)^p \boldsymbol{B} + (\sigma^2_v)^p \boldsymbol{W} \tag{2.29} $${{</math>}}
-
-- Lembre-se que {{<math>}}$$\sigma^2_\varepsilon = \sigma^2_v + T \sigma^2_u $${{</math>}}
-
-### MQG: junção MQE e _Within_
-- Combinação de MQE (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
-- Pode-se computar mais eficientemente por MQO, que necessita transformação das variáveis usando a matriz {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, tal que {{<math>}}$\boldsymbol{\Sigma}^{-0.5\prime}\boldsymbol{\Sigma}^{-0.5} = \boldsymbol{\Sigma}^{-1}${{</math>}}.
-- Denotando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
-{{<math>}}\begin{align*}
-    \hat{\boldsymbol{\gamma}} &= (Z' \boldsymbol{\Sigma}^{-1} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-1} y) \tag{2.27} \\
-    &= (Z' \boldsymbol{\Sigma}^{-0.5\prime} \boldsymbol{\Sigma}^{-0.5} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-0.5}\boldsymbol{\Sigma}^{-0.5\prime} y) \\
-    &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}} \tilde{\boldsymbol{y}}
-\end{align*}{{</math>}}
-
-Usando (2.29), {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
-{{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = \frac{1}{\sigma_\varepsilon} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} $${{</math>}}
-
-Essa transformação evidencia uma combinação linear entre as matrizes de transformação _between_ e _within_ ponderadas pelo inverso dos desvios padrão dos 2 componentes de erro ({{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_\varepsilon)/T${{</math>}})
-
-Pré-multiplicando as variáveis por {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} (ao invés de {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}} para simplificação e sem perda de generalidade), as covariadas transformadas para o indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}} são dadas por:
-{{<math>}}$$ \tilde{z}_{it}\ =\ \frac{\sigma_v}{\sigma_\varepsilon} \bar{z}_{i\cdot} + (z_{it} - \bar{z}_{i\cdot})\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_\varepsilon} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot} $${{</math>}}
-em que
-{{<math>}}$$ \theta\ \equiv\ 1 - \frac{\sigma_v}{\sigma_\varepsilon}\ \equiv\ 1 - \phi $${{</math>}}
-
-    
-Note que, quando:
-
-- {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} MQG se aproxima do estimador _within_; e
-- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} MQG se aproxima do pooled MQO
-
-
-### Estimação dos Componentes de Erro
-- Note que não temos {{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_\varepsilon)/T${{</math>}} e, logo, {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é desconhecido.
-- Se {{<math>}}$\varepsilon${{</math>}} fosse conhecido, então os estimadores para as duas variâncias seriam:
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\varepsilon' \boldsymbol{B} \varepsilon}{N} \tag{2.34}\\
-    \hat{\sigma}^2_v &= \frac{\varepsilon' \boldsymbol{W} \varepsilon}{N(T-1)} \tag{2.35}
-\end{align*}{{</math>}}
-- Como {{<math>}}$\varepsilon${{</math>}} é desconhecido, então usam-se resíduos de estimadores consistentes em seu lugar.
-- O estimador obtido por esse processo é chamado de FMQG (ou MQG Factível)
-- **Wallace e Hussain (1969)**: usam resíduos MQO
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{MQO}}{N} \\
-    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{MQO}}{N(T-1)}
-\end{align*}{{</math>}}
-- **Amemiya (1971)**: usam resíduos _within_
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{W} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{W}}{N}\\
-    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{W} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{W}}{N(T-1)}
-\end{align*}{{</math>}}
-Note que, a variância do efeito individual é sobre-estimado quando o modelo contém variáveis invariantes no tempo (somem com a transformação _within_)
-- **Hausman e Taylor (1981)**: propuseram ajuste ao método de Amemiya (1971), em que {{<math>}}$\hat{\boldsymbol{\varepsilon}}_W${{</math>}} são regredidos em todas variáveis invariantes no tempo no modelo e são utilizados os resíduos dessa regressão, {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{HT}${{</math>}}.
-- **Swamy e Arora (1972)**: usam resíduos _between_ e _within_ para calcular, respectivamente, {{<math>}}$\hat{\sigma}^2_l${{</math>}} e {{<math>}}$\hat{\sigma}^2_v${{</math>}}
-{{<math>}}\begin{align*}
-    \hat{\sigma}^2_l &= \frac{\hat{\boldsymbol{\varepsilon}}'_{B} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{B}}{N - K - 1}\\
-    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{W} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{W}}{N(T-1) - K}
-\end{align*}{{</math>}}
-
-- **Nerlove (1971)**: computam {{<math>}}$\sigma^2_u${{</math>}} empírica dos efeitos fixos do modelo _within_
-
-{{<math>}}\begin{align*}
-    \hat{u}_i &= \bar{y}_{i\cdot} - \hat{\boldsymbol{\beta}}_W \bar{x}_{i\cdot} \\
-    \hat{\sigma}^2_u &= \sum^N_{i=1}{(\hat{u}_i - \bar{\hat{u}}) / (N-1)} \\
-    \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_W \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_W}{NT}
-\end{align*}{{</math>}}
-
-
-### Estimação MQG via `plm()`
-- Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via MQG
-- em `random.method` podemos escolher o método de cálculo dos parâmetros de erro:
-    1. `"walhus"` para Wallace e Hussain (1969)
-    2. `"amemiya"` para Amemiya (1971)
-    3. `"ht"` para Hausman e Taylor (1981)
-    4. `"swar"` para Swamy e Arora (1972) [padrão]
-    5. `"nerlove"` para Nerlove (1971)
-
-```{r}
-library(plm)
-data("TobinQ", package = "pder")
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-
-# Estimações MQG
-Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
-Q.amemiya = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "amemiya")
-Q.ht = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "ht")
-Q.swar = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "swar")
-Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
-
-summary(Q.walhus) # output da estimação MQG por Wallace e Hussain (1969)
-```
-Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa MQG é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de períodos ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
-
-
-```{r}
-# Resumindo 5 estimações em única tabela
-stargazer::stargazer(Q.walhus, Q.amemiya, Q.ht, Q.swar, Q.nerlove, type="text")
-```
-Os resultados são praticamente idênticos, assim como seus {{<math>}}$\theta${{</math>}}'s:
-
-```{r}
-# Podemos visualizar o theta usando ercomp()$theta
-ercomp(Q.walhus)$theta
-
-# Criaremos uma lista com todos objetos de estimação MQG
-Q.models = list(walhus = Q.walhus, amemiya = Q.amemiya, ht = Q.ht,
-                swar = Q.swar, nerlove = Q.nerlove)
-
-# Aplicaremos sapply() com a lista criada e a função ercomp()
-sapply(Q.models, function(model) ercomp(model)$theta)
-```
-
-
-Observe que poderíamos ter obtido informações sobre as variâncias de covariadas por meio de `summary()` sobre uma variável no formato `pdata.frame`:
-```{r}
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year")) # transf. em pdata.frame
-summary(pTobinQ$qn) # resumo sobre variável qn
-```
-
-Também é possível verificar o mesmo para a variância do erro na estimação em MQG:
-```{r}
-ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
-```
-
-
-
-#### Estimação Analítica MQG
-- Aqui, faremos a estimação analítica do MQG usando o método de Wallace e Hussain (1969).
-- Consiste no uso dos desvios estimados por pooled MQO para calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} (e consequentemente {{<math>}}$\hat{\sigma}^2_u${{</math>}}), possibilitando encontrar {{<math>}}$\hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} para estimar por FMQG.
-- Para agilizar a estimação, vamos estimar o pooled MQO por `plm()`:
-```{r}
-library(plm)
-data("TobinQ", package = "pder")
-
-# Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
-```
-
-- Obtendo {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{MQO}${{</math>}}
-
-```{r}
-# Estimação pooled MQO
-Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
-
-# obtendo os resíduos MQO
-e_MQO = Q.pooling$residuals %>% as.vector()
-head(e_MQO)
-```
-
-- Precisamos calcular {{<math>}}$\hat{\sigma}^2_l${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}} e {{<math>}}$\hat{\sigma}^2_u${{</math>}}
-
-```{r}
-TobinQ = TobinQ %>% mutate(constant = 1) # criando vetor de 1's
-
-y = TobinQ %>% select(ikn) %>% as.matrix() # vetor y
-X = TobinQ %>% select(qn) %>% as.matrix() # vetor X
-Z = cbind(TobinQ$constant, X) # vetor Z = (iota, X)
-
-N = TobinQ %>% select(cusip) %>% unique() %>% nrow() # núm. indivíduos
-T = TobinQ %>% select(year) %>% unique() %>% nrow() # núm. períodos
-iota_T = rep(1, T)
-
-# Calculando matrizes de tranformação B e W
-B = diag(N) %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-W = diag(N*T) - B
-
-# Calculando os termos de erro
-sigma2_l = (t(e_MQO) %*% B %*% e_MQO) / N
-sigma2_nu = (t(e_MQO) %*% W %*% e_MQO) / (N * (T-1))
-sigma2_u = (sigma2_l + sigma2_nu) / T
-
-sigmas2 = cbind(sigma2_l, sigma2_nu, sigma2_u)
-colnames(sigmas2) = c("sigma2_l", "sigma2_nu", "sigma2_u")
-sigmas2
-```
-
-- Agora, conseguimos calcular:
-{{<math>}}$$ \boldsymbol{\Sigma}^{-1} = \frac{1}{\sigma^2_\varepsilon}B + \frac{1}{\sigma^2_v}\boldsymbol{W} $${{</math>}}
-```{r}
-Sigma_1 = c(sigma2_l^(-1)) * B + c(sigma2_nu^(-1)) * W
-dim(Sigma_1) # NT x NT
-```
-
-{{<math>}}$$ \hat{V}_{MQG} = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
-
-```{r}
-## Estimando a matriz de variancia/covariancia das estimativas gamma
-vcov_hat = solve(t(Z) %*% Sigma_1 %*% Z)
-
-# vetor de estimativas gamma_hat = (alpha, beta)
-gamma_hat = solve(t(Z) %*% Sigma_1 %*% Z) %*% (t(Z) %*% Sigma_1 %*% y)
-gamma_hat
-
-## Calculando erros padrao das estimativas gamma
-std_err = sqrt(diag(vcov_hat)) # Raiz da diagonal da matriz de covariâncias
-
-## Calculando estatisticas t das estimativas gamma
-t_stat = gamma_hat / std_err
-
-## Calculando p-valores das estimativas gamma
-p_value = 2 * pt(q = -abs(t_stat), df = nrow(Z) - ncol(Z))  # NT - K - 1 graus de liberdade
-
-## Organizando os resultados da regressao em uma matriz
-results_walhus = cbind(gamma_hat, std_err, t_stat, p_value)
-
-## Nomeando as colunas da matriz de resultados
-colnames(results_walhus) = c('Estimate', 'Std. Error', 't stat', 'Pr(>|t|)')
-rownames(results_walhus) = c("(Intercept)", "qn")
-results_walhus
-
-summary(Q.walhus)$coef # comparando com estimado via plm()
-```
-
 
 </br>
 
@@ -1383,9 +1444,9 @@ que é assintoticamente distribuída como ua $\chi^2$ com 1 grau de liberdade.
 ### Testes F
 - Seção 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 - Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo _within_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W${{</math>}} e {{<math>}}$N(T-1) - K${{</math>}}, respectivamente.
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo pooled MQO {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_{MQO}\hat{\boldsymbol{\varepsilon}}_{MQO}${{</math>}} e {{<math>}}$NT - K - 1${{</math>}}, respectivamente.
+- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo pooled MQO {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}}\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}} e {{<math>}}$NT - K - 1${{</math>}}, respectivamente.
 - Sob hipótese nula de que não há efeitos individuais, a estatística teste é dada por
-{{<math>}}$$ \frac{\hat{\boldsymbol{\varepsilon}}'_{MQO} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{MQO} - \hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W}{\hat{\boldsymbol{\varepsilon}}'_W \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_W} \frac{NT - K - N + 1}{N-1} $${{</math>}}
+{{<math>}}$$ \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}} - \hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W}{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}}\boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_W} \frac{NT - K - N + 1}{N-1} $${{</math>}}
 que segue uma distribuição F de Fisher-Snedecor com {{<math>}}$N-1${{</math>}} e {{<math>}}$NT - K - N + 1${{</math>}} graus de liberdade.
 
 
@@ -1429,10 +1490,10 @@ Assim como o teste LM, Pelo teste F, observam-se efeitos individuais significati
 {{<math>}}$$ \hat{q} \equiv \hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W\ \overset{p}{\rightarrow}\ 0 $${{</math>}}
 então é preferível usar o mais eficiente (MQG, pois usa ambas variações inter e intra-indivíduos).
 
-- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W \neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
+- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}\neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
 - A variância é dada por 
 {{<math>}}\begin{align*}
-    V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{MQG}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{W}, \hat{\boldsymbol{\beta}}_{MQG}) \\
+    V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{MQG} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{MQG}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}, \hat{\boldsymbol{\beta}}_{MQG}) \\
     &= \sigma^2_v (Z' \boldsymbol{W} Z)^{-1} - (Z'\boldsymbol{\Sigma}^{-1} Z)^{-1}
 \end{align*}{{</math>}}
 - Logo, a estatística teste se torna

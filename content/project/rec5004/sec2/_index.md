@@ -510,7 +510,7 @@ m
 ## [2,]   NA   NA   NA
 ```
 
-É possível construir uma matriz "preenchida" informando os seus (nº linhas `\(\times\)` nº colunas) valores por meio de um vetor. Os elementos deste vetor preenchem primeiro todas linhas de uma coluna para, depois, preencher a próxima coluna (_column-wise_):
+É possível construir uma matriz "preenchida" informando os seus (nº linhas {{<math>}}$\times${{</math>}} nº colunas) valores por meio de um vetor. Os elementos deste vetor preenchem primeiro todas linhas de uma coluna para, depois, preencher a próxima coluna (_column-wise_):
 
 ```r
 m = matrix(1:6, nrow=2, ncol=3)
