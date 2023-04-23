@@ -730,7 +730,7 @@ stargazer::stargazer(Q.pooling, Q.ols, type="text")
 - Precisamos fazer a inferência considerando uma Matriz de Variâncias-Covariâncias dos Erros apropriada. Para isto, vamos usar o argumento `vcov=vcovBK` dentro da função `summary()`:
 
 ```r
-# Estimação MQE
+# Estimação MQE - matriz de var-cov dos erros com correlação intra-indiv
 summary(Q.pooling, vcov=vcovBK)$coef
 ```
 
