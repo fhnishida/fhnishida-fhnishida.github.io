@@ -436,9 +436,9 @@ as.logical(c("T", "FALSE", "1", TRUE)) # (character TRUE/FALSE, logical)
 seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
     length.out = NULL, ...)
 
-from, to: the starting and (maximal) end values of the sequence. Of length 1 unless just from is supplied as an unnamed argument.
-by:	number, increment of the sequence.
-length.out: desired length of the sequence. A non-negative number, which for seq and seq.int will be rounded up if fractional.
+- from, to: the starting and (maximal) end values of the sequence.
+- by:	number, increment of the sequence.
+- length.out (length): desired length of the sequence.
 ```
 - Note que todos argumentos já possuem valores pré-definidos, então podemos montar sequências de maneiras distintas.
 - Considerando o preenchimento dos argumentos `from` e `to`, podemos:
@@ -466,7 +466,8 @@ seq(from=0, to=10, length=5)
 ```yaml
 rep(x, times)
 
-x: a vector (of any mode including a list) or a factor or (for rep only) a POSIXct or POSIXlt or Date object.
+- x: a vector (of any mode including a list) or a factor.
+- times: an integer-valued vector giving the (non-negative) number of times to repeat each element, or to repeat the whole vector.
 ```
 
 ```r
@@ -487,19 +488,20 @@ rep(c("a", "b"), 2) # repetição do vetor c("a", "b")
 
 
 ### Matrizes
-Matrizes são vetores (e, portanto, possuem elementos de mesma classe) com atributo de _dimensão_ (nº linhas por nº colunas). Uma matriz pode ser criada usando a função `matrix()`:
+Matrizes também possuem elementos de mesma classe, mas bidimensional. Uma matriz pode ser criada usando a função `matrix()`:
 
 ```yaml
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, ...)
 
-data: an optional data vector (including a list or expression vector). Non-atomic classed R objects are coerced by as.vector and all attributes discarded.
-nrow: the desired number of rows.
-ncol: the desired number of columns.
-byrow: logical. If FALSE (the default) the matrix is filled by columns, otherwise the matrix is filled by rows.
+- data: an optional data vector (including a list or expression vector). Non-atomic classed R objects are coerced by as.vector and all attributes discarded.
+- nrow: the desired number of rows.
+- ncol: the desired number of columns.
+- byrow: logical. If FALSE (the default) the matrix is filled by columns, otherwise the matrix is filled by rows.
 ```
 
 
 ```r
+# matriz de NAs
 m = matrix(nrow=2, ncol=3)
 m
 ```
@@ -508,6 +510,18 @@ m
 ##      [,1] [,2] [,3]
 ## [1,]   NA   NA   NA
 ## [2,]   NA   NA   NA
+```
+
+```r
+# matriz de 0s
+m = matrix(0, 2, 3)
+m
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    0    0    0
+## [2,]    0    0    0
 ```
 
 É possível construir uma matriz "preenchida" informando os seus (nº linhas {{<math>}}$\times${{</math>}} nº colunas) valores por meio de um vetor. Os elementos deste vetor preenchem primeiro todas linhas de uma coluna para, depois, preencher a próxima coluna (_column-wise_):
@@ -526,19 +540,12 @@ m
 
 Outra maneira de criar matrizes é juntando vetores em colunas (_column-binding_) ou em linhas (_row-binding_), usando as funções `cbind()` e `rbind()`, respectivamente:
 
-```yaml
-cbind(...)
-rbind(...)
-
-... : (generalized) vectors or matrices. These can be given as named arguments. Other R objects may be coerced as appropriate, or S4 methods may be used: see sections ‘Details’ and ‘Value’. (For the "data.frame" method of cbind these can be further arguments to data.frame such as stringsAsFactors.)
-```
-
 
 ```r
 x = 1:3
 y = 10:12
 
-cbind(x, y)
+cbind(x, y) # juntando por coluna
 ```
 
 ```
@@ -549,7 +556,7 @@ cbind(x, y)
 ```
 
 ```r
-rbind(x, y)
+rbind(x, y) # juntando por linha
 ```
 
 ```
@@ -557,6 +564,65 @@ rbind(x, y)
 ## x    1    2    3
 ## y   10   11   12
 ```
+
+
+### Arrays
+Arrays são "matrizes" com mais de duas dimensões.
+```yaml
+array(data = NA, dim = length(data), dimnames = NULL)
+
+- data: a vector (including a list or expression vector) giving data to fill the array. Non-atomic classed objects are coerced by as.vector.
+- dim: the dim attribute for the array to be created, that is an integer vector of length one or more giving the maximal indices in each dimension.
+- dimnames: either NULL or the names for the dimensions.
+```
+
+
+```r
+# arrays de NAs de dimensões 1 x 2 x 3
+a = array(dim=c(1, 2, 3))
+a
+```
+
+```
+## , , 1
+## 
+##      [,1] [,2]
+## [1,]   NA   NA
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]   NA   NA
+## 
+## , , 3
+## 
+##      [,1] [,2]
+## [1,]   NA   NA
+```
+
+```r
+# matriz preenchida de dimensões 1 x 2 x 3
+a = array(1:6, c(1, 2, 3))
+a
+```
+
+```
+## , , 1
+## 
+##      [,1] [,2]
+## [1,]    1    2
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]    3    4
+## 
+## , , 3
+## 
+##      [,1] [,2]
+## [1,]    5    6
+```
+
 
 
 ### Listas
@@ -603,10 +669,8 @@ class(x)
 - Mas também pode ser criada manualmente via `data.frame()`
 
 ```yaml
-data.frame(..., stringsAsFactors = FALSE)
-
-... : these arguments are of either the form value or tag = value. Component names are created based on the tag (if present) or the deparsed argument itself.
-stringsAsFactors: logical: should character vectors be converted to factors?.
+data.frame(...)
+... : these arguments are of either the form value or tag = value
 ```
 
 
@@ -879,16 +943,40 @@ x[, 2] # todas linhas e coluna 2
 ```
 ## [1] 3 4
 ```
-- Note que, quando o subconjunto é um valor único ou um vetor, o objeto retornado deixa de ser uma matriz. Podemos forçar a se manter como matriz usando o argumento `drop= FALSE`
+
+
+- O mesmo pode ser utilizado para arrays, porém com mais dimensões
 
 ```r
-x[1, 2, drop = FALSE]
+x = array(1:16, c(1, 2, 3)) # array com 3 dimensões
+x
 ```
 
 ```
-##      [,1]
-## [1,]    3
+## , , 1
+## 
+##      [,1] [,2]
+## [1,]    1    2
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]    3    4
+## 
+## , , 3
+## 
+##      [,1] [,2]
+## [1,]    5    6
 ```
+
+```r
+x[1, 1, 2] # extraindo valor com índices (1, 1, 2)
+```
+
+```
+## [1] 3
+```
+
 
 ### Removendo valores ausentes (`NA`)
 - [Subsetting - Removing missing values (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/Qy8bH/subsetting-removing-missing-values)
@@ -924,180 +1012,7 @@ x[ !is.na(x) ]
 
 </br>
 
-## Operações vetoriais/matriciais
-- [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
-- Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor
 
-```r
-x = 1:4
-y = 6:9
-
-x + y # soma de cada elemento na mesma posição
-```
-
-```
-## [1]  7  9 11 13
-```
-
-```r
-x + 2 # soma de de cada elemento com um mesmo escalar
-```
-
-```
-## [1] 3 4 5 6
-```
-
-```r
-x * y # multiplicação de cada elemento na mesma posição
-```
-
-```
-## [1]  6 14 24 36
-```
-
-```r
-x / y # divisão de cada elemento na mesma posição
-```
-
-```
-## [1] 0.1666667 0.2857143 0.3750000 0.4444444
-```
-- Para fazer o produto vetorial usa-se `%*%`. Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna.
-
-```r
-# Operações vetoriais
-x %*% y # x vetor-linha / y vetor-coluna
-```
-
-```
-##      [,1]
-## [1,]   80
-```
-
-```r
-x %*% t(y) # x vetor-coluna / y vetor-linha (só altera o segundo)
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    6    7    8    9
-## [2,]   12   14   16   18
-## [3,]   18   21   24   27
-## [4,]   24   28   32   36
-```
-- Também pode-se "forçar" um vetor em linha ou em coluna via função `matrix()`.
-
-```r
-# Transformando vetores em objetos matriz
-x_col = matrix(x, ncol=1) # vetor-coluna
-x_col
-```
-
-```
-##      [,1]
-## [1,]    1
-## [2,]    2
-## [3,]    3
-## [4,]    4
-```
-
-```r
-y_lin = matrix(y, nrow=1)
-y_lin
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    6    7    8    9
-```
-
-```r
-# Operações vetoriais
-x_col %*% y_lin # x vetor-linha / y vetor-coluna 
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    6    7    8    9
-## [2,]   12   14   16   18
-## [3,]   18   21   24   27
-## [4,]   24   28   32   36
-```
-
-```r
-t(x_col) %*% t(y_lin) # x vetor-linha / y vetor-coluna 
-```
-
-```
-##      [,1]
-## [1,]   80
-```
-- O mesmo é válido para matrizes:
-
-```r
-x = matrix(1:4, nrow=2, ncol=2)
-x
-```
-
-```
-##      [,1] [,2]
-## [1,]    1    3
-## [2,]    2    4
-```
-
-```r
-y = matrix(rep(10, 4), nrow=2, ncol=2)
-y
-```
-
-```
-##      [,1] [,2]
-## [1,]   10   10
-## [2,]   10   10
-```
-
-```r
-x + y # Soma de elementos na mesma posição
-```
-
-```
-##      [,1] [,2]
-## [1,]   11   13
-## [2,]   12   14
-```
-
-```r
-x + 2 # Soma de cada elemento da matriz com um mesmo escalar
-```
-
-```
-##      [,1] [,2]
-## [1,]    3    5
-## [2,]    4    6
-```
-
-```r
-x * y # Multiplicação de elementos na mesma posição
-```
-
-```
-##      [,1] [,2]
-## [1,]   10   30
-## [2,]   20   40
-```
-
-```r
-x %*% y # Multplicação matricial
-```
-
-```
-##      [,1] [,2]
-## [1,]   40   40
-## [2,]   60   60
-```
-
-
-</br>
 
 ## Estatísticas básicas em vetores e matrizes
 - **Valores Absolutos**: `abs()`
@@ -1174,36 +1089,13 @@ min(x) # Valor mínimo
 ```
 ## [1] -5
 ```
-- A obtenção dos valores máximos e mínimos também poderia ser feita usando as funções `which.max()` e `which.min()`, que retornam **o índice do 1º elemento** de valor máximo/mínimo a partir de um **vetor de números**:
 
-```r
-which.max(x) # 1º índice de valor máximo
-```
-
-```
-## [1] 5
-```
-
-```r
-which.min(x) # 1º índice de valor mínimo
-```
-
-```
-## [1] 3
-```
-
-```r
-x[which.max(x)] # extraindo o valor máximo do vetor x
-```
-
-```
-## [1] 8
-```
-- Para obter os índices de todos os elementos de valor máximo/mínimo, precisamos usar a função `which()` que tem como argumento um **vetor lógico** (de `TRUE`'s e `FALSE`'s) como input, e gera um vetor de índices:
+- Para obter os índices de todos os elementos iguais ao valor máximo/mínimo, podemos usar a função `which()` que tem como argumento um **vetor lógico** (de `TRUE`'s e `FALSE`'s) como input, e gera um vetor/matriz de índices:
 ```yaml
-which(x, ...)
+which(x, arr.ind = FALSE, ...)
     
-x: a logical vector or array. NAs are allowed and omitted (treated as if FALSE).
+- x: a logical vector or array. NAs are allowed and omitted (treated as if FALSE).
+- arr.ind: logical; should array indices be returned when x is an array?
 ```
 
 ```r
@@ -1230,11 +1122,20 @@ x[which(x == max(x))] # valores máximos
 ```
 ## [1] 8 8
 ```
-- Note que, se houve valores ausentes (`NA`), a função retorna `NA` por padrão. Para excluir os valores ausentes, precisamos definir o argumento `na.rm = TRUE`:
+
+```r
+x[which(x == min(x))] # valores máximos
+```
+
+```
+## [1] -5 -5
+```
+
+- Note que, se houver valores ausentes (`NA`), a função retorna `NA` por padrão. Para excluir os valores ausentes, precisamos definir o argumento `na.rm = TRUE`:
 
 ```r
 x = c(1, 4, -5, 2, NA, -2, 4, 7, NA, 0, 2, 3, -5, NA, 4, -4, NA, 5, 2, NA)
-mean(x) # Sem excluir valores ausentes
+max(x) # Sem excluir valores ausentes
 ```
 
 ```
@@ -1242,11 +1143,11 @@ mean(x) # Sem excluir valores ausentes
 ```
 
 ```r
-mean(x, na.rm=TRUE) # Excluindo valores ausentes
+max(x, na.rm=TRUE) # Excluindo valores ausentes
 ```
 
 ```
-## [1] 1.2
+## [1] 7
 ```
 
 
@@ -1299,8 +1200,8 @@ min(fx) # f(x) mínimo
 ```
 
 ```r
-argmin_index = which.min(fx) # índice de x que maximiza
-argmin_index
+argmin = which(fx == min(fx)) # índice de x que maximiza
+argmin
 ```
 
 ```
@@ -1309,7 +1210,7 @@ argmin_index
 - Para recuperar o valor de {{<math>}}$x${{</math>}} que minimiza {{<math>}}$f(x)${{</math>}}, precisamos usar o índice encontrado para encontrar no vetor `x_grid`:
 
 ```r
-x_grid[argmin_index]
+x_grid[argmin]
 ```
 
 ```
@@ -1586,8 +1487,8 @@ fxz
 - Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`:
 
 ```r
-argmin_index = which(fxz==min(fxz), arr.ind = TRUE)
-argmin_index
+argmin = which(fxz==min(fxz), arr.ind = TRUE)
+argmin
 ```
 
 ```
@@ -1596,8 +1497,8 @@ argmin_index
 ```
 
 ```r
-argmin_x = x_grid[argmin_index[1]] # aplicando índice de x em x_grid
-argmin_z = z_grid[argmin_index[2]] # aplicando índice de z em z_grid
+argmin_x = x_grid[argmin[1]] # aplicando índice de x em x_grid
+argmin_z = z_grid[argmin[2]] # aplicando índice de z em z_grid
 
 paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a função f(x,z).")
 ```
@@ -1619,7 +1520,7 @@ paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a função f(x,
 
 ```r
 soma = function(a, b) {
-    a + b
+    a^2 + b
 }
 ```
 - Ao atribuir a função ao objeto `soma` não geramos resultados. Para fazer isso, usamos a função `soma()` inserindo 2 números como inputs:
@@ -1629,7 +1530,7 @@ soma(10, 4)
 ```
 
 ```
-## [1] 14
+## [1] 104
 ```
 - Note que as variáveis arbitrárias `a` e `b` são utilizadas apenas dentro da função
 ```r

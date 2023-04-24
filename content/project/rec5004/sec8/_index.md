@@ -12,6 +12,181 @@ type: book
 
 
 
+## Operações vetoriais/matriciais
+- [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
+- Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor
+
+```r
+x = 1:4
+y = 6:9
+
+x + y # soma de cada elemento na mesma posição
+```
+
+```
+## [1]  7  9 11 13
+```
+
+```r
+x + 2 # soma de de cada elemento com um mesmo escalar
+```
+
+```
+## [1] 3 4 5 6
+```
+
+```r
+x * y # multiplicação de cada elemento na mesma posição
+```
+
+```
+## [1]  6 14 24 36
+```
+
+```r
+x / y # divisão de cada elemento na mesma posição
+```
+
+```
+## [1] 0.1666667 0.2857143 0.3750000 0.4444444
+```
+- Para fazer o produto vetorial usa-se `%*%`. Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna.
+
+```r
+# Operações vetoriais
+x %*% y # x vetor-linha / y vetor-coluna
+```
+
+```
+##      [,1]
+## [1,]   80
+```
+
+```r
+x %*% t(y) # x vetor-coluna / y vetor-linha (só altera o segundo)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    6    7    8    9
+## [2,]   12   14   16   18
+## [3,]   18   21   24   27
+## [4,]   24   28   32   36
+```
+- Também pode-se "forçar" um vetor em linha ou em coluna via função `matrix()`.
+
+```r
+# Transformando vetores em objetos matriz
+x_col = matrix(x, ncol=1) # vetor-coluna
+x_col
+```
+
+```
+##      [,1]
+## [1,]    1
+## [2,]    2
+## [3,]    3
+## [4,]    4
+```
+
+```r
+y_lin = matrix(y, nrow=1)
+y_lin
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    6    7    8    9
+```
+
+```r
+# Operações vetoriais
+x_col %*% y_lin # x vetor-linha / y vetor-coluna 
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    6    7    8    9
+## [2,]   12   14   16   18
+## [3,]   18   21   24   27
+## [4,]   24   28   32   36
+```
+
+```r
+t(x_col) %*% t(y_lin) # x vetor-linha / y vetor-coluna 
+```
+
+```
+##      [,1]
+## [1,]   80
+```
+- O mesmo é válido para matrizes:
+
+```r
+x = matrix(1:4, nrow=2, ncol=2)
+x
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+```
+
+```r
+y = matrix(rep(10, 4), nrow=2, ncol=2)
+y
+```
+
+```
+##      [,1] [,2]
+## [1,]   10   10
+## [2,]   10   10
+```
+
+```r
+x + y # Soma de elementos na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]   11   13
+## [2,]   12   14
+```
+
+```r
+x + 2 # Soma de cada elemento da matriz com um mesmo escalar
+```
+
+```
+##      [,1] [,2]
+## [1,]    3    5
+## [2,]    4    6
+```
+
+```r
+x * y # Multiplicação de elementos na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]   10   30
+## [2,]   20   40
+```
+
+```r
+x %*% y # Multplicação matricial
+```
+
+```
+##      [,1] [,2]
+## [1,]   40   40
+## [2,]   60   60
+```
+
+
+</br>
+
 
 ## Estimação MQO multivariado
 
