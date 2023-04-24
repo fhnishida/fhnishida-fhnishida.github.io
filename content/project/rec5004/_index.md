@@ -33,6 +33,10 @@ Feel free to contact us if you have any question:
 
 ## Gravações das Monitorias
 
+- **Monitoria 2**: Programação em R - Parte 1 | [Script](monitoria02.R)
+    
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/rUTKEOu9a-M/hqdefault.jpg)](https://www.youtube.com/watch?v=rUTKEOu9a-M)
+
 - **Monitoria 1**: Ferramentas do R | [Script](monitoria01.R)
     
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/VlL4SfQN88I/hqdefault.jpg)](https://www.youtube.com/watch?v=VlL4SfQN88I)
