@@ -163,8 +163,7 @@ sapply(x, summary) # retorna uma matriz
 - [Subsetting and sorting (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/aqd2Y/subsetting-and-sorting)
 - Como exemplo, criaremos um _data frame_ com três variáveis, em que, para misturar a ordem dos números, usaremos a função `sample()` num vetor de números e também incluiremos alguns valores ausentes `NA`.
 ```{r}
-set.seed(2022)
-x = data.frame("var1"=sample(1:5), "var2"=sample(6:10), "var3"=sample(11:15))
+x = data.frame(var1=sample(1:5), var2=sample(6:10), var3=sample(11:15))
 x
 
 x$var2[c(1, 3)] = NA
@@ -236,8 +235,7 @@ x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
 ### Inclusão de novas colunas/variáveis
 - Para incluir novas variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
 ```{r}
-set.seed(1234)
-x$var4 = rnorm(5)
+x$var4 = 5:1
 x
 ```
 

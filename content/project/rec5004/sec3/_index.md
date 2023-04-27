@@ -353,8 +353,8 @@ x
 ## [1] 1 2 3 4 5
 ## 
 ## $b
-##  [1] -1.0464533  0.3078177 -0.6772875  0.3618147 -0.6336314 -0.2014745
-##  [7] -1.1858344  0.2919019 -0.6809388 -1.1977298
+##  [1]  0.44757714 -0.68045584 -0.12179980  0.98109903  0.58946783 -0.97974708
+##  [7] -2.20900619  1.97535518 -0.44879781  0.02281245
 ## 
 ## $c
 ## [1]  1  4 65  6
@@ -369,7 +369,7 @@ lapply(x, mean) # retorna médias de cada vetor dentro da lista
 ## [1] 3
 ## 
 ## $b
-## [1] -0.4661816
+## [1] -0.04234951
 ## 
 ## $c
 ## [1] 19
@@ -385,8 +385,8 @@ lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
 ##       1       2       3       3       4       5 
 ## 
 ## $b
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.1977 -0.9551 -0.6555 -0.4662  0.1686  0.3618 
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -2.20901 -0.62254 -0.04949 -0.04235  0.55400  1.97536 
 ## 
 ## $c
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -412,8 +412,8 @@ sapply(x, mean) # retorna um vetor
 ```
 
 ```
-##          a          b          c 
-##  3.0000000 -0.4661816 19.0000000
+##           a           b           c 
+##  3.00000000 -0.04234951 19.00000000
 ```
 - Se o resultado for uma lista em que cada elemento tem mesmo comprimento, retorna uma matriz
 
@@ -422,13 +422,13 @@ sapply(x, summary) # retorna uma matriz
 ```
 
 ```
-##         a          b     c
-## Min.    1 -1.1977298  1.00
-## 1st Qu. 2 -0.9550747  3.25
-## Median  3 -0.6554595  5.00
-## Mean    3 -0.4661816 19.00
-## 3rd Qu. 4  0.1685578 20.75
-## Max.    5  0.3618147 65.00
+##         a           b     c
+## Min.    1 -2.20900619  1.00
+## 1st Qu. 2 -0.62254133  3.25
+## Median  3 -0.04949367  5.00
+## Mean    3 -0.04234951 19.00
+## 3rd Qu. 4  0.55399516 20.75
+## Max.    5  1.97535518 65.00
 ```
 
 
@@ -444,18 +444,17 @@ sapply(x, summary) # retorna uma matriz
 - Como exemplo, criaremos um _data frame_ com três variáveis, em que, para misturar a ordem dos números, usaremos a função `sample()` num vetor de números e também incluiremos alguns valores ausentes `NA`.
 
 ```r
-set.seed(2022)
-x = data.frame("var1"=sample(1:5), "var2"=sample(6:10), "var3"=sample(11:15))
+x = data.frame(var1=sample(1:5), var2=sample(6:10), var3=sample(11:15))
 x
 ```
 
 ```
 ##   var1 var2 var3
-## 1    4    9   13
-## 2    3    7   11
-## 3    2    8   12
-## 4    1   10   15
-## 5    5    6   14
+## 1    3    6   14
+## 2    1    7   12
+## 3    5   10   13
+## 4    4    8   11
+## 5    2    9   15
 ```
 
 ```r
@@ -465,11 +464,11 @@ x
 
 ```
 ##   var1 var2 var3
-## 1    4   NA   13
-## 2    3    7   11
-## 3    2   NA   12
-## 4    1   10   15
-## 5    5    6   14
+## 1    3   NA   14
+## 2    1    7   12
+## 3    5   NA   13
+## 4    4    8   11
+## 5    2    9   15
 ```
 - Lembre-se que, para extrair um subconjunto de um data frame, usamos as chaves `[]` indicando vetores de linhas e de colunas (ou também os nomes das colunas).
 
@@ -478,7 +477,7 @@ x[, 1] # Todas linhas e 1ª coluna
 ```
 
 ```
-## [1] 4 3 2 1 5
+## [1] 3 1 5 4 2
 ```
 
 ```r
@@ -486,7 +485,7 @@ x[, "var1"] # Todas linhas e 1ª coluna (usando seu nome)
 ```
 
 ```
-## [1] 4 3 2 1 5
+## [1] 3 1 5 4 2
 ```
 
 ```r
@@ -503,7 +502,7 @@ x$var1 <= 3 & x$var3 > 11
 ```
 
 ```
-## [1] FALSE FALSE  TRUE  TRUE FALSE
+## [1]  TRUE  TRUE FALSE FALSE  TRUE
 ```
 
 ```r
@@ -513,8 +512,9 @@ x[x$var1 <= 3 & x$var3 > 11, ]
 
 ```
 ##   var1 var2 var3
-## 3    2   NA   12
-## 4    1   10   15
+## 1    3   NA   14
+## 2    1    7   12
+## 5    2    9   15
 ```
 - Poderíamos também obter apenas as observações em que a variável 1 seja menor ou igual a 3 **OU** (`|`) que a variável 3 seja estritamente maior do que 11:
 
@@ -524,11 +524,10 @@ x[x$var1 <= 3 | x$var3 > 11, ]
 
 ```
 ##   var1 var2 var3
-## 1    4   NA   13
-## 2    3    7   11
-## 3    2   NA   12
-## 4    1   10   15
-## 5    5    6   14
+## 1    3   NA   14
+## 2    1    7   12
+## 3    5   NA   13
+## 5    2    9   15
 ```
 - Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale `==` com mais de um valor)
 
@@ -537,7 +536,7 @@ x$var1 %in% c(1, 5) # obs em que var1 é igual a 1 ou 5
 ```
 
 ```
-## [1] FALSE FALSE FALSE  TRUE  TRUE
+## [1] FALSE  TRUE  TRUE FALSE FALSE
 ```
 
 ```r
@@ -546,8 +545,8 @@ x[x$var1 %in% c(1, 5), ]
 
 ```
 ##   var1 var2 var3
-## 4    1   10   15
-## 5    5    6   14
+## 2    1    7   12
+## 3    5   NA   13
 ```
 
 - Note que, ao escrevermos uma expressão lógica para um vetor que contém valores ausentes, gerará um vetor com `TRUE`, `FALSE` e `NA`
@@ -557,7 +556,7 @@ x$var2 > 8
 ```
 
 ```
-## [1]    NA FALSE    NA  TRUE FALSE
+## [1]    NA FALSE    NA FALSE  TRUE
 ```
 
 ```r
@@ -568,7 +567,7 @@ x[x$var2 > 8, ]
 ##      var1 var2 var3
 ## NA     NA   NA   NA
 ## NA.1   NA   NA   NA
-## 4       1   10   15
+## 5       2    9   15
 ```
 - Para contornar este problema, podemos usar a função `which()` que, ao invés de gerar um vetor de `TRUE`/`FALSE`, retorna um vetor com as posições dos elementos que tornam a expressão lógica verdadeira
 
@@ -577,7 +576,7 @@ which(x$var2 > 8)
 ```
 
 ```
-## [1] 4
+## [1] 5
 ```
 
 ```r
@@ -586,7 +585,7 @@ x[which(x$var2 > 8), ]
 
 ```
 ##   var1 var2 var3
-## 4    1   10   15
+## 5    2    9   15
 ```
 - Outra forma de contornar os valores ausentes é incluir a condição 
 de não incluir valores ausentes `!is.na()`:
@@ -596,7 +595,7 @@ x$var2 > 8 & !is.na(x$var2)
 ```
 
 ```
-## [1] FALSE FALSE FALSE  TRUE FALSE
+## [1] FALSE FALSE FALSE FALSE  TRUE
 ```
 
 ```r
@@ -605,7 +604,7 @@ x[x$var2 > 8 & !is.na(x$var2), ]
 
 ```
 ##   var1 var2 var3
-## 4    1   10   15
+## 5    2    9   15
 ```
 
 
@@ -634,7 +633,7 @@ sort(x$var2) # ordenando e retirando NA
 ```
 
 ```
-## [1]  6  7 10
+## [1] 7 8 9
 ```
 
 ```r
@@ -642,7 +641,7 @@ sort(x$var2, na.last=TRUE) # ordenando e mantendo NA no final
 ```
 
 ```
-## [1]  6  7 10 NA NA
+## [1]  7  8  9 NA NA
 ```
 - Note que não podemos usar a função `sort()` para ordenar um data frame, pois a função retorna valores e, portanto, não retorna suas posições.
 
@@ -673,7 +672,7 @@ order(x$var3)
 ```
 
 ```
-## [1] 2 3 1 5 4
+## [1] 4 2 3 1 5
 ```
 
 ```r
@@ -682,29 +681,28 @@ x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
 
 ```
 ##   var1 var2 var3
-## 2    3    7   11
-## 3    2   NA   12
-## 1    4   NA   13
-## 5    5    6   14
-## 4    1   10   15
+## 4    4    8   11
+## 2    1    7   12
+## 3    5   NA   13
+## 1    3   NA   14
+## 5    2    9   15
 ```
 
 ### Inclusão de novas colunas/variáveis
 - Para incluir novas variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
 
 ```r
-set.seed(1234)
-x$var4 = rnorm(5)
+x$var4 = 5:1
 x
 ```
 
 ```
-##   var1 var2 var3       var4
-## 1    4   NA   13 -1.2070657
-## 2    3    7   11  0.2774292
-## 3    2   NA   12  1.0844412
-## 4    1   10   15 -2.3456977
-## 5    5    6   14  0.4291247
+##   var1 var2 var3 var4
+## 1    3   NA   14    5
+## 2    1    7   12    4
+## 3    5   NA   13    3
+## 4    4    8   11    2
+## 5    2    9   15    1
 ```
 
 - [Algumas transformações comuns de variáveis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
@@ -714,7 +712,7 @@ abs(x$var4) # valor absoluto
 ```
 
 ```
-## [1] 1.2070657 0.2774292 1.0844412 2.3456977 0.4291247
+## [1] 5 4 3 2 1
 ```
 
 ```r
@@ -722,11 +720,7 @@ sqrt(x$var4) # raiz quadrada
 ```
 
 ```
-## Warning in sqrt(x$var4): NaNs produzidos
-```
-
-```
-## [1]       NaN 0.5267155 1.0413651       NaN 0.6550761
+## [1] 2.236068 2.000000 1.732051 1.414214 1.000000
 ```
 
 ```r
@@ -734,7 +728,7 @@ ceiling(x$var4) # valor inteiro acima
 ```
 
 ```
-## [1] -1  1  2 -2  1
+## [1] 5 4 3 2 1
 ```
 
 ```r
@@ -742,7 +736,7 @@ floor(x$var4) # valor inteiro abaixo
 ```
 
 ```
-## [1] -2  0  1 -3  0
+## [1] 5 4 3 2 1
 ```
 
 ```r
@@ -750,7 +744,7 @@ round(x$var4, digits=1) # arredondamento com 1 dígito
 ```
 
 ```
-## [1] -1.2  0.3  1.1 -2.3  0.4
+## [1] 5 4 3 2 1
 ```
 
 ```r
@@ -758,7 +752,7 @@ cos(x$var4) # cosseno
 ```
 
 ```
-## [1]  0.3557632  0.9617627  0.4674068 -0.6996456  0.9093303
+## [1]  0.2836622 -0.6536436 -0.9899925 -0.4161468  0.5403023
 ```
 
 ```r
@@ -766,7 +760,7 @@ sin(x$var4) # seno
 ```
 
 ```
-## [1] -0.9345761  0.2738841  0.8840424 -0.7144900  0.4160750
+## [1] -0.9589243 -0.7568025  0.1411200  0.9092974  0.8414710
 ```
 
 ```r
@@ -774,11 +768,7 @@ log(x$var4) # logaritmo natural
 ```
 
 ```
-## Warning in log(x$var4): NaNs produzidos
-```
-
-```
-## [1]         NaN -1.28218936  0.08106481         NaN -0.84600775
+## [1] 1.6094379 1.3862944 1.0986123 0.6931472 0.0000000
 ```
 
 ```r
@@ -786,11 +776,7 @@ log10(x$var4) # logaritmo base 10
 ```
 
 ```
-## Warning: NaNs produzidos
-```
-
-```
-## [1]        NaN -0.5568478  0.0352060        NaN -0.3674165
+## [1] 0.6989700 0.6020600 0.4771213 0.3010300 0.0000000
 ```
 
 ```r
@@ -798,7 +784,7 @@ exp(x$var4) # exponencial
 ```
 
 ```
-## [1] 0.29907355 1.31973273 2.95778648 0.09578035 1.53591253
+## [1] 148.413159  54.598150  20.085537   7.389056   2.718282
 ```
 
 
@@ -816,12 +802,12 @@ x
 ```
 
 ```
-##   var1 var2 var3       var4          y
-## 1    4   NA   13 -1.2070657  0.5060559
-## 2    3    7   11  0.2774292 -0.5747400
-## 3    2   NA   12  1.0844412 -0.5466319
-## 4    1   10   15 -2.3456977 -0.5644520
-## 5    5    6   14  0.4291247 -0.8900378
+##   var1 var2 var3 var4          y
+## 1    3   NA   14    5  0.1065169
+## 2    1    7   12    4  0.6179181
+## 3    5   NA   13    3 -1.9922358
+## 4    4    8   11    2  1.2170688
+## 5    2    9   15    1 -0.2848278
 ```
 - Também podemos acrescentar linhas usando `rbind()`, desde que o vetor tenha a quantidade de elementos igual ao número de colunas (ou data frame a ser incluído tenha o mesmo número de colunas)
 
@@ -832,13 +818,13 @@ x
 ```
 
 ```
-##         var1       var2       var3        var4          y
-## 1  4.0000000         NA 13.0000000 -1.20706575  0.5060559
-## 2  3.0000000  7.0000000 11.0000000  0.27742924 -0.5747400
-## 3  2.0000000         NA 12.0000000  1.08444118 -0.5466319
-## 4  1.0000000 10.0000000 15.0000000 -2.34569770 -0.5644520
-## 5  5.0000000  6.0000000 14.0000000  0.42912469 -0.8900378
-## 6 -0.4771927 -0.9983864 -0.7762539  0.06445882  0.9594941
+##        var1      var2        var3      var4          y
+## 1 3.0000000        NA 14.00000000 5.0000000  0.1065169
+## 2 1.0000000 7.0000000 12.00000000 4.0000000  0.6179181
+## 3 5.0000000        NA 13.00000000 3.0000000 -1.9922358
+## 4 4.0000000 8.0000000 11.00000000 2.0000000  1.2170688
+## 5 2.0000000 9.0000000 15.00000000 1.0000000 -0.2848278
+## 6 0.9005502 0.8601366 -0.02622439 0.7533998 -0.5528262
 ```
 
 
@@ -981,6 +967,10 @@ head(wrong)
 
 ```r
 library("dplyr") # Carregando pacote
+```
+
+```
+## Warning: package 'dplyr' was built under R version 4.2.3
 ```
 
 ```
@@ -1779,15 +1769,15 @@ bd1
 ##    name            year  mass
 ##    <chr>          <dbl> <dbl>
 ##  1 C-3PO           2021  75  
-##  2 C-3PO           2022  74.1
+##  2 C-3PO           2022  73.1
 ##  3 Darth Vader     2021 136  
-##  4 Darth Vader     2022 138. 
+##  4 Darth Vader     2022 127. 
 ##  5 Leia Organa     2021  49  
-##  6 Leia Organa     2022  48.2
+##  6 Leia Organa     2022  48.7
 ##  7 Luke Skywalker  2021  77  
-##  8 Luke Skywalker  2022  77.3
+##  8 Luke Skywalker  2022  78.0
 ##  9 R2-D2           2021  32  
-## 10 R2-D2           2022  31.6
+## 10 R2-D2           2022  31.9
 ```
 
 ```r
@@ -1828,15 +1818,15 @@ full_join(bd1, bd2, by=c("name", "year"))
 ##    name                year  mass height
 ##    <chr>              <dbl> <dbl>  <dbl>
 ##  1 C-3PO               2021  75    167  
-##  2 C-3PO               2022  74.1  170. 
+##  2 C-3PO               2022  73.1  170. 
 ##  3 Darth Vader         2021 136    202  
-##  4 Darth Vader         2022 138.   206. 
+##  4 Darth Vader         2022 127.   206. 
 ##  5 Leia Organa         2021  49     NA  
-##  6 Leia Organa         2022  48.2   NA  
+##  6 Leia Organa         2022  48.7   NA  
 ##  7 Luke Skywalker      2021  77     NA  
-##  8 Luke Skywalker      2022  77.3   NA  
+##  8 Luke Skywalker      2022  78.0   NA  
 ##  9 R2-D2               2021  32     NA  
-## 10 R2-D2               2022  31.6   NA  
+## 10 R2-D2               2022  31.9   NA  
 ## 11 Beru Whitesun lars  2021  NA    165  
 ## 12 Beru Whitesun lars  2022  NA    168. 
 ## 13 Biggs Darklighter   2021  NA    183  
@@ -1854,24 +1844,24 @@ full_join(bd1, bd2, by=c("name", "year"))
 
 ```
 ## # A tibble: 16 × 5
-##    name                year mass.x height  mass.y
-##    <chr>              <dbl>  <dbl>  <dbl>   <dbl>
-##  1 C-3PO               2021   75    167   -0.936 
-##  2 C-3PO               2022   74.1  170.   1.10  
-##  3 Darth Vader         2021  136    202   -0.476 
-##  4 Darth Vader         2022  138.   206.  -0.709 
-##  5 Leia Organa         2021   49     NA   NA     
-##  6 Leia Organa         2022   48.2   NA   NA     
-##  7 Luke Skywalker      2021   77     NA   NA     
-##  8 Luke Skywalker      2022   77.3   NA   NA     
-##  9 R2-D2               2021   32     NA   NA     
-## 10 R2-D2               2022   31.6   NA   NA     
-## 11 Beru Whitesun lars  2021   NA    165   -1.45  
-## 12 Beru Whitesun lars  2022   NA    168.   0.575 
-## 13 Biggs Darklighter   2021   NA    183   -1.02  
-## 14 Biggs Darklighter   2022   NA    187.  -0.0151
-## 15 R5-D4               2021   NA     97   -0.501 
-## 16 R5-D4               2022   NA     98.9 -1.63
+##    name                year mass.x height mass.y
+##    <chr>              <dbl>  <dbl>  <dbl>  <dbl>
+##  1 C-3PO               2021   75    167   -1.94 
+##  2 C-3PO               2022   73.1  170.   1.12 
+##  3 Darth Vader         2021  136    202   -1.07 
+##  4 Darth Vader         2022  127.   206.   2.16 
+##  5 Leia Organa         2021   49     NA   NA    
+##  6 Leia Organa         2022   48.7   NA   NA    
+##  7 Luke Skywalker      2021   77     NA   NA    
+##  8 Luke Skywalker      2022   78.0   NA   NA    
+##  9 R2-D2               2021   32     NA   NA    
+## 10 R2-D2               2022   31.9   NA   NA    
+## 11 Beru Whitesun lars  2021   NA    165    1.15 
+## 12 Beru Whitesun lars  2022   NA    168.   1.01 
+## 13 Biggs Darklighter   2021   NA    183    0.292
+## 14 Biggs Darklighter   2022   NA    187.  -2.28 
+## 15 R5-D4               2021   NA     97    1.55 
+## 16 R5-D4               2022   NA     98.9 -1.06
 ```
 
 

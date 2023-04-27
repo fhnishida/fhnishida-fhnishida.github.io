@@ -32,6 +32,9 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+- **Monitoria 6 (27/04)**: Estimação da MQGF | [Script](monitoria06.R)
+[<img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=G-1AVqDQBqY)
+
 - **Monitoria 5 (20/04)**: Estimação da Matriz de Covariâncias dos Erros e de MQE | [Script](monitoria05.R)
 [<img src="https://img.youtube.com/vi/uxEXcGDL_zM/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=uxEXcGDL_zM)
 

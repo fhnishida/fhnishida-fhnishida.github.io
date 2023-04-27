@@ -1079,8 +1079,8 @@ Neste caso específico, os resultados são praticamente idênticos.
 
 ### Estimação MQGF Analítica
 - Aqui, faremos a estimação analítica do MQGF usando o método de Wallace e Hussain (1969).
-- Consiste no uso dos desvios estimados por pooled MQO para calcular {{<math>}}$\hat{\sigma}^2_u${{</math>}}, {{<math>}}$\hat{\sigma}^2_v${{</math>}}, possibilitando encontrar {{<math>}}$\hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} para estimar por MQGF.
 - Primeiro, precisamos encontrar {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}${{</math>}} e {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}, para estimar {{<math>}}$\hat{\sigma}^2_{u}${{</math>}}, {{<math>}}$\hat{\sigma}^2_{v}${{</math>}} e {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}
+- Depois, fazemos a estimação de {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} e de {{<math>}}$V_{\hat{\boldsymbol{\beta}}_{\tiny{MQGF}}}${{</math>}}
 
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
@@ -1177,29 +1177,8 @@ bhat_MQGF
 ## [2,] 0.003862631
 ```
 
-h) Valores ajustados/preditos de MQGF {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQGF}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{MQGF}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}} $${{</math>}}
-
-
-```r
-yhat_MQGF = X %*% bhat_MQGF
-head(yhat_MQGF)
-```
-
-```
-##           [,1]
-## [1,] 0.2014672
-## [2,] 0.2065837
-## [3,] 0.1879484
-## [4,] 0.1855138
-## [5,] 0.1878022
-## [6,] 0.1828793
-```
-
-
-
-i) Matriz de Variâncias-Covariâncias do Estimador
+h) Matriz de Variâncias-Covariâncias do Estimador
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
 
@@ -1217,7 +1196,7 @@ Vbhat
 ```
 
 
-j) Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}})${{</math>}}
+i) Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}})${{</math>}}
 
 É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
 
@@ -1230,7 +1209,7 @@ se_bhat
 ## [1] 0.0034164422 0.0001683526
 ```
 
-k) Estatística _t_
+j) Estatística _t_
 
 {{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
@@ -1248,7 +1227,7 @@ t_bhat
 ## [2,] 22.94370
 ```
 
-l) P-valor
+k) P-valor
 
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
@@ -1265,7 +1244,7 @@ p_bhat
 ## [2,] 3.904386e-112
 ```
 
-m) Tabela-resumo
+l) Tabela-resumo
 
 ```r
 cbind(bhat_MQGF, se_bhat, t_bhat, p_bhat) # resultado MQE correto
