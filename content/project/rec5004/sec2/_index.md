@@ -1014,7 +1014,7 @@ x[ !is.na(x) ]
 
 
 
-## Estatísticas básicas em vetores e matrizes
+## Estatísticas básicas
 - **Valores Absolutos**: `abs()`
 
 ```r
@@ -1131,6 +1131,37 @@ x[which(x == min(x))] # valores máximos
 ## [1] -5 -5
 ```
 
+- Isso também é válido para matrizes, mas se quisermos ter o índice da linha e da coluna, precisamos usar o argumento `arr.ind = TRUE`
+
+```r
+x = matrix(1:6, nrow=2)
+x
+```
+
+```
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+```
+
+```r
+which(x == max(x)) # retorna um número único
+```
+
+```
+## [1] 6
+```
+
+```r
+which(x == max(x), arr.ind = T) # retorna um vetor de números
+```
+
+```
+##      row col
+## [1,]   2   3
+```
+
+
 - Note que, se houver valores ausentes (`NA`), a função retorna `NA` por padrão. Para excluir os valores ausentes, precisamos definir o argumento `na.rm = TRUE`:
 
 ```r
@@ -1232,21 +1263,11 @@ x_grid[argmin]
 x = 5
 if (x > 10) {
     y = 10
-    print("caso x > 10")
 } else if (x > 0) {
     y = 5
-    print("caso 10 >= x > 0")
 } else {
     y = 0
-    print("caso x >= 0")
 }
-```
-
-```
-## [1] "caso 10 >= x > 0"
-```
-
-```r
 y
 ```
 
@@ -1254,7 +1275,7 @@ y
 ## [1] 5
 ```
 
-- Essa mesma estrutura também pode ser utilizada para atribuir valor a um objeto
+- Essa mesma estrutura também pode atribuir diretamente um valor a um objeto
 
 ```r
 x = 5
@@ -1371,141 +1392,96 @@ distancia
 ```
 
 
-### Exemplo 1: Tabuada
+### Exemplo: Preenchendo matriz a partir de uma _f(x,y)_
 - É comum o uso de uma estrutura de repetição dentro de outra estrutura de repetição (repetições encaixadas).
-- Como exemplo, será criada uma matriz vazia e esta será preenchida com a tabela de tabuada
+- Como exemplo, calcularemos a função
+{{<math>}}$$ f(x,y) = 2x^2 - y^2 + 3xy, $${{</math>}}
+para cada combinação de {{<math>}}$x \in \boldsymbol{X}=\{ -5, -4, -3, ..., 3, 4, 5\}${{</math>}} e de {{<math>}}$y \in \boldsymbol{Y}=\{ 0, 2, 4, 6, 8, 10\} ${{</math>}}.
+
+Uma matriz será preenchida com os valores:
+
+{{<math>}}$$ \begin{pmatrix}
+f(-5, 0) & f(-5, 2) & \cdots & f(-5, 10) \\
+f(-4, 0) & f(-4, 2) & \cdots & f(-4, 10) \\
+\vdots & \vdots & \ddots & \vdots \\
+f(5, 0) & f(5, 2) & \cdots & f(5, 10)
+\end{pmatrix} $${{</math>}}
 
 
-```r
-tabuada = matrix(NA, 10, 10)
-tabuada
-```
-
-```
-##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [2,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [3,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [4,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [5,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [6,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [7,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [8,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-##  [9,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-## [10,]   NA   NA   NA   NA   NA   NA   NA   NA   NA    NA
-```
+No R:
 
 ```r
-# Preenchimento da matriz de tabuada
-for (linha in 1:10) {
+X = seq(-5, 5, by=1)
+Y = seq(0, 10, by=2)
+fxy = matrix(NA, nrow=length(X), ncol=length(Y)) # Criando matrix 11 x 6
+
+# Preenchimento da matriz com a f(x,y)
+for (i in 1:length(X)) {
     # Dado um valor de linha, preenche todas colunas
-    for (coluna in 1:10) {
-        tabuada[linha, coluna] = linha * coluna
+    for (j in 1:length(Y)) {
+        fxy[i, j] = 2*X[i]^2 - Y[j]^2 + 3*X[i]*Y[j]
     }
-    # Terminada todas colunas (de 1 a 10), começa novo loop na próxima linha
+    # Terminada todas colunas de uma linha, começa novo loop na próxima linha
 }
-tabuada
+fxy
 ```
 
 ```
-##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,]    1    2    3    4    5    6    7    8    9    10
-##  [2,]    2    4    6    8   10   12   14   16   18    20
-##  [3,]    3    6    9   12   15   18   21   24   27    30
-##  [4,]    4    8   12   16   20   24   28   32   36    40
-##  [5,]    5   10   15   20   25   30   35   40   45    50
-##  [6,]    6   12   18   24   30   36   42   48   54    60
-##  [7,]    7   14   21   28   35   42   49   56   63    70
-##  [8,]    8   16   24   32   40   48   56   64   72    80
-##  [9,]    9   18   27   36   45   54   63   72   81    90
-## [10,]   10   20   30   40   50   60   70   80   90   100
+##       [,1] [,2] [,3] [,4] [,5] [,6]
+##  [1,]   50   16  -26  -76 -134 -200
+##  [2,]   32    4  -32  -76 -128 -188
+##  [3,]   18   -4  -34  -72 -118 -172
+##  [4,]    8   -8  -32  -64 -104 -152
+##  [5,]    2   -8  -26  -52  -86 -128
+##  [6,]    0   -4  -16  -36  -64 -100
+##  [7,]    2    4   -2  -16  -38  -68
+##  [8,]    8   16   16    8   -8  -32
+##  [9,]   18   32   38   36   26    8
+## [10,]   32   52   64   68   64   52
+## [11,]   50   76   94  104  106  100
 ```
 
-### Exemplo 2: Otimização de função bivariada
-- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja,
-    $$ \text{arg} \min_{x, z} (x^2 + 4z^2 - 4) $$
-- Primeiro, vamos criar vetores de possíveis valores de `\(x\)` e `\(z\)`.
 
-```r
-x_grid = seq(-5, 5, length=11)
-z_grid = seq(-6, 6, length=11)
-```
-- Agora, vamos criar uma matriz em que cada linha representa um valor de {{<math>}}$x${{</math>}} e cada coluna representa um valor de {{<math>}}$z${{</math>}}:
+<!-- ### Exemplo 2: Otimização de função bivariada -->
+<!-- - Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja, -->
+<!--     $$ \text{arg} \min_{x, z} (x^2 + 4z^2 - 4) $$ -->
+<!-- - Primeiro, vamos criar vetores de possíveis valores de `\(x\)` e `\(z\)`. -->
+<!-- ```{r} -->
+<!-- x_grid = seq(-5, 5, length=11) -->
+<!-- z_grid = seq(-6, 6, length=11) -->
+<!-- ``` -->
+<!-- - Agora, vamos criar uma matriz em que cada linha representa um valor de {{<math>}}$x${{</math>}} e cada coluna representa um valor de {{<math>}}$z${{</math>}}: -->
+<!-- ```{r} -->
+<!-- # Criando matriz para preencher -->
+<!-- fxz = matrix(NA, length(x_grid), length(z_grid)) -->
 
-```r
-# Criando matriz para preencher
-fxz = matrix(NA, length(x_grid), length(z_grid))
+<!-- # Nomeando linhas e colunas -->
+<!-- rownames(fxz) = x_grid -->
+<!-- colnames(fxz) = z_grid -->
 
-# Nomeando linhas e colunas
-rownames(fxz) = x_grid
-colnames(fxz) = z_grid
+<!-- fxz -->
+<!-- ``` -->
+<!-- - Agora, vamos preencher cada possível combinação usando a estrutura de repetição dentro de outra repetição. -->
 
-fxz
-```
+<!-- ```{r} -->
+<!-- # Preenchimento da matriz fxz -->
+<!-- for (lin_x in 1:length(x_grid)) { -->
+<!--     for (lin_z in 1:length(z_grid)) { -->
+<!--         fxz[lin_x, lin_z] = x_grid[lin_x]^2 + 4*z_grid[lin_z]^2 -4 -->
+<!--     } -->
+<!-- } -->
+<!-- fxz -->
+<!-- ``` -->
+<!-- - Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`: -->
+<!-- ```{r} -->
+<!-- argmin = which(fxz==min(fxz), arr.ind = TRUE) -->
+<!-- argmin -->
 
-```
-##    -6 -4.8 -3.6 -2.4 -1.2  0 1.2 2.4 3.6 4.8  6
-## -5 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## -4 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## -3 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## -2 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## -1 NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## 0  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## 1  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## 2  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## 3  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## 4  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-## 5  NA   NA   NA   NA   NA NA  NA  NA  NA  NA NA
-```
-- Agora, vamos preencher cada possível combinação usando a estrutura de repetição dentro de outra repetição.
+<!-- argmin_x = x_grid[argmin[1]] # aplicando índice de x em x_grid -->
+<!-- argmin_z = z_grid[argmin[2]] # aplicando índice de z em z_grid -->
 
-
-```r
-# Preenchimento da matriz fxz
-for (lin_x in 1:length(x_grid)) {
-    for (lin_z in 1:length(z_grid)) {
-        fxz[lin_x, lin_z] = x_grid[lin_x]^2 + 4*z_grid[lin_z]^2 -4
-    }
-}
-fxz
-```
-
-```
-##     -6   -4.8  -3.6  -2.4  -1.2  0   1.2   2.4   3.6    4.8   6
-## -5 165 113.16 72.84 44.04 26.76 21 26.76 44.04 72.84 113.16 165
-## -4 156 104.16 63.84 35.04 17.76 12 17.76 35.04 63.84 104.16 156
-## -3 149  97.16 56.84 28.04 10.76  5 10.76 28.04 56.84  97.16 149
-## -2 144  92.16 51.84 23.04  5.76  0  5.76 23.04 51.84  92.16 144
-## -1 141  89.16 48.84 20.04  2.76 -3  2.76 20.04 48.84  89.16 141
-## 0  140  88.16 47.84 19.04  1.76 -4  1.76 19.04 47.84  88.16 140
-## 1  141  89.16 48.84 20.04  2.76 -3  2.76 20.04 48.84  89.16 141
-## 2  144  92.16 51.84 23.04  5.76  0  5.76 23.04 51.84  92.16 144
-## 3  149  97.16 56.84 28.04 10.76  5 10.76 28.04 56.84  97.16 149
-## 4  156 104.16 63.84 35.04 17.76 12 17.76 35.04 63.84 104.16 156
-## 5  165 113.16 72.84 44.04 26.76 21 26.76 44.04 72.84 113.16 165
-```
-- Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`:
-
-```r
-argmin = which(fxz==min(fxz), arr.ind = TRUE)
-argmin
-```
-
-```
-##   row col
-## 0   6   6
-```
-
-```r
-argmin_x = x_grid[argmin[1]] # aplicando índice de x em x_grid
-argmin_z = z_grid[argmin[2]] # aplicando índice de z em z_grid
-
-paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a função f(x,z).")
-```
-
-```
-## [1] "O par (x = 0, z = 0) minimizam a função f(x,z)."
-```
+<!-- paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a função f(x,z).") -->
+<!-- ``` -->
 
 
 

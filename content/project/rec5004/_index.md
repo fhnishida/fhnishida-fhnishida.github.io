@@ -31,7 +31,15 @@ Feel free to contact us if you have any question:
 </br>
 
 
+## Listas Práticas
+- [Lista Prática 1](Lista-Pratica-1.pdf)  
+
+
+
 ## Gravações das Monitorias
+
+- **Monitoria 3**: Programação em R - Parte 2 | [Script](monitoria03.R)
+[<img src="https://img.youtube.com/vi/b5FhLOj9Sn4/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=b5FhLOj9Sn4)  
 
 - **Monitoria 2**: Programação em R - Parte 1 | [Script](monitoria02.R)
 [<img src="https://img.youtube.com/vi/rUTKEOu9a-M/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=rUTKEOu9a-M)  
