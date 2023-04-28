@@ -39,6 +39,7 @@ Feel free to contact us if you have any question:
 ## Gravações das Monitorias
 
 - **Monitoria 3**: Programação em R - Parte 2 | [Script](monitoria03.R)
+  - O áudio ficou meio ruim em algumas partes. Caso não estejam entendendo, por favor, me avisem.
 [<img src="https://img.youtube.com/vi/b5FhLOj9Sn4/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=b5FhLOj9Sn4)  
 
 - **Monitoria 2**: Programação em R - Parte 1 | [Script](monitoria02.R)
