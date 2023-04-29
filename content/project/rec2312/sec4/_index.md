@@ -641,7 +641,7 @@ O modelo a ser estimado é
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQE}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
 
 
-### Estimação MQE via `plm()`
+### Estimação via `plm()`
 Para ilustrar as estimações MQO dos estimadores vistos anteriormente, usaremos a base de dados `TobinQ` do pacote `pder`, que conta com dados de 188 firmas por 35 anos (6580 observações).
 
 ```r
@@ -697,33 +697,32 @@ Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
 Q.ols = lm(ikn ~ qn, TobinQ)
 
 # Comparando ambos outputs
-stargazer::stargazer(Q.pooling, Q.ols, type="text")
+stargazer::stargazer(Q.pooling, Q.ols, type="text", omit.stat="f")
 ```
 
 ```
 ## 
-## =======================================================
-##                                Dependent variable:     
-##                            ----------------------------
-##                                        ikn             
-##                              panel           OLS       
-##                              linear                    
-##                               (1)            (2)       
-## -------------------------------------------------------
-## qn                          0.004***      0.004***     
-##                             (0.0002)      (0.0002)     
-##                                                        
-## Constant                    0.158***      0.158***     
-##                             (0.001)        (0.001)     
-##                                                        
-## -------------------------------------------------------
-## Observations                 6,580          6,580      
-## R2                           0.111          0.111      
-## Adjusted R2                  0.111          0.111      
-## Residual Std. Error                   0.086 (df = 6578)
-## F Statistic (df = 1; 6578) 824.663***    824.663***    
-## =======================================================
-## Note:                       *p<0.1; **p<0.05; ***p<0.01
+## ================================================
+##                         Dependent variable:     
+##                     ----------------------------
+##                                 ikn             
+##                       panel           OLS       
+##                       linear                    
+##                        (1)            (2)       
+## ------------------------------------------------
+## qn                   0.004***      0.004***     
+##                      (0.0002)      (0.0002)     
+##                                                 
+## Constant             0.158***      0.158***     
+##                      (0.001)        (0.001)     
+##                                                 
+## ------------------------------------------------
+## Observations          6,580          6,580      
+## R2                    0.111          0.111      
+## Adjusted R2           0.111          0.111      
+## Residual Std. Error            0.086 (df = 6578)
+## ================================================
+## Note:                *p<0.1; **p<0.05; ***p<0.01
 ```
 
 
@@ -742,7 +741,7 @@ summary(Q.pooling, vcov=vcovBK)$coef
 
 
 
-### Estimação MQE Analítica
+### Estimação Analítica
 A estimação analítica do MQE é equivalente ao MQO vista anteriormente, mas no contexto de dados em painel. As principais diferenças são: o número de graus de liberdade é {{<math>}}$NT - K - 1${{</math>}} (pois possui {{<math>}}$NT${{</math>}} observações) e a modelagem da matriz de variâncias-covariâncias dos erros, {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, para o contexto de painel.
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
@@ -1023,7 +1022,7 @@ summary(Q.pooling, vcov=vcovBK)$coef # com matriz cov erros ajustada
 
 
 
-### Estimação MQGF via `plm()`
+### Estimação via `plm()`
 - Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via MQGF
 - em `random.method` podemos escolher o método de cálculo dos parâmetros de erro:
     1. `"walhus"` para Wallace e Hussain (1969)
@@ -1047,37 +1046,36 @@ Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
 
 # Resumindo 5 estimações em única tabela
 stargazer::stargazer(Q.walhus, Q.amemiya, Q.ht, Q.swar, Q.nerlove,
-                     digits=5, type="text")
+                     digits=5, type="text", omit.stat="f")
 ```
 
 ```
 ## 
-## =============================================================================
-##                                    Dependent variable:                       
-##              ----------------------------------------------------------------
-##                                            ikn                               
-##                  (1)          (2)          (3)          (4)          (5)     
-## -----------------------------------------------------------------------------
-## qn            0.00386***   0.00386***   0.00386***   0.00386***   0.00386*** 
-##               (0.00017)    (0.00017)    (0.00017)    (0.00017)    (0.00017)  
-##                                                                              
-## Constant      0.15933***   0.15933***   0.15933***   0.15933***   0.15934*** 
-##               (0.00341)    (0.00344)    (0.00344)    (0.00342)    (0.00361)  
-##                                                                              
-## -----------------------------------------------------------------------------
-## Observations    6,580        6,580        6,580        6,580        6,580    
-## R2             0.07418      0.07412      0.07412      0.07415      0.07376   
-## Adjusted R2    0.07404      0.07398      0.07398      0.07401      0.07362   
-## F Statistic  527.04530*** 526.62180*** 526.62180*** 526.85440*** 523.83190***
-## =============================================================================
-## Note:                                             *p<0.1; **p<0.05; ***p<0.01
+## ===================================================================
+##                               Dependent variable:                  
+##              ------------------------------------------------------
+##                                       ikn                          
+##                 (1)        (2)        (3)        (4)        (5)    
+## -------------------------------------------------------------------
+## qn           0.00386*** 0.00386*** 0.00386*** 0.00386*** 0.00386***
+##              (0.00017)  (0.00017)  (0.00017)  (0.00017)  (0.00017) 
+##                                                                    
+## Constant     0.15933*** 0.15933*** 0.15933*** 0.15933*** 0.15934***
+##              (0.00341)  (0.00344)  (0.00344)  (0.00342)  (0.00361) 
+##                                                                    
+## -------------------------------------------------------------------
+## Observations   6,580      6,580      6,580      6,580      6,580   
+## R2            0.07418    0.07412    0.07412    0.07415    0.07376  
+## Adjusted R2   0.07404    0.07398    0.07398    0.07401    0.07362  
+## ===================================================================
+## Note:                                   *p<0.1; **p<0.05; ***p<0.01
 ```
 
 Neste caso específico, os resultados são praticamente idênticos.
 
 
 
-### Estimação MQGF Analítica
+### Estimação Analítica
 - Aqui, faremos a estimação analítica do MQGF usando o método de Wallace e Hussain (1969).
 - Primeiro, precisamos encontrar {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}${{</math>}} e {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}, para estimar {{<math>}}$\hat{\sigma}^2_{u}${{</math>}}, {{<math>}}$\hat{\sigma}^2_{v}${{</math>}} e {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}
 - Depois, fazemos a estimação de {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} e de {{<math>}}$V_{\hat{\boldsymbol{\beta}}_{\tiny{MQGF}}}${{</math>}}
@@ -2401,13 +2399,13 @@ data("TobinQ", package="pder")
 # Criando o vetor y
 y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz/vetor de covariadas X
+# Criando a matriz/vetor de covariadas variantes no tempo Xt
 Xt = as.matrix( TobinQ[, "qn"] ) # não junta com coluna de 1's
 
 # Pegando valores N, T e K
 N = length( unique(TobinQ$cusip) )
 T = length( unique(TobinQ$year) )
-K = ncol(X) # não subtrai 1
+K = ncol(Xt) # não subtrai 1
 ```
 
 
@@ -2485,8 +2483,8 @@ Vghat_W
 ```
 
 ```
-##              [,1]
-## [1,] 2.981086e-08
+##             [,1]
+## [1,] 2.98062e-08
 ```
 
 
@@ -2500,7 +2498,7 @@ se_ghat_W
 ```
 
 ```
-## [1] 0.0001726582
+## [1] 0.0001726447
 ```
 
 j) Estatística _t_
@@ -2517,7 +2515,7 @@ t_ghat_W
 
 ```
 ##          [,1]
-## [1,] 21.96216
+## [1,] 21.96388
 ```
 
 k) P-valor
@@ -2533,7 +2531,7 @@ p_ghat_W
 
 ```
 ##               [,1]
-## [1,] 3.156618e-103
+## [1,] 3.043589e-103
 ```
 
 l) Tabela-resumo
@@ -2544,7 +2542,7 @@ cbind(ghat_W, se_ghat_W, t_ghat_W, p_ghat_W) # resultado Within
 
 ```
 ##                     se_ghat_W                       
-## [1,] 0.003791948 0.0001726582 21.96216 3.156618e-103
+## [1,] 0.003791948 0.0001726447 21.96388 3.043589e-103
 ```
 
 ```r
@@ -2626,7 +2624,7 @@ Vghat_OLS
 
 ```
 ##              [,1]
-## [1,] 2.896327e-08
+## [1,] 2.895887e-08
 ```
 
 
@@ -2640,7 +2638,7 @@ se_ghat_OLS
 ```
 
 ```
-## [1] 0.000170186
+## [1] 0.000170173
 ```
 
 i') Estatística _t_
@@ -2657,7 +2655,7 @@ t_ghat_OLS
 
 ```
 ##         [,1]
-## [1,] 22.2812
+## [1,] 22.2829
 ```
 
 j') P-valor
@@ -2672,8 +2670,8 @@ p_ghat_OLS
 ```
 
 ```
-##             [,1]
-## [1,] 4.3711e-106
+##               [,1]
+## [1,] 4.214597e-106
 ```
 
 k') Tabela-resumo
@@ -2683,8 +2681,8 @@ cbind(ghat_OLS, se_ghat_OLS, t_ghat_OLS, p_ghat_OLS) # resultado Within via MQO
 ```
 
 ```
-##                  se_ghat_OLS                    
-## [1,] 0.003791948 0.000170186 22.2812 4.3711e-106
+##                  se_ghat_OLS                      
+## [1,] 0.003791948 0.000170173 22.2829 4.214597e-106
 ```
 
 ```r
@@ -2698,98 +2696,145 @@ summary(Q.within)$coef # resultado Within via plm()
 
 
 
-
-
-### Efeitos Fixos da Estimação _Within_
-- Para o estimador _within_, podemos usar a função `fixef()` para computar os efeitos individuais. É possível calcular 3 tipos por meio do argumento `type`:
-    - `level`: valor padrão que retorna os interceptos individuais ({{<math>}}$\hat{\alpha} + \hat{u}_{i}${{</math>}})
-    - `dfirst`: em desvios do 1º indivíduo ({{<math>}}$\hat{\alpha}${{</math>}} é o intercepto do 1º indivíduo)
-    - `dmean`: em desvios da média de efeitos individuais ({{<math>}}$\hat{\alpha}${{</math>}} é a média)
+### Efeitos Fixos do _Within_
+- Para o estimador _within_, podemos usar a função `fixef()` para computar os efeitos individuais. É possível visualizar os efeitos fixos de três formas por meio do argumento `type`:
+    - `level`: valor padrão que retorna os interceptos individuais
+    - `dfirst`: em desvios do 1º indivíduo
+    - `dmean`: em desvios da média de efeitos individuais
 
 
 ```r
 # 6 primeiros efeitos individuais de cada tipo
-for (t in c("level", "dfirst", "dmean")) {
-    print( head( fixef(Q.within, type=t) ) )
-}
+head( fixef(Q.within, type="level") ) # 6 primeiros valores em nível
 ```
 
 ```
 ##      2824      6284      9158     13716     17372     19411 
-## 0.1452896 0.1280547 0.2580836 0.1100110 0.1267251 0.1694891 
+## 0.1452896 0.1280547 0.2580836 0.1100110 0.1267251 0.1694891
+```
+
+```r
+head( fixef(Q.within, type="dfirst") ) # 6 primeiros valores em relação ao 1º indiv.
+```
+
+```
 ##        6284        9158       13716       17372       19411       19519 
-## -0.01723488  0.11279400 -0.03527859 -0.01856442  0.02419952 -0.01038237 
+## -0.01723488  0.11279400 -0.03527859 -0.01856442  0.02419952 -0.01038237
+```
+
+```r
+head( fixef(Q.within, type="dmean") ) # 6 primeiros valores em desvios da média
+```
+
+```
 ##         2824         6284         9158        13716        17372        19411 
 ## -0.014213401 -0.031448285  0.098580596 -0.049491991 -0.032777823  0.009986116
 ```
-- Note que, como o `dfirst` retorna valores em relação ao 1º indivíduo, este não aparece no output do `fixef()`, diferente dos demais.
-- No caso linear, o estimador _within_ é equivalente à estimação por MQO com inclusão de dummies para cada indivíduo:
+- Note que, como o `dfirst` retorna valores em relação ao 1º indivíduo e, portanto, este não aparece no output do `fixef()`.
+- No caso linear, o estimador _within_ é equivalente à estimação por MQO com inclusão de dummies para cada indivíduo (efeitos fixos dos indivíduos):
 
 ```r
 # Estimando MQO com dummies individuais - factor() tranforma cusip em var. categ.
-Q.dummies = lm(ikn ~ qn + factor(cusip), pTobinQ)
+Q.dummies1 = lm(ikn ~ 0 + qn + factor(cusip), TobinQ)
 
-# Comparando as estimativas de qn
-cbind(Q.within$coef, Q.dummies$coef["qn"])
+# Comparando as estimativas de qn e efeitos individuais
+cbind(
+  Q.dummies1$coef[1:7], # coef MQO incluindo dummies
+  c(Q.within$coef, fixef(Q.within, type="level")[1:6]) # coef within + 6 efeitos fixos
+)
 ```
 
 ```
-##           [,1]        [,2]
-## qn 0.003791948 0.003791948
+##                           [,1]        [,2]
+## qn                 0.003791948 0.003791948
+## factor(cusip)2824  0.145289553 0.145289553
+## factor(cusip)6284  0.128054670 0.128054670
+## factor(cusip)9158  0.258083550 0.258083550
+## factor(cusip)13716 0.110010964 0.110010964
+## factor(cusip)17372 0.126725132 0.126725132
+## factor(cusip)19411 0.169489071 0.169489071
 ```
+
+- Se estimássemos o MQO com efeitos fixos usando um intercepto, o intercepto seria o valor do efeito fixo do 1º indivíduo e os valores dos efeitos fixos dos demais indivíduos seriam em relação a este.
+  - A dummy do 1º indivíduo seria retirado para não haver multicolinearidade perfeita
+
 
 ```r
-# Comparando efeitos fixos (dfirst) e dummies
-cbind(head(fixef(Q.within, type="dfirst")),
-      Q.dummies$coef[3:8])
+# Estimando MQO com dummies individuais - factor() tranforma cusip em var. categ.
+Q.dummies2 = lm(ikn ~ qn + factor(cusip), TobinQ)
+
+# Comparando as estimativas de qn e efeitos individuais
+cbind(
+  Q.dummies2$coef[1:7], # coef MQO incluindo dummies
+  c(NA, Q.within$coef, fixef(Q.within, type="dfirst")[1:5]) # coef within + 6 efeitos fixos
+)
 ```
 
 ```
-##              [,1]        [,2]
-## 6284  -0.01723488 -0.01723488
-## 9158   0.11279400  0.11279400
-## 13716 -0.03527859 -0.03527859
-## 17372 -0.01856442 -0.01856442
-## 19411  0.02419952  0.02419952
-## 19519 -0.01038237 -0.01038237
+##                            [,1]         [,2]
+## (Intercept)         0.145289553           NA
+## qn                  0.003791948  0.003791948
+## factor(cusip)6284  -0.017234884 -0.017234884
+## factor(cusip)9158   0.112793997  0.112793997
+## factor(cusip)13716 -0.035278589 -0.035278589
+## factor(cusip)17372 -0.018564422 -0.018564422
+## factor(cusip)19411  0.024199517  0.024199517
 ```
-
 
 
 </br>
 
 ## Comparativo dos Estimadores
 
-
 ### MQGF: junção MQE e _Within_
 - Combinação de MQE (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
-- Pode-se computar mais eficientemente por MQO, que necessita transformação das variáveis usando a matriz {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, tal que {{<math>}}$\boldsymbol{\Sigma}^{-0.5\prime}\boldsymbol{\Sigma}^{-0.5} = \boldsymbol{\Sigma}^{-1}${{</math>}}.
-- Denotando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}, o modelo com variáveis transformadas é dado por
-{{<math>}}\begin{align*}
-    \hat{\boldsymbol{\beta}} &= (Z' \boldsymbol{\Sigma}^{-1} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-1} y) \tag{2.27} \\
-    &= (Z' \boldsymbol{\Sigma}^{-0.5\prime} \boldsymbol{\Sigma}^{-0.5} Z)^{-1} (Z' \boldsymbol{\Sigma}^{-0.5}\boldsymbol{\Sigma}^{-0.5\prime} y) \\
-    &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}} \tilde{\boldsymbol{y}}
-\end{align*}{{</math>}}
+- Lembre-se que a Matriz de Variâncias-Covariâncias dos Erros é dada por
+{{<math>}}$$ \hat{\boldsymbol{\Sigma}}^p = (\hat{\sigma}^2_v)^p \boldsymbol{W} + (\hat{\sigma}^2_v + T \hat{\sigma}^2_u)^p \boldsymbol{B}, \tag{2.29} $${{</math>}}
+em que {{<math>}}$p${{</math>}} é um escalar.
 
-Usando (2.29), {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
+- Usando {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
 {{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = \frac{1}{\sigma_v + T \sigma_u} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} $${{</math>}}
 
-Essa transformação evidencia uma combinação linear entre as matrizes de transformação _between_ e _within_ ponderadas pelo inverso dos desvios padrão dos 2 componentes de erro ({{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u = (\sigma^2_v + \sigma^2_\varepsilon)/T${{</math>}})
+- Anteriormente, transformamos MQGF usando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}:
 
-Pré-multiplicando as variáveis por {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} (ao invés de {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}} para simplificação e sem perda de generalidade), as covariadas transformadas para o indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}} são dadas por:
-{{<math>}}$$ \tilde{z}_{it}\ =\ \frac{\sigma_v}{\sigma_v + T \sigma_u} \bar{z}_{i\cdot} + (z_{it} - \bar{z}_{i\cdot})\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_v + T \sigma_u} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot} $${{</math>}}
-em que
-{{<math>}}$$ \theta\ \equiv\ 1 - \frac{\sigma_v}{\sigma_v + T \sigma_u}\ \equiv\ 1 - \phi $${{</math>}}
+{{<math>}}\begin{align}
+    \hat{\boldsymbol{\beta}} &= (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} \\
+    &= (\boldsymbol{X}' \boldsymbol{\Sigma}^{-0.5\prime} \boldsymbol{\Sigma}^{-0.5} \boldsymbol{X})^{-1} (\boldsymbol{X}' \boldsymbol{\Sigma}^{-0.5}\boldsymbol{\Sigma}^{-0.5\prime} \boldsymbol{y}) \\
+    &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}} \tilde{\boldsymbol{y}}
+\end{align}{{</math>}}
+
+Sem perda de generalidade, podemos pré-multiplicar o modelo por {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} (ao invés de {{<math>}}$\boldsymbol{\Sigma}^{-0.5})${{</math>}}, logo:
+
+{{<math>}}\begin{align} \boldsymbol{\Sigma}^{-0.5} &= \sqrt{\frac{1}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} \\
+&= \frac{1}{\sigma_v} \left[ \sigma_v \sqrt{\frac{1}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} + \boldsymbol{W} \right] \\
+&= \frac{1}{\sigma_v} \left[ \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} + \boldsymbol{W} \right] \\
+&= \frac{1}{\sigma_v} \left[ \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} + (\boldsymbol{I} - \boldsymbol{B}) \right] \\
+&= \frac{1}{\sigma_v} \left[ \boldsymbol{I} + \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} - \boldsymbol{B} \right] \\
+&=\frac{1}{\sigma_v} \left[ \boldsymbol{I} - \left( 1 - \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \right) \boldsymbol{B} \right] \\
+\end{align}{{</math>}}
+
+
+
+
+Logo, quando pré-multiplicamos as variáveis por {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, para uma variável explicativa {{<math>}}$k${{</math>}} do indivíduo {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}}, segue que:
+{{<math>}}$$ \tilde{x}^k_{it}\ =\ \frac{1}{\sigma_v} \left[ x^k_{it} + \left(1 - \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \right) \bar{x}^k_{i}\right]\ \equiv\ \frac{1}{\sigma_v} \left[ x_{it} - \theta \bar{x}^k_{i}\right], $${{</math>}}
+em que {{<math>}}$$\theta \equiv \left( 1 - \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \right)$${{</math>}}
 
     
 Note que, quando:
 
-- {{<math>}}$\theta \rightarrow 1${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} dominam {{<math>}}$\implies${{</math>}} MQGF se aproxima do estimador _within_; e
-- {{<math>}}$\theta \rightarrow 0${{</math>}}, os efeitos individuais {{<math>}}$\sigma_u${{</math>}} somem {{<math>}}$\implies${{</math>}} MQGF se aproxima do pooled MQO
+- {{<math>}}$\theta \rightarrow 1${{</math>}}
+  - os efeitos individuais dominam {{<math>}}$\sigma_u \rightarrow \infty${{</math>}}
+  - variável transformada se aproxima da em desvios: {{<math>}}$x^k_{it} - \bar{x}^k_{i}${{</math>}}
+  - MQGF se aproxima do estimador _within_
+- {{<math>}}$\theta \rightarrow 0${{</math>}}
+  - os efeitos individuais somem: {{<math>}}$\sigma_u \rightarrow 0${{</math>}}
+  - variável transformada se aproxima da não transformada: {{<math>}}$x^k_{it}${{</math>}}
+  - MQGF se aproxima do MQE 
 
 
 
-### Exemplo 1 - Retornando...
+### Exemplo 1
 
 
 ```r
@@ -2799,11 +2844,6 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
 # Estimações MQGF
 Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
-Q.amemiya = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "amemiya")
-Q.ht = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "ht")
-Q.swar = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "swar")
-Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
-
 summary(Q.walhus) # output da estimação MQGF por Wallace e Hussain (1969)
 ```
 
@@ -2842,63 +2882,6 @@ summary(Q.walhus) # output da estimação MQGF por Wallace e Hussain (1969)
 Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa MQGF é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de períodos ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
 
 
-{{<math>}}$\theta${{</math>}}'s:
-
-
-```r
-# Podemos visualizar o theta usando ercomp()$theta
-ercomp(Q.walhus)$theta
-```
-
-```
-##        id 
-## 0.7342249
-```
-
-```r
-# Criaremos uma lista com todos objetos de estimação MQGF
-Q.models = list(walhus = Q.walhus, amemiya = Q.amemiya, ht = Q.ht,
-                swar = Q.swar, nerlove = Q.nerlove)
-
-# Aplicaremos sapply() com a lista criada e a função ercomp()
-sapply(Q.models, function(model) ercomp(model)$theta)
-```
-
-```
-##  walhus.id amemiya.id      ht.id    swar.id nerlove.id 
-##  0.7342249  0.7361186  0.7361186  0.7350771  0.7489177
-```
-
-
-Observe que poderíamos ter obtido informações sobre as variâncias de covariadas por meio de `summary()` sobre uma variável no formato `pdata.frame`:
-
-```r
-pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year")) # transf. em pdata.frame
-summary(pTobinQ$qn) # resumo sobre variável qn
-```
-
-```
-## total sum of squares: 314349.9 
-##         id       time 
-## 0.43080609 0.09393499 
-## 
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -68.8663  -0.8254   0.3976   2.5053   2.9961  89.8933
-```
-
-Também é possível verificar o mesmo para a variância do erro na estimação em MQGF:
-
-```r
-ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
-```
-
-```
-##                    var  std.dev share
-## idiosyncratic 0.005333 0.073028 0.725
-## individual    0.002019 0.044930 0.275
-## theta: 0.7351
-```
-
 
 ### Exemplo 2
 - Seção 2.4.4 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
@@ -2909,84 +2892,127 @@ ercomp(ikn ~ qn, TobinQ) # padrão method = "swar"
 data("ForeignTrade", package = "pder")
 FT = pdata.frame(ForeignTrade, index=c("country", "year"))
 
-# Variâncias 
-ercomp(imports ~ gnp, FT) # variância do erro na estimação MQGF
+# Estimações MQGF
+FT.between = plm(imports ~ gnp, FT, model = "between")
+FT.pooled = plm(imports ~ gnp, FT, model = "pooling")
+FT.fgls = plm(imports ~ gnp, FT, model = "random", random.method = "walhus")
+FT.within = plm(imports ~ gnp, FT, model = "within")
+
+# Resumindo 4 estimações em única tabela
+stargazer::stargazer(FT.between, FT.pooled, FT.fgls, FT.within,
+                     digits=3, type="text", omit.stat="f")
 ```
 
 ```
-##                   var std.dev share
-## idiosyncratic 0.08634 0.29383 0.074
-## individual    1.07785 1.03820 0.926
-## theta: 0.9423
+## 
+## ===================================================
+##                       Dependent variable:          
+##              --------------------------------------
+##                             imports                
+##                 (1)       (2)       (3)      (4)   
+## ---------------------------------------------------
+## gnp            0.049   0.064***  0.675***  0.902***
+##               (0.080)   (0.017)   (0.033)  (0.035) 
+##                                                    
+## Constant     -6.368*** -6.321*** -4.403***         
+##               (0.313)   (0.066)   (0.183)          
+##                                                    
+## ---------------------------------------------------
+## Observations    31        744       744      744   
+## R2             0.013     0.019     0.358    0.488  
+## Adjusted R2   -0.021     0.018     0.357    0.466  
+## ===================================================
+## Note:                   *p<0.1; **p<0.05; ***p<0.01
 ```
-- Variância do erro da estimação MQGF é dada por 93\% de variação inter-indivíduos
-- O estimador MQGF remove grande parte da variação inter-indivíduos, pois subtrai, da covariada, 94\% da média individual:
-
-{{<math>}}$$ \tilde{z}_{it}\ =\ z_{it} + \left(1 - \frac{\sigma_v}{\sigma_v + T \sigma_u} \right) \bar{z}_{i\cdot}\ \equiv\ z_{it} - \theta \bar{z}_{i\cdot}\ =\ z_{it} - 0,94 \bar{z}_{i\cdot} $${{</math>}}
-
 
 ```r
-# Estimações
-models = c("within", "random", "pooling", "between")
-sapply(models, function(x) round(
-    coef(summary(plm(imports ~ gnp, FT, model=x)))["gnp",], 4))
+# Resumo do MQGF
+summary(FT.fgls)
 ```
 
 ```
-##             within  random pooling between
-## Estimate    0.9024  0.7682  0.0637  0.0487
-## Std. Error  0.0346  0.0338  0.0168  0.0802
-## t-value    26.0616 22.7595  3.7789  0.6076
-## Pr(>|t|)    0.0000  0.0000  0.0002  0.5482
+## Oneway (individual) effect Random Effect Model 
+##    (Wallace-Hussain's transformation)
+## 
+## Call:
+## plm(formula = imports ~ gnp, data = FT, model = "random", random.method = "walhus")
+## 
+## Balanced Panel: n = 31, T = 24, N = 744
+## 
+## Effects:
+##                  var std.dev share
+## idiosyncratic 0.1573  0.3966 0.135
+## individual    1.0063  1.0032 0.865
+## theta: 0.9196
+## 
+## Residuals:
+##       Min.    1st Qu.     Median    3rd Qu.       Max. 
+## -1.4043348 -0.1920097 -0.0017737  0.2230540  0.9444870 
+## 
+## Coefficients:
+##              Estimate Std. Error z-value  Pr(>|z|)    
+## (Intercept) -4.403331   0.182589 -24.116 < 2.2e-16 ***
+## gnp          0.675111   0.033209  20.329 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Total Sum of Squares:    125.04
+## Residual Sum of Squares: 80.312
+## R-Squared:      0.35773
+## Adj. R-Squared: 0.35686
+## Chisq: 413.271 on 1 DF, p-value: < 2.22e-16
 ```
+- O estimador MQGF remove grande parte da variação inter-indivíduos, pois subtrai, da covariada, 94\% da média individual:
+{{<math>}}$$ \tilde{x}_{it}\ =\ x_{it} - \theta \bar{x}_{i}\ =\ x_{it} - 0,94 \bar{x}_{i} $${{</math>}}
+
 
 <center><img src="../example_panel-1.png"></center>
 
 - MQGF e _within_ são bastante parecidos
-- MQO, que considera variação inter-indivíduos, é parecido com _between_
+- MQE é parecido com _between_, pois maior peso fica na variabilidade entre indivíduos
 
 
 </br>
 
 ## Estimador MV
 - Seção 3.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Uma alternativa aos estimadores de MQGF é o de máxima verossimilhança (ML).
+- Uma alternativa aos estimadores de MQGF é o de máxima verossimilhança (MV).
 - Assume-se que a distribuição dos dois componentes de erro são normais:
 {{<math>}}$$ u | X \sim N(0, \sigma^2_u) \quad \text{ e } \quad v | u, X \sim N(0, \sigma^2_v) $${{</math>}}
 
-- O modelo a ser estimado é o
-{{<math>}}$$ y_{it} = \alpha \boldsymbol{\iota} + \beta' x_i + u_i + v_{it} = \boldsymbol{\gamma}' z_i + u_i + v_{it} $${{</math>}}
-
 - Ao invés de estimar {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}} para depois calcular {{<math>}}$\boldsymbol{\beta}${{</math>}}, ambos são estimados simultaneamente.
 
-- Denotando 
-{{<math>}}$\phi = \frac{\sigma_v}{\sigma_{l}},${{</math>}}
+- Denote 
+{{<math>}}$\phi \equiv \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T\sigma^2_u}},${{</math>}}
 a função de log-verossimilhança para um painel balanceado é:
 
-{{<math>}}$$ \ln{L} = -\frac{NT}{2} \ln{2\pi} - \frac{NT}{2}\ln{\sigma^2_v} + \frac{N}{2} \ln{\phi^2} - \frac{1}{2\sigma^2_v} \left( \varepsilon' \boldsymbol{W} \varepsilon + \phi^2 \varepsilon' \boldsymbol{B} \varepsilon \right) $${{</math>}}
 
-Denotando 
+<!-- {{<math>}}$$ \ln{L} = -\frac{NT}{2} \ln{2\pi} - \frac{NT}{2}\ln{\sigma^2_v} + \frac{N}{2} \ln{\phi^2} - \frac{1}{2\sigma^2_v} \left( \varepsilon' \boldsymbol{W} \varepsilon + \phi^2 \varepsilon' \boldsymbol{B} \varepsilon \right) $${{</math>}} -->
+
+
+e considere a transformação de variável pela pré-multiplicação por {{<math>}}$(\boldsymbol{I} - \phi \boldsymbol{B})${{</math>}}:
 
 {{<math>}}$$\tilde{\boldsymbol{X}}\ \equiv\ (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{X}\ =\ \boldsymbol{X} - \phi \boldsymbol{B} \boldsymbol{X}$${{</math>}}
-e resolvendo as CPO's da log-verossimilhança, segue que:
 
-{{<math>}}\begin{align*}
+Logo,
+
+{{<math>}}\begin{align}
     \hat{\boldsymbol{\beta}} &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}'\tilde{\boldsymbol{y}} \tag{3.12} \\
     \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}} + \hat{\phi}^2 \hat{\boldsymbol{\varepsilon}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}}{NT} \tag{3.13} \\
     \hat{\phi}^2 &=\frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{(T-1) \hat{\boldsymbol{\varepsilon}}'\boldsymbol{B}\hat{\boldsymbol{\varepsilon}}} \tag{3.14}
-\end{align*}{{</math>}}
+\end{align}{{</math>}}
 
 A estimação pode ser feita iterativamente por FIML (Full Information Maximum Likelihood):
 
 
-1. Chute inicial de {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} (por exemplo, estimativa _within_)
+1. Chute inicial de {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
 2. Calcular {{<math>}}$\hat{\phi}^2${{</math>}} usando (3.14)
 3. Calcular {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} usando (3.12) 
 4. Verificar convergência: se não convergiu, volta para o passo 2, usando o {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} calculado no passo 3.
 5. Calcular {{<math>}}$\sigma^2_v${{</math>}} usando (3.13)
 
 
-### Estimação MV via `pglm()`
+### Estimação via `pglm()`
 
 
 ```r
@@ -2997,39 +3023,185 @@ data("TobinQ", package = "pder")
 # Transformando no formato pdata frame, com indentificador de indivíduo e de tempo
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimação pooled MQO
-Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian")
-summary(Q.ml)
+# Estimação MV
+Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian") # Estimação MV
+Q.fgls = plm(ikn ~ qn, pTobinQ, model="random",
+             random.method="walhus") # Estimação FGLS
+
+summary(Q.ml)$estimate # Coef. MV
 ```
 
 ```
-## --------------------------------------------
-## Maximum Likelihood estimation
-## Newton-Raphson maximisation, 3 iterations
-## Return code 8: successive function values within relative tolerance limit (reltol)
-## Log-Likelihood: 7632.794 
-## 4  free parameters
-## Estimates:
-##              Estimate Std. error t value Pr(> t)    
-## (Intercept) 0.1593280  0.0034344   46.39  <2e-16 ***
-## qn          0.0038618  0.0001684   22.93  <2e-16 ***
-## sd.id       0.0450737  0.0025011   18.02  <2e-16 ***
-## sd.idios    0.0730233  0.0006452  113.17  <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## --------------------------------------------
+##                Estimate   Std. error   t value       Pr(> t)
+## (Intercept) 0.159327956 0.0034343786  46.39208  0.000000e+00
+## qn          0.003861798 0.0001683923  22.93334 2.160874e-116
+## sd.id       0.045073677 0.0025010701  18.02176  1.315002e-72
+## sd.idios    0.073023338 0.0006452452 113.17145  0.000000e+00
 ```
 
 ```r
-summary(Q.swar)$coef # Comparando com estimação MQGF-swar
+summary(Q.fgls)$coef # Coef. MQGF
 ```
 
 ```
 ##                Estimate   Std. Error  z-value      Pr(>|z|)
-## (Intercept) 0.159326945 0.0034249012 46.52016  0.000000e+00
-## qn          0.003862202 0.0001682634 22.95331 1.365529e-116
+## (Intercept) 0.159325869 0.0034143937 46.66300  0.000000e+00
+## qn          0.003862631 0.0001682516 22.95747 1.240977e-116
 ```
 - Note que o resultado por ML foi bem próximo ao do obtido por MQGF
+
+
+
+### Estimação Analítica
+
+a) Chutar valores iniciais para as estimativas {{<math>}}$\hat{\beta}_{\scriptscriptstyle{ini}}${{</math>}} (pode usar tudo 0)
+
+
+```r
+data("TobinQ", package="pder")
+
+# Criando o vetor y
+y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+
+# Criando a matriz de covariadas X com primeira coluna de 1's
+X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # juntando 1's com as covariadas
+
+# Pegando valores N, T e K
+N = length( unique(TobinQ$cusip) )
+T = length( unique(TobinQ$year) )
+K = ncol(X) - 1
+
+# Matrizes Between e Within
+iota_T = matrix(1, nrow=T, ncol=1)
+I_N = diag(N)
+I_NT = diag(N*T)
+B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
+W = I_NT - B
+
+# Iremos realizar iterações até a convergência das estimativas
+tol = 1e-10 # tolerância para convergência
+dist = 1 # distância inicial, apenas para entrar no loop/while
+it = 0 # número de iterações
+
+# (a) Chutar valores iniciais para as estimativas
+bhat_ini = matrix(0, nrow=2, ncol=1) # chute inicial de 0's
+bhat_ini
+```
+
+```
+##      [,1]
+## [1,]    0
+## [2,]    0
+```
+
+b) Obter {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}} e calcular 
+		{{<math>}}$$ \hat{\phi}^2 = \frac{\hat{\varepsilon}' \boldsymbol{W} \hat{\varepsilon}}{(T-1)\hat{\varepsilon}' \boldsymbol{B} \hat{\varepsilon}} \tag{3.14} $${{</math>}}
+		
+		
+c) Calcular as novas estimativas {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}}${{</math>}} novo usando
+		{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}} = (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{X}'\tilde{y}, \tag{3.12} $${{</math>}}
+		em que {{<math>}}$\tilde{\boldsymbol{X}} = (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{X}${{</math>}}, e {{<math>}}$\tilde{\boldsymbol{y}} = (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{y}${{</math>}}
+
+
+d) Verificar convergência das estimativas de acordo com:
+		{{<math>}}$$ \text{distância}\ =\ \max\{\text{abs}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{ini}})\}\}\ <\ 1 \times 10^{-10}\ =\ \text{tolerância}$${{</math>}}
+		Se não convergiu (i.e., expressão acima não foi satisfeita), volte ao passo (b), definindo {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{ini}} \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}}${{</math>}} e iniciando uma nova iteração
+
+
+
+```r
+while (dist > tol) {
+	# Mostrar a iteração atual e as estimativas atuais beta
+	print(paste0("iteração ", it,
+	      ": b0 = ", round(bhat_ini[1], 6),
+        " | b1 = ", round(bhat_ini[2], 6)
+	))
+	
+	# (b)  Obter valores ajustados, resíduos e estimar phi
+	y_hat = X %*% bhat_ini
+	e = y - y_hat
+	phi2_hat = as.numeric((t(e) %*% W %*% e) / ((T-1) * (t(e) %*% B %*% e)))
+	phi_hat = sqrt(phi2_hat)
+
+	# (c) Calcular o novas estimativas
+	X_til = (I_NT - phi_hat * B) %*% X
+	y_til = (I_NT - phi_hat * B) %*% y
+	bhat_fim = solve(t(X_til) %*% X_til) %*% t(X_til) %*% y_til
+	
+	# (d) Verificar convergência das estimativas
+	dist = max(abs(bhat_fim - bhat_ini)) # calculando distância
+	bhat_ini = bhat_fim
+	it = it + 1
+}
+```
+
+```
+## [1] "iteração 0: b0 = 0 | b1 = 0"
+## [1] "iteração 1: b0 = 0.158127 | b1 = 0.004341"
+## [1] "iteração 2: b0 = 0.158491 | b1 = 0.004196"
+## [1] "iteração 3: b0 = 0.158491 | b1 = 0.004196"
+## [1] "iteração 4: b0 = 0.158491 | b1 = 0.004196"
+```
+
+
+e) Obter {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}} e {{<math>}}$ \hat{\phi}^2 ${{</math>}} para calcular
+		{{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\varepsilon}' \boldsymbol{W} \hat{\varepsilon} + \hat{\phi}^2 \hat{\varepsilon}' \boldsymbol{B} \hat{\varepsilon}}{NT} \tag{3.13} \qquad \text{e} \qquad \sigma^2_l = \frac{\sigma^2_v}{\hat{\phi}^2}  $${{</math>}}
+
+
+```r
+# (e) Calcular phi, sigma^2_v, e sigma^2_l
+y_hat = X %*% bhat_fim
+e = y - y_hat
+phi2_hat = as.numeric((t(e) %*% W %*% e) / ((T-1)*(t(e) %*% B %*% e)))
+phi_hat = sqrt(phi2_hat)
+
+sig2v = as.numeric((t(e) %*% W %*% e + phi2_hat * t(e) %*% B %*% e) / (N*T))
+sig2l = sig2v / phi2_hat
+```
+
+g) Calcular {{<math>}}$V(\hat{\beta})${{</math>}} usando:
+		{{<math>}}$$ V(\hat{\beta}) = \left( \frac{1}{\hat{\sigma}^2_v} \boldsymbol{X}' \boldsymbol{W X} + \frac{1}{\hat{\sigma}^2_l} \boldsymbol{X}' \boldsymbol{B X}\right)^{-1} $${{</math>}}
+
+```r
+# (g) Calcular V(bhat)
+Vbhat = solve(c(1/sig2v) * t(X) %*% W %*% X + c(1/sig2l) * t(X) %*% B %*% X)
+Vbhat
+```
+
+```
+##               [,1]          [,2]
+## [1,]  1.171015e-05 -7.095051e-08
+## [2,] -7.095051e-08  2.831961e-08
+```
+
+h) Obter erros padrão das estimativas, estatísticas t e p-valores
+
+```r
+# (h) Erros padrão, estatistica t e p-valores
+se_bhat = sqrt(diag(Vbhat))
+t_bhat = bhat_fim / se_bhat
+p_bhat = pt(-abs(t_bhat), df = N*T-K-1) # NT - K - 1
+
+cbind(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
+```
+
+```
+##                       se_bhat                      
+## [1,] 0.158490653 0.0034220099 46.31508  0.00000e+00
+## [2,] 0.004196004 0.0001682843 24.93402 1.68128e-131
+```
+
+```r
+summary(Q.ml)$estimate # Estimação MV via pglm()
+```
+
+```
+##                Estimate   Std. error   t value       Pr(> t)
+## (Intercept) 0.159327956 0.0034343786  46.39208  0.000000e+00
+## qn          0.003861798 0.0001683923  22.93334 2.160874e-116
+## sd.id       0.045073677 0.0025010701  18.02176  1.315002e-72
+## sd.idios    0.073023338 0.0006452452 113.17145  0.000000e+00
+```
 
 
 </br>
@@ -3048,7 +3220,6 @@ que é assintoticamente distribuída como ua `\(\chi^2\)` com 1 grau de liberdad
     - Gourieroux et al. (1982),
     - Honda (1985), e
     - King and Wu (1997).
-
 
 
 ### Testes F
@@ -3124,7 +3295,7 @@ então é preferível usar o mais eficiente (MQGF, pois usa ambas variações in
 - A variância é dada por 
 {{<math>}}\begin{align*}
     V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}, \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}) \\
-    &= \sigma^2_v (Z' \boldsymbol{W} Z)^{-1} - (Z'\boldsymbol{\Sigma}^{-1} Z)^{-1}
+    &= \sigma^2_v (\boldsymbol{X}' \boldsymbol{W X})^{-1} - (\boldsymbol{X}'\boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1}
 \end{align*}{{</math>}}
 - Logo, a estatística teste se torna
 {{<math>}}$$ \hat{q}'\ V(\hat{q})^{-1}\ \hat{q} $${{</math>}}
