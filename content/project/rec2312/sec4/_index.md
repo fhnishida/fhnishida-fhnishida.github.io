@@ -1417,7 +1417,7 @@ ou, usando
     1 & x^1_{21} & x^2_{21} & \cdots & x^J_{21} & x^{J+1}_{21} & x^{J+2}_{21} & \cdots & x^K_{21} \\
     1 & x^1_{22} & x^2_{22} & \cdots & x^J_{22} & x^{J+1}_{22} & x^{J+2}_{22} & \cdots & x^K_{22} \\
     \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-    1 & x^1_{NT} & x^2_{NT} & \cdots & x^J_{NT} & x^{J+1}_{NT} & x^{J+2}_{NT} & \cdots & x^K_{NT} \\\hline
+    1 & x^1_{2T} & x^2_{2T} & \cdots & x^J_{2T} & x^{J+1}_{2T} & x^{J+2}_{2T} & \cdots & x^K_{2T} \\\hline
     \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\\hline
     1 & x^1_{N1} & x^2_{N1} & \cdots & x^J_{N1} & x^{J+1}_{N1} & x^{J+2}_{N1} & \cdots & x^K_{21} \\
     1 & x^1_{N2} & x^2_{N2} & \cdots & x^J_{N2} & x^{J+1}_{N2} & x^{J+2}_{N2} & \cdots & x^K_{N2} \\
@@ -1432,7 +1432,7 @@ ou, usando
     1 & x^1_{2} & x^2_{2} & \cdots & x^J_{2} & x^{J+1}_{21} & x^{J+2}_{21} & \cdots & x^K_{21} \\
     1 & x^1_{2} & x^2_{2} & \cdots & x^J_{2} & x^{J+1}_{22} & x^{J+2}_{22} & \cdots & x^K_{22} \\
     \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-    1 & x^1_{N} & x^2_{N} & \cdots & x^J_{N} & x^{J+1}_{NT} & x^{J+2}_{NT} & \cdots & x^K_{NT} \\\hline
+    1 & x^1_{2} & x^2_{2} & \cdots & x^J_{2} & x^{J+1}_{2T} & x^{J+2}_{2T} & \cdots & x^K_{2T} \\\hline
     \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\\hline
     1 & x^1_{N} & x^2_{N} & \cdots & x^J_{N} & x^{J+1}_{N1} & x^{J+2}_{N1} & \cdots & x^K_{21} \\
     1 & x^1_{N} & x^2_{N} & \cdots & x^J_{N} & x^{J+1}_{N2} & x^{J+2}_{N2} & \cdots & x^K_{N2} \\
@@ -1483,7 +1483,7 @@ Logo,
     1 & x^1_{2} & x^2_{2} & \cdots & x^J_{2} & \bar{x}^{J+1}_{2} & \bar{x}^{J+2}_{2} & \cdots & \bar{x}^K_{2} \\
     1 & x^1_{2} & x^2_{2} & \cdots & x^J_{2} & \bar{x}^{J+1}_{2} & \bar{x}^{J+2}_{2} & \cdots & \bar{x}^K_{2} \\
     \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-    1 & x^1_{N} & x^2_{N} & \cdots & x^J_{N} & \bar{x}^{J+1}_{N} & \bar{x}^{J+2}_{N} & \cdots & \bar{x}^K_{N} \\\hline
+    1 & x^1_{2} & x^2_{2} & \cdots & x^J_{2} & \bar{x}^{J+1}_{2} & \bar{x}^{J+2}_{2} & \cdots & \bar{x}^K_{2} \\\hline
     \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\\hline
     1 & x^1_{N} & x^2_{N} & \cdots & x^J_{N} & \bar{x}^{J+1}_{N} & \bar{x}^{J+2}_{N} & \cdots & \bar{x}^K_{2} \\
     1 & x^1_{N} & x^2_{N} & \cdots & x^J_{N} & \bar{x}^{J+1}_{N} & \bar{x}^{J+2}_{N} & \cdots & \bar{x}^K_{N} \\
@@ -1504,7 +1504,6 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
         0 & 0 & 0 & 1/3 & 1/3 & 1/3
     \end{array} \right]_{6 \times 6}, $${{</math>}}
 
-em que {{<math>}}$\otimes${{</math>}} é o produto de Kronecker.
 
 Por exemplo, suponha a matriz {{<math>}}$\boldsymbol{X}${{</math>}}, com {{<math>}}$J=1${{</math>}} variável invariante no tempo, e {{<math>}}$P=3${{</math>}} variantes: 
 
@@ -1556,8 +1555,7 @@ Agora, vamos definir uma matriz de covariadas `X` e pós-multiplicar pela matriz
 ```r
 N = 2 # nº indivíduos
 T = 3 # nº períodos
-J = 1 # nº invariantes no tempo
-P = 3 # nº variantes no tempo
+K = 4 # nº variáveis explicativas
 
 # Calculando matriz de transformação between
 iota_T = matrix(1, nrow=T, ncol=1) # vetor de 1's de dimensão T
@@ -1581,7 +1579,7 @@ B # matriz de transformação between
 X = matrix(c(rep(1, 6), # 1a coluna de 1's
              rep(3, 3), rep(7, 3), # 2a coluna
              1:18 # 3a a 5a colunas
-             ), ncol=1+J+P) # matriz covariadas NT x (K+1)
+             ), ncol=K+1) # matriz covariadas NT x (K+1)
 X
 ```
 
@@ -1656,15 +1654,16 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
 
 Logo, temos:
 
-{{<math>}}\begin{align} \boldsymbol{BX} &=  
-\left[ \begin{array}{rrrrrr} 
+{{<math>}}\begin{align} \boldsymbol{WX} =  
+&\left[ \begin{array}{rrrrrr} 
          2/6 & -1/3 & -1/3 &    0 &    0 &    0 \\
         -1/3 &  2/6 & -1/3 &    0 &    0 &    0 \\
         -1/3 & -1/3 &  2/6 &    0 &    0 &    0 \\
            0 &    0 &    0 &  2/6 & -1/3 & -1/3 \\
            0 &    0 &    0 & -1/3 &  2/6 & -1/3 \\
            0 &    0 &    0 & -1/3 & -1/3 &  2/6
-    \end{array} \right] \left[ \begin{array}{cc|ccc}
+    \end{array} \right] \\ 
+    &\left[ \begin{array}{cc|ccc}
 1 & 3 & 1 & 7 & 13 \\
 1 & 3 & 2 & 8 & 14 \\
 1 & 3 & 3 & 9 & 15 \\ \hline
@@ -1672,7 +1671,7 @@ Logo, temos:
 1 & 7 & 5 & 11 & 17 \\
 1 & 7 & 6 & 12 & 18
 \end{array} \right] \\
-&= \left[ \begin{array}{cc|ccc}
+= &\left[ \begin{array}{cc|ccc}
 0 & 0 & -1 & -1 & -1 \\
 0 & 0 &  0 &  0 &  0 \\
 0 & 0 &  1 &  1 &  1 \\ \hline
@@ -1722,6 +1721,8 @@ Observe que:
 - coluna de 0's, no R, ficou muito próxima de 0 ({{<math>}}$1,11 \times 10^{-16}${{</math>}}), então foi necessário arredondar.
 
 
+</br>
+
 ## Estimador _Between_
 
 O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{B} = \boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}}:
@@ -1753,7 +1754,7 @@ Então
 &= (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B} \boldsymbol{B} y \\
 &= (\boldsymbol{X}' \boldsymbol{B}' \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B}' \boldsymbol{B} y \\
 &= ([\boldsymbol{B} \boldsymbol{X}]' \boldsymbol{B} \boldsymbol{X} )^{-1} [\boldsymbol{B} \boldsymbol{X}]' \boldsymbol{B} y \\
-&\equiv ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} = \tilde{\hat{\beta}}_{\scriptscriptstyle{MQO}} \end{align}{{</math>}}
+&\equiv ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} = \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}} \end{align}{{</math>}}
 
 Note que usamos:
 {{<math>}}$$ \boldsymbol{B} = \boldsymbol{B}\boldsymbol{B} \qquad \text{e} \qquad \boldsymbol{B}=\boldsymbol{B}' $${{</math>}}
@@ -1818,9 +1819,8 @@ summary(Q.between)
 ## Adj. R-Squared: 0.20054
 ## F-statistic: 47.9079 on 1 and 186 DF, p-value: 7.0128e-11
 ```
-- Observe que:
-    - as variáveis entram ns estimação sem nenhuma transformação as diferentes quantidades de observações e
-    - cada método possui diferentes graus de liberdade
+
+
 
 
 ### Estimação via lm()
@@ -1831,32 +1831,7 @@ Nós podemos construir as variáveis de média diretamente no data frame e fazer
 ```r
 # Pacote para manipular base de dados
 library(dplyr)
-```
 
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:plm':
-## 
-##     between, lag, lead
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 # Criando "na mão" as variáveis de médias para cada indivíduo
 TobinQ = TobinQ %>% group_by(cusip) %>% # agrupando por cusip (indivíduo)
     mutate(
@@ -2260,7 +2235,7 @@ Então
 &= (\boldsymbol{X}_t' \boldsymbol{W} \boldsymbol{W} \boldsymbol{X}_t )^{-1} \boldsymbol{X}_t' \boldsymbol{W} \boldsymbol{W} y \\
 &= (\boldsymbol{X}_t' \boldsymbol{W}' \boldsymbol{W} \boldsymbol{X}_t )^{-1} \boldsymbol{X}_t' \boldsymbol{W}' \boldsymbol{W} y \\
 &= ([\boldsymbol{W} \boldsymbol{X}_t]' \boldsymbol{W} \boldsymbol{X}_t )^{-1} [\boldsymbol{W} \boldsymbol{X}_t]' \boldsymbol{W} y \\
-&\equiv ( \tilde{\boldsymbol{X}_t}' \tilde{\boldsymbol{X}_t} )^{-1} \tilde{\boldsymbol{X}_t}' \tilde{\boldsymbol{y}} = \tilde{\hat{\gamma}}_{\scriptscriptstyle{MQO}} \end{align}{{</math>}}
+&\equiv ( \tilde{\boldsymbol{X}_t}' \tilde{\boldsymbol{X}_t} )^{-1} \tilde{\boldsymbol{X}_t}' \tilde{\boldsymbol{y}} = \tilde{\hat{\boldsymbol{\gamma}}}_{\scriptscriptstyle{MQO}} \end{align}{{</math>}}
 
 Note que usamos:
 {{<math>}}$$ \boldsymbol{W} = \boldsymbol{W}\boldsymbol{W} \qquad \text{e} \qquad \boldsymbol{W}=\boldsymbol{W}' $${{</math>}}

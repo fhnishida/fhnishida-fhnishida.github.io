@@ -15,55 +15,68 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+> “Between 30% to 80% of the data analysis task is spent on cleaning and understanding the data.” (Dasu \& Johnson, 2003)
+
+Para esta seção, usaremos a base de dados `starwars` do pacote de manipulação de dados `dplyr`:
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+
+# Vamos chamar a base de dados starwars de sw
+sw = starwars
+
+# vamos retirar as últimas 3 colunas para facilitar a manipulação.
+# São colunas da classe list
+sw[,c("films", "vehicles", "starships")] = NULL
+```
+
+
 </br>
 
-## Resumindo dados
+## Pacote `base`
+- Nesta seção, vamos manipular bases de dados usando as funções pré-carregadas no R (pacote `base`)
 
-### Funções básicas
+
+### Resumo dos dados
+
+#### Funções básicas
 - [Summarizing data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/e5qVi/summarizing-data)
-- Para esta seção, usaremos a base de dados `airquality`, já presente no R.
-- Verificaremos o **dimensões** da base com `dim()` e visualizaremos as 6 **primeiras** e **últimas** linhas da base via `head()` e `tail()`, respectivamente.
+- Verificaremos:
+  - as **dimensões** da base via `dim()`
+  - as 6 **primeiras** linhas da base via `head()`
+  - as 6 **últimas** linhas da base via `tail()`
 ```{r}
-# data() # lista de base de dados presentes no R
-
-dim(airquality) # Verificar tamanho da base (linhas x colunas)
-head(airquality) # Visualizando as 6 primeiras linhas
-tail(airquality) # Visualizando as 6 últimas linhas
+dim(sw) # Verificar tamanho da base (linhas x colunas)
+head(sw) # Visualizando as 6 primeiras linhas
+tail(sw) # Visualizando as 6 últimas linhas
 ```
-- Usando `str()`, podemos visualizar a **estrutura** da base:
+- Usando `str()`, podemos visualizar a **estrutura** (_structure_) da base:
     - todas a variáveis (colunas),
     - a classe de cada uma delas e
     - algumas de suas observações.
 ```{r}
-str(airquality)
+str(sw)
 ```
 
 
 - Para fazer um **resumo** de todas as variáveis da base, podemos usar a função `summary()` que, para variáveis numéricas, calcula a média e os quartis, e mostra a quantidade de `NA`.
 ```{r}
-summary(airquality)
-```
-- Também podemos calcular os **quantis** via `quantile()`
-```{r}
-quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
+summary(sw)
 ```
 
-- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a contagem de cada categoria/possível valor:
+- Note que, para variáveis lógicas, de texto (character) ou categóricas (factor), aparecem poucas informações.
+- Logo, pode ser interessante fazer uma **tabela com a contagem** de com as categorias de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
 ```{r}
-summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
+table(sw$hair_color) # contagem
+prop.table(table(sw$hair_color)) # percentual
 ```
-- Para variáveis de texto, pode ser interessante fazer uma **tabela com a contagem** de cada possível categoria de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
+- Também podemos fazer uma "contagem cruzada" incluindo mais uma variável em `table()`:
 ```{r}
-table(CO2$Type) # contagem
-prop.table(table(CO2$Type)) # percentual
-```
-- Também podemos incluir mais uma variável em `table()` para visualizar a contagem considerando 2 variáveis:
-```{r}
-table(CO2$Type, CO2$Treatment)
+table(sw$hair_color, sw$gender)
 ```
 
 
-### Família de funções _apply_
+#### Família de funções _apply_
 Veremos uma família de funções _apply_ que permitem executar comandos em loop de maneira compacta:
 - `apply`: aplica uma função sobre as margens (linha ou coluna) de uma matrix/array
 - `lapply`: loop sobre uma lista e avalia uma função em cada elemento
@@ -72,17 +85,16 @@ Veremos uma família de funções _apply_ que permitem executar comandos em loop
 
 
 
-#### Função `apply()`
+##### Função `apply()`
 - [Loop functions - apply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/IUUhK/loop-functions-apply)
-- Usado para avaliar, por meio de uma função, margens de um array
+- Usado para avaliar, por meio de uma função, margens de uma matriz/array
 - Frequentemente é utilizado para aplicar uma função a linhas ou a colunas de uma matriz
 - Não é mais rápido do que escrever um loop, mas funciona em uma única linha
 ```yaml
 apply(X, MARGIN, FUN, ...)
 
-X: an array, including a matrix.MARGIN: a vector giving the subscripts which the function will be applied over. E.g., for a matrix 1 indicates rows, 2 indicates columns, c(1, 2) indicates rows and columns. Where X has named dimnames, it can be a character vector selecting dimension names.
-FUN: the function to be applied: see ‘Details’. In the case of functions like +, %*%, etc., the function name must be backquoted or quoted.
-... : optional arguments to FUN.
+- X: an array, including a matrix.MARGIN: a vector giving the subscripts which the function will be applied over. E.g., for a matrix 1 indicates rows, 2 indicates columns, c(1, 2) indicates rows and columns.
+- FUN: the function to be applied
 ```
 ```{r}
 x = matrix(1:20, 5, 4)
@@ -96,238 +108,250 @@ apply(x, 2, mean) # médias das colunas
     - `rowMeans = apply(x, 1, mean)`
     - `colSums = apply(x, 2, sum)`
     - `colMeans = apply(x, 2, mean)`
-- Podemos, por exemplo, também calcular os quantis de uma matriz usando a função `quantile()`
-```{r}
-x = matrix(1:50, 10, 5) # matriz 20x10 - 200 números ~ N(0, 1)
-x
 
 
-apply(x, 2, quantile) # obtendo os quantis de cada coluna
-```
-- Com também podemos verificar quais são os valores únicos de cada variável em um data frame combinando `apply()` e `unique()`
-```{r}
-apply(mtcars, 2, unique)
-``` 
-
-
-- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
-```{r}
-head( is.na(airquality) ) # 6 primeiras linhas aplicando is.na()
-apply(is.na(airquality), 2, sum) # somando cada coluna de TRUE/FALSE
-```
-
-
-#### Função `lapply()`
+##### Função `lapply()`
 - [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
-- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
+- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os argumentos da função inserida)
 ```yaml
 lapply(X, FUN, ...)
 
-X: a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.
-FUN: the function to be applied to each element of X: see ‘Details’. In the case of functions like +, %*%, the function name must be backquoted or quoted.
-... : optional arguments to FUN.
+- X: a vector (atomic or list) or an expression object.
+- FUN: the function to be applied to each element of X.
 ```
+
+
+<!-- ```{r} -->
+<!-- # Criando uma lista com vetor de dimensões distintas -->
+<!-- x = list(a=1:5, b=45:38, c=c(1, 4, 65, 6, 78)) -->
+<!-- x -->
+
+<!-- lapply(x, mean) # retorna médias de cada vetor dentro da lista -->
+<!-- lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista -->
+
+<!-- class(lapply(x, mean)) # classe do objeto retornado pelo lapply -->
+<!-- ``` -->
+
+- A função `lapply()` aplica uma função em cada um de seus elementos.
+- Um tipo especial de lista é o data frame, cujos elementos são suas colunas (variáveis).
+
+```{r warning=FALSE}
+lapply(sw, mean, na.rm=TRUE) # valores únicos
+``` 
+
+- Note que as variáveis não numérica retornaram `NA` e o 3º argumento é um arguemento da própria função `mean()`
+
+
+- Podemos verificar quais são os valores únicos de cada variável (um item da lista) usando `unique()`
 ```{r}
-# Criando uma lista com vetor de dimensões distintas
-x = list(a=1:5, b=rnorm(10), c=c(1, 4, 65, 6))
-x
+lapply(sw, unique) # valores únicos
+``` 
 
-lapply(x, mean) # retorna médias de cada vetor dentro da lista
-lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
-
-class(lapply(x, mean)) # classe do objeto retornado pelo lapply
+- Um uso interessante é para a verificação do **número de NA's de um data frame**. No entanto, ao transformar uma variável com `is.na()`, ela se torna uma matriz e, portanto, é necessário usar função `apply()`:
+```{r}
+head( is.na(sw) ) # 6 primeiras linhas aplicando is.na()
+class( is.na(sw) ) # tipo de objeto
+apply(is.na(sw), 2, sum) # somando cada coluna de TRUE/FALSE
 ```
 
 
-#### Função `sapply()`
+##### Função `sapply()`
 Similar ao `lapply`, mas `sapply` tenta simplificar o output:
 
-- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
-```{r}
-sapply(x, mean) # retorna um vetor
-```
-- Se o resultado for uma lista em que cada elemento tem mesmo comprimento, retorna uma matriz
-```{r}
-sapply(x, summary) # retorna uma matriz
+- Se o resultado for uma lista em seus elementos têm o mesmo comprimento, retorna um vetor (ou matriz)
+```{r warning=FALSE}
+sapply(sw, mean, na.rm=TRUE) # retorna um vetor
 ```
 
 
-
-</br>
-
-## Manipulando dados
-
-> “Between 30% to 80% of the data analysis task is spent on cleaning and understanding the data.” (Dasu \& Johnson, 2003)
-
-### Extração de subconjuntos
+### Filtro de linhas
 - [Subsetting and sorting (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/aqd2Y/subsetting-and-sorting)
-- Como exemplo, criaremos um _data frame_ com três variáveis, em que, para misturar a ordem dos números, usaremos a função `sample()` num vetor de números e também incluiremos alguns valores ausentes `NA`.
-```{r}
-x = data.frame(var1=sample(1:5), var2=sample(6:10), var3=sample(11:15))
-x
 
-x$var2[c(1, 3)] = NA
-x
-```
-- Lembre-se que, para extrair um subconjunto de um data frame, usamos as chaves `[]` indicando vetores de linhas e de colunas (ou também os nomes das colunas).
 ```{r}
-x[, 1] # Todas linhas e 1ª coluna
-x[, "var1"] # Todas linhas e 1ª coluna (usando seu nome)
-x[1:2, "var2"] # Linhas 1 e 2, e 2ª coluna (usando seu nome)
-```
-- Note que, podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair uma parte do data frame. Por exemplo, queremos obter apenas as observações em que a variável 1 seja menor ou igual a 3 **E** (`&`) que a variável 3 seja estritamente maior do que 11:
-```{r}
-x$var1 <= 3 & x$var3 > 11
+# vetor lógico de cabelo loiro
+sw$hair_color == "blond"
 
-# Extraindo as linhas de x
-x[x$var1 <= 3 & x$var3 > 11, ]
-```
-- Poderíamos também obter apenas as observações em que a variável 1 seja menor ou igual a 3 **OU** (`|`) que a variável 3 seja estritamente maior do que 11:
-```{r}
-x[x$var1 <= 3 | x$var3 > 11, ]
-```
-- Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale `==` com mais de um valor)
-```{r}
-x$var1 %in% c(1, 5) # obs em que var1 é igual a 1 ou 5
-x[x$var1 %in% c(1, 5), ]
+# Extraindo linhas com cabelo loiro
+sw[sw$hair_color == "blond", ]
 ```
 
-- Note que, ao escrevermos uma expressão lógica para um vetor que contém valores ausentes, gerará um vetor com `TRUE`, `FALSE` e `NA`
+- Podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair/filtrar uma parte do data frame. Por exemplo, queremos filtrar "Droid" **E** (`&`) que não seja `NA`:
 ```{r}
-x$var2 > 8
-x[x$var2 > 8, ]
+sw[sw$hair_color == "blond" & !is.na(sw$hair_color), ]
 ```
-- Para contornar este problema, podemos usar a função `which()` que, ao invés de gerar um vetor de `TRUE`/`FALSE`, retorna um vetor com as posições dos elementos que tornam a expressão lógica verdadeira
+
+- Para não ter que ficar escrevendo `sw` antes de cada variáveis, podemos usar função `with()`
 ```{r}
-which(x$var2 > 8)
-x[which(x$var2 > 8), ]
+with(sw,
+     sw[hair_color == "blond" & !is.na(hair_color),]
+     )
 ```
-- Outra forma de contornar os valores ausentes é incluir a condição 
-de não incluir valores ausentes `!is.na()`:
+
+- Poderíamos também obter cabelo loiro **OU** (`|`) branco:
 ```{r}
-x$var2 > 8 & !is.na(x$var2)
-x[x$var2 > 8 & !is.na(x$var2), ]
+# Extraindo linhas em que cabelo é loiro ou branco
+sw[sw$hair_color == "blond" | sw$hair_color == "white", ]
+```
+- Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale a `==` com mais de um valor)
+```{r}
+sw$hair_color %in% c("blond", "white") # T/F cabelo loiro ou branco
+sw = sw[sw$hair_color %in% c("blond", "white"), ]
+head(sw)
 ```
 
 
-### Ordenação
+### Ordenação de linhas
+- [Subsetting and sorting (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/aqd2Y/subsetting-and-sorting)
+
 - Podemos usar a função `sort()` para ordenar um vetor de maneira crescente (padrão) ou decrescente:
 ```{r}
-sort(x$var1) # ordenando de maneira crescente
-sort(x$var1, decreasing=TRUE) # ordenando de maneira decrescente
-```
-- Por padrão, o `sort()` retira os valores ausentes. Para mantê-los e deixá-los no final, precisamos usar o argumento `na.last=TRUE`
-```{r}
-sort(x$var2) # ordenando e retirando NA
-sort(x$var2, na.last=TRUE) # ordenando e mantendo NA no final
-```
-- Note que não podemos usar a função `sort()` para ordenar um data frame, pois a função retorna valores e, portanto, não retorna suas posições.
-```{r}
-sort(x$var3)
-x[sort(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
-```
-- Para ordenar data frames, precisamos utilizar a função `order()` que, ao invés de retorar os valores em algum ordem, retorna as suas posições
-```{r}
-order(x$var3)
-x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
+sort(sw$height) # ordenando de maneira crescente
+sort(sw$height, decreasing=TRUE) # ordenando de maneira decrescente
 ```
 
-### Inclusão de novas colunas/variáveis
-- Para incluir novas variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
+- Note que não podemos usar a função `sort()` para ordenar um data frame, pois a função retorna um vetor com os valores da base de dados.
+- Para **ordenar data frames**, precisamos utilizar a função `order()` que, retorna os índices dos menores valores aos maiores (ou decrescente com `decreasing = TRUE`):
 ```{r}
-x$var4 = 5:1
-x
+order(sw$height) # índices na forma crescente de altura
+sw = sw[order(sw$height), ] # reordenando data frame
+head(sw)
 ```
+
+
+### Seleção de colunas
+- Podemos selecionar colunas usando `[,]` e incluindo um vetor de nomes/índices das colunas que quer manter (ou retirar usando `!`)
+```{r}
+# Selecionando 3 primeiras colunas
+head( sw[,c("name","height", "mass")] )
+
+# Selecionando 6 primeiras colunas
+sw = sw[,1:6]
+head(sw)
+```
+
+
+### Renomeação de colunas
+- Podemos alterar os nomes das variáveis usando `names()` ou `colnames()` e atribuindo um vetor de nomes
+
+```{r}
+names(sw) # nomes da base de dados
+
+# Retirando os underlines
+names(sw)[4] = "haircolor" # alterando um único
+names(sw)[5:6] = c("skincolor", "eyecolor") # alterando 2 nomes
+names(sw) # vetor de nomes com alteração
+```
+
+
+### Modificação de colunas
+
+- Para modificar variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
+```{r}
+sw$height = sw$height / 100 # de cm para metro
+```
+
+- Se incluir um escalar, vai repetir o valor para todas as linhas
+```{r}
+sw$const = 1
+```
+
+- Também é possível criar uma nova variável:
+```{r}
+sw$BMI = sw$mass / sw$height^2 # índice de massa corpórea
+head(sw)
+```
+
 
 - [Algumas transformações comuns de variáveis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
 ```{r}
-abs(x$var4) # valor absoluto
-sqrt(x$var4) # raiz quadrada
-ceiling(x$var4) # valor inteiro acima
-floor(x$var4) # valor inteiro abaixo
-round(x$var4, digits=1) # arredondamento com 1 dígito
-cos(x$var4) # cosseno
-sin(x$var4) # seno
-log(x$var4) # logaritmo natural
-log10(x$var4) # logaritmo base 10
-exp(x$var4) # exponencial
+abs(sw$BMI[1:4]) # valor absoluto
+sqrt(sw$BMI[1:4]) # raiz quadrada
+ceiling(sw$BMI[1:4]) # valor inteiro acima
+floor(sw$BMI[1:4]) # valor inteiro abaixo
+round(sw$BMI[1:4], digits=1) # arred com 1 dígito
+cos(sw$BMI[1:4]) # cosseno
+sin(sw$BMI[1:4]) # seno
+log(sw$BMI[1:4]) # logaritmo natural
+log10(sw$BMI[1:4]) # logaritmo base 10
+exp(sw$BMI[1:4]) # exponencial
 ```
 
 
+### Junção de bases
 
-### Juntando bases de dados
-
-#### Acrescentando colunas e linhas via `cbind()` e `rbind()`
-
-- Uma maneira de juntar o data frame com um vetor de mesmo tamanho é usando `cbind()`
-```{r}
-y = rnorm(5)
-x = cbind(x, y)
-x
-```
-- Também podemos acrescentar linhas usando `rbind()`, desde que o vetor tenha a quantidade de elementos igual ao número de colunas (ou data frame a ser incluído tenha o mesmo número de colunas)
-```{r}
-z = rnorm(5)
-x = rbind(x, z)
-x
-```
-
-
-#### Mesclando base de dados com `merge()`
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
-- Podemos juntar base de dados a partir de uma variável-chave que aparece em ambas bases.
-- Como exemplo, utilizaremos duas bases de dados de respostas a perguntas ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) e de correções feitas por seus pares ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
-```{r}
-solutions = read.csv("https://fhnishida.netlify.app/project/rec5004/solutions.csv")
-head(solutions)
+- [Joining (Merging) Data (David E. Caughlin)](https://rforhr.com/join.html)
 
-reviews = read.csv("https://fhnishida.netlify.app/project/rec5004/reviews.csv")
-head(reviews)
-```
-- Note que:
-    - as primeiras colunas das bases `solutions` e `reviews`` são os identificadores únicos das soluções e dos reviews, respectivamente.
-    - na base `reviews` há a coluna _problem_id_ que faz a ligação entre esta base com a coluna _id_ da base `solutions`.
-- Usaremos a função `merge()` para juntar ambas bases em uma só, a partir do id da solução.
+- Uma junção é o processo de correspondência de casos (ou seja, linhas ou observações) entre dois bases de dados usando uma oou mais variáveis-chave:
+
+<center><img src="../merge.webp"></center>
+
+- Para isto, vamos usar a função `merge()`:
 
 ```yaml
 merge(x, y, by = intersect(names(x), names(y)),
       by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
-      sort = TRUE, suffixes = c(".x",".y"), ...)
+      suffixes = c(".x",".y"), ...)
 
-x, y: data frames, or objects to be coerced to one.
-by, by.x, by.y: specifications of the columns used for merging. See ‘Details’.
-all: logical; all = L is shorthand for all.x = L and all.y = L, where L is either TRUE or FALSE.
-all.x: logical; if TRUE, then extra rows will be added to the output, one for each row in x that has no matching row in y. These rows will have NAs in those columns that are usually filled with values from y. The default is FALSE, so that only rows with data from both x and y are included in the output.
-all.y: logical; analogous to all.x.
-sort: logical. Should the result be sorted on the by columns?
-suffixes: a character vector of length 2 specifying the suffixes to be used for making unique the names of columns in the result which are not used for merging (appearing in by etc).
+- x, y: data frames, or objects to be coerced to one.
+- by, by.x, by.y: specifications of the columns used for merging.
+- all: logical; all = L is shorthand for all.x = L and all.y = L, where L is either TRUE or FALSE.
+- all.x: logical; if TRUE, then extra rows will be added to the output, one for each row in x that has no matching row in y. These rows will have NAs in those columns that are usually filled with values from y.
+- all.y: logical; analogous to all.x.
+- sort: logical. Should the result be sorted on the by columns?
+- suffixes: a character vector of length 2 specifying the suffixes to be used for making unique the names of columns.
 ```
 
-<center><img src="../merge.webp"></center>
+- Vamos criar duas bases de dados, sendo que existem indivíduos presentes em uma base que não está na outra:
 
 ```{r}
-mergedData = merge(reviews, solutions,
-                   by.x="solution_id",
-                   by.y="id",
-                   all=TRUE)
-head(mergedData)
+# Extraindo data frames menores de 'starwars' (original)
+bd1 = starwars[1:6, c(1, 3, 11)]
+bd1
+bd2 = starwars[c(2, 4, 7:10), c(1:2, 6)]
+bd2
 ```
 
-- Note que, como há colunas de mesmos nomes, e especificamos que a variável chave era somente o id de solução, então as colunas de nomes iguais foram renomeadas com sufixos `.x` e `.y`, correspondendo às 1ª e 2ª bases inseridas na função `merge()`
-- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a função `intersect()` em conjunto com a função `names()`:
+- Note que há 12 personagens únicos em ambas bases, mas apenas “C-3PO” e “Darth Vader” são observações comuns.
+- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a função `intersect()` em conjunto com a função `names()` ou `colnames()`:
 ```{r}
-intersect( names(solutions), names(reviews) )
+intersect( names(bd1), names(bd2) )
 ```
-- Se não especificássemos nenhuma variável-chave, a função `merge()` utilizaria como variável-chave todas as colunas com nomes iguais em ambas bases de dados 
+- Caso não especifiquemos nenhuma variável-chave, a função `merge()` utiliza como variável-chave todas as colunas com nomes iguais.
+
+##### Inner-join
+
+<center><img src="../inner_join.png"></center>
 ```{r}
-wrong = merge(reviews, solutions,
-                   all=TRUE)
-head(wrong)
+merge(bd1, bd2, all = FALSE)
 ```
 
 
+##### Full-join
+
+<center><img src="../full_join.png"></center>
+```{r}
+merge(bd1, bd2, all = TRUE)
+```
+
+
+##### Left-join
+
+<center><img src="../left_join.png"></center>
+```{r}
+merge(bd1, bd2, all.x = TRUE)
+```
+
+
+##### Right-join
+
+<center><img src="../right_join.png"></center>
+```{r}
+merge(bd1, bd2, all.y = TRUE)
+```
 
 </br>
+
 
 ## Pacote `dplyr`
 - [Vignette - Introduction to _dplyr_](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html)
@@ -342,118 +366,113 @@ head(wrong)
         - `arrange()`: organiza a ordem das linhas
     - Grupo de linhas:
         - `summarise()`: colapsa um grupo em uma única linha
+        - `group_by()`: agrupa base de dados a partir de uma variável categórica
 - Nesta subseção, continuaremos utilizando a base de dados de Star Wars (`starwars`), utilizada na subseção anterior.
 - Você irá notar que, ao usar essas funções, o data frame é transformado em um _tibble_ que é um formato mais eficiente para tratar dados tabulares, mas que funciona de forma igual a um data frame.
 
 ```{r}
-library("dplyr") # Carregando pacote
-head(starwars) # olhando primeiras linhas da base contida no pacote
+sw = starwars # "limpando" sw com a base original
 ```
 
 
-
-### Filtre linhas com `filter()`
+### Filtro via `filter()`
 - Permite selecionar um subconjunto de linhas de um data frame
 ```yaml
 filter(.data, ...)
 
-.data: A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr).
-...	: <data-masking> Expressions that return a logical value, and are defined in terms of the variables in .data. If multiple expressions are included, they are combined with the & operator. Only rows for which all conditions evaluate to TRUE are kept.
+- .data: A data frame, data frame extension (e.g. a tibble).
+- ...	: Expressions that return a logical value, and are defined in terms of the variables in .data. If multiple expressions are included, they are combined with the & operator. Only rows for which all conditions evaluate to TRUE are kept.
 ```
-- 
+
 ```{r}
-starwars1 = filter(starwars, species == "Human", height >= 100)
-starwars1
-
-# Equivalente a:
-starwars[starwars$species == "Human" & starwars$height >= 100, ]
+sw1 = filter(sw, species == "Human", height >= 100)
+sw1 # já filtra os NA's
 ```
 
 
 
-### Organize linhas com `arrange()`
+### Ordenação via `arrange()`
 - Reordena as linhas a partir de um conjunto de nomes de coluna
 ```yaml
 arrange(.data, ..., .by_group = FALSE)
 
-.data: A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr).
-... : <data-masking> Variables, or functions of variables. Use desc() to sort a variable in descending order.
+- .data: A data frame, data frame extension (e.g. a tibble).
+- ... : Variables, or functions of variables. Use desc() to sort a variable in descending order.
 ```
 - Se for inserido mais de um nome de variável, organiza de acordo com a 1ª variável e, em caso de ter linhas com o mesmo valor na 1ª variável, ordena estas linhas de mesmo valor de acordo com a 2ª variável
 - Para usar a ordem decrescente, temos a função `desc()`
 ```{r}
-starwars2 = arrange(starwars1, height, desc(mass))
-starwars2
+sw2 = arrange(sw1, height, desc(mass))
+sw2
 ```
 
 
 
-### Selecione colunas com `select()`
+### Seleção via `select()`
 - Seleciona colunas que são de interesse.
 ```yaml
 select(.data, ...)
 
-... : variables in a data frame
-: for selecting a range of consecutive variables.
-! for taking the complement of a set of variables.
-c() for combining selections.
+- ... : variables in a data frame
+  - : for selecting a range of consecutive variables.
+  - ! for taking the complement of a set of variables.
+  - c() for combining selections.
 ```
 - Coloca-se os nomes das colunas desejadas para selecioná-las.
 - Também é possível selecionar um intervalo de variáveis usando `var1:var2`
 - Caso queira tirar apenas algumas colunas, basta informar o nome delas precedidas pelo sinal de subtração (`-var`)
 ```{r}
-starwars3 = select(starwars2, name:eye_color, sex:species)
-# equivalente: select(starwars2, -birth_year, -c(films:starships))
-starwars3
+sw3 = select(sw2, name:eye_color, sex:species)
+sw3
 ```
 - Note que o `select()` pode não funcionar corretamente se o pacote `MASS` estiver ativo. Caso esteja, retire a seleção do pacote `MASS` no quadrante inferior/direito em 'Packages' (ou digite `detach("package:MASS", unload = TRUE)`)
 - Uma outra forma de fazer a seleção de coluna é combinando com `starts_with()` e `ends_with()`, que resulta na seleção de colunas que se iniciam e terminam com um texto dado
 ```{r}
-head( select(starwars, ends_with("color")) ) # colunas que terminam com color
-head( select(starwars, starts_with("s")) ) # colunas que iniciam com a letra "s"
+head( select(sw, ends_with("color")) ) # colunas que terminam com color
+head( select(sw, starts_with("s")) ) # colunas que iniciam com a letra "s"
 ```
 
 
 
-### Renomeie colunas com `rename()`
+### Renomeação via `rename()`
 - Renomeia colunas usando `novo_nome = velho_nome`
 ```yaml
 rename(.data, ...)
 
-.data: A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr).
-...	: For rename(): <tidy-select> Use new_name = old_name to rename selected variables.
+- .data: A data frame, data frame extension (e.g. a tibble).
+- ...	: Use new_name = old_name to rename selected variables.
 ```
 
 ```{r}
-starwars4 = rename(starwars3,
-                haircolor = hair_color,
-                skincolor = skin_color, 
-                eyecolor = eye_color)
-starwars4
+sw4 = rename(sw3,
+             haircolor = hair_color,
+             skincolor = skin_color, 
+             eyecolor = eye_color)
+sw4
 ```
 
 
 
-### Modifique/Adicione colunas com `mutate()`
+### Modificação via `mutate()`
 - Modifica uma coluna se ela já existir
 - Cria uma coluna se ela não existir
 ```yaml
 mutate(.data, ...)
 
-.data: A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr).
-...	: <data-masking> Name-value pairs. The name gives the name of the column in the output. The value can be:
+- .data: A data frame, data frame extension (e.g. a tibble).
+- ...	: Name-value pairs. The name gives the name of the column in the output.
  - A vector of length 1, which will be recycled to the correct length.
  - A vector the same length as the current group (or the whole data frame if ungrouped).
  - NULL, to remove the column.
 ```
 ```{r}
-starwars5 = mutate(starwars4,
-                height = height/100, # transf cm p/ metro
-                BMI = mass / height^2,
-                dummy = 1 # se não for vetor, tudo fica igual
-                )
-starwars5 = select(starwars5, BMI, dummy, everything()) # facilitar
-starwars5
+sw5 = mutate(sw4,
+             height = height/100, # transf cm p/ metro
+             BMI = mass / height^2,
+             dummy = 1 # se não for vetor, tudo fica igual
+             )
+sw5 = select(sw5, BMI, dummy, everything()) # reordenação colunas
+sw5
 ```
 
 
@@ -462,30 +481,30 @@ starwars5
 - Note que todas as funções do pacote `dyplr` anteriores têm como 1º argumento a base de dados (`.data`), e isto não é por acaso.
 - O operador pipe `%>%` joga um data frame (escrito à sua esquerda) no 1º argumento da função seguinte (à sua direita).
 ```{r}
-filter(starwars, species=="Droid") # sem operador pipe
-starwars %>% filter(species=="Droid") # com operador pipe
+filter(sw, species=="Droid") # sem operador pipe
+sw %>% filter(species=="Droid") # com operador pipe
 ```
 - Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está sendo aplicada automaticamente via `%>%`).
 - Note que, desde a subseção com a função `filter()` até `mutate()` fomos "acumulando" as alterações em novos data frames, ou seja, o último data frame `starwars5` é a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
 ```{r}
-starwars1 = filter(starwars, species == "Human", height >= 100)
-starwars2 = arrange(starwars1, height, desc(mass))
-starwars3 = select(starwars2, name:eye_color, sex:species)
-starwars4 = rename(starwars3,
-                haircolor = hair_color,
-                skincolor = skin_color, 
-                eyecolor = eye_color)
-starwars5 = mutate(starwars4,
-                height = height/100,
-                BMI = mass / height^2,
-                dummy = 1
-                )
-starwars5 = select(starwars5, BMI, dummy, everything())
-starwars5
+sw1 = filter(sw, species == "Human", height >= 100)
+sw2 = arrange(sw1, height, desc(mass))
+sw3 = select(sw2, name:eye_color, sex:species)
+sw4 = rename(sw3,
+             haircolor = hair_color,
+             skincolor = skin_color, 
+             eyecolor = eye_color)
+sw5 = mutate(sw4,
+             height = height/100,
+             BMI = mass / height^2,
+             dummy = 1
+             )
+sw5 = select(sw5, BMI, dummy, everything())
+sw5
 ```
 - Usando o operador pipe `%>%` várias vezes, podemos ir pegando o output resultante da aplicação de uma função e jogar como input da função seguinte. Reescreveremos o código acima "em única linha" com `%>%`, chegando ao mesmo data frame de `starwars5`
 ```{r}
-starwars_pipe = starwars %>% 
+sw_pipe = sw %>% 
     filter(species == "Human", height >= 100) %>%
     arrange(height, desc(mass)) %>%
     select(name:eye_color, sex:species) %>%
@@ -497,28 +516,27 @@ starwars_pipe = starwars %>%
            dummy = 1
            ) %>%
     select(BMI, dummy, everything())
-starwars_pipe
+sw_pipe
 
-all(starwars_pipe == starwars5, na.rm=TRUE) # verificando se todos elementos são iguais
+all(sw_pipe == sw5, na.rm=TRUE) # verificando se todos elementos são iguais
 ```
 
 
 
-### Resuma com `summarise()`
+### Resumo via `summarise()`
 
 - Podemos usar a função `summarise()` para gerar alguma estatística acerca de uma ou mais variáveis:
 ```{r}
 starwars %>% summarise(
     n_obs = n(),
-    mean_height = mean(height, na.rm=TRUE),
-    mean_mass = mean(mass, na.rm=TRUE)
+    height_mean = mean(height, na.rm=TRUE),
+    mass_mean = mean(mass, na.rm=TRUE)
     )
 ```
 - No caso acima, gerou simplesmente o tamanho da amostra e as médias de altura e de massa considerando a amostra inteira de `starwars` (o que não foi muito útil).
 
 
-
-### Agrupe com `group_by()`
+#### Agrupamento via `group_by()`
 - Diferente das outras funções do `dplyr` mostradas até agora, o output do `group_by` não altera conteúdo do data frame, apenas **transforma em uma base de dados agrupada** em categorias de uma dada variável
 ```{r}
 grouped_sw = starwars %>% group_by(sex)
@@ -530,33 +548,32 @@ head(grouped_sw) # agrupado por sexo
 - O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observações
 ```{r}
 starwars %>%
-    mutate(mean_mass = mean(mass, na.rm=TRUE)) %>% 
-    select(mean_mass, sex, everything()) %>%
+    mutate(mass_mean = mean(mass, na.rm=TRUE)) %>% 
+    select(mass_mean, sex, everything()) %>%
     head(10)
 ```
-- Note que todos os valores de `mean_mass` são iguais. Agora, agruparemos por `sex` antes de fazer a soma:
+- Note que todos os valores de `mass_mean` são iguais. Agora, agruparemos por `sex` antes de fazer a soma:
 ```{r}
 starwars %>%
     group_by(sex) %>%
-    mutate(mean_mass = mean(mass, na.rm=TRUE)) %>% 
+    mutate(mass_mean = mean(mass, na.rm=TRUE)) %>% 
     ungroup() %>% # Lembre-se sempre de desagrupar depois!
-    select(mean_mass, sex, everything()) %>%
+    select(mass_mean, sex, everything()) %>%
     head(10)
 ```
-- Note que, agora, a coluna `mean_mass` tem valores diferentes de acordo com o sexo da observação.
+- Note que, agora, a coluna `mass_mean` tem valores diferentes de acordo com o sexo da observação.
 - Isso é útil em algumas aplicações econômicas em que consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observação (e.g. morador) pertence.
 
 > **Evite potenciais erros**: Sempre que usar `group_by()`, não se esqueça de desagrupar o data frame via função `ungroup()` após realizar a operações desejadas.
 
-
-### Resuma em grupos com `group_by()` e `summarise()`
+#### Resumo por grupo via `group_by()` e `summarise()`
 - A função `summarise()` é de fato útil quando combinada com a função `group_by()`, pois conseguimos obter as estatísticas de grupos:
 ```{r}
 summary_sw = starwars %>% group_by(sex) %>%
     summarise(
         n_obs = n(),
-        mean_height = mean(height, na.rm = TRUE),
-        mean_mass = mean(mass, na.rm = TRUE)
+        height_mean = mean(height, na.rm = TRUE),
+        mass_mean = mean(mass, na.rm = TRUE)
     )
 summary_sw
 class(summary_sw) # ao usar summary, deixa de ser agrupada
@@ -567,8 +584,8 @@ class(summary_sw) # ao usar summary, deixa de ser agrupada
 starwars %>% group_by(sex, hair_color) %>%
     summarise(
         n_obs = n(),
-        mean_height = mean(height, na.rm = TRUE),
-        mean_mass = mean(mass, na.rm = TRUE)
+        height_mean = mean(height, na.rm = TRUE),
+        mass_mean = mean(mass, na.rm = TRUE)
     )
 ```
 - Para agrupar variáveis **contínuas**, precisamos definir intervalos usando a função `cut()`
@@ -584,7 +601,7 @@ breaks: either a numeric vector of two or more unique cut points or a single num
 starwars %>% group_by(cut(birth_year, breaks=5)) %>%
     summarise(
         n_obs = n(),
-        mean_height = mean(height, na.rm = TRUE)
+        height_mean = mean(height, na.rm = TRUE)
     )
 
 # breaks com um vetor = quebras dos intervalos dos grupos
@@ -592,17 +609,16 @@ starwars %>% group_by(birth_year=cut(birth_year,
                           breaks=c(0, 40, 90, 200, 900))) %>%
     summarise(
         n_obs = n(),
-        mean_height = mean(height, na.rm = TRUE)
+        height_mean = mean(height, na.rm = TRUE)
     )
 ```
 - Note que inserimos `birth_year=cut(birth_year, ...)` para que o nome da coluna ficasse `birth_year`, caso contrário a coluna ficaria com o nome `cut(birth_year, ...)`.
 
 
 
-### Junte bases com funções _join_
-- Vimos anteriormente que podemos usar o `cbind()` juntar um data frame com outro data frame (ou vetor), caso tenham o mesmo número de linhas
-- Para juntar linhas (considerando que as colunas possuem as mesmas classes de variáveis), podemos usar o `rbind`
-- Para agrupar bases de dados a partir de variáveis-chave, usamos a função `merge()`.
+
+### Junção via _\*\_join()_
+- Vimos anteriormente que, para agrupar bases de dados a partir de variáveis-chave, podemos usar a função `merge()`.
 - O pacote `dplyr` fornece uma família de funções _join_ que executam o mesmo comando que `merge()`, porém, ao invés de alterar o valor de um argumento, você precisa escolher uma das funções _join_ que podem ser resumidas na seguinte figura:
 
 <center><img src="../dplyr-data-join-functions.png"></center>
@@ -615,8 +631,8 @@ starwars %>% group_by(birth_year=cut(birth_year,
 - Como exemplo, usaremos subconjuntos da base de dados `starwars`:
 ```{r}
 bd1 = starwars[1:6, c(1, 3, 11)]
-bd2 = starwars[c(2, 4, 7:10), c(1:2, 6)]
 bd1
+bd2 = starwars[c(2, 4, 7:10), c(1:2, 6)]
 bd2
 ```
 - Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observações comuns.
@@ -636,38 +652,6 @@ left_join(bd1, bd2, by="name")
 - `right_join()`: mantém apenas ID's presentes na base 2 (informada como `y`)
 ```{r}
 right_join(bd1, bd2, by="name")
-```
-
-- Note que podemos incluir mais de uma variável-chave para correspondência entre ID's de ambas bases. Primeiro, vamos construir as bases como paineis
-```{r}
-bd1 = starwars[1:5, c(1, 3)]
-bd1 = rbind(bd1, bd1) %>%
-    mutate(year = c(rep(2021, 5), rep(2022, 5)),
-           # Se não for ano 2021, multiplica por um número aleatório ~ N(1, 0.025)
-           mass = ifelse(year == 2021, mass, mass*rnorm(10, 1, 0.025))) %>%
-    select(name, year, mass) %>%
-    arrange(name, year)
-bd1
-
-bd2 = starwars[c(2, 4, 7:9), 1:2]
-bd2 = rbind(bd2, bd2) %>%
-    mutate(year = c(rep(2021, 5), rep(2022, 5)),
-           # Se não for ano 2021, altura cresce 2%
-           height = ifelse(year == 2021, height, height*1.02)) %>%
-    select(name, year, height) %>%
-    arrange(name, year)
-bd2
-```
-- Note agora que, para cada personagem, temos 2 linhas que correspondem aos dois anos (2021 e 2022). Faremos um `full_join()` considerando como variáveis-chave ambos `name` e `year`.
-```{r}
-# Juntando as bases
-full_join(bd1, bd2, by=c("name", "year"))
-```
-- Atente-se também aos nomes das variáveis, pois ao juntar bases com variáveis de mesmos nomes (que não são usadas como chave), a função acaba incluindo ambas variáveis renomeadas, por padrão, com sufixos `.x` e `.y` (sufixos podem ser alterados pelo argumento `suffix`)
-```{r}
-bd2 = bd2 %>% mutate(mass = rnorm(10)) # Criando uma variável mass
-
-full_join(bd1, bd2, by=c("name", "year"))
 ```
 
 
