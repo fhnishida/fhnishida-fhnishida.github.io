@@ -35,7 +35,7 @@ Feel free to contact us if you have any question:
 
 ## Gravações das Monitorias
 
-- **Monitoria **: Manipulação de Dados | [Script](monitoria04.R)
+- **Monitoria 4**: Manipulação de Dados | [Script](monitoria04.R)
 [<img src="https://img.youtube.com/vi/XcwJWp4W01A/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=XcwJWp4W01A)  
 
 - **Monitoria 3**: Programação em R - Parte 2 | [Script](monitoria03.R)
