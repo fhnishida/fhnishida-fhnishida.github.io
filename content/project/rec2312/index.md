@@ -32,6 +32,9 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+- **Monitoria 7 (04/05)**: Matrizes de Tranformação e Estimador Between | [Script](monitoria07.R)
+[<img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=kh69ZHE8DNY)
+
 - **Monitoria 6 (27/04)**: Estimação de MQGF | [Script](monitoria06.R)
 [<img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=G-1AVqDQBqY)
 

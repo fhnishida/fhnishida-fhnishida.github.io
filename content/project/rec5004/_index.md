@@ -47,5 +47,5 @@ Feel free to contact us if you have any question:
 
 - **Monitoria 1**: Ferramentas do R | [Script](monitoria01.R)
 [<img src="https://img.youtube.com/vi/VlL4SfQN88I/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=VlL4SfQN88I)
-
+  - [R Markdown](Segue o vídeo curto sobre o uso do R Markdown: https://www.youtube.com/watch?v=kpQBfVM3mww)
 

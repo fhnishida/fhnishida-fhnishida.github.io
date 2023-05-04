@@ -6,22 +6,19 @@ N = 2
 T = 3
 K = 4
 
-iota_T = matrix(1, ncol=1, nrow=T)
+iota_T = matrix(1, nrow=T, ncol=1)
 I_N = diag(N)
-B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 
-# Matriz de covariadas X
-X = matrix(c(rep(1, 6), # 1a coluna de 1's
-             rep(3, 3), rep(7, 3), # 2a coluna
-             1,9,8,6,8,1, # 3a coluna
-             3,5,7,6,6,9, # 4a coluna
-             6,4,2,8,1,9  # 5a coluna
-), ncol=K+1) # matriz covariadas NT x (K+1)
-X
+B = I_N %x% (iota_T %*% solve( t(iota_T) %*% iota_T) %*% t(iota_T))
+
+X = matrix(
+  c(rep(1,6),
+    rep(3,3), rep(7,3),
+    1:18),
+  ncol=K+1
+)
 
 B %*% X
-
-
 
 
 ## Matriz de transformação within
@@ -29,18 +26,6 @@ I_NT = diag(N*T)
 W = I_NT - B
 
 round(W %*% X, 10)
-
-
-## Matriz de transformação de primeiras-diferenças
-Di = -diag(T)
-diag(Di[-nrow(Di), -1]) = 1
-Di = Di[-nrow(Di),]
-Di
-
-D = I_N %x% Di
-
-D %*% X
-
 
 
 ### Estimação Between
@@ -53,6 +38,27 @@ pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 # estimação between
 Q.between = plm(ikn ~ qn, pTobinQ, model="between")
 summary(Q.between)
+
+## via lm()
+library(dplyr)
+
+TobinQ = TobinQ %>% group_by(cusip) %>%
+  mutate(
+    ikn_bar = mean(ikn),
+    qn_bar = mean(qn)
+  ) %>% ungroup()
+
+# estimação MQO
+Q.between.ols = lm(ikn_bar ~ qn_bar, TobinQ)
+summary(Q.between.ols)$coef
+summary(Q.between)$coef
+
+N = 188
+T = 35
+K = 1
+vcov.ols = vcov(Q.between.ols)
+vcov.between = vcov(Q.between.ols) * (N*T - K - 1) / (N - K - 1)
+se.between = sqrt(diag(vcov.between))
 
 
 ## Estimação Analítica

@@ -617,7 +617,7 @@ starwars %>% group_by(birth_year=cut(birth_year,
 
 
 
-### Junção via _\*\_join()_
+### Junção via _\_join()_
 - Vimos anteriormente que, para agrupar bases de dados a partir de variáveis-chave, podemos usar a função `merge()`.
 - O pacote `dplyr` fornece uma família de funções _join_ que executam o mesmo comando que `merge()`, porém, ao invés de alterar o valor de um argumento, você precisa escolher uma das funções _join_ que podem ser resumidas na seguinte figura:
 
@@ -658,3 +658,5 @@ right_join(bd1, bd2, by="name")
 </br>
 
 {{< cta cta_text="👉 Proceed to Data Visualization" cta_link="../sec4" >}}
+
+
