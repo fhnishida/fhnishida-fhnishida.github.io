@@ -18,13 +18,11 @@ type: book
     - É possível ler gratuitamente a versão online em: <http://www.urfie.net>
     - Há também uma versão de Python do livro em: <http://www.upfie.net>
 - A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote `wooldridge`:
-
 ```r
-# install.packages("wooldridge")
-library(wooldridge)
+install.packages("wooldridge")
 ```
 
-
+</br>
 
 ## Distribuições
 - [Seção 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
@@ -141,21 +139,21 @@ Podemos criar gráficos usando a função `curve( function(x), from, to )`, na q
 curve(dnorm(x, mean=0, sd=1), from=-3, to=3)
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 ```r
 # cdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3
 curve(pnorm(x, mean=0, sd=1), from=-3, to=3)
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-6-2.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
 
 ```r
 # quantil de normal padrão com probabilidade acumulada no intervalo 0 e 1
 curve(qnorm(x, mean=0, sd=1), from=0, to=1)
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-6-3.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
 
 
 ### Distribuição t-Student
@@ -171,9 +169,10 @@ for (n in c(10, 5, 3, 2)) {
 }
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 
+</br>
 
 ## Simulação
 
@@ -195,7 +194,7 @@ sample(letters, 5) # Amostragem de 5 letras
 ```
 
 ```
-## [1] "g" "i" "y" "m" "e"
+## [1] "c" "g" "v" "i" "a"
 ```
 
 ```r
@@ -203,7 +202,7 @@ sample(1:10, 4) # Amostragem de 4 números de 1 a 10
 ```
 
 ```
-## [1] 3 9 2 5
+## [1] 5 9 2 3
 ```
 
 ```r
@@ -211,7 +210,7 @@ sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
 ```
 
 ```
-##  [1]  7  9  4  1  3  8 10  6  5  2
+##  [1]  8  5 10  2  7  4  3  9  1  6
 ```
 
 ```r
@@ -219,7 +218,7 @@ sample(1:10, replace = TRUE) # Amostragem com reposição
 ```
 
 ```
-##  [1] 10  3  5  9  6  8  6  4  9  8
+##  [1]  4 10  9  5  7 10 10  9  5  5
 ```
 - Note que, por padrão, a função `sample()` faz a amostragem sem reposição.
 
@@ -233,7 +232,7 @@ sample(1:6, 1) # amostra um número dentro do vetor 1:6
 ```
 
 ```
-## [1] 2
+## [1] 5
 ```
 - Vamos jogar 500 vezes o dado (usando função `replicate()`) e verificar sua distribuição:
 
@@ -245,7 +244,7 @@ table(amostra) # tabela com contagem das jogadas
 ```
 ## amostra
 ##  1  2  3  4  5  6 
-## 70 92 86 75 92 85
+## 89 85 87 81 67 91
 ```
 
 ```r
@@ -253,7 +252,7 @@ table(amostra) # tabela com contagem das jogadas
 plot(table(amostra), type="h")
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 - Note que não podemos usar a função `rep()` com simulação, pois ele sortearia um número e replicaria esse mesmo número 500 vezes.
 - Agora, vamos jogar 2 vezes o dado e fazer a média entre eles
 
@@ -262,7 +261,7 @@ mean(sample(1:6, 2))
 ```
 
 ```
-## [1] 3.5
+## [1] 3
 ```
 - Fazendo isso 500 vezes, temos:
 
@@ -274,7 +273,7 @@ table(amostra) # tabela com contagem das médias de 2 jogadas
 ```
 ## amostra
 ##   1 1.5   2 2.5   3 3.5   4 4.5   5 5.5   6 
-##  15  26  50  63  60  75  67  49  42  32  21
+##  13  39  47  42  72  88  63  60  38  27  11
 ```
 
 ```r
@@ -282,7 +281,7 @@ table(amostra) # tabela com contagem das médias de 2 jogadas
 plot(table(amostra), type="h")
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 - Note que, ao repetir 500 vezes, o cálcilo da média de 2 jogadas de dado, começou a dar mais peso para médias próximas à média populacional (3,5), mas ainda tem densidade nos valores mais extremos (1 e 6)
 - Foi necessário usar o argumento `replace=TRUE` para ter "reposição" dos números do dado
@@ -296,7 +295,7 @@ amostra = replicate(500, mean(sample(1:6, N, replace=T)))
 plot(table(amostra), type="h", xlim=c(1,6))
 ```
 
-<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 - Note que, quanto maior {{<math>}}$N${{</math>}}, a concentração das médias das amostragens se concentraram ainda mais próximo da média populacional (3,5). Além disso, a densidade de médias mais distantes ficaram praticamente nulas.
 
@@ -309,7 +308,7 @@ rnorm(5) # gerando 5 números aleatórios
 ```
 
 ```
-## [1] -1.8946846  0.1504202 -1.3370367  0.2945693  0.6537438
+## [1]  1.3154541  0.3899255 -0.4086082  0.5716515 -0.5222012
 ```
 
 - Para reproduzir resultados que usem números aleatórios, podemos definir "sementes" usando a função `set.seed()` e informando um número inteiro. Isso também é válido para a função `sample()`.
@@ -408,9 +407,10 @@ avgChange + CV * c(-se, se)
 - Note que o valor 0 está fora do intervalo de confiança de 95\% e, portanto, conclui-se que houve alteração na taxa de refugo (houve efeito negativo estatisticamente significante).
 
 
+</br>
+
 ## Teste _t_ e p-valores
 - [Subseções 1.8.2 e 1.8.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/74)
-- Apêndice C.6 de Wooldridge (2006, em português)
 
 - A estatística _t_ para testar uma hipótese sobre uma variável aleatória {{<math>}}$y${{</math>}} normalmente distribuída com média {{<math>}}$\bar{y}${{</math>}} é dado pela equação C.35 (Wooldridge, 2006). Dada a hipótese nula {{<math>}}$H_0: \bar{y} = \mu_0${{</math>}},
 $$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $$
@@ -463,10 +463,10 @@ t.test(x, y = NULL,
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95, ...)
 
-x: (non-empty) numeric vector of data values.
-alternative: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
-mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
-conf.level: confidence level of the interval.
+- x: (non-empty) numeric vector of data values.
+- alternative: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
+- mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
+- conf.level: confidence level of the interval.
 ```
 - Note que incluiremos um vetor de valor no argmento `x` e, por padrão, a função considera um teste bicaudal, testando a {{<math>}}$H_0${{</math>}} se média verdadeira é igual a zero e com intervalo de confiança de 95\%.
 - Retornando aos exemplos C.2 e C.6 ("Efeito de subsídios de treinamento corporativo sobre a produtividade"), temos:
@@ -511,4 +511,4 @@ testresults$p.value
 
 
 
-{{< cta cta_text="👉 Proceed to OLS Estimation" cta_link="../sec7" >}}
+{{< cta cta_text="👉 Proceed to Simple Regression" cta_link="../sec7" >}}

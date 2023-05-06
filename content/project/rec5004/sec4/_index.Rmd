@@ -42,7 +42,7 @@ knitr::opts_chunk$set(echo = TRUE)
     c. Gráfico de barra (_Barplot_)
     d. Gráfico de dispersão (_Scatterplot_)
 
-Como exemplo, usaremos dados da Agência de Proteção Ambiental dos EUA (EPA), [avgpm25.csv](https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv), que informa a quantidade de poluição por partícula fina (PM2.5). A média anual de PM2.5 que não pode exceder 12 {{math}}$\mu g/m^3${{/math}}. 
+Como exemplo, usaremos dados da Agência de Proteção Ambiental dos EUA (EPA), [avgpm25.csv](https://fhnishida.netlify.app/project/rec5004/avgpm25.csv), que informa a quantidade de poluição por partícula fina (PM2.5). A média anual de PM2.5 que não pode exceder 12 {{<math>}}$\mu g/m^3${{</math>}}. 
 
 ```{r}
 library(dplyr)
@@ -191,19 +191,20 @@ g + geom_point()
 ```
 
 4. Layer de suavização/tendência (`smooth`)
-```yaml
-geom_smooth(
-  mapping = NULL, data = NULL, ...,
-  method = NULL, formula = NULL, se = TRUE, level = 0.95
-)
 
-mapping: Set of aesthetic mappings created by aes() or aes_(). If specified and inherit.aes = TRUE (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping.
-data: The data to be displayed in this layer. If NULL, the default, the data is inherited from the plot data as specified in the call to ggplot().
-method: Smoothing method (function) to use, accepts either NULL or a character vector, e.g. "lm", "glm", "gam", "loess" or a function (...).
-formula: Formula to use in smoothing function, eg. y ~ x, y ~ poly(x, 2), y ~ log(x).
-se: Display confidence interval around smooth? (TRUE by default, see level to control.)
-level: Level of confidence interval to use (0.95 by default).
-```
+<!-- ```yaml -->
+<!-- geom_smooth( -->
+<!--   mapping = NULL, data = NULL, ..., -->
+<!--   method = NULL, formula = NULL, se = TRUE, level = 0.95 -->
+<!-- ) -->
+
+<!-- - mapping: Set of aesthetic mappings created by aes() or aes_(). If specified and inherit.aes = TRUE (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping. -->
+<!-- - data: The data to be displayed in this layer. If NULL, the default, the data is inherited from the plot data as specified in the call to ggplot(). -->
+<!-- - method: Smoothing method (function) to use, accepts either NULL or a character vector, e.g. "lm", "glm", "gam", "loess" or a function (...). -->
+<!-- - formula: Formula to use in smoothing function, eg. y ~ x, y ~ poly(x, 2), y ~ log(x). -->
+<!-- - se: Display confidence interval around smooth? (TRUE by default, see level to control.) -->
+<!-- - level: Level of confidence interval to use (0.95 by default). -->
+<!-- ``` -->
 
 ```{r}
 g + geom_point() + geom_smooth(method="lm") # suavização a partir de OLS
@@ -211,8 +212,7 @@ g + geom_point() + geom_smooth(method="lm") # suavização a partir de OLS
 
 
 
-5. Layers condicionais
-Facets (usar `cyl`)
+5. Layers condicionais (facets)
 
 ```{r}
 g + geom_point() + geom_smooth(method="lm") + facet_grid(. ~ cyl) # agrupando por nº cilindros horizontalmente

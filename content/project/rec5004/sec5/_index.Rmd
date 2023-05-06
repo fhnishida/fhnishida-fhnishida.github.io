@@ -20,12 +20,11 @@ knitr::opts_chunk$set(echo = TRUE)
     - É possível ler gratuitamente a versão online em: <http://www.urfie.net>
     - Há também uma versão de Python do livro em: <http://www.upfie.net>
 - A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote `wooldridge`:
-```{r}
-# install.packages("wooldridge")
-library(wooldridge)
+```r
+install.packages("wooldridge")
 ```
 
-
+</br>
 
 ## Distribuições
 - [Seção 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
@@ -120,6 +119,7 @@ for (n in c(10, 5, 3, 2)) {
 ```
 
 
+</br>
 
 ## Simulação
 
@@ -260,9 +260,10 @@ avgChange + CV * c(-se, se)
 - Note que o valor 0 está fora do intervalo de confiança de 95\% e, portanto, conclui-se que houve alteração na taxa de refugo (houve efeito negativo estatisticamente significante).
 
 
+</br>
+
 ## Teste _t_ e p-valores
 - [Subseções 1.8.2 e 1.8.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/74)
-- Apêndice C.6 de Wooldridge (2006, em português)
 
 - A estatística _t_ para testar uma hipótese sobre uma variável aleatória {{<math>}}$y${{</math>}} normalmente distribuída com média {{<math>}}$\bar{y}${{</math>}} é dado pela equação C.35 (Wooldridge, 2006). Dada a hipótese nula {{<math>}}$H_0: \bar{y} = \mu_0${{</math>}},
 $$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $$
@@ -305,10 +306,10 @@ t.test(x, y = NULL,
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95, ...)
 
-x: (non-empty) numeric vector of data values.
-alternative: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
-mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
-conf.level: confidence level of the interval.
+- x: (non-empty) numeric vector of data values.
+- alternative: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.
+- mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test).
+- conf.level: confidence level of the interval.
 ```
 - Note que incluiremos um vetor de valor no argmento `x` e, por padrão, a função considera um teste bicaudal, testando a {{<math>}}$H_0${{</math>}} se média verdadeira é igual a zero e com intervalo de confiança de 95\%.
 - Retornando aos exemplos C.2 e C.6 ("Efeito de subsídios de treinamento corporativo sobre a produtividade"), temos:
@@ -327,4 +328,4 @@ testresults$p.value
 
 
 
-{{< cta cta_text="👉 Proceed to OLS Estimation" cta_link="../sec7" >}}
+{{< cta cta_text="👉 Proceed to Simple Regression" cta_link="../sec7" >}}
