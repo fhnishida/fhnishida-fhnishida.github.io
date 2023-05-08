@@ -200,7 +200,7 @@ x %*% y # Multplicação matricial
   - A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()` -- para retirá-la, precisa incluir a "variável independente" `0` na fórmula.
 
 
-#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA
 - Sejam as variáveis
     - `colGPA` (_college GPA_): a nota média em um curso superior,
     - `hsGPA` (_high school GPA_): a nota médio do ensino médio, e
@@ -353,7 +353,7 @@ solve( t(A) %*% A )
 ## [2,] -0.21875  0.09375
 ```
 
-#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA
 - Queremos estimar o modelo:
 $$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
 
@@ -608,7 +608,7 @@ $$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
 
 </br>
 
-#### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+#### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA
 - Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_j = 0${{</math>}}.
 
 
@@ -754,7 +754,7 @@ confint(GPAres)
 - Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regressões usando a função `stargazer` do pacote de mesmo nome.
 
 
-#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores (Wooldridge, 2006)
+#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores
 - Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
 
 $$ \log{\text{salary}} = \beta_0 + \beta_1. (\text{benefits/salary}) + \text{outros_fatores} + u $$
@@ -857,7 +857,7 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 - Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
 
 
-##### Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### Exemplo 7.5 - Equação do Log do Salário-Hora
 
 - Vamos usar a base de dados `wage1` do pacote `wooldridge`
 - Vamos estimar o modelo:
@@ -1148,7 +1148,7 @@ cut(1:10, cutpts)
 ```
 
 
-##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais (Wooldridge, 2006)
+##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais
 
 - Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
 - Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
@@ -1206,7 +1206,7 @@ round( summary(res)$coef, 5 )
 - Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
 
 
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora
 
 - Retornemos à base de dados `wage1` do pacote `wooldridge`
 - Agora, vamos incluir a variável _dummy_ `married`
@@ -1314,7 +1314,7 @@ round( summary(reg_7.14b)$coef, 4 )
 
 
 
-##### Exemplo 7.10 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### Exemplo 7.10 - Equação do Log do Salário-Hora
 
 - Retornemos à base de dados `wage1` do pacote `wooldridge`
 - Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
