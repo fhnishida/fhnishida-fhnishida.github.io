@@ -301,7 +301,7 @@ mean(sal_hat)
 - Isto **NÃO** quer dizer que, para o modelo real as seguintes hipóteses sejam verdadeiras:
 {{<math>}}\begin{align}
     &E(\varepsilon) = 0 \tag{2.7'} \\
-    &E(x\varepsilon) = 0\ \Longrightarrow\ cov(x, \varepsilon) = 0 \tag{2.8'}
+    &E(x\varepsilon) = 0 \quad \Longrightarrow \quad cov(x, \varepsilon) = 0 \tag{2.8'}
 \end{align}{{</math>}}
 - De fato, se 2.7' e 2.8' não forem válidos, a estimação por OLS (que assume 2.7 e 2.8) será viesada.
 
@@ -338,51 +338,36 @@ $$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = 
 data(ceosal1, package="wooldridge")
 
 # Estimando modelo nível-nível
-lm(salary ~ sales, data=ceosal1)
+lm(salary ~ sales, data=ceosal1)$coef
 ```
 
 ```
-## 
-## Call:
-## lm(formula = salary ~ sales, data = ceosal1)
-## 
-## Coefficients:
-## (Intercept)        sales  
-##   1.174e+03    1.547e-02
+##  (Intercept)        sales 
+## 1.174005e+03 1.547053e-02
 ```
 
 - _Modelo log-nível_:
 
 ```r
 # Estimando modelo log-nível
-lm(log(salary) ~ sales, data=ceosal1)
+lm(log(salary) ~ sales, data=ceosal1)$coef
 ```
 
 ```
-## 
-## Call:
-## lm(formula = log(salary) ~ sales, data = ceosal1)
-## 
-## Coefficients:
-## (Intercept)        sales  
-##   6.847e+00    1.498e-05
+## (Intercept)       sales 
+## 6.84665e+00 1.49825e-05
 ```
 
 - _Modelo log-log_:
 
 ```r
 # Estimando modelo log-log
-lm(log(salary) ~ log(sales), data=ceosal1)
+lm(log(salary) ~ log(sales), data=ceosal1)$coef
 ```
 
 ```
-## 
-## Call:
-## lm(formula = log(salary) ~ log(sales), data = ceosal1)
-## 
-## Coefficients:
-## (Intercept)   log(sales)  
-##      4.8220       0.2567
+## (Intercept)  log(sales) 
+##   4.8219965   0.2566717
 ```
 
 
@@ -524,6 +509,7 @@ summary(CEOregres)
 
 
 </br>
+
 ## Diferença de médias
 - Baseado no Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador 
 - Poderíamos ter calculado a diferença de médias por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.

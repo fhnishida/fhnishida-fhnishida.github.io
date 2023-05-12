@@ -18,13 +18,12 @@ type: book
 
 ```r
 x = 1:4
-y = 6:9
 
-x + y # soma de cada elemento na mesma posição
+x + x # soma de cada elemento na mesma posição
 ```
 
 ```
-## [1]  7  9 11 13
+## [1] 2 4 6 8
 ```
 
 ```r
@@ -36,48 +35,57 @@ x + 2 # soma de de cada elemento com um mesmo escalar
 ```
 
 ```r
-x * y # multiplicação de cada elemento na mesma posição
+x * x # multiplicação de cada elemento na mesma posição
 ```
 
 ```
-## [1]  6 14 24 36
+## [1]  1  4  9 16
 ```
 
 ```r
-x / y # divisão de cada elemento na mesma posição
+x / x # divisão de cada elemento na mesma posição
 ```
 
 ```
-## [1] 0.1666667 0.2857143 0.3750000 0.4444444
+## [1] 1 1 1 1
 ```
-- Para fazer o produto vetorial usa-se `%*%`. Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna.
+
+
+- Além disso, podemos fazer
+  - **Transposta de uma matriz ou vetor**: função `t()`
+  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
+  - **Inversa de uma matriz (quadrada)**: função `solve()`
+
 
 ```r
 # Operações vetoriais
-x %*% y # x vetor-linha / y vetor-coluna
+x %*% x # x vetor-linha / x vetor-coluna
 ```
 
 ```
 ##      [,1]
-## [1,]   80
+## [1,]   30
 ```
 
 ```r
-x %*% t(y) # x vetor-coluna / y vetor-linha (só altera o segundo)
+x %*% t(x) # x vetor-coluna / x vetor-linha (altera ambos, mas t() só no 2o)
 ```
 
 ```
 ##      [,1] [,2] [,3] [,4]
-## [1,]    6    7    8    9
-## [2,]   12   14   16   18
-## [3,]   18   21   24   27
-## [4,]   24   28   32   36
+## [1,]    1    2    3    4
+## [2,]    2    4    6    8
+## [3,]    3    6    9   12
+## [4,]    4    8   12   16
 ```
-- Também pode-se "forçar" um vetor em linha ou em coluna via função `matrix()`.
+
+- Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna quando fazemos uma multiplicação vetorial.
+- Dado que adotamos vetores-coluna como padrão, sugiro "forçar" um vetor em linha ou em coluna via função `matrix()`.
+
 
 ```r
-# Transformando vetores em objetos matriz
-x_col = matrix(x, ncol=1) # vetor-coluna
+# Transformando em vetor-coluna
+x_col = matrix(x, ncol=1)
 x_col
 ```
 
@@ -90,99 +98,109 @@ x_col
 ```
 
 ```r
-y_lin = matrix(y, nrow=1)
-y_lin
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    6    7    8    9
-```
-
-```r
 # Operações vetoriais
-x_col %*% y_lin # x vetor-linha / y vetor-coluna 
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    6    7    8    9
-## [2,]   12   14   16   18
-## [3,]   18   21   24   27
-## [4,]   24   28   32   36
-```
-
-```r
-t(x_col) %*% t(y_lin) # x vetor-linha / y vetor-coluna 
+t(x_col) %*% x_col # produto interno
 ```
 
 ```
 ##      [,1]
-## [1,]   80
+## [1,]   30
 ```
+
+```r
+x_col %*% t(x_col) # produto externo
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    2    4    6    8
+## [3,]    3    6    9   12
+## [4,]    4    8   12   16
+```
+
+</br>
+
 - O mesmo é válido para matrizes:
 
 ```r
-x = matrix(1:4, nrow=2, ncol=2)
-x
+# Como exemplo, criaremos matriz X de dimensão 4x2
+X = matrix(1:8, nrow=4, ncol=2)
+X
 ```
 
 ```
 ##      [,1] [,2]
-## [1,]    1    3
-## [2,]    2    4
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
 ```
 
 ```r
-y = matrix(rep(10, 4), nrow=2, ncol=2)
-y
+# Transposta de X (2x4)
+t(X)
 ```
 
 ```
-##      [,1] [,2]
-## [1,]   10   10
-## [2,]   10   10
-```
-
-```r
-x + y # Soma de elementos na mesma posição
-```
-
-```
-##      [,1] [,2]
-## [1,]   11   13
-## [2,]   12   14
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
 ```
 
 ```r
-x + 2 # Soma de cada elemento da matriz com um mesmo escalar
+# Produto matricial X'X (2x2)
+t(X) %*% X
 ```
 
 ```
 ##      [,1] [,2]
-## [1,]    3    5
-## [2,]    4    6
+## [1,]   30   70
+## [2,]   70  174
 ```
 
 ```r
-x * y # Multiplicação de elementos na mesma posição
+# Inversa de X'X (2x2)
+solve( t(X) %*% X )
 ```
 
 ```
-##      [,1] [,2]
-## [1,]   10   30
-## [2,]   20   40
+##          [,1]     [,2]
+## [1,]  0.54375 -0.21875
+## [2,] -0.21875  0.09375
+```
+
+- Também podemos criar uma matrix identidade usando a função `diag()` e informando um número inteiro
+
+```r
+# Matriz identidade de dimensão 4
+I = diag(4)
+I
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
 ```
 
 ```r
-x %*% y # Multplicação matricial
+# diag() pode alterar valores da diagonal de uma matriz existente
+diag(I) = 1:4
+I
 ```
 
 ```
-##      [,1] [,2]
-## [1,]   40   40
-## [2,]   60   60
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    2    0    0
+## [3,]    0    0    3    0
+## [4,]    0    0    0    4
 ```
+
+
 
 
 </br>
@@ -298,60 +316,6 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x
 
 
 #### Estimação Analítica no R
-
-##### Operações matriciais/vetoriais no R
-- Primeiro, vamos ver como realizar operações matriciais/vetoriais no R:
-  - **Transposta de uma matriz ou vetor**: função `t()`
-  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
-  - **Inversa de uma matriz (quadrada)**: função `solve()`
-
-
-```r
-# Como exemplo, criaremos matriz A de dimensão 4x2
-A = matrix(1:8, nrow=4, ncol=2)
-A
-```
-
-```
-##      [,1] [,2]
-## [1,]    1    5
-## [2,]    2    6
-## [3,]    3    7
-## [4,]    4    8
-```
-
-```r
-# Transposta de A (2x4)
-t(A)
-```
-
-```
-##      [,1] [,2] [,3] [,4]
-## [1,]    1    2    3    4
-## [2,]    5    6    7    8
-```
-
-```r
-# Produto matricial A'A (2x2)
-t(A) %*% A
-```
-
-```
-##      [,1] [,2]
-## [1,]   30   70
-## [2,]   70  174
-```
-
-```r
-# Inversa de A'A (2x2)
-solve( t(A) %*% A )
-```
-
-```
-##          [,1]     [,2]
-## [1,]  0.54375 -0.21875
-## [2,] -0.21875  0.09375
-```
 
 #### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA
 - Queremos estimar o modelo:
@@ -478,9 +442,83 @@ head(uhat)
 ```
 
 
+
+
+##### Comparando estimativas `lm()` e analítica
+- Até agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
+
+```r
+cbind(bhat, GPAres$coef)
+```
+
+```
+##              [,1]        [,2]
+## const 1.286327767 1.286327767
+## hsGPA 0.453455885 0.453455885
+## ACT   0.009426012 0.009426012
+```
+
+<!-- - E, portanto, ainda percisamos concluir a parte de inferência da estimação por meio do cálculo da estatística _t_ e do p-valor: -->
+<!-- ```{r} -->
+<!-- summary(GPAres)$coef -->
+<!-- ``` -->
+
+
+</br>
+
+## Inferência MQO multivariado
+
+### Matriz de Variâncias-Covariâncias dos Erros
+A Matriz de Variâncias-Covariâncias dos Erros relaciona um termo de erro, {{<math>}}$\varepsilon_{i}${{</math>}}, com todos os demais termos de erro {{<math>}}$\varepsilon_{j}${{</math>}}, para todo {{<math>}}$j = 1, ..., N${{</math>}}.
+
+Na matriz de covariância de erro, cada linha representa um {{<math>}}$\varepsilon_{i}${{</math>}} e cada coluna representa um {{<math>}}$\varepsilon_{j}${{</math>}}. Seus elementos representam a covariância entre 
+{{<math>}}$\varepsilon_{i}${{</math>}} e {{<math>}}$\varepsilon_{j}${{</math>}}, sendo que pode haver {{<math>}}$\varepsilon_{i} = \varepsilon_{j}${{</math>}} (que, neste caso, torna-se variância):
+
+{{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
+\left[ \begin{array}{cccc}
+var(\varepsilon_{1}) & cov(\varepsilon_{1}, \varepsilon_{2}) & \cdots & cov(\varepsilon_{1}, \varepsilon_{N}) \\
+cov(\varepsilon_{2}, \varepsilon_{1}) & var(\varepsilon_{2}) & \cdots & cov(\varepsilon_{2}, \varepsilon_{N}) \\
+\vdots & \vdots & \ddots & \vdots \\
+cov(\varepsilon_{N}, \varepsilon_{1}) & cov(\varepsilon_{N}, \varepsilon_{2}) & \cdots & var(\varepsilon_{N}) 
+\end{array} \right]$${{</math>}}
+
+
+Como assumimos amostragem aleatória, a covariância entre dois indivíduos distintos {{<math>}}($i \neq j$){{</math>}} é  
+{{<math>}}$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{para todo } i \neq j.$${{</math>}}
+
+Logo, 
+{{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
+\left[ \begin{array}{cccc}
+var(\varepsilon_{1}) & 0 & \cdots & 0 \\
+0 & var(\varepsilon_{2}) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & var(\varepsilon_{N}) 
+\end{array} \right]$${{</math>}}
+
+
+Como também assumimos homocedasticidade, {{<math>}}$ var(\varepsilon_i) = \sigma^2,\ \forall i${{</math>}}, então:
+
+{{<math>}}\begin{align} cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} &= 
+\left[ \begin{array}{cccc}
+\sigma^2 & 0 & \cdots & 0 \\
+0 & \sigma^2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2 
+\end{array} \right] \\
+= \sigma^2 I_N &= \sigma^2 \begin{bmatrix} 1 & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1  \end{bmatrix} \end{align}{{</math>}}
+
+
+### Matriz de Variâncias-Covariâncias do Estimador
+(...)
+
+
+
 ##### 4. Variância do termo de erro {{<math>}}$S^2${{</math>}}
 
-{{<math>}}$$ S^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
+{{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
 
 No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
 
@@ -494,7 +532,7 @@ S2
 ```
 
 
-##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
+##### 5. Matriz de Variâncias-Covariâncias do Estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
 
@@ -526,53 +564,21 @@ se_bhat
 ```
 
 
-##### Comparando estimações via `lm()` e analítica
-- Até agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
-
-```r
-cbind(bhat, se_bhat)
-```
-
-```
-##                      se_bhat
-## const 1.286327767 0.34082212
-## hsGPA 0.453455885 0.09581292
-## ACT   0.009426012 0.01077719
-```
-
-- E, portanto, ainda percisamos concluir a parte de inferência da estimação por meio do cálculo da estatística _t_ e do p-valor:
-
-```r
-summary(GPAres)$coef
-```
-
-```
-##                Estimate Std. Error   t value     Pr(>|t|)
-## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
-## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
-## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
-```
-
-
-</br>
-
-## Inferência MQO multivariado
-
 ### O teste _t_
 
 - [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
 
 - Após a estimação, é importante fazer testes de hipótese na forma
-$$ H_0: \ \beta_j = a_j \tag{4.1} $$
+$$ H_0: \ \beta_j = h_j \tag{4.1} $$
 tal que {{<math>}}$a_j${{</math>}} é uma constante, e {{<math>}}$j${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
 
 - A hipótese alternativa para teste bicaudal é dada por
-$$ H_1: \ \beta_j \neq a_j \tag{4.2} $$
+$$ H_1: \ \beta_j \neq h_j \tag{4.2} $$
 enquanto, para teste unicaudal, é
-$$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $$
+$$ H_1: \ \beta_j > h_j \qquad \text{ou} \qquad H_1: \ \beta_j < h_j \tag{4.3} $$
 
 - Estas hipóteses podem ser convenientemente testas pelo test _t_:
-$$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
+$$ t_j = \frac{\hat{\beta}_j - h_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
 
 - **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
 

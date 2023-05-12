@@ -34,35 +34,14 @@ type: book
     2. O objetivo é o entendimento dos dados
     3. Eixos/legendas normalmente são retiradas
     4. Cores/tamanhos são primariamente usadas para informação
-- Principais gráficos simples:
-    a. Diagrama de caixa (_Boxplot_)
-    b. Histogramas
-    c. Gráfico de barra (_Barplot_)
-    d. Gráfico de dispersão (_Scatterplot_)
+- Principais gráficos:
+    1. Diagrama de caixa (_Boxplot_)
+    2. Histogramas
+    3. Gráfico de barra (_Barplot_)
+    4. Gráfico de dispersão (_Scatterplot_)
 
 Como exemplo, usaremos dados da Agência de Proteção Ambiental dos EUA (EPA), [avgpm25.csv](https://fhnishida.netlify.app/project/rec5004/avgpm25.csv), que informa a quantidade de poluição por partícula fina (PM2.5). A média anual de PM2.5 que não pode exceder 12 {{<math>}}$\mu g/m^3${{</math>}}. 
 
-
-```r
-library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
 
 ```r
 pollution = read.csv("https://fhnishida.netlify.app/project/rec5004/avgpm25.csv")
@@ -127,8 +106,8 @@ abline(v=12, col="red") # Linha vertical no valor 12
 ```r
 par(mfrow=c(2, 1), mar=c(4, 4, 2, 1)) # Criando figura com 2 linhas e 1 coluna + margens
 
-pol_west = pollution %>% filter(region == "west")
-pol_east = pollution %>% filter(region == "east")
+pol_west = pollution[pollution$region == "west",]
+pol_east = pollution[pollution$region == "east",]
 
 hist(pol_west$pm25, col="green")
 hist(pol_east$pm25, col="green")
@@ -184,13 +163,14 @@ plot(pol_east$latitude, pol_east$pm25, main="East")
 ```r
 par(mfrow=c(1, 1)) # Retornando ao padrão
 
-air_may = airquality %>% filter(Month==5)
-air_other = airquality %>% filter(Month!=5)
+air_may = airquality[airquality$Month==5,]
+air_other = airquality[airquality$Month!=5,]
 
 plot(airquality$Wind, airquality$Ozone, main="Ozone and Wind in NYC")
 points(air_may$Wind, air_may$Ozone, col="blue")
 points(air_other$Wind, air_other$Ozone, col="red")
-legend("topright", pch=1, col=c("blue", "red"), legend=c("May", "Other Months"))
+legend("topright", pch=1, col=c("blue", "red"),
+       legend=c("May", "Other Months"))
 ```
 
 <img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />

@@ -275,6 +275,7 @@ summary(CEOregres)
 
 
 </br>
+
 ## Diferença de médias
 - Baseado no Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador 
 - Poderíamos ter calculado a diferença de médias por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
