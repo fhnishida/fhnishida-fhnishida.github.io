@@ -29,49 +29,45 @@ $$ y = \beta_0 + \beta_1 x + \varepsilon \tag{2.1} $$
 
 - E os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}} é dado por
 $$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
-tal que 
-$$ y = \hat{y} + \hat{\varepsilon} $$
+e os resíduos podem ser obtidos por 
+$$ \hat{\varepsilon} = y - \hat{y} $$
 
 ### Exemplo 2.3: Salário de Diretores Executivos e Retornos de Ações
 
 - Considere o seguinte modelo de regressão simples
 $$ \text{salary} = \beta_0 + \beta_1 \text{roe} + \varepsilon $$
-em que `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o investimento em percentual.
+em que `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o patrimônio líquido em percentual.
 
 
-#### Estimando regressão simples "na mão"
+#### Estimação Analítica ("na mão")
 
 ```{r message=FALSE, warning=FALSE}
 # Carregando a base de dados do pacote 'wooldridge'
 data(ceosal1, package="wooldridge")
 
-attach(ceosal1) # para não precisar escrever 'ceosal1$' antes de toda variável
-
-cov(salary, roe) # covariância entre variável dependente e independente
-var(roe) # variância do retorno sobre o investimento
-mean(roe) # média do retorno sobre o investimento
-mean(salary) # média do salário
+cov(ceosal1$salary, ceosal1$roe) # covariância entre salary e roe
+var(ceosal1$roe) # variância do retorno sobre o patrimônio líquido
+mean(ceosal1$roe) # média do retorno sobre o patrimônio líquido
+mean(ceosal1$salary) # média do salário
 
 # Cálculo "na mão" das estimativas de MQO
-b1hat = cov(salary, roe) / var(roe) # por (2.3)
+b1hat = cov(ceosal1$salary, ceosal1$roe) / var(ceosal1$roe) # por (2.3)
 b1hat
-b0hat = mean(salary) - var(roe)*mean(salary) # por (2.2)
+b0hat = mean(ceosal1$salary) - b1hat*mean(ceosal1$roe) # por (2.2)
 b0hat
-
-detach(ceosal1) # para parar de procurar variável dentro do objeto 'ceosal1'
 ```
 
-- Vemos que um incremento de uma unidade (porcento) no retorno sobre o investimento (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos diretores executivos.
+- Vemos que um incremento de uma unidade (porcento) no retorno sobre o patrimônio líquido (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos diretores executivos.
 
 
-#### Estimando regressão simples via `lm()`
+#### Estimação via `lm()`
 - Uma maneira mais conveniente de fazer a estimação por MQO é usando a função `lm()`
 - Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (`~`):
 ```{r}
 lm(ceosal1$salary ~ ceosal1$roe)
 ```
 
-- Também podemos deixar de usar o prefixo `ceosal1$` antes dos nomes do vetores preenchermos o argumento `data = ceosal1`
+- Também podemos deixar de usar o prefixo `ceosal1$` antes dos nomes do vetores ao preenchermos o argumento `data = ceosal1`
 ```{r}
 lm(salary ~ roe, data=ceosal1)
 ```
@@ -93,16 +89,16 @@ abline(lm(salary ~ roe, data=ceosal1), col="red")
 - Podemos "guardar" os resultados da estimação em um objeto (da classe `list`) e, depois, extrair informações dele.
 ```{r}
 # atribuindo o resultado da regressão em um objeto
-CEOregres = lm(salary ~ roe, data=ceosal1)
+reg = lm(salary ~ roe, data=ceosal1)
 
 # verificando os "nomes" das informações contidas no objeto
-names(CEOregres)
+names(reg)
 ```
 
 - Podemos usar a função `coef()` para extrairmos um data frame com os coeficientes da regressão
 ```{r}
 # Extraindo vetor de coeficientes da regressão
-bhat = coef(CEOregres)
+bhat = coef(reg)
 bhat
 
 b0hat = bhat["(Intercept)"] # ou bhat[1]
@@ -117,7 +113,7 @@ b1hat =  bhat["roe"] # ou bhat[2]
 \end{align}{{</math>}}
 
 ```{r}
-# Extraindo colunas de ceosal1 em vetores
+# Extraindo variáveis de ceosal1 em vetores
 sal = ceosal1$salary
 roe = ceosal1$roe
 
@@ -133,18 +129,17 @@ head( cbind(sal, roe, sal_hat, ehat) )
 
 - Com as funções `fitted()` e `resid()` podemos extrair os valores ajustados e os resíduos do objeto com resultado da regressão:
 ```{r}
-head( cbind(fitted(CEOregres), resid(CEOregres)) )
+head( cbind(fitted(reg), resid(reg)) )
 
 # Ou também
-head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
+head( cbind(reg$fitted, reg$residuals) )
 ```
 
 
 - Na seção 2.3 de Wooldridge (2006), vemos que a estimação por MQO usa as seguintes hipóteses:
 {{<math>}}\begin{align}
     &\sum^n_{i=1}{\hat{\varepsilon}_i} = 0 \quad \implies \quad \bar{\hat{\varepsilon}} = 0 \tag{2.7} \\
-    &\sum^n_{i=1}{x_i \hat{\varepsilon}_i} = 0 \quad \implies \quad cov(x,\hat{\varepsilon}) = 0 \tag{2.8} \\
-    &\bar{y}=\hat{\beta}_0 + \hat{\beta}_1.\bar{x} \tag{2.9}
+    &\sum^n_{i=1}{x_i \hat{\varepsilon}_i} = 0 \quad \implies \quad cov(x,\hat{\varepsilon}) = 0 \tag{2.8}
 \end{align}{{</math>}}
 
 - Podemos verificá-los em nosso exemplo:
@@ -153,20 +148,17 @@ head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 mean(ehat) # bem próximo de 0
 
 # Verificando (2.8)
-cor(ceosal1$roe, ehat) # bem próximo de 0
-
-# Verificando (2.9)
-mean(ceosal1$salary)
-mean(sal_hat)
+cov(ceosal1$roe, ehat) # bem próximo de 0
 ```
 
-- **IMPORTANTE**: Isso só quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
-- Isto **NÃO** quer dizer que, para o modelo real as seguintes hipóteses sejam verdadeiras:
-{{<math>}}\begin{align}
-    &E(\varepsilon) = 0 \tag{2.7'} \\
-    &E(x\varepsilon) = 0 \quad \Longrightarrow \quad cov(x, \varepsilon) = 0 \tag{2.8'}
-\end{align}{{</math>}}
-- De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7 e 2.8) será viesada.
+
+<!-- - **IMPORTANTE**: Isso só quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7 e 2.8 sejam verdadeiros. -->
+<!-- - Isto **NÃO** quer dizer que, para o modelo real as seguintes hipóteses sejam verdadeiras: -->
+<!-- {{<math>}}\begin{align} -->
+<!--     &E(\varepsilon) = 0 \tag{2.7'} \\ -->
+<!--     &E(x\varepsilon) = 0 \quad \Longrightarrow \quad cov(x, \varepsilon) = 0 \tag{2.8'} -->
+<!-- \end{align}{{</math>}} -->
+<!-- - De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7 e 2.8) será viesada. -->
 
 
 </br>
@@ -236,74 +228,45 @@ mean(ceosal1$salary, na.rm=TRUE)
 </br>
 
 
-## Qualidade do ajuste
-- [Seção 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101)
-- A soma de quadrados total (SST), a soma de quadrados explicada (SSE) e a soma de quadrados dos resíduos (SSR) podem ser escritos como:
+<!-- ## Qualidade do ajuste -->
+<!-- - [Seção 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101) -->
+<!-- - A soma de quadrados total (SST), a soma de quadrados explicada (SSE) e a soma de quadrados dos resíduos (SSR) podem ser escritos como: -->
 
-{{<math>}}\begin{align}
-    SST &= \sum^n_{i=1}{(y_i - \bar{y})^2} = (n-1) . var(y) \tag{2.10}\\
-    SSE &= \sum^n_{i=1}{(\hat{y}_i - \bar{y})^2} = (n-1) . var(\hat{y}) \tag{2.11}\\
-    SSR &= \sum^n_{i=1}{(\hat{\varepsilon}_i - 0)^2} = (n-1) . var(\hat{\varepsilon}) \tag{2.12}
-\end{align}{{</math>}}
-em que {{<math>}}$var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}.
+<!-- {{<math>}}\begin{align} -->
+<!--     SST &= \sum^n_{i=1}{(y_i - \bar{y})^2} = (n-1) . var(y) \tag{2.10}\\ -->
+<!--     SSE &= \sum^n_{i=1}{(\hat{y}_i - \bar{y})^2} = (n-1) . var(\hat{y}) \tag{2.11}\\ -->
+<!--     SSR &= \sum^n_{i=1}{(\hat{\varepsilon}_i - 0)^2} = (n-1) . var(\hat{\varepsilon}) \tag{2.12} -->
+<!-- \end{align}{{</math>}} -->
+<!-- em que {{<math>}}$var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}. -->
 
-- Wooldridge (2006) define o coeficiente de determinação como:
-{{<math>}}\begin{align}
-    R^2 &= \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\\
-        &= \frac{var(\hat{y})}{var(y)} = 1 - \frac{var(\hat{\varepsilon})}{var(y)} \tag{2.13}
-\end{align}{{</math>}}
-pois {{<math>}}$SST = SSE + SSR${{</math>}}.
+<!-- - Wooldridge (2006) define o coeficiente de determinação como: -->
+<!-- {{<math>}}\begin{align} -->
+<!--     R^2 &= \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\\ -->
+<!--         &= \frac{var(\hat{y})}{var(y)} = 1 - \frac{var(\hat{\varepsilon})}{var(y)} \tag{2.13} -->
+<!-- \end{align}{{</math>}} -->
+<!-- pois {{<math>}}$SST = SSE + SSR${{</math>}}. -->
 
-```{r}
-# Calculando SST, SSE e SSR
-SST = t(sal - mean(sal)) %*% (sal - mean(sal)) # produto interno y'y
-SSE = t(sal_hat - mean(sal)) %*% (sal_hat - mean(sal)) # produto interno yhat'yhat
-SSR = t(ehat) %*% ehat # produto interno ehat'ehat
+<!-- ```{r} -->
+<!-- # Calculando SST, SSE e SSR -->
+<!-- SST = t(sal - mean(sal)) %*% (sal - mean(sal)) # produto interno y'y -->
+<!-- SSE = t(sal_hat - mean(sal)) %*% (sal_hat - mean(sal)) # produto interno yhat'yhat -->
+<!-- SSR = t(ehat) %*% ehat # produto interno ehat'ehat -->
 
-# Calculando R^2
-SSE/SST
-var(sal_hat)/var(sal) # "SSE/SST"
-1 - SSR/SST
-1 - var(ehat)/var(sal) # 1 - "SSR/SST"
-```
+<!-- # Calculando R^2 -->
+<!-- SSE/SST -->
+<!-- var(sal_hat)/var(sal) # "SSE/SST" -->
+<!-- 1 - SSR/SST -->
+<!-- 1 - var(ehat)/var(sal) # 1 - "SSR/SST" -->
+<!-- ``` -->
 
-- Para obter o {{<math>}}$R^2${{</math>}} de forma mais conveniente, pode-se usar a função `summary()` sobre o objeto de resultado da regressão. Esta função fornece uma visualização dos resultados mais detalhada, incluindo o {{<math>}}$R^2${{</math>}}:
-```{r}
-summary(CEOregres)
-```
-
-
-
-</br>
-
-## Diferença de médias
-- Baseado no Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador 
-- Poderíamos ter calculado a diferença de médias por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
-- Primeiro vamos criar um vetor único de taxas de refugo (vamos empilhar `SR87` e `SR88`)
-```{r}
-SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
-         1, .45, 5.03, 8, 9, 18, .28, 7, 3.97)
-SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5, 
-         .61, 6.7, 4, 7, 19, .2, 5, 3.83)
-
-SR = c(SR87, SR88) # empilhando SR87 e SR88 em único vetor
-SR
-```
-
-- Note que os 20 primeiros valores são relativos às taxas de refugo no ano de 1987 e os 20 últimos valores são de 1988.
-- Vamos criar uma variável _dummy_ chamada de _group88_ que atribui valor 1 as observações do ano de 1988 e o valor 0 para as de 1987:
-```{r}
-group88 = c(rep(0, 20), rep(1, 20)) # 0/1 para 20 primeiras/últimas observ
-group88
-```
-
-- Ao regredirmos a taxa de refugo em relação à _dummy_ obtemos a diferença das médias
-```{r}
-lm(SR ~ group88)
-```
+<!-- - Para obter o {{<math>}}$R^2${{</math>}} de forma mais conveniente, pode-se usar a função `summary()` sobre o objeto de resultado da regressão. Esta função fornece uma visualização dos resultados mais detalhada, incluindo o {{<math>}}$R^2${{</math>}}: -->
+<!-- ```{r} -->
+<!-- summary(reg) -->
+<!-- ``` -->
 
 
 </br>
+
 
 
 ## Violações de hipótese
@@ -348,8 +311,8 @@ lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ```
 
 - Note que foi possível recuperar os parâmetros reais:
-  - {{<math>}}$\hat{\beta}_0 = 50,268 \approx 50 = \tilde{\beta}_0${{</math>}} e
-  - {{<math>}}$\hat{\beta}_1 = -5,039 \approx -5 = \tilde{\beta}_1${{</math>}}.
+  - {{<math>}}$\hat{\beta}_0 = 49,794 \approx 50 = \tilde{\beta}_0${{</math>}} e
+  - {{<math>}}$\hat{\beta}_1 = -4,948 \approx -5 = \tilde{\beta}_1${{</math>}}.
 
 ```{r}
 plot(x, y) # Figura de x contra y
@@ -361,7 +324,7 @@ abline(lm(y ~ x), col="blue") # reta estimada a partir das observações
 - Agora, no _modelo real_, suponha que o número de queimaduras {{<math>}}$y${{</math>}} é determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
 
 $$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\beta}_2 z + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 2^2) \tag{2} $$
-em que {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{<math>}}$\beta_2=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim U(1, 9)${{</math>}} e {{<math>}}$z \sim N(11, 15)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, **não** é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
+em que {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{<math>}}$\beta_2=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim U(1, 9)${{</math>}} e {{<math>}}$z \sim U(11, 15)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, **não** é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
 
 - Primeiro, vamos simular as observações:
 ```{r}
@@ -381,13 +344,13 @@ y = b0til + b1til*x + b2til*z + e_til # calculando observações y
     $$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{2a}$$
     assumindo que {{<math>}}$E[\varepsilon] = 0${{</math>}} e {{<math>}}$cov(\varepsilon, x)= 0${{</math>}}.
 
-- Note que o pesquisador deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba ``entrando'' no erro da estimação.
+- Note que o pesquisador deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba "entrando" no erro da estimação.
 - No entanto, como {{<math>}}$z${{</math>}} não tem relação com {{<math>}}$x${{</math>}}, então isso não afeta a estimativa de {{<math>}}$\hat{\beta}_1${{</math>}}:
 ```{r}
 cor(x, z) # correlação de x e z -> próxima de 0
 lm(y ~ x) # estimação por MQO
 ```
-- Note que {{<math>}}$\hat{\beta}_1 = -5,12 \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar do pesquisador não ter incluído {{<math>}}$z${{</math>}} no modelo.
+- Note que {{<math>}}$\hat{\beta}_1 = -4,913 \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar do pesquisador não ter incluído {{<math>}}$z${{</math>}} no modelo.
 - Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e alguma variável de interesse {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}. Ou seja, que nenhuma variável explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro.
 
 
@@ -414,7 +377,7 @@ cor(x, z) # correlação de x e z
 lm(y ~ x) # estimação por MQO
 ```
 
-- Observe que {{<math>}}$\hat{\beta}_1 = 0,5 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o resíduo {{<math>}}$\hat{\varepsilon}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do MQO).
+- Observe que {{<math>}}$\hat{\beta}_1 = 2,56 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o resíduo {{<math>}}$\hat{\varepsilon}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do MQO).
 - Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}:
 
 ```{r}

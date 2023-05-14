@@ -362,7 +362,7 @@ t_{\hat{\beta}_k} &= \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{\small{(N-K-1)}}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 em que {{<math>}}$\Phi_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
 
-<center><img src="../t_test.png" width=50%></center>
+<center><img src="../t_test.png" width=60%></center>
 
 - Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor for menor do que um nível de significância {{<math>}}$\alpha${{</math>}}:
 {{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_k} \le \alpha $${{</math>}}
@@ -449,7 +449,7 @@ summary(reg)
 ## F-statistic: 14.78 on 2 and 138 DF,  p-value: 1.526e-06
 ```
 
-- Podemos extrair apenas a matriz 'Coefficients' usando `coef()` ou `$coef`
+- Podemos extrair apenas a matriz 'Coefficients' usando `coef()` ou `$coef`, e o intervalo de confiança usando `confint()`
 
 ```r
 # Coefficients
@@ -484,10 +484,22 @@ coef(reg)
 ## 1.286327767 0.453455885 0.009426012
 ```
 
-- Além disso, podemos extrair a matriz de variâncias-covariâncias do estimador:
+```r
+# Intervalo de confiança
+confint(reg)
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept)  0.61241898 1.96023655
+## hsGPA        0.26400467 0.64290710
+## ACT         -0.01188376 0.03073578
+```
+
+- Além disso, podemos extrair a matriz de variâncias-covariâncias do estimador com `vcov()`:
 
 ```r
-vcov(reg)
+vcov(reg) 
 ```
 
 ```
@@ -499,7 +511,7 @@ vcov(reg)
 
 
 
-### Estimação Analítica no R (parte 1)
+### Estimação Analítica
 
 #### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA
 - Queremos estimar o modelo:
@@ -900,19 +912,59 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"))
 
 ##### Exemplo 7.5 - Equação do Log do Salário-Hora
 
-- Vamos usar a base de dados `wage1` do pacote `wooldridge`
-- Vamos estimar o modelo:
+
+- Podemos calcular a **diferença de médias** de uma variável dependente por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
+- Vamos utilizar a base de dados `wage1` do pacote `wooldridge`  para estimar o seguinte modelo
+{{<math>}}$$ \text{wage} = \beta_0 + \beta_1 \text{female} + \varepsilon $${{</math>}}
+
+- Observe que, se incluirmos apenas uma dummy (_female_) como covariada, a regressão calcula a **diferença de médias entre os dois grupos**:
+
+```r
+data(wage1, package="wooldridge")
+reg = lm(wage ~ female, data=wage1)
+round( summary(reg)$coef, 6 )
+```
+
+```
+##              Estimate Std. Error   t value Pr(>|t|)
+## (Intercept)  7.099489   0.210008 33.805777        0
+## female      -2.511830   0.303409 -8.278688        0
+```
+
+```r
+# calculando as médias de salário por sexo:
+mean(wage1$wage[wage1$female==0]) # média salarial dos homens
+```
+
+```
+## [1] 7.099489
+```
+
+```r
+mean(wage1$wage[wage1$female==1]) # média salarial das mulheres
+```
+
+```
+## [1] 4.587659
+```
+
+- Note que:
+  - {{<math>}}$\hat{\beta}_0${{</math>}} é a média salarial dos homens (`female==0`)
+  - {{<math>}}$\hat{\beta}_1${{</math>}} é a diferença salarial entre os homens (`female==0`) e as mulheres (`female==1`)
+  - A soma {{<math>}}$\hat{\beta}_0 + {{<math>}}$\hat{\beta}_1${{</math>}}${{</math>}} é igual à média das mulheres.
+- A vantagem de fazer a regressão de diferença de médias é que podemos usar a estatística _t_ para avaliar se a diferença é estatisticamente significante entre os dois grupos.
+- Neste caso, a diferença é bastante significante (p-valor < 0,01%)
+
+
+</br>
+
+
+- Agora, vamos estimar o modelo com mais variáveis explicativas:
 
 {{<math>}}\begin{align}
 \text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
 &\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + \varepsilon \tag{7.6} \end{align}{{</math>}}
 em que:
-
-- `wage`: salário médio por hora
-- `female`: dummy em que (1) mulher e (0) homem
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
-- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 ```r
@@ -920,8 +972,8 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-reg_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(reg_7.1)$coef, 4 )
+reg = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg)$coef, 4 )
 ```
 
 ```
@@ -935,8 +987,10 @@ round( summary(reg_7.1)$coef, 4 )
 ## tenursq      -0.0029     0.0017 -1.7473   0.0812
 ```
 
-- Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
+- Nota-se que as mulheres (`female == 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female == 0`).
+- Isto implica que, neste modelo, o **intercepto** das mulheres é 1,78 inferior aos dos homens.
 - Essa diferença é estatisticamente significante (p-valor de `female` é menor do que 5\%)
+
 
 
 
@@ -972,7 +1026,7 @@ em que:
 
 
 ```r
-card1994 = read.csv("https://fhnishida.netlify.app/project/rec2301/card1994.csv")
+card1994 = read.csv("https://fhnishida.netlify.app/project/rec5004/card1994.csv")
 head(card1994) # olhando as 6 primeiras linhas
 ```
 
@@ -986,8 +1040,8 @@ head(card1994) # olhando as 6 primeiras linhas
 ## 6   451  0     1    24.0    13.00
 ```
 
-- Note que a variável categórica `chain` possui números ao invés dos nomes das redes de fast food.
-- Isto é comum nas bases de dados, já que números consomem menos espaço de armazenamento.
+- Note que a variável categórica `chain` foi considerada como variável numérica, pois possui números ao invés de nomes das redes de fast food.
+- Isto é comum em grandes bases de dados, já que números consomem menos espaço de armazenamento do que texto. Neste caso, há um dicionário indicando o que significa cada número.
 - Caso você rode a estimação com a variável `chain` desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:
 
 
@@ -1005,7 +1059,7 @@ lm(diff_fte ~ nj + hrsopen + chain, data=card1994)
 ##     0.40284      4.61869     -0.28458     -0.06462
 ```
 
-- Note que a interpretação é que a mudança de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
+- Note que a interpretação é que a mudança de uma rede para a outra [como `bk` (1) para `kfc` (2), de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
 - Portanto, precisamos criar as _dummies_ das variáveis categóricas:
 
 
@@ -1030,7 +1084,7 @@ head(card1994)
 ## 6   451  0     1    24.0    13.00  1   0    0      0
 ```
 
-- Também é possível criar _dummies_ mais facilmente usando o pacote `fastDummies`
+- Também é possível criar _dummies_ mais facilmente usando a função `dummy_cols()` do pacote `fastDummies`
 - Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
 - Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
 
@@ -1273,8 +1327,8 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-reg_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(reg_7.11)$coef, 4 )
+reg = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
+round( summary(reg)$coef, 4 )
 ```
 
 ```
@@ -1303,9 +1357,9 @@ round( summary(reg_7.11)$coef, 4 )
 
 ```r
 # Estimando o modelo - forma (a)
-reg_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
+reg = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
                data=wage1)
-round( summary(reg_7.14a)$coef, 4 )
+round( summary(reg)$coef, 4 )
 ```
 
 ```
@@ -1323,9 +1377,9 @@ round( summary(reg_7.14a)$coef, 4 )
 
 ```r
 # Estimando o modelo - forma (b)
-reg_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
+reg = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
                data=wage1)
-round( summary(reg_7.14b)$coef, 4 )
+round( summary(reg)$coef, 4 )
 ```
 
 ```
@@ -1380,9 +1434,9 @@ em que:
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
-reg_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
+reg = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
               data=wage1)
-round( summary(reg_7.17)$coef, 4 )
+round( summary(reg)$coef, 4 )
 ```
 
 ```
