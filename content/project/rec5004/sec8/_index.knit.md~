@@ -10,24 +10,46 @@ output: md_document
 type: book
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-wd = "~/../OneDrive/FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Aspire
-# wd = "~/../FEA-RP/Disciplinas/REC5004_Econometria-I/Monitoria-FHN/PNADc" # Nitro
-```
+
 
 
 
 ## Operações matriciais no R
 - [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
 - Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor
-```{r}
+
+```r
 x = 1:4
 
 x + x # soma de cada elemento na mesma posição
+```
+
+```
+## [1] 2 4 6 8
+```
+
+```r
 x + 2 # soma de de cada elemento com um mesmo escalar
+```
+
+```
+## [1] 3 4 5 6
+```
+
+```r
 x * x # multiplicação de cada elemento na mesma posição
+```
+
+```
+## [1]  1  4  9 16
+```
+
+```r
 x / x # divisão de cada elemento na mesma posição
+```
+
+```
+## [1] 1 1 1 1
 ```
 
 
@@ -36,52 +58,148 @@ x / x # divisão de cada elemento na mesma posição
   - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
   - **Inversa de uma matriz (quadrada)**: função `solve()`
 
-```{r}
+
+```r
 # Operações vetoriais
 x %*% x # x vetor-linha / x vetor-coluna
+```
+
+```
+##      [,1]
+## [1,]   30
+```
+
+```r
 x %*% t(x) # x vetor-coluna / x vetor-linha (altera ambos, mas t() só no 2o)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    2    4    6    8
+## [3,]    3    6    9   12
+## [4,]    4    8   12   16
 ```
 
 - Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna quando fazemos uma multiplicação vetorial.
 - Dado que adotamos vetores-coluna como padrão, sugiro "forçar" um vetor em linha ou em coluna via função `matrix()`.
 
-```{r}
+
+```r
 # Transformando em vetor-coluna
 x_col = matrix(x, ncol=1)
 x_col
+```
 
+```
+##      [,1]
+## [1,]    1
+## [2,]    2
+## [3,]    3
+## [4,]    4
+```
+
+```r
 # Operações vetoriais
 t(x_col) %*% x_col # produto interno
+```
+
+```
+##      [,1]
+## [1,]   30
+```
+
+```r
 x_col %*% t(x_col) # produto externo
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    2    4    6    8
+## [3,]    3    6    9   12
+## [4,]    4    8   12   16
 ```
 
 </br>
 
 - O mesmo é válido para matrizes:
-```{r}
+
+```r
 # Como exemplo, criaremos matriz X de dimensão 4x2
 X = matrix(1:8, nrow=4, ncol=2)
 X
+```
 
+```
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+```
+
+```r
 # Transposta de X (2x4)
 t(X)
+```
 
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
+```
+
+```r
 # Produto matricial X'X (2x2)
 t(X) %*% X
+```
 
+```
+##      [,1] [,2]
+## [1,]   30   70
+## [2,]   70  174
+```
+
+```r
 # Inversa de X'X (2x2)
 solve( t(X) %*% X )
 ```
 
+```
+##          [,1]     [,2]
+## [1,]  0.54375 -0.21875
+## [2,] -0.21875  0.09375
+```
+
 - Também podemos criar uma matrix identidade usando a função `diag()` e informando um número inteiro
-```{r}
+
+```r
 # Matriz identidade de dimensão 4
 I = diag(4)
 I
+```
 
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
+```
+
+```r
 # diag() pode alterar valores da diagonal de uma matriz existente
 diag(I) = 1:4
 I
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    2    0    0
+## [3,]    0    0    3    0
+## [4,]    0    0    0    4
 ```
 
 </br>
@@ -283,7 +401,8 @@ $$ \text{CI}_\alpha = \hat{\beta}_k\ \pm\ \text{cv}_{\scriptscriptstyle{1-\alpha
 
 $$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + \varepsilon $$
 
-```{r}
+
+```r
 # Acessando a base de dados gpa1
 data(gpa1, package = "wooldridge")
 
@@ -292,23 +411,90 @@ reg = lm(colGPA ~ hsGPA + ACT, data = gpa1)
 reg
 ```
 
+```
+## 
+## Call:
+## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+## 
+## Coefficients:
+## (Intercept)        hsGPA          ACT  
+##    1.286328     0.453456     0.009426
+```
+
 - Note que podemos ver mais detalhes da estimação usando a função `summary()` no objeto resultante da função `lm()`
-```{r}
+
+```r
 summary(reg)
 ```
 
+```
+## 
+## Call:
+## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.85442 -0.24666 -0.02614  0.28127  0.85357 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 1.286328   0.340822   3.774 0.000238 ***
+## hsGPA       0.453456   0.095813   4.733 5.42e-06 ***
+## ACT         0.009426   0.010777   0.875 0.383297    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3403 on 138 degrees of freedom
+## Multiple R-squared:  0.1764,	Adjusted R-squared:  0.1645 
+## F-statistic: 14.78 on 2 and 138 DF,  p-value: 1.526e-06
+```
+
 - Podemos extrair apenas a matriz 'Coefficients' usando `coef()` ou `$coef`
-```{r}
+
+```r
 # Coefficients
 coef(summary(reg))
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
 summary(reg)$coef
+```
+
+```
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+```
+
+```r
 # note que se não usarmos summary(), temos apenas as estimativas
 coef(reg)
 ```
 
+```
+## (Intercept)       hsGPA         ACT 
+## 1.286327767 0.453455885 0.009426012
+```
+
 - Além disso, podemos extrair a matriz de variâncias-covariâncias do estimador:
-```{r}
+
+```r
 vcov(reg)
+```
+
+```
+##              (Intercept)         hsGPA           ACT
+## (Intercept)  0.116159717 -0.0226063687 -0.0015908486
+## hsGPA       -0.022606369  0.0091801149 -0.0003570767
+## ACT         -0.001590849 -0.0003570767  0.0001161478
 ```
 
 
@@ -321,109 +507,280 @@ $$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + \vareps
 
 - A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
 
-```{r}
+
+```r
 # Acessando a base de dados gpa1
 data(gpa1, package = "wooldridge")
 
 # Criando o vetor y
 y = as.matrix(gpa1[,"colGPA"]) # transformando coluna de data frame em matriz
 head(y)
+```
 
+```
+##      [,1]
+## [1,]  3.0
+## [2,]  3.4
+## [3,]  3.0
+## [4,]  3.5
+## [5,]  3.6
+## [6,]  3.0
+```
+
+```r
 # Criando a matriz de covariadas X com primeira coluna de 1's
 X = cbind( 1, gpa1[, c("hsGPA", "ACT")] ) # juntando 1's com as covariadas
 X = as.matrix(X) # transformando em matriz
 head(X)
+```
 
+```
+##   1 hsGPA ACT
+## 1 1   3.0  21
+## 2 1   3.2  24
+## 3 1   3.6  26
+## 4 1   3.5  27
+## 5 1   3.9  28
+## 6 1   3.4  25
+```
+
+```r
 # Pegando valores N e K
 N = nrow(gpa1)
 K = ncol(X) - 1
 N
+```
+
+```
+## [1] 141
+```
+
+```r
 K
 ```
 
+```
+## [1] 2
+```
+
 ##### 1. Estimativas de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
-```{r}
+
+```r
 bhat = solve( t(X) %*% X ) %*% t(X) %*% y
 bhat
 ```
 
+```
+##              [,1]
+## 1     1.286327767
+## hsGPA 0.453455885
+## ACT   0.009426012
+```
+
 
 ##### 2. Valores preditos/ajustados {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
-```{r}
+
+```r
 yhat = X %*% bhat
 head(yhat)
 ```
 
+```
+##       [,1]
+## 1 2.844642
+## 2 2.963611
+## 3 3.163845
+## 4 3.127926
+## 5 3.318734
+## 6 3.063728
+```
+
 
 ##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}
-```{r}
+
+```r
 ehat = y - yhat
 head(ehat)
+```
+
+```
+##          [,1]
+## 1  0.15535832
+## 2  0.43638918
+## 3 -0.16384523
+## 4  0.37207430
+## 5  0.28126580
+## 6 -0.06372813
 ```
 
 
 ##### 4. Variância do termo de erro {{<math>}}$\hat{\sigma}^2${{</math>}}
 Como {{<math>}}$\hat{\sigma}^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
-```{r}
+
+```r
 sig2hat = as.numeric( t(ehat) %*% ehat / (N-K-1) )
 sig2hat
 ```
 
+```
+## [1] 0.1158148
+```
+
 
 ##### 5. Matriz de variâncias-covariâncias do estimador {{<math>}}$\text{V}(\hat{\boldsymbol{\beta}})${{</math>}}
-```{r}
+
+```r
 Vbhat = sig2hat * solve( t(X) %*% X )
 Vbhat
 ```
 
+```
+##                  1         hsGPA           ACT
+## 1      0.116159717 -0.0226063687 -0.0015908486
+## hsGPA -0.022606369  0.0091801149 -0.0003570767
+## ACT   -0.001590849 -0.0003570767  0.0001161478
+```
+
 
 ##### 6. Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
-```{r}
+
+```r
 se_bhat = sqrt( diag(Vbhat) )
 se_bhat
 ```
 
+```
+##          1      hsGPA        ACT 
+## 0.34082212 0.09581292 0.01077719
+```
+
 
 ##### 7. Estatística _t_
-```{r}
+
+```r
 # Cálculo da estatística t
 t_bhat = bhat / se_bhat
 t_bhat
 ```
 
+```
+##            [,1]
+## 1     3.7741910
+## hsGPA 4.7327219
+## ACT   0.8746263
+```
+
 
 ##### 8. Avaliando as hipóteses nulas
-```{r}
+
+```r
 # definição do nível de significância
 alpha = 0.05
 cv = qt(1 - alpha/2, N-K-1) # valor crítico de teste bicaudal
 cv
+```
 
+```
+## [1] 1.977304
+```
+
+```r
 # (i) Comparando estatística t com o valor crítico
 abs(t_bhat) > cv # avaliando H0
+```
 
+```
+##        [,1]
+## 1      TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
 # (ii) Comparando p-valor com o nível de significância de 5%
 p_bhat = 2 * pt(-abs(t_bhat), N-K-1)
 round(p_bhat, 5) # arredondando para facilitar visualização
-p_bhat < 0.05 # avaliando H0
+```
 
+```
+##          [,1]
+## 1     0.00024
+## hsGPA 0.00001
+## ACT   0.38330
+```
+
+```r
+p_bhat < 0.05 # avaliando H0
+```
+
+```
+##        [,1]
+## 1      TRUE
+## hsGPA  TRUE
+## ACT   FALSE
+```
+
+```r
 # (ii) Verificando se zero (0) está fora do intervalo de confiança
 ci = cbind(bhat - cv*se_bhat, bhat + cv*se_bhat) # avaliando H0
 ci
 ```
 
+```
+##              [,1]       [,2]
+## 1      0.61241898 1.96023655
+## hsGPA  0.26400467 0.64290710
+## ACT   -0.01188376 0.03073578
+```
+
 
 ##### Comparando estimações via `lm()` e analítica
 - Resultados calculados analiticamente ("na mão")
-```{r}
+
+```r
 round( cbind(bhat, se_bhat, t_bhat, p_bhat), 4 ) # coeficientes
+```
+
+```
+##              se_bhat              
+## 1     1.2863  0.3408 3.7742 0.0002
+## hsGPA 0.4535  0.0958 4.7327 0.0000
+## ACT   0.0094  0.0108 0.8746 0.3833
+```
+
+```r
 round(ci, 4) # intervalos de confiança
 ```
 
+```
+##          [,1]   [,2]
+## 1      0.6124 1.9602
+## hsGPA  0.2640 0.6429
+## ACT   -0.0119 0.0307
+```
+
 - Resultado via função `lm()`
-```{r}
+
+```r
 round( summary(reg)$coef, 4 ) # coeficientes
+```
+
+```
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   1.2863     0.3408  3.7742   0.0002
+## hsGPA         0.4535     0.0958  4.7327   0.0000
+## ACT           0.0094     0.0108  0.8746   0.3833
+```
+
+```r
 round( confint(reg), 4 ) # intervalos de confiança
+```
+
+```
+##               2.5 % 97.5 %
+## (Intercept)  0.6124 1.9602
+## hsGPA        0.2640 0.6429
+## ACT         -0.0119 0.0307
 ```
 
 
@@ -443,7 +800,8 @@ round( confint(reg), 4 ) # intervalos de confiança
 $$ \log{(\text{salary})} = \beta_0 + \beta_1. \left(\frac{\text{benefits}}{\text{salary}}\right) + \text{outros_fatores} + \varepsilon $$
 
 - Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
-```{r}
+
+```r
 data(meap93, package="wooldridge") # carregando base de dados
 
 # Definindo nova variável
@@ -456,7 +814,8 @@ meap93$b_s = meap93$benefits / meap93$salary
   - Modelo 3: incluir as variáveis explicativas *droprate* e *droprate²*
 
 - Para fazer transformações dentro de `lm()`, é necessário usar a função `I()`
-```{r message=FALSE, warning=FALSE}
+
+```r
 # Estimando os três modelos
 model1 = lm(log(salary) ~ I(benefits/salary), meap93)
 model2 = lm(log(salary) ~ I(benefits/salary) + log(enroll) + log(staff), meap93)
@@ -465,15 +824,59 @@ model3 = lm(log(salary) ~ I(benefits/salary) + log(enroll) +
 round(summary(model3)$coef, 4)
 ```
 
+```
+##                    Estimate Std. Error t value Pr(>|t|)
+## (Intercept)         10.8291     0.2514 43.0674   0.0000
+## I(benefits/salary)  -0.5958     0.1655 -3.6008   0.0004
+## log(enroll)          0.0877     0.0073 11.9509   0.0000
+## log(staff)          -0.2173     0.0501 -4.3382   0.0000
+## droprate            -0.0025     0.0021 -1.2014   0.2303
+## I(droprate^2)        0.0000     0.0001  0.2851   0.7757
+```
+
 
 - Agora, vamos resumir os resultados em uma única tabela usando a função `stargazer()` pacote `stargazer`
   - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
   - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
 
-```{r message=FALSE, warning=FALSE}
+
+```r
 # Resumindo em uma tabela
 library(stargazer)
 stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"))
+```
+
+```
+## 
+## ================================================
+##                         Dependent variable:     
+##                    -----------------------------
+##                             log(salary)         
+##                       (1)       (2)       (3)   
+## ------------------------------------------------
+## I(benefits/salary) -0.825*** -0.605*** -0.596***
+##                     (0.200)   (0.165)   (0.165) 
+##                                                 
+## log(enroll)                  0.087***  0.088*** 
+##                               (0.007)   (0.007) 
+##                                                 
+## log(staff)                   -0.222*** -0.217***
+##                               (0.050)   (0.050) 
+##                                                 
+## droprate                                -0.002  
+##                                         (0.002) 
+##                                                 
+## I(droprate2)                            0.00001 
+##                                        (0.0001) 
+##                                                 
+## Constant           10.523*** 10.844*** 10.829***
+##                     (0.042)   (0.252)   (0.251) 
+##                                                 
+## ------------------------------------------------
+## Observations          408       408       408   
+## R2                   0.040     0.353     0.358  
+## ================================================
+## Note:                *p<0.1; **p<0.05; ***p<0.01
 ```
 
 - É comum que os resultados econométricos venham acompanhados de asteriscos (`*`), pois estes indicam o quão significantes são as estimativas.
@@ -511,13 +914,25 @@ em que:
 - `exper`: anos de experiência (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
-```{r}
+
+```r
 # Carregando a base de dados necessária
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
 reg_7.1 = lm(wage ~ female + educ + exper + expersq + tenure + tenursq, data=wage1)
 round( summary(reg_7.1)$coef, 4 )
+```
+
+```
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)  -2.1097     0.7107 -2.9687   0.0031
+## female       -1.7832     0.2572 -6.9327   0.0000
+## educ          0.5263     0.0485 10.8412   0.0000
+## exper         0.1878     0.0357  5.2557   0.0000
+## expersq      -0.0038     0.0008 -4.9267   0.0000
+## tenure        0.2117     0.0492  4.3050   0.0000
+## tenursq      -0.0029     0.0017 -1.7473   0.0812
 ```
 
 - Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
@@ -553,264 +968,49 @@ em que:
 - `hrsopen`: horas de funcionamento por dia
 
 
-```{r eval=FALSE, include=FALSE}
-# Criando a base de dados
-data(Fastfood, package="loedata")
 
-library(dplyr)
-card1994 = Fastfood %>% select(sheet, nj, after, chain, fte, hrsopen) %>%
-  tidyr::pivot_wider(
-    values_from = "fte", names_from = "after", 
-  ) %>% na.omit() %>% mutate(
-    diff_fte = `1` - `0`
-  ) %>% select(-`1`, -`0`)
 
-readr::write_csv(card1994, "card1994.csv")
-```
 
-```{r}
+```r
 card1994 = read.csv("https://fhnishida.netlify.app/project/rec5004/card1994.csv")
 head(card1994) # olhando as 6 primeiras linhas
+```
+
+```
+##    id        state emptot_feb92 emptot_nov92 chain  pct_fte wage_st hrsopen
+## 1  46 Pennsylvania        40.50         24.0    bk 74.07407      NA    16.5
+## 2  46 Pennsylvania        40.50         24.0    bk 14.58333    4.30    16.5
+## 3  49 Pennsylvania        13.75         11.5   kfc 47.27273      NA    13.0
+## 4  49 Pennsylvania        13.75         11.5   kfc  0.00000    4.45    13.0
+## 5 506 Pennsylvania         8.50         10.5   kfc 35.29412      NA    10.0
+## 6 506 Pennsylvania         8.50         10.5   kfc 28.57143    5.00    11.0
 ```
 
 - Note que a variável categórica `chain` foi considerada como variável numérica, pois possui números ao invés de nomes das redes de fast food.
 - Isto é comum em grandes bases de dados, já que números consomem menos espaço de armazenamento do que texto. Neste caso, há um dicionário indicando o que significa cada número.
 - Caso você rode a estimação com a variável `chain` desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:
 
-```{r}
-lm(diff_fte ~ nj + hrsopen + chain, data=card1994)
-```
 
-- Note que a interpretação é que a mudança de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
-- Portanto, precisamos criar as _dummies_ das variáveis categóricas:
 
-```{r}
-# Criando dummies para cada variável
-card1994$bk = ifelse(card1994$chain==1, 1, 0)
-card1994$kfc = ifelse(card1994$chain==2, 1, 0)
-card1994$roys = ifelse(card1994$chain==3, 1, 0)
-card1994$wendys = ifelse(card1994$chain==4, 1, 0)
 
-# Visualizando as primeras linhas
-head(card1994)
-```
 
-- Também é possível criar _dummies_ mais facilmente usando o pacote `fastDummies`
-- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
-- Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
 
-```{r}
-lm(diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, data=card1994)
-```
 
-- Por padrão, o R já retira uma das categorias para servir como referência.
-- Aqui, a categoria `wendys` serve como referência às estimativas das demais _dummies_
-  - Em relação a `wendys`, o nº de empregados de:
-    - `bk` teve uma variação de empregados muito parecida (apenas 0,005 menor)
-    - `roys` teve uma diminuição (menos 1 empregado)
-    - `kfc` teve uma maior diminuição (menos 2 empregados)
-- Note que poderíamos usar como referência outra rede de fast food, deixando sua _dummy_ de fora da regressão.
-- Vamos deixar de fora a _dummy_ do `roys`:
 
-```{r}
-lm(diff_fte ~ nj + hrsopen + bk + kfc + wendys, data=card1994)
-```
 
-- Note agora que os parâmetros estão em relação à `roys``:
-  - estimativa de `kfc` que tinha ficado -2, agora está "menos" negativo (-1)
-  - estimativas de `bk` e de `wendys` possuem estimativas positivas (lembre-se que, em relação a `wendys`, a estimativa de `roys` foi negativo na regressão anterior)
 
-</br>
 
-- No R, na verdade, não é necessário criar _dummies_ de uma variável categórica para rodar uma regressão, caso ela esteja como _texto_ ou como _factor_
 
-- Criando variável da classe texto:
-```{r}
-card1994$chain_txt = as.character(card1994$chain) # criando variável texto
-head(card1994$chain_txt) # Visualizado os primeiros valores
 
-# Estimando do modelo
-lm(diff_fte ~ nj + hrsopen + chain_txt, data=card1994)
-```
 
-- Observe que a função `lm()` retira a categoria que aparece primeiro no vetor de texto (`"1"`)
-- Usando como variável texto, não é possível selecionar facilmente qual categoria vai ser retirada da regressão
-- Para isto, podemos usar a classe de objeto `factor`:
 
-```{r}
-card1994$chain_fct = factor(card1994$chain) # criando variável factor
-levels(card1994$chain_fct) # verificando os níveis (categorias) da variável factor
 
-# Estimando do modelo
-lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
-```
 
-- Note que a função `lm()` retira o primeiro nível da regressão (não necessariamente o que aparece primeiro na base de dados)
-- Podemos trocar a referência usando a função `relevel()` em uma variável _factor_
-```{r}
-card1994$chain_fct = relevel(card1994$chain_fct, ref="3") # referência roys
-levels(card1994$chain_fct) # verificando os níveis da variável factor
 
-# Estimando do modelo
-lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
-```
 
-- Observe que o primeiro nível foi alterado para `"3"` e, portanto, essa categoria foi retirada na regressão
 
 
 
-### Transformando variáveis contínuas em categorias
-- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
-- Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
 
-```{r}
-# Definindo pontos de corte
-cutpts = c(0, 3, 6, 10)
 
-# Classificando o vetor 1:10 a partir dos pontos de corte
-cut(1:10, cutpts)
-```
 
-
-##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais
-
-- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
-- Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
-
-```{r}
-data(lawsch85, package="wooldridge") # carregando base de dados necessária
-
-# Definindo pontos de corte
-cutpts = c(0, 10, 25, 40, 60, 100, 175)
-
-# Criando variável com a classificação
-lawsch85$rankcat = cut(lawsch85$rank, cutpts)
-
-# Visualizando os 6 primeiros valores de rankcat
-head(lawsch85$rankcat)
-
-# Escolhendo a categoria de referência (acima de 100 até 175)
-lawsch85$rankcat = relevel(lawsch85$rankcat, '(100,175]')
-
-# Estimando o modelo
-res = lm(log(salary) ~ rankcat + LSAT + GPA + llibvol + lcost, data=lawsch85)
-round( summary(res)$coef, 5 )
-```
-
-- Note que, em relação às universidades em piores colocações (`(100,175]`), as melhores ranqueadas provêem salários de 13,16\% a 69,96\% superiores
-
-
-### Interações Envolvendo Variáveis Dummy
-
-#### Interações entre variáveis dummy
-- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
-- Seção 7. de Wooldridge (2006)
-- Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
-
-
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora
-
-- Retornemos à base de dados `wage1` do pacote `wooldridge`
-- Agora, vamos incluir a variável _dummy_ `married`
-
-- O modelo a ser estimado é:
-
-{{<math>}}\begin{align}
-\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
-em que:
-
-- `wage`: salário médio por hora
-- `female`: dummy em que (1) mulher e (0) homem
-- `married`: dummy em que (1) casado e (0) solteiro
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
-- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
-
-
-```{r}
-# Carregando a base de dados necessária
-data(wage1, package="wooldridge")
-
-# Estimando o modelo
-reg_7.11 = lm(lwage ~ female + married + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(reg_7.11)$coef, 4 )
-```
-
-- Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29\% sobre o salário.
-- O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.
-- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
-  - `lwage ~ female + married + married:female` (o `:` cria apenas a interação), ou
-  - `lwage ~ female * married` (a "multiplicação" cria as dummies e a interação)
-
-- O modelo a ser estimado agora é:
-{{<math>}}\begin{align}
-\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
-
-```{r}
-# Estimando o modelo - forma (a)
-reg_7.14a = lm(lwage ~ female + married + female:married + educ + exper + expersq + tenure + tenursq,
-               data=wage1)
-round( summary(reg_7.14a)$coef, 4 )
-
-# Estimando o modelo - forma (b)
-reg_7.14b = lm(lwage ~ female * married + educ + exper + expersq + tenure + tenursq,
-               data=wage1)
-round( summary(reg_7.14b)$coef, 4 )
-```
-
-- Observe que, agora, o parâmetro de casado refere-se apenas aos homens (`married`) é positivo e significante de 21,27\%.
-- Já, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, é igual a -8,79\% (= 0,2127 - 0,3006)
-- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudança do estado civil (**intercepto**) é diferente entre mulheres e homens.
-- No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
-
-
-</br>
-
-#### Considerando inclinações diferentes
-- Seção 7.4 de Wooldridge (2006)
-- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
-- Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
-
-
-
-##### Exemplo 7.10 - Equação do Log do Salário-Hora
-
-- Retornemos à base de dados `wage1` do pacote `wooldridge`
-- Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
-- Então, incluiremos no modelo a interação entre a dummy `female` e os anos de educação (`educ`):
-
-{{<math>}}\begin{align}
-\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
-&\beta_3 \text{exper} + \beta_4 \text{exper}^2 + \beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
-em que:
-
-- `wage`: salário médio por hora
-- `female`: dummy em que (1) mulher e (0) homem
-- `educ`: anos de educação
-- `female*educ`: interação entre a dummy `female` e anos de educação (`educ`)
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
-- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
-
-```{r}
-# Carregando a base de dados necessária
-data(wage1, package="wooldridge")
-
-# Estimando o modelo
-reg_7.17 = lm(lwage ~ female + educ + female:educ + exper + expersq + tenure + tenursq,
-              data=wage1)
-round( summary(reg_7.17)$coef, 4 )
-```
-
-- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno a cada ano de educação (**inclinação**) é diferente entre mulheres e homens.
-- Pela estimação, nota-se que o incremento no salário das mulheres para cada ano a mais de educação é 0,56\% menor em relação aos homens:
-  - Homens aumentam 8,24\% (`educ`) o salário para cada ano de educação
-  - Mulheres aumentam 7,58\% (= 0,0824 - 0,0056) o salário para cada ano de educação
-- No entanto, essa diferença é estatisticamente não-significante a 5\% de significância.
-
-<img src="../example_interaction.png" alt="">
-
-
-
-{{< cta cta_text="👉 Proceed to Hypothesis Testing" cta_link="../sec9" >}}

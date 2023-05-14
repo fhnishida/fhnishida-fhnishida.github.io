@@ -3,7 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Simple Regression
-summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
+summary: This page covers topics such as simple MQO regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
 title: Simple Regression
 weight: 6
 output: md_document
@@ -14,11 +14,11 @@ type: book
 
 
 
-## Regressão simples por OLS
+## Regressão simples por MQO
 - [Seção 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
 - Considere o seguinte modelo empírico
 $$ y = \beta_0 + \beta_1 x + \varepsilon \tag{2.1} $$
-- Os estimadores de mínimos quadrados ordinários (OLS), segundo Wooldridge (2006, Seção 2.2) é dado por
+- Os estimadores de mínimos quadrados ordinários (MQO), segundo Wooldridge (2006, Seção 2.2) é dado por
 
 {{<math>}}\begin{align}
     \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x} \tag{2.2}\\
@@ -78,7 +78,7 @@ mean(salary) # média do salário
 ```
 
 ```r
-# Cálculo "na mão" das estimativas de OLS
+# Cálculo "na mão" das estimativas de MQO
 b1hat = cov(salary, roe) / var(roe) # por (2.3)
 b1hat
 ```
@@ -104,7 +104,7 @@ detach(ceosal1) # para parar de procurar variável dentro do objeto 'ceosal1'
 
 
 #### Estimando regressão simples via `lm()`
-- Uma maneira mais conveniente de fazer a estimação por OLS é usando a função `lm()`
+- Uma maneira mais conveniente de fazer a estimação por MQO é usando a função `lm()`
 - Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (`~`):
 
 ```r
@@ -253,7 +253,7 @@ head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 ```
 
 
-- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por OLS usa as seguintes hipóteses:
+- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por MQO usa as seguintes hipóteses:
 {{<math>}}\begin{align}
     &\sum^n_{i=1}{\hat{\varepsilon}_i} = 0 \quad \implies \quad \bar{\hat{\varepsilon}} = 0 \tag{2.7} \\
     &\sum^n_{i=1}{x_i \hat{\varepsilon}_i} = 0 \quad \implies \quad cov(x,\hat{\varepsilon}) = 0 \tag{2.8} \\
@@ -297,13 +297,13 @@ mean(sal_hat)
 ## [1] 1281.12
 ```
 
-- **IMPORTANTE**: Isso só quer dizer que o OLS escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
+- **IMPORTANTE**: Isso só quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
 - Isto **NÃO** quer dizer que, para o modelo real as seguintes hipóteses sejam verdadeiras:
 {{<math>}}\begin{align}
     &E(\varepsilon) = 0 \tag{2.7'} \\
     &E(x\varepsilon) = 0 \quad \Longrightarrow \quad cov(x, \varepsilon) = 0 \tag{2.8'}
 \end{align}{{</math>}}
-- De fato, se 2.7' e 2.8' não forem válidos, a estimação por OLS (que assume 2.7 e 2.8) será viesada.
+- De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7 e 2.8) será viesada.
 
 
 </br>
@@ -599,15 +599,15 @@ plot(x, y)
     
   - Simulamos as observações {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que são, na prática, as informações que observamos nas bases de dados.
 
-2. Estimaremos, por OLS, os parâmetros {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
+2. Estimaremos, por MQO, os parâmetros {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
     - Um pesquisador supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
     $$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{1a}$$
     assumindo que {{<math>}}$E[\varepsilon] = 0${{</math>}} e {{<math>}}$cov(\varepsilon, x)= 0=0${{</math>}}.
-    - Para estimar o modelo por OLS, usamos a função `lm()`
+    - Para estimar o modelo por MQO, usamos a função `lm()`
     
 
 ```r
-lm(y ~ x) # regredindo por OLS a var. dependente y pela var. x
+lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ```
 
 ```
@@ -670,7 +670,7 @@ cor(x, z) # correlação de x e z -> próxima de 0
 ```
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # estimação por MQO
 ```
 
 ```
@@ -682,7 +682,7 @@ lm(y ~ x) # estimação por OLS
 ## (Intercept)            x  
 ##      88.628       -4.913
 ```
-- Note que {{<math>}}$\hat{\beta}_1 = -5,12 \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por OLS conseguiu recuperar o parâmetro real, apesar do pesquisador não ter incluído {{<math>}}$z${{</math>}} no modelo.
+- Note que {{<math>}}$\hat{\beta}_1 = -5,12 \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar do pesquisador não ter incluído {{<math>}}$z${{</math>}} no modelo.
 - Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e alguma variável de interesse {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}. Ou seja, que nenhuma variável explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro.
 
 
@@ -712,7 +712,7 @@ cor(x, z) # correlação de x e z
     
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # estimação por MQO
 ```
 
 ```
@@ -725,7 +725,7 @@ lm(y ~ x) # estimação por OLS
 ##      49.709        2.566
 ```
 
-- Observe que {{<math>}}$\hat{\beta}_1 = 0,5 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o resíduo {{<math>}}$\hat{\varepsilon}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do OLS).
+- Observe que {{<math>}}$\hat{\beta}_1 = 0,5 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o resíduo {{<math>}}$\hat{\varepsilon}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do MQO).
 - Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}:
 
 
@@ -760,7 +760,7 @@ y = b0til + b1til*x + e_til # calculando observações y
 - Caso um pesquisador assuma {{<math>}}$E[\varepsilon] = 0${{</math>}}, segue que:
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # estimação por MQO
 ```
 
 ```
@@ -794,7 +794,7 @@ plot(x, y) # visualizando heteroscedasticidade
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # estimação por MQO
 ```
 
 ```
