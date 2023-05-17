@@ -948,7 +948,7 @@ t_bhat
 
 j) P-valor
 
-{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
@@ -1227,7 +1227,7 @@ t_bhat
 
 k) P-valor
 
-{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
@@ -2230,7 +2230,7 @@ t_bhat_B
 
 k) P-valor
 
-{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
@@ -2376,7 +2376,7 @@ t_bhat_OLS
 
 k) P-valor
 
-{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
@@ -2419,6 +2419,7 @@ summary(Q.between)$coef # resultado Between via plm()
 ## Estimador _Within_ (Efeitos Fixos)
 - Também conhecido como estimador de **Efeitos Fixos**
 - **Não assume que {{<math>}}$E(u | X) = 0${{</math>}}**
+- Ou seja, flexibilizamos o modelo para **{{<math>}}$E(u | X) \neq ${{</math>}} constante**
 - Avalia desvios em relação às médias individuais
 
 O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B}${{</math>}}:
@@ -2598,8 +2599,8 @@ c) Estimativas _Within_ {{<math>}}$\hat{\boldsymbol{\delta}}_{\scriptscriptstyle
 {{<math>}}$$ \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}} = (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{X}^{*})^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 
 ```r
-ghat_W = solve( t(Xt) %*% W %*% Xt ) %*% t(Xt) %*% W %*% y
-ghat_W
+dhat_W = solve( t(Xt) %*% W %*% Xt ) %*% t(Xt) %*% W %*% y
+dhat_W
 ```
 
 ```
@@ -2613,7 +2614,7 @@ d) Valores ajustados/preditos _Within_ {{<math>}}$\hat{\boldsymbol{y}}_{\scripts
 
 
 ```r
-yhat_W = Xt %*% ghat_W
+yhat_W = Xt %*% dhat_W
 ```
 
 
@@ -2646,8 +2647,8 @@ g) Matriz de Variâncias-Covariâncias do Estimador _Within_
 
 ```r
 # Calculando a Matriz de variância-covariância dos estimadores
-Vghat_W = sig2v * solve( t(Xt) %*% W %*% Xt )
-Vghat_W
+Vdhat_W = sig2v * solve( t(Xt) %*% W %*% Xt )
+Vdhat_W
 ```
 
 ```
@@ -2661,8 +2662,8 @@ i) Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptst
 É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
 
 ```r
-se_ghat_W = sqrt( diag(Vghat_W) )
-se_ghat_W
+se_dhat_W = sqrt( diag(Vdhat_W) )
+se_dhat_W
 ```
 
 ```
@@ -2677,8 +2678,8 @@ $$ {{</math>}}
 
 ```r
 # Cálculo da estatística t
-t_ghat_W = ghat_W / se_ghat_W
-t_ghat_W
+t_dhat_W = dhat_W / se_dhat_W
+t_dhat_W
 ```
 
 ```
@@ -2688,13 +2689,13 @@ t_ghat_W
 
 k) P-valor
 
-{{<math>}}$$ p_{\hat{\delta}_k} = 2.F_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
 # p-valor
-p_ghat_W = 2 * pt(-abs(t_ghat_W), N*T-K-N)
-p_ghat_W
+p_dhat_W = 2 * pt(-abs(t_dhat_W), N*T-K-N)
+p_dhat_W
 ```
 
 ```
@@ -2705,11 +2706,11 @@ p_ghat_W
 l) Tabela-resumo
 
 ```r
-cbind(ghat_W, se_ghat_W, t_ghat_W, p_ghat_W) # resultado Within
+cbind(dhat_W, se_dhat_W, t_dhat_W, p_dhat_W) # resultado Within
 ```
 
 ```
-##                     se_ghat_W                       
+##                     se_dhat_W                       
 ## [1,] 0.003791948 0.0001726447 21.96388 3.854128e-103
 ```
 
@@ -2739,8 +2740,8 @@ Xt_til = W %*% Xt
 y_til = W %*% y
 
 # Estimando
-ghat_OLS = solve( t(Xt_til) %*% Xt_til ) %*% t(Xt_til) %*% y_til
-ghat_OLS
+dhat_OLS = solve( t(Xt_til) %*% Xt_til ) %*% t(Xt_til) %*% y_til
+dhat_OLS
 ```
 
 ```
@@ -2754,7 +2755,7 @@ d') Valores ajustados/preditos _OLS_
 
 
 ```r
-yhat_OLS = Xt_til %*% ghat_OLS
+yhat_OLS = Xt_til %*% dhat_OLS
 ```
 
 e') Resíduos MQO
@@ -2786,8 +2787,8 @@ g') Matriz de Variâncias-Covariâncias do Estimador MQO
 
 ```r
 # Calculando a Matriz de variância-covariância dos estimadores
-Vghat_OLS = sig2hat * solve( t(Xt_til) %*% Xt_til )
-Vghat_OLS
+Vdhat_OLS = sig2hat * solve( t(Xt_til) %*% Xt_til )
+Vdhat_OLS
 ```
 
 ```
@@ -2801,8 +2802,8 @@ h') Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscripts
 É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
 
 ```r
-se_ghat_OLS = sqrt( diag(Vghat_OLS) )
-se_ghat_OLS
+se_dhat_OLS = sqrt( diag(Vdhat_OLS) )
+se_dhat_OLS
 ```
 
 ```
@@ -2817,8 +2818,8 @@ $$ {{</math>}}
 
 ```r
 # Cálculo da estatística t
-t_ghat_OLS = ghat_OLS / se_ghat_OLS
-t_ghat_OLS
+t_dhat_OLS = dhat_OLS / se_dhat_OLS
+t_dhat_OLS
 ```
 
 ```
@@ -2828,13 +2829,13 @@ t_ghat_OLS
 
 j') P-valor
 
-{{<math>}}$$ p_{\hat{\delta}_k} = 2.F_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
 # p-valor
-p_ghat_OLS = 2 * pt(-abs(t_ghat_OLS), N*T-K-N)
-p_ghat_OLS
+p_dhat_OLS = 2 * pt(-abs(t_dhat_OLS), N*T-K-N)
+p_dhat_OLS
 ```
 
 ```
@@ -2845,11 +2846,11 @@ p_ghat_OLS
 k') Tabela-resumo
 
 ```r
-cbind(ghat_OLS, se_ghat_OLS, t_ghat_OLS, p_ghat_OLS) # resultado Within via MQO
+cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # resultado Within via MQO
 ```
 
 ```
-##                   se_ghat_OLS                       
+##                   se_dhat_OLS                       
 ## [1,] 0.003791948 0.0001726447 21.96388 3.854128e-103
 ```
 
@@ -2955,10 +2956,11 @@ cbind(
 ## Estimador de Primeiras-Diferenças
 
 - **Não assume que {{<math>}}$E(u | X) = 0${{</math>}}**
+- Ou seja, flexibilizamos o modelo para **{{<math>}}$E(u | X) \neq ${{</math>}} constante**
 - Avalia as variações de uma observação em relação à observação do período imediatamente seguinte
 
 O modelo a ser estimado é o MQO pré-multiplicado por {{<math>}}$\boldsymbol{D}${{</math>}}:
-{{<math>}}$$ \boldsymbol{Dy}\ =\ \boldsymbol{DX\beta} + \boldsymbol{D\varepsilon}\ =\ \boldsymbol{WX}^* \boldsymbol{\delta} + \boldsymbol{Wv}. $${{</math>}}
+{{<math>}}$$ \boldsymbol{Dy}\ =\ \boldsymbol{DX\beta} + \boldsymbol{D\varepsilon}\ =\ \boldsymbol{DX}^* \boldsymbol{\delta} + \boldsymbol{Dv}. $${{</math>}}
 Note que a transformação de primeiras-diferenças remove as variáveis invariantes no tempo, a coluna de 1's e o termo de erro individual {{<math>}}$\boldsymbol{u}${{</math>}} (sobrando apenas {{<math>}}$\boldsymbol{\varepsilon} = \boldsymbol{v}${{</math>}}).
 
 - O estimador de primeiras-diferenças é dado por
@@ -3120,8 +3122,8 @@ c) Estimativas  de Primeiras-Diferenças {{<math>}}$\hat{\boldsymbol{\delta}}_{\
 {{<math>}}$$ \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}} = (\boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^{*})^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{y} $${{</math>}}
 
 ```r
-ghat_FD = solve( t(Xt) %*% t(D) %*% D %*% Xt ) %*% t(Xt) %*% t(D) %*% D %*% y
-ghat_FD
+dhat_FD = solve( t(Xt) %*% t(D) %*% D %*% Xt ) %*% t(Xt) %*% t(D) %*% D %*% y
+dhat_FD
 ```
 
 ```
@@ -3135,7 +3137,7 @@ d) Valores ajustados/preditos de Primeiras-Diferenças {{<math>}}$\hat{\boldsymb
 
 
 ```r
-yhat_FD = Xt %*% ghat_FD
+yhat_FD = Xt %*% dhat_FD
 ```
 
 
@@ -3178,8 +3180,8 @@ g) Matriz de Variâncias-Covariâncias do Estimador _Within_
 # Calculando a Matriz de variância-covariância dos estimadores
 bread = solve( t(Xt) %*% t(D) %*% D %*% Xt )
 meat = t(Xt) %*% t(D) %*% D %*% Xt
-Vghat_FD = sig2v * (bread %*% meat %*% bread) # sandwich
-Vghat_FD
+Vdhat_FD = sig2v * (bread %*% meat %*% bread) # sandwich
+Vdhat_FD
 ```
 
 ```
@@ -3193,8 +3195,8 @@ i) Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptst
 É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
 
 ```r
-se_ghat_FD = sqrt( diag(Vghat_FD) )
-se_ghat_FD
+se_dhat_FD = sqrt( diag(Vdhat_FD) )
+se_dhat_FD
 ```
 
 ```
@@ -3209,8 +3211,8 @@ $$ {{</math>}}
 
 ```r
 # Cálculo da estatística t
-t_ghat_FD = ghat_FD / se_ghat_FD
-t_ghat_FD
+t_dhat_FD = dhat_FD / se_dhat_FD
+t_dhat_FD
 ```
 
 ```
@@ -3220,13 +3222,13 @@ t_ghat_FD
 
 k) P-valor
 
-{{<math>}}$$ p_{\hat{\delta}_k} = 2.F_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
 # p-valor
-p_ghat_FD = 2 * pt(-abs(t_ghat_FD), N*T-K-N)
-p_ghat_FD
+p_dhat_FD = 2 * pt(-abs(t_dhat_FD), N*T-K-N)
+p_dhat_FD
 ```
 
 ```
@@ -3237,11 +3239,11 @@ p_ghat_FD
 l) Tabela-resumo
 
 ```r
-cbind(ghat_FD, se_ghat_FD, t_ghat_FD, p_ghat_FD) # resultado Within
+cbind(dhat_FD, se_dhat_FD, t_dhat_FD, p_dhat_FD) # resultado Within
 ```
 
 ```
-##                    se_ghat_FD                      
+##                    se_dhat_FD                      
 ## [1,] 0.004012382 0.0003068216 13.07725 1.385139e-38
 ```
 
@@ -3271,8 +3273,8 @@ Xt_til = D %*% Xt
 y_til = D %*% y
 
 # Estimando
-ghat_OLS = solve( t(Xt_til) %*% Xt_til ) %*% t(Xt_til) %*% y_til
-ghat_OLS
+dhat_OLS = solve( t(Xt_til) %*% Xt_til ) %*% t(Xt_til) %*% y_til
+dhat_OLS
 ```
 
 ```
@@ -3286,7 +3288,7 @@ d') Valores ajustados/preditos _OLS_
 
 
 ```r
-yhat_OLS = Xt_til %*% ghat_OLS
+yhat_OLS = Xt_til %*% dhat_OLS
 ```
 
 e') Resíduos MQO
@@ -3300,7 +3302,7 @@ ehat_OLS = y_til - yhat_OLS
 
 f') Variância do termo de erro
 
-{{<math>}}$$ \hat{\sigma}^2 \equiv  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}}{NT - K - 1} $${{</math>}}
+{{<math>}}$$ \hat{\sigma}^2 \equiv  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{MQO}} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}}{NT - K - N} $${{</math>}}
 
 Como {{<math>}}$\hat{\sigma}^2${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
 
@@ -3318,8 +3320,8 @@ g') Matriz de Variâncias-Covariâncias do Estimador MQO
 
 ```r
 # Calculando a Matriz de variância-covariância dos estimadores
-Vghat_OLS = sig2hat * solve( t(Xt_til) %*% Xt_til )
-Vghat_OLS
+Vdhat_OLS = sig2hat * solve( t(Xt_til) %*% Xt_til )
+Vdhat_OLS
 ```
 
 ```
@@ -3333,8 +3335,8 @@ h') Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscripts
 É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
 
 ```r
-se_ghat_OLS = sqrt( diag(Vghat_OLS) )
-se_ghat_OLS
+se_dhat_OLS = sqrt( diag(Vdhat_OLS) )
+se_dhat_OLS
 ```
 
 ```
@@ -3349,8 +3351,8 @@ $$ {{</math>}}
 
 ```r
 # Cálculo da estatística t
-t_ghat_OLS = ghat_OLS / se_ghat_OLS
-t_ghat_OLS
+t_dhat_OLS = dhat_OLS / se_dhat_OLS
+t_dhat_OLS
 ```
 
 ```
@@ -3360,13 +3362,13 @@ t_ghat_OLS
 
 j') P-valor
 
-{{<math>}}$$ p_{\hat{\delta}_k} = 2.F_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
+{{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
 # p-valor
-p_ghat_OLS = 2 * pt(-abs(t_ghat_OLS), N*T-K-N)
-p_ghat_OLS
+p_dhat_OLS = 2 * pt(-abs(t_dhat_OLS), N*T-K-N)
+p_dhat_OLS
 ```
 
 ```
@@ -3377,11 +3379,11 @@ p_ghat_OLS
 k') Tabela-resumo
 
 ```r
-cbind(ghat_OLS, se_ghat_OLS, t_ghat_OLS, p_ghat_OLS) # resultado FD via MQO
+cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # resultado FD via MQO
 ```
 
 ```
-##                   se_ghat_OLS                      
+##                   se_dhat_OLS                      
 ## [1,] 0.004012382 0.0003068216 13.07725 1.385139e-38
 ```
 
