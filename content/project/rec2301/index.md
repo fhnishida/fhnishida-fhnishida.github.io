@@ -27,15 +27,15 @@ Página do curso (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.
 ## Listas de Exercícios
 
 ### Listas Teóricas
-- [Lista Teórica - Capítulo 2](../Lista-Teorica-Cap2_v2.pdf) 
-- [Lista Teórica - Capítulo 3](../Lista-Teorica-Cap3_v2.pdf) 
+- [Lista Teórica - Capítulo 2](Lista-Teorica-Cap2_v2.pdf) 
+- [Lista Teórica - Capítulo 3](Lista-Teorica-Cap3_v2.pdf) 
 
 
 
 ### Listas Práticas
-- [Lista Prática 1](../Lista_Pratica_1.pdf) | [Solução](../Lista_Pratica_1_solucao.pdf)
-- [Lista Prática 2](../Lista_Pratica_2.pdf) | [Solução](../Lista_Pratica_2_solucao.pdf) 
-- [Lista Prática 3](../Lista_Pratica_3.pdf) | [Solução](../Lista_Pratica_3_solucao.pdf) 
+- [Lista Prática 1](Lista_Pratica_1.pdf) | [Solução](Lista_Pratica_1_solucao.pdf)
+- [Lista Prática 2](Lista_Pratica_2.pdf) | [Solução](Lista_Pratica_2_solucao.pdf) 
+- [Lista Prática 3](Lista_Pratica_3.pdf) | [Solução](Lista_Pratica_3_solucao.pdf) 
 
 
 </br>
