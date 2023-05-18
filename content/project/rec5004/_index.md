@@ -32,11 +32,14 @@ Feel free to contact us if you have any question:
 
 
 ## Listas Práticas
-- [Lista Prática 1](Lista-Pratica-1.pdf)  
+- [Lista Prática 1](Lista-Pratica-1.pdf) | [Solução](Lista-Pratica-1_Solucao.pdf)
 - [Lista Prática 2](Lista-Pratica-2.pdf) 
 
 
 ## Gravações das Monitorias
+
+- **Monitoria 6**: Regressão Simples | [Script](monitoria06.R)
+[<img src="https://img.youtube.com/vi/nU0U7M_MHNo/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=nU0U7M_MHNo)  
 
 - **Monitoria 5**: Visualização de Dados e Distribuições  | [Script](monitoria05.R)
 [<img src="https://img.youtube.com/vi/Kvt24TLrQVk/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=Kvt24TLrQVk) 

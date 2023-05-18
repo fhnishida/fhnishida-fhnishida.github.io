@@ -33,7 +33,7 @@ $$ \hat{\varepsilon} = y - \hat{y} $$
 ### Exemplo 2.3: Salário de CEO e Retorno sobre Equity
 
 - Considere o seguinte modelo de regressão simples
-$$ \text{salary} = \beta_0 + \beta_1 \text{sales} + \varepsilon $$
+$$ \text{salary} = \beta_0 + \beta_1 \text{roe} + \varepsilon $$
 em que `salary` é a remuneração de um CEO em milhares de dólares e `roe` é o retorno sobre o patrimônio líquido em percentual.
 
 
@@ -451,11 +451,11 @@ em que {{<math>}}$\tilde{\beta}_0=50${{</math>}} e {{<math>}}$\tilde{\beta}_1=-5
 ```r
 b0til = 50
 b1til = -5
-N = 500 # Número de observações
+N = 1000 # Número de observações
 
-set.seed(1)
-e_til = rnorm(N, 0, 4) # Desvios: 500 obs. de média 0 e desv pad 2
-x = runif(N, 1, 9) # Gerando 500 obs. de x
+set.seed(123)
+e_til = rnorm(N, 0, 4) # Erros: 1000 obs. de média 0 e desv pad 2
+x = runif(N, 1, 9) # Gerando 1000 obs. de x
 y = b0til + b1til*x + e_til # calculando observações y
 
 plot(x, y)
@@ -483,7 +483,7 @@ lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      49.589       -4.896
+##       49.86        -4.96
 ```
 
 - Note que foi possível recuperar os parâmetros reais:
@@ -511,12 +511,12 @@ em que {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{
 b0til = 50
 b1til = -5
 b2til = 3
-N = 500 # Número de observações
+N = 1000 # Número de observações
 
-set.seed(1)
-e_til = rnorm(N, 0, 4) # Desvios: 500 obs. de média 0 e desv pad 2
-x = runif(N, 1, 9) # Gerando 500 obs. de x
-z = runif(N, 11, 15) # Gerando 500 obs. de y
+set.seed(123)
+e_til = rnorm(N, 0, 4) # Erros: 1000 obs. de média 0 e desv pad 2
+x = runif(N, 1, 9) # Gerando 1000 obs. de x
+z = runif(N, 11, 15) # Gerando 1000 obs. de y
 y = b0til + b1til*x + b2til*z + e_til # calculando observações y
 ```
 
@@ -532,7 +532,7 @@ cor(x, z) # correlação de x e z -> próxima de 0
 ```
 
 ```
-## [1] 0.022555
+## [1] -0.05722716
 ```
 
 ```r
@@ -546,7 +546,7 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      88.423       -4.862
+##      89.342       -5.046
 ```
 - Note que {{<math>}}$\hat{\beta}_1 = \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar da não-inclusão de {{<math>}}$z${{</math>}} no modelo.
 - Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e alguma variável de interesse {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}.
@@ -555,20 +555,20 @@ lm(y ~ x) # estimação por MQO
 
 ### Violação de cov(e,x) = 0
 - Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} está relacionado com {{<math>}}$z${{</math>}}).
-    - Suponha {{<math>}}$z = 2,5x + \varepsilon, \quad \varepsilon \sim N(0, 2^2)${{</math>}}:
+    - Suponha {{<math>}}$z = 2,5x + \tilde{u}, \quad \tilde{u} \sim N(0, 2^2)${{</math>}}:
     
 
 ```r
-set.seed(1)
-e_til = rnorm(N, 0, 4) # Desvios: 500 obs. de média 0 e desv pad 2
-x = runif(N, 1, 9) # Gerando 500 obs. de x
-z = 2.5*x + rnorm(N, 0, 2) # Gerando 500 obs. de z
+set.seed(123)
+e_til = rnorm(N, 0, 4) # Erros: 1000 obs. de média 0 e desv pad 2
+x = runif(N, 1, 9) # Gerando 1000 obs. de x
+z = 2.5*x + rnorm(N, 0, 2) # Gerando 1000 obs. de z
 y = b0til + b1til*x + b2til*z + e_til # calculando observações y
 cor(x, z) # correlação de x e z
 ```
 
 ```
-## [1] 0.9434074
+## [1] 0.9484694
 ```
 
 - Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} são consideravalmente correlacionados
@@ -588,7 +588,7 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      48.910        2.714
+##      49.529        2.604
 ```
 
 - Observe que {{<math>}}$\hat{\beta}_1 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o erro {{<math>}}$\varepsilon = \tilde{\beta}_2 z + \tilde{\varepsilon}${{</math>}}.
@@ -607,7 +607,7 @@ lm(y ~ x + z)
 ## 
 ## Coefficients:
 ## (Intercept)            x            z  
-##      49.595       -4.969        3.029
+##      49.850       -4.663        2.882
 ```
 
 ### Violação de E(e) = 0, porém constante
@@ -619,9 +619,9 @@ b0til = 50
 b1til = -5
 k = 100
 
-set.seed(1)
-e_til = rnorm(N, k, 2) # Desvios: 500 obs. de média k e desv pad 2
-x = runif(N, 1, 9) # Gerando 500 obs. de x
+set.seed(123)
+e_til = rnorm(N, k, 2) # Erros: 1000 obs. de média k e desv pad 2
+x = runif(N, 1, 9) # Gerando 1000 obs. de x
 y = b0til + b1til*x + e_til # calculando observações y
 ```
 - Caso um pesquisador assuma {{<math>}}$E[\varepsilon] = 0${{</math>}}, segue que:
@@ -637,7 +637,7 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##     149.794       -4.948
+##      149.93        -4.98
 ```
 - Note que o fato de {{<math>}}$E[\varepsilon] \neq 0${{</math>}} afeta apenas a estimação de {{<math>}}$\hat{\beta}_0 \neq \tilde{\beta}_0${{</math>}}, porém não afeta a de {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}, que é normalmente o parâmetro de interesse em estudos econômicos.
 
@@ -649,10 +649,11 @@ lm(y ~ x) # estimação por MQO
 ```r
 b0til = 50
 b1til = -5
-N = 500
+N = 1000
 
-x = runif(N, 1, 9) # Gerando 500 obs. de x
-e_til = rnorm(N, 0, 5*x) # Desvios: 500 obs. de média 0 e desv pad 5x
+set.seed(123)
+x = runif(N, 1, 9) # Gerando 1000 obs. de x
+e_til = rnorm(N, 0, 5*x) # Erros: 1000 obs. de média 0 e desv pad 5x
 y = b0til + b1til*x + e_til # calculando observações y
 lm(y ~ x) # estimação por MQO
 ```
@@ -664,23 +665,26 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      52.446       -5.606
+##      51.243       -5.229
 ```
 
 ```r
 plot(x, y, ylim=c(-100,100)) # visualizando heteroscedasticidade
 abline(a=b0til, b=b1til, col="red") # modelo real
-abline(lm(y ~ x), col="blue") # modelo esimado
+abline(lm(y ~ x), col="blue") # modelo estimado
 ```
 
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+
 - Mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}} quando {{<math>}}$N${{</math>}} for grande (ainda é consistente).
 - Mas, observe que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{\beta}_1 \neq \tilde{\beta}_1${{</math>}}. Teste alguns {{<math>}}$N${{</math>}} menores:
 
 ```r
 N = 50
+
+set.seed(123)
 x = runif(N, 1, 9) # Gerando 50 obs. de x
-e_til = rnorm(N, 0, 5*x) # Desvios: 50 obs. de média 0 e desv pad 5x
+e_til = rnorm(N, 0, 5*x) # Erros: 50 obs. de média 0 e desv pad 5x
 y = b0til + b1til*x + e_til # calculando observações y
 lm(y ~ x) # estimação por MQO
 ```
@@ -692,13 +696,13 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      48.148       -4.108
+##      45.098       -3.518
 ```
 
 ```r
 plot(x, y, ylim=c(-100,100)) # visualizando heteroscedasticidade
 abline(a=b0til, b=b1til, col="red") # modelo real
-abline(lm(y ~ x), col="blue") # modelo esimado
+abline(lm(y ~ x), col="blue") # modelo estimado
 ```
 
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-26-1.png" width="672" />

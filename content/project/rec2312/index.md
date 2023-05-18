@@ -32,6 +32,9 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+- **Monitoria 8 (18/05)**: Estimadores Within e de Primeiras Diferenças | [Script](monitoria08.R)
+[<img src="https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=KbOV12t_Ki0)
+
 - **Monitoria 7 (04/05)**: Matrizes de Tranformação e Estimador Between | [Script](monitoria07.R)
 [<img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=kh69ZHE8DNY)
 

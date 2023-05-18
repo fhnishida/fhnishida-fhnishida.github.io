@@ -34,13 +34,16 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+- **Monitoria 8 (18/05)**: Estimadores Within e de Primeiras Diferenças | [Script](monitoria08.R)
+[<img src="https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=KbOV12t_Ki0)
+
 - **Monitoria 7 (04/05)**: Matrizes de Tranformação e Estimador Between | [Script](monitoria07.R)
 [<img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=kh69ZHE8DNY)
 
-- **Monitoria 6 (27/04)**: Estimação da MQGF | [Script](monitoria06.R)
+- **Monitoria 6 (27/04)**: Estimador de MQGF | [Script](monitoria06.R)
 [<img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=G-1AVqDQBqY)
 
-- **Monitoria 5 (20/04)**: Estimação da Matriz de Covariâncias dos Erros e de MQE | [Script](monitoria05.R)
+- **Monitoria 5 (20/04)**: Estimação da Matriz de Covariâncias dos Erros e Estimador de MQE | [Script](monitoria05.R)
 [<img src="https://img.youtube.com/vi/uxEXcGDL_zM/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=uxEXcGDL_zM)
 
 - **Monitoria 4 (13/04)**: Dados em Painel e Matriz de Covariâncias dos Erros | [Script](monitoria04.R)
