@@ -30,11 +30,11 @@ $$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
 e os resíduos podem ser obtidos por 
 $$ \hat{\varepsilon} = y - \hat{y} $$
 
-### Exemplo 2.3: Salário de Diretores Executivos e Retornos de Ações
+### Exemplo 2.3: Salário de CEO e Retorno sobre Equity
 
 - Considere o seguinte modelo de regressão simples
-$$ \text{salary} = \beta_0 + \beta_1 \text{roe} + \varepsilon $$
-em que `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o patrimônio líquido em percentual.
+$$ \text{salary} = \beta_0 + \beta_1 \text{sales} + \varepsilon $$
+em que `salary` é a remuneração de um CEO em milhares de dólares e `roe` é o retorno sobre o patrimônio líquido em percentual.
 
 
 #### Estimação Analítica ("na mão")
@@ -94,7 +94,7 @@ b0hat
 ## [1] 963.1913
 ```
 
-- Vemos que um incremento de uma unidade (porcento) no retorno sobre o patrimônio líquido (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos diretores executivos.
+- Vemos que um incremento de uma unidade (porcento) no retorno sobre o patrimônio líquido (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos CEOs.
 
 
 #### Estimação via `lm()`
@@ -302,49 +302,42 @@ $$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = 
     - Usar a função `log()` diretamente no vetor dentro da função `lm()`
 
 
-### Exemplo 2.11: Salário de Diretores Executivos e Vendas das Empresas
-- Considere as variáveis:
-    - `wage`: salário anual em milhares de dólares
-    - `sales`: vendas em milhões de dólares
+### Exemplo 2.11: Salário de CEO e Retorno sobre Equity
 
-
-- _Modelo nível-nível_:
+- _Modelo nível-log_:
 
 ```r
-# Carregando a base de dados
-data(ceosal1, package="wooldridge")
-
-# Estimando modelo nível-nível
-lm(salary ~ sales, data=ceosal1)$coef
+# Estimando modelo nível-log
+lm(salary ~ log(roe), data=ceosal1)$coef
 ```
 
 ```
-##  (Intercept)        sales 
-## 1.174005e+03 1.547053e-02
+## (Intercept)    log(roe) 
+##    586.5961    255.3113
 ```
 
 - _Modelo log-nível_:
 
 ```r
 # Estimando modelo log-nível
-lm(log(salary) ~ sales, data=ceosal1)$coef
+lm(log(salary) ~ roe, data=ceosal1)$coef
 ```
 
 ```
-## (Intercept)       sales 
-## 6.84665e+00 1.49825e-05
+## (Intercept)         roe 
+##  6.71216858  0.01386258
 ```
 
 - _Modelo log-log_:
 
 ```r
-# Estimando modelo log-log
-lm(log(salary) ~ log(sales), data=ceosal1)$coef
+# Estimando modelo log-log (elasticidade)
+lm(log(salary) ~ log(roe), data=ceosal1)$coef
 ```
 
 ```
-## (Intercept)  log(sales) 
-##   4.8219965   0.2566717
+## (Intercept)    log(roe) 
+##   6.4886473   0.1697382
 ```
 
 
@@ -386,11 +379,11 @@ lm(salary ~ 1, data=ceosal1)
 ```
 
 ```r
-mean(ceosal1$salary, na.rm=TRUE)
+mean(ceosal1$roe, na.rm=TRUE)
 ```
 
 ```
-## [1] 1281.12
+## [1] 17.18421
 ```
 
 
@@ -443,17 +436,17 @@ mean(ceosal1$salary, na.rm=TRUE)
 - [Simulating a linear model (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model)
 - Na prática, fazemos regressões a partir de observações contidas em bases de dados e não sabemos qual é o _modelo real_ que gerou essas observações.
 - No R, podemos supor esse _modelo real_ e simular suas observações no R para analisar o que ocorre quando há violação de uma premissa de um modelo econométrico.
-- Usaremos como exemplo a relação das horas de prática em culinária com o número de queimaduras na cozinha.
+- Usaremos como exemplo a relação das horas de treinamento em culinária com o número de queimaduras na cozinha.
 
 
 ### Sem violação de hipótese: Exemplo 1
-- Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas gastas aprendendo a cozinhar.
+- Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas de treinamento em culinária
 - Suponha o _modelo real_:
-$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 2^2) \tag{1}$$
+$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 4^2) \tag{1}$$
 em que {{<math>}}$\tilde{\beta}_0=50${{</math>}} e {{<math>}}$\tilde{\beta}_1=-5${{</math>}}.
 
 1. Iremos definir {{<math>}}$\tilde{\beta}_0${{</math>}} e {{<math>}}$\tilde{\beta}_1${{</math>}}, e gerar, por simulação, as observações de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
-    - Geraremos valores aleatórios {{<math>}}$x \sim U(1, 9)${{</math>}}. Isso é apenas para facilitar, não importa a distribuição de {{<math>}}$x${{</math>}}. 
+    - Geraremos valores aleatórios de {{<math>}}$x \sim U(1, 9)${{</math>}} e de {{<math>}}$\tilde{\varepsilon} \sim N(0, 4^2)${{</math>}}
 
 ```r
 b0til = 50
@@ -461,7 +454,7 @@ b1til = -5
 N = 500 # Número de observações
 
 set.seed(1)
-e_til = rnorm(N, 0, 2) # Desvios: 500 obs. de média 0 e desv pad 2
+e_til = rnorm(N, 0, 4) # Desvios: 500 obs. de média 0 e desv pad 2
 x = runif(N, 1, 9) # Gerando 500 obs. de x
 y = b0til + b1til*x + e_til # calculando observações y
 
@@ -475,7 +468,7 @@ plot(x, y)
 2. Estimaremos, por MQO, os parâmetros {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
     - Um pesquisador supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
     $$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{1a}$$
-    assumindo que {{<math>}}$E[\varepsilon] = 0${{</math>}} e {{<math>}}$cov(\varepsilon, x)= 0=0${{</math>}}.
+    assumindo que {{<math>}}$E[\varepsilon] = 0${{</math>}} e {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}.
     - Para estimar o modelo por MQO, usamos a função `lm()`
     
 
@@ -490,12 +483,12 @@ lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      49.794       -4.948
+##      49.589       -4.896
 ```
 
 - Note que foi possível recuperar os parâmetros reais:
-  - {{<math>}}$\hat{\beta}_0 = 49,794 \approx 50 = \tilde{\beta}_0${{</math>}} e
-  - {{<math>}}$\hat{\beta}_1 = -4,948 \approx -5 = \tilde{\beta}_1${{</math>}}.
+  - {{<math>}}$\hat{\beta}_0 \approx 50 = \tilde{\beta}_0${{</math>}} e
+  - {{<math>}}$\hat{\beta}_1 \approx -5 = \tilde{\beta}_1${{</math>}}.
 
 
 ```r
@@ -507,10 +500,10 @@ abline(lm(y ~ x), col="blue") # reta estimada a partir das observações
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 ### Sem violação de hipótese: Exemplo 2
-- Agora, no _modelo real_, suponha que o número de queimaduras {{<math>}}$y${{</math>}} é determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
+- Agora, no _modelo real_, suponha uma nova variável de quantidade de horas cozinhando {{<math>}}$z${{</math>}} que, a princípio, não tem relação com a quantidade de horas de treinamento em culinária:
 
-$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\beta}_2 z + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 2^2) \tag{2} $$
-em que {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{<math>}}$\beta_2=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim U(1, 9)${{</math>}} e {{<math>}}$z \sim U(11, 15)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, **não** é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
+$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\beta}_2 z + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 4^2) \tag{2} $$
+em que {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{<math>}}$\beta_2=3${{</math>}}. Apenas para facilitar, geraremos também valores aleatórios de {{<math>}}$z \sim U(11, 15)${{</math>}} que, por construção, **não** é correlacionada com {{<math>}}$x${{</math>}}.
 
 - Primeiro, vamos simular as observações:
 
@@ -521,7 +514,7 @@ b2til = 3
 N = 500 # Número de observações
 
 set.seed(1)
-e_til = rnorm(N, 0, 2) # Desvios: 500 obs. de média 0 e desv pad 2
+e_til = rnorm(N, 0, 4) # Desvios: 500 obs. de média 0 e desv pad 2
 x = runif(N, 1, 9) # Gerando 500 obs. de x
 z = runif(N, 11, 15) # Gerando 500 obs. de y
 y = b0til + b1til*x + b2til*z + e_til # calculando observações y
@@ -531,8 +524,8 @@ y = b0til + b1til*x + b2til*z + e_til # calculando observações y
     $$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{2a}$$
     assumindo que {{<math>}}$E[\varepsilon] = 0${{</math>}} e {{<math>}}$cov(\varepsilon, x)= 0${{</math>}}.
 
-- Note que o pesquisador deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba "entrando" no erro da estimação.
-- No entanto, como {{<math>}}$z${{</math>}} não tem relação com {{<math>}}$x${{</math>}}, então isso não afeta a estimativa de {{<math>}}$\hat{\beta}_1${{</math>}}:
+- Note que deixando a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, ela entra no erro do modelo {{<math>}}($\varepsilon = \tilde{\beta}_2 z + \tilde{\varepsilon}$){{</math>}}.
+- No entanto, como {{<math>}}$z${{</math>}} não tem relação com {{<math>}}$x${{</math>}} {{<math>}}($cov(\varepsilon, x) = 0$){{</math>}}, então isso não afeta a estimativa de {{<math>}}$\hat{\beta}_1${{</math>}}:
 
 ```r
 cor(x, z) # correlação de x e z -> próxima de 0
@@ -553,29 +546,29 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      88.628       -4.913
+##      88.423       -4.862
 ```
-- Note que {{<math>}}$\hat{\beta}_1 = -4,913 \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar do pesquisador não ter incluído {{<math>}}$z${{</math>}} no modelo.
-- Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e alguma variável de interesse {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}. Ou seja, que nenhuma variável explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro.
+- Note que {{<math>}}$\hat{\beta}_1 = \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar da não-inclusão de {{<math>}}$z${{</math>}} no modelo.
+- Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e alguma variável de interesse {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}.
 
 
 
 ### Violação de cov(e,x) = 0
-- Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} está relacionada com {{<math>}}$z${{</math>}}).
-    - Considere que {{<math>}}$z = 2,5x + \varepsilon, \quad \varepsilon \sim N(0; (0,25)^2)${{</math>}}:
+- Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} está relacionado com {{<math>}}$z${{</math>}}).
+    - Suponha {{<math>}}$z = 2,5x + \varepsilon, \quad \varepsilon \sim N(0, 2^2)${{</math>}}:
     
 
 ```r
 set.seed(1)
-e_til = rnorm(N, 0, 2) # Desvios: 500 obs. de média 0 e desv pad 2
+e_til = rnorm(N, 0, 4) # Desvios: 500 obs. de média 0 e desv pad 2
 x = runif(N, 1, 9) # Gerando 500 obs. de x
-z = 2.5*x + rnorm(N, 0, 0.25) # Gerando 500 obs. de z
+z = 2.5*x + rnorm(N, 0, 2) # Gerando 500 obs. de z
 y = b0til + b1til*x + b2til*z + e_til # calculando observações y
 cor(x, z) # correlação de x e z
 ```
 
 ```
-## [1] 0.9990112
+## [1] 0.9434074
 ```
 
 - Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} são consideravalmente correlacionados
@@ -595,10 +588,11 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      49.709        2.566
+##      48.910        2.714
 ```
 
-- Observe que {{<math>}}$\hat{\beta}_1 = 2,56 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o resíduo {{<math>}}$\hat{\varepsilon}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do MQO).
+- Observe que {{<math>}}$\hat{\beta}_1 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o erro {{<math>}}$\varepsilon = \tilde{\beta}_2 z + \tilde{\varepsilon}${{</math>}}.
+- Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do MQO).
 - Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}:
 
 
@@ -613,17 +607,17 @@ lm(y ~ x + z)
 ## 
 ## Coefficients:
 ## (Intercept)            x            z  
-##      49.798       -5.235        3.114
+##      49.595       -4.969        3.029
 ```
 
 ### Violação de E(e) = 0, porém constante
 - Agora, consideraremos que {{<math>}}$E[\varepsilon] = k${{</math>}}, sendo {{<math>}}$k \neq 0${{</math>}} uma constante.
-- Assuma que {{<math>}}$k = 10${{</math>}}:
+- Assuma que {{<math>}}$k = 100${{</math>}}:
 
 ```r
 b0til = 50
 b1til = -5
-k = 10
+k = 100
 
 set.seed(1)
 e_til = rnorm(N, k, 2) # Desvios: 500 obs. de média k e desv pad 2
@@ -643,13 +637,13 @@ lm(y ~ x) # estimação por MQO
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      59.794       -4.948
+##     149.794       -4.948
 ```
 - Note que o fato de {{<math>}}$E[\varepsilon] \neq 0${{</math>}} afeta apenas a estimação de {{<math>}}$\hat{\beta}_0 \neq \tilde{\beta}_0${{</math>}}, porém não afeta a de {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}, que é normalmente o parâmetro de interesse em estudos econômicos.
 
 
 ### Violação de var(e|x) = constante (homocedasticidade)
-- Agora, consideraremos que {{<math>}}$\varepsilon \sim N(0, (5x)^2)${{</math>}}, ou seja, a variância cresce com {{<math>}}$x${{</math>}} -- {{<math>}}$var(\varepsilon|x) \neq ${{</math>}} constante (não vale homocedasticidade).
+- Agora, consideraremos que {{<math>}}$\varepsilon \sim N(0, (5x)^2)${{</math>}}, ou seja, a variância cresce com {{<math>}}$x\ \implies \ var(\varepsilon|x) \neq ${{</math>}} constante (heterocedasticidade).
 
 
 ```r
@@ -660,13 +654,6 @@ N = 500
 x = runif(N, 1, 9) # Gerando 500 obs. de x
 e_til = rnorm(N, 0, 5*x) # Desvios: 500 obs. de média 0 e desv pad 5x
 y = b0til + b1til*x + e_til # calculando observações y
-
-plot(x, y) # visualizando heteroscedasticidade
-```
-
-<img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-25-1.png" width="672" />
-
-```r
 lm(y ~ x) # estimação por MQO
 ```
 
@@ -679,7 +666,43 @@ lm(y ~ x) # estimação por MQO
 ## (Intercept)            x  
 ##      52.446       -5.606
 ```
-- Note que, mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}} quando {{<math>}}$N${{</math>}} for grande (ainda é consistente). Mas, observe também que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{\beta}_1 \neq \tilde{\beta}_1${{</math>}}. Teste alguns {{<math>}}$N${{</math>}} menores.
+
+```r
+plot(x, y, ylim=c(-100,100)) # visualizando heteroscedasticidade
+abline(a=b0til, b=b1til, col="red") # modelo real
+abline(lm(y ~ x), col="blue") # modelo esimado
+```
+
+<img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+- Mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}} quando {{<math>}}$N${{</math>}} for grande (ainda é consistente).
+- Mas, observe que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{\beta}_1 \neq \tilde{\beta}_1${{</math>}}. Teste alguns {{<math>}}$N${{</math>}} menores:
+
+```r
+N = 50
+x = runif(N, 1, 9) # Gerando 50 obs. de x
+e_til = rnorm(N, 0, 5*x) # Desvios: 50 obs. de média 0 e desv pad 5x
+y = b0til + b1til*x + e_til # calculando observações y
+lm(y ~ x) # estimação por MQO
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      48.148       -4.108
+```
+
+```r
+plot(x, y, ylim=c(-100,100)) # visualizando heteroscedasticidade
+abline(a=b0til, b=b1til, col="red") # modelo real
+abline(lm(y ~ x), col="blue") # modelo esimado
+```
+
+<img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+
 
 
 </br>
