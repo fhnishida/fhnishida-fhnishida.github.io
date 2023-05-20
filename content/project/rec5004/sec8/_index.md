@@ -359,8 +359,8 @@ t_{\hat{\beta}_k} &= \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 </br>
 
 - **(ii)** Outra maneira de avaliar a hipótese nula é via **p-valor**, que indica o quão provável é que  {{<math>}}$\hat{\beta}_k${{</math>}} não seja um valor extremo (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$h_k = 0${{</math>}}).
-{{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{\small{(N-K-1)}}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
-em que {{<math>}}$\Phi_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
+{{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{\small{(N-K-1)}}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
+em que {{<math>}}$F_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
 
 <center><img src="../t_test.png" width=60%></center>
 
@@ -375,9 +375,7 @@ $$ \text{CI}_\alpha = \hat{\beta}_k\ \pm\ \text{cv}_{\scriptscriptstyle{1-\alpha
 - Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$h_k${{</math>}} estiver fora do intervalo de confiança.
 
 
-
 </br>
-
 
 
 ## Estimação MQO multivariado
@@ -512,10 +510,6 @@ vcov(reg)
 
 
 ### Estimação Analítica
-
-#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA
-- Queremos estimar o modelo:
-$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + \varepsilon $$
 
 - A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
 
@@ -796,6 +790,102 @@ round( confint(reg), 4 ) # intervalos de confiança
 ```
 
 
+
+### Inferência via Bootstrap
+
+- [Bootstrappig Regression Models](https://www.sagepub.com/sites/default/files/upm-binaries/21122_Chapter_21.pdf)
+- Bootstrapping is a nonparametric approach to statistical inference that substitutes computation for more traditional distributional assumptions and asymptotic results.
+- The bootstrap is quite general, although there are some cases in which it fails.
+- Because it does not require distributional assumptions (such as normally distributed errors), the bootstrap can provide more accurate inferences when the data are not well behaved or when the sample size is small.
+- It is possible to apply the bootstrap to statistics with sampling distributions that are difficult to derive, even asymptotically.
+- It is relatively simple to apply the bootstrap to complex data-collection plans (such as
+stratified and clustered samples).
+
+
+```r
+# Acessando a base de dados gpa1
+data(gpa1, package = "wooldridge")
+
+# Criando vetor e matriz de variáveis
+y = as.matrix(gpa1[,"colGPA"]) # vetor da variável dependente
+X = as.matrix(cbind( 1, gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas
+
+# Estimativas iniciais
+bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+
+# Matrix para guardar resultados de bootstraps
+B = 1000 # número de replicações
+boot_coefs = matrix(NA, nrow = B, ncol = nrow(bhat))
+colnames(boot_coefs) = rownames(bhat)
+
+# Bootstrapping
+for (i in 1:B) {
+  # Sample the data with replacement
+  boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ]
+
+  # Criando vetor e matriz de variáveis
+  y = as.matrix(boot_gpa1[,"colGPA"]) # vetor da variável dependente
+  X = as.matrix(cbind( 1, boot_gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas
+  
+  # Estimativas iniciais
+  boot_bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+
+  # Guardando as estimativas bootstrapeadas
+  boot_coefs[i, ] = boot_bhat
+}
+
+# Intervalos bootstrapeados por Percentil
+ci_boot = t(apply(boot_coefs, 2, quantile, probs=c(.025, .975))) # bootstrapped CI
+ci_boot
+```
+
+```
+##              2.5%      97.5%
+## 1      0.63151756 1.98957225
+## hsGPA  0.25813699 0.64541353
+## ACT   -0.01059536 0.02951574
+```
+
+```r
+# Intervalos bootstrapeados pela Teoria Normal (estatística t)
+se_boot = apply(boot_coefs, 2, sd) # bootstrapped SE
+ci_se_boot = cbind(bhat + se_boot*-1.96, bhat + se_boot*1.96)
+cbind(se_boot, ci_se_boot) 
+```
+
+```
+##          se_boot                      
+## 1     0.35212474  0.5961633 1.97649225
+## hsGPA 0.09794168  0.2614902 0.64542158
+## ACT   0.01039496 -0.0109481 0.02980013
+```
+
+```r
+# Intervalos pela inferência por OLS
+cbind(se_bhat, ci)
+```
+
+```
+##          se_bhat                       
+## 1     0.34082212  0.61241898 1.96023655
+## hsGPA 0.09581292  0.26400467 0.64290710
+## ACT   0.01077719 -0.01188376 0.03073578
+```
+
+```r
+# Histograma com os intervalos 
+hist(boot_coefs[,3], main="Histograma de beta_1 por bootstrap")
+abline(v=ci_se_boot[3,], col="orange") # intervalo por bootstrapped SE
+abline(v=ci_boot[3,], col="blue") # intervalo por bootstrapped CI
+abline(v=ci[3,], col="green") # intervalo por OLS
+```
+
+<img src="/project/rec5004/sec8/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+
+
+
+
+
 </br>
 
 ## Transformação de Variáveis e Comparação de Regressões
@@ -811,13 +901,10 @@ round( confint(reg), 4 ) # intervalos de confiança
 
 $$ \log{(\text{salary})} = \beta_0 + \beta_1. \left(\frac{\text{benefits}}{\text{salary}}\right) + \text{outros_fatores} + \varepsilon $$
 
-- Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
+- Primeiro, vamos carregar a base de dados:
 
 ```r
 data(meap93, package="wooldridge") # carregando base de dados
-
-# Definindo nova variável
-meap93$b_s = meap93$benefits / meap93$salary
 ```
 
 - Agora vamos estimar diversos modelos:

@@ -669,43 +669,15 @@ lm(y ~ x) # estimação por MQO
 ```
 
 ```r
-plot(x, y, ylim=c(-100,100)) # visualizando heteroscedasticidade
+plot(x, y) # visualizando heteroscedasticidade
 abline(a=b0til, b=b1til, col="red") # modelo real
 abline(lm(y ~ x), col="blue") # modelo estimado
 ```
 
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
-- Mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}} quando {{<math>}}$N${{</math>}} for grande (ainda é consistente).
-- Mas, observe que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{\beta}_1 \neq \tilde{\beta}_1${{</math>}}. Teste alguns {{<math>}}$N${{</math>}} menores:
-
-```r
-N = 50
-
-set.seed(123)
-x = runif(N, 1, 9) # Gerando 50 obs. de x
-e_til = rnorm(N, 0, 5*x) # Erros: 50 obs. de média 0 e desv pad 5x
-y = b0til + b1til*x + e_til # calculando observações y
-lm(y ~ x) # estimação por MQO
-```
-
-```
-## 
-## Call:
-## lm(formula = y ~ x)
-## 
-## Coefficients:
-## (Intercept)            x  
-##      45.098       -3.518
-```
-
-```r
-plot(x, y, ylim=c(-100,100)) # visualizando heteroscedasticidade
-abline(a=b0til, b=b1til, col="red") # modelo real
-abline(lm(y ~ x), col="blue") # modelo estimado
-```
-
-<img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+- Mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}, pois o estimador de MQO permanece não-viesado.
+- Heterocedasticidade compromete apenas a inferência (cálculo dos erros padrão, estatísticas t, e p-valor), tornando o estimador não-eficiente.
 
 
 
