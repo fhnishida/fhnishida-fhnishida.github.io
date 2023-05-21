@@ -22,9 +22,9 @@ type: book
 
 #### _Grid Search_
 
-- O método mais simples de otimização numérica é o _grid search_ (discretização).
-- Como o R não lida com problemas com infinitos valores, uma forma lidar com isso é discretizando diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
-- Para cada possível combinação de parâmetros, calculam-se diversos valores a partir da função objetivo. De todos os valores calculados, escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
+- O método mais simples de otimização numérica é o _grid search_.
+- Como o computador não lida com problemas com infinitos valores, discretizamos diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
+- Para cada possível combinação de parâmetros, calcula-se a função objetivo e escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
 - O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
 
 <center><img src="../grid_search.png"></center>
@@ -47,14 +47,22 @@ type: book
 </video>
 
 
+#### Simulated Annealing (SANN)
+- O _simulated annealing_ é um algoritmo de otimização probabilístico que busca aproximar o ótimo global de uma função dada.
+- O nome do algoritmo vem do recozimento (_annealing_) em metalurgia, uma técnica que envolve o aquecimento e resfriamento controlado de um material para alterar suas propriedades físicas.
+- O algoritmo começa com uma solução inicial e, em seguida, melhora iterativamente a solução atual perturbando-a aleatoriamente e aceitando a perturbação com uma certa probabilidade. A probabilidade de aceitar uma solução pior é inicialmente alta e diminui gradualmente à medida que o número de iterações aumenta.
+
+<center><img src="../sann.gif" width=60%></center>
+
+
 
 ### Métodos baseados em gradiente
 - [BFGS in a Nutshell: An Introduction to Quasi-Newton Methods](https://towardsdatascience.com/bfgs-in-a-nutshell-an-introduction-to-quasi-newton-methods-21b0e13ee504)
 - Há uma outra família de algoritmos de otimização que utilizam o gradiente
 
 
-#### _Gradient Descent_
-- O algoritmo desta família mais simples é o _gradient descent_ (_ascent_).
+#### _Gradient Ascent (Descent)_
+- O algoritmo desta família mais simples é o _gradient ascent_ (_descent_).
 - Queremos encontrar o {{<math>}}${\theta}^{**}${{</math>}} que é o parâmetro que maximiza globalmente a função objetivo
 - Passos para encontrar um máximo:
   1. Comece com algum valor inicial de parâmetro, {{<math>}}${\theta}^0${{</math>}}
@@ -132,7 +140,7 @@ reg$coef
 
 ### (a) Minimização da função perda
 - A função perda adotada pela Teoria da Decisão é a **função de soma dos quadrados dos resíduos**
-- Por essa estratégia, queremos encontrar as estimativas, {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0,\ \hat{\beta}_1 \right\}${{</math>}}, que **minimizam** essa função.
+- Por essa estratégia, queremos encontrar as estimativas que **minimizam** essa função.
 
 
 #### 1. Criar função perda que calcula a soma dos resíduos quadráticos
@@ -296,12 +304,12 @@ ehat = y - yhat
 
 ##### 4. Criação da matriz de momentos
 - Note que {{<math>}}$X' \hat{\boldsymbol{\varepsilon}}${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz de dimensão {{<math>}}$g \times N${{</math>}}, sendo {{<math>}}$g${{</math>}} o número de momentos e {{<math>}}$N${{</math>}} o tamanho da amostra.
-- No R, precisamos fazer **multiplicação elemento a elemento** do vetor de resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com a matriz de covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante _1_ e _hp_), na forma:
+- No R, precisamos fazer **multiplicação elemento a elemento por linha** do vetor de resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com a matriz de covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante _1_ e _hp_), na forma:
 
-{{<math>}}\begin{align} \boldsymbol{X}' \times \hat{\boldsymbol{\varepsilon}} \ =\ \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix} \times \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \ =\ &\begin{bmatrix} \hat{\varepsilon}_1 & x_1.\hat{\varepsilon}_1  \\ \hat{\varepsilon}_2 & x_2.\hat{\varepsilon}_2 \\ \vdots & \vdots \\ \hat{\varepsilon}_N & x_N.\hat{\varepsilon}_N \end{bmatrix}\\
+{{<math>}}\begin{align} \hat{\boldsymbol{\varepsilon}} \odot \boldsymbol{X}\ =\ \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \odot \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}  \ =\ &\begin{bmatrix} \hat{\varepsilon}_1 & x_1.\hat{\varepsilon}_1  \\ \hat{\varepsilon}_2 & x_2.\hat{\varepsilon}_2 \\ \vdots & \vdots \\ \hat{\varepsilon}_N & x_N.\hat{\varepsilon}_N \end{bmatrix}\\
 \\ &\quad \Big\Downarrow \text{(Soma por coluna)} \\
 &\begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}, \end{align}{{</math>}}
-em que {{<math>}}$\times${{</math>}} denota a multiplicação padrão, elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.
+em que {{<math>}}$\odot${{</math>}} denota a multiplicação elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.
 
 Note que, para fazer o GMM no R, não devemos fazer a soma/média de cada coluna (a própria função `gmm()` fará isso).
 
