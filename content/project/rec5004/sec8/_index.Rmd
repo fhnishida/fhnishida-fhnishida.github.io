@@ -454,7 +454,7 @@ colnames(boot_coefs) = rownames(bhat)
 
 # Bootstrapping
 for (i in 1:B) {
-  # Sample the data with replacement
+  # Sorteio aleatório das linhas com reposição
   boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ]
 
   # Criando vetor e matriz de variáveis

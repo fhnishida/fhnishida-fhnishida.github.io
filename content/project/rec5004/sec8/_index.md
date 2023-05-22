@@ -820,7 +820,7 @@ colnames(boot_coefs) = rownames(bhat)
 
 # Bootstrapping
 for (i in 1:B) {
-  # Sample the data with replacement
+  # Sorteio aleatório das linhas com reposição
   boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ]
 
   # Criando vetor e matriz de variáveis
@@ -841,9 +841,9 @@ ci_boot
 
 ```
 ##              2.5%      97.5%
-## 1      0.63151756 1.98957225
-## hsGPA  0.25813699 0.64541353
-## ACT   -0.01059536 0.02951574
+## 1      0.57947768 2.01116296
+## hsGPA  0.25138322 0.64724409
+## ACT   -0.01221803 0.03179149
 ```
 
 ```r
@@ -854,10 +854,10 @@ cbind(se_boot, ci_se_boot)
 ```
 
 ```
-##          se_boot                      
-## 1     0.35212474  0.5961633 1.97649225
-## hsGPA 0.09794168  0.2614902 0.64542158
-## ACT   0.01039496 -0.0109481 0.02980013
+##          se_boot                       
+## 1     0.35975938  0.58119937 1.99145616
+## hsGPA 0.10107494  0.25534900 0.65156277
+## ACT   0.01095982 -0.01205523 0.03090725
 ```
 
 ```r
