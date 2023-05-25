@@ -32,8 +32,8 @@ knitr::opts_chunk$set(echo = TRUE)
 <center><img src="../grid_search.png"></center>
 
 - Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis).
-- Porém, este método depende da definição de intervalo para busca do valor ótimo e fica mais preciso com maiores quantidades de pontos.
-- Então, como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimensões:
+- Porém, depende da definição de intervalo para busca do valor ótimo e fica mais preciso com maiores quantidades de pontos.
+- Como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimensões:
 
 <center><img src="../multigrid_search.png" width=60%></center>
 

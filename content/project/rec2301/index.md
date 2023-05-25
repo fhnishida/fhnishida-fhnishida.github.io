@@ -33,9 +33,9 @@ Página do curso (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.
 
 
 ### Listas Práticas
-- [Lista Prática 1](Lista_Pratica_1.pdf) | [Solução](Lista_Pratica_1_solucao.pdf)
-- [Lista Prática 2](Lista_Pratica_2.pdf) | [Solução](Lista_Pratica_2_solucao.pdf) 
-- [Lista Prática 3](Lista_Pratica_3.pdf) | [Solução](Lista_Pratica_3_solucao.pdf) 
+- [Lista Prática 1](Lista_Pratica_1.pdf)
+- [Lista Prática 2](Lista_Pratica_2.pdf)
+- [Lista Prática 3](Lista_Pratica_3.pdf)
 
 
 </br>

@@ -30,8 +30,8 @@ type: book
 <center><img src="../grid_search.png"></center>
 
 - Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis).
-- Porém, este método depende da definição de intervalo para busca do valor ótimo e fica mais preciso com maiores quantidades de pontos.
-- Então, como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimensões:
+- Porém, depende da definição de intervalo para busca do valor ótimo e fica mais preciso com maiores quantidades de pontos.
+- Como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimensões:
 
 <center><img src="../multigrid_search.png" width=60%></center>
 
@@ -218,7 +218,7 @@ round(min_loss, 4)
 
 ```
 ##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
-## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.03
+## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.04
 ## BFGS        30.0989 -0.0682 447.6743     31      5           0    1    1  0.00
 ## nlminb      30.0989 -0.0682 447.6743     11     16           0    1    1  0.00
 ```
@@ -367,7 +367,7 @@ round(gmm1, 4)
 ```
 ##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
 ## Nelder-Mead  0.0320  0.1009 28256.45     39     NA           0    0    0  0.02
-## BFGS        30.0989 -0.0682     0.00     66     11           0    0    0  0.01
+## BFGS        30.0989 -0.0682     0.00     66     11           0    0    0  0.00
 ## nlminb      30.0989 -0.0682     0.00     54     42           0    0    0  0.00
 ```
 
