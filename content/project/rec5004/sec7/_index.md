@@ -14,8 +14,8 @@ type: book
 
 
 ## Otimização numérica
-- Essa seção tem o objetivo para dar uma intuição sobre alguns algoritmos de otimização.
-- Veremos os métodos de _grid search_ e _gradient descent_ (_ascent_) que representam famílias de métodos de otimização.
+- Essa seção tem o objetivo para dar uma intuição sobre alguns algoritmos de otimização numérica.
+- Veremos dois grupos/famílias de métodos de otimização: _livres de derivadas_ e _baseados em gradiente_.
 
 
 ### Métodos livres de derivadas
@@ -62,15 +62,15 @@ type: book
 
 #### _Gradient Ascent (Descent)_
 - O algoritmo desta família mais simples é o _gradient ascent_ (_descent_).
-- Queremos encontrar o {{<math>}}${\theta}^{**}${{</math>}} que é o parâmetro que maximiza globalmente a função objetivo
+- Queremos encontrar um {{<math>}}${\theta}^{*}${{</math>}} que é o parâmetro que maximiza a função objetivo
 - Passos para encontrar um máximo:
   1. Comece com algum valor inicial de parâmetro, {{<math>}}${\theta}^0${{</math>}}
-  2. Calcula-se o gradiente (vetor de derivadas parciais) e a hessiana (matriz de segundas derivadas parciais) e avalia-se a possibilidade de "andar para cima" a um valor mais alto
+  2. Calcula-se o gradiente (vetor de derivadas parciais) avalia-se a possibilidade de "andar para cima" a um valor mais alto
   3. Caso possa, anda para {{<math>}}${\theta}^1${{</math>}}
   {{<math>}}$$\theta^1 = \theta^0 + \alpha f'(\theta^0)$${{</math>}}
   ou, no caso multivariado:
   {{<math>}}$$\boldsymbol{\theta}^1 = \boldsymbol{\theta}^0 + \alpha \nabla f(\boldsymbol{\theta}^0),$${{</math>}}
-  em que {{<math>}}$\nabla f(\cdot)${{</math>}} é o gradiente (vetor de derivadas parciais).
+  em que {{<math>}}$\alpha${{</math>}} é a taxa de aprendizado, e {{<math>}}$\nabla f(\cdot)${{</math>}} é o gradiente (vetor de derivadas parciais).
   4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} até atingir um ponto máximo
 
 <center><img src="../steepest_ascent.png"></center>
@@ -101,7 +101,7 @@ type: book
 - Como o cálculo da Hessiana (e a sua inversão) é computacionalmente demandante, diversos métodos propõem cálculos para aproximações da Hessiana a partir do gradiente para agilizar o algoritmo.
 - A qualidade da aproximação da matriz Hessiana pode afetar a eficácia destes métodos e suas taxas de convergência.
 - Alguns exemplos são:
-  - `BFGS` (Boryden-Fletcher-Goldfarb-Shanno): um dos métodos quasi-newtonianos mais populares
+  - `BFGS` (Broyden-Fletcher-Goldfarb-Shanno): um dos métodos quasi-newtonianos mais populares
   - `nlminb` (Nonlinear Minimization subject to Box Constraints): otimização sem restrições ou com restrições de caixa usando rotinas PORT do FORTRAN. 
 
 
@@ -218,7 +218,7 @@ round(min_loss, 4)
 
 ```
 ##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
-## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.04
+## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.03
 ## BFGS        30.0989 -0.0682 447.6743     31      5           0    1    1  0.00
 ## nlminb      30.0989 -0.0682 447.6743     11     16           0    1    1  0.00
 ```
@@ -237,8 +237,13 @@ round(min_loss, 4)
 
 - Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.
 - Os análogos amostrais são:
-
 {{<math>}}$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} = 0 $${{</math>}}
+
+- E queremos minimizar:
+{{<math>}}$$ \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2 $${{</math>}}
+em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
+
+</br>
 
 - Podemos calcular estes dois momentos amostrais em uma única multiplicação matricial.
 - Primeiro, considere:
@@ -252,6 +257,7 @@ round(min_loss, 4)
 
 {{<math>}}\begin{align} \boldsymbol{m} \equiv \boldsymbol{X}' \hat{\boldsymbol{\varepsilon}} &= \begin{bmatrix} 1 & 1 & \cdots & 1 \\ x_1 & x_2 & \cdots & x_N  \end{bmatrix} \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \\\
 &= \begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}  \propto \begin{bmatrix} \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \end{align}{{</math>}}
+em que {{<math>}}$\propto${{</math>}} significa "proporcional a".
 
 - Agora, suponha a matriz de pesos (cuja soma não precisa ser igual a 1)
 {{<math>}}$$ W = \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} $${{</math>}}
@@ -259,12 +265,12 @@ em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois es
 
 - No GMM, queremos fazer com que esses momentos sejam o mais próximos de zero. Um forma de fazer isso é minimizar a soma (ponderada) dos quadrados dos momentos:
 
-{{<math>}}\begin{align} m' W m &= \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
+{{<math>}}\begin{align} \boldsymbol{m}' \boldsymbol{W m} &= \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
 &= \begin{bmatrix} \alpha \sum^N_{i=1}{\hat{\varepsilon}_i} & \beta \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
 &= \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2
 \end{align}{{</math>}}
 
-- Note que, usamos o quadrado dos momentos amostrais, pois minimizar o valor absoluto tende a formar "quinas" (ponto não diferenciáveis) na função objetivo.
+- Note que, usamos os quadrados dos momentos amostrais, pois minimizar o valor absoluto tende a formar "quinas" (pontos não-diferenciáveis) na função objetivo.
 
 
 
@@ -320,7 +326,7 @@ sum(m1)^2 + sum(m2)^2 # soma dos quadrados com mesmos pesos (1 e 1)
 - Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}${{</math>}} que, ao calcular a soma/média das colunas, se aproximem ao máximo de zero. Isso será feito via `gmm()` (semelhante à função `opm()`)
 
 
-##### 5a. Criação de função com os momentos
+##### 5a. Criação de função com os momentos para `opm()`
 - Vamos criar uma função que tem como input um vetor de parâmetros (`theta`) e uma base de dados (`dta`), e que retorna uma matriz em que cada coluna representa um momento.
 - Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
 
@@ -508,12 +514,12 @@ o que implica que
 
 
 
-#### Otimização Numérica via `mle2()`
+#### Otimização Numérica para Máxima Verossimilhança
 
 - Nosso objetivo é
 {{<math>}}$$ \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $${{</math>}}
 
-- A função `mle2()` do pacote `bbmle`, que será usada para desempenhar a otimização numérica, assim como `opm()`. Precisamos usar como input:
+- Usaremos as funções `opm()` e `mle2()` do pacote `bbmle` para desempenhar a otimização numérica. Precisamos usar como input:
   - Alguns valores inicias dos parâmetros, {{<math>}}$\hat{\boldsymbol{\theta}}^0 = \left\{ \hat{\beta}^0_0, \hat{\beta}^0_1, \hat{\sigma}^0 \right\}${{</math>}}
   - Uma função que tome esses parâmetros como argumento e calcule a 
 log-verossimilhança, {{<math>}}$\ln{L(\boldsymbol{\hat{\boldsymbol{\theta}}})}${{</math>}}.
@@ -698,8 +704,8 @@ round(mle1, 4)
 ## BFGS        30.0989 -0.0682 3.7403 87.6193     52     20           0    1    1
 ## nlminb      30.0989 -0.0682 3.7403 87.6193     33     67           0    1    1
 ##             xtime
-## Nelder-Mead  0.02
-## BFGS         0.01
+## Nelder-Mead  0.01
+## BFGS         0.00
 ## nlminb       0.00
 ```
 

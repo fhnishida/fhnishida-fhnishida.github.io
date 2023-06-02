@@ -38,6 +38,9 @@ Feel free to contact us if you have any question:
 
 ## Gravações das Monitorias
 
+- **Monitoria 7**: Otimização Numérica | [Script](monitoria07.R)
+[<img src="https://img.youtube.com/vi/KjwznBd4QI8/maxresdefault.jpg" alt="img" width=70%/>](https://youtu.be/KjwznBd4QI8)
+
 - **Monitoria 6**: Regressão Simples | [Script](monitoria06.R)
 [<img src="https://img.youtube.com/vi/nU0U7M_MHNo/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=nU0U7M_MHNo)  
 
