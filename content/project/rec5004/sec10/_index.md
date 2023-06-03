@@ -320,7 +320,7 @@ stargazer::stargazer(ols, wls,
 ```
 
 - Note que tanto faz colocar `1/x` ou `1/(10*x)` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
-- Veja também que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que conhecíamos a priori que a variância do erro era proporcional à variável _x_.
+- Veja também que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que conhecíamos, a priori, que a variância do erro era proporcional à variável _x_.
 - Na prática, é difícil conhecer/defender uma forma exata da heterocedasticidade, já que não conhecemos o modelo real.
 
 
