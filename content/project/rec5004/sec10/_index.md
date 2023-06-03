@@ -292,8 +292,7 @@ plot(x, y)
 # Estimações
 ols = lm(y ~ x) # estimação por MQO
 wls = lm(y ~ x, weights=1/x) # estimação por MQP
-stargazer::stargazer(ols, wls,
-                     digits=2, type="text", omit.stat="f")
+stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
 ```
 
 ```
@@ -711,7 +710,9 @@ summary(wls)$coef # resultado MQP via lm()
 
 
 
+
 </br>
+
 
 {{< cta cta_text="👉 Proceed to Instrumental Variable" cta_link="../sec11" >}}
 

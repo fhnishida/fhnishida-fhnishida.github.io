@@ -16,11 +16,18 @@ type: book
 
 ## Operações matriciais no R
 - [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
-- Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor
+- Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor. Vamos criar um vetor `x` (minúsculo):
 
 ```r
-x = 1:4
+x = 1:4 # vetor de 1 a 4
+x
+```
 
+```
+## [1] 1 2 3 4
+```
+
+```r
 x + x # soma de cada elemento na mesma posição
 ```
 
@@ -52,6 +59,94 @@ x / x # divisão de cada elemento na mesma posição
 ## [1] 1 1 1 1
 ```
 
+- O mesmo também é válido para matrizes. Vamos criar a matriz `X` (maiúscula)
+
+```r
+X = matrix(1:8, nrow=4, ncol=2) # matriz X de dimensão 4x2
+X
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+```
+
+```r
+# Operações convencionais entre matrizes
+X + X # soma de cada elemento na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]    2   10
+## [2,]    4   12
+## [3,]    6   14
+## [4,]    8   16
+```
+
+```r
+X + 2 # soma de de cada elemento com um mesmo escalar
+```
+
+```
+##      [,1] [,2]
+## [1,]    3    7
+## [2,]    4    8
+## [3,]    5    9
+## [4,]    6   10
+```
+
+```r
+X * X # multiplicação de cada elemento na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]    1   25
+## [2,]    4   36
+## [3,]    9   49
+## [4,]   16   64
+```
+
+```r
+X / X # divisão de cada elemento na mesma posição
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    1
+## [2,]    1    1
+## [3,]    1    1
+## [4,]    1    1
+```
+
+```r
+# Operações convencionais entre matriz e vetor
+x + X # soma por linha em cada uma das colunas
+```
+
+```
+##      [,1] [,2]
+## [1,]    2    6
+## [2,]    4    8
+## [3,]    6   10
+## [4,]    8   12
+```
+
+```r
+x * X # multiplicação por linha em cada uma das colunas
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    4   12
+## [3,]    9   21
+## [4,]   16   32
+```
 
 - Além disso, podemos fazer
   - **Transposta de uma matriz ou vetor**: função `t()`
@@ -82,7 +177,7 @@ x %*% t(x) # x vetor-coluna / x vetor-linha (altera ambos, mas t() só no 2o)
 ```
 
 - Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna quando fazemos uma multiplicação vetorial.
-- Dado que adotamos vetores-coluna como padrão, sugiro "forçar" um vetor em linha ou em coluna via função `matrix()`.
+- Dado que adotamos vetores-coluna como padrão, recomenda-se "forçar" um vetor em linha ou em coluna via função `matrix()`.
 
 
 ```r
@@ -124,20 +219,6 @@ x_col %*% t(x_col) # produto externo
 </br>
 
 - O mesmo é válido para matrizes:
-
-```r
-# Como exemplo, criaremos matriz X de dimensão 4x2
-X = matrix(1:8, nrow=4, ncol=2)
-X
-```
-
-```
-##      [,1] [,2]
-## [1,]    1    5
-## [2,]    2    6
-## [3,]    3    7
-## [4,]    4    8
-```
 
 ```r
 # Transposta de X (2x4)
@@ -213,31 +294,31 @@ I
 
 - Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
 - Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
-$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + \varepsilon_i, \qquad i=1, 2, ..., N \tag{E.1} $$
+$$ y_i = \beta_0 + \beta_1 x_{i}^1 + \beta_2 x_{i}^2 + ... + \beta_K x_{i}^K + \varepsilon_i, \qquad i=1, 2, ..., N \tag{E.1} $$
 em que {{<math>}}$N${{</math>}} é o número de observações.
 
 - Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}'_i${{</math>}} (minúsculo):
-{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}'_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
+{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}'_i} = \left[ \begin{matrix} 1 & x_{i}^1 & x_{i}^2 & \cdots & x_{i}^K  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
 
 - Note que o produto interno {{<math>}}$\boldsymbol{x}'_i \boldsymbol{\beta}${{</math>}} é:
 
-{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}'_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
-&= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}{{</math>}}
+{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}'_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i}^1 & x_{i}^2 & \cdots & x_{i}^K  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
+&= 1.\beta_0 + x_{i}^1 \beta_1  + x_{i}^2 \beta_2 + \cdots + x_{i}^K \beta_K, \end{align}{{</math>}}
 
 - Logo, a equação (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
 
-$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}'_i \boldsymbol{\beta}} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{E.2} $$
+$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i}^1 + \beta_2 x_{i}^2 + ... + \beta_K x_{i}^K}_{\boldsymbol{x}'_i \boldsymbol{\beta}} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{1} $$
 
 - Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
 
-{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \\ \vdots \\ \boldsymbol{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
+{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}'_1 \\ \boldsymbol{x}'_2 \\ \vdots \\ \boldsymbol{x}'_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{1}^1 & x_{1}^2 & \cdots & x_{1}^K   \\ 1 & x_{2}^1 & x_{2}^2 & \cdots & x_{2}^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N}^1 & x_{N}^2 & \cdots & x_{N}^K \end{matrix} \right] , $${{</math>}}
 
-- Agora, podemos "empilhar" as equações (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
+- Agora, podemos "empilhar" as equações (1) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
 
-{{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \tag{E.3} \\
-&= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]   \\
-&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]\\
-&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + \varepsilon_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + \varepsilon_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + \varepsilon_N \end{matrix} \right]\\
+{{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \tag{2} \\
+&= \left[ \begin{matrix} 1 & x_{1}^1 & x_{1}^2 & \cdots & x_{1}^K   \\ 1 & x_{2}^1 & x_{2}^2 & \cdots & x_{2}^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N}^1 & x_{N}^2 & \cdots & x_{N}^K \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]   \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{1}^1 + \beta_2 x_{1}^2 + ... + \beta_K x_{1}^K \\ \beta_0 .1 + \beta_1 x_{2}^1 + \beta_2 x_{2}^2 + ... + \beta_K x_{2}^K \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N}^1 + \beta_2 x_{N}^2 + ... + \beta_K x_{N}^K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{1}^1 + \beta_2 x_{1}^2 + ... + \beta_K x_{1}^K + \varepsilon_1 \\ \beta_0 .1 + \beta_1 x_{2}^1 + \beta_2 x_{2}^2 + ... + \beta_K x_{2}^K + \varepsilon_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N}^1 + \beta_2 x_{N}^2 + ... + \beta_K x_{N}^K + \varepsilon_N \end{matrix} \right]\\
 &= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}{{</math>}}
 
 ### Estimativas de MQO
@@ -247,11 +328,12 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x
 
 
 ### Valores preditos
-{{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}  $${{</math>}}
+{{<math>}}\begin{align} \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} 1 & x_{1}^1 & x_{1}^2 & \cdots & x_{1}^K   \\ 1 & x_{2}^1 & x_{2}^2 & \cdots & x_{2}^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N}^1 & x_{N}^2 & \cdots & x_{N}^K \end{matrix} \right] \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] \\
+= \left[ \begin{matrix} \hat{\beta}_0. 1 + \hat{\beta}_1 x_{1}^1 + \hat{\beta}_2 x_{1}^2 + ... + \hat{\beta}_K x_{1}^K \\ \hat{\beta}_0 .1 + \hat{\beta}_1 x_{2}^1 + \hat{\beta}_2 x_{2}^2 + ... + \hat{\beta}_K x_{2}^K \\ \vdots \\ \hat{\beta}_0. 1 + \hat{\beta}_1 x_{N}^1 + \hat{\beta}_2 x_{N}^2 + ... + \hat{\beta}_K x_{N}^K \end{matrix} \right] = \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{bmatrix} \end{align}{{</math>}}
 
 
 ### Resíduos
-{{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} \tag{3.3}  $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} = \begin{bmatrix} {y}_1 \\ {y}_2 \\ \vdots \\ {y}_N \end{bmatrix} - \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{bmatrix} = \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \tag{3.3}  $${{</math>}}
 
 
 
@@ -791,98 +873,63 @@ round( confint(reg), 4 ) # intervalos de confiança
 
 
 
-### Inferência via Bootstrap
+<!-- ### Inferência via Bootstrap -->
 
-- [Bootstrappig Regression Models](https://www.sagepub.com/sites/default/files/upm-binaries/21122_Chapter_21.pdf)
-- Bootstrapping is a nonparametric approach to statistical inference that substitutes computation for more traditional distributional assumptions and asymptotic results.
-- The bootstrap is quite general, although there are some cases in which it fails.
-- Because it does not require distributional assumptions (such as normally distributed errors), the bootstrap can provide more accurate inferences when the data are not well behaved or when the sample size is small.
-- It is possible to apply the bootstrap to statistics with sampling distributions that are difficult to derive, even asymptotically.
-- It is relatively simple to apply the bootstrap to complex data-collection plans (such as
-stratified and clustered samples).
+<!-- - [Bootstrapping Regression Models](https://www.sagepub.com/sites/default/files/upm-binaries/21122_Chapter_21.pdf) -->
+<!-- - Bootstrapping é um método não-paramétrico para inferência estatística que necessita de premissas de distribuição. -->
+<!-- - O método, portanto, não utiliza fórmulas analíticas e pode prover erros padrão e intervalos de confiança mais acurados quando os dados não são bem comportados. -->
 
 
-```r
-# Acessando a base de dados gpa1
-data(gpa1, package = "wooldridge")
+<!-- ```{r} -->
+<!-- # Acessando a base de dados gpa1 -->
+<!-- data(gpa1, package = "wooldridge") -->
 
-# Criando vetor e matriz de variáveis
-y = as.matrix(gpa1[,"colGPA"]) # vetor da variável dependente
-X = as.matrix(cbind( 1, gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas
+<!-- # Criando vetor e matriz de variáveis -->
+<!-- y = as.matrix(gpa1[,"colGPA"]) # vetor da variável dependente -->
+<!-- X = as.matrix(cbind( 1, gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas -->
 
-# Estimativas iniciais
-bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+<!-- # Estimativas iniciais -->
+<!-- bhat = solve( t(X) %*% X ) %*% t(X) %*% y -->
 
-# Matrix para guardar resultados de bootstraps
-B = 1000 # número de replicações
-boot_coefs = matrix(NA, nrow = B, ncol = nrow(bhat))
-colnames(boot_coefs) = rownames(bhat)
+<!-- # Matrix para guardar resultados de bootstraps -->
+<!-- B = 1000 # número de replicações -->
+<!-- boot_coefs = matrix(NA, nrow = B, ncol = nrow(bhat)) -->
+<!-- colnames(boot_coefs) = rownames(bhat) -->
 
-# Bootstrapping
-for (i in 1:B) {
-  # Sorteio aleatório das linhas com reposição
-  boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ]
+<!-- # Bootstrapping -->
+<!-- for (i in 1:B) { -->
+<!--   # Sorteio aleatório das linhas com reposição -->
+<!--   boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ] -->
 
-  # Criando vetor e matriz de variáveis
-  y = as.matrix(boot_gpa1[,"colGPA"]) # vetor da variável dependente
-  X = as.matrix(cbind( 1, boot_gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas
-  
-  # Estimativas iniciais
-  boot_bhat = solve( t(X) %*% X ) %*% t(X) %*% y
+<!--   # Criando vetor e matriz de variáveis -->
+<!--   y = as.matrix(boot_gpa1[,"colGPA"]) # vetor da variável dependente -->
+<!--   X = as.matrix(cbind( 1, boot_gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas -->
 
-  # Guardando as estimativas bootstrapeadas
-  boot_coefs[i, ] = boot_bhat
-}
+<!--   # Estimativas iniciais -->
+<!--   boot_bhat = solve( t(X) %*% X ) %*% t(X) %*% y -->
 
-# Intervalos bootstrapeados por Percentil
-ci_boot = t(apply(boot_coefs, 2, quantile, probs=c(.025, .975))) # bootstrapped CI
-ci_boot
-```
+<!--   # Guardando as estimativas bootstrapeadas -->
+<!--   boot_coefs[i, ] = boot_bhat -->
+<!-- } -->
 
-```
-##              2.5%      97.5%
-## 1      0.57947768 2.01116296
-## hsGPA  0.25138322 0.64724409
-## ACT   -0.01221803 0.03179149
-```
+<!-- # Intervalos bootstrapeados por Percentil -->
+<!-- ci_boot = t(apply(boot_coefs, 2, quantile, probs=c(.025, .975))) # bootstrapped CI -->
+<!-- ci_boot -->
 
-```r
-# Intervalos bootstrapeados pela Teoria Normal (estatística t)
-se_boot = apply(boot_coefs, 2, sd) # bootstrapped SE
-ci_se_boot = cbind(bhat + se_boot*-1.96, bhat + se_boot*1.96)
-cbind(se_boot, ci_se_boot) 
-```
+<!-- # Intervalos bootstrapeados pela Teoria Normal (estatística t) -->
+<!-- se_boot = apply(boot_coefs, 2, sd) # bootstrapped SE -->
+<!-- ci_se_boot = cbind(bhat + se_boot*-1.96, bhat + se_boot*1.96) -->
+<!-- cbind(se_boot, ci_se_boot) -->
 
-```
-##          se_boot                       
-## 1     0.35975938  0.58119937 1.99145616
-## hsGPA 0.10107494  0.25534900 0.65156277
-## ACT   0.01095982 -0.01205523 0.03090725
-```
+<!-- # Intervalos pela inferência por OLS -->
+<!-- cbind(se_bhat, ci) -->
 
-```r
-# Intervalos pela inferência por OLS
-cbind(se_bhat, ci)
-```
-
-```
-##          se_bhat                       
-## 1     0.34082212  0.61241898 1.96023655
-## hsGPA 0.09581292  0.26400467 0.64290710
-## ACT   0.01077719 -0.01188376 0.03073578
-```
-
-```r
-# Histograma com os intervalos 
-hist(boot_coefs[,3], main="Histograma de beta_1 por bootstrap")
-abline(v=ci_se_boot[3,], col="orange") # intervalo por bootstrapped SE
-abline(v=ci_boot[3,], col="blue") # intervalo por bootstrapped CI
-abline(v=ci[3,], col="green") # intervalo por OLS
-```
-
-<img src="/project/rec5004/sec8/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
-
-
+<!-- # Histograma com os intervalos -->
+<!-- hist(boot_coefs[,3], main="Histograma de beta_1 por bootstrap") -->
+<!-- abline(v=ci_se_boot[3,], col="orange") # intervalo por bootstrapped SE -->
+<!-- abline(v=ci_boot[3,], col="blue") # intervalo por bootstrapped CI -->
+<!-- abline(v=ci[3,], col="green") # intervalo por OLS -->
+<!-- ``` -->
 
 
 

@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - **Monitoria 6**: Estimador de MQGF | [Script](https://fhnishida.netlify.app/project/rec2312/monitoria06.R)
 [<img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=50%/>](https://www.youtube.com/watch?v=G-1AVqDQBqY)
 
-- **Monitoria 7**: Matrizes de Tranformação e Estimador Between | [Script](https://fhnishida.netlify.app/project/rec2312/monitoria07.R)
+- **Monitoria 7**: Matrizes de Transformação e Estimador Between | [Script](https://fhnishida.netlify.app/project/rec2312/monitoria07.R)
 [<img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=50%/>](https://www.youtube.com/watch?v=kh69ZHE8DNY)
 
 - **Monitoria 8**: Estimadores Within e de Primeiras Diferenças | [Script](https://fhnishida.netlify.app/project/rec2312/monitoria08.R)

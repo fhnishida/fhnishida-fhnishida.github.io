@@ -394,32 +394,6 @@ pnad_joined4 %>% select(TRI, everything()) %>% head(20)
 ```
 
 
-#### Extra: Criação de dummies via `pivot_wider()`
-- Primeiro, é necessário criar uma coluna de 1's
-- Depois usar a função `pivot_wider()`, indicando a variável categórica e a coluna de 1's, preenchendo os NA's com zero (`fill = 0`) :
-
-```r
-dummies_sexo = pnad_1 %>% mutate(const = 1) %>% # criando coluna de 1's
-    pivot_wider(names_from = SEXO,
-                values_from = const,
-                values_fill = 0)
-head(dummies_sexo)
-```
-
-```
-## # A tibble: 6 × 13
-##   Trimestre UPA       DOMIC PAINEL ORDEM DIA_NASC MES_NASC ANO_NASC UF    IDADE
-##   <chr>     <chr>     <chr> <chr>  <chr> <chr>    <chr>    <chr>    <chr> <dbl>
-## 1 1         110000016 01    08     01    16       05       1981     11       39
-## 2 1         110000016 01    08     02    12       06       2000     11       20
-## 3 1         110000016 01    08     03    15       05       2004     11       16
-## 4 1         110000016 01    08     04    26       07       1947     11       73
-## 5 1         110000016 01    08     05    15       08       1961     11       59
-## 6 1         110000016 02    08     01    11       07       1983     11       37
-## # ℹ 3 more variables: RENDA <dbl>, `2` <dbl>, `1` <dbl>
-```
-
-
 #### Outro exemplo 1: _wide_ para _long_
 - A base de dados abaixo possui informações de 5 condados com suas repectivas áreas territoriais, proporções de adultos com ensino superior e nº de vagas de emprego em 4 anos distintos:
 

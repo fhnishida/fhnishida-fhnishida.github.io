@@ -288,13 +288,11 @@ plot(x, y)
 - Agora, vamos estimar por MQO e MQP o seguinte modelo empírico
 {{<math>}}$$ y = \beta_0 + \beta_1 x + \varepsilon $${{</math>}}
 
-```{r}
+```{r warning=FALSE}
 # Estimações
 ols = lm(y ~ x) # estimação por MQO
 wls = lm(y ~ x, weights=1/x) # estimação por MQP
-stargazer::stargazer(ols, wls,
-                     digits=2, type="text", omit.stat="f")
-
+stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
 ```
 
 - Note que tanto faz colocar `1/x` ou `1/(10*x)` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
@@ -503,7 +501,9 @@ summary(wls)$coef # resultado MQP via lm()
 
 
 
+
 </br>
+
 
 {{< cta cta_text="👉 Proceed to Instrumental Variable" cta_link="../sec11" >}}
 
