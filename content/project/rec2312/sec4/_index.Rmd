@@ -721,7 +721,7 @@ p_bhat
 
 k) Tabela-resumo
 ```{r}
-cbind(bhat, se_bhat, t_bhat, p_bhat) # resultado MQE correto
+data.frame(bhat, se_bhat, t_bhat, p_bhat) # resultado MQE correto
 summary(Q.pooling)$coef # resultado MQO via plm() ou lm()
 summary(Q.pooling, vcov=vcovBK)$coef # com matriz cov erros ajustada
 ```
@@ -913,7 +913,7 @@ p_bhat
 
 l) Tabela-resumo
 ```{r}
-cbind(bhat_FGLS, se_bhat, t_bhat, p_bhat) # resultado MQE correto
+data.frame(bhat_FGLS, se_bhat, t_bhat, p_bhat) # resultado MQE correto
 summary(Q.walhus)$coef # resultado MQGF via plm()
 ```
 
@@ -989,7 +989,7 @@ p_bhat_OLS = 2 * pt(-abs(t_bhat_OLS), N*T-K-1)
 l') Comparativo
 ```{r}
 # MQGF via MQO Analítico
-cbind(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS)
+data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS)
 # MQGF via plm
 summary(Q.walhus)$coef
 ```
@@ -1699,7 +1699,7 @@ p_bhat_B
 
 l) Tabela-resumo
 ```{r}
-cbind(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # resultado Between
+data.frame(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # resultado Between
 summary(Q.between)$coef # resultado Between via plm()
 ```
 
@@ -1793,7 +1793,7 @@ p_bhat_OLS
 
 l) Tabela-resumo
 ```{r}
-cbind(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # resultado Between via MQO
+data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # resultado Between via MQO
 summary(Q.between)$coef # resultado Between via plm()
 ```
 
@@ -2762,7 +2762,7 @@ se_bhat = sqrt(diag(Vbhat))
 t_bhat = bhat_fim / se_bhat
 p_bhat = pt(-abs(t_bhat), df = N*T-K-1) # NT - K - 1
 
-cbind(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
+data.frame(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
 summary(Q.ml)$estimate # Estimação MV via pglm()
 ```
 

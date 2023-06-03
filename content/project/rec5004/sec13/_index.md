@@ -12,7 +12,7 @@ type: book
 
 
 
-## Gravações das monitorias de REC2312 (graduação)
+## Gravações de REC2312 (graduação)
 
 - **Monitoria 4**: Dados em Painel e Matriz de Covariâncias dos Erros | [Script](https://fhnishida.netlify.app/project/rec2312/monitoria04.R)
     [<img src="https://img.youtube.com/vi/6hZqBAGTNTc/maxresdefault.jpg" alt="img" width=50%/>](https://www.youtube.com/watch?v=6hZqBAGTNTc)

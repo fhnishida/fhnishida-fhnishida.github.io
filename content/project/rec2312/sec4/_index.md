@@ -966,13 +966,13 @@ p_bhat
 k) Tabela-resumo
 
 ```r
-cbind(bhat, se_bhat, t_bhat, p_bhat) # resultado MQE correto
+data.frame(bhat, se_bhat, t_bhat, p_bhat) # resultado MQE correto
 ```
 
 ```
-##                      se_bhat                      
-## [1,] 0.15799969 0.0034936352 45.22501 0.000000e+00
-## [2,] 0.00439197 0.0003366365 13.04663 1.986019e-38
+##         bhat      se_bhat   t_bhat       p_bhat
+## 1 0.15799969 0.0034936352 45.22501 0.000000e+00
+## 2 0.00439197 0.0003366365 13.04663 1.986019e-38
 ```
 
 ```r
@@ -1245,13 +1245,13 @@ p_bhat
 l) Tabela-resumo
 
 ```r
-cbind(bhat_FGLS, se_bhat, t_bhat, p_bhat) # resultado MQE correto
+data.frame(bhat_FGLS, se_bhat, t_bhat, p_bhat) # resultado MQE correto
 ```
 
 ```
-##                       se_bhat                       
-## [1,] 0.159325869 0.0034164422 46.63503  0.000000e+00
-## [2,] 0.003862631 0.0001683526 22.94370 3.904386e-112
+##     bhat_FGLS      se_bhat   t_bhat        p_bhat
+## 1 0.159325869 0.0034164422 46.63503  0.000000e+00
+## 2 0.003862631 0.0001683526 22.94370 3.904386e-112
 ```
 
 ```r
@@ -1355,13 +1355,13 @@ l') Comparativo
 
 ```r
 # MQGF via MQO Analítico
-cbind(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS)
+data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS)
 ```
 
 ```
-##                   se_bhat_OLS                       
-## [1,] 0.159325869 0.0034143937 46.66300  0.000000e+00
-## [2,] 0.003862631 0.0001682516 22.95747 2.912584e-112
+##      bhat_OLS  se_bhat_OLS t_bhat_OLS    p_bhat_OLS
+## 1 0.159325869 0.0034143937   46.66300  0.000000e+00
+## 2 0.003862631 0.0001682516   22.95747 2.912584e-112
 ```
 
 ```r
@@ -2248,13 +2248,13 @@ p_bhat_B
 l) Tabela-resumo
 
 ```r
-cbind(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # resultado Between
+data.frame(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # resultado Between
 ```
 
 ```
-##                     se_bhat_B                       
-## [1,] 0.156013534 0.0038820321 40.188625 1.227764e-93
-## [2,] 0.005184737 0.0007490711  6.921555 7.012814e-11
+##        bhat_B    se_bhat_B  t_bhat_B     p_bhat_B
+## 1 0.156013534 0.0038820321 40.188625 1.227764e-93
+## 2 0.005184737 0.0007490711  6.921555 7.012814e-11
 ```
 
 ```r
@@ -2394,13 +2394,13 @@ p_bhat_OLS
 l) Tabela-resumo
 
 ```r
-cbind(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # resultado Between via MQO
+data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # resultado Between via MQO
 ```
 
 ```
-##                   se_bhat_OLS                       
-## [1,] 0.156013534 0.0038820321 40.188625 1.227764e-93
-## [2,] 0.005184737 0.0007490711  6.921555 7.012814e-11
+##      bhat_OLS  se_bhat_OLS t_bhat_OLS   p_bhat_OLS
+## 1 0.156013534 0.0038820321  40.188625 1.227764e-93
+## 2 0.005184737 0.0007490711   6.921555 7.012814e-11
 ```
 
 ```r
@@ -3798,13 +3798,13 @@ se_bhat = sqrt(diag(Vbhat))
 t_bhat = bhat_fim / se_bhat
 p_bhat = pt(-abs(t_bhat), df = N*T-K-1) # NT - K - 1
 
-cbind(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
+data.frame(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
 ```
 
 ```
-##                       se_bhat                      
-## [1,] 0.158490653 0.0034220099 46.31508  0.00000e+00
-## [2,] 0.004196004 0.0001682843 24.93402 1.68128e-131
+##      bhat_fim      se_bhat   t_bhat       p_bhat
+## 1 0.158490653 0.0034220099 46.31508  0.00000e+00
+## 2 0.004196004 0.0001682843 24.93402 1.68128e-131
 ```
 
 ```r
