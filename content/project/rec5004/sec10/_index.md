@@ -558,9 +558,9 @@ b'') Variáveis transformadas {{<math>}}$\tilde{\boldsymbol{y}}${{</math>}} e {{
 ytil = W_0.5 %*% y
 Xtil = W_0.5 %*% X
 
-plot(Xtil[,2], ytil, ylim=c(-125,175), 
-     main=expression(paste("Gráfico ", tilde(x) ," \u00D7 ", tilde(y))),
-     xlab=expression(tilde(x)), ylab=expression(tilde(y))) # plot xtil e ytil
+plot(x, ytil, ylim=c(-125,175), 
+     main=expression(paste("Gráfico ", x ," \u00D7 ", tilde(y))),
+     xlab=expression(x), ylab=expression(tilde(y))) # plot xtil e ytil
 ```
 
 <img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />

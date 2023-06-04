@@ -384,7 +384,7 @@ head(Z)
 
 - Note que, mesmo pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z^*}}}${{</math>}}, **as variáveis exógenas permaneceram com os mesmos valores**, já que as dimensões _exper_ e _expersq_ estão presentes em ambas matrizes {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{Z}^*${{</math>}} e são projetadas nas próprias dimensões.
 - Embora o instrumento {{<math>}}$\boldsymbol{x}^*_1${{</math>}} em {{<math>}}$\boldsymbol{Z}${{</math>}} não esteja exatamente igual no passo (a2), estão bastante próximas.
-- A partir do item (b), os passos são os mesmos dos aplicados anteriormente e, por concisão, estão foram omitidos abaixo
+- A partir do item (b), os passos são os mesmos dos aplicados anteriormente e, por concisão, itens (b) a (i) foram omitidos abaixo:
 
 b -- i) ...
 ```{r include=FALSE}
@@ -408,12 +408,16 @@ summary(reg.iv2)$coef # resultado VI via ivreg()
 
 
 
-
 </br>
 
 ## Estimador MQ2E
 
 - Mínimos Quadrados em 2 Estágios (MQ2E/2SLS)
+
+
+
+### Testes
+
 
 
 
