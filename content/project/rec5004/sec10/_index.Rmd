@@ -91,6 +91,8 @@ e
 
 ## Estimador MQP
 
+- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Weighted Least Squares (Yibi Huang)](https://www.stat.uchicago.edu/~yibi/teaching/stat224/L14.pdf)
 - Um caso especial de MQGF é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que as variância de um indivíduo é proporcional às variâncias dos demais a partir uma função de variáveis explicativas, {{<math>}}$g(\boldsymbol{x}'_i) ${{</math>}}, conhecida a priori:
 {{<math>}}$$ Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2.g(\boldsymbol{x}'_i) $${{</math>}}
 
@@ -268,7 +270,9 @@ em que usamos {{<math>}}$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}$
 
 - Aqui usaremos um exemplo parecido com o que simulamos em uma seção anterior.
 - Vamos criar observações do seguinte modelo real com presença de heterocedasticidade:
-{{<math>}}$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 10x^2) $${{</math>}}
+{{<math>}}$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, (10x)^2) $${{</math>}}
+logo
+{{<math>}}$$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 (10x_i)^2 \quad \implies\quad sd(\tilde{\varepsilon}_i | x_i) = \sigma (10x_i) $${{</math>}}
 - Para estimar o MQP via `lm()`, precisamos informar os pesos no argumento `weights`
 
 ```{r}
@@ -291,11 +295,11 @@ plot(x, y)
 ```{r warning=FALSE}
 # Estimações
 ols = lm(y ~ x) # estimação por MQO
-wls = lm(y ~ x, weights=1/x) # estimação por MQP
+wls = lm(y ~ x, weights=1/x^2) # estimação por MQP
 stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
 ```
 
-- Note que tanto faz colocar `1/x` ou `1/(10*x)` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
+- Note que tanto faz colocar `1/x^2` ou `1/(10*x)^2` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
 - Veja também que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que conhecíamos, a priori, que a variância do erro era proporcional à variável _x_.
 - Na prática, é difícil conhecer/defender uma forma exata da heterocedasticidade, já que não conhecemos o modelo real.
 
@@ -311,7 +315,7 @@ y = as.matrix(y) # transformando coluna de data frame em matriz
 # Criando a matriz de covariadas X com primeira coluna de 1's
 X = as.matrix( cbind(1, x) ) # juntando 1's com x
 
-# Pegando valores N e K
+# Pegando valores K
 K = ncol(X) - 1
 ```
 
@@ -321,7 +325,7 @@ b) Matriz de pesos {{<math>}}$\boldsymbol{W}${{</math>}}
 - É a matriz cuja diagonal principal é preenchida pelos valores inversos de _x_
 
 ```{r}
-W = diag(1/x)
+W = diag(1/x^2)
 round(W[1:10,1:10], 2)
 ```
 
@@ -410,10 +414,10 @@ summary(wls)$coef # resultado MQP via lm()
 
 b') Matriz de pesos {{<math>}}$\boldsymbol{W}^{0.5}${{</math>}}
 
-- É a matriz cuja diagonal principal é preenchida pelas raízes quadradas dos valores inversos de _x_
+- É a matriz cuja diagonal principal é preenchida pelas raízes quadradas dos pesos
 
 ```{r}
-W_0.5 = diag(1/sqrt(x))
+W_0.5 = diag(1/x)
 round(W_0.5[1:10,1:10], 2)
 ```
 
@@ -421,6 +425,13 @@ b'') Variáveis transformadas {{<math>}}$\tilde{\boldsymbol{y}}${{</math>}} e {{
 ```{r}
 ytil = W_0.5 %*% y
 Xtil = W_0.5 %*% X
+
+plot(Xtil[,2], ytil, ylim=c(-125,175), 
+     main=expression(paste("Gráfico ", tilde(x) ," \u00D7 ", tilde(y))),
+     xlab=expression(tilde(x)), ylab=expression(tilde(y))) # plot xtil e ytil
+plot(x, y, ylim=c(-125,175), 
+     main=expression(paste("Gráfico ", x ," \u00D7 ", y)),
+     xlab=expression(x), ylab=expression(y)) # plot x e y
 ```
 
 
@@ -447,7 +458,7 @@ head(ehat_OLS)
 ``` 
 
 f') Estimativa da variância do erro {{<math>}}$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{MQO}}${{</math>}}
-{{<math>}}$$\tilde{\hat{\sigma}}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $${{</math>}}
+{{<math>}}$$\tilde{\hat{\sigma}}^2 =  \frac{\tilde{\hat{\boldsymbol{\varepsilon}}}' \tilde{\hat{\boldsymbol{\varepsilon}}}}{N - K - 1} $${{</math>}}
 
 ```{r}
 sig2hat_OLS = as.numeric( t(ehat_OLS) %*% ehat_OLS / (N-K-1) )

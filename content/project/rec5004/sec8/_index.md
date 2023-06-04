@@ -287,38 +287,37 @@ I
 
 ## MQO na forma matricial
 
-- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
+- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 
 
 ### Notações
 
-- Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
 - Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
-$$ y_i = \beta_0 + \beta_1 x_{i}^1 + \beta_2 x_{i}^2 + ... + \beta_K x_{i}^K + \varepsilon_i, \qquad i=1, 2, ..., N \tag{E.1} $$
+$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + \varepsilon_i, \qquad i=1, 2, ..., N \tag{1} $$
 em que {{<math>}}$N${{</math>}} é o número de observações.
 
 - Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}'_i${{</math>}} (minúsculo):
-{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}'_i} = \left[ \begin{matrix} 1 & x_{i}^1 & x_{i}^2 & \cdots & x_{i}^K  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
+{{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}'_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
 
 - Note que o produto interno {{<math>}}$\boldsymbol{x}'_i \boldsymbol{\beta}${{</math>}} é:
 
-{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}'_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i}^1 & x_{i}^2 & \cdots & x_{i}^K  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
-&= 1.\beta_0 + x_{i}^1 \beta_1  + x_{i}^2 \beta_2 + \cdots + x_{i}^K \beta_K, \end{align}{{</math>}}
+{{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}'_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
+&= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}{{</math>}}
 
-- Logo, a equação (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
+- Logo, a equação (1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
 
-$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i}^1 + \beta_2 x_{i}^2 + ... + \beta_K x_{i}^K}_{\boldsymbol{x}'_i \boldsymbol{\beta}} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{1} $$
+$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}'_i \boldsymbol{\beta}} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{2} $$
 
 - Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
 
-{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}'_1 \\ \boldsymbol{x}'_2 \\ \vdots \\ \boldsymbol{x}'_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{1}^1 & x_{1}^2 & \cdots & x_{1}^K   \\ 1 & x_{2}^1 & x_{2}^2 & \cdots & x_{2}^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N}^1 & x_{N}^2 & \cdots & x_{N}^K \end{matrix} \right] , $${{</math>}}
+{{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}'_1 \\ \boldsymbol{x}'_2 \\ \vdots \\ \boldsymbol{x}'_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
 
-- Agora, podemos "empilhar" as equações (1) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
+- Agora, podemos "empilhar" as equações (2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
 
 {{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \tag{2} \\
-&= \left[ \begin{matrix} 1 & x_{1}^1 & x_{1}^2 & \cdots & x_{1}^K   \\ 1 & x_{2}^1 & x_{2}^2 & \cdots & x_{2}^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N}^1 & x_{N}^2 & \cdots & x_{N}^K \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]   \\
-&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{1}^1 + \beta_2 x_{1}^2 + ... + \beta_K x_{1}^K \\ \beta_0 .1 + \beta_1 x_{2}^1 + \beta_2 x_{2}^2 + ... + \beta_K x_{2}^K \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N}^1 + \beta_2 x_{N}^2 + ... + \beta_K x_{N}^K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]\\
-&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{1}^1 + \beta_2 x_{1}^2 + ... + \beta_K x_{1}^K + \varepsilon_1 \\ \beta_0 .1 + \beta_1 x_{2}^1 + \beta_2 x_{2}^2 + ... + \beta_K x_{2}^K + \varepsilon_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N}^1 + \beta_2 x_{N}^2 + ... + \beta_K x_{N}^K + \varepsilon_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]   \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + \varepsilon_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + \varepsilon_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + \varepsilon_N \end{matrix} \right]\\
 &= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}{{</math>}}
 
 ### Estimativas de MQO
@@ -328,8 +327,8 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i}^1 + \beta_2 x_{i}^2 + ... + \beta_K
 
 
 ### Valores preditos
-{{<math>}}\begin{align} \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} 1 & x_{1}^1 & x_{1}^2 & \cdots & x_{1}^K   \\ 1 & x_{2}^1 & x_{2}^2 & \cdots & x_{2}^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N}^1 & x_{N}^2 & \cdots & x_{N}^K \end{matrix} \right] \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] \\
-= \left[ \begin{matrix} \hat{\beta}_0. 1 + \hat{\beta}_1 x_{1}^1 + \hat{\beta}_2 x_{1}^2 + ... + \hat{\beta}_K x_{1}^K \\ \hat{\beta}_0 .1 + \hat{\beta}_1 x_{2}^1 + \hat{\beta}_2 x_{2}^2 + ... + \hat{\beta}_K x_{2}^K \\ \vdots \\ \hat{\beta}_0. 1 + \hat{\beta}_1 x_{N}^1 + \hat{\beta}_2 x_{N}^2 + ... + \hat{\beta}_K x_{N}^K \end{matrix} \right] = \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{bmatrix} \end{align}{{</math>}}
+{{<math>}}\begin{align} \hat{\boldsymbol{y}} &= \boldsymbol{X} \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] \\
+&= \left[ \begin{matrix} \hat{\beta}_0. 1 + \hat{\beta}_1 x_{11} + \hat{\beta}_2 x_{12} + ... + \hat{\beta}_K x_{1K} \\ \hat{\beta}_0 .1 + \hat{\beta}_1 x_{21} + \hat{\beta}_2 x_{22} + ... + \hat{\beta}_K x_{2K} \\ \vdots \\ \hat{\beta}_0. 1 + \hat{\beta}_1 x_{N1} + \hat{\beta}_2 x_{N2} + ... + \hat{\beta}_K x_{NK} \end{matrix} \right] = \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{bmatrix} \end{align}{{</math>}}
 
 
 ### Resíduos
@@ -375,7 +374,7 @@ Como também assumimos homocedasticidade, {{<math>}}$ var(\varepsilon_i) = \sigm
 \end{array} \right] = \sigma^2 \begin{bmatrix} 1 & 0 & \cdots & 0 \\
 0 & 1 & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & 1  \end{bmatrix} = \sigma^2 I_N $${{</math>}}
+0 & 0 & \cdots & 1  \end{bmatrix} = \sigma^2 \boldsymbol{I}_N $${{</math>}}
 
 
 ### Variância do termo de erro
@@ -415,7 +414,7 @@ Os erros padrão do estimador podem ser obtidos tomando a raiz quadrada da diago
 
 ### Teste _t_
 
-- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
+- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 
 - Após a estimação, é importante testar hipóteses na forma
 $$ H_0: \ \beta_k = h_k \tag{4.1} $$
@@ -464,7 +463,7 @@ $$ \text{CI}_\alpha = \hat{\beta}_k\ \pm\ \text{cv}_{\scriptscriptstyle{1-\alpha
 
 ### Estimação via `lm()`
 
-- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
+- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 
 - Para estimar um modelo multivariado no R, podemos usar a função `lm()`:
   - O til (`~`) separa a a variável dependente das variáveis independentes
@@ -937,7 +936,7 @@ round( confint(reg), 4 ) # intervalos de confiança
 
 ## Transformação de Variáveis e Comparação de Regressões
 
-- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
+- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Aqui, vamos utilizar um exemplo para mostrar como:
   - tranformar variáveis diretamente da função `lm()`, e
   - informar os resultados de diversas regressões usando a função `stargazer()` do pacote `stargazer`.
@@ -1039,7 +1038,7 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"))
 
 ### Variáveis Dummy
 
-- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
+- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
 - Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
 
@@ -1096,8 +1095,8 @@ mean(wage1$wage[wage1$female==1]) # média salarial das mulheres
 - Agora, vamos estimar o modelo com mais variáveis explicativas:
 
 {{<math>}}\begin{align}
-\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper}^2 +\\
-&\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + \varepsilon \tag{7.6} \end{align}{{</math>}}
+\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper2} +\\
+&\beta_5 \text{tenure} + \beta_6 \text{tenure2} + \varepsilon \tag{7.6} \end{align}{{</math>}}
 em que:
 
 
@@ -1130,7 +1129,7 @@ round( summary(reg)$coef, 4 )
 
 ### Variáveis com múltiplas categorias
 
-- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
+- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
 - É necessário criar uma _dummy_ para cada categoria
 - Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
@@ -1359,7 +1358,7 @@ lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 
 
 ### Transformando variáveis contínuas em categorias
-- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
+- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf) 
 - Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
 
 
@@ -1430,7 +1429,7 @@ round( summary(res)$coef, 5 )
 ### Interações Envolvendo Variáveis Dummy
 
 #### Interações entre variáveis dummy
-- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
+- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Seção 7. de Wooldridge (2006)
 - Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
 
@@ -1444,7 +1443,7 @@ round( summary(res)$coef, 5 )
 
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
+&\beta_4 \text{exper} + \beta_5 \text{exper2} + \beta_6 \text{tenure} + \beta_7 \text{tenure2} + \varepsilon \end{align}{{</math>}}
 em que:
 
 - `wage`: salário médio por hora
@@ -1486,7 +1485,7 @@ round( summary(reg)$coef, 4 )
 - O modelo a ser estimado agora é:
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
+&\beta_4 \text{exper} + \beta_5 \text{exper2} + \beta_6 \text{tenure} + \beta_7 \text{tenure2} + \varepsilon \end{align}{{</math>}}
 
 
 ```r
@@ -1539,7 +1538,7 @@ round( summary(reg)$coef, 4 )
 
 #### Considerando inclinações diferentes
 - Seção 7.4 de Wooldridge (2006)
-- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
+- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
 
 
@@ -1552,7 +1551,7 @@ round( summary(reg)$coef, 4 )
 
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
-&\beta_3 \text{exper} + \beta_4 \text{exper}^2 + \beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
+&\beta_3 \text{exper} + \beta_4 \text{exper2} + \beta_5 \text{tenure} + \beta_6 \text{tenure2} + \varepsilon \end{align}{{</math>}}
 em que:
 
 - `wage`: salário médio por hora

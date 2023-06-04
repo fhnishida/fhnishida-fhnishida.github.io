@@ -87,6 +87,8 @@ e
 
 ## Estimador MQP
 
+- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Weighted Least Squares (Yibi Huang)](https://www.stat.uchicago.edu/~yibi/teaching/stat224/L14.pdf)
 - Um caso especial de MQGF é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que as variância de um indivíduo é proporcional às variâncias dos demais a partir uma função de variáveis explicativas, {{<math>}}$g(\boldsymbol{x}'_i) ${{</math>}}, conhecida a priori:
 {{<math>}}$$ Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2.g(\boldsymbol{x}'_i) $${{</math>}}
 
@@ -264,7 +266,9 @@ em que usamos {{<math>}}$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}$
 
 - Aqui usaremos um exemplo parecido com o que simulamos em uma seção anterior.
 - Vamos criar observações do seguinte modelo real com presença de heterocedasticidade:
-{{<math>}}$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 10x^2) $${{</math>}}
+{{<math>}}$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, (10x)^2) $${{</math>}}
+logo
+{{<math>}}$$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 (10x_i)^2 \quad \implies\quad sd(\tilde{\varepsilon}_i | x_i) = \sigma (10x_i) $${{</math>}}
 - Para estimar o MQP via `lm()`, precisamos informar os pesos no argumento `weights`
 
 
@@ -291,7 +295,7 @@ plot(x, y)
 ```r
 # Estimações
 ols = lm(y ~ x) # estimação por MQO
-wls = lm(y ~ x, weights=1/x) # estimação por MQP
+wls = lm(y ~ x, weights=1/x^2) # estimação por MQP
 stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
 ```
 
@@ -303,22 +307,22 @@ stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
 ##                                            y              
 ##                                    (1)            (2)     
 ## ----------------------------------------------------------
-## x                                -5.51**       -5.99***   
-##                                   (2.35)        (1.93)    
+## x                                -5.51**       -5.92***   
+##                                   (2.35)        (1.77)    
 ##                                                           
-## Constant                         49.27***      51.68***   
-##                                  (12.87)        (8.29)    
+## Constant                         49.27***      51.43***   
+##                                  (12.87)        (5.50)    
 ##                                                           
 ## ----------------------------------------------------------
 ## Observations                       100            100     
-## R2                                 0.05          0.09     
-## Adjusted R2                        0.04          0.08     
-## Residual Std. Error (df = 98)     53.30          21.74    
+## R2                                 0.05          0.10     
+## Adjusted R2                        0.04          0.09     
+## Residual Std. Error (df = 98)     53.30          9.69     
 ## ==========================================================
 ## Note:                          *p<0.1; **p<0.05; ***p<0.01
 ```
 
-- Note que tanto faz colocar `1/x` ou `1/(10*x)` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
+- Note que tanto faz colocar `1/x^2` ou `1/(10*x)^2` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
 - Veja também que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que conhecíamos, a priori, que a variância do erro era proporcional à variável _x_.
 - Na prática, é difícil conhecer/defender uma forma exata da heterocedasticidade, já que não conhecemos o modelo real.
 
@@ -335,7 +339,7 @@ y = as.matrix(y) # transformando coluna de data frame em matriz
 # Criando a matriz de covariadas X com primeira coluna de 1's
 X = as.matrix( cbind(1, x) ) # juntando 1's com x
 
-# Pegando valores N e K
+# Pegando valores K
 K = ncol(X) - 1
 ```
 
@@ -346,22 +350,22 @@ b) Matriz de pesos {{<math>}}$\boldsymbol{W}${{</math>}}
 
 
 ```r
-W = diag(1/x)
+W = diag(1/x^2)
 round(W[1:10,1:10], 2)
 ```
 
 ```
 ##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,]  0.3 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
-##  [2,]  0.0 0.14 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
-##  [3,]  0.0 0.00 0.23 0.00 0.00 0.00 0.00 0.00 0.00  0.00
-##  [4,]  0.0 0.00 0.00 0.12 0.00 0.00 0.00 0.00 0.00  0.00
-##  [5,]  0.0 0.00 0.00 0.00 0.12 0.00 0.00 0.00 0.00  0.00
-##  [6,]  0.0 0.00 0.00 0.00 0.00 0.73 0.00 0.00 0.00  0.00
-##  [7,]  0.0 0.00 0.00 0.00 0.00 0.00 0.19 0.00 0.00  0.00
-##  [8,]  0.0 0.00 0.00 0.00 0.00 0.00 0.00 0.12 0.00  0.00
-##  [9,]  0.0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.18  0.00
-## [10,]  0.0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.21
+##  [1,] 0.09 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [2,] 0.00 0.02 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [3,] 0.00 0.00 0.05 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [4,] 0.00 0.00 0.00 0.02 0.00 0.00 0.00 0.00 0.00  0.00
+##  [5,] 0.00 0.00 0.00 0.00 0.01 0.00 0.00 0.00 0.00  0.00
+##  [6,] 0.00 0.00 0.00 0.00 0.00 0.54 0.00 0.00 0.00  0.00
+##  [7,] 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.00 0.00  0.00
+##  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.02 0.00  0.00
+##  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.03  0.00
+## [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.05
 ```
 
 c) Estimativas MQP {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}${{</math>}}
@@ -376,8 +380,8 @@ bhat_WLS
 
 ```
 ##        [,1]
-##   51.684388
-## x -5.990958
+##   51.433290
+## x -5.923353
 ```
 
 d) Valores ajustados {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQP}}${{</math>}}
@@ -389,12 +393,12 @@ head(yhat_WLS)
 
 ```
 ##            [,1]
-## [1,] 31.9105128
-## [2,]  7.9118094
-## [3,] 26.0921234
-## [4,]  3.3724719
-## [5,]  0.6190335
-## [6,] 43.5100143
+## [1,] 31.8825514
+## [2,]  8.1546597
+## [3,] 26.1298192
+## [4,]  3.6665460
+## [5,]  0.9441786
+## [6,] 43.3511590
 ```
 
 
@@ -407,12 +411,12 @@ head(ehat_WLS)
 
 ```
 ##             [,1]
-## [1,]   9.9474683
-## [2,]   3.4702333
-## [3,]   0.7174529
-## [4,] 116.6728257
-## [5,] -12.4818528
-## [6,]  20.3592392
+## [1,]   9.9754298
+## [2,]   3.2273830
+## [3,]   0.6797571
+## [4,] 116.3787515
+## [5,] -12.8069979
+## [6,]  20.5180944
 ```
 
 f) Estimativa da variância do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{MQP}}${{</math>}}
@@ -425,7 +429,7 @@ sig2hat_WLS
 ```
 
 ```
-## [1] 472.5068
+## [1] 93.95364
 ```
 
 h) Matriz de Variâncias-Covariâncias do Estimador
@@ -440,8 +444,8 @@ Vbhat_WLS
 
 ```
 ##                     x
-##    68.70516 -13.77279
-## x -13.77279   3.70812
+##   30.248472 -8.143956
+## x -8.143956  3.132177
 ```
 
 
@@ -456,7 +460,7 @@ se_WLS
 
 ```
 ##                 x 
-## 8.288858 1.925648
+## 5.499861 1.769796
 ```
 
 j) Estatística _t_
@@ -473,8 +477,8 @@ t_WLS
 
 ```
 ##        [,1]
-##    6.235406
-## x -3.111138
+##    9.351743
+## x -3.346913
 ```
 
 k) P-valor
@@ -490,8 +494,8 @@ p_WLS
 
 ```
 ##           [,1]
-##   1.141713e-08
-## x 2.441535e-03
+##   3.090884e-15
+## x 1.159943e-03
 ```
 
 l) Tabela-resumo
@@ -502,8 +506,8 @@ data.frame(bhat_WLS, se_WLS, t_WLS, p_WLS) # resultado MQP
 
 ```
 ##    bhat_WLS   se_WLS     t_WLS        p_WLS
-##   51.684388 8.288858  6.235406 1.141713e-08
-## x -5.990958 1.925648 -3.111138 2.441535e-03
+##   51.433290 5.499861  9.351743 3.090884e-15
+## x -5.923353 1.769796 -3.346913 1.159943e-03
 ```
 
 ```r
@@ -512,8 +516,8 @@ summary(wls)$coef # resultado MQP via lm()
 
 ```
 ##              Estimate Std. Error   t value     Pr(>|t|)
-## (Intercept) 51.684388   8.288858  6.235406 1.141713e-08
-## x           -5.990958   1.925648 -3.111138 2.441535e-03
+## (Intercept) 51.433290   5.499861  9.351743 3.090884e-15
+## x           -5.923353   1.769796 -3.346913 1.159943e-03
 ```
 
 
@@ -526,26 +530,26 @@ summary(wls)$coef # resultado MQP via lm()
 
 b') Matriz de pesos {{<math>}}$\boldsymbol{W}^{0.5}${{</math>}}
 
-- É a matriz cuja diagonal principal é preenchida pelas raízes quadradas dos valores inversos de _x_
+- É a matriz cuja diagonal principal é preenchida pelas raízes quadradas dos pesos
 
 
 ```r
-W_0.5 = diag(1/sqrt(x))
+W_0.5 = diag(1/x)
 round(W_0.5[1:10,1:10], 2)
 ```
 
 ```
 ##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-##  [1,] 0.55 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
-##  [2,] 0.00 0.37 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
-##  [3,] 0.00 0.00 0.48 0.00 0.00 0.00 0.00 0.00 0.00  0.00
-##  [4,] 0.00 0.00 0.00 0.35 0.00 0.00 0.00 0.00 0.00  0.00
-##  [5,] 0.00 0.00 0.00 0.00 0.34 0.00 0.00 0.00 0.00  0.00
-##  [6,] 0.00 0.00 0.00 0.00 0.00 0.86 0.00 0.00 0.00  0.00
-##  [7,] 0.00 0.00 0.00 0.00 0.00 0.00 0.44 0.00 0.00  0.00
-##  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.35 0.00  0.00
-##  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.43  0.00
-## [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.46
+##  [1,]  0.3 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [2,]  0.0 0.14 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [3,]  0.0 0.00 0.23 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [4,]  0.0 0.00 0.00 0.12 0.00 0.00 0.00 0.00 0.00  0.00
+##  [5,]  0.0 0.00 0.00 0.00 0.12 0.00 0.00 0.00 0.00  0.00
+##  [6,]  0.0 0.00 0.00 0.00 0.00 0.73 0.00 0.00 0.00  0.00
+##  [7,]  0.0 0.00 0.00 0.00 0.00 0.00 0.19 0.00 0.00  0.00
+##  [8,]  0.0 0.00 0.00 0.00 0.00 0.00 0.00 0.12 0.00  0.00
+##  [9,]  0.0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.18  0.00
+## [10,]  0.0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.21
 ```
 
 b'') Variáveis transformadas {{<math>}}$\tilde{\boldsymbol{y}}${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}}${{</math>}}
@@ -553,7 +557,21 @@ b'') Variáveis transformadas {{<math>}}$\tilde{\boldsymbol{y}}${{</math>}} e {{
 ```r
 ytil = W_0.5 %*% y
 Xtil = W_0.5 %*% X
+
+plot(Xtil[,2], ytil, ylim=c(-125,175), 
+     main=expression(paste("Gráfico ", tilde(x) ," \u00D7 ", tilde(y))),
+     xlab=expression(tilde(x)), ylab=expression(tilde(y))) # plot xtil e ytil
 ```
+
+<img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+
+```r
+plot(x, y, ylim=c(-125,175), 
+     main=expression(paste("Gráfico ", x ," \u00D7 ", y)),
+     xlab=expression(x), ylab=expression(y)) # plot x e y
+```
+
+<img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-15-2.png" width="672" />
 
 
 c') Estimativas MQO {{<math>}}$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}${{</math>}}
@@ -568,8 +586,8 @@ bhat_OLS
 
 ```
 ##        [,1]
-##   51.684388
-## x -5.990958
+##   51.433290
+## x -5.923353
 ```
 
 d') Valores ajustados {{<math>}}$\tilde{\hat{\boldsymbol{y}}}_{\scriptscriptstyle{MQO}}${{</math>}}
@@ -581,12 +599,12 @@ head(yhat_OLS)
 
 ```
 ##            [,1]
-## [1,] 17.5645088
-## [2,]  2.9270010
-## [3,] 12.6241803
-## [4,]  1.1875976
-## [5,]  0.2120309
-## [6,] 37.2486121
+## [1,]  9.6595639
+## [2,]  1.1160919
+## [3,]  6.1167951
+## [4,]  0.4546730
+## [5,]  0.1107705
+## [6,] 31.7718463
 ```
 
 
@@ -598,17 +616,17 @@ head(ehat_OLS)
 ```
 
 ```
-##           [,1]
-## [1,]  5.475387
-## [2,]  1.283825
-## [3,]  0.347126
-## [4,] 41.085702
-## [5,] -4.275274
-## [6,] 17.429399
+##            [,1]
+## [1,]  3.0222895
+## [2,]  0.4417175
+## [3,]  0.1591261
+## [4,] 14.4316397
+## [5,] -1.5025095
+## [6,] 15.0376081
 ```
 
 f') Estimativa da variância do erro {{<math>}}$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{MQO}}${{</math>}}
-{{<math>}}$$\tilde{\hat{\sigma}}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $${{</math>}}
+{{<math>}}$$\tilde{\hat{\sigma}}^2 =  \frac{\tilde{\hat{\boldsymbol{\varepsilon}}}' \tilde{\hat{\boldsymbol{\varepsilon}}}}{N - K - 1} $${{</math>}}
 
 
 ```r
@@ -617,7 +635,7 @@ sig2hat_OLS
 ```
 
 ```
-## [1] 472.5068
+## [1] 93.95364
 ```
 
 h') Matriz de Variâncias-Covariâncias do Estimador
@@ -632,8 +650,8 @@ Vbhat_OLS
 
 ```
 ##                     x
-##    68.70516 -13.77279
-## x -13.77279   3.70812
+##   30.248472 -8.143956
+## x -8.143956  3.132177
 ```
 
 
@@ -648,7 +666,7 @@ se_OLS
 
 ```
 ##                 x 
-## 8.288858 1.925648
+## 5.499861 1.769796
 ```
 
 j') Estatística _t_
@@ -665,8 +683,8 @@ t_OLS
 
 ```
 ##        [,1]
-##    6.235406
-## x -3.111138
+##    9.351743
+## x -3.346913
 ```
 
 k') P-valor
@@ -682,8 +700,8 @@ p_OLS
 
 ```
 ##           [,1]
-##   1.141713e-08
-## x 2.441535e-03
+##   3.090884e-15
+## x 1.159943e-03
 ```
 
 l') Tabela-resumo
@@ -694,8 +712,8 @@ data.frame(bhat_OLS, se_OLS, t_OLS, p_OLS) # resultado MQO transformado
 
 ```
 ##    bhat_OLS   se_OLS     t_OLS        p_OLS
-##   51.684388 8.288858  6.235406 1.141713e-08
-## x -5.990958 1.925648 -3.111138 2.441535e-03
+##   51.433290 5.499861  9.351743 3.090884e-15
+## x -5.923353 1.769796 -3.346913 1.159943e-03
 ```
 
 ```r
@@ -704,8 +722,8 @@ summary(wls)$coef # resultado MQP via lm()
 
 ```
 ##              Estimate Std. Error   t value     Pr(>|t|)
-## (Intercept) 51.684388   8.288858  6.235406 1.141713e-08
-## x           -5.990958   1.925648 -3.111138 2.441535e-03
+## (Intercept) 51.433290   5.499861  9.351743 3.090884e-15
+## x           -5.923353   1.769796 -3.346913 1.159943e-03
 ```
 
 

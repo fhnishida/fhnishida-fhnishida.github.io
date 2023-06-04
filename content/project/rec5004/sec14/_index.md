@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Panel Data Manipulation
+linktitle: Manipulation
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Panel Data Maniplation using tidyr
+title: Panel Data Manipulation
 weight: 14
 output: md_document
 type: book
@@ -85,7 +85,7 @@ pnad_2 = pnad_022021 %>% select(all_of(lista_var)) %>%
 
 
 
-### Empilhando bases de dados e filtrando indivíduos que aparecem em todos os períodos
+### Filtrando indivíduos presentes em todos períodos
 - Primeiro, empilharemos as bases de dados usando `rbind()`. É necessário garantir que tenham o mesmo número de colunas e estas sejam da mesma classe (_character_, _numeric_, etc.):
 
 ```r
@@ -206,7 +206,7 @@ paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 ```
 
 
-### Juntado as bases e transformando de _wide_ para _long_
+### Transformando de _wide_ para _long_
 - Agora, juntaremos a base usando a função `inner_join()` que apenas mantém indivíduos que aparecem em ambas bases de dados:
 
 ```r
@@ -266,7 +266,7 @@ pnad_joined = pnad_joined %>% select(-Trimestre_1, -Trimestre_2)
 - Estando no formato _wide_, precisamos transformar para o formato _long_
 
 
-#### Transformando a base de _wide_ para _long_ via `tidyr`
+#### Transformação _wide_/_long_ via `tidyr`
 - [Pivoting (_tidyr_)](https://tidyr.tidyverse.org/articles/pivot.html)
 
 - Para fazer transformações em _wide_ ou _long_ usaremos o pacote `tidyr` e suas funções `pivot_longer()`, `pivot_wider()` e `separate()`
@@ -599,4 +599,5 @@ TravelMode3 %>% head(10)
 ```
 
 
-{{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec6" >}}
+<!-- {{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec6" >}} -->
+

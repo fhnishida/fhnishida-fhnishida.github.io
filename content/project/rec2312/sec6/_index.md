@@ -72,6 +72,10 @@ library(AER) # carregando pacote com ivreg
 ```
 
 ```
+## Warning: package 'car' was built under R version 4.2.3
+```
+
+```
 ## Carregando pacotes exigidos: carData
 ```
 
@@ -81,6 +85,10 @@ library(AER) # carregando pacote com ivreg
 
 ```
 ## Carregando pacotes exigidos: zoo
+```
+
+```
+## Warning: package 'zoo' was built under R version 4.2.3
 ```
 
 ```
@@ -100,6 +108,10 @@ library(AER) # carregando pacote com ivreg
 
 ```
 ## Carregando pacotes exigidos: survival
+```
+
+```
+## Warning: package 'survival' was built under R version 4.2.3
 ```
 
 ```r
@@ -159,6 +171,16 @@ round( summary(reg.iv)$coef, 5 )
 
 - [Seção 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
 
+
+
+
+
+</br>
+
+
+## Modelos de Equações Simultâneas
+
+- [Seção 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
 
 
 

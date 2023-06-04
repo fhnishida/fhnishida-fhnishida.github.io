@@ -110,6 +110,16 @@ round( summary(reg.iv)$coef, 5 )
 
 
 
+
+</br>
+
+
+## Modelos de Equações Simultâneas
+
+- [Seção 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+
+
+
 </br>
 
 {{< cta cta_text="👉 Seguir para Equações Simultâneas" cta_link="../sec7" >}}
