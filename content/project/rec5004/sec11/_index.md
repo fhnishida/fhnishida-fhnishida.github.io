@@ -517,7 +517,7 @@ para {{<math>}}$k = J+1, ..., K${{</math>}}.
 <!-- {{<math>}}$$ \underset{N \times N}{\boldsymbol{P_{\scriptscriptstyle{\boldsymbol{Z}^*}} }} = \boldsymbol{Z}^* (\boldsymbol{Z}^{*\prime} \boldsymbol{Z}^*)^{-1} \boldsymbol{Z}^{*\prime} $${{</math>}} -->
 
 
-#### Estimação via `ivreg()`
+### Estimação via `ivreg()`
 - Só é necessário incluir o novo instrumento após o `|` na fórmula do `ivreg()`
 
 ```r
@@ -553,7 +553,7 @@ round(reg.iv2, 4) # resultado IV sobreidentificado
 ```
 
 
-#### Estimação via `lm()`
+### Estimação via `lm()`
 - 1º MQO: `educ ~ fatheduc + motheduc + exper + expersq`
 - Obter os valores ajustados `educ_hat`
 - 2º MQO: `lwage ~ educ_hat + exper + expersq`
@@ -909,7 +909,7 @@ summary(reg.2sls)
 
 </br>
 
-## Equações Simultâneas
+#### Equações Simultâneas
 
 - Modelos de Equações Simultâneas (MES/SEM)
 
