@@ -2,7 +2,7 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: FGLS/WLS
+linktitle: FGLS / WLS
 summary: FGLS...
 title: Feasible Generalized Least Squares
 weight: 10
