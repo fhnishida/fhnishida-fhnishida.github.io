@@ -3,7 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: IV / 2SLS
-summary: Instrumental Variable Regression.
+summary: The IV / 2SLS section of the current web page context discusses Instrumental Variable and Two-Stage Least Squares methods. These are statistical techniques used to estimate causal relationships when there is a concern about endogeneity, or when one or more of the independent variables are correlated with the error term. The section includes references to several academic sources on these topics, including sections from books by Heiss (2020), Cameron and Trivedi (2005), Wooldridge (2010), and Davidson and MacKinnon (1999). The section also includes mathematical notation and equations related to these methods. For example, it presents a multivariate model with K regressors, matrix notation, and the definition of an instrumental variable. The section also includes information on how to estimate an instrumental variable using R code, including an example using the mroz dataset from the wooldridge package. Overall, this section provides a detailed introduction to instrumental variable and two-stage least squares methods, including both theoretical background and practical examples using R code.
 title: Instrumental Variable and Two-Stage Least Squares
 weight: 11
 output: md_document
@@ -36,7 +36,7 @@ em que
 {{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \begin{bmatrix} 1 & x^*_{11} & \cdots & x^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & x^*_{21} & \cdots & x^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & x^*_{N1} & \cdots & x^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix}, $${{</math>}}
 {{<math>}}$$ \underset{N \times 1}{\boldsymbol{y}} = \left[ \begin{matrix} \boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_N \end{matrix} \right] \quad \text{ e } \quad  \underset{N \times 1}{\boldsymbol{\varepsilon}} = \left[ \begin{matrix} \boldsymbol{\varepsilon}_1 \\ \boldsymbol{\varepsilon}_2 \\ \vdots \\ \boldsymbol{\varepsilon}_N \end{matrix} \right] $${{</math>}}
 
-- Denote {{<math>}}$\boldsymbol{Z}${{</math>}} a matriz de instrumentos dos {{<math>}}$J${{</math>}} regressores endógenos e das variáveis exógenas:
+- Denote {{<math>}}$\boldsymbol{Z}${{</math>}} a matriz de instrumentos com {{<math>}}$L${{</math>}} variáveis instrumentais, {{<math>}}$\boldsymbol{z}_k${{</math>}}, e {{<math>}}$K-J${{</math>}} variáveis exógenas, {{<math>}}$\boldsymbol{x}_k${{</math>}}:
 {{<math>}}$$ \underset{N \times (1+L+K-J)}{\boldsymbol{Z}} = \begin{bmatrix}
 1 & z_{11} & \cdots & z_{1L} & x_{1,J+1} & \cdots & x_{1K} \\
 1 & z_{21} & \cdots & z_{2L} & x_{2,J+1} & \cdots & x_{2K} \\
@@ -337,7 +337,7 @@ pois {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é idempotent
 - O 1º MQO ocorre quando pré-multiplicamos por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}}, pois esta matriz projeta {{<math>}}$\boldsymbol{X}${{</math>}} no espaço de {{<math>}}$\boldsymbol{Z}${{</math>}}:
 {{<math>}}\begin{align} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} &= \boldsymbol{P_{\scriptscriptstyle{Z}}} \begin{bmatrix} 1 & x^*_{11} & \cdots & x^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & x^*_{21} & \cdots & x^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & x^*_{N1} & \cdots & x^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix} \\
 &= \ \quad \begin{bmatrix} 1 & \hat{x}^*_{11} & \cdots & \hat{x}^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & \hat{x}^*_{21} & \cdots & \hat{x}^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & \hat{x}^*_{N1} & \cdots & \hat{x}^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix} \equiv \hat{\boldsymbol{X}} \end{align}{{</math>}}
-em que cada variável de {{<math>}}$\boldsymbol{X}${{</math>}} foi regredida por todos instrumentos em {{<math>}}$\boldsymbol{Z}${{</math>}}:
+em que cada variável de {{<math>}}$\boldsymbol{X}${{</math>}} foi regredida por todos instrumentos (e variáveis exógenas) em {{<math>}}$\boldsymbol{Z}${{</math>}}:
 {{<math>}}$$\hat{\boldsymbol{x}}^*_{k} = \hat{\gamma}_{k0} + \hat{\gamma}_{k1} \boldsymbol{z}^*_1 + \cdots + \hat{\gamma}_{kL} \boldsymbol{z}^*_L + \hat{\gamma}_{k,J+1} \boldsymbol{x}_{J+1} + \cdots + \hat{\gamma}_{kK} \boldsymbol{x}_{K}  ,$${{</math>}}
 para {{<math>}}$k = 1, ..., J ${{</math>}}, e
 {{<math>}}\begin{align} \hat{\boldsymbol{x}}_{k} &= \hat{\gamma}_{k0} + \hat{\gamma}_{k1} \boldsymbol{z}^*_1 + \cdots + \hat{\gamma}_{kL} \boldsymbol{z}_L + \hat{\gamma}_{k,J+1} \boldsymbol{x}_{J+1} + \cdots + \hat{\gamma}_{kK} \boldsymbol{x}_{K} \\
