@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Considere:
   - {{<math>}}$G${{</math>}} o número de restrições lineares
   - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$Q \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$G \times 1${{</math>}}
   - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, contida por diversos vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
   - Modelo multivariado:
   
@@ -352,7 +352,7 @@ w > c
 - [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
 - Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
 - Nele, estimamos dois modelos:
-  - Irrestrito: inclui todas as as variáveis explicativas de interesse
+  - Irrestrito: inclui todas as variáveis explicativas de interesse
   - Restrito: exclui algumas variáveis da estimação
 - O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
 - A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
