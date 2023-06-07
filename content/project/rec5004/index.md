@@ -4,7 +4,7 @@ date: "2023-04-03T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Graduate TA Sessions on OLS, FGLS, IV and Panel Data.
+summary: Graduate TA Sessions on OLS, GLS, IV and Panel Data.
 tags:
 - Graduate
 title: Econometrics I (Spring 2023)

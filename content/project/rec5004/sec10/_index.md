@@ -2,15 +2,18 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: FGLS / WLS
+linktitle: GLS / WLS / FGLS
 summary: FGLS...
-title: Feasible Generalized Least Squares
+title: Generalized Least Squares
 weight: 10
 output: md_document
 type: book
 ---
 
 
+
+- [Seções 8.2 e 8.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- Seções 7.1 a 7.4 de Davidson e MacKinnon (1999)
 
 
 ## Matriz de variâncias-covariâncias dos erros
@@ -71,13 +74,13 @@ e
 </br>
 
 
-## Estimador MQGF
+## Estimador MQG
 
-- O estimador de MQGF, considerando dados em corte transversal, é dado por
-{{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQGF}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
+- O estimador de MQG, considerando dados em corte transversal, é dado por
+{{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQG}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
 
 - A matriz de variâncias-covariâncias do estimador é dada por
-{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
+{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
 
 - O problema é que desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, e precisamos fazer mais premissas sobre a matriz de variâncias-covariâncias dos erros para estimar {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
 
@@ -729,7 +732,26 @@ summary(wls)$coef # resultado MQP via lm()
 
 
 
+
+
 </br>
+
+## Estimador MQGF
+
+
+
+
+
+
+</br>
+
+
+## Testes de heterocedasticidade
+
+
+
+</br>
+
 
 
 {{< cta cta_text="👉 Proceed to Instrumental Variable" cta_link="../sec11" >}}

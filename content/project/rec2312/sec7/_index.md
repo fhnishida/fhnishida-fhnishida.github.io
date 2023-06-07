@@ -910,8 +910,7 @@ summary(reg.2sls)
 - Para isto, é utilizado um vetor de constrastes (vetor de diferença entre vetores de estimativas)
 
 A ideia do Teste de Hausman é a seguinte:
-- Escolhemos dois métodos de estimação, cuja **única diferença seja a robustez uma "situação"**
-  - Por exemplo: MQO e MQGF, sendo o segundo robusto à heterocedasticidade ("situação").
+- Escolhemos dois métodos/modelos de estimação, cuja **diferença seja a robustez uma "situação"**
 - Os dois estimadores são **ambos consistentes na ausência da "situação"**
   - O estimador "menos robusto" é mais eficiente quando a "situação" está ausente
   - Já o estimador "mais robusto" é **não-viesado na presença da "situação"**
