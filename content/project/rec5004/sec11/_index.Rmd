@@ -2,7 +2,7 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: IV / 2SLS
+linktitle: IV/2SLS
 summary: The IV / 2SLS section of the current web page context discusses Instrumental Variable and Two-Stage Least Squares methods. These are statistical techniques used to estimate causal relationships when there is a concern about endogeneity, or when one or more of the independent variables are correlated with the error term. The section includes references to several academic sources on these topics, including sections from books by Heiss (2020), Cameron and Trivedi (2005), Wooldridge (2010), and Davidson and MacKinnon (1999). The section also includes mathematical notation and equations related to these methods. For example, it presents a multivariate model with K regressors, matrix notation, and the definition of an instrumental variable. The section also includes information on how to estimate an instrumental variable using R code, including an example using the mroz dataset from the wooldridge package. Overall, this section provides a detailed introduction to instrumental variable and two-stage least squares methods, including both theoretical background and practical examples using R code.
 title: Instrumental Variable and Two-Stage Least Squares
 weight: 11
@@ -555,8 +555,7 @@ summary(reg.2sls)
 - Para isto, é utilizado um vetor de constrastes (vetor de diferença entre vetores de estimativas)
 
 A ideia do Teste de Hausman é a seguinte:
-- Escolhemos dois métodos de estimação, cuja **única diferença seja a robustez uma "situação"**
-  - Por exemplo: MQO e MQGF, sendo o segundo robusto à heterocedasticidade ("situação").
+- Escolhemos dois métodos/modelos de estimação, cuja **diferença seja a robustez uma "situação"**
 - Os dois estimadores são **ambos consistentes na ausência da "situação"**
   - O estimador "menos robusto" é mais eficiente quando a "situação" está ausente
   - Já o estimador "mais robusto" é **não-viesado na presença da "situação"**

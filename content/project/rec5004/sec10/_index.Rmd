@@ -2,7 +2,7 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: GLS / WLS / FGLS
+linktitle: GLS/WLS/FGLS
 summary: FGLS...
 title: Generalized Least Squares
 weight: 10
@@ -80,13 +80,14 @@ e
 
 ## Estimador MQG
 
-- O estimador de MQG, considerando dados em corte transversal, é dado por
+- O estimador de Mínimos Quadrados Generalizados (MQG/GLS), assumindo dados em corte transversal, é dado por
 {{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQG}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
 
 - A matriz de variâncias-covariâncias do estimador é dada por
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
 
-- O problema é que desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, e precisamos fazer mais premissas sobre a matriz de variâncias-covariâncias dos erros para estimar {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
+- O problema é que desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, e precisamos fazer mais premissas sobre a forma da matriz de variâncias-covariâncias dos erros (e sua inversa) para estimar {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
+
 
 
 
@@ -96,11 +97,42 @@ e
 
 - [Seção 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - [Weighted Least Squares (Yibi Huang)](https://www.stat.uchicago.edu/~yibi/teaching/stat224/L14.pdf)
-- Um caso especial de MQGF é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que as variância de um indivíduo é proporcional às variâncias dos demais a partir uma função de variáveis explicativas, {{<math>}}$g(\boldsymbol{x}'_i) ${{</math>}}, conhecida a priori:
-{{<math>}}$$ Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2.g(\boldsymbol{x}'_i) $${{</math>}}
+
+- Um caso especial de MQG é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que a variância do erro de cada observação é conhecida e proporcional a das demais.
+- A variância do erro individual é a partir uma função de algumas variáveis explicativas, {{<math>}}$h(\boldsymbol{z}'_i)${{</math>}} (não necessariamente em função das mesmas variáveis da regressão, {{<math>}}$\boldsymbol{x}'_i${{</math>}}):
+{{<math>}}$$ Var(\varepsilon_i | \boldsymbol{z}'_i) = \sigma^2.h(\boldsymbol{z}'_i), $${{</math>}}
+ou seja,
+{{<math>}}\begin{align} \boldsymbol{\Sigma} &= 
+\left[ \begin{array}{cccc}
+\sigma^2 h(\boldsymbol{z}'_1) & 0 & \cdots & 0 \\
+0 & \sigma^2 h(\boldsymbol{z}'_2) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2 h(\boldsymbol{z}'_1) 
+\end{array} \right] \\
+&= \sigma^2 \left[ \begin{array}{cccc}
+h(\boldsymbol{z}'_1) & 0 & \cdots & 0 \\
+0 & h(\boldsymbol{z}'_2) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & h(\boldsymbol{z}'_N) 
+\end{array} \right] \\
+&\equiv \sigma^2 \boldsymbol{W}^{-1}
+\end{align}{{</math>}}
+em que {{<math>}}$\boldsymbol{W}${{</math>}} é uma matriz de pesos:
+{{<math>}}$$ \boldsymbol{W} = \left[ \begin{array}{cccc}
+\frac{1}{h(\boldsymbol{z}'_1)} & 0 & \cdots & 0 \\
+0 & \frac{1}{h(\boldsymbol{z}'_2)} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \frac{1}{h(\boldsymbol{z}'_N)}
+\end{array} \right] \equiv \left[ \begin{array}{cccc}
+w_1 & 0 & \cdots & 0 \\
+0 & w_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & w_N
+\end{array} \right] $${{</math>}}
+em que {{<math>}}$w_i${{</math>}} são os pesos da estimação.
 
 - Por exemplo, considere que a variância das mulheres é o dobro da variância dos homens ({{<math>}}$\sigma^2_M = 2.\sigma^2_H ${{</math>}}), então:
-{{<math>}}$$ g(\text{female}_i) = \left\{ \begin{matrix} 
+{{<math>}}$$ h(\text{female}_i) = \left\{ \begin{matrix} 
 2, &\text{se female}_i = 1 \\
 1, &\text{se female}_i = 0
 \end{matrix} \right. $${{</math>}}
@@ -140,10 +172,9 @@ e
 0 & \cdots & 0 & 0 & \cdots & 1 \\
 \end{array} \right] 
 \end{align}{{</math>}}
-.
 
-- Logo, podemos também escrever:
 
+- Por ser uma matriz diagonal, as seguintes matrizes são facilmente calculadas:
 {{<math>}}$$ \boldsymbol{\Sigma}^{-1} = 
 \frac{1}{\sigma^2} \left[ \begin{array}{cccc}
 \frac{1}{2} & \cdots & 0 & 0 & \cdots & 0 \\
@@ -154,7 +185,7 @@ e
 0 & \cdots & 0 & 0 & \cdots & \frac{1}{1} \\
 \end{array} \right] \equiv 
 \frac{1}{\sigma^2} \boldsymbol{W}, $${{</math>}}
-em que {{<math>}}$ \boldsymbol{W} ${{</math>}} é uma matriz de pesos, e também
+e
 {{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = 
 \frac{1}{\sigma} \left[ \begin{array}{cccc}
 \frac{1}{\sqrt{2}} & \cdots & 0 & 0 & \cdots & 0 \\
@@ -165,6 +196,7 @@ em que {{<math>}}$ \boldsymbol{W} ${{</math>}} é uma matriz de pesos, e também
 0 & \cdots & 0 & 0 & \cdots & \frac{1}{\sqrt{1}} \\
 \end{array} \right] \equiv 
 \frac{1}{\sigma} \boldsymbol{W}^{0.5} $${{</math>}}
+
 
 </br>
 
@@ -522,7 +554,43 @@ summary(wls)$coef # resultado MQP via lm()
 
 ## Estimador MQGF
 
+- Na prática, é difícil conhecer a priori a matriz de variâncias-covariâncias dos erros.
+- Uma forma razoável é supor que {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é uma função de parâmetros de um modelo linear {{<math>}}$\boldsymbol{\gamma}${{</math>}} desconhecidos.
+- Assim, podemos calcular {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} para obter {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}}
+- Esse tipo de proceimento é conhecido como Mínimos Quadrados Generalizados Factíveis (MQGF/FGLS), pois seu cálculo é possível enquanto o MQG não é.
 
+
+- **Whether or not feasible GLS is a desirable estimation method in practice depends on how good an estimate of Ω can be obtained. If Ω(ˆ γ) is a very good estimate, then feasible GLS will have essentially the same properties as GLS itself, and inferences based on the GLS covariance matrix (7.05), with Ω(ˆ γ) replacing Ω, should be reasonably reliable, even though they will not be exact in finite samples.**
+- **if Ω(ˆ γ) is a poor estimate, feasible GLS estimates may have quite different properties from real GLS estimates, and inferences may be quite misleading.**
+
+
+</br>
+
+- Queremos estimar o modelo
+{{<math>}}$$y_i = \beta_0 + \beta_1 x_{i1} + ... + \beta_K x_{iK} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{1} $${{</math>}}
+enquanto, geralmente, assume-se a variância do erro individual é dada por:
+{{<math>}}$$Var(\varepsilon_i | \boldsymbol{z}'_i) = \sigma^2 \exp(\boldsymbol{z}'_i \boldsymbol{\gamma}). $${{</math>}}
+
+- A função {{<math>}}$\exp(\boldsymbol{z}'_i \boldsymbol{\gamma})${{</math>}} é um exemplo de função _skedastic_, que garante que, após cálculo de {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}}, o valor ajustado não seja negativo (para a variância do indivíduo ser sempre positiva).
+
+- Para estimar {{<math>}}$\boldsymbol{\gamma}${{</math>}}, é necessário ter estimativas {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} consistentes. A forma mais comum é começar calculando {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}.
+- Depois, é feita a regressão linear auxiliar
+{{<math>}}$$ \log{\hat{\varepsilon}}_i = \boldsymbol{z}'_i \boldsymbol{\gamma} + u_i, \tag{2} $${{</math>}}
+- A partir da estimação, podemos usar os valores ajustados para calcular
+{{<math>}}$$h(\boldsymbol{z}'_i) = \exp(\boldsymbol{z}'_i \boldsymbol{\gamma})$${{</math>}}
+que é a inverso do peso
+{{<math>}}$$w_i = \frac{1}{h(\boldsymbol{z}'_i)} = \frac{1}{\exp(\boldsymbol{z}'_i \boldsymbol{\gamma})}$${{</math>}}
+
+- Com {{<math>}}$\boldsymbol{W}${{</math>}} estimado, podemos calcular {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} e a matriz de variâncias e covariâncias do estimador {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}})${{</math>}}.
+- Podemos usar esse {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} estimado para estimar um novo {{<math>}}$\boldsymbol{\gamma})${{</math>}} e um novo {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}}. Isso pode ser feito iteradamente até sua convergência (se isso ocorrer) ou até um certo número de repetições.
+
+
+### Estimação via lm()
+
+
+
+### Estimação analítia
+- Parecida com MQP, apenas o início é diferente:
 
 
 
