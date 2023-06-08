@@ -596,7 +596,7 @@ sig2hat_wls
 
 ```{r}
 Vbhat_wls = sig2hat_wls * solve( t(X) %*% W %*% X )
-Vbhat_wls
+round(Vbhat_wls, 3)
 ```
 
 
@@ -678,7 +678,7 @@ sig2hat_ols
 
 ```{r}
 Vbhat_ols = sig2hat_ols * solve( t(Xtil) %*% Xtil )
-Vbhat_ols
+round(Vbhat_ols, 3)
 ```
 
 
@@ -737,7 +737,7 @@ reg.ols = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn,
              data=smoke)
 round(summary(reg.ols)$coef, 4)
 
-# Obtenção dos pesos wi = 1/h(zi) = 1/exp(Zg)
+# Obtenção dos pesos wi = 1/h(zi) = 1/exp(Xg)
 logu2 = log(resid(reg.ols)^2)
 reg.var = lm(logu2 ~ lincome + lcigpric + educ + age + agesq + restaurn,
              data=smoke)
@@ -832,7 +832,7 @@ sig2hat_fgls
 
 ```{r}
 Vbhat_fgls = sig2hat_fgls * solve( t(X) %*% W %*% X )
-Vbhat_fgls
+round(Vbhat_fgls, 3)
 ```
 
 
