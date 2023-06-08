@@ -2,7 +2,7 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: -------------- Panel Data
+linktitle: Panel Data
 summary: This page includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I (2022).
 title: Panel Data Estimation
 weight: 13

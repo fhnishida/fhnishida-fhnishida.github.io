@@ -112,7 +112,7 @@ em que:
 - _educ_: anos de escolaridade
 - _age_: idade
 - _agesq_: idade ao quadrado
-- _restaurn_: dummy resturante them restrições de fumo
+- _restaurn_: dummy resturante tem restrições de fumo
 
 ```{r}
 library(lmtest) # precisa ser instalado
@@ -258,7 +258,7 @@ head(ehat^2)
 ```{r}
 # Estimando matriz de vcov dos erros (diagonal com resíduo^2 de cada indiv)
 Sigma = diag(as.numeric(ehat^2)) # transformar em numeric p/ preencher diagonal
-Sigma[1:7, 1:7]
+round(Sigma[1:7, 1:7], 3)
 ```
 - Note que foi necessário transformar `ehat^2` em numeric para aplicar o operador `diag()`. Caso não fosse feito, iria retornar um número ao invés de criar uma matriz diagonal preenchida com os resíduos ao quadrado.
 - Agora, o podemos estimar a matriz de variâncias-covariâncias do estimador robusta a heterocedasticidade:
@@ -507,14 +507,20 @@ plot(x, y)
 
 ```{r warning=FALSE}
 # Estimações
-ols = lm(y ~ x) # estimação por MQO
-wls = lm(y ~ x, weights=1/x^2) # estimação por MQP
-stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
+reg.ols = lm(y ~ x) # estimação por MQO
+reg.wls = lm(y ~ x, weights=1/x^2) # estimação por MQP
+stargazer::stargazer(reg.ols, reg.wls, digits=2, type="text", omit.stat="f")
 ```
 
 - Note que tanto faz colocar `1/x^2` ou `1/(10*x)^2` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
 - Veja também que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que **já sabíamos que a variância do erro era proporcional à variável _x_**.
 - Na prática, é difícil conhecer/defender uma forma exata da heterocedasticidade, já que não conhecemos o modelo real da variância do erro.
+- Abaixo, segue uma estimação feita com pesos errados {{<math>}}$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 \left(\frac{1}{x_i}\right)^2${{</math>}} e note que, inclusive, afeta a estimativas (além de piorar os erros padrão):
+```{r warning=FALSE}
+# Estimações
+reg.wls2 = lm(y ~ x, weights=x^2) # estimação por MQP
+stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.stat="f")
+```
 
 
 <!-- - Vamos continuar com a base de dados de cigarros -->
@@ -608,7 +614,7 @@ p_wls = 2 * pt(-abs(t_wls), N-K-1)
 
 # Resultados
 data.frame(bhat_wls, se_wls, t_wls, p_wls) # resultado MQP
-summary(wls)$coef # resultado MQP via lm()
+summary(reg.wls)$coef # resultado MQP via lm()
 ```
 
 
@@ -690,7 +696,7 @@ p_ols = 2 * pt(-abs(t_ols), N-K-1)
 
 # Resultados
 data.frame(bhat_ols, se_ols, t_ols, p_ols) # resultado MQO transformado
-summary(wls)$coef # resultado MQP via lm()
+summary(reg.wls)$coef # resultado MQP via lm()
 ```
 
 

@@ -1300,4 +1300,4 @@ sarg = N * r2 # sempre positivo
 
 
 
-{{< cta cta_text="👉 Proceed to GMM" cta_link="../sec12" >}}
+{{< cta cta_text="👉 Proceed to Panel Data" cta_link="../sec13" >}}

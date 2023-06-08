@@ -452,7 +452,7 @@ em que {{<math>}}$F_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma dis
 </br>
 
 - **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do **intervalo de confiança**:
-$$ \text{CI}_\alpha = \hat{\beta}_k\ \pm\ \text{cv}_{\scriptscriptstyle{1-\alpha}} . \text{se}(\hat{\beta}_k) \tag{4.8} $$
+{{<math>}}$$ \text{CI}_\alpha = \hat{\beta}_k\ \pm\ \text{cv}_{\scriptscriptstyle{1-\alpha}} . \text{se}(\hat{\beta}_k) \tag{4.8} $${{</math>}}
 - Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$h_k${{</math>}} estiver fora do intervalo de confiança.
 
 
@@ -1145,8 +1145,7 @@ round( summary(reg)$coef, 4 )
 - Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
 - Vamos estimar o seguinte modelo:
 
-{{<math>}}$$`
-\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + \varepsilon $${{</math>}}
+{{<math>}}$$\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + \varepsilon$${{</math>}}
 em que:
 
 - `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992

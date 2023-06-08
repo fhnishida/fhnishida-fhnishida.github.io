@@ -108,7 +108,7 @@ em que:
 - _educ_: anos de escolaridade
 - _age_: idade
 - _agesq_: idade ao quadrado
-- _restaurn_: dummy resturante them restrições de fumo
+- _restaurn_: dummy resturante tem restrições de fumo
 
 
 ```r
@@ -408,18 +408,18 @@ head(ehat^2)
 ```r
 # Estimando matriz de vcov dos erros (diagonal com resíduo^2 de cada indiv)
 Sigma = diag(as.numeric(ehat^2)) # transformar em numeric p/ preencher diagonal
-Sigma[1:7, 1:7]
+round(Sigma[1:7, 1:7], 3)
 ```
 
 ```
-##          [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
-## [1,] 106.7707   0.0000  0.00000   0.0000  0.00000 0.000000   0.0000
-## [2,]   0.0000 115.6655  0.00000   0.0000  0.00000 0.000000   0.0000
-## [3,]   0.0000   0.0000 59.59677   0.0000  0.00000 0.000000   0.0000
-## [4,]   0.0000   0.0000  0.00000 105.2808  0.00000 0.000000   0.0000
-## [5,]   0.0000   0.0000  0.00000   0.0000 56.31231 0.000000   0.0000
-## [6,]   0.0000   0.0000  0.00000   0.0000  0.00000 5.950747   0.0000
-## [7,]   0.0000   0.0000  0.00000   0.0000  0.00000 0.000000 142.4191
+##         [,1]    [,2]   [,3]    [,4]   [,5]  [,6]    [,7]
+## [1,] 106.771   0.000  0.000   0.000  0.000 0.000   0.000
+## [2,]   0.000 115.666  0.000   0.000  0.000 0.000   0.000
+## [3,]   0.000   0.000 59.597   0.000  0.000 0.000   0.000
+## [4,]   0.000   0.000  0.000 105.281  0.000 0.000   0.000
+## [5,]   0.000   0.000  0.000   0.000 56.312 0.000   0.000
+## [6,]   0.000   0.000  0.000   0.000  0.000 5.951   0.000
+## [7,]   0.000   0.000  0.000   0.000  0.000 0.000 142.419
 ```
 - Note que foi necessário transformar `ehat^2` em numeric para aplicar o operador `diag()`. Caso não fosse feito, iria retornar um número ao invés de criar uma matriz diagonal preenchida com os resíduos ao quadrado.
 - Agora, o podemos estimar a matriz de variâncias-covariâncias do estimador robusta a heterocedasticidade:
@@ -715,9 +715,9 @@ plot(x, y)
 
 ```r
 # Estimações
-ols = lm(y ~ x) # estimação por MQO
-wls = lm(y ~ x, weights=1/x^2) # estimação por MQP
-stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
+reg.ols = lm(y ~ x) # estimação por MQO
+reg.wls = lm(y ~ x, weights=1/x^2) # estimação por MQP
+stargazer::stargazer(reg.ols, reg.wls, digits=2, type="text", omit.stat="f")
 ```
 
 ```
@@ -746,6 +746,36 @@ stargazer::stargazer(ols, wls, digits=2, type="text", omit.stat="f")
 - Note que tanto faz colocar `1/x^2` ou `1/(10*x)^2` nos pesos, pois o que importa são os pesos relativos de variância entre as observações
 - Veja também que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que **já sabíamos que a variância do erro era proporcional à variável _x_**.
 - Na prática, é difícil conhecer/defender uma forma exata da heterocedasticidade, já que não conhecemos o modelo real da variância do erro.
+- Abaixo, segue uma estimação feita com pesos errados {{<math>}}$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 \left(\frac{1}{x_i}\right)^2${{</math>}} e note que, inclusive, afeta a estimativas (além de piorar os erros padrão):
+
+```r
+# Estimações
+reg.wls2 = lm(y ~ x, weights=x^2) # estimação por MQP
+stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.stat="f")
+```
+
+```
+## 
+## ===========================================================
+##                                    Dependent variable:     
+##                               -----------------------------
+##                                             y              
+##                                  (1)        (2)      (3)   
+## -----------------------------------------------------------
+## x                              -5.51**   -5.92***   -2.60  
+##                                 (2.35)    (1.77)    (3.88) 
+##                                                            
+## Constant                       49.27***  51.43***   30.54  
+##                                (12.87)    (5.50)   (26.90) 
+##                                                            
+## -----------------------------------------------------------
+## Observations                     100        100      100   
+## R2                               0.05      0.10     0.005  
+## Adjusted R2                      0.04      0.09     -0.01  
+## Residual Std. Error (df = 98)   53.30      9.69     368.51 
+## ===========================================================
+## Note:                           *p<0.1; **p<0.05; ***p<0.01
+```
 
 
 <!-- - Vamos continuar com a base de dados de cigarros -->
@@ -906,7 +936,7 @@ data.frame(bhat_wls, se_wls, t_wls, p_wls) # resultado MQP
 ```
 
 ```r
-summary(wls)$coef # resultado MQP via lm()
+summary(reg.wls)$coef # resultado MQP via lm()
 ```
 
 ```
@@ -958,7 +988,7 @@ plot(x, ytil, ylim=c(-125,175),
      xlab=expression(x), ylab=expression(tilde(y))) # plot xtil e ytil
 ```
 
-<img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ```r
 plot(x, y, ylim=c(-125,175), 
@@ -966,7 +996,7 @@ plot(x, y, ylim=c(-125,175),
      xlab=expression(x), ylab=expression(y)) # plot x e y
 ```
 
-<img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-20-2.png" width="672" />
+<img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
 
 
 **c')** Estimativas MQO {{<math>}}$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}${{</math>}}
@@ -1068,7 +1098,7 @@ data.frame(bhat_ols, se_ols, t_ols, p_ols) # resultado MQO transformado
 ```
 
 ```r
-summary(wls)$coef # resultado MQP via lm()
+summary(reg.wls)$coef # resultado MQP via lm()
 ```
 
 ```
