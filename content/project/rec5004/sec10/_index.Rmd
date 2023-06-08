@@ -784,10 +784,10 @@ ghat = solve( t(X) %*% X ) %*% t(X) %*% log(ehat^2)
 
 **b3)** Matriz de pesos {{<math>}}$\boldsymbol{W}${{</math>}}
 {{<math>}}$$\boldsymbol{W} = diag\left(\frac{1}{\exp(\boldsymbol{X} \hat{\boldsymbol{\gamma}})}\right) = \begin{bmatrix}
-\boldsymbol{x}'_1\hat{\boldsymbol{\gamma}} & 0 & \cdots & 0 \\
-0 & \boldsymbol{x}'_2\hat{\boldsymbol{\gamma}} & \cdots & 0 \\
+\frac{1}{\exp(\boldsymbol{x}'_1\hat{\boldsymbol{\gamma}})} & 0 & \cdots & 0 \\
+0 & \frac{1}{\exp(\boldsymbol{x}'_2\hat{\boldsymbol{\gamma}})} & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \boldsymbol{x}'_N \hat{\boldsymbol{\gamma}}
+0 & 0 & \cdots & \frac{1}{\exp(\boldsymbol{x}'_N\hat{\boldsymbol{\gamma}})}
 \end{bmatrix}$${{</math>}}
 
 ```{r}
