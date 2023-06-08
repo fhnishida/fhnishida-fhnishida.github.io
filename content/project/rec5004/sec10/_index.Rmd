@@ -3,8 +3,8 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: GLS/WLS/FGLS
-summary: FGLS...
-title: Generalized Least Squares
+summary: The section covers topics such as the variance-covariance matrix of errors, heteroskedasticity tests (including the Breusch-Pagan and White tests), and various estimators such as OLS with robust standard errors, GLS, WLS, and FGLS. The section provides R code examples for performing these analyses and includes references to relevant literature. Overall, this section of the webpage provides a comprehensive overview of econometric methods and techniques for analyzing data using R. It is a valuable resource for anyone interested in learning more about these topics.
+title: Heterocedasticidade
 weight: 10
 output: md_document
 type: book
@@ -203,6 +203,8 @@ LM = N * r2e
 {{<math>}}$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$${{</math>}}
 que é também é conhecido como estimador sanduíche, pois {{<math>}}$$(\boldsymbol{X}' \boldsymbol{X})^{-1}$${{</math>}} está nos extremos da fórmula (pão/_bread_), que "sanduicham" o termo {{<math>}}$$\boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X}$${{</math>}} (carne/_meat_).
 
+### Estimação via lm() e vcovHC()
+
 ```{r warning=FALSE}
 # Usando fórmula vcovHC() do pacote sandwich
 library(lmtest)
@@ -222,6 +224,9 @@ round(coeftest(reg, vcov=vcov_sandwich), 3) # resultado com correção
 
 - Note que, neste caso, os erros padrão foram pouco alterados com o ajuste.
 - Para ter ganho em eficiência, {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} precisa ser bem especificado. Há também outras formas de modelar {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} na própria função `vcovHC()`.
+
+
+### Estimação Analítica
 - Também podemos fazer a inferência robusta a heterocedasticidade analiticamente:
 
 ```{r}
@@ -745,7 +750,7 @@ round(summary(reg.fgls)$coef, 4)
 ```
 
 
-### Estimação analítia
+### Estimação Analítica
 - Parecida com MQP, apenas o início é diferente:
 **a)** Criando vetores/matrizes e definindo _N_ e _K_
 ```{r}
