@@ -32,6 +32,9 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+- **Monitoria 9 (09/06)**: Testes de Hipótese | [Script](monitoria09.R)
+[<img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=0Kq11zaSGys)
+
 - **Monitoria 8 (18/05)**: Estimadores Within e de Primeiras Diferenças | [Script](monitoria08.R)
 [<img src="https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=KbOV12t_Ki0)
 

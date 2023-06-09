@@ -13,6 +13,7 @@ type: book
 
 
 
+
 - Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
 
 
@@ -20,8 +21,8 @@ type: book
 - Considere:
   - {{<math>}}$G${{</math>}} o número de restrições lineares
   - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$Q \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, contida por diversos vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., Q${{</math>}}
+  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$G \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, que empilha {{<math>}}$G${{</math>}} vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
   - Modelo multivariado:
   
   {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + \varepsilon$${{</math>}}
@@ -35,6 +36,7 @@ type: book
 
 
 
+
 ### Uma restrição linear
 
 - Considere o modelo:
@@ -43,67 +45,97 @@ type: book
 - Logo, há {{<math>}}$K=2${{</math>}} variáveis explicativas (e há 3 parâmetros)
 - 1 restrição linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
 - Logo, neste caso específico, temos
-{{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \ \ \implies\ \ \ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
+{{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
 
-- Então, calcula-se a estatística _t_:
-{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 s^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\hat{\beta}}} \boldsymbol{r}_1}} $${{</math>}}
-
-
-#### Exemplo 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
-
-- Podemos fazer o teste _t_ usando:
-
-{{<math>}}$$ t = \frac{\hat{\beta}_1 - 4}{\sqrt{\text{var}(\hat{\beta}_1)}} = \frac{\hat{\beta}_1 - 4}{\text{se}(\hat{\beta}_1)} $${{</math>}}
-
-- Na forma vetorial:
-  - Note que {{<math>}}$h_1 = 4${{</math>}}
-  - O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
-
-{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
-
-  - Então, a hipótese nula é
-{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
-
-
-
-#### Exemplo 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
-
-- Podemos fazer o teste _t_ usando:
-
-{{<math>}}$$ t = \frac{(\hat{\beta}_1 + \hat{\beta}_2) - 2}{\sqrt{\text{var}(\hat{\beta}_1 + \hat{\beta}_2)}} = \frac{(\hat{\beta}_1 + \hat{\beta}_2) - 2}{\sqrt{\text{var}(\hat{\beta}_1) + \text{var}(\hat{\beta}_2) + 2 \text{cov}(\hat{\beta}_1, \hat{\beta}_2)}} $${{</math>}}
-
-
-- Na forma vetorial:
-  - Note que {{<math>}}$h_1 = 2${{</math>}}
-  - O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
-  
-  {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
-  
-  - Então, a hipótese nula é
-  {{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
-
-
-
-#### Aplicando no R
 
 #### Avaliando a hipótese nula com restrição única
 - Para o caso com uma única restrição, assumimos que 
-{{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V_{\hat{\beta}} r_1})$${{</math>}}
+{{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}}) r_1})$${{</math>}}
 
-- Calcula-se a estatística _t_:
-{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 s^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\hat{\beta}}} \boldsymbol{r}_1}} $${{</math>}}
+- Calcula-se a estatística de Wald (igual à estatística _t_, quando tem uma única restrição):
+{{<math>}}$$ w = t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1}} $${{</math>}}
 
-- Note que, em pequenas amostras, precisamos assumir que {{<math>}}$ u|x \sim N(0; \sigma^2) ${{</math>}}
 - Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística _t_ não pertencer ao intervalo de confiança.
 
 
+
+#### Exemplo 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
+- Note que {{<math>}}$h_1 = 4${{</math>}}
+- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
+
+- E o denomidor da estatística _t_ é igual a:
+{{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
+&= \sqrt{\left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right]  {\small \begin{bmatrix}
+var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
+cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2) \\
+cov(\hat{\beta}_0, \hat{\beta}_2) & cov(\hat{\beta}_1, \hat{\beta}_2) & var(\hat{\beta}_2) \\
+\end{bmatrix}}  \left[ \begin{matrix} 0 \\ 1 \\ 0 \end{matrix} \right]} \\
+&= \sqrt{\small{\begin{bmatrix}
+cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2)
+\end{bmatrix}} \left[ \begin{matrix} 0 \\ 1 \\ 0 \end{matrix} \right]} \\
+&= \sqrt{var(\hat{\beta}_1)} = se(\hat{\beta}_1) \end{align}{{</math>}}
+
+
+#### Exemplo 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
+- Note que {{<math>}}$h_1 = 2${{</math>}}
+- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
+
+- E o denomidor da estatística _t_ é igual a:
+{{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
+&= \sqrt{\left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right]  {\small \begin{bmatrix}
+var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
+cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2) \\
+cov(\hat{\beta}_0, \hat{\beta}_2) & cov(\hat{\beta}_1, \hat{\beta}_2) & var(\hat{\beta}_2) \\
+\end{bmatrix}}  \left[ \begin{matrix} 0 \\ 1 \\ 1 \end{matrix} \right]} \\
+&= \sqrt{\small{\begin{bmatrix}
+cov(\hat{\beta}_0, \hat{\beta}_1)+cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{\beta}_1) + cov(\hat{\beta}_1, \hat{\beta}_2) \\ cov(\hat{\beta}_1, \hat{\beta}_2) + var(\hat{\beta}_2)
+\end{bmatrix}}' \left[ \begin{matrix} 0 \\ 1 \\ 1 \end{matrix} \right]} \\
+&= \sqrt{var(\hat{\beta}_1) + var(\hat{\beta}_2) + 2cov(\hat{\beta}_1, \hat{\beta}_2)} = \sqrt{var(\hat{\beta}_1 + \hat{\beta}_2)} \end{align}{{</math>}}
+
+
+#### Exemplo 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
+- Note que
+{{<math>}}$$\beta_1 = \beta_2 \iff \beta_1 - \beta_2 = 0 $${{</math>}}
+
+- Logo, {{<math>}}$h_1 = 0${{</math>}}
+- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+{{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $${{</math>}}
+
+- Então, a hipótese nula é
+{{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $${{</math>}}
+
+- E o denomidor da estatística _t_ é igual a:
+{{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
+&= \sqrt{\left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right]  {\small \begin{bmatrix}
+var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
+cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2) \\
+cov(\hat{\beta}_0, \hat{\beta}_2) & cov(\hat{\beta}_1, \hat{\beta}_2) & var(\hat{\beta}_2) \\
+\end{bmatrix}}  \left[ \begin{matrix} 0 \\ 1 \\ -1 \end{matrix} \right]} \\
+&= \sqrt{\small{\begin{bmatrix}
+cov(\hat{\beta}_0, \hat{\beta}_1)-cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{\beta}_1) - cov(\hat{\beta}_1, \hat{\beta}_2) \\ cov(\hat{\beta}_1, \hat{\beta}_2) - var(\hat{\beta}_2)
+\end{bmatrix}}' \left[ \begin{matrix} 0 \\ 1 \\ -1 \end{matrix} \right]} \\
+&= \sqrt{var(\hat{\beta}_1) + var(\hat{\beta}_2) - 2cov(\hat{\beta}_1, \hat{\beta}_2)} = \sqrt{var(\hat{\beta}_1 - \hat{\beta}_2)} \end{align}{{</math>}}
+
+
+#### Aplicando no R
 
 ##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
 - Anteriormente, estimamos o seguinte modelo:
 
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} +\\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
 em que:
 
 - `wage`: salário médio por hora
@@ -115,87 +147,33 @@ em que:
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
-
-
 ```r
 # Carregando a base de dados necessária
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
 res_7.14 = lm(lwage ~ female*married + educ + exper + expersq + tenure + tenursq, data=wage1)
-round( summary(res_7.14)$coef, 5 )
+round( summary(res_7.14)$coef, 4 )
 ```
 
 ```
-##                Estimate Std. Error  t value Pr(>|t|)
-## (Intercept)     0.32138    0.10001  3.21349  0.00139
-## female         -0.11035    0.05574 -1.97966  0.04827
-## married         0.21268    0.05536  3.84188  0.00014
-## educ            0.07891    0.00669 11.78733  0.00000
-## exper           0.02680    0.00524  5.11183  0.00000
-## expersq        -0.00054    0.00011 -4.84710  0.00000
-## tenure          0.02909    0.00676  4.30161  0.00002
-## tenursq        -0.00053    0.00023 -2.30555  0.02153
-## female:married -0.30059    0.07177 -4.18846  0.00003
+##                Estimate Std. Error t value Pr(>|t|)
+## (Intercept)      0.3214     0.1000  3.2135   0.0014
+## female          -0.1104     0.0557 -1.9797   0.0483
+## married          0.2127     0.0554  3.8419   0.0001
+## educ             0.0789     0.0067 11.7873   0.0000
+## exper            0.0268     0.0052  5.1118   0.0000
+## expersq         -0.0005     0.0001 -4.8471   0.0000
+## tenure           0.0291     0.0068  4.3016   0.0000
+## tenursq         -0.0005     0.0002 -2.3056   0.0215
+## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
 
 - Notamos que o efeito do casamento sobre mulheres é diferente do efeito sobre homens, pois o parâmetro de `female:married` ({{<math>}}$\delta_2${{</math>}}) é significante.
-- No entanto, para avaliar se o efeito do casamento sobre a mulher é significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}, sendo que:
-
-{{<math>}}$$ \hat{\beta}_2 = 0.21268, \qquad \hat{\delta}_2 = -0.30059 $${{</math>}}
-
-
+- No entanto, para avaliar se o efeito do casamento sobre a mulher é significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}.
 - Como tem apenas uma restrição, a hipótese pode ser avaliada por teste _t_:
 
-<img src="../t_test.png" alt="">
-
-- Observe que a matriz de variância/covariância das estimativas ({{<math>}}$V_{\hat{\beta}}${{</math>}}) é:
-
-```r
-round(vcov(res_7.14), 5)
-```
-
-```
-##                (Intercept)   female  married     educ    exper expersq tenure
-## (Intercept)        0.01000 -0.00188 -0.00084 -0.00058 -0.00013       0  3e-05
-## female            -0.00188  0.00311  0.00183  0.00001 -0.00001       0  0e+00
-## married           -0.00084  0.00183  0.00306 -0.00003 -0.00008       0 -3e-05
-## educ              -0.00058  0.00001 -0.00003  0.00004  0.00000       0  0e+00
-## exper             -0.00013 -0.00001 -0.00008  0.00000  0.00003       0 -1e-05
-## expersq            0.00000  0.00000  0.00000  0.00000  0.00000       0  0e+00
-## tenure             0.00003  0.00000 -0.00003  0.00000 -0.00001       0  5e-05
-## tenursq            0.00000  0.00000  0.00000  0.00000  0.00000       0  0e+00
-## female:married     0.00165 -0.00308 -0.00274  0.00000  0.00000       0  4e-05
-##                tenursq female:married
-## (Intercept)          0        0.00165
-## female               0       -0.00308
-## married              0       -0.00274
-## educ                 0        0.00000
-## exper                0        0.00000
-## expersq              0        0.00000
-## tenure               0        0.00004
-## tenursq              0        0.00000
-## female:married       0        0.00515
-```
-em que as diagonais são as variâncias das estimativas e os demais elementos são as covariâncias entre as estimativas:
-{{<math>}}$$ V_{\hat{\beta}} = \left[ \begin{matrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots & cov(\hat{\beta}_0, \hat{\beta}_K) \\ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1) & \cdots & cov(\hat{\beta}_1, \hat{\beta}_K) \\ \vdots & \vdots & \ddots & \vdots \\ cov(\hat{\beta}_0, \hat{\beta}_K) & cov(\hat{\beta}_1, \hat{\beta}_K) & \cdots & var(\hat{\beta}_K) \end{matrix} \right]  $$ {{</math>}}
-
-logo:
-
-{{<math>}}$$ var(\hat{\beta}_2) = 0.00306, \quad 
-var(\hat{\delta}_2) = 0.00515, \quad 
-cov(\hat{\beta}_2, \hat{\delta}_2) = -0.00274 $$ {{</math>}}
-
-
-
-- Podemos calcular a estatística _t_ por:
-
-{{<math>}}\begin{align} t &= \frac{(\hat{\beta}_2 + \hat{\delta}_2) - 0}{\sqrt{\text{var}(\hat{\beta}_2 + \hat{\delta}_2)}} = \frac{\hat{\beta}_2 + \hat{\delta}_2}{\sqrt{\text{var}(\hat{\beta}_2) + \text{var}(\hat{\delta}_2) + 2 \text{cov}(\hat{\beta}_2, \hat{\delta}_2)}} \\
-&= \frac{0.21268 - 0.30059}{\sqrt{0.00306 + 0.00515 + 2 (-0.00274)}} = \frac{-0.08791}{\sqrt{0.00273}} \\
-&= -1.68251 \end{align}{{</math>}}
-
-
-- O mesmo pode ser feito vetorialmente:
+<img src="../t_test.png" alt="" width=60%>
 
 
 ```r
@@ -204,56 +182,26 @@ bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
 Vbhat = vcov(res_7.14) # matriz de variância-covariância do estimador
 N = nrow(wage1) # número de observações
 K = length(bhat) - 1 # número de covariadas
-uhat = residuals(res_7.14) # resíduos da regressão
+ehat = residuals(res_7.14) # resíduos da regressão
 
 # Criando vetor-linha de restrição
 r1prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1) # vetor restrição
 h1 = 0 # constante da H0
 G = 1 # número de restrições
 
-# Calculando a estatística t
-t_numer = r1prime %*% bhat - h1 # numerador de t
-t_numer
+# Fazendo teste t
+t = (r1prime %*% bhat - h1) / sqrt(r1prime %*% Vbhat %*% t(r1prime))
+abs(t)
 ```
 
 ```
-##             [,1]
-## [1,] -0.08791739
-```
-
-```r
-t_denom = sqrt( r1prime %*% Vbhat %*% t(r1prime) ) # denominador de t
-t_denom
-```
-
-```
-##            [,1]
-## [1,] 0.05234814
-```
-
-```r
-t = t_numer / t_denom # estatistica t
-t
-```
-
-```
-##           [,1]
-## [1,] -1.679475
-```
-
-```r
-# Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
-c = qt(1 - 0.05/2, df=N-K-1)
-c
-```
-
-```
-## [1] 1.964563
+##          [,1]
+## [1,] 1.679475
 ```
 
 ```r
 # Calculando o p-valor
-p = pt(-abs(t), N-K-1) * 2
+p = 2 * pt(-abs(t), N-K-1)
 p
 ```
 
@@ -262,17 +210,11 @@ p
 ## [1,] 0.09366368
 ```
 
-- O valor ficou um pouco diferente por arredondamento
-- Como {{<math>}}$|t| < 1,9646${{</math>}}, então não rejeitamos a hipótese nula e concluímos que o efeito do casamento sobre o salário de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) é estatisticamente não-significante.
+- Como {{<math>}}$|t| < 2${{</math>}} (valor crítico aproximada para nível de significância de 5\%), então não rejeitamos a hipótese nula e concluímos que o efeito do casamento sobre o salário de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) é estatisticamente não-significante.
 
 - Também podemos fazer o mesmo pelo teste de Wald, mas avaliando a estatística pela distribuição {{<math>}}$\chi^2${{</math>}} com 1 grau de liberdade (pois há apenas {{<math>}}$G=1${{</math>}} restrição)
-
-{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1 \right]' \left[ \boldsymbol{\boldsymbol{r}'_1  V_{\hat{\beta}} \boldsymbol{r}_1 }' \right]^{-1} \left[ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1 \right]\ \sim\ \chi^2_{(1)} $${{</math>}}
-
 - Lembre-se também que usa-se o teste qui-quadrado unicaudal à direita.
 
-
-<img src="../chisq_test.png" alt="">
 
 
 
@@ -286,16 +228,6 @@ w
 ```
 ##          [,1]
 ## [1,] 2.820636
-```
-
-```r
-# Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
-c = qchisq(1-0.05, df=G)
-c
-```
-
-```
-## [1] 3.841459
 ```
 
 ```r
@@ -315,7 +247,21 @@ p
 
 ### Múltiplas restrições lineares
 
-#### Exemplo 3: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
+#### Avaliando a hipótese nula com múltiplas restrições
+- Para o caso com _G_ restrições, assumimos que 
+{{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V(\hat{\boldsymbol{\beta}}) R'})$${{</math>}}
+
+- Calcula-se a estatística de Wald
+{{<math>}}$$ w = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V(\hat{\beta}) R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
+
+- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística {{<math>}}$w${{</math>}} não pertencer ao intervalo de confiança (do zero ao valor crítico).
+
+
+
+<img src="../chisq_test.png" alt="">
+
+
+#### Exemplo 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
 - Note que {{<math>}}$h_1 = 0 \text{ e } h_2 = 2${{</math>}}
 - Os vetores {{<math>}}$r'_1 \text{ e } r'_2${{</math>}} podem ser escritos como
 
@@ -328,25 +274,14 @@ p
 {{<math>}}$$\text{H}_0:\ \boldsymbol{R} \boldsymbol{\beta} = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = \left[ \begin{matrix} h_1 \\ h_2 \end{matrix} \right]\ \iff\ \text{H}_0:\ \left\{  \begin{matrix} \beta_1 &= 0 \\ \beta_1 + \beta_2 &= 2 \end{matrix} \right. $${{</math>}}
 
 
-#### Avaliando a hipótese nula com múltiplas restrições
-- Para o caso com _G_ restrições, assumimos que 
-{{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V_{\hat{\beta}} R'})$${{</math>}}
-
-- Calcula-se a estatística de Wald
-{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
-
-- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística {{<math>}}$ w(\hat{\boldsymbol{\beta}})${{</math>}} não pertencer ao intervalo de confiança (do zero ao valor crítico).
-
 </br>
 
 ### Aplicando no R
 
-- Como exemplo, usaremos o pacote de dados `mlb1` com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)
+- Como exemplo, usaremos a base de dados `mlb1` (pacote `wooldridge`) com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)
 - Queremos estimar o modelo:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
-&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
-
-
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
 em que:
   - `log(salary)`: log do salário de 1993
   - `years`: anos jogando na 1ª divisão de beisebol americano
@@ -382,7 +317,7 @@ round(summary(resMLB)$coef, 5) # coeficientes da estimação
 {{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \boldsymbol{r}'_3 \end{matrix} \right] = \left[ \begin{matrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \end{matrix} \right] $${{</math>}}
 
 
-#### Usando função `wald.test()`
+#### Usando função `Wald.test()`
 
 
 ```r
@@ -402,48 +337,12 @@ round(Vbhat, 5)
 ```
 
 ```r
-# Número de restrições
-G = 3
-
-# Matriz das restrições
-R = matrix(c(0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
-             0, 0, 0, 0, 0, 1),
-           nrow=G, byrow=TRUE)
-R
-```
-
-```
-##      [,1] [,2] [,3] [,4] [,5] [,6]
-## [1,]    0    0    0    1    0    0
-## [2,]    0    0    0    0    1    0
-## [3,]    0    0    0    0    0    1
-```
-
-```r
-# Vetor de constantes h
-h = matrix(c(0, 0, 0), ncol=1)
-h
-```
-
-```
-##      [,1]
-## [1,]    0
-## [2,]    0
-## [3,]    0
-```
-
-- Lembre-se que, por padrão, a função `matrix()` "preenche" a matrix por coluna.
-- No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento `byrow=TRUE`.
-
-
-```r
 # Calculando a estatística de Wald
 # install.packages("aod") # instalando o pacote necessário
 aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
                b = coef(resMLB), # estimativas
-               L = R, # matriz de restrições
-               H0 = h # Hipótese nula (tudo igual a zero)
+               Terms = 4:6, # posições dos parâmetros a serem testados
+               H0 = c(0, 0, 0) # vetor h (tudo igual a zero)
                )
 ```
 
@@ -495,13 +394,13 @@ round(bhat, 5)
 
 ```r
 # Calculando os resíduos
-uhat = y - X %*% bhat
+ehat = y - X %*% bhat
 
 # Variância do termo de erro
-S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
+sig2hat = as.numeric( t(ehat) %*% ehat / (N-K-1) )
 
 # Matriz de variância-covariância do estimador
-Vbhat = S2 * solve( t(X) %*% X )
+Vbhat = sig2hat * solve( t(X) %*% X )
 round(Vbhat, 5)
 ```
 
@@ -515,6 +414,43 @@ round(Vbhat, 5)
 ## rbisyr   0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
 ```
 
+- Agora, vamos criar a matriz das restrições
+
+```r
+# Número de restrições
+G = 3
+
+# Matriz das restrições
+R = matrix(c(0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1),
+           nrow=G, byrow=TRUE)
+R
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    0    0    0    1    0    0
+## [2,]    0    0    0    0    1    0
+## [3,]    0    0    0    0    0    1
+```
+
+```r
+# Vetor de constantes h
+h = matrix(c(0, 0, 0),
+           nrow=3, ncol=1)
+h
+```
+
+```
+##      [,1]
+## [1,]    0
+## [2,]    0
+## [3,]    0
+```
+
+- Lembre-se que, por padrão, a função `matrix()` "preenche" a matrix por coluna.
+- No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento `byrow=TRUE`.
 - Calculando a estatística de Wald, dada por
 {{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
 
@@ -542,14 +478,13 @@ c
 ```
 
 ```r
-# Encontrando p-valor
-p = 1 - pchisq(w, df=G)
-p
+# Comparando estatística de Wald e valor crítico
+w > c
 ```
 
 ```
-##              [,1]
-## [1,] 2.651604e-06
+##      [,1]
+## [1,] TRUE
 ```
 
 - Como Estatística de Wald (= 28,65) é maior do que o valor crítico (= 7,81), então rejeitamos a hipótese nula conjunta de que todos parâmetros testados são iguais a zero.
@@ -573,9 +508,9 @@ p
 ## Teste F
 
 - [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
-- Uma forma mais adequada para avaliar restrições múltiplas em pequenas amostras é por meio do teste F.
+- Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
 - Nele, estimamos dois modelos:
-  - Irrestrito: inclui todas as as variáveis explicativas de interesse
+  - Irrestrito: inclui todas as variáveis explicativas de interesse
   - Restrito: exclui algumas variáveis da estimação
 - O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
 - A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
@@ -584,7 +519,7 @@ p
 
 - A estatística _F_ pode ser calculada por:
 
-{{<math>}}$$ F = \frac{\text{SQR}_{r} - \text{SQR}_{ur}}{\text{SQR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
+{{<math>}}$$ F = \frac{\text{SSR}_{r} - \text{SSR}_{ur}}{\text{SSR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
 
 em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 
@@ -599,10 +534,10 @@ em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 - Aqui, continuaremos usando a base de dados `mlb1` da Seção 4.5 de Wooldridge (2006)
 - O modelo irrestrito (com todas variáveis explicativas) é:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
-&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
 
 - O modelo restrito (excluindo as variáveis) é:
-{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + u \end{align}{{</math>}}
+{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \varepsilon \end{align}{{</math>}}
 
 
 #### Usando função `linearHypothesis()`
@@ -704,6 +639,8 @@ F
 ```
 ## [1] 4.473708e-06
 ```
+
+
 
 
 </br>
