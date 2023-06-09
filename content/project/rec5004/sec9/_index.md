@@ -21,7 +21,7 @@ type: book
   - {{<math>}}$G${{</math>}} o número de restrições lineares
   - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
   - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$G \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, contida por diversos vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
+  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, que empilha {{<math>}}$G${{</math>}} vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
   - Modelo multivariado:
   
   {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + u$${{</math>}}
@@ -88,9 +88,9 @@ type: book
 {{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)} r_1})$${{</math>}}
 
 - Calcula-se a estatística _t_:
-{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)}} \boldsymbol{r}_1}} $${{</math>}}
+{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)}} \boldsymbol{r}_1}} $${{</math>}}
 
-- Note que, em pequenas amostras, precisamos assumir que {{<math>}}$ u|x \sim N(0; \sigma^2) ${{</math>}}
+- Note que, em pequenas amostras, precisamos assumir que {{<math>}}$ \varepsilon|x \sim N(0; \sigma^2) ${{</math>}}
 - Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística _t_ não pertencer ao intervalo de confiança.
 
 
@@ -165,7 +165,7 @@ abs(t)
 ```
 
 ```r
-# Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.
+# Avaliando valor crítico em distribuição t a 5% signif.
 c = qt(1 - 0.05/2, df=N-K-1)
 c
 ```
@@ -176,7 +176,7 @@ c
 
 ```r
 # Calculando o p-valor
-p = pt(-abs(t), N-K-1) * 2
+p = 2 * pt(-abs(t), N-K-1)
 p
 ```
 

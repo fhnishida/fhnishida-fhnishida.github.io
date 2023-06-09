@@ -1084,7 +1084,7 @@ mean(wage1$wage[wage1$female==1]) # média salarial das mulheres
 - Note que:
   - {{<math>}}$\hat{\beta}_0${{</math>}} é a média salarial dos homens (`female==0`)
   - {{<math>}}$\hat{\beta}_1${{</math>}} é a diferença salarial entre os homens (`female==0`) e as mulheres (`female==1`)
-  - A soma {{<math>}}$\hat{\beta}_0 + {{<math>}}$\hat{\beta}_1${{</math>}}${{</math>}} é igual à média das mulheres.
+  - A soma {{<math>}}$\hat{\beta}_0 + \hat{\beta}_1${{</math>}} é igual à média das mulheres.
 - A vantagem de fazer a regressão de diferença de médias é que podemos usar a estatística _t_ para avaliar se a diferença é estatisticamente significante entre os dois grupos.
 - Neste caso, a diferença é bastante significante (p-valor < 0,01%)
 

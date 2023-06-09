@@ -346,7 +346,7 @@ summary(reg.iv)$coef # resultado VI via ivreg()
 - Como exemplo, considere um caso com {{<math>}}$L = 2${{</math>}} instrumentos para {{<math>}}$J = 1${{</math>}} regressor endógeno {{<math>}}$\boldsymbol{x}_1^*${{</math>}}
 - Note que {{<math>}}$L > J,${{</math>}} então temos um modelo sobreidentificado.
 
-- Para fazer a estimação VI, podemos **criar um novo instrumento**, {{<math>}}$\boldsymbol{z}_1^*${{</math>}}, que é uma combinação linear dos outros dois a partir do seguinte modelo:
+- Para fazer a estimação VI, podemos **criar um novo instrumento** por meio do cálculo do valor predito, {{<math>}}$\hat{\boldsymbol{x}}_1^*${{</math>}}, do seguinte modelo:
 {{<math>}}\begin{align} \boldsymbol{x}_1^* &= \gamma_0 + \gamma_1 \boldsymbol{z}_1 + \gamma_2 \boldsymbol{z}_2 + \boldsymbol{u} \\
 &= \boldsymbol{Z}^*\boldsymbol{\gamma} + \boldsymbol{u} \end{align}{{</math>}}
 em que
@@ -356,7 +356,7 @@ em que
 {{<math>}}$$ \hat{\boldsymbol{\gamma}} = (\boldsymbol{Z}^{*\prime} \boldsymbol{Z}^{*})^{-1} \boldsymbol{Z}^{*\prime} \boldsymbol{x}_1^*  $$ {{</math>}}
 
 - E podemos usar o valor ajustado deste modelo, {{<math>}}$\hat{\boldsymbol{x}}_1^*${{</math>}}, como instrumento de {{<math>}}$\boldsymbol{x}_1^*${{</math>}} dentro de {{<math>}}$\boldsymbol{Z}${{</math>}}:
-{{<math>}}$$ \boldsymbol{z}^*_1 \equiv \hat{\boldsymbol{x}}_1^* = \boldsymbol{Z}^*\hat{\boldsymbol{\gamma}}$$ {{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{x}}_1^* = \boldsymbol{Z}^*\hat{\boldsymbol{\gamma}}$$ {{</math>}}
 
 - Então, a matriz de instrumentos, de mesmas dimensões de {{<math>}}$\boldsymbol{X}${{</math>}} fica:
 
