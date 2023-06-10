@@ -35,8 +35,21 @@ Feel free to contact us if you have any question:
 - [Lista Prática 1](Lista-Pratica-1.pdf) | [Solução](Lista-Pratica-1_Solucao.pdf)
 - [Lista Prática 2](Lista-Pratica-2.pdf) 
 
+<!--- comment --->
 
 ## Gravações das Monitorias
+
+<!--- - **Monitoria 12**: VI, MQ2E e Testes | [Script](monitoria12.R)
+[<img src="https://img.youtube.com/vi/XMAD79vEoS8/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=XMAD79vEoS8) --->
+
+<!--- - **Monitoria 11**: MQG, MQP e MQGF | [Script](monitoria11.R)
+[<img src="https://img.youtube.com/vi/feHhKe1DSkc/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=feHhKe1DSkc) --->
+
+<!--- - **Monitoria 10**: Testes de Heterocedasticidade e MQO com Erros Padrão Robustos | [Script](monitoria10.R)
+[<img src="https://img.youtube.com/vi/kOb4RHe9j8U/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=kOb4RHe9j8U) --->
+
+<!--- - **Monitoria 9**: Testes de Hipótese | [Script](monitoria09.R)
+[<img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=0Kq11zaSGys) --->
 
 - **Monitoria 8**: Regressão Múltipla | [Script](monitoria08.R)
 [<img src="https://img.youtube.com/vi/Gx3VFbWU7C4/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=Gx3VFbWU7C4)

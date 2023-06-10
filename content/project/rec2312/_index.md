@@ -34,6 +34,12 @@ Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.co
 
 ## Gravações das Monitorias
 
+<!--- - **Monitoria 11**: Testes para Variáveis Instrumentais | [Script](monitoria11.R)
+[<img src="https://img.youtube.com/vi/7jUnNLDqDdY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=7jUnNLDqDdY) --->
+
+<!--- - **Monitoria 10**: VI e MQ2E | [Script](monitoria10.R)
+[<img src="https://img.youtube.com/vi/yzebYA1gEJc/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=yzebYA1gEJc) --->
+
 - **Monitoria 9 (09/06)**: Testes de Hipótese | [Script](monitoria09.R)
 [<img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=0Kq11zaSGys)
 

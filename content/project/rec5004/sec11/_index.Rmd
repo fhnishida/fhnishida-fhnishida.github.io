@@ -45,7 +45,6 @@ em que
 em que {{<math>}}$J \ge L${{</math>}} e, logo, {{<math>}}$\boldsymbol{Z}${{</math>}} tem pelo menos o mesmo número de colunas da matriz {{<math>}}$\boldsymbol{X}${{</math>}}
 
 - Note que:
-  - {{<math>}}$\boldsymbol{z}_1${{</math>}} é o instrumento da variável exógena {{<math>}}$\boldsymbol{x}^*_1${{</math>}}
   - os (melhores) instrumentos de variáveis exógenas são elas mesmas ({{<math>}}$\boldsymbol{x}_2, ..., \boldsymbol{x}_K${{</math>}})
   - **Apenas no caso em que {{<math>}}$J = L${{</math>}} (nº de regressores endógenos = nº de instrumentos)**, a matriz {{<math>}}$\boldsymbol{Z}${{</math>}} tem as mesmas dimensões de {{<math>}}$\boldsymbol{X:}${{</math>}}
   
@@ -633,7 +632,7 @@ summary(reg.2nd.mod)$coef
 
 ### Testes de Instrumentos Fracos
 
-- No teste de instrumentos fracos, testamos a hipótese nula **conjunta** de que os parâmetros dos instrumentos são iguais a zero, ou seja:
+- No teste de instrumentos fracos, testamos a hipótese nula **conjunta** de que os parâmetros dos instrumentos (MQO do 1º estágio) são iguais a zero, ou seja:
 {{<math>}}$$H_0: \quad \ \boldsymbol{\gamma}^* = \boldsymbol{0}\ \iff\ \begin{bmatrix} \gamma^*_1 \\ \gamma^*_2 \\ \vdots \\ \gamma^*_L \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}$${{</math>}}
 - Podemos verificar isso por meio dos Testes de Wald ou F.
 - Para maior detalhes, ver [Seção de Teste de Hipótese](../sec9).
