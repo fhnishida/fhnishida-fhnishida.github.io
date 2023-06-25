@@ -920,7 +920,7 @@ A ideia do Teste de Hausman é a seguinte:
 - Se a diferença entre as estimativas for estatisticamente
   - _significante_, isto deve-se ao fato da presença da "situação", que torna o estimador "menos robusto" viesado/inconsistente e, portanto, diferente do estimador "mais robusto";
   - _não-significante_, então a "situação" não está presente e, logo, o estimador mais eficiente (e "menos robusto") é mais adequado.
-  
+
 
 </br>  
 

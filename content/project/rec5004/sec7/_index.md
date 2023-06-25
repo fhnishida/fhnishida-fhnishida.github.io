@@ -218,7 +218,7 @@ round(min_loss, 4)
 
 ```
 ##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
-## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.03
+## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.02
 ## BFGS        30.0989 -0.0682 447.6743     31      5           0    1    1  0.00
 ## nlminb      30.0989 -0.0682 447.6743     11     16           0    1    1  0.00
 ```
@@ -323,7 +323,7 @@ sum(m1)^2 + sum(m2)^2 # soma dos quadrados com mesmos pesos (1 e 1)
 ```
 - Note que, como multiplicamos a constante igual a 1 com os resíduos {{<math>}}$\hat{\varepsilon}${{</math>}}, a 1ª coluna corresponde ao momento amostral {{<math>}}$\sum^N_{i=1}{\hat{\varepsilon}_i}${{</math>}} (mas sem dividir por _N_).
 - Já a coluna 2 correspode ao momento amostral {{<math>}}$\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}${{</math>}} para a variável _hp_ (mas sem dividir por _N_).
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}${{</math>}} que, ao calcular a soma/média das colunas, se aproximem ao máximo de zero. Isso será feito via `gmm()` (semelhante à função `opm()`)
+- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}${{</math>}} que faça com que a soma dos quadrados dos momentos amostrais se aproxime ao máximo de zero.
 
 
 ##### 5a. Criação de função com os momentos para `opm()`
@@ -372,9 +372,9 @@ round(gmm1, 4)
 
 ```
 ##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
-## Nelder-Mead  0.0320  0.1009 28256.45     39     NA           0    0    0  0.02
+## Nelder-Mead  0.0320  0.1009 28256.45     39     NA           0    0    0  0.01
 ## BFGS        30.0989 -0.0682     0.00     66     11           0    0    0  0.00
-## nlminb      30.0989 -0.0682     0.00     54     42           0    0    0  0.00
+## nlminb      30.0989 -0.0682     0.00     54     42           0    0    0  0.03
 ```
 
 
@@ -438,7 +438,7 @@ gmm2$coef
 
 ```
 ##    Theta[1]    Theta[2] 
-## 30.09886038 -0.06822828
+## 30.09886026 -0.06822828
 ```
 
 ```r
@@ -705,8 +705,8 @@ round(mle1, 4)
 ## nlminb      30.0989 -0.0682 3.7403 87.6193     33     67           0    1    1
 ##             xtime
 ## Nelder-Mead  0.01
-## BFGS         0.00
-## nlminb       0.00
+## BFGS         0.02
+## nlminb       0.03
 ```
 
 ##### 6b. Criando a Função de Log-Verossimilhança para `mle2()`
