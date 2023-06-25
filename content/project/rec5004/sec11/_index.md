@@ -913,20 +913,20 @@ summary(reg.2sls)
 - Para isto, é utilizado um vetor de constrastes (vetor de diferença entre vetores de estimativas)
 
 A ideia do Teste de Hausman é a seguinte:
-- Escolhemos dois métodos/modelos de estimação, cuja **diferença seja a robustez uma "situação"**
+- Escolhemos dois métodos/modelos de estimação, cuja **diferença seja a robustez a uma "situação"**
 - Os dois estimadores são **ambos consistentes na ausência da "situação"**
   - O estimador "menos robusto" é mais eficiente quando a "situação" está ausente
   - Já o estimador "mais robusto" é **não-viesado na presença da "situação"**
 - Se a diferença entre as estimativas for estatisticamente
   - _significante_, isto deve-se ao fato da presença da "situação", que torna o estimador "menos robusto" viesado/inconsistente e, portanto, diferente do estimador "mais robusto";
-  - _não-significante_, então a "situação" não está presente e, logo, o estimador mais eficiente (e "menos robusto") é mais adequado
+  - _não-significante_, então a "situação" não está presente e, logo, o estimador mais eficiente (e "menos robusto") é mais adequado.
   
 
 </br>  
 
 No caso de variáveis instrumentais:
 - Escolhemos os estimadores de MQO e de MQ2E/VI, em que a "situação" é a endogeneidade.
-- Caso a **endogeneidade esteja presente**, estimador MQ2E/VI será não-viesado/consistente e, portanto, tendem estimativas tendem a ser diferentes de MQO (viesado)
+- Caso a **endogeneidade esteja presente**, estimador MQ2E/VI será não-viesado/consistente e, portanto, as estimativas tendem a ser diferentes de MQO (viesado)
 - Caso a **endogeneidade esteja ausente, ambos estimadores são consistentes** (tendem ao verdadeiro {{<math>}}$\boldsymbol{\beta}${{</math>}}), mas o estimador de **MQO será o mais eficiente**
 {{<math>}}$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}'  \boldsymbol{X})^{-1}\right] \quad \text{ e } \quad \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \right]$${{</math>}}
 e, portanto, podemos testar
