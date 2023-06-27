@@ -536,7 +536,7 @@ starwars %>% summarise(
 - No caso acima, gerou simplesmente o tamanho da amostra e as médias de altura e de massa considerando a amostra inteira de `starwars` (o que não foi muito útil).
 
 
-#### Agrupamento via `group_by()`
+### Agrupamento via `group_by()`
 - Diferente das outras funções do `dplyr` mostradas até agora, o output do `group_by` não altera conteúdo do data frame, apenas **transforma em uma base de dados agrupada** em categorias de uma dada variável
 ```{r}
 grouped_sw = starwars %>% group_by(sex)
@@ -566,7 +566,7 @@ starwars %>%
 
 > **Evite potenciais erros**: Sempre que usar `group_by()`, não se esqueça de desagrupar o data frame via função `ungroup()` após realizar a operações desejadas.
 
-#### Resumo por grupo via `group_by()` e `summarise()`
+### Resumo por grupo via `group_by()` e `summarise()`
 - A função `summarise()` é de fato útil quando combinada com a função `group_by()`, pois conseguimos obter as estatísticas de grupos:
 ```{r}
 summary_sw = starwars %>% group_by(sex) %>%

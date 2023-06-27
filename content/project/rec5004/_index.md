@@ -33,7 +33,7 @@ Feel free to contact us if you have any question:
 
 ## Listas Práticas
 - [Lista Prática 1](Lista-Pratica-1.pdf) | [Solução](Lista-Pratica-1_Solucao.pdf)
-- [Lista Prática 2](Lista-Pratica-2.pdf) | [Solução](Lista-Pratica-2_Solucao.pdf)
+- [Lista Prática 2](Lista-Pratica-2.pdf) | [Solução (v2)](Lista-Pratica-2_Solucao_v2.pdf)
 - [Lista Prática 3](Lista-Pratica-3.pdf)
 
 <!--- comment --->
