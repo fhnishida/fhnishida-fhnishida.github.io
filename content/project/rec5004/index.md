@@ -32,13 +32,14 @@ Feel free to contact us if you have any question:
 - [Lista Prática 1](Lista-Pratica-1.pdf) | [Solução](Lista-Pratica-1_Solucao.pdf)
 - [Lista Prática 2](Lista-Pratica-2.pdf) | [Solução (v2)](Lista-Pratica-2_Solucao_v2.pdf)
 - [Lista Prática 3](Lista-Pratica-3.pdf)
+- [Lista Prática 4](Lista-Pratica-4.pdf)
 
 <!--- comment --->
 
 ## Gravações das Monitorias
 
-<!--- - **Monitoria 12**: VI, MQ2E e Testes | [Script](monitoria12.R)
-[<img src="https://img.youtube.com/vi/XMAD79vEoS8/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=XMAD79vEoS8) --->
+- **Monitoria 12**: VI, MQ2E e Testes | [Script](monitoria12.R)
+[<img src="https://img.youtube.com/vi/XMAD79vEoS8/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=XMAD79vEoS8)
 
 - **Monitoria 11**: MQG, MQP e MQGF | [Script](monitoria11.R)
 [<img src="https://img.youtube.com/vi/feHhKe1DSkc/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=feHhKe1DSkc)
