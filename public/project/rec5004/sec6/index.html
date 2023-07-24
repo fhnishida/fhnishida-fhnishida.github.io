@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: July 24, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fábio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="This page covers topics such as simple MQO regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.netlify.app/project/rec5004/sec6/" />
+<link rel="canonical" href="https://fhnishida.netlify.app/project/rec5004/sec6/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fábio Nishida" />
+<meta property="og:url" content="https://fhnishida.netlify.app/project/rec5004/sec6/" />
+<meta property="og:title" content="Simple Regression | Fábio Nishida" />
+<meta property="og:description" content="This page covers topics such as simple MQO regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed." /><meta property="og:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec6/index.xml" type="application/rss+xml" title="Fábio Nishida" />
+  
+
+  
+
+
+  
+  <title>Simple Regression | Fábio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="8a058b72341a9689d8dbc23a1082b3c9" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/"><i class="fas fa-book pr-1"></i>Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/project/rec5004/">----------------------</a></li>
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">----------------</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#regressão-simples-por-mqo">Regressão simples por MQO</a>
+      <ul>
+        <li><a href="#exemplo-23-salário-de-ceo-e-retorno-sobre-equity">Exemplo 2.3: Salário de CEO e Retorno sobre Equity</a></li>
+      </ul>
+    </li>
+    <li><a href="#coeficientes-valores-ajustados-e-resíduos">Coeficientes, Valores Ajustados e Resíduos</a></li>
+    <li><a href="#transformações-log">Transformações log</a>
+      <ul>
+        <li><a href="#exemplo-211-salário-de-ceo-e-retorno-sobre-equity">Exemplo 2.11: Salário de CEO e Retorno sobre Equity</a></li>
+      </ul>
+    </li>
+    <li><a href="#regressão-a-partir-da-origem-ou-sobre-uma-constante">Regressão a partir da origem ou sobre uma constante</a></li>
+    <li><a href="#violações-de-hipótese">Violações de hipótese</a>
+      <ul>
+        <li><a href="#sem-violação-de-hipótese-exemplo-1">Sem violação de hipótese: Exemplo 1</a></li>
+        <li><a href="#sem-violação-de-hipótese-exemplo-2">Sem violação de hipótese: Exemplo 2</a></li>
+        <li><a href="#violação-de-covex--0">Violação de cov(e,x) = 0</a></li>
+        <li><a href="#violação-de-ee--0-porém-constante">Violação de E(e) = 0, porém constante</a></li>
+        <li><a href="#violação-de-varex--constante-homocedasticidade">Violação de var(e|x) = constante (homocedasticidade)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Simple Regression</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <h2 id="regressão-simples-por-mqo">Regressão simples por MQO</h2>
+<ul>
+<li><a href="http://www.urfie.net/read/index.html#page/93" target="_blank" rel="noopener">Seção 2.1 de Heiss (2020)</a></li>
+<li>Considere o seguinte modelo empírico
+$$ y = \beta_0 + \beta_1 x + \varepsilon \tag{2.1} $$</li>
+<li>Os estimadores de mínimos quadrados ordinários (MQO), segundo Wooldridge (2006, Seção 2.2) é dado por</li>
+</ul>
+
+
+\begin{align}
+    \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x} \tag{2.2}\\
+    \hat{\beta}_1 &= \frac{cov(x,y)}{var(x)} \tag{2.3}
+\end{align}
+<ul>
+<li>E os valores ajustados/preditos, 
+
+$\hat{y}$ é dado por
+$$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
+e os resíduos podem ser obtidos por
+$$ \hat{\varepsilon} = y - \hat{y} $$</li>
+</ul>
+<h3 id="exemplo-23-salário-de-ceo-e-retorno-sobre-equity">Exemplo 2.3: Salário de CEO e Retorno sobre Equity</h3>
+<ul>
+<li>Considere o seguinte modelo de regressão simples
+$$ \text{salary} = \beta_0 + \beta_1 \text{roe} + \varepsilon $$
+em que <code>salary</code> é a remuneração de um CEO em milhares de dólares e <code>roe</code> é o retorno sobre o patrimônio líquido em percentual.</li>
+</ul>
+<h4 id="estimação-analítica-na-mão">Estimação Analítica (&ldquo;na mão&rdquo;)</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Carregando a base de dados do pacote &#39;wooldridge&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">ceosal1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cov</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span><span class="p">,</span> <span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span> <span class="c1"># covariância entre salary e roe</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1342.538
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">var</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span> <span class="c1"># variância do retorno sobre o patrimônio líquido</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 72.56499
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span> <span class="c1"># média do retorno sobre o patrimônio líquido</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 17.18421
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span><span class="p">)</span> <span class="c1"># média do salário</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1281.12
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Cálculo &#34;na mão&#34; das estimativas de MQO</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1hat</span> <span class="o">=</span> <span class="nf">cov</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span><span class="p">,</span> <span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span> <span class="o">/</span> <span class="nf">var</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span> <span class="c1"># por (2.3)</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1hat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 18.50119
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">b0hat</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span><span class="p">)</span> <span class="o">-</span> <span class="n">b1hat</span><span class="o">*</span><span class="nf">mean</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span> <span class="c1"># por (2.2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">b0hat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 963.1913
+</span></span></code></pre></div><ul>
+<li>Vemos que um incremento de uma unidade (porcento) no retorno sobre o patrimônio líquido (<em>roe</em>), aumentar 18 unidades (milhares de dólares) nos salários dos CEOs.</li>
+</ul>
+<h4 id="estimação-via-lm">Estimação via <code>lm()</code></h4>
+<ul>
+<li>Uma maneira mais conveniente de fazer a estimação por MQO é usando a função <code>lm()</code></li>
+<li>Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (<code>~</code>):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span> <span class="o">~</span> <span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = ceosal1$salary ~ ceosal1$roe)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)  ceosal1$roe  
+</span></span><span class="line"><span class="cl">##       963.2         18.5
+</span></span></code></pre></div><ul>
+<li>Também podemos deixar de usar o prefixo <code>ceosal1$</code> antes dos nomes do vetores ao preenchermos o argumento <code>data = ceosal1</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">salary</span> <span class="o">~</span> <span class="n">roe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = salary ~ roe, data = ceosal1)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)          roe  
+</span></span><span class="line"><span class="cl">##       963.2         18.5
+</span></span></code></pre></div><ul>
+<li>Podemos usar a função <code>lm()</code> para incluir uma reta de regressão no gráfico</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Gráfico de dispersão (scatter)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">,</span> <span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Adicionando a reta de regressão</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">salary</span> <span class="o">~</span> <span class="n">roe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+</br>
+<h2 id="coeficientes-valores-ajustados-e-resíduos">Coeficientes, Valores Ajustados e Resíduos</h2>
+<ul>
+<li><a href="http://www.urfie.net/read/index.html#page/98" target="_blank" rel="noopener">Seção 2.2 de Heiss (2020)</a></li>
+<li>Podemos &ldquo;guardar&rdquo; os resultados da estimação em um objeto (da classe <code>list</code>) e, depois, extrair informações dele.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># atribuindo o resultado da regressão em um objeto</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">salary</span> <span class="o">~</span> <span class="n">roe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># verificando os &#34;nomes&#34; das informações contidas no objeto</span>
+</span></span><span class="line"><span class="cl"><span class="nf">names</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##  [1] &#34;coefficients&#34;  &#34;residuals&#34;     &#34;effects&#34;       &#34;rank&#34;         
+</span></span><span class="line"><span class="cl">##  [5] &#34;fitted.values&#34; &#34;assign&#34;        &#34;qr&#34;            &#34;df.residual&#34;  
+</span></span><span class="line"><span class="cl">##  [9] &#34;xlevels&#34;       &#34;call&#34;          &#34;terms&#34;         &#34;model&#34;
+</span></span></code></pre></div><ul>
+<li>Podemos usar a função <code>coef()</code> para extrairmos um data frame com os coeficientes da regressão</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Extraindo vetor de coeficientes da regressão</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">coef</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)         roe 
+</span></span><span class="line"><span class="cl">##   963.19134    18.50119
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">b0hat</span> <span class="o">=</span> <span class="n">bhat[</span><span class="s">&#34;(Intercept)&#34;</span><span class="n">]</span> <span class="c1"># ou bhat[1]</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1hat</span> <span class="o">=</span>  <span class="n">bhat[</span><span class="s">&#34;roe&#34;</span><span class="n">]</span> <span class="c1"># ou bhat[2]</span>
+</span></span></code></pre></div><ul>
+<li>Dados estes parâmetros estimados, podemos calcular os valores ajustados/preditos, 
+
+$\hat{y}$, e os desvios, 
+
+$\hat{\varepsilon}$, para cada observação 
+
+$i=1, ..., n$:</li>
+</ul>
+
+
+\begin{align}
+    \hat{y}_i &= \hat{\beta}_0 + \hat{\beta}_1 . x_i \tag{2.5} \\
+    \hat{\varepsilon}_i &= y_i - \hat{y}_i \tag{2.6}
+\end{align}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Extraindo variáveis de ceosal1 em vetores</span>
+</span></span><span class="line"><span class="cl"><span class="n">sal</span> <span class="o">=</span> <span class="n">ceosal1</span><span class="o">$</span><span class="n">salary</span>
+</span></span><span class="line"><span class="cl"><span class="n">roe</span> <span class="o">=</span> <span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculando os valores ajustados/preditos</span>
+</span></span><span class="line"><span class="cl"><span class="n">sal_hat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="p">(</span><span class="n">b1hat</span> <span class="o">*</span> <span class="n">roe</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculando os desvios</span>
+</span></span><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">sal</span> <span class="o">-</span> <span class="n">sal_hat</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Visualizando as 6 primerias linhas de sal, roe, sal_hat e ehat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="n">roe</span><span class="p">,</span> <span class="n">sal_hat</span><span class="p">,</span> <span class="n">ehat</span><span class="p">)</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       sal  roe  sal_hat      ehat
+</span></span><span class="line"><span class="cl">## [1,] 1095 14.1 1224.058 -129.0581
+</span></span><span class="line"><span class="cl">## [2,] 1001 10.9 1164.854 -163.8543
+</span></span><span class="line"><span class="cl">## [3,] 1122 23.5 1397.969 -275.9692
+</span></span><span class="line"><span class="cl">## [4,]  578  5.9 1072.348 -494.3483
+</span></span><span class="line"><span class="cl">## [5,] 1368 13.8 1218.508  149.4923
+</span></span><span class="line"><span class="cl">## [6,] 1145 20.0 1333.215 -188.2151
+</span></span></code></pre></div><ul>
+<li>Com as funções <code>fitted()</code> e <code>resid()</code> podemos extrair os valores ajustados e os resíduos do objeto com resultado da regressão:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">reg</span><span class="p">),</span> <span class="nf">resid</span><span class="p">(</span><span class="n">reg</span><span class="p">))</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       [,1]      [,2]
+</span></span><span class="line"><span class="cl">## 1 1224.058 -129.0581
+</span></span><span class="line"><span class="cl">## 2 1164.854 -163.8543
+</span></span><span class="line"><span class="cl">## 3 1397.969 -275.9692
+</span></span><span class="line"><span class="cl">## 4 1072.348 -494.3483
+</span></span><span class="line"><span class="cl">## 5 1218.508  149.4923
+</span></span><span class="line"><span class="cl">## 6 1333.215 -188.2151
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Ou também</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">reg</span><span class="o">$</span><span class="n">fitted</span><span class="p">,</span> <span class="n">reg</span><span class="o">$</span><span class="n">residuals</span><span class="p">)</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       [,1]      [,2]
+</span></span><span class="line"><span class="cl">## 1 1224.058 -129.0581
+</span></span><span class="line"><span class="cl">## 2 1164.854 -163.8543
+</span></span><span class="line"><span class="cl">## 3 1397.969 -275.9692
+</span></span><span class="line"><span class="cl">## 4 1072.348 -494.3483
+</span></span><span class="line"><span class="cl">## 5 1218.508  149.4923
+</span></span><span class="line"><span class="cl">## 6 1333.215 -188.2151
+</span></span></code></pre></div><ul>
+<li>
+<p>Na seção 2.3 de Wooldridge (2006), vemos que a estimação por MQO usa as seguintes hipóteses:
+
+
+\begin{align}
+    &\sum^n_{i=1}{\hat{\varepsilon}_i} = 0 \quad \implies \quad \bar{\hat{\varepsilon}} = 0 \tag{2.7} \\
+    &\sum^n_{i=1}{x_i \hat{\varepsilon}_i} = 0 \quad \implies \quad cov(x,\hat{\varepsilon}) = 0 \tag{2.8}
+\end{align}</p>
+</li>
+<li>
+<p>Podemos verificá-los em nosso exemplo:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Verificando (2.7)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="c1"># bem próximo de 0</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -2.666235e-14
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Verificando (2.8)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cov</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">,</span> <span class="n">ehat</span><span class="p">)</span> <span class="c1"># bem próximo de 0</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -7.012777e-13
+</span></span></code></pre></div><!-- - **IMPORTANTE**: Isso só quer dizer que o MQO escolhe 
+
+$\hat{\beta}_0$ e 
+
+$\hat{\beta}_1$ tais que 2.7 e 2.8 sejam verdadeiros. -->
+<!-- - Isto **NÃO** quer dizer que, para o modelo real as seguintes hipóteses sejam verdadeiras: -->
+<!-- 
+
+\begin{align} -->
+<!--     &E(\varepsilon) = 0 \tag{2.7'} \\ -->
+<!--     &E(x\varepsilon) = 0 \quad \Longrightarrow \quad cov(x, \varepsilon) = 0 \tag{2.8'} -->
+<!-- \end{align} -->
+<!-- - De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7 e 2.8) será viesada. -->
+</br>
+<h2 id="transformações-log">Transformações log</h2>
+<ul>
+<li><a href="http://www.urfie.net/read/index.html#page/103" target="_blank" rel="noopener">Seção 2.4 de Heiss (2020)</a></li>
+<li>Também podemos fazer estimações transformando variáveis em nível para logaritmo.</li>
+<li>É especialmente importante para transformar modelos não-lineares em lineares - quando o parâmetro está no expoente ao invés estar multiplicando:</li>
+</ul>
+<p>$$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $$</p>
+<ul>
+<li>Também é frequentemente utilizada em variáveis dependentes 
+
+$y \ge 0$</li>
+</ul>
+<center><img src="../tab_2-3.png"></center>
+<ul>
+<li>Há duas maneiras de fazer a transformação log:
+<ul>
+<li>Criar um novo vetor/coluna com a variável em log, ou</li>
+<li>Usar a função <code>log()</code> diretamente no vetor dentro da função <code>lm()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="exemplo-211-salário-de-ceo-e-retorno-sobre-equity">Exemplo 2.11: Salário de CEO e Retorno sobre Equity</h3>
+<ul>
+<li><em>Modelo nível-log</em>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando modelo nível-log</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">salary</span> <span class="o">~</span> <span class="nf">log</span><span class="p">(</span><span class="n">roe</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)    log(roe) 
+</span></span><span class="line"><span class="cl">##    586.5961    255.3113
+</span></span></code></pre></div><ul>
+<li><em>Modelo log-nível</em>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando modelo log-nível</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="n">roe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)         roe 
+</span></span><span class="line"><span class="cl">##  6.71216858  0.01386258
+</span></span></code></pre></div><ul>
+<li><em>Modelo log-log</em>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando modelo log-log (elasticidade)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="nf">log</span><span class="p">(</span><span class="n">roe</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)    log(roe) 
+</span></span><span class="line"><span class="cl">##   6.4886473   0.1697382
+</span></span></code></pre></div></br>
+<h2 id="regressão-a-partir-da-origem-ou-sobre-uma-constante">Regressão a partir da origem ou sobre uma constante</h2>
+<ul>
+<li><a href="http://www.urfie.net/read/index.html#page/103" target="_blank" rel="noopener">Seção 2.5 de Heiss (2020)</a></li>
+<li>Para esstimar o modelo sem o intercepto (constante), precisamos adicionar um <code>0</code> ou <code>-1</code> nos regressores na função <code>lm()</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">ceosal1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">salary</span> <span class="o">~</span> <span class="m">0</span> <span class="o">+</span> <span class="n">roe</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = salary ~ 0 + roe, data = ceosal1)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">##   roe  
+</span></span><span class="line"><span class="cl">## 63.54
+</span></span></code></pre></div><ul>
+<li>Ao regredirmos uma variável dependente sobre uma constante (1), obtemos a média desta variável.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">salary</span> <span class="o">~</span> <span class="m">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">ceosal1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = salary ~ 1, data = ceosal1)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)  
+</span></span><span class="line"><span class="cl">##        1281
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="n">ceosal1</span><span class="o">$</span><span class="n">roe</span><span class="p">,</span> <span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 17.18421
+</span></span></code></pre></div></br>
+<!-- ## Qualidade do ajuste -->
+<!-- - [Seção 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101) -->
+<!-- - A soma de quadrados total (SST), a soma de quadrados explicada (SSE) e a soma de quadrados dos resíduos (SSR) podem ser escritos como: -->
+<!-- 
+
+\begin{align} -->
+<!--     SST &= \sum^n_{i=1}{(y_i - \bar{y})^2} = (n-1) . var(y) \tag{2.10}\\ -->
+<!--     SSE &= \sum^n_{i=1}{(\hat{y}_i - \bar{y})^2} = (n-1) . var(\hat{y}) \tag{2.11}\\ -->
+<!--     SSR &= \sum^n_{i=1}{(\hat{\varepsilon}_i - 0)^2} = (n-1) . var(\hat{\varepsilon}) \tag{2.12} -->
+<!-- \end{align} -->
+<!-- em que 
+
+$var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}$. -->
+<!-- - Wooldridge (2006) define o coeficiente de determinação como: -->
+<!-- 
+
+\begin{align} -->
+<!--     R^2 &= \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\\ -->
+<!--         &= \frac{var(\hat{y})}{var(y)} = 1 - \frac{var(\hat{\varepsilon})}{var(y)} \tag{2.13} -->
+<!-- \end{align} -->
+<!-- pois 
+
+$SST = SSE + SSR$. -->
+<!-- ```{r} -->
+<!-- # Calculando SST, SSE e SSR -->
+<!-- SST = t(sal - mean(sal)) %*% (sal - mean(sal)) # produto interno y'y -->
+<!-- SSE = t(sal_hat - mean(sal)) %*% (sal_hat - mean(sal)) # produto interno yhat'yhat -->
+<!-- SSR = t(ehat) %*% ehat # produto interno ehat'ehat -->
+<!-- # Calculando R^2 -->
+<!-- SSE/SST -->
+<!-- var(sal_hat)/var(sal) # "SSE/SST" -->
+<!-- 1 - SSR/SST -->
+<!-- 1 - var(ehat)/var(sal) # 1 - "SSR/SST" -->
+<!-- ``` -->
+<!-- - Para obter o 
+
+$R^2$ de forma mais conveniente, pode-se usar a função `summary()` sobre o objeto de resultado da regressão. Esta função fornece uma visualização dos resultados mais detalhada, incluindo o 
+
+$R^2$: -->
+<!-- ```{r} -->
+<!-- summary(reg) -->
+<!-- ``` -->
+</br>
+<h2 id="violações-de-hipótese">Violações de hipótese</h2>
+<ul>
+<li><a href="http://www.urfie.net/read/index.html#page/113" target="_blank" rel="noopener">Subseção 2.7.3 de Heiss (2020)</a>, mas usando exemplo distinto.</li>
+<li><a href="https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model" target="_blank" rel="noopener">Simulating a linear model (John Hopkins/Coursera)</a></li>
+<li>Na prática, fazemos regressões a partir de observações contidas em bases de dados e não sabemos qual é o <em>modelo real</em> que gerou essas observações.</li>
+<li>No R, podemos supor esse <em>modelo real</em> e simular suas observações no R para analisar o que ocorre quando há violação de uma premissa de um modelo econométrico.</li>
+<li>Usaremos como exemplo a relação das horas de treinamento em culinária com o número de queimaduras na cozinha.</li>
+</ul>
+<h3 id="sem-violação-de-hipótese-exemplo-1">Sem violação de hipótese: Exemplo 1</h3>
+<ul>
+<li>Sejam 
+
+$y$ o número de queimaduras na cozinha e 
+
+$x$ o número de horas de treinamento em culinária</li>
+<li>Suponha o <em>modelo real</em>:
+$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 4^2) \tag{1}$$
+em que 
+
+$\tilde{\beta}_0=50$ e 
+
+$\tilde{\beta}_1=-5$.</li>
+</ul>
+<ol>
+<li>Iremos definir 
+
+$\tilde{\beta}_0$ e 
+
+$\tilde{\beta}_1$, e gerar, por simulação, as observações de 
+
+$x$ e 
+
+$y$:
+<ul>
+<li>Geraremos valores aleatórios de 
+
+$x \sim U(1, 9)$ e de 
+
+$\tilde{\varepsilon} \sim N(0, 4^2)$</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">b0til</span> <span class="o">=</span> <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1til</span> <span class="o">=</span> <span class="m">-5</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="m">1000</span> <span class="c1"># Número de observações</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e_til</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># Erros: 1000 obs. de média 0 e desv pad 2</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">9</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de x</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">b0til</span> <span class="o">+</span> <span class="n">b1til</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e_til</span> <span class="c1"># calculando observações y</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<ul>
+<li>Simulamos as observações 
+
+$x$ e 
+
+$y$ que são, na prática, as informações que observamos nas bases de dados.</li>
+</ul>
+<ol start="2">
+<li>Estimaremos, por MQO, os parâmetros 
+
+$\hat{\beta}_0$ e 
+
+$\hat{\beta}_1$ a partir das observações simuladas de 
+
+$y$ e 
+
+$x$:
+<ul>
+<li>Um pesquisador supôs a relação entre as variáveis pelo seguinte <em>modelo empírico</em>:
+$$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{1a}$$
+assumindo que 
+
+$E[\varepsilon] = 0$ e 
+
+$cov(\varepsilon, x) = 0$.</li>
+<li>Para estimar o modelo por MQO, usamos a função <code>lm()</code></li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># regredindo por MQO a var. dependente y pela var. x</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = y ~ x)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)            x  
+</span></span><span class="line"><span class="cl">##       49.86        -4.96
+</span></span></code></pre></div><ul>
+<li>Note que foi possível recuperar os parâmetros reais:
+<ul>
+<li>
+
+$\hat{\beta}_0 \approx 50 = \tilde{\beta}_0$ e</li>
+<li>
+
+$\hat{\beta}_1 \approx -5 = \tilde{\beta}_1$.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1"># Figura de x contra y</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">50</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="m">-5</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span> <span class="c1"># reta do modelo real</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">)</span> <span class="c1"># reta estimada a partir das observações</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<h3 id="sem-violação-de-hipótese-exemplo-2">Sem violação de hipótese: Exemplo 2</h3>
+<ul>
+<li>Agora, no <em>modelo real</em>, suponha uma nova variável de quantidade de horas cozinhando 
+
+$z$ que, a princípio, não tem relação com a quantidade de horas de treinamento em culinária:</li>
+</ul>
+<p>$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\beta}_2 z + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 4^2) \tag{2} $$
+em que 
+
+$\beta_0=50$, 
+
+$\beta_1=-5$ e 
+
+$\beta_2=3$. Apenas para facilitar, geraremos também valores aleatórios de 
+
+$z \sim U(11, 15)$ que, por construção, <strong>não</strong> é correlacionada com 
+
+$x$.</p>
+<ul>
+<li>Primeiro, vamos simular as observações:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">b0til</span> <span class="o">=</span> <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1til</span> <span class="o">=</span> <span class="m">-5</span>
+</span></span><span class="line"><span class="cl"><span class="n">b2til</span> <span class="o">=</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="m">1000</span> <span class="c1"># Número de observações</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e_til</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># Erros: 1000 obs. de média 0 e desv pad 2</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">9</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de x</span>
+</span></span><span class="line"><span class="cl"><span class="n">z</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">15</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de y</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">b0til</span> <span class="o">+</span> <span class="n">b1til</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">b2til</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">e_til</span> <span class="c1"># calculando observações y</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>Considere que um pesquisador suponha a relação entre as variáveis pelo seguinte <em>modelo empírico</em>:
+$$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{2a}$$
+assumindo que 
+
+$E[\varepsilon] = 0$ e 
+
+$cov(\varepsilon, x)= 0$.</p>
+</li>
+<li>
+<p>Note que deixando a variável de horas cozinhando 
+
+$z$ fora do modelo, ela entra no erro do modelo 
+
+($\varepsilon = \tilde{\beta}_2 z + \tilde{\varepsilon}$).</p>
+</li>
+<li>
+<p>No entanto, como 
+
+$z$ não tem relação com 
+
+$x$ 
+
+($cov(\varepsilon, x) = 0$), então isso não afeta a estimativa de 
+
+$\hat{\beta}_1$:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">cor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="c1"># correlação de x e z -&gt; próxima de 0</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -0.05722716
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># estimação por MQO</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = y ~ x)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)            x  
+</span></span><span class="line"><span class="cl">##      89.342       -5.046
+</span></span></code></pre></div><ul>
+<li>Note que 
+
+$\hat{\beta}_1 = \approx -5 = \tilde{\beta}_1$, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar da não-inclusão de 
+
+$z$ no modelo.</li>
+<li>Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre 
+
+$y$ e alguma variável de interesse 
+
+$x$, então não é necessário incluir todas possíveis variáveis que impactam 
+
+$y$, desde que 
+
+$cov(\varepsilon, x) = 0$.</li>
+</ul>
+<h3 id="violação-de-covex--0">Violação de cov(e,x) = 0</h3>
+<ul>
+<li>Agora, suponha que, no <em>modelo real</em>, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, 
+
+$x$ está relacionado com 
+
+$z$).
+<ul>
+<li>Suponha 
+
+$z = 2,5x + \tilde{u}, \quad \tilde{u} \sim N(0, 2^2)$:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e_til</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># Erros: 1000 obs. de média 0 e desv pad 2</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">9</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de x</span>
+</span></span><span class="line"><span class="cl"><span class="n">z</span> <span class="o">=</span> <span class="m">2.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de z</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">b0til</span> <span class="o">+</span> <span class="n">b1til</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">b2til</span><span class="o">*</span><span class="n">z</span> <span class="o">+</span> <span class="n">e_til</span> <span class="c1"># calculando observações y</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="c1"># correlação de x e z</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.9484694
+</span></span></code></pre></div><ul>
+<li>Note que, agora, 
+
+$x$ e 
+
+$z$ são consideravalmente correlacionados</li>
+<li>Vamos estimar o <em>modelo empírico</em>:
+$$ y = \beta_0 + \beta_1 x + \varepsilon,$$
+assumindo que 
+
+$E[\varepsilon] = 0$ e 
+
+$cov(\varepsilon, x)= 0$.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># estimação por MQO</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = y ~ x)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)            x  
+</span></span><span class="line"><span class="cl">##      49.529        2.604
+</span></span></code></pre></div><ul>
+<li>Observe que 
+
+$\hat{\beta}_1 \neq -5 = \tilde{\beta}_1$. Isto se dá porque 
+
+$z$ não foi incluído no modelo e, portanto, ele acaba compondo o erro 
+
+$\varepsilon = \tilde{\beta}_2 z + \tilde{\varepsilon}$.</li>
+<li>Como 
+
+$z$ é correlacionado com 
+
+$x$, então 
+
+$cov(\varepsilon, x)\neq 0$ (violando a hipótese do MQO).</li>
+<li>Observe que, se incluíssemos a variável 
+
+$z$ na estimação, conseguiríamos recuperar 
+
+$\hat{\beta}_1 \approx \tilde{\beta}_1$:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = y ~ x + z)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)            x            z  
+</span></span><span class="line"><span class="cl">##      49.850       -4.663        2.882
+</span></span></code></pre></div><h3 id="violação-de-ee--0-porém-constante">Violação de E(e) = 0, porém constante</h3>
+<ul>
+<li>Agora, consideraremos que 
+
+$E[\varepsilon] = k$, sendo 
+
+$k \neq 0$ uma constante.</li>
+<li>Assuma que 
+
+$k = 100$:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">b0til</span> <span class="o">=</span> <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1til</span> <span class="o">=</span> <span class="m">-5</span>
+</span></span><span class="line"><span class="cl"><span class="n">k</span> <span class="o">=</span> <span class="m">100</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e_til</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span> <span class="c1"># Erros: 1000 obs. de média k e desv pad 2</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">9</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de x</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">b0til</span> <span class="o">+</span> <span class="n">b1til</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e_til</span> <span class="c1"># calculando observações y</span>
+</span></span></code></pre></div><ul>
+<li>Caso um pesquisador assuma 
+
+$E[\varepsilon] = 0$, segue que:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># estimação por MQO</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = y ~ x)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)            x  
+</span></span><span class="line"><span class="cl">##      149.93        -4.98
+</span></span></code></pre></div><ul>
+<li>Note que o fato de 
+
+$E[\varepsilon] \neq 0$ afeta apenas a estimação de 
+
+$\hat{\beta}_0 \neq \tilde{\beta}_0$, porém não afeta a de 
+
+$\hat{\beta}_1 \approx \tilde{\beta}_1$, que é normalmente o parâmetro de interesse em estudos econômicos.</li>
+</ul>
+<h3 id="violação-de-varex--constante-homocedasticidade">Violação de var(e|x) = constante (homocedasticidade)</h3>
+<ul>
+<li>Agora, consideraremos que 
+
+$\varepsilon \sim N(0, (5x)^2)$, ou seja, a variância cresce com 
+
+$x\ \implies \ var(\varepsilon|x) \neq $ constante (heterocedasticidade).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">b0til</span> <span class="o">=</span> <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1til</span> <span class="o">=</span> <span class="m">-5</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">9</span><span class="p">)</span> <span class="c1"># Gerando 1000 obs. de x</span>
+</span></span><span class="line"><span class="cl"><span class="n">e_til</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">5</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Erros: 1000 obs. de média 0 e desv pad 5x</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">b0til</span> <span class="o">+</span> <span class="n">b1til</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e_til</span> <span class="c1"># calculando observações y</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># estimação por MQO</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = y ~ x)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)            x  
+</span></span><span class="line"><span class="cl">##      51.243       -5.229
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1"># visualizando heteroscedasticidade</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">b0til</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b1til</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span> <span class="c1"># modelo real</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">)</span> <span class="c1"># modelo estimado</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<ul>
+<li>Mesmo com heterocesdasticidade, é possível recuperar 
+
+$\hat{\beta}_1 \approx \tilde{\beta}_1$, pois o estimador de MQO permanece não-viesado.</li>
+<li>Heterocedasticidade compromete apenas a inferência (cálculo dos erros padrão, estatísticas t, e p-valor), tornando o estimador não-eficiente.</li>
+</ul>
+</br>
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec7"  class="btn btn-primary px-3 py-3">👉 Proceed to Optimization</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

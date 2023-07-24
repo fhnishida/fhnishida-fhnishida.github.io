@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: July 24, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fábio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="The section covers topics such as the variance-covariance matrix of errors, heteroskedasticity tests (including the Breusch-Pagan and White tests), and various estimators such as OLS with robust standard errors, GLS, WLS, and FGLS. The section provides R code examples for performing these analyses and includes references to relevant literature. Overall, this section of the webpage provides a comprehensive overview of econometric methods and techniques for analyzing data using R. It is a valuable resource for anyone interested in learning more about these topics." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.netlify.app/project/rec5004/sec10/" />
+<link rel="canonical" href="https://fhnishida.netlify.app/project/rec5004/sec10/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fábio Nishida" />
+<meta property="og:url" content="https://fhnishida.netlify.app/project/rec5004/sec10/" />
+<meta property="og:title" content="Heterocedasticidade | Fábio Nishida" />
+<meta property="og:description" content="The section covers topics such as the variance-covariance matrix of errors, heteroskedasticity tests (including the Breusch-Pagan and White tests), and various estimators such as OLS with robust standard errors, GLS, WLS, and FGLS. The section provides R code examples for performing these analyses and includes references to relevant literature. Overall, this section of the webpage provides a comprehensive overview of econometric methods and techniques for analyzing data using R. It is a valuable resource for anyone interested in learning more about these topics." /><meta property="og:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec10/index.xml" type="application/rss+xml" title="Fábio Nishida" />
+  
+
+  
+
+
+  
+  <title>Heterocedasticidade | Fábio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="e2f7f7abb3c24a069c0cc1eb84cb43c7" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/"><i class="fas fa-book pr-1"></i>Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/project/rec5004/">----------------------</a></li>
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">----------------</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#matriz-de-variâncias-covariâncias-dos-erros">Matriz de variâncias-covariâncias dos erros</a></li>
+    <li><a href="#testes-de-heterocedasticidade">Testes de heterocedasticidade</a>
+      <ul>
+        <li><a href="#teste-de-breusch-pagan">Teste de Breusch-Pagan</a></li>
+        <li><a href="#teste-de-white">Teste de White</a></li>
+      </ul>
+    </li>
+    <li><a href="#estimador-mqo-com-erros-padrão-robustos">Estimador MQO com erros padrão robustos</a>
+      <ul>
+        <li><a href="#estimação-via-lm-e-vcovhc">Estimação via lm() e vcovHC()</a></li>
+        <li><a href="#estimação-analítica">Estimação Analítica</a></li>
+      </ul>
+    </li>
+    <li><a href="#estimador-mqg">Estimador MQG</a></li>
+    <li><a href="#estimador-mqp">Estimador MQP</a>
+      <ul>
+        <li><a href="#estimação-via-lm">Estimação via <code>lm()</code></a></li>
+        <li><a href="#estimação-analítica-1">Estimação Analítica</a></li>
+      </ul>
+    </li>
+    <li><a href="#estimador-mqgf">Estimador MQGF</a>
+      <ul>
+        <li><a href="#estimação-via-lm-1">Estimação via lm()</a></li>
+        <li><a href="#estimação-analítica-2">Estimação Analítica</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Heterocedasticidade</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seções 8.2 e 8.3 de Heiss (2020)</a></li>
+<li>Seções 5.5, 7.1 a 7.4 de Davidson e MacKinnon (1999)</li>
+<li>Seções 4.2.3 e 4.2.4 de Wooldridge</li>
+</ul>
+<h2 id="matriz-de-variâncias-covariâncias-dos-erros">Matriz de variâncias-covariâncias dos erros</h2>
+<p>Relembre que a matriz de variâncias-covariâncias dos erros é dada por:</p>
+
+
+$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
+\left[ \begin{array}{cccc}
+var(\varepsilon_{1}) & cov(\varepsilon_{1}, \varepsilon_{2}) & \cdots & cov(\varepsilon_{1}, \varepsilon_{N}) \\
+cov(\varepsilon_{2}, \varepsilon_{1}) & var(\varepsilon_{2}) & \cdots & cov(\varepsilon_{2}, \varepsilon_{N}) \\
+\vdots & \vdots & \ddots & \vdots \\
+cov(\varepsilon_{N}, \varepsilon_{1}) & cov(\varepsilon_{N}, \varepsilon_{2}) & \cdots & var(\varepsilon_{N}) 
+\end{array} \right]$$
+<p>Como assumimos amostragem aleatória, a covariância entre dois indivíduos distintos 
+
+($i \neq j$) é<br>
+
+
+$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{para todo } i \neq j.$$</p>
+<p>Logo,
+
+
+$$ \boldsymbol{\Sigma} = 
+\left[ \begin{array}{cccc}
+var(\varepsilon_{1}) & 0 & \cdots & 0 \\
+0 & var(\varepsilon_{2}) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & var(\varepsilon_{N}) 
+\end{array} \right]$$</p>
+<p>Para MQO, assumíamos homocedasticidade e, portanto, a diagonal principal era toda preenchida por um mesmo 
+
+$ var(\varepsilon_i) = \sigma^2,\ \forall i$.
+Na presença de <strong>heteroscedasticidade</strong>, segue que 
+
+$ var(\varepsilon_i) = \sigma^2_i,\ \forall i$ e, logo:</p>
+
+
+$$ \boldsymbol{\Sigma} = 
+\left[ \begin{array}{cccc}
+\sigma^2_1 & 0 & \cdots & 0 \\
+0 & \sigma^2_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2_N 
+\end{array} \right] \ \neq\ \sigma^2 I_N $$
+<p>Como é uma matriz diagonal, é fácil computar a inversa da matriz:</p>
+<p>
+
+$$ \boldsymbol{\Sigma}^{-1} = 
+\left[ \begin{array}{cccc}
+1/\sigma^2_1 & 0 & \cdots & 0 \\
+0 & 1/\sigma^2_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1/\sigma^2_N 
+\end{array} \right]$$
+e
+
+
+$$\boldsymbol{\Sigma}^{-0.5} = 
+\left[ \begin{array}{cccc}
+1/\sigma_1 & 0 & \cdots & 0 \\
+0 & 1/\sigma_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1/\sigma_N 
+\end{array} \right]$$</p>
+<br>
+<h2 id="testes-de-heterocedasticidade">Testes de heterocedasticidade</h2>
+<ul>
+<li>A ideia os testes de heterocedasticidade é pegar os resíduos da estimação por MQO, 
+
+$\hat{\boldsymbol{\varepsilon}}$, e verificar sua correlação com as variáveis explicativas, 
+
+$\boldsymbol{X}$. Em caso de homocedasticidade, essa correlação deveria ser estatisticamente nula.</li>
+<li>Podemos testar isso por meio do testes de Breusch-Pagan ou de White.</li>
+</ul>
+<h3 id="teste-de-breusch-pagan">Teste de Breusch-Pagan</h3>
+<ul>
+<li>
+<p>Inicialmente, considere o seguinte modelo linear
+
+
+$$\boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}_{1} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} $$</p>
+</li>
+<li>
+<p>Ao estimá-lo por MQO, obtemos os resíduos
+
+
+$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} = \boldsymbol{y} - \boldsymbol{X} \hat{\boldsymbol{\beta}}$</p>
+</li>
+<li>
+<p>Depois, fazemos a regressão dos resíduos ao quadrado em função das covariadas:
+
+
+$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + \gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u} = \boldsymbol{X} \boldsymbol{\gamma} + \boldsymbol{u} $$</p>
+</li>
+<li>
+<p>Breusch-Pagan (1979) e Koenker (1981) propuseram testar a hipótese nula <strong>conjunta</strong> de que todos os parâmetros são iguais a zero:
+
+
+$$H_0: \quad \boldsymbol{\gamma} = \boldsymbol{0} \iff \begin{bmatrix} \gamma_1 \\ \gamma_2 \\ \vdots \\ \gamma_K \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} $$</p>
+</li>
+<li>
+<p>A verificação dessa hipótese pode ser feita via estatística LM</p>
+</li>
+</ul>
+
+
+$$ LM = N. R^2_{\scriptstyle{\hat{\varepsilon}}}\ \sim\ \chi^2_K $$
+<h4 id="exemplo-87-demanda-por-cigarros-wooldridge">Exemplo 8.7: Demanda por Cigarros (Wooldridge)</h4>
+<ul>
+<li>
+<p>Nesta seção, vamos usar a base de dados <code>smoke</code> do pacote <code>wooldridge</code> para estimar o seguinte modelo:
+
+
+\begin{align}\text{cigs} = &\beta_0 + \beta_1 \text{lincome} + \beta_2 \text{lcigpric} + \beta_3 \text{educ} + \beta_4 \text{age}\\ &+ \beta_5 \text{agesq} + \beta_6 \text{restaurn} + \varepsilon \end{align}
+em que:</p>
+</li>
+<li>
+<p><em>cigs</em>: cigarros fumados por dia</p>
+</li>
+<li>
+<p><em>lincome</em>: log da renda</p>
+</li>
+<li>
+<p><em>lcigpric</em>: log do preço do cigarro</p>
+</li>
+<li>
+<p><em>educ</em>: anos de escolaridade</p>
+</li>
+<li>
+<p><em>age</em>: idade</p>
+</li>
+<li>
+<p><em>agesq</em>: idade ao quadrado</p>
+</li>
+<li>
+<p><em>restaurn</em>: dummy resturante tem restrições de fumo</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">lmtest</span><span class="p">)</span> <span class="c1"># precisa ser instalado</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">smoke</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Regressão do modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">cigs</span> <span class="o">~</span> <span class="n">lincome</span> <span class="o">+</span> <span class="n">lcigpric</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">agesq</span> <span class="o">+</span> <span class="n">restaurn</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">bptest</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## 	studentized Breusch-Pagan test
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## data:  reg
+</span></span><span class="line"><span class="cl">## BP = 32.258, df = 6, p-value = 1.456e-05
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Teste BP na &#34;mão&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="nf">model.matrix</span><span class="p">(</span><span class="n">reg</span><span class="p">))</span> <span class="o">-</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">reg.resid</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="n">^2</span> <span class="o">~</span> <span class="n">lincome</span> <span class="o">+</span> <span class="n">lcigpric</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">agesq</span> <span class="o">+</span> <span class="n">restaurn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2e</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg.resid</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">LM</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">r2e</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="n">LM</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.455779e-05
+</span></span></code></pre></div><ul>
+<li>Alternativamente, o teste também pode ser feito pela estatística LM (ou, também, Wald):
+
+
+$$ F_{\scriptscriptstyle{K, (N-K-1)}} = \frac{R^2_{\scriptstyle{\hat{\varepsilon}}}/K}{(1 - R^2_{\scriptstyle{\hat{\varepsilon}}}) / (N-K-1)} $$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Teste F já vem calculado no summary(lm())</span>
+</span></span><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg.resid</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = resid(reg)^2 ~ lincome + lcigpric + educ + age + 
+</span></span><span class="line"><span class="cl">##     agesq + restaurn, data = smoke)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Residuals:
+</span></span><span class="line"><span class="cl">##    Min     1Q Median     3Q    Max 
+</span></span><span class="line"><span class="cl">## -270.1 -127.5  -94.0  -39.1 4667.8 
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">##               Estimate Std. Error t value Pr(&gt;|t|)    
+</span></span><span class="line"><span class="cl">## (Intercept) -636.30306  652.49456  -0.975   0.3298    
+</span></span><span class="line"><span class="cl">## lincome       24.63848   19.72180   1.249   0.2119    
+</span></span><span class="line"><span class="cl">## lcigpric      60.97655  156.44869   0.390   0.6968    
+</span></span><span class="line"><span class="cl">## educ          -2.38423    4.52753  -0.527   0.5986    
+</span></span><span class="line"><span class="cl">## age           19.41748    4.33907   4.475 8.75e-06 ***
+</span></span><span class="line"><span class="cl">## agesq         -0.21479    0.04723  -4.547 6.27e-06 ***
+</span></span><span class="line"><span class="cl">## restaurn     -71.18138   30.12789  -2.363   0.0184 *  
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Residual standard error: 363.2 on 800 degrees of freedom
+</span></span><span class="line"><span class="cl">## Multiple R-squared:  0.03997,	Adjusted R-squared:  0.03277 
+</span></span><span class="line"><span class="cl">## F-statistic: 5.552 on 6 and 800 DF,  p-value: 1.189e-05
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Teste F na &#34;mão&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="bp">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">r2e</span> <span class="o">/</span> <span class="n">K</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="m">1</span><span class="o">-</span><span class="n">r2e</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="bp">F</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 5.551687
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pf</span><span class="p">(</span><span class="bp">F</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.188811e-05
+</span></span></code></pre></div><ul>
+<li>Note que os testes avaliam se há heterocedasticidade, mas não mostra quais variáveis são responsáveis por isso.</li>
+<li>Por isso, pode ser interessante também visualizar os testes t de cada regressor na regressão sobre o quadrado do resíduos. Neste caso, aparenta ocorrer pela variável <em>age</em>, <em>agesq</em> e <em>restaurn</em>.</li>
+</ul>
+<h3 id="teste-de-white">Teste de White</h3>
+<ul>
+<li>Embora o teste de Breusch-Pagan seja interessante, ele avalia os erros apenas de forma linear nas variáveis explicativas:
+
+
+$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + \gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u}$$</li>
+<li>Portanto, para capturar mais formas de heterocedasticidade, é interessante colocar também as <strong>interações entre os regressores e seus quadrados</strong> na forma:
+
+
+\begin{align} \hat{\boldsymbol{\varepsilon}}^2 = & \alpha + {\color{blue}\gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K}} + {\color{red}\delta_{11} \boldsymbol{x}^2_{1} + \delta_{12} (\boldsymbol{x}_{1}\boldsymbol{x}_{2}) + ... + \delta_{1K} (\boldsymbol{x}_{1}\boldsymbol{x}_{K})}\\
+& {\color{red}+ \delta_{22} \boldsymbol{x}^2_{2} + \delta_{23} (\boldsymbol{x}_{2}\boldsymbol{x}_{3}) + ... + \delta_{KK}\boldsymbol{x}^2_{K}} + \boldsymbol{u} \end{align}</li>
+<li>Então, o teste de hipótese seria:
+
+
+$$H_0: \quad \begin{bmatrix}\boldsymbol{\gamma} \\ \boldsymbol{\delta} \end{bmatrix} = \boldsymbol{0} \iff \begin{bmatrix} \gamma_1 \\ \gamma_2 \\ \vdots \\ \gamma_K \\ \delta_{11} \\ \delta_{12} \\ \vdots \\ \delta_{KK} \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} $$</li>
+<li>O problema é que se perdem muitos graus de liberdade quando incluímos parâmetros para todas as interações e os quadrados dos regressores.</li>
+<li>White (1980) então mostrou que é possível fazer um teste equivalente incluindo apenas 
+
+$\hat{\boldsymbol{y}}$ e 
+
+$\hat{\boldsymbol{y}}^2$ como regressores no modelo do resíduo ao quadrado:
+
+
+$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + {\color{blue}\gamma \hat{\boldsymbol{y}}} + {\color{red}\delta \hat{\boldsymbol{y}}^2} + \boldsymbol{u}$$</li>
+<li>E o teste de hipótese se torna apenas
+
+
+$$H_0: \quad \begin{bmatrix}\gamma \\ \delta \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} $$
+que também pode ser testada pelas estatísticas LM (Breusch-Pagan) ou F.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Valores ajustados</span>
+</span></span><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="nf">fitted</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Teste via bptest()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">bptest</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="o">~</span> <span class="n">yhat</span> <span class="o">+</span> <span class="nf">I</span><span class="p">(</span><span class="n">yhat^2</span><span class="p">))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## 	studentized Breusch-Pagan test
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## data:  reg
+</span></span><span class="line"><span class="cl">## BP = 26.573, df = 2, p-value = 1.698e-06
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Teste BP/LM &#34;na mão&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.resid</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="n">^2</span> <span class="o">~</span> <span class="n">yhat</span> <span class="o">+</span> <span class="nf">I</span><span class="p">(</span><span class="n">yhat^2</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2e</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg.resid</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">LM</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">r2e</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="n">LM</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.697606e-06
+</span></span></code></pre></div><br>
+<h2 id="estimador-mqo-com-erros-padrão-robustos">Estimador MQO com erros padrão robustos</h2>
+<ul>
+<li>O estimador de MQO permanece não-viesado/consistente sob heterocedasticidade, mas perde eficiência.</li>
+<li>Um forma de contornar esse problema é modelarmos a matriz de variâncias-covariâncias <strong>dos erros</strong> 
+
+$\boldsymbol{\Sigma}$</li>
+<li>Primeiro, lembre-se que a matriz de variâncias-covariâncias <strong>do estimador de MQO</strong> é dada por
+
+
+$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$$</li>
+<li>Como há heterocedasticidade, essa matriz não se simplifica para 
+
+$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) = \sigma^2 (\boldsymbol{X}' \boldsymbol{X})^{-1}$, porém também não conhecemos 
+
+$\boldsymbol{\Sigma}$, que precisa ser estimado.</li>
+<li>A forma mais simples de obter 
+
+$\hat{\boldsymbol{\Sigma}}$ foi sugerido por White (1980), que é preencher sua diagonal com o quadrado do resíduo de cada indivíduo (obtido por estimação MQO):
+
+
+$$\hat{\boldsymbol{\Sigma}} = \begin{bmatrix}
+\hat{\varepsilon}^2_1 & 0 & \cdots & 0 \\
+0 & \hat{\varepsilon}^2_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \hat{\varepsilon}^2_N \end{bmatrix}$$</li>
+<li>Portanto, temos o estimador de matriz de covariâncias consistente com heterocedasticidade (HCCME)
+
+
+$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$$
+que é também é conhecido como estimador sanduíche, pois 
+
+$(\boldsymbol{X}' \boldsymbol{X})^{-1}$ está nos extremos da fórmula (pão/<em>bread</em>), que &ldquo;sanduicham&rdquo; o termo 
+
+$\boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X}$ (carne/<em>meat</em>).</li>
+</ul>
+<h3 id="estimação-via-lm-e-vcovhc">Estimação via lm() e vcovHC()</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Usando fórmula vcovHC() do pacote sandwich</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">lmtest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">sandwich</span><span class="p">)</span> <span class="c1"># precisa ser instalado</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Regressão do modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">cigs</span> <span class="o">~</span> <span class="n">lincome</span> <span class="o">+</span> <span class="n">lcigpric</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">agesq</span> <span class="o">+</span> <span class="n">restaurn</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Construindo matriz vcov do estimador ajustado por heterocedasticidade</span>
+</span></span><span class="line"><span class="cl"><span class="n">vcov_sandwich</span> <span class="o">=</span> <span class="nf">vcovHC</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;HC0&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">vcov_sandwich</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             (Intercept) lincome lcigpric   educ    age  agesq restaurn
+</span></span><span class="line"><span class="cl">## (Intercept)     650.511  -2.642 -149.814 -0.240 -0.489  0.005    3.823
+</span></span><span class="line"><span class="cl">## lincome          -2.642   0.352    0.009 -0.029 -0.019  0.000   -0.077
+</span></span><span class="line"><span class="cl">## lcigpric       -149.814   0.009   36.110  0.048  0.078 -0.001   -0.783
+</span></span><span class="line"><span class="cl">## educ             -0.240  -0.029    0.048  0.026 -0.001  0.000   -0.012
+</span></span><span class="line"><span class="cl">## age              -0.489  -0.019    0.078 -0.001  0.019  0.000   -0.002
+</span></span><span class="line"><span class="cl">## agesq             0.005   0.000   -0.001  0.000  0.000  0.000    0.000
+</span></span><span class="line"><span class="cl">## restaurn          3.823  -0.077   -0.783 -0.012 -0.002  0.000    1.007
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Resultados</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">coeftest</span><span class="p">(</span><span class="n">reg</span><span class="p">),</span> <span class="m">3</span><span class="p">)</span> <span class="c1"># resultado padrão do MQO</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## t test of coefficients:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)    
+</span></span><span class="line"><span class="cl">## (Intercept)   -3.640     24.079  -0.151    0.880    
+</span></span><span class="line"><span class="cl">## lincome        0.880      0.728   1.210    0.227    
+</span></span><span class="line"><span class="cl">## lcigpric      -0.751      5.773  -0.130    0.897    
+</span></span><span class="line"><span class="cl">## educ          -0.501      0.167  -3.002    0.003 ** 
+</span></span><span class="line"><span class="cl">## age            0.771      0.160   4.813   &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## agesq         -0.009      0.002  -5.176   &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## restaurn      -2.825      1.112  -2.541    0.011 *  
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">coeftest</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="n">vcov_sandwich</span><span class="p">),</span> <span class="m">3</span><span class="p">)</span> <span class="c1"># resultado com correção</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## t test of coefficients:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)    
+</span></span><span class="line"><span class="cl">## (Intercept)   -3.640     25.505  -0.143    0.887    
+</span></span><span class="line"><span class="cl">## lincome        0.880      0.593   1.483    0.138    
+</span></span><span class="line"><span class="cl">## lcigpric      -0.751      6.009  -0.125    0.901    
+</span></span><span class="line"><span class="cl">## educ          -0.501      0.162  -3.102    0.002 ** 
+</span></span><span class="line"><span class="cl">## age            0.771      0.138   5.598   &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## agesq         -0.009      0.001  -6.198   &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## restaurn      -2.825      1.004  -2.815    0.005 ** 
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span></code></pre></div><ul>
+<li>Note que, neste caso, os erros padrão foram pouco alterados com o ajuste.</li>
+<li>Para ter ganho em eficiência, 
+
+$\hat{\boldsymbol{\Sigma}}$ precisa ser bem especificado. Há também outras formas de modelar 
+
+$\hat{\boldsymbol{\Sigma}}$ na própria função <code>vcovHC()</code>.</li>
+</ul>
+<h3 id="estimação-analítica">Estimação Analítica</h3>
+<ul>
+<li>Também podemos fazer a inferência robusta a heterocedasticidade analiticamente:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Criando o vetor y</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">smoke[</span><span class="p">,</span><span class="s">&#34;cigs&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># transformando coluna de data frame em matriz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">smoke[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;lincome&#34;</span><span class="p">,</span> <span class="s">&#34;lcigpric&#34;</span><span class="p">,</span> <span class="s">&#34;educ&#34;</span><span class="p">,</span> <span class="s">&#34;age&#34;</span><span class="p">,</span> <span class="s">&#34;agesq&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="s">&#34;restaurn&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># juntando 1&#39;s com x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pegando valores N e K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimativas MQO, valores preditos e resíduos</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat^2</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##         [,1]
+</span></span><span class="line"><span class="cl">## 1 106.770712
+</span></span><span class="line"><span class="cl">## 2 115.665513
+</span></span><span class="line"><span class="cl">## 3  59.596771
+</span></span><span class="line"><span class="cl">## 4 105.280775
+</span></span><span class="line"><span class="cl">## 5  56.312306
+</span></span><span class="line"><span class="cl">## 6   5.950747
+</span></span></code></pre></div><ul>
+<li>Agora vamos estimar a matriz de variâncias-covariâncias dos erros pelo método de White, preenchendo a sua diagonal com os resíduos ao quadrado para cada indivíduo:
+
+
+$$\hat{\boldsymbol{\Sigma}} = diag(\hat{\varepsilon}_1, \hat{\varepsilon}_2, ..., \hat{\varepsilon}_N)  = \begin{bmatrix}
+\hat{\varepsilon}^2_1 & 0 & \cdots & 0 \\
+0 & \hat{\varepsilon}^2_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \hat{\varepsilon}^2_N \end{bmatrix}$$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando matriz de vcov dos erros (diagonal com resíduo^2 de cada indiv)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Sigma</span> <span class="o">=</span> <span class="nf">diag</span><span class="p">(</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">ehat^2</span><span class="p">))</span> <span class="c1"># transformar em numeric p/ preencher diagonal</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Sigma[1</span><span class="o">:</span><span class="m">7</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">7</span><span class="n">]</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##         [,1]    [,2]   [,3]    [,4]   [,5]  [,6]    [,7]
+</span></span><span class="line"><span class="cl">## [1,] 106.771   0.000  0.000   0.000  0.000 0.000   0.000
+</span></span><span class="line"><span class="cl">## [2,]   0.000 115.666  0.000   0.000  0.000 0.000   0.000
+</span></span><span class="line"><span class="cl">## [3,]   0.000   0.000 59.597   0.000  0.000 0.000   0.000
+</span></span><span class="line"><span class="cl">## [4,]   0.000   0.000  0.000 105.281  0.000 0.000   0.000
+</span></span><span class="line"><span class="cl">## [5,]   0.000   0.000  0.000   0.000 56.312 0.000   0.000
+</span></span><span class="line"><span class="cl">## [6,]   0.000   0.000  0.000   0.000  0.000 5.951   0.000
+</span></span><span class="line"><span class="cl">## [7,]   0.000   0.000  0.000   0.000  0.000 0.000 142.419
+</span></span></code></pre></div><ul>
+<li>Note que foi necessário transformar <code>ehat^2</code> em numeric para aplicar o operador <code>diag()</code>. Caso não fosse feito, iria retornar um número ao invés de criar uma matriz diagonal preenchida com os resíduos ao quadrado.</li>
+<li>Agora, o podemos estimar a matriz de variâncias-covariâncias do estimador robusta a heterocedasticidade:
+
+
+$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Matriz de variâncias-covariância do estimador</span>
+</span></span><span class="line"><span class="cl"><span class="n">bread</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">meat</span> <span class="o">=</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Sigma</span> <span class="o">%*%</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">bread</span> <span class="o">%*%</span> <span class="n">meat</span> <span class="o">%*%</span> <span class="n">bread</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                 1 lincome lcigpric   educ    age  agesq restaurn
+</span></span><span class="line"><span class="cl">## 1         650.511  -2.642 -149.814 -0.240 -0.489  0.005    3.823
+</span></span><span class="line"><span class="cl">## lincome    -2.642   0.352    0.009 -0.029 -0.019  0.000   -0.077
+</span></span><span class="line"><span class="cl">## lcigpric -149.814   0.009   36.110  0.048  0.078 -0.001   -0.783
+</span></span><span class="line"><span class="cl">## educ       -0.240  -0.029    0.048  0.026 -0.001  0.000   -0.012
+</span></span><span class="line"><span class="cl">## age        -0.489  -0.019    0.078 -0.001  0.019  0.000   -0.002
+</span></span><span class="line"><span class="cl">## agesq       0.005   0.000   -0.001  0.000  0.000  0.000    0.000
+</span></span><span class="line"><span class="cl">## restaurn    3.823  -0.077   -0.783 -0.012 -0.002  0.000    1.007
+</span></span></code></pre></div><ul>
+<li>Só falta calcular os erros padrão, estísticas t e p-valores:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Erro padrão robusto, estat t e p-valor</span>
+</span></span><span class="line"><span class="cl"><span class="n">se</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="n">bhat</span> <span class="o">/</span> <span class="n">se</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Resultados</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="m">3</span><span class="p">)</span> <span class="c1"># resultado obtido analiticamente</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            bhat     se      t     p
+</span></span><span class="line"><span class="cl">## 1        -3.640 25.505 -0.143 0.887
+</span></span><span class="line"><span class="cl">## lincome   0.880  0.593  1.483 0.138
+</span></span><span class="line"><span class="cl">## lcigpric -0.751  6.009 -0.125 0.901
+</span></span><span class="line"><span class="cl">## educ     -0.501  0.162 -3.102 0.002
+</span></span><span class="line"><span class="cl">## age       0.771  0.138  5.598 0.000
+</span></span><span class="line"><span class="cl">## agesq    -0.009  0.001 -6.198 0.000
+</span></span><span class="line"><span class="cl">## restaurn -2.825  1.004 -2.815 0.005
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">coeftest</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="n">vcov_sandwich</span><span class="p">),</span> <span class="m">3</span><span class="p">)</span> <span class="c1"># obtido por funções</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## t test of coefficients:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)    
+</span></span><span class="line"><span class="cl">## (Intercept)   -3.640     25.505  -0.143    0.887    
+</span></span><span class="line"><span class="cl">## lincome        0.880      0.593   1.483    0.138    
+</span></span><span class="line"><span class="cl">## lcigpric      -0.751      6.009  -0.125    0.901    
+</span></span><span class="line"><span class="cl">## educ          -0.501      0.162  -3.102    0.002 ** 
+</span></span><span class="line"><span class="cl">## age            0.771      0.138   5.598   &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## agesq         -0.009      0.001  -6.198   &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## restaurn      -2.825      1.004  -2.815    0.005 ** 
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span></code></pre></div><br>
+<h2 id="estimador-mqg">Estimador MQG</h2>
+<ul>
+<li>
+<p>Alternativamente, podemos fazer a estimação e a inferência modelando a matriz de variâncias-covariâncias dos erros, 
+
+$\boldsymbol{\Sigma}$.</p>
+</li>
+<li>
+<p>O estimador de Mínimos Quadrados Generalizados (MQG/GLS), assumindo dados em corte transversal, é dado por
+
+
+$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQG}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $$</p>
+</li>
+<li>
+<p>A matriz de variâncias-covariâncias do estimador é dada por
+
+
+$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $$</p>
+</li>
+<li>
+<p>O problema é que desconhecemos 
+
+$\boldsymbol{\Sigma}$, e precisamos fazer mais premissas sobre a forma da matriz de variâncias-covariâncias dos erros (e sua inversa) para estimar 
+
+$\boldsymbol{\hat{\Sigma}}$.</p>
+</li>
+</ul>
+<br>
+<h2 id="estimador-mqp">Estimador MQP</h2>
+<ul>
+<li>
+<p><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 4.1 de Heiss (2020)</a></p>
+</li>
+<li>
+<p><a href="https://www.stat.uchicago.edu/~yibi/teaching/stat224/L14.pdf" target="_blank" rel="noopener">Weighted Least Squares (Yibi Huang)</a></p>
+</li>
+<li>
+<p>Um caso especial de MQG é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que a variância do erro de cada observação é conhecida e proporcional a das demais.</p>
+</li>
+<li>
+<p>A variância do erro individual é a partir uma função das variáveis explicativas, 
+
+$h(\boldsymbol{x}'_i)$:
+
+
+$$ Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2.h(\boldsymbol{x}'_i), $$
+ou seja,
+
+
+\begin{align} \boldsymbol{\Sigma} &= 
+\left[ \begin{array}{cccc}
+\sigma^2 h(\boldsymbol{x}'_1) & 0 & \cdots & 0 \\
+0 & \sigma^2 h(\boldsymbol{x}'_2) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2 h(\boldsymbol{x}'_1) 
+\end{array} \right] \\
+&= \sigma^2 \left[ \begin{array}{cccc}
+h(\boldsymbol{x}'_1) & 0 & \cdots & 0 \\
+0 & h(\boldsymbol{x}'_2) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & h(\boldsymbol{x}'_N) 
+\end{array} \right] \\
+&\equiv \sigma^2 \boldsymbol{W}^{-1}
+\end{align}
+em que 
+
+$\boldsymbol{W}$ é uma matriz de pesos:
+
+
+$$ \boldsymbol{W} = \left[ \begin{array}{cccc}
+\frac{1}{h(\boldsymbol{x}'_1)} & 0 & \cdots & 0 \\
+0 & \frac{1}{h(\boldsymbol{x}'_2)} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \frac{1}{h(\boldsymbol{x}'_N)}
+\end{array} \right] \equiv \left[ \begin{array}{cccc}
+w_1 & 0 & \cdots & 0 \\
+0 & w_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & w_N
+\end{array} \right] $$
+em que 
+
+$w_i$ são os pesos da estimação.</p>
+</li>
+</ul>
+<br>
+<ul>
+<li>
+<p>Por exemplo, considere que a variância das mulheres é o dobro da variância dos homens (
+
+$\sigma^2_M = 2.\sigma^2_H $), então:
+
+
+$$ h(\text{female}_i) = \left\{ \begin{matrix} 
+2, &\text{se female}_i = 1 \\
+1, &\text{se female}_i = 0
+\end{matrix} \right. $$</p>
+</li>
+<li>
+<p>Considerando que as 
+
+$M$ primeiras linhas são de mulheres, a matriz de variâncias-covariâncias dos erros pode ser simplificada para:
+
+
+\begin{align} \boldsymbol{\Sigma} &= 
+\left[ \begin{array}{cccc}
+\sigma^2_M & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & \sigma^2_M & 0 & \cdots & 0 \\
+0 & \cdots & 0 & \sigma^2_H & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & \sigma^2_H \\
+\end{array} \right] \\
+&= \left[ \begin{array}{cccc}
+2\sigma^2 & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 2\sigma^2 & 0 & \cdots & 0 \\
+0 & \cdots & 0 & \sigma^2 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & \sigma^2 \\
+\end{array} \right] \\ 
+&= \left[ \begin{array}{cccc}
+2\sigma^2 & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 2\sigma^2 & 0 & \cdots & 0 \\
+0 & \cdots & 0 & \sigma^2 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & \sigma^2 \\
+\end{array} \right] \\
+&= \sigma^2 \left[ \begin{array}{cccc}
+2 & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 2 & 0 & \cdots & 0 \\
+0 & \cdots & 0 & 1 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & 1 \\
+\end{array} \right] 
+\end{align}</p>
+</li>
+<li>
+<p>Por ser uma matriz diagonal, as seguintes matrizes são facilmente calculadas:
+
+
+$$ \boldsymbol{\Sigma}^{-1} = 
+\frac{1}{\sigma^2} \left[ \begin{array}{cccc}
+\frac{1}{2} & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & \frac{1}{2} & 0 & \cdots & 0 \\
+0 & \cdots & 0 & \frac{1}{1} & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & \frac{1}{1} \\
+\end{array} \right] \equiv 
+\frac{1}{\sigma^2} \boldsymbol{W}, $$
+e
+
+
+$$ \boldsymbol{\Sigma}^{-0.5} = 
+\frac{1}{\sigma} \left[ \begin{array}{cccc}
+\frac{1}{\sqrt{2}} & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & \frac{1}{\sqrt{2}} & 0 & \cdots & 0 \\
+0 & \cdots & 0 & \frac{1}{\sqrt{1}} & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & \frac{1}{\sqrt{1}} \\
+\end{array} \right] \equiv 
+\frac{1}{\sigma} \boldsymbol{W}^{0.5} $$</p>
+</li>
+</ul>
+<br>
+<ul>
+<li>Disto, podemos obter o estimador 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}$:</li>
+</ul>
+
+
+\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}} &= (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) \\
+&= \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{y} \right) \\
+&= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \frac{1}{\sigma^2} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \\
+&= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}
+\end{align}
+<ul>
+<li>A matriz de variâncias-covariâncias do estimador de MQP é dada por</li>
+</ul>
+
+
+\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) &= \left(\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X} \right)^{-1} \\
+&= \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
+&= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} = V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) \end{align}
+<!-- - Note que, para calcularmos 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}$ precisamos estimar 
+
+$\sigma^2$. Porém, a variância dos erros é estimada a partir de resíduos, 
+
+$\hat{\boldsymbol{\varepsilon}}$, que por sua vez são obtidos a partir de estimativas 
+
+$\hat{\boldsymbol{\beta}}$. -->
+<ul>
+<li>A variância dos erros, 
+
+$\sigma^2$, pode ser estimada usando:
+
+
+$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N-K-1} $$</li>
+</ul>
+<br>
+<ul>
+<li>
+<p>Também podemos transformar as variáveis e resolver por MQO, pré-multiplicando 
+
+$\boldsymbol{X}$ e 
+
+$\boldsymbol{y}$ por 
+
+$ \boldsymbol{W}^{0.5}$, e definindo:
+
+
+$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{y}$$</p>
+</li>
+<li>
+<p>No exemplo em que a variância da mulher é o dobro da variância do homem, temos:
+
+
+\begin{align} \boldsymbol{W}^{0.5} \boldsymbol{y} &= \begin{bmatrix}
+2^{0.5} & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 2^{0.5} & 0 & \cdots & 0 \\
+0 & \cdots & 0 & 1^{0.5} & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & 1^{0.5} \\
+\end{bmatrix} \begin{bmatrix} y_1 \\ \vdots \\ y_M \\ y_{M+1} \\ \vdots \\ y_N \end{bmatrix}\\
+&= \begin{bmatrix}
+\frac{1}{\sqrt{2}} & \cdots & 0 & 0 & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & \frac{1}{\sqrt{2}} & 0 & \cdots & 0 \\
+0 & \cdots & 0 & \frac{1}{\sqrt{1}} & \cdots & 0 \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & \cdots & 0 & 0 & \cdots & \frac{1}{\sqrt{1}} \\
+\end{bmatrix} \begin{bmatrix}  y_1 \\ \vdots \\ y_M \\ y_{M+1} \\ \vdots \\ y_N \end{bmatrix} \\
+&= \begin{bmatrix} \frac{1}{\sqrt{2}} y_1 \\ \vdots \\ \frac{1}{\sqrt{2}}  y_M \\ \frac{1}{\sqrt{1}}  y_{M+1} \\ \vdots \\ \frac{1}{\sqrt{1}} y_N \end{bmatrix} \end{align}
+em que 
+
+$M$ é o número de mulheres na base de dados.</p>
+</li>
+<li>
+<p>Note que as variáveis 
+
+$\boldsymbol{y}$ e 
+
+$\boldsymbol{X}$ ficam multiplicadas pelo inverso da raiz de seus respectivos pesos, quando as pré-multiplicamos por 
+
+$\boldsymbol{W}$.</p>
+</li>
+<li>
+<p>Observe também que os estimadores são equivalentes:
+
+
+\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}} &= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \\
+&= \left(\boldsymbol{X}' \boldsymbol{W}^{0.5} \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W}^{0.5} \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
+&= \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
+&= \left( \left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
+&= ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} ) \equiv \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}} \end{align}
+e
+
+
+\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
+&= \sigma^2 \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}} \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
+&= \sigma^2 \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
+&= \sigma^2 \left(\left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
+V(\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}) &= \sigma^2 (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1}
+\end{align}</p>
+</li>
+</ul>
+<p>em que usamos 
+
+$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}$ (matriz simétrica).</p>
+<h3 id="estimação-via-lm">Estimação via <code>lm()</code></h3>
+<ul>
+<li>Aqui usaremos um exemplo parecido com o que simulamos em uma seção anterior, pois é difícil encontrar um exemplo que saiba o formato exato da heterocedasticidade à priori.</li>
+<li>Vamos criar observações do seguinte modelo real com presença de heterocedasticidade:
+
+
+$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, (10x)^2) $$
+logo
+
+
+$$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 (10x_i)^2 \quad \implies\quad sd(\tilde{\varepsilon}_i | x_i) = \sigma (10x_i) $$</li>
+<li>Para estimar o MQP via <code>lm()</code>, precisamos informar os pesos no argumento <code>weights</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Definindo parâmetros</span>
+</span></span><span class="line"><span class="cl"><span class="n">b0til</span> <span class="o">=</span> <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1til</span> <span class="o">=</span> <span class="m">-5</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="m">100</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Gerando x e y por simulação</span>
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">9</span><span class="p">)</span> <span class="c1"># Gerando 100 obs. de x</span>
+</span></span><span class="line"><span class="cl"><span class="n">e_til</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="c1"># Erros: 100 obs. de média 0 e desv pad 10x</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">b0til</span> <span class="o">+</span> <span class="n">b1til</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e_til</span> <span class="c1"># calculando observações y</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<ul>
+<li>Agora, vamos estimar por MQO e MQP o seguinte modelo empírico
+
+
+$$ y = \beta_0 + \beta_1 x + \varepsilon $$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimações</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.ols</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># estimação por MQO</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.wls</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="m">1</span><span class="o">/</span><span class="p">(</span><span class="m">10</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="n">^2</span><span class="p">)</span> <span class="c1"># estimação por MQP</span>
+</span></span><span class="line"><span class="cl"><span class="n">stargazer</span><span class="o">::</span><span class="nf">stargazer</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">,</span> <span class="n">reg.wls</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">,</span> <span class="n">omit.stat</span><span class="o">=</span><span class="s">&#34;f&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## ==========================================================
+</span></span><span class="line"><span class="cl">##                                   Dependent variable:     
+</span></span><span class="line"><span class="cl">##                               ----------------------------
+</span></span><span class="line"><span class="cl">##                                            y              
+</span></span><span class="line"><span class="cl">##                                    (1)            (2)     
+</span></span><span class="line"><span class="cl">## ----------------------------------------------------------
+</span></span><span class="line"><span class="cl">## x                                -5.51**       -5.92***   
+</span></span><span class="line"><span class="cl">##                                   (2.35)        (1.77)    
+</span></span><span class="line"><span class="cl">##                                                           
+</span></span><span class="line"><span class="cl">## Constant                         49.27***      51.43***   
+</span></span><span class="line"><span class="cl">##                                  (12.87)        (5.50)    
+</span></span><span class="line"><span class="cl">##                                                           
+</span></span><span class="line"><span class="cl">## ----------------------------------------------------------
+</span></span><span class="line"><span class="cl">## Observations                       100            100     
+</span></span><span class="line"><span class="cl">## R2                                 0.05          0.10     
+</span></span><span class="line"><span class="cl">## Adjusted R2                        0.04          0.09     
+</span></span><span class="line"><span class="cl">## Residual Std. Error (df = 98)     53.30          0.97     
+</span></span><span class="line"><span class="cl">## ==========================================================
+</span></span><span class="line"><span class="cl">## Note:                          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</span></span></code></pre></div><ul>
+<li>Veja que a estimação por MQP foi mais eficiente - produziu erros padrão menores, dado que <strong>já sabíamos que a variância do erro era proporcional à variável <em>x</em></strong>.</li>
+<li>Na prática, é difícil conhecer/defender uma forma exata da heterocedasticidade, já que não conhecemos o modelo real da variância do erro.</li>
+<li>Abaixo, segue uma estimação feita com pesos errados 
+
+$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 \left(\frac{1}{10 x_i}\right)^2$ e note que, inclusive, afeta a estimativas (além de piorar os erros padrão):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimações</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.wls2</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">x^2</span><span class="p">)</span> <span class="c1"># estimação por MQP</span>
+</span></span><span class="line"><span class="cl"><span class="n">stargazer</span><span class="o">::</span><span class="nf">stargazer</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">,</span> <span class="n">reg.wls</span><span class="p">,</span> <span class="n">reg.wls2</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">,</span> <span class="n">omit.stat</span><span class="o">=</span><span class="s">&#34;f&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## ===========================================================
+</span></span><span class="line"><span class="cl">##                                    Dependent variable:     
+</span></span><span class="line"><span class="cl">##                               -----------------------------
+</span></span><span class="line"><span class="cl">##                                             y              
+</span></span><span class="line"><span class="cl">##                                  (1)        (2)      (3)   
+</span></span><span class="line"><span class="cl">## -----------------------------------------------------------
+</span></span><span class="line"><span class="cl">## x                              -5.51**   -5.92***   -2.60  
+</span></span><span class="line"><span class="cl">##                                 (2.35)    (1.77)    (3.88) 
+</span></span><span class="line"><span class="cl">##                                                            
+</span></span><span class="line"><span class="cl">## Constant                       49.27***  51.43***   30.54  
+</span></span><span class="line"><span class="cl">##                                (12.87)    (5.50)   (26.90) 
+</span></span><span class="line"><span class="cl">##                                                            
+</span></span><span class="line"><span class="cl">## -----------------------------------------------------------
+</span></span><span class="line"><span class="cl">## Observations                     100        100      100   
+</span></span><span class="line"><span class="cl">## R2                               0.05      0.10     0.005  
+</span></span><span class="line"><span class="cl">## Adjusted R2                      0.04      0.09     -0.01  
+</span></span><span class="line"><span class="cl">## Residual Std. Error (df = 98)   53.30      0.97     368.51 
+</span></span><span class="line"><span class="cl">## ===========================================================
+</span></span><span class="line"><span class="cl">## Note:                           *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</span></span></code></pre></div><!-- - Vamos continuar com a base de dados de cigarros -->
+<!-- - Aqui, vamos assumir que a variância dos erros é dada por -->
+<!-- 
+
+$$ Var(\varepsilon_i | \text{age}_i) = \sigma^2 (\text{age}_i + \text{age}^2_i)$$ -->
+<!-- - Agora, vamos estimar por MQO e MQP: -->
+<!-- ```{r warning=FALSE} -->
+<!-- data(smoke, package="wooldridge") -->
+<!-- # Regressão do modelo -->
+<!-- reg.ols = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn, data=smoke) -->
+<!-- reg.wls = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn, -->
+<!--              weights=1/(age + agesq), data=smoke) -->
+<!-- stargazer::stargazer(reg.ols, reg.wls, digits=4, type="text") -->
+<!-- ``` -->
+<h3 id="estimação-analítica-1">Estimação Analítica</h3>
+<p><strong>a)</strong> Criando vetores/matrizes e definindo <em>N</em> e <em>K</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Criando o vetor y</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="c1"># transformando coluna de data frame em matriz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># juntando 1&#39;s com x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pegando valores N e K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span></code></pre></div><p><strong>b)</strong> Matriz de pesos 
+
+$\boldsymbol{W}$</p>
+<ul>
+<li>É a matriz cuja diagonal principal é preenchida pelos pesos, 
+
+$w_i = 1/x^2_i$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">W</span> <span class="o">=</span> <span class="nf">diag</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="n">x^2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">W[1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="n">]</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+</span></span><span class="line"><span class="cl">##  [1,] 0.09 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [2,] 0.00 0.02 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [3,] 0.00 0.00 0.05 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [4,] 0.00 0.00 0.00 0.02 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [5,] 0.00 0.00 0.00 0.00 0.01 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [6,] 0.00 0.00 0.00 0.00 0.00 0.54 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [7,] 0.00 0.00 0.00 0.00 0.00 0.00 0.04 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.02 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.03  0.00
+</span></span><span class="line"><span class="cl">## [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.05
+</span></span></code></pre></div><p><strong>c)</strong> Estimativas MQP 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}$</p>
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat_wls</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat_wls</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">##   51.433290
+</span></span><span class="line"><span class="cl">## x -5.923353
+</span></span></code></pre></div><p><strong>d)</strong> Valores ajustados 
+
+$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQP}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat_wls</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat_wls</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat_wls</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            [,1]
+</span></span><span class="line"><span class="cl">## [1,] 31.8825514
+</span></span><span class="line"><span class="cl">## [2,]  8.1546597
+</span></span><span class="line"><span class="cl">## [3,] 26.1298192
+</span></span><span class="line"><span class="cl">## [4,]  3.6665460
+</span></span><span class="line"><span class="cl">## [5,]  0.9441786
+</span></span><span class="line"><span class="cl">## [6,] 43.3511590
+</span></span></code></pre></div><p><strong>e)</strong> Resíduos 
+
+$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQP}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ehat_wls</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat_wls</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat_wls</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             [,1]
+</span></span><span class="line"><span class="cl">## [1,]   9.9754298
+</span></span><span class="line"><span class="cl">## [2,]   3.2273830
+</span></span><span class="line"><span class="cl">## [3,]   0.6797571
+</span></span><span class="line"><span class="cl">## [4,] 116.3787515
+</span></span><span class="line"><span class="cl">## [5,] -12.8069979
+</span></span><span class="line"><span class="cl">## [6,]  20.5180944
+</span></span></code></pre></div><p><strong>f)</strong> Estimativa da variância do erro 
+
+$\hat{\sigma}^2_{\scriptscriptstyle{MQP}}$
+
+
+$$\hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">sig2hat_wls</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat_wls</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">ehat_wls</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat_wls</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 93.95364
+</span></span></code></pre></div><p><strong>h)</strong> Matriz de Variâncias-Covariâncias do Estimador</p>
+
+
+$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) = \hat{\sigma}^2 (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">Vbhat_wls</span> <span class="o">=</span> <span class="n">sig2hat_wls</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Vbhat_wls</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##               x
+</span></span><span class="line"><span class="cl">##   30.248 -8.144
+</span></span><span class="line"><span class="cl">## x -8.144  3.132
+</span></span></code></pre></div><p><strong>i)</strong> Erros-padrão, estatísticas t e p-valores</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">se_wls</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat_wls</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">t_wls</span> <span class="o">=</span> <span class="n">bhat_wls</span> <span class="o">/</span> <span class="n">se_wls</span>
+</span></span><span class="line"><span class="cl"><span class="n">p_wls</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t_wls</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Resultados</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat_wls</span><span class="p">,</span> <span class="n">se_wls</span><span class="p">,</span> <span class="n">t_wls</span><span class="p">,</span> <span class="n">p_wls</span><span class="p">)</span> <span class="c1"># resultado MQP</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##    bhat_wls   se_wls     t_wls        p_wls
+</span></span><span class="line"><span class="cl">##   51.433290 5.499861  9.351743 3.090884e-15
+</span></span><span class="line"><span class="cl">## x -5.923353 1.769796 -3.346913 1.159943e-03
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg.wls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span> <span class="c1"># resultado MQP via lm()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              Estimate Std. Error   t value     Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept) 51.433290   5.499861  9.351743 3.090884e-15
+</span></span><span class="line"><span class="cl">## x           -5.923353   1.769796 -3.346913 1.159943e-03
+</span></span></code></pre></div><h4 id="transformando-e-estimando-por-mqo">Transformando e estimando por MQO</h4>
+<ul>
+<li>Agora, vamos transformar as variáveis e resolver por MQO, pré-multiplicando 
+
+$\boldsymbol{X}$ e 
+
+$\boldsymbol{y}$ por 
+
+$ \boldsymbol{W}^{0.5}$, e definindo:</li>
+</ul>
+
+
+$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{y}$$
+<p><strong>b&rsquo;)</strong> Matriz de pesos 
+
+$\boldsymbol{W}^{0.5}$</p>
+<ul>
+<li>É a matriz cuja diagonal principal é preenchida pelas raízes quadradas dos pesos</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">W_0.5</span> <span class="o">=</span> <span class="nf">diag</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="p">(</span><span class="m">10</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">W_0.5[1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="n">]</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+</span></span><span class="line"><span class="cl">##  [1,] 0.03 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [2,] 0.00 0.01 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [3,] 0.00 0.00 0.02 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [4,] 0.00 0.00 0.00 0.01 0.00 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [5,] 0.00 0.00 0.00 0.00 0.01 0.00 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [6,] 0.00 0.00 0.00 0.00 0.00 0.07 0.00 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [7,] 0.00 0.00 0.00 0.00 0.00 0.00 0.02 0.00 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.01 0.00  0.00
+</span></span><span class="line"><span class="cl">##  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.02  0.00
+</span></span><span class="line"><span class="cl">## [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.02
+</span></span></code></pre></div><p><strong>b&rsquo;&rsquo;)</strong> Variáveis transformadas 
+
+$\tilde{\boldsymbol{y}}$ e 
+
+$\tilde{\boldsymbol{X}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ytil</span> <span class="o">=</span> <span class="n">W_0.5</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">Xtil</span> <span class="o">=</span> <span class="n">W_0.5</span> <span class="o">%*%</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Gráficos</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ytil</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-125</span><span class="p">,</span><span class="m">175</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">     <span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;Gráfico &#34;</span><span class="p">,</span> <span class="n">x</span> <span class="p">,</span><span class="s">&#34; \u00D7 &#34;</span><span class="p">,</span> <span class="nf">tilde</span><span class="p">(</span><span class="n">y</span><span class="p">))),</span>
+</span></span><span class="line"><span class="cl">     <span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ylab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">tilde</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span> <span class="c1"># plot xtil e ytil</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-125</span><span class="p">,</span><span class="m">175</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">     <span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;Gráfico &#34;</span><span class="p">,</span> <span class="n">x</span> <span class="p">,</span><span class="s">&#34; \u00D7 &#34;</span><span class="p">,</span> <span class="n">y</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">     <span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ylab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="c1"># plot x e y</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
+<p><strong>c&rsquo;)</strong> Estimativas MQO 
+
+$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}$</p>
+
+
+$$ \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQo}} = (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat_ols</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Xtil</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Xtil</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Xtil</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ytil</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat_ols</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">##   51.433290
+</span></span><span class="line"><span class="cl">## x -5.923353
+</span></span></code></pre></div><p><strong>d&rsquo;)</strong> Valores ajustados 
+
+$\tilde{\hat{\boldsymbol{y}}}_{\scriptscriptstyle{MQO}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat_ols</span> <span class="o">=</span> <span class="n">Xtil</span> <span class="o">%*%</span> <span class="n">bhat_ols</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat_ols</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            [,1]
+</span></span><span class="line"><span class="cl">## [1,] 0.96595639
+</span></span><span class="line"><span class="cl">## [2,] 0.11160919
+</span></span><span class="line"><span class="cl">## [3,] 0.61167951
+</span></span><span class="line"><span class="cl">## [4,] 0.04546730
+</span></span><span class="line"><span class="cl">## [5,] 0.01107705
+</span></span><span class="line"><span class="cl">## [6,] 3.17718463
+</span></span></code></pre></div><p><strong>e&rsquo;)</strong> Resíduos 
+
+$\tilde{\hat{\boldsymbol{\varepsilon}}}_{\scriptscriptstyle{MQO}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ehat_ols</span> <span class="o">=</span> <span class="n">ytil</span> <span class="o">-</span> <span class="n">yhat_ols</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat_ols</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             [,1]
+</span></span><span class="line"><span class="cl">## [1,]  0.30222895
+</span></span><span class="line"><span class="cl">## [2,]  0.04417175
+</span></span><span class="line"><span class="cl">## [3,]  0.01591261
+</span></span><span class="line"><span class="cl">## [4,]  1.44316397
+</span></span><span class="line"><span class="cl">## [5,] -0.15025095
+</span></span><span class="line"><span class="cl">## [6,]  1.50376081
+</span></span></code></pre></div><p><strong>f&rsquo;)</strong> Estimativa da variância do erro 
+
+$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{MQO}}$
+
+
+$$\tilde{\hat{\sigma}}^2 =  \frac{\tilde{\hat{\boldsymbol{\varepsilon}}}' \tilde{\hat{\boldsymbol{\varepsilon}}}}{N - K - 1} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">sig2hat_ols</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat_ols</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ehat_ols</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat_ols</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.9395364
+</span></span></code></pre></div><p><strong>h&rsquo;)</strong> Matriz de Variâncias-Covariâncias do Estimador</p>
+
+
+$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) = \tilde{\hat{\sigma}}^2(\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">Vbhat_ols</span> <span class="o">=</span> <span class="n">sig2hat_ols</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Xtil</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Xtil</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Vbhat_ols</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##               x
+</span></span><span class="line"><span class="cl">##   30.248 -8.144
+</span></span><span class="line"><span class="cl">## x -8.144  3.132
+</span></span></code></pre></div><p><strong>i&rsquo;)</strong> Erros-padrão, estatísticas t e p-valores</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">se_ols</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat_ols</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">t_ols</span> <span class="o">=</span> <span class="n">bhat_ols</span> <span class="o">/</span> <span class="n">se_ols</span>
+</span></span><span class="line"><span class="cl"><span class="n">p_ols</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t_ols</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Resultados</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat_ols</span><span class="p">,</span> <span class="n">se_ols</span><span class="p">,</span> <span class="n">t_ols</span><span class="p">,</span> <span class="n">p_ols</span><span class="p">)</span> <span class="c1"># resultado MQO transformado</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##    bhat_ols   se_ols     t_ols        p_ols
+</span></span><span class="line"><span class="cl">##   51.433290 5.499861  9.351743 3.090884e-15
+</span></span><span class="line"><span class="cl">## x -5.923353 1.769796 -3.346913 1.159943e-03
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg.wls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span> <span class="c1"># resultado MQP via lm()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              Estimate Std. Error   t value     Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept) 51.433290   5.499861  9.351743 3.090884e-15
+</span></span><span class="line"><span class="cl">## x           -5.923353   1.769796 -3.346913 1.159943e-03
+</span></span></code></pre></div><br>
+<h2 id="estimador-mqgf">Estimador MQGF</h2>
+<ul>
+<li>
+<p>Na prática, é difícil conhecer a priori a matriz de variâncias-covariâncias dos erros.</p>
+</li>
+<li>
+<p>Uma forma razoável é supor que 
+
+$\boldsymbol{\Sigma}$ é uma função de parâmetros de um modelo linear 
+
+$\boldsymbol{\gamma}$ desconhecidos.</p>
+</li>
+<li>
+<p>Assim, podemos calcular 
+
+$\hat{\boldsymbol{\gamma}}$ para obter 
+
+$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})$, a partir de resíduos de MQO.</p>
+</li>
+<li>
+<p>Esse tipo de procedimento é conhecido como Mínimos Quadrados Generalizados Factíveis (MQGF/FGLS), pois seu cálculo é possível enquanto o MQG não é.</p>
+</li>
+<li>
+<p>Note que, se 
+
+$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})$ não for uma boa aproximação de 
+
+$\boldsymbol{\Sigma}$, então as estimativas e inferências por MQGF poderão ser ruins.</p>
+</li>
+</ul>
+<br>
+<ul>
+<li>
+<p>Queremos estimar o modelo
+
+
+$$y_i = \beta_0 + \beta_1 x_{i1} + ... + \beta_K x_{iK} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{1} $$
+enquanto, geralmente, assume-se a variância do erro individual é dada por:
+
+
+$$Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2 \exp(\boldsymbol{x}'_i \boldsymbol{\gamma}). $$</p>
+</li>
+<li>
+<p>A função 
+
+$\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})$ é um exemplo de função <em>skedastic</em>, que garante que, após cálculo de 
+
+$\hat{\boldsymbol{\gamma}}$, o valor ajustado não seja negativo (para a variância do indivíduo ser sempre positiva).</p>
+</li>
+<li>
+<p>Para estimar 
+
+$\boldsymbol{\gamma}$, é necessário ter estimativas 
+
+$\hat{\boldsymbol{\varepsilon}}$ consistentes. A forma mais comum é começar calculando 
+
+$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}$.</p>
+</li>
+<li>
+<p>Depois, é feita a regressão linear auxiliar
+
+
+$$ \log{\hat{\varepsilon}}^2_i = \boldsymbol{x}'_i \boldsymbol{\gamma} + u_i, \tag{2} $$</p>
+</li>
+<li>
+<p>A partir da estimação, podemos usar os valores ajustados para calcular
+
+
+$$h(\boldsymbol{x}'_i) = \exp(\boldsymbol{x}'_i \boldsymbol{\gamma})$$
+que é a inverso do peso
+
+
+$$w_i = \frac{1}{h(\boldsymbol{x}'_i)} = \frac{1}{\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})}$$</p>
+</li>
+<li>
+<p>Com 
+
+$\boldsymbol{W}$ estimado, podemos calcular 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}$ e 
+
+$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}})$, seguindo os mesmos passos de MQP.</p>
+</li>
+<li>
+<p>Podemos usar esse 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}$ estimado para estimar um novo 
+
+$\boldsymbol{\gamma}$ e um novo 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}$. Isso pode ser feito iteradamente até sua convergência (se isso ocorrer) ou até um certo número de repetições.</p>
+</li>
+</ul>
+<h3 id="estimação-via-lm-1">Estimação via lm()</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">smoke</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimação por MQO</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.ols</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">cigs</span> <span class="o">~</span> <span class="n">lincome</span> <span class="o">+</span> <span class="n">lcigpric</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">agesq</span> <span class="o">+</span> <span class="n">restaurn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)  -3.6398    24.0787 -0.1512   0.8799
+</span></span><span class="line"><span class="cl">## lincome       0.8803     0.7278  1.2095   0.2268
+</span></span><span class="line"><span class="cl">## lcigpric     -0.7509     5.7733 -0.1301   0.8966
+</span></span><span class="line"><span class="cl">## educ         -0.5015     0.1671 -3.0016   0.0028
+</span></span><span class="line"><span class="cl">## age           0.7707     0.1601  4.8132   0.0000
+</span></span><span class="line"><span class="cl">## agesq        -0.0090     0.0017 -5.1765   0.0000
+</span></span><span class="line"><span class="cl">## restaurn     -2.8251     1.1118 -2.5410   0.0112
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Obtenção dos pesos wi = 1/h(zi) = 1/exp(Xg)</span>
+</span></span><span class="line"><span class="cl"><span class="n">logu2</span> <span class="o">=</span> <span class="nf">log</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">)</span><span class="n">^2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.var</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">logu2</span> <span class="o">~</span> <span class="n">lincome</span> <span class="o">+</span> <span class="n">lcigpric</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">agesq</span> <span class="o">+</span> <span class="n">restaurn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="m">1</span><span class="o">/</span><span class="nf">exp</span><span class="p">(</span><span class="nf">fitted</span><span class="p">(</span><span class="n">reg.var</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimação por MQGF</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.fgls</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">cigs</span> <span class="o">~</span> <span class="n">lincome</span> <span class="o">+</span> <span class="n">lcigpric</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">agesq</span> <span class="o">+</span> <span class="n">restaurn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="n">weight</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">smoke</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg.fgls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   5.6355    17.8031  0.3165   0.7517
+</span></span><span class="line"><span class="cl">## lincome       1.2952     0.4370  2.9639   0.0031
+</span></span><span class="line"><span class="cl">## lcigpric     -2.9403     4.4601 -0.6592   0.5099
+</span></span><span class="line"><span class="cl">## educ         -0.4634     0.1202 -3.8570   0.0001
+</span></span><span class="line"><span class="cl">## age           0.4819     0.0968  4.9784   0.0000
+</span></span><span class="line"><span class="cl">## agesq        -0.0056     0.0009 -5.9897   0.0000
+</span></span><span class="line"><span class="cl">## restaurn     -3.4611     0.7955 -4.3508   0.0000
+</span></span></code></pre></div><h3 id="estimação-analítica-2">Estimação Analítica</h3>
+<ul>
+<li>Parecida com MQP, apenas o início é diferente:
+<strong>a)</strong> Criando vetores/matrizes e definindo <em>N</em> e <em>K</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Criando o vetor y</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">smoke[</span><span class="p">,</span><span class="s">&#34;cigs&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># transformando coluna de data frame em matriz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">smoke[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;lincome&#34;</span><span class="p">,</span> <span class="s">&#34;lcigpric&#34;</span><span class="p">,</span> <span class="s">&#34;educ&#34;</span><span class="p">,</span> <span class="s">&#34;age&#34;</span><span class="p">,</span> <span class="s">&#34;agesq&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="s">&#34;restaurn&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># juntando 1&#39;s com x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pegando valores N e K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span></code></pre></div><p><strong>b1)</strong> Estimação por MQO para obter 
+
+$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat_ols</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat_ols</span>
+</span></span><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span></code></pre></div><p><strong>b2)</strong> Regressão do log dos resíduos ao quadrado e estimação de 
+
+$\hat{\boldsymbol{\gamma}}$
+
+
+$$ \log{\hat{\boldsymbol{\varepsilon}}}^2 = \boldsymbol{X} \boldsymbol{\gamma} + \boldsymbol{u} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ghat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">log</span><span class="p">(</span><span class="n">ehat^2</span><span class="p">)</span>
+</span></span></code></pre></div><p><strong>b3)</strong> Matriz de pesos 
+
+$\boldsymbol{W}$
+
+
+$$\boldsymbol{W} = diag\left(\frac{1}{\exp(\boldsymbol{X} \hat{\boldsymbol{\gamma}})}\right) = \begin{bmatrix}
+\frac{1}{\exp(\boldsymbol{x}'_1\hat{\boldsymbol{\gamma}})} & 0 & \cdots & 0 \\
+0 & \frac{1}{\exp(\boldsymbol{x}'_2\hat{\boldsymbol{\gamma}})} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \frac{1}{\exp(\boldsymbol{x}'_N\hat{\boldsymbol{\gamma}})}
+\end{bmatrix}$$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">W</span> <span class="o">=</span> <span class="nf">diag</span><span class="p">(</span><span class="nf">as.numeric</span><span class="p">(</span><span class="m">1</span> <span class="o">/</span> <span class="nf">exp</span><span class="p">(</span><span class="n">X</span> <span class="o">%*%</span> <span class="n">ghat</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">W[1</span><span class="o">:</span><span class="m">7</span><span class="p">,</span><span class="m">1</span><span class="o">:</span><span class="m">7</span><span class="n">]</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       [,1]  [,2]  [,3] [,4]  [,5]  [,6]  [,7]
+</span></span><span class="line"><span class="cl">## [1,] 0.008 0.000 0.000 0.00 0.000 0.000 0.000
+</span></span><span class="line"><span class="cl">## [2,] 0.000 0.007 0.000 0.00 0.000 0.000 0.000
+</span></span><span class="line"><span class="cl">## [3,] 0.000 0.000 0.009 0.00 0.000 0.000 0.000
+</span></span><span class="line"><span class="cl">## [4,] 0.000 0.000 0.000 0.01 0.000 0.000 0.000
+</span></span><span class="line"><span class="cl">## [5,] 0.000 0.000 0.000 0.00 0.024 0.000 0.000
+</span></span><span class="line"><span class="cl">## [6,] 0.000 0.000 0.000 0.00 0.000 0.444 0.000
+</span></span><span class="line"><span class="cl">## [7,] 0.000 0.000 0.000 0.00 0.000 0.000 0.007
+</span></span></code></pre></div><ul>
+<li>Os próximos passos são os mesmos de MQP:</li>
+</ul>
+<p><strong>c)</strong> Estimativas MQGF 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}$
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat_fgls</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat_fgls</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                 [,1]
+</span></span><span class="line"><span class="cl">## 1         5.63546183
+</span></span><span class="line"><span class="cl">## lincome   1.29523990
+</span></span><span class="line"><span class="cl">## lcigpric -2.94031229
+</span></span><span class="line"><span class="cl">## educ     -0.46344637
+</span></span><span class="line"><span class="cl">## age       0.48194788
+</span></span><span class="line"><span class="cl">## agesq    -0.00562721
+</span></span><span class="line"><span class="cl">## restaurn -3.46106414
+</span></span></code></pre></div><p><strong>d)</strong> Valores ajustados 
+
+$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQGF}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat_fgls</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat_fgls</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat_fgls</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">## 1  9.246793
+</span></span><span class="line"><span class="cl">## 2  9.914233
+</span></span><span class="line"><span class="cl">## 3 10.527827
+</span></span><span class="line"><span class="cl">## 4  9.667243
+</span></span><span class="line"><span class="cl">## 5  8.440092
+</span></span><span class="line"><span class="cl">## 6  2.048962
+</span></span></code></pre></div><p><strong>e)</strong> Resíduos 
+
+$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQGF}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ehat_fgls</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat_fgls</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat_fgls</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">## 1 -9.246793
+</span></span><span class="line"><span class="cl">## 2 -9.914233
+</span></span><span class="line"><span class="cl">## 3 -7.527827
+</span></span><span class="line"><span class="cl">## 4 -9.667243
+</span></span><span class="line"><span class="cl">## 5 -8.440092
+</span></span><span class="line"><span class="cl">## 6 -2.048962
+</span></span></code></pre></div><p><strong>f)</strong> Estimativa da variância do erro 
+
+$\hat{\sigma}^2_{\scriptscriptstyle{MQGF}}$
+
+
+$$\hat{\sigma}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">sig2hat_fgls</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat_fgls</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">ehat_fgls</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat_fgls</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2.492289
+</span></span></code></pre></div><p><strong>h)</strong> Matriz de Variâncias-Covariâncias do Estimador</p>
+
+
+$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">Vbhat_fgls</span> <span class="o">=</span> <span class="n">sig2hat_fgls</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">W</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Vbhat_fgls</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                1 lincome lcigpric   educ    age  agesq restaurn
+</span></span><span class="line"><span class="cl">## 1        316.952   0.444  -77.432  0.196 -0.389  0.004    2.323
+</span></span><span class="line"><span class="cl">## lincome    0.444   0.191   -0.463 -0.016 -0.007  0.000    0.008
+</span></span><span class="line"><span class="cl">## lcigpric -77.432  -0.463   19.893 -0.050  0.071 -0.001   -0.620
+</span></span><span class="line"><span class="cl">## educ       0.196  -0.016   -0.050  0.014 -0.001  0.000    0.002
+</span></span><span class="line"><span class="cl">## age       -0.389  -0.007    0.071 -0.001  0.009  0.000   -0.009
+</span></span><span class="line"><span class="cl">## agesq      0.004   0.000   -0.001  0.000  0.000  0.000    0.000
+</span></span><span class="line"><span class="cl">## restaurn   2.323   0.008   -0.620  0.002 -0.009  0.000    0.633
+</span></span></code></pre></div><p><strong>i)</strong> Erros-padrão, estatísticas t e p-valores</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">se_fgls</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat_fgls</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">t_fgls</span> <span class="o">=</span> <span class="n">bhat_fgls</span> <span class="o">/</span> <span class="n">se_fgls</span>
+</span></span><span class="line"><span class="cl"><span class="n">p_fgls</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t_fgls</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Resultados</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat_fgls</span><span class="p">,</span> <span class="n">se_fgls</span><span class="p">,</span> <span class="n">t_fgls</span><span class="p">,</span> <span class="n">p_fgls</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># resultado MQP</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          bhat_fgls se_fgls  t_fgls p_fgls
+</span></span><span class="line"><span class="cl">## 1           5.6355 17.8031  0.3165 0.7517
+</span></span><span class="line"><span class="cl">## lincome     1.2952  0.4370  2.9639 0.0031
+</span></span><span class="line"><span class="cl">## lcigpric   -2.9403  4.4601 -0.6592 0.5099
+</span></span><span class="line"><span class="cl">## educ       -0.4634  0.1202 -3.8570 0.0001
+</span></span><span class="line"><span class="cl">## age         0.4819  0.0968  4.9784 0.0000
+</span></span><span class="line"><span class="cl">## agesq      -0.0056  0.0009 -5.9897 0.0000
+</span></span><span class="line"><span class="cl">## restaurn   -3.4611  0.7955 -4.3508 0.0000
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg.fgls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># resultado MQGF via lm()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   5.6355    17.8031  0.3165   0.7517
+</span></span><span class="line"><span class="cl">## lincome       1.2952     0.4370  2.9639   0.0031
+</span></span><span class="line"><span class="cl">## lcigpric     -2.9403     4.4601 -0.6592   0.5099
+</span></span><span class="line"><span class="cl">## educ         -0.4634     0.1202 -3.8570   0.0001
+</span></span><span class="line"><span class="cl">## age           0.4819     0.0968  4.9784   0.0000
+</span></span><span class="line"><span class="cl">## agesq        -0.0056     0.0009 -5.9897   0.0000
+</span></span><span class="line"><span class="cl">## restaurn     -3.4611     0.7955 -4.3508   0.0000
+</span></span></code></pre></div><br>
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec11"  class="btn btn-primary px-3 py-3">👉 Proceed to Instrumental Variable</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

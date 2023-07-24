@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Panel Data Estimation | Fábio Nishida</title>
+    <link>https://fhnishida.netlify.app/project/rec5004/sec13/</link>
+      <atom:link href="https://fhnishida.netlify.app/project/rec5004/sec13/index.xml" rel="self" type="application/rss+xml" />
+    <description>Panel Data Estimation</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 09 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
+      <title>Panel Data Estimation</title>
+      <link>https://fhnishida.netlify.app/project/rec5004/sec13/</link>
+    </image>
+    
+  </channel>
+</rss>

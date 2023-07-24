@@ -1,0 +1,2738 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: July 24, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fábio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.netlify.app/project/rec5004/sec8/" />
+<link rel="canonical" href="https://fhnishida.netlify.app/project/rec5004/sec8/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fábio Nishida" />
+<meta property="og:url" content="https://fhnishida.netlify.app/project/rec5004/sec8/" />
+<meta property="og:title" content="Multiple Regression | Fábio Nishida" />
+<meta property="og:description" content="This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed." /><meta property="og:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec8/index.xml" type="application/rss+xml" title="Fábio Nishida" />
+  
+
+  
+
+
+  
+  <title>Multiple Regression | Fábio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="817c3451949b1db6eb11f923252584db" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/"><i class="fas fa-book pr-1"></i>Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/project/rec5004/">----------------------</a></li>
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">----------------</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#operações-matriciais-no-r">Operações matriciais no R</a></li>
+    <li><a href="#mqo-na-forma-matricial">MQO na forma matricial</a>
+      <ul>
+        <li><a href="#notações">Notações</a></li>
+        <li><a href="#estimativas-de-mqo">Estimativas de MQO</a></li>
+        <li><a href="#valores-preditos">Valores preditos</a></li>
+        <li><a href="#resíduos">Resíduos</a></li>
+        <li><a href="#matriz-de-variâncias-covariâncias-dos-erros">Matriz de variâncias-covariâncias dos erros</a></li>
+        <li><a href="#variância-do-termo-de-erro">Variância do termo de erro</a></li>
+        <li><a href="#matriz-de-variâncias-covariâncias-do-estimador">Matriz de variâncias-covariâncias do estimador</a></li>
+        <li><a href="#erros-padrão-do-estimador">Erros-padrão do estimador</a></li>
+        <li><a href="#teste-_t_">Teste <em>t</em></a></li>
+      </ul>
+    </li>
+    <li><a href="#estimação-mqo-multivariado">Estimação MQO multivariado</a>
+      <ul>
+        <li><a href="#estimação-via-lm">Estimação via <code>lm()</code></a></li>
+        <li><a href="#estimação-analítica">Estimação Analítica</a></li>
+      </ul>
+    </li>
+    <li><a href="#transformação-de-variáveis-e-comparação-de-regressões">Transformação de Variáveis e Comparação de Regressões</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#regressores-qualitativos">Regressores Qualitativos</a>
+      <ul>
+        <li><a href="#variáveis-dummy">Variáveis Dummy</a></li>
+        <li><a href="#variáveis-com-múltiplas-categorias">Variáveis com múltiplas categorias</a></li>
+        <li><a href="#transformando-variáveis-contínuas-em-categorias">Transformando variáveis contínuas em categorias</a></li>
+        <li><a href="#interações-envolvendo-variáveis-dummy">Interações Envolvendo Variáveis Dummy</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Multiple Regression</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <h2 id="operações-matriciais-no-r">Operações matriciais no R</h2>
+<ul>
+<li><a href="https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations" target="_blank" rel="noopener">Vectorized operations (John Hopkins/Coursera)</a></li>
+<li>Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor. Vamos criar um vetor <code>x</code> (minúsculo):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="m">4</span> <span class="c1"># vetor de 1 a 4</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1 2 3 4
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="c1"># soma de cada elemento na mesma posição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2 4 6 8
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">+</span> <span class="m">2</span> <span class="c1"># soma de de cada elemento com um mesmo escalar</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 3 4 5 6
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># multiplicação de cada elemento na mesma posição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1]  1  4  9 16
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">/</span> <span class="n">x</span> <span class="c1"># divisão de cada elemento na mesma posição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1 1 1 1
+</span></span></code></pre></div><ul>
+<li>O mesmo também é válido para matrizes. Vamos criar a matriz <code>X</code> (maiúscula)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">8</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">2</span><span class="p">)</span> <span class="c1"># matriz X de dimensão 4x2</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    1    5
+</span></span><span class="line"><span class="cl">## [2,]    2    6
+</span></span><span class="line"><span class="cl">## [3,]    3    7
+</span></span><span class="line"><span class="cl">## [4,]    4    8
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Operações convencionais entre matrizes</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">+</span> <span class="n">X</span> <span class="c1"># soma de cada elemento na mesma posição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    2   10
+</span></span><span class="line"><span class="cl">## [2,]    4   12
+</span></span><span class="line"><span class="cl">## [3,]    6   14
+</span></span><span class="line"><span class="cl">## [4,]    8   16
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">X</span> <span class="o">+</span> <span class="m">2</span> <span class="c1"># soma de de cada elemento com um mesmo escalar</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    3    7
+</span></span><span class="line"><span class="cl">## [2,]    4    8
+</span></span><span class="line"><span class="cl">## [3,]    5    9
+</span></span><span class="line"><span class="cl">## [4,]    6   10
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">X</span> <span class="o">*</span> <span class="n">X</span> <span class="c1"># multiplicação de cada elemento na mesma posição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    1   25
+</span></span><span class="line"><span class="cl">## [2,]    4   36
+</span></span><span class="line"><span class="cl">## [3,]    9   49
+</span></span><span class="line"><span class="cl">## [4,]   16   64
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">X</span> <span class="o">/</span> <span class="n">X</span> <span class="c1"># divisão de cada elemento na mesma posição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    1    1
+</span></span><span class="line"><span class="cl">## [2,]    1    1
+</span></span><span class="line"><span class="cl">## [3,]    1    1
+</span></span><span class="line"><span class="cl">## [4,]    1    1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Operações convencionais entre matriz e vetor</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">+</span> <span class="n">X</span> <span class="c1"># soma por linha em cada uma das colunas</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    2    6
+</span></span><span class="line"><span class="cl">## [2,]    4    8
+</span></span><span class="line"><span class="cl">## [3,]    6   10
+</span></span><span class="line"><span class="cl">## [4,]    8   12
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">*</span> <span class="n">X</span> <span class="c1"># multiplicação por linha em cada uma das colunas</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]    1    5
+</span></span><span class="line"><span class="cl">## [2,]    4   12
+</span></span><span class="line"><span class="cl">## [3,]    9   21
+</span></span><span class="line"><span class="cl">## [4,]   16   32
+</span></span></code></pre></div><ul>
+<li>Além disso, podemos fazer
+<ul>
+<li><strong>Transposta de uma matriz ou vetor</strong>: função <code>t()</code></li>
+<li><strong>Multiplicação matricial ou vetorial (produto interno)</strong>: operador <code>%*%</code></li>
+<li><strong>Inversa de uma matriz (quadrada)</strong>: função <code>solve()</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Operações vetoriais</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">%*%</span> <span class="n">x</span> <span class="c1"># x vetor-linha / x vetor-coluna</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]   30
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># x vetor-coluna / x vetor-linha (altera ambos, mas t() só no 2o)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4]
+</span></span><span class="line"><span class="cl">## [1,]    1    2    3    4
+</span></span><span class="line"><span class="cl">## [2,]    2    4    6    8
+</span></span><span class="line"><span class="cl">## [3,]    3    6    9   12
+</span></span><span class="line"><span class="cl">## [4,]    4    8   12   16
+</span></span></code></pre></div><ul>
+<li>Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna quando fazemos uma multiplicação vetorial.</li>
+<li>Dado que adotamos vetores-coluna como padrão, recomenda-se &ldquo;forçar&rdquo; um vetor em linha ou em coluna via função <code>matrix()</code>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Transformando em vetor-coluna</span>
+</span></span><span class="line"><span class="cl"><span class="n">x_col</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">x_col</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]    1
+</span></span><span class="line"><span class="cl">## [2,]    2
+</span></span><span class="line"><span class="cl">## [3,]    3
+</span></span><span class="line"><span class="cl">## [4,]    4
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Operações vetoriais</span>
+</span></span><span class="line"><span class="cl"><span class="nf">t</span><span class="p">(</span><span class="n">x_col</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">x_col</span> <span class="c1"># produto interno</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]   30
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">x_col</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">x_col</span><span class="p">)</span> <span class="c1"># produto externo</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4]
+</span></span><span class="line"><span class="cl">## [1,]    1    2    3    4
+</span></span><span class="line"><span class="cl">## [2,]    2    4    6    8
+</span></span><span class="line"><span class="cl">## [3,]    3    6    9   12
+</span></span><span class="line"><span class="cl">## [4,]    4    8   12   16
+</span></span></code></pre></div></br>
+<ul>
+<li>O mesmo é válido para matrizes:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Transposta de X (2x4)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4]
+</span></span><span class="line"><span class="cl">## [1,]    1    2    3    4
+</span></span><span class="line"><span class="cl">## [2,]    5    6    7    8
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Produto matricial X&#39;X (2x2)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2]
+</span></span><span class="line"><span class="cl">## [1,]   30   70
+</span></span><span class="line"><span class="cl">## [2,]   70  174
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Inversa de X&#39;X (2x2)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]     [,2]
+</span></span><span class="line"><span class="cl">## [1,]  0.54375 -0.21875
+</span></span><span class="line"><span class="cl">## [2,] -0.21875  0.09375
+</span></span></code></pre></div><ul>
+<li>Também podemos criar uma matrix identidade usando a função <code>diag()</code> e informando um número inteiro</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Matriz identidade de dimensão 4</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span> <span class="o">=</span> <span class="nf">diag</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4]
+</span></span><span class="line"><span class="cl">## [1,]    1    0    0    0
+</span></span><span class="line"><span class="cl">## [2,]    0    1    0    0
+</span></span><span class="line"><span class="cl">## [3,]    0    0    1    0
+</span></span><span class="line"><span class="cl">## [4,]    0    0    0    1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># diag() pode alterar valores da diagonal de uma matriz existente</span>
+</span></span><span class="line"><span class="cl"><span class="nf">diag</span><span class="p">(</span><span class="n">I</span><span class="p">)</span> <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="m">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4]
+</span></span><span class="line"><span class="cl">## [1,]    1    0    0    0
+</span></span><span class="line"><span class="cl">## [2,]    0    2    0    0
+</span></span><span class="line"><span class="cl">## [3,]    0    0    3    0
+</span></span><span class="line"><span class="cl">## [4,]    0    0    0    4
+</span></span></code></pre></div></br>
+<h2 id="mqo-na-forma-matricial">MQO na forma matricial</h2>
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 3.2 de Heiss (2020)</a></li>
+</ul>
+<h3 id="notações">Notações</h3>
+<ul>
+<li>
+<p>Considere o modelo multivariado com 
+
+$K$ regressores para a observação 
+
+$i$:
+$$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + &hellip; + \beta_K x_{iK} + \varepsilon_i, \qquad i=1, 2, &hellip;, N \tag{1} $$
+em que 
+
+$N$ é o número de observações.</p>
+</li>
+<li>
+<p>Defina o vetor-coluna de parâmetros, 
+
+$\boldsymbol{\beta}$, e o vetor-linha de variáveis independentes da observação 
+
+$i$, 
+
+$\boldsymbol{x}'_i$ (minúsculo):
+
+
+$$ \underset{1 \times K}{\boldsymbol{x}'_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$$</p>
+</li>
+<li>
+<p>Note que o produto interno 
+
+$\boldsymbol{x}'_i \boldsymbol{\beta}$ é:</p>
+</li>
+</ul>
+
+
+\begin{align} \underset{1 \times 1}{\boldsymbol{x}'_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
+&= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}
+<ul>
+<li>Logo, a equação (1) pode ser reescrita, para 
+
+$i=1, 2, ..., N$, como</li>
+</ul>
+<p>$$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + &hellip; + \beta_K x_{iK}}_{\boldsymbol{x}&rsquo;_i \boldsymbol{\beta}} + \varepsilon_i = \boldsymbol{x}&rsquo;_i \boldsymbol{\beta} + \varepsilon_i, \tag{2} $$</p>
+<ul>
+<li>Considere 
+
+$\boldsymbol{X}$ a matriz de todas 
+
+$N$ observações para as 
+
+$K+1$ variáveis explicativas:</li>
+</ul>
+
+
+$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}'_1 \\ \boldsymbol{x}'_2 \\ \vdots \\ \boldsymbol{x}'_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $$
+<ul>
+<li>Agora, podemos &ldquo;empilhar&rdquo; as equações (2) para todo 
+
+$i=1, 2, ..., N$ e obtemos:</li>
+</ul>
+
+
+\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \tag{2} \\
+&= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]   \\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} \end{matrix} \right] + \left[ \begin{matrix}\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{matrix} \right]\\
+&= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + \varepsilon_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + \varepsilon_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + \varepsilon_N \end{matrix} \right]\\
+&= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}
+<h3 id="estimativas-de-mqo">Estimativas de MQO</h3>
+
+
+$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} \tag{3.2} $$
+<h3 id="valores-preditos">Valores preditos</h3>
+
+
+\begin{align} \hat{\boldsymbol{y}} &= \boldsymbol{X} \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] \\
+&= \left[ \begin{matrix} \hat{\beta}_0. 1 + \hat{\beta}_1 x_{11} + \hat{\beta}_2 x_{12} + ... + \hat{\beta}_K x_{1K} \\ \hat{\beta}_0 .1 + \hat{\beta}_1 x_{21} + \hat{\beta}_2 x_{22} + ... + \hat{\beta}_K x_{2K} \\ \vdots \\ \hat{\beta}_0. 1 + \hat{\beta}_1 x_{N1} + \hat{\beta}_2 x_{N2} + ... + \hat{\beta}_K x_{NK} \end{matrix} \right] = \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{bmatrix} \end{align}
+<h3 id="resíduos">Resíduos</h3>
+
+
+$$ \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} = \begin{bmatrix} {y}_1 \\ {y}_2 \\ \vdots \\ {y}_N \end{bmatrix} - \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots \\ \hat{y}_N \end{bmatrix} = \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \tag{3.3}  $$
+<h3 id="matriz-de-variâncias-covariâncias-dos-erros">Matriz de variâncias-covariâncias dos erros</h3>
+<p>A Matriz de variâncias-covariâncias dos erros relaciona um termo de erro, 
+
+$\varepsilon_{i}$, com todos os demais termos de erro 
+
+$\varepsilon_{j}$, para todo 
+
+$j = 1, ..., N$.</p>
+<p>Na matriz de covariância de erro, cada linha representa um 
+
+$\varepsilon_{i}$ e cada coluna representa um 
+
+$\varepsilon_{j}$. Seus elementos representam a covariância entre
+
+
+$\varepsilon_{i}$ e 
+
+$\varepsilon_{j}$, sendo que pode haver 
+
+$\varepsilon_{i} = \varepsilon_{j}$ (que, neste caso, torna-se variância):</p>
+
+
+$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
+\left[ \begin{array}{cccc}
+var(\varepsilon_{1}) & cov(\varepsilon_{1}, \varepsilon_{2}) & \cdots & cov(\varepsilon_{1}, \varepsilon_{N}) \\
+cov(\varepsilon_{2}, \varepsilon_{1}) & var(\varepsilon_{2}) & \cdots & cov(\varepsilon_{2}, \varepsilon_{N}) \\
+\vdots & \vdots & \ddots & \vdots \\
+cov(\varepsilon_{N}, \varepsilon_{1}) & cov(\varepsilon_{N}, \varepsilon_{2}) & \cdots & var(\varepsilon_{N}) 
+\end{array} \right]$$
+<p>Como assumimos amostragem aleatória, a covariância entre dois indivíduos distintos 
+
+($i \neq j$) é<br>
+
+
+$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{para todo } i \neq j.$$</p>
+<p>Logo,
+
+
+$$ \boldsymbol{\Sigma} = 
+\left[ \begin{array}{cccc}
+var(\varepsilon_{1}) & 0 & \cdots & 0 \\
+0 & var(\varepsilon_{2}) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & var(\varepsilon_{N}) 
+\end{array} \right]$$</p>
+<p>Como também assumimos homocedasticidade, 
+
+$ var(\varepsilon_i) = \sigma^2,\ \forall i$, então:</p>
+
+
+$$ \boldsymbol{\Sigma} = 
+\left[ \begin{array}{cccc}
+\sigma^2 & 0 & \cdots & 0 \\
+0 & \sigma^2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2 
+\end{array} \right] = \sigma^2 \begin{bmatrix} 1 & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1  \end{bmatrix} = \sigma^2 \boldsymbol{I}_N $$
+<h3 id="variância-do-termo-de-erro">Variância do termo de erro</h3>
+<p>Como não conhecemos a variância do termo de erro 
+
+$\sigma^2$, precisamos estimá-la usando:</p>
+
+
+$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{N-K-1}  $$
+<h3 id="matriz-de-variâncias-covariâncias-do-estimador">Matriz de variâncias-covariâncias do estimador</h3>
+<ul>
+<li>
+<p>A matriz de variâncias-covariâncias do estimador tem a seguinte estrutura
+
+
+$$ V(\hat{\boldsymbol{\beta}}) 
+= \begin{bmatrix} var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & \cdots &  cov(\hat{\beta}_0, \hat{\beta}_K) \\
+cov(\hat{\beta}_1, \hat{\beta}_0) & var(\hat{\beta}_1) & \cdots &  cov(\hat{\beta}_1, \hat{\beta}_K) \\
+\vdots & \vdots & \ddots & \vdots \\
+cov(\hat{\beta}_K, \hat{\beta}_0) & cov(\hat{\beta}_K, \hat{\beta}_1) & \cdots &  var(\hat{\beta}_K) \end{bmatrix} $$</p>
+</li>
+<li>
+<p>Essa matriz pode ser obtida usando:
+
+
+$$ V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1}, $$
+mas como MQO supõe 
+
+$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} $, então a matriz de variâncias-covariâncias do estimador pode ser simplificada:</p>
+</li>
+</ul>
+
+
+\begin{align} V(\hat{\boldsymbol{\beta}}) 
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\ 
+&= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \left[ \sigma^2 \boldsymbol{I} \right] \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \sigma^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\
+&= \sigma^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \end{align}
+<h3 id="erros-padrão-do-estimador">Erros-padrão do estimador</h3>
+<p>Os erros padrão do estimador podem ser obtidos tomando a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador:</p>
+
+
+$$\text{se}(\hat{\boldsymbol{\beta}}) = \sqrt{\text{diag}(V(\hat{\boldsymbol{\beta}}))} = \begin{bmatrix} \sqrt{\text{var}(\hat{\beta}_0)} \\ \sqrt{\text{var}(\hat{\beta}_1)} \\ \vdots \\ \sqrt{\text{var}(\hat{\beta}_K)} \end{bmatrix} = \begin{bmatrix} \text{se}(\hat{\beta}_0) \\ \text{se}(\hat{\beta}_1) \\ \vdots \\ \text{se}(\hat{\beta}_K) \end{bmatrix} $$
+<h3 id="teste-_t_">Teste <em>t</em></h3>
+<ul>
+<li>
+<p><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 4.1 de Heiss (2020)</a></p>
+</li>
+<li>
+<p>Após a estimação, é importante testar hipóteses na forma
+$$ H_0: \ \beta_k = h_k \tag{4.1} $$
+tal que 
+
+$h_k$ é uma constante, e 
+
+$k$ é um dos 
+
+$K+1$ parâmetros estimados.</p>
+</li>
+<li>
+<p>Esta hipótese pode ser testada pelo teste <em>t</em>:
+$$ t_k = \frac{\hat{\beta}_k - h_k}{\text{se}(\hat{\beta}_k)} \tag{4.4} $$</p>
+</li>
+<li>
+<p>Por padrão, as rotinas de softwares estatísticos realizam o teste bicaudal com 
+
+$h_k=0$ para testar se a estimativa 
+
+$\hat{\beta}_k$ é estatisticamente significante (efeito estatisticamente diferente de zero sobre a variável dependente):</p>
+</li>
+</ul>
+
+
+\begin{align} 
+H_0: \ \beta_k &= 0, \tag{4.5}\\
+t_{\hat{\beta}_k} &= \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
+\end{align}
+<ul>
+<li>
+<p>Há três formas de avaliar essa hipótese.</p>
+</li>
+<li>
+<p><strong>(i)</strong> A primeira é por meio da comparação da <strong>estatística <em>t</em></strong> com o valor crítico (cv), dado um nível de significância 
+
+$\alpha$:
+
+
+$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_k} | > \text{cv}_{\scriptscriptstyle{1-\alpha}}. $$</p>
+</li>
+<li>
+<p>Frequentemente, utiliza-se 
+
+$\alpha = 5\%$, cujo valor crítico tende a ficar próximo de 2,0 para quantidades razoáveis de graus de liberdade (e se aproxima ao valor crítico de 1,96 da distribuição normal).</p>
+</li>
+</ul>
+</br>
+<ul>
+<li><strong>(ii)</strong> Outra maneira de avaliar a hipótese nula é via <strong>p-valor</strong>, que indica o quão provável é que  
+
+$\hat{\beta}_k$ não seja um valor extremo (ou seja, o quão provável é que a estimativa seja igual a 
+
+$h_k = 0$).
+
+
+$$ p_{\hat{\beta}_k} = 2.F_{t_{\small{(N-K-1)}}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $$
+em que 
+
+$F_{t_{\small{(N-K-1)}}}(\cdot)$ é a cdf de uma distribuição <em>t</em> com 
+
+$(N-K-1)$ graus de liberdade.</li>
+</ul>
+<center><img src="../t_test.png" width=60%></center>
+<ul>
+<li>Portanto, rejeitamos 
+
+$H_0$ quando o p-valor for menor do que um nível de significância 
+
+$\alpha$:
+
+
+$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_k} \le \alpha $$</li>
+</ul>
+</br>
+<ul>
+<li><strong>(iii)</strong> A terceira maneira de avaliar a hipótese nula é via cálculo do <strong>intervalo de confiança</strong>:
+
+
+$$ \text{CI}_\alpha = \hat{\beta}_k\ \pm\ \text{cv}_{\scriptscriptstyle{1-\alpha}} . \text{se}(\hat{\beta}_k) \tag{4.8} $$</li>
+<li>Rejeitamos a hipótese nula, neste caso, quando 
+
+$h_k$ estiver fora do intervalo de confiança.</li>
+</ul>
+</br>
+<h2 id="estimação-mqo-multivariado">Estimação MQO multivariado</h2>
+<h3 id="estimação-via-lm">Estimação via <code>lm()</code></h3>
+<ul>
+<li>
+<p><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 3.1 de Heiss (2020)</a></p>
+</li>
+<li>
+<p>Para estimar um modelo multivariado no R, podemos usar a função <code>lm()</code>:</p>
+<ul>
+<li>O til (<code>~</code>) separa a a variável dependente das variáveis independentes</li>
+<li>As variáveis independentes precisam ser separadas por um <code>+</code></li>
+<li>O intercepto (
+
+$\beta_0$) é incluído automaticamente pela função <code>lm()</code> &ndash; para retirá-lo, é preciso incluir a &ldquo;variável&rdquo; <code>0</code> na fórmula.</li>
+</ul>
+</li>
+</ul>
+<h4 id="exemplo-31-determinantes-da-nota-média-em-curso-superior-nos-eua">Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA</h4>
+<ul>
+<li>Sejam as variáveis
+<ul>
+<li><code>colGPA</code> (<em>college GPA</em>): a nota média em um curso superior,</li>
+<li><code>hsGPA</code> (<em>high school GPA</em>): a nota médio do ensino médio, e</li>
+<li><code>ACT</code> (<em>achievement test score</em>): a nota de avaliação de conhecimentos para ingresso no ensino superior.</li>
+</ul>
+</li>
+<li>Usando a base <code>gpa1</code> do pacote <code>wooldridge</code>, vamos estimar o seguinte modelo:</li>
+</ul>
+<p>$$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + \varepsilon $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Acessando a base de dados gpa1</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">gpa1</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">colGPA</span> <span class="o">~</span> <span class="n">hsGPA</span> <span class="o">+</span> <span class="n">ACT</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">gpa1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)        hsGPA          ACT  
+</span></span><span class="line"><span class="cl">##    1.286328     0.453456     0.009426
+</span></span></code></pre></div><ul>
+<li>Note que podemos ver mais detalhes da estimação usando a função <code>summary()</code> no objeto resultante da função <code>lm()</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = colGPA ~ hsGPA + ACT, data = gpa1)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Residuals:
+</span></span><span class="line"><span class="cl">##      Min       1Q   Median       3Q      Max 
+</span></span><span class="line"><span class="cl">## -0.85442 -0.24666 -0.02614  0.28127  0.85357 
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)    
+</span></span><span class="line"><span class="cl">## (Intercept) 1.286328   0.340822   3.774 0.000238 ***
+</span></span><span class="line"><span class="cl">## hsGPA       0.453456   0.095813   4.733 5.42e-06 ***
+</span></span><span class="line"><span class="cl">## ACT         0.009426   0.010777   0.875 0.383297    
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Residual standard error: 0.3403 on 138 degrees of freedom
+</span></span><span class="line"><span class="cl">## Multiple R-squared:  0.1764,	Adjusted R-squared:  0.1645 
+</span></span><span class="line"><span class="cl">## F-statistic: 14.78 on 2 and 138 DF,  p-value: 1.526e-06
+</span></span></code></pre></div><ul>
+<li>Podemos extrair apenas a matriz &lsquo;Coefficients&rsquo; usando <code>coef()</code> ou <code>$coef</code>, e o intervalo de confiança usando <code>confint()</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Coefficients</span>
+</span></span><span class="line"><span class="cl"><span class="nf">coef</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                Estimate Std. Error   t value     Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+</span></span><span class="line"><span class="cl">## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+</span></span><span class="line"><span class="cl">## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                Estimate Std. Error   t value     Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept) 1.286327767 0.34082212 3.7741910 2.375872e-04
+</span></span><span class="line"><span class="cl">## hsGPA       0.453455885 0.09581292 4.7327219 5.421580e-06
+</span></span><span class="line"><span class="cl">## ACT         0.009426012 0.01077719 0.8746263 3.832969e-01
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># note que se não usarmos summary(), temos apenas as estimativas</span>
+</span></span><span class="line"><span class="cl"><span class="nf">coef</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)       hsGPA         ACT 
+</span></span><span class="line"><span class="cl">## 1.286327767 0.453455885 0.009426012
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Intervalo de confiança</span>
+</span></span><span class="line"><span class="cl"><span class="nf">confint</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                   2.5 %     97.5 %
+</span></span><span class="line"><span class="cl">## (Intercept)  0.61241898 1.96023655
+</span></span><span class="line"><span class="cl">## hsGPA        0.26400467 0.64290710
+</span></span><span class="line"><span class="cl">## ACT         -0.01188376 0.03073578
+</span></span></code></pre></div><ul>
+<li>Além disso, podemos extrair a matriz de variâncias-covariâncias do estimador com <code>vcov()</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">vcov</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span> 
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              (Intercept)         hsGPA           ACT
+</span></span><span class="line"><span class="cl">## (Intercept)  0.116159717 -0.0226063687 -0.0015908486
+</span></span><span class="line"><span class="cl">## hsGPA       -0.022606369  0.0091801149 -0.0003570767
+</span></span><span class="line"><span class="cl">## ACT         -0.001590849 -0.0003570767  0.0001161478
+</span></span></code></pre></div><h3 id="estimação-analítica">Estimação Analítica</h3>
+<ul>
+<li>A partir da base de dados <code>gpa1</code>, vamos criar o vetor da variável dependente <code>y</code> e a matrix das variáveis independentes <code>X</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Acessando a base de dados gpa1</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">gpa1</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando o vetor y</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">gpa1[</span><span class="p">,</span><span class="s">&#34;colGPA&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># transformando coluna de data frame em matriz</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]  3.0
+</span></span><span class="line"><span class="cl">## [2,]  3.4
+</span></span><span class="line"><span class="cl">## [3,]  3.0
+</span></span><span class="line"><span class="cl">## [4,]  3.5
+</span></span><span class="line"><span class="cl">## [5,]  3.6
+</span></span><span class="line"><span class="cl">## [6,]  3.0
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">cbind</span><span class="p">(</span> <span class="m">1</span><span class="p">,</span> <span class="n">gpa1[</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;hsGPA&#34;</span><span class="p">,</span> <span class="s">&#34;ACT&#34;</span><span class="p">)</span><span class="n">]</span> <span class="p">)</span> <span class="c1"># juntando 1&#39;s com as covariadas</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># transformando em matriz</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##   1 hsGPA ACT
+</span></span><span class="line"><span class="cl">## 1 1   3.0  21
+</span></span><span class="line"><span class="cl">## 2 1   3.2  24
+</span></span><span class="line"><span class="cl">## 3 1   3.6  26
+</span></span><span class="line"><span class="cl">## 4 1   3.5  27
+</span></span><span class="line"><span class="cl">## 5 1   3.9  28
+</span></span><span class="line"><span class="cl">## 6 1   3.4  25
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Pegando valores N e K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">gpa1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 141
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">K</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2
+</span></span></code></pre></div><h5 id="1-estimativas-de-mqo-hahahugoshortcode-s60-hbhb">1. Estimativas de MQO 
+
+$\hat{\boldsymbol{\beta}}$</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              [,1]
+</span></span><span class="line"><span class="cl">## 1     1.286327767
+</span></span><span class="line"><span class="cl">## hsGPA 0.453455885
+</span></span><span class="line"><span class="cl">## ACT   0.009426012
+</span></span></code></pre></div><h5 id="2-valores-preditosajustados-hahahugoshortcode-s61-hbhb">2. Valores preditos/ajustados 
+
+$\hat{\boldsymbol{y}}$</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       [,1]
+</span></span><span class="line"><span class="cl">## 1 2.844642
+</span></span><span class="line"><span class="cl">## 2 2.963611
+</span></span><span class="line"><span class="cl">## 3 3.163845
+</span></span><span class="line"><span class="cl">## 4 3.127926
+</span></span><span class="line"><span class="cl">## 5 3.318734
+</span></span><span class="line"><span class="cl">## 6 3.063728
+</span></span></code></pre></div><h5 id="3-resíduos-hahahugoshortcode-s62-hbhb">3. Resíduos 
+
+$\hat{\boldsymbol{\varepsilon}}$</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## 1  0.15535832
+</span></span><span class="line"><span class="cl">## 2  0.43638918
+</span></span><span class="line"><span class="cl">## 3 -0.16384523
+</span></span><span class="line"><span class="cl">## 4  0.37207430
+</span></span><span class="line"><span class="cl">## 5  0.28126580
+</span></span><span class="line"><span class="cl">## 6 -0.06372813
+</span></span></code></pre></div><h5 id="4-variância-do-termo-de-erro-hahahugoshortcode-s63-hbhb">4. Variância do termo de erro 
+
+$\hat{\sigma}^2$</h5>
+<p>Como 
+
+$\hat{\sigma}^2$ é um escalar, é conveniente transformar a &ldquo;matriz 1x1&rdquo; em um número usando <code>as.numeric()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">sig2hat</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ehat</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.1158148
+</span></span></code></pre></div><h5 id="5-matriz-de-variâncias-covariâncias-do-estimador-hahahugoshortcode-s65-hbhb">5. Matriz de variâncias-covariâncias do estimador 
+
+$\text{V}(\hat{\boldsymbol{\beta}})$</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">sig2hat</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  1         hsGPA           ACT
+</span></span><span class="line"><span class="cl">## 1      0.116159717 -0.0226063687 -0.0015908486
+</span></span><span class="line"><span class="cl">## hsGPA -0.022606369  0.0091801149 -0.0003570767
+</span></span><span class="line"><span class="cl">## ACT   -0.001590849 -0.0003570767  0.0001161478
+</span></span></code></pre></div><h5 id="6-erros-padrão-do-estimador-hahahugoshortcode-s66-hbhb">6. Erros-padrão do estimador 
+
+$\text{se}(\hat{\boldsymbol{\beta}})$</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">se_bhat</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">se_bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          1      hsGPA        ACT 
+</span></span><span class="line"><span class="cl">## 0.34082212 0.09581292 0.01077719
+</span></span></code></pre></div><h5 id="7-estatística-_t_">7. Estatística <em>t</em></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Cálculo da estatística t</span>
+</span></span><span class="line"><span class="cl"><span class="n">t_bhat</span> <span class="o">=</span> <span class="n">bhat</span> <span class="o">/</span> <span class="n">se_bhat</span>
+</span></span><span class="line"><span class="cl"><span class="n">t_bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            [,1]
+</span></span><span class="line"><span class="cl">## 1     3.7741910
+</span></span><span class="line"><span class="cl">## hsGPA 4.7327219
+</span></span><span class="line"><span class="cl">## ACT   0.8746263
+</span></span></code></pre></div><h5 id="8-avaliando-as-hipóteses-nulas">8. Avaliando as hipóteses nulas</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># definição do nível de significância</span>
+</span></span><span class="line"><span class="cl"><span class="n">alpha</span> <span class="o">=</span> <span class="m">0.05</span>
+</span></span><span class="line"><span class="cl"><span class="n">cv</span> <span class="o">=</span> <span class="nf">qt</span><span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">/</span><span class="m">2</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="c1"># valor crítico de teste bicaudal</span>
+</span></span><span class="line"><span class="cl"><span class="n">cv</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.977304
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># (i) Comparando estatística t com o valor crítico</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abs</span><span class="p">(</span><span class="n">t_bhat</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">cv</span> <span class="c1"># avaliando H0</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">## 1      TRUE
+</span></span><span class="line"><span class="cl">## hsGPA  TRUE
+</span></span><span class="line"><span class="cl">## ACT   FALSE
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># (ii) Comparando p-valor com o nível de significância de 5%</span>
+</span></span><span class="line"><span class="cl"><span class="n">p_bhat</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t_bhat</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">p_bhat</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span> <span class="c1"># arredondando para facilitar visualização</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## 1     0.00024
+</span></span><span class="line"><span class="cl">## hsGPA 0.00001
+</span></span><span class="line"><span class="cl">## ACT   0.38330
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">p_bhat</span> <span class="o">&lt;</span> <span class="m">0.05</span> <span class="c1"># avaliando H0</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">## 1      TRUE
+</span></span><span class="line"><span class="cl">## hsGPA  TRUE
+</span></span><span class="line"><span class="cl">## ACT   FALSE
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># (ii) Verificando se zero (0) está fora do intervalo de confiança</span>
+</span></span><span class="line"><span class="cl"><span class="n">ci</span> <span class="o">=</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">bhat</span> <span class="o">-</span> <span class="n">cv</span><span class="o">*</span><span class="n">se_bhat</span><span class="p">,</span> <span class="n">bhat</span> <span class="o">+</span> <span class="n">cv</span><span class="o">*</span><span class="n">se_bhat</span><span class="p">)</span> <span class="c1"># avaliando H0</span>
+</span></span><span class="line"><span class="cl"><span class="n">ci</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              [,1]       [,2]
+</span></span><span class="line"><span class="cl">## 1      0.61241898 1.96023655
+</span></span><span class="line"><span class="cl">## hsGPA  0.26400467 0.64290710
+</span></span><span class="line"><span class="cl">## ACT   -0.01188376 0.03073578
+</span></span></code></pre></div><h5 id="comparando-estimações-via-lm-e-analítica">Comparando estimações via <code>lm()</code> e analítica</h5>
+<ul>
+<li>Resultados calculados analiticamente (&ldquo;na mão&rdquo;)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="n">se_bhat</span><span class="p">,</span> <span class="n">t_bhat</span><span class="p">,</span> <span class="n">p_bhat</span><span class="p">),</span> <span class="m">4</span> <span class="p">)</span> <span class="c1"># coeficientes</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              se_bhat              
+</span></span><span class="line"><span class="cl">## 1     1.2863  0.3408 3.7742 0.0002
+</span></span><span class="line"><span class="cl">## hsGPA 0.4535  0.0958 4.7327 0.0000
+</span></span><span class="line"><span class="cl">## ACT   0.0094  0.0108 0.8746 0.3833
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># intervalos de confiança</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]   [,2]
+</span></span><span class="line"><span class="cl">## 1      0.6124 1.9602
+</span></span><span class="line"><span class="cl">## hsGPA  0.2640 0.6429
+</span></span><span class="line"><span class="cl">## ACT   -0.0119 0.0307
+</span></span></code></pre></div><ul>
+<li>Resultado via função <code>lm()</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span> <span class="c1"># coeficientes</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   1.2863     0.3408  3.7742   0.0002
+</span></span><span class="line"><span class="cl">## hsGPA         0.4535     0.0958  4.7327   0.0000
+</span></span><span class="line"><span class="cl">## ACT           0.0094     0.0108  0.8746   0.3833
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">confint</span><span class="p">(</span><span class="n">reg</span><span class="p">),</span> <span class="m">4</span> <span class="p">)</span> <span class="c1"># intervalos de confiança</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##               2.5 % 97.5 %
+</span></span><span class="line"><span class="cl">## (Intercept)  0.6124 1.9602
+</span></span><span class="line"><span class="cl">## hsGPA        0.2640 0.6429
+</span></span><span class="line"><span class="cl">## ACT         -0.0119 0.0307
+</span></span></code></pre></div><!-- ### Inferência via Bootstrap -->
+<!-- - [Bootstrapping Regression Models](https://www.sagepub.com/sites/default/files/upm-binaries/21122_Chapter_21.pdf) -->
+<!-- - Bootstrapping é um método não-paramétrico para inferência estatística que necessita de premissas de distribuição. -->
+<!-- - O método, portanto, não utiliza fórmulas analíticas e pode prover erros padrão e intervalos de confiança mais acurados quando os dados não são bem comportados. -->
+<!-- ```{r} -->
+<!-- # Acessando a base de dados gpa1 -->
+<!-- data(gpa1, package = "wooldridge") -->
+<!-- # Criando vetor e matriz de variáveis -->
+<!-- y = as.matrix(gpa1[,"colGPA"]) # vetor da variável dependente -->
+<!-- X = as.matrix(cbind( 1, gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas -->
+<!-- # Estimativas iniciais -->
+<!-- bhat = solve( t(X) %*% X ) %*% t(X) %*% y -->
+<!-- # Matrix para guardar resultados de bootstraps -->
+<!-- B = 1000 # número de replicações -->
+<!-- boot_coefs = matrix(NA, nrow = B, ncol = nrow(bhat)) -->
+<!-- colnames(boot_coefs) = rownames(bhat) -->
+<!-- # Bootstrapping -->
+<!-- for (i in 1:B) { -->
+<!--   # Sorteio aleatório das linhas com reposição -->
+<!--   boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ] -->
+<!--   # Criando vetor e matriz de variáveis -->
+<!--   y = as.matrix(boot_gpa1[,"colGPA"]) # vetor da variável dependente -->
+<!--   X = as.matrix(cbind( 1, boot_gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas -->
+<!--   # Estimativas iniciais -->
+<!--   boot_bhat = solve( t(X) %*% X ) %*% t(X) %*% y -->
+<!--   # Guardando as estimativas bootstrapeadas -->
+<!--   boot_coefs[i, ] = boot_bhat -->
+<!-- } -->
+<!-- # Intervalos bootstrapeados por Percentil -->
+<!-- ci_boot = t(apply(boot_coefs, 2, quantile, probs=c(.025, .975))) # bootstrapped CI -->
+<!-- ci_boot -->
+<!-- # Intervalos bootstrapeados pela Teoria Normal (estatística t) -->
+<!-- se_boot = apply(boot_coefs, 2, sd) # bootstrapped SE -->
+<!-- ci_se_boot = cbind(bhat + se_boot*-1.96, bhat + se_boot*1.96) -->
+<!-- cbind(se_boot, ci_se_boot) -->
+<!-- # Intervalos pela inferência por OLS -->
+<!-- cbind(se_bhat, ci) -->
+<!-- # Histograma com os intervalos -->
+<!-- hist(boot_coefs[,3], main="Histograma de beta_1 por bootstrap") -->
+<!-- abline(v=ci_se_boot[3,], col="orange") # intervalo por bootstrapped SE -->
+<!-- abline(v=ci_boot[3,], col="blue") # intervalo por bootstrapped CI -->
+<!-- abline(v=ci[3,], col="green") # intervalo por OLS -->
+<!-- ``` -->
+</br>
+<h2 id="transformação-de-variáveis-e-comparação-de-regressões">Transformação de Variáveis e Comparação de Regressões</h2>
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 4.4 de Heiss (2020)</a></li>
+<li>Aqui, vamos utilizar um exemplo para mostrar como:
+<ul>
+<li>tranformar variáveis diretamente da função <code>lm()</code>, e</li>
+<li>informar os resultados de diversas regressões usando a função <code>stargazer()</code> do pacote <code>stargazer</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="exemplo-410---a-relação-salário-benefícios-de-professores">Exemplo 4.10 - A Relação Salário-Benefícios de Professores</h4>
+<ul>
+<li>Vamos usar a base de dados <code>meap93</code> do pacote <code>wooldridge</code> e queremos estimar o modelo</li>
+</ul>
+<p>$$ \log{(\text{salary})} = \beta_0 + \beta_1. \left(\frac{\text{benefits}}{\text{salary}}\right) + \text{outros_fatores} + \varepsilon $$</p>
+<ul>
+<li>Primeiro, vamos carregar a base de dados:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">meap93</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span> <span class="c1"># carregando base de dados</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>Agora vamos estimar diversos modelos:</p>
+<ul>
+<li>Modelo 1: apenas <em>benefits/salary</em> como regressor</li>
+<li>Modelo 2: incluir as variáveis explicativas <em>log(enroll)</em> e <em>log(staff)</em></li>
+<li>Modelo 3: incluir as variáveis explicativas <em>droprate</em> e <em>droprate²</em></li>
+</ul>
+</li>
+<li>
+<p>Para fazer transformações dentro de <code>lm()</code>, é necessário usar a função <code>I()</code></p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando os três modelos</span>
+</span></span><span class="line"><span class="cl"><span class="n">model1</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="nf">I</span><span class="p">(</span><span class="n">benefits</span><span class="o">/</span><span class="n">salary</span><span class="p">),</span> <span class="n">meap93</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">model2</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="nf">I</span><span class="p">(</span><span class="n">benefits</span><span class="o">/</span><span class="n">salary</span><span class="p">)</span> <span class="o">+</span> <span class="nf">log</span><span class="p">(</span><span class="n">enroll</span><span class="p">)</span> <span class="o">+</span> <span class="nf">log</span><span class="p">(</span><span class="n">staff</span><span class="p">),</span> <span class="n">meap93</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">model3</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="nf">I</span><span class="p">(</span><span class="n">benefits</span><span class="o">/</span><span class="n">salary</span><span class="p">)</span> <span class="o">+</span> <span class="nf">log</span><span class="p">(</span><span class="n">enroll</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">              <span class="nf">log</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span> <span class="o">+</span> <span class="n">droprate</span> <span class="o">+</span> <span class="nf">I</span><span class="p">(</span><span class="n">droprate^2</span><span class="p">),</span> <span class="n">meap93</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">model3</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                    Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)         10.8291     0.2514 43.0674   0.0000
+</span></span><span class="line"><span class="cl">## I(benefits/salary)  -0.5958     0.1655 -3.6008   0.0004
+</span></span><span class="line"><span class="cl">## log(enroll)          0.0877     0.0073 11.9509   0.0000
+</span></span><span class="line"><span class="cl">## log(staff)          -0.2173     0.0501 -4.3382   0.0000
+</span></span><span class="line"><span class="cl">## droprate            -0.0025     0.0021 -1.2014   0.2303
+</span></span><span class="line"><span class="cl">## I(droprate^2)        0.0000     0.0001  0.2851   0.7757
+</span></span></code></pre></div><ul>
+<li>Agora, vamos resumir os resultados em uma única tabela usando a função <code>stargazer()</code> pacote <code>stargazer</code>
+<ul>
+<li><code>type=&quot;text&quot;</code> para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)</li>
+<li><code>keep.stat=c(&quot;n&quot;, &quot;rsq&quot;)</code> para manter apenas os nº de observações e os 
+
+R$^2$</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Resumindo em uma tabela</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">stargazer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">stargazer</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">model1</span><span class="p">,</span> <span class="n">model2</span><span class="p">,</span> <span class="n">model3</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">,</span> <span class="n">keep.stat</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;n&#34;</span><span class="p">,</span> <span class="s">&#34;rsq&#34;</span><span class="p">))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## ================================================
+</span></span><span class="line"><span class="cl">##                         Dependent variable:     
+</span></span><span class="line"><span class="cl">##                    -----------------------------
+</span></span><span class="line"><span class="cl">##                             log(salary)         
+</span></span><span class="line"><span class="cl">##                       (1)       (2)       (3)   
+</span></span><span class="line"><span class="cl">## ------------------------------------------------
+</span></span><span class="line"><span class="cl">## I(benefits/salary) -0.825*** -0.605*** -0.596***
+</span></span><span class="line"><span class="cl">##                     (0.200)   (0.165)   (0.165) 
+</span></span><span class="line"><span class="cl">##                                                 
+</span></span><span class="line"><span class="cl">## log(enroll)                  0.087***  0.088*** 
+</span></span><span class="line"><span class="cl">##                               (0.007)   (0.007) 
+</span></span><span class="line"><span class="cl">##                                                 
+</span></span><span class="line"><span class="cl">## log(staff)                   -0.222*** -0.217***
+</span></span><span class="line"><span class="cl">##                               (0.050)   (0.050) 
+</span></span><span class="line"><span class="cl">##                                                 
+</span></span><span class="line"><span class="cl">## droprate                                -0.002  
+</span></span><span class="line"><span class="cl">##                                         (0.002) 
+</span></span><span class="line"><span class="cl">##                                                 
+</span></span><span class="line"><span class="cl">## I(droprate2)                            0.00001 
+</span></span><span class="line"><span class="cl">##                                        (0.0001) 
+</span></span><span class="line"><span class="cl">##                                                 
+</span></span><span class="line"><span class="cl">## Constant           10.523*** 10.844*** 10.829***
+</span></span><span class="line"><span class="cl">##                     (0.042)   (0.252)   (0.251) 
+</span></span><span class="line"><span class="cl">##                                                 
+</span></span><span class="line"><span class="cl">## ------------------------------------------------
+</span></span><span class="line"><span class="cl">## Observations          408       408       408   
+</span></span><span class="line"><span class="cl">## R2                   0.040     0.353     0.358  
+</span></span><span class="line"><span class="cl">## ================================================
+</span></span><span class="line"><span class="cl">## Note:                *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</span></span></code></pre></div><ul>
+<li>É comum que os resultados econométricos venham acompanhados de asteriscos (<code>*</code>), pois estes indicam o quão significantes são as estimativas.</li>
+<li>Quanto menor o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.</li>
+</ul>
+</br>
+<h2 id="regressores-qualitativos">Regressores Qualitativos</h2>
+<ul>
+<li>Muitas variáveis de interesse são qualitativas, ao invés de quantitativas.</li>
+<li>Isso inclui variáveis como <em>sexo</em>, <em>cor/raça</em>, <em>status de trabalho</em>, <em>estado civil</em>, <em>escolha de marca</em>, etc.</li>
+</ul>
+<h3 id="variáveis-dummy">Variáveis Dummy</h3>
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 7.1 de Heiss (2020)</a></li>
+<li>Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0&rsquo;s ou 1&rsquo;s), então ele pode ser inserido imediatamente numa regressão linear.</li>
+<li>Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)</li>
+</ul>
+<h5 id="exemplo-75---equação-do-log-do-salário-hora">Exemplo 7.5 - Equação do Log do Salário-Hora</h5>
+<ul>
+<li>
+<p>Podemos calcular a <strong>diferença de médias</strong> de uma variável dependente por meio de uma regressão sobre uma variável <em>dummy</em>, cujos valores são 0 ou 1.</p>
+</li>
+<li>
+<p>Vamos utilizar a base de dados <code>wage1</code> do pacote <code>wooldridge</code>  para estimar o seguinte modelo
+
+
+$$ \text{wage} = \beta_0 + \beta_1 \text{female} + \varepsilon $$</p>
+</li>
+<li>
+<p>Observe que, se incluirmos apenas uma dummy (<em>female</em>) como covariada, a regressão calcula a <strong>diferença de médias entre os dois grupos</strong>:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">wage1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">wage</span> <span class="o">~</span> <span class="n">female</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">6</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              Estimate Std. Error   t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)  7.099489   0.210008 33.805777        0
+</span></span><span class="line"><span class="cl">## female      -2.511830   0.303409 -8.278688        0
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># calculando as médias de salário por sexo:</span>
+</span></span><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="n">wage1</span><span class="o">$</span><span class="n">wage[wage1</span><span class="o">$</span><span class="n">female</span><span class="o">==</span><span class="m">0</span><span class="n">]</span><span class="p">)</span> <span class="c1"># média salarial dos homens</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 7.099489
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="n">wage1</span><span class="o">$</span><span class="n">wage[wage1</span><span class="o">$</span><span class="n">female</span><span class="o">==</span><span class="m">1</span><span class="n">]</span><span class="p">)</span> <span class="c1"># média salarial das mulheres</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 4.587659
+</span></span></code></pre></div><ul>
+<li>Note que:
+<ul>
+<li>
+
+$\hat{\beta}_0$ é a média salarial dos homens (<code>female==0</code>)</li>
+<li>
+
+$\hat{\beta}_1$ é a diferença salarial entre os homens (<code>female==0</code>) e as mulheres (<code>female==1</code>)</li>
+<li>A soma 
+
+$\hat{\beta}_0 + \hat{\beta}_1$ é igual à média das mulheres.</li>
+</ul>
+</li>
+<li>A vantagem de fazer a regressão de diferença de médias é que podemos usar a estatística <em>t</em> para avaliar se a diferença é estatisticamente significante entre os dois grupos.</li>
+<li>Neste caso, a diferença é bastante significante (p-valor &lt; 0,01%)</li>
+</ul>
+</br>
+<ul>
+<li>Agora, vamos estimar o modelo com mais variáveis explicativas:</li>
+</ul>
+<p>
+
+\begin{align}
+\text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper2} +\\
+&\beta_5 \text{tenure} + \beta_6 \text{tenure2} + \varepsilon \tag{7.6} \end{align}
+em que:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Carregando a base de dados necessária</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">wage1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">wage</span> <span class="o">~</span> <span class="n">female</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">tenure</span> <span class="o">+</span> <span class="n">tenursq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)  -2.1097     0.7107 -2.9687   0.0031
+</span></span><span class="line"><span class="cl">## female       -1.7832     0.2572 -6.9327   0.0000
+</span></span><span class="line"><span class="cl">## educ          0.5263     0.0485 10.8412   0.0000
+</span></span><span class="line"><span class="cl">## exper         0.1878     0.0357  5.2557   0.0000
+</span></span><span class="line"><span class="cl">## expersq      -0.0038     0.0008 -4.9267   0.0000
+</span></span><span class="line"><span class="cl">## tenure        0.2117     0.0492  4.3050   0.0000
+</span></span><span class="line"><span class="cl">## tenursq      -0.0029     0.0017 -1.7473   0.0812
+</span></span></code></pre></div><ul>
+<li>Nota-se que as mulheres (<code>female == 1</code>) recebem em média $1,78/hora a menos, em relação aos homens (<code>female == 0</code>).</li>
+<li>Isto implica que, neste modelo, o <strong>intercepto</strong> das mulheres é 1,78 inferior aos dos homens.</li>
+<li>Essa diferença é estatisticamente significante (p-valor de <code>female</code> é menor do que 5%)</li>
+</ul>
+<h3 id="variáveis-com-múltiplas-categorias">Variáveis com múltiplas categorias</h3>
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 7.3 de Heiss (2020)</a></li>
+<li>Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma <em>dummy</em>.</li>
+<li>É necessário criar uma <em>dummy</em> para cada categoria</li>
+<li>Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
+<ul>
+<li>Conhecendo todas as <em>dummies</em> menos uma, dá para saber o valor esta última <em>dummy</em></li>
+<li>Se todas outras dummies forem iguais a 0, a última dummy é igual a 1</li>
+<li>Se houver outra dummy igual a 1, então última dummy é igual a 0</li>
+</ul>
+</li>
+<li>Além disso, a categoria deixada de fora acaba sendo usada <strong>referência</strong> quando são estimados os parâmetros.</li>
+</ul>
+<h5 id="exemplo-efeito-do-aumento-do-salário-mínimo-sobre-o-emprego-card-e-krueger-1994">Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)</h5>
+<ul>
+<li>Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo</li>
+<li>Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.</li>
+<li>Vamos estimar o seguinte modelo:</li>
+</ul>
+<p>
+
+$$\text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + \varepsilon$$
+em que:</p>
+<ul>
+<li><code>diff_emptot</code>: diferença de nº de empregados entre fev/1992 e nov/1992</li>
+<li><code>nj</code>: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA</li>
+<li><code>chain</code>: rede de fast food: (1) Burger King (<code>bk</code>), (2) KFC (<code>kfc</code>), (3) Roy&rsquo;s (<code>roys</code>), e (4) Wendy&rsquo;s (<code>wendys</code>)</li>
+<li><code>hrsopen</code>: horas de funcionamento por dia</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">card1994</span> <span class="o">=</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#34;https://fhnishida.netlify.app/project/rec5004/card1994.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">card1994</span><span class="p">)</span> <span class="c1"># olhando as 6 primeiras linhas</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##   sheet nj chain hrsopen diff_fte
+</span></span><span class="line"><span class="cl">## 1    46  0     1    16.5   -16.50
+</span></span><span class="line"><span class="cl">## 2    49  0     2    13.0    -2.25
+</span></span><span class="line"><span class="cl">## 3    56  0     4    12.0   -14.00
+</span></span><span class="line"><span class="cl">## 4    61  0     4    12.0    11.50
+</span></span><span class="line"><span class="cl">## 5   445  0     1    18.0   -41.50
+</span></span><span class="line"><span class="cl">## 6   451  0     1    24.0    13.00
+</span></span></code></pre></div><ul>
+<li>Note que a variável categórica <code>chain</code> foi considerada como variável numérica, pois possui números ao invés de nomes das redes de fast food.</li>
+<li>Isto é comum em grandes bases de dados, já que números consomem menos espaço de armazenamento do que texto. Neste caso, há um dicionário indicando o que significa cada número.</li>
+<li>Caso você rode a estimação com a variável <code>chain</code> desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">diff_fte</span> <span class="o">~</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">hrsopen</span> <span class="o">+</span> <span class="n">chain</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = diff_fte ~ nj + hrsopen + chain, data = card1994)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)           nj      hrsopen        chain  
+</span></span><span class="line"><span class="cl">##     0.40284      4.61869     -0.28458     -0.06462
+</span></span></code></pre></div><ul>
+<li>Note que a interpretação é que a mudança de uma rede para a outra [como <code>bk</code> (1) para <code>kfc</code> (2), de <code>kfc</code> (2) para <code>roys</code> (3), ou de <code>roys</code> (3) para <code>wendys</code> (4)] diminuiu a variação do nº trabalhadores &ndash; <strong>o que não faz sentido!</strong></li>
+<li>Portanto, precisamos criar as <em>dummies</em> das variáveis categóricas:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Criando dummies para cada variável</span>
+</span></span><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">bk</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain</span><span class="o">==</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">kfc</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain</span><span class="o">==</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">roys</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain</span><span class="o">==</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">wendys</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain</span><span class="o">==</span><span class="m">4</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Visualizando as primeras linhas</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##   sheet nj chain hrsopen diff_fte bk kfc roys wendys
+</span></span><span class="line"><span class="cl">## 1    46  0     1    16.5   -16.50  1   0    0      0
+</span></span><span class="line"><span class="cl">## 2    49  0     2    13.0    -2.25  0   1    0      0
+</span></span><span class="line"><span class="cl">## 3    56  0     4    12.0   -14.00  0   0    0      1
+</span></span><span class="line"><span class="cl">## 4    61  0     4    12.0    11.50  0   0    0      1
+</span></span><span class="line"><span class="cl">## 5   445  0     1    18.0   -41.50  1   0    0      0
+</span></span><span class="line"><span class="cl">## 6   451  0     1    24.0    13.00  1   0    0      0
+</span></span></code></pre></div><ul>
+<li>Também é possível criar <em>dummies</em> mais facilmente usando a função <code>dummy_cols()</code> do pacote <code>fastDummies</code></li>
+<li>Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um <code>1</code> em cada linha.</li>
+<li>Portanto, caso coloquemos as 4 <em>dummies</em> quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">diff_fte</span> <span class="o">~</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">hrsopen</span> <span class="o">+</span> <span class="n">bk</span> <span class="o">+</span> <span class="n">kfc</span> <span class="o">+</span> <span class="n">roys</span> <span class="o">+</span> <span class="n">wendys</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, 
+</span></span><span class="line"><span class="cl">##     data = card1994)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)           nj      hrsopen           bk          kfc         roys  
+</span></span><span class="line"><span class="cl">##    2.097621     4.859363    -0.388792    -0.005512    -1.997213    -1.010903  
+</span></span><span class="line"><span class="cl">##      wendys  
+</span></span><span class="line"><span class="cl">##          NA
+</span></span></code></pre></div><ul>
+<li>Por padrão, o R já retira uma das categorias para servir como referência.</li>
+<li>Aqui, a categoria <code>wendys</code> serve como referência às estimativas das demais <em>dummies</em>
+<ul>
+<li>Em relação a <code>wendys</code>, o nº de empregados de:
+<ul>
+<li><code>bk</code> teve uma variação de empregados muito parecida (apenas 0,005 menor)</li>
+<li><code>roys</code> teve uma diminuição (menos 1 empregado)</li>
+<li><code>kfc</code> teve uma maior diminuição (menos 2 empregados)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Note que poderíamos usar como referência outra rede de fast food, deixando sua <em>dummy</em> de fora da regressão.</li>
+<li>Vamos deixar de fora a <em>dummy</em> do <code>roys</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">diff_fte</span> <span class="o">~</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">hrsopen</span> <span class="o">+</span> <span class="n">bk</span> <span class="o">+</span> <span class="n">kfc</span> <span class="o">+</span> <span class="n">wendys</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = diff_fte ~ nj + hrsopen + bk + kfc + wendys, data = card1994)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)           nj      hrsopen           bk          kfc       wendys  
+</span></span><span class="line"><span class="cl">##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
+</span></span></code></pre></div><ul>
+<li>Note agora que os parâmetros estão em relação à `roys``:
+<ul>
+<li>estimativa de <code>kfc</code> que tinha ficado -2, agora está &ldquo;menos&rdquo; negativo (-1)</li>
+<li>estimativas de <code>bk</code> e de <code>wendys</code> possuem estimativas positivas (lembre-se que, em relação a <code>wendys</code>, a estimativa de <code>roys</code> foi negativo na regressão anterior)</li>
+</ul>
+</li>
+</ul>
+</br>
+<ul>
+<li>
+<p>No R, na verdade, não é necessário criar <em>dummies</em> de uma variável categórica para rodar uma regressão, caso ela esteja como <em>texto</em> ou como <em>factor</em></p>
+</li>
+<li>
+<p>Criando variável da classe texto:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">chain_txt</span> <span class="o">=</span> <span class="nf">as.character</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain</span><span class="p">)</span> <span class="c1"># criando variável texto</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain_txt</span><span class="p">)</span> <span class="c1"># Visualizado os primeiros valores</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] &#34;1&#34; &#34;2&#34; &#34;4&#34; &#34;4&#34; &#34;1&#34; &#34;1&#34;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando do modelo</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">diff_fte</span> <span class="o">~</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">hrsopen</span> <span class="o">+</span> <span class="n">chain_txt</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = diff_fte ~ nj + hrsopen + chain_txt, data = card1994)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)           nj      hrsopen   chain_txt2   chain_txt3   chain_txt4  
+</span></span><span class="line"><span class="cl">##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
+</span></span></code></pre></div><ul>
+<li>Observe que a função <code>lm()</code> retira a categoria que aparece primeiro no vetor de texto (<code>&quot;1&quot;</code>)</li>
+<li>Usando como variável texto, não é possível selecionar facilmente qual categoria vai ser retirada da regressão</li>
+<li>Para isto, podemos usar a classe de objeto <code>factor</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">chain_fct</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain</span><span class="p">)</span> <span class="c1"># criando variável factor</span>
+</span></span><span class="line"><span class="cl"><span class="nf">levels</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain_fct</span><span class="p">)</span> <span class="c1"># verificando os níveis (categorias) da variável factor</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] &#34;1&#34; &#34;2&#34; &#34;3&#34; &#34;4&#34;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando do modelo</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">diff_fte</span> <span class="o">~</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">hrsopen</span> <span class="o">+</span> <span class="n">chain_fct</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = diff_fte ~ nj + hrsopen + chain_fct, data = card1994)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)           nj      hrsopen   chain_fct2   chain_fct3   chain_fct4  
+</span></span><span class="line"><span class="cl">##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
+</span></span></code></pre></div><ul>
+<li>Note que a função <code>lm()</code> retira o primeiro nível da regressão (não necessariamente o que aparece primeiro na base de dados)</li>
+<li>Podemos trocar a referência usando a função <code>relevel()</code> em uma variável <em>factor</em></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">card1994</span><span class="o">$</span><span class="n">chain_fct</span> <span class="o">=</span> <span class="nf">relevel</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain_fct</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="s">&#34;3&#34;</span><span class="p">)</span> <span class="c1"># referência roys</span>
+</span></span><span class="line"><span class="cl"><span class="nf">levels</span><span class="p">(</span><span class="n">card1994</span><span class="o">$</span><span class="n">chain_fct</span><span class="p">)</span> <span class="c1"># verificando os níveis da variável factor</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] &#34;3&#34; &#34;1&#34; &#34;2&#34; &#34;4&#34;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando do modelo</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">diff_fte</span> <span class="o">~</span> <span class="n">nj</span> <span class="o">+</span> <span class="n">hrsopen</span> <span class="o">+</span> <span class="n">chain_fct</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">card1994</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## lm(formula = diff_fte ~ nj + hrsopen + chain_fct, data = card1994)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">## (Intercept)           nj      hrsopen   chain_fct1   chain_fct2   chain_fct4  
+</span></span><span class="line"><span class="cl">##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
+</span></span></code></pre></div><ul>
+<li>Observe que o primeiro nível foi alterado para <code>&quot;3&quot;</code> e, portanto, essa categoria foi retirada na regressão</li>
+</ul>
+<h3 id="transformando-variáveis-contínuas-em-categorias">Transformando variáveis contínuas em categorias</h3>
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 7.4 de Heiss (2020)</a></li>
+<li>Usando a função <code>cut()</code>, podemos &ldquo;dividir&rdquo; um vetor de números em intervalos, a partir de pontos de corte</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Definindo pontos de corte</span>
+</span></span><span class="line"><span class="cl"><span class="n">cutpts</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Classificando o vetor 1:10 a partir dos pontos de corte</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cut</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="n">cutpts</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##  [1] (0,3]  (0,3]  (0,3]  (3,6]  (3,6]  (3,6]  (6,10] (6,10] (6,10] (6,10]
+</span></span><span class="line"><span class="cl">## Levels: (0,3] (3,6] (6,10]
+</span></span></code></pre></div><h5 id="exemplo-78---efeitos-da-classificação-das-faculdade-de-direito-sobre-salários-iniciais">Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais</h5>
+<ul>
+<li>Queremos verificar o quanto as universidades top 10 (<code>top10</code>), e as ranqueadas entre 11 e 25 (<code>r11_25</code>), entre 26 e 40 (<code>r26_40</code>), entre 41 e 60 (<code>r41_60</code>), e entre 61 e 100 (<code>r61_100</code>), impactam o log do salário (<code>log(salary)</code>) em relação às demais universidades (<code>r101_175</code>).</li>
+<li>Utilizaremos como variáveis de controle: <code>LSAT</code>, <code>GPA</code>, <code>llibvol</code> e <code>lcost</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">lawsch85</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span> <span class="c1"># carregando base de dados necessária</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Definindo pontos de corte</span>
+</span></span><span class="line"><span class="cl"><span class="n">cutpts</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">40</span><span class="p">,</span> <span class="m">60</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">175</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando variável com a classificação</span>
+</span></span><span class="line"><span class="cl"><span class="n">lawsch85</span><span class="o">$</span><span class="n">rankcat</span> <span class="o">=</span> <span class="nf">cut</span><span class="p">(</span><span class="n">lawsch85</span><span class="o">$</span><span class="n">rank</span><span class="p">,</span> <span class="n">cutpts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Visualizando os 6 primeiros valores de rankcat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">lawsch85</span><span class="o">$</span><span class="n">rankcat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] (100,175] (100,175] (25,40]   (40,60]   (60,100]  (60,100] 
+</span></span><span class="line"><span class="cl">## Levels: (0,10] (10,25] (25,40] (40,60] (60,100] (100,175]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Escolhendo a categoria de referência (acima de 100 até 175)</span>
+</span></span><span class="line"><span class="cl"><span class="n">lawsch85</span><span class="o">$</span><span class="n">rankcat</span> <span class="o">=</span> <span class="nf">relevel</span><span class="p">(</span><span class="n">lawsch85</span><span class="o">$</span><span class="n">rankcat</span><span class="p">,</span> <span class="s">&#39;(100,175]&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="n">rankcat</span> <span class="o">+</span> <span class="n">LSAT</span> <span class="o">+</span> <span class="n">GPA</span> <span class="o">+</span> <span class="n">llibvol</span> <span class="o">+</span> <span class="n">lcost</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">lawsch85</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">5</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                 Estimate Std. Error  t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)      9.16530    0.41142 22.27699  0.00000
+</span></span><span class="line"><span class="cl">## rankcat(0,10]    0.69957    0.05349 13.07797  0.00000
+</span></span><span class="line"><span class="cl">## rankcat(10,25]   0.59354    0.03944 15.04926  0.00000
+</span></span><span class="line"><span class="cl">## rankcat(25,40]   0.37508    0.03408 11.00536  0.00000
+</span></span><span class="line"><span class="cl">## rankcat(40,60]   0.26282    0.02796  9.39913  0.00000
+</span></span><span class="line"><span class="cl">## rankcat(60,100]  0.13159    0.02104  6.25396  0.00000
+</span></span><span class="line"><span class="cl">## LSAT             0.00569    0.00306  1.85793  0.06551
+</span></span><span class="line"><span class="cl">## GPA              0.01373    0.07419  0.18500  0.85353
+</span></span><span class="line"><span class="cl">## llibvol          0.03636    0.02602  1.39765  0.16467
+</span></span><span class="line"><span class="cl">## lcost            0.00084    0.02514  0.03347  0.97336
+</span></span></code></pre></div><ul>
+<li>Note que, em relação às universidades em piores colocações (<code>(100,175]</code>), as melhores ranqueadas provêem salários de 13,16% a 69,96% superiores</li>
+</ul>
+<h3 id="interações-envolvendo-variáveis-dummy">Interações Envolvendo Variáveis Dummy</h3>
+<h4 id="interações-entre-variáveis-dummy">Interações entre variáveis dummy</h4>
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Subseção 6.1.6 de Heiss (2020)</a></li>
+<li>Seção 7. de Wooldridge (2006)</li>
+<li>Adicionando um termo de interação entre duas <em>dummies</em>, é possível obter estimativas distintas de uma <em>dummy</em> (mudança no <strong>intercepto</strong>) para cada um das 2 categorias da outra <em>dummy</em> (0 e 1).</li>
+</ul>
+<h5 id="continuação-exemplo-75---equação-do-log-do-salário-hora">(Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora</h5>
+<ul>
+<li>
+<p>Retornemos à base de dados <code>wage1</code> do pacote <code>wooldridge</code></p>
+</li>
+<li>
+<p>Agora, vamos incluir a variável <em>dummy</em> <code>married</code></p>
+</li>
+<li>
+<p>O modelo a ser estimado é:</p>
+</li>
+</ul>
+<p>
+
+\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
+&\beta_4 \text{exper} + \beta_5 \text{exper2} + \beta_6 \text{tenure} + \beta_7 \text{tenure2} + \varepsilon \end{align}
+em que:</p>
+<ul>
+<li><code>wage</code>: salário médio por hora</li>
+<li><code>female</code>: dummy em que (1) mulher e (0) homem</li>
+<li><code>married</code>: dummy em que (1) casado e (0) solteiro</li>
+<li><code>educ</code>: anos de educação</li>
+<li><code>exper</code>: anos de experiência (<code>expersq</code> = anos ao quadrado)</li>
+<li><code>tenure</code>: anos de trabalho no empregador atual (<code>tenursq</code> = anos ao quadrado)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Carregando a base de dados necessária</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">wage1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">female</span> <span class="o">+</span> <span class="n">married</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">tenure</span> <span class="o">+</span> <span class="n">tenursq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   0.4178     0.0989  4.2257   0.0000
+</span></span><span class="line"><span class="cl">## female       -0.2902     0.0361 -8.0356   0.0000
+</span></span><span class="line"><span class="cl">## married       0.0529     0.0408  1.2985   0.1947
+</span></span><span class="line"><span class="cl">## educ          0.0792     0.0068 11.6399   0.0000
+</span></span><span class="line"><span class="cl">## exper         0.0270     0.0053  5.0609   0.0000
+</span></span><span class="line"><span class="cl">## expersq      -0.0005     0.0001 -4.8135   0.0000
+</span></span><span class="line"><span class="cl">## tenure        0.0313     0.0068  4.5700   0.0000
+</span></span><span class="line"><span class="cl">## tenursq      -0.0006     0.0002 -2.4475   0.0147
+</span></span></code></pre></div><ul>
+<li>
+<p>Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29% sobre o salário.</p>
+</li>
+<li>
+<p>O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.</p>
+</li>
+<li>
+<p>Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis <code>married</code> e <code>female</code> usando:</p>
+<ul>
+<li><code>lwage ~ female + married + married:female</code> (o <code>:</code> cria apenas a interação), ou</li>
+<li><code>lwage ~ female * married</code> (a &ldquo;multiplicação&rdquo; cria as dummies e a interação)</li>
+</ul>
+</li>
+<li>
+<p>O modelo a ser estimado agora é:
+
+
+\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
+&\beta_4 \text{exper} + \beta_5 \text{exper2} + \beta_6 \text{tenure} + \beta_7 \text{tenure2} + \varepsilon \end{align}</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando o modelo - forma (a)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">female</span> <span class="o">+</span> <span class="n">married</span> <span class="o">+</span> <span class="n">female</span><span class="o">:</span><span class="n">married</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">tenure</span> <span class="o">+</span> <span class="n">tenursq</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)      0.3214     0.1000  3.2135   0.0014
+</span></span><span class="line"><span class="cl">## female          -0.1104     0.0557 -1.9797   0.0483
+</span></span><span class="line"><span class="cl">## married          0.2127     0.0554  3.8419   0.0001
+</span></span><span class="line"><span class="cl">## educ             0.0789     0.0067 11.7873   0.0000
+</span></span><span class="line"><span class="cl">## exper            0.0268     0.0052  5.1118   0.0000
+</span></span><span class="line"><span class="cl">## expersq         -0.0005     0.0001 -4.8471   0.0000
+</span></span><span class="line"><span class="cl">## tenure           0.0291     0.0068  4.3016   0.0000
+</span></span><span class="line"><span class="cl">## tenursq         -0.0005     0.0002 -2.3056   0.0215
+</span></span><span class="line"><span class="cl">## female:married  -0.3006     0.0718 -4.1885   0.0000
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando o modelo - forma (b)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">female</span> <span class="o">*</span> <span class="n">married</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">tenure</span> <span class="o">+</span> <span class="n">tenursq</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)      0.3214     0.1000  3.2135   0.0014
+</span></span><span class="line"><span class="cl">## female          -0.1104     0.0557 -1.9797   0.0483
+</span></span><span class="line"><span class="cl">## married          0.2127     0.0554  3.8419   0.0001
+</span></span><span class="line"><span class="cl">## educ             0.0789     0.0067 11.7873   0.0000
+</span></span><span class="line"><span class="cl">## exper            0.0268     0.0052  5.1118   0.0000
+</span></span><span class="line"><span class="cl">## expersq         -0.0005     0.0001 -4.8471   0.0000
+</span></span><span class="line"><span class="cl">## tenure           0.0291     0.0068  4.3016   0.0000
+</span></span><span class="line"><span class="cl">## tenursq         -0.0005     0.0002 -2.3056   0.0215
+</span></span><span class="line"><span class="cl">## female:married  -0.3006     0.0718 -4.1885   0.0000
+</span></span></code></pre></div><ul>
+<li>Observe que, agora, o parâmetro de casado refere-se apenas aos homens (<code>married</code>) é positivo e significante de 21,27%.</li>
+<li>Já, sobre as mulheres, o casamento tem o efeito de 
+
+$\beta_2 + \delta_2$, ou seja, é igual a -8,79% (= 0,2127 - 0,3006)</li>
+<li>Uma hipótese importante é a 
+
+H$_0:\ \delta_2 = 0$ para verificar se o retorno por mudança do estado civil (<strong>intercepto</strong>) é diferente entre mulheres e homens.</li>
+<li>No output da regressão, podemos ver que o parâmetros da interação (<code>female:married</code>) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.</li>
+</ul>
+</br>
+<h4 id="considerando-inclinações-diferentes">Considerando inclinações diferentes</h4>
+<ul>
+<li>Seção 7.4 de Wooldridge (2006)</li>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Seção 7.5 de Heiss (2020)</a></li>
+<li>Adicionando um termo de interação entre uma variável contínua e uma <em>dummy</em>, é possível obter estimativas distintas de da variável numérica (mudança na <strong>inclinação</strong>) para cada um das 2 categorias da <em>dummy</em> (0 e 1).</li>
+</ul>
+<h5 id="exemplo-710---equação-do-log-do-salário-hora">Exemplo 7.10 - Equação do Log do Salário-Hora</h5>
+<ul>
+<li>Retornemos à base de dados <code>wage1</code> do pacote <code>wooldridge</code></li>
+<li>Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.</li>
+<li>Então, incluiremos no modelo a interação entre a dummy <code>female</code> e os anos de educação (<code>educ</code>):</li>
+</ul>
+<p>
+
+\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
+&\beta_3 \text{exper} + \beta_4 \text{exper2} + \beta_5 \text{tenure} + \beta_6 \text{tenure2} + \varepsilon \end{align}
+em que:</p>
+<ul>
+<li><code>wage</code>: salário médio por hora</li>
+<li><code>female</code>: dummy em que (1) mulher e (0) homem</li>
+<li><code>educ</code>: anos de educação</li>
+<li><code>female*educ</code>: interação entre a dummy <code>female</code> e anos de educação (<code>educ</code>)</li>
+<li><code>exper</code>: anos de experiência (<code>expersq</code> = anos ao quadrado)</li>
+<li><code>tenure</code>: anos de trabalho no empregador atual (<code>tenursq</code> = anos ao quadrado)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Carregando a base de dados necessária</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">wage1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">female</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">female</span><span class="o">:</span><span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">tenure</span> <span class="o">+</span> <span class="n">tenursq</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   0.3888     0.1187  3.2759   0.0011
+</span></span><span class="line"><span class="cl">## female       -0.2268     0.1675 -1.3536   0.1764
+</span></span><span class="line"><span class="cl">## educ          0.0824     0.0085  9.7249   0.0000
+</span></span><span class="line"><span class="cl">## exper         0.0293     0.0050  5.8860   0.0000
+</span></span><span class="line"><span class="cl">## expersq      -0.0006     0.0001 -5.3978   0.0000
+</span></span><span class="line"><span class="cl">## tenure        0.0319     0.0069  4.6470   0.0000
+</span></span><span class="line"><span class="cl">## tenursq      -0.0006     0.0002 -2.5089   0.0124
+</span></span><span class="line"><span class="cl">## female:educ  -0.0056     0.0131 -0.4260   0.6703
+</span></span></code></pre></div><ul>
+<li>Uma hipótese importante é a 
+
+H$_0:\ \delta_2 = 0$ para verificar se o retorno a cada ano de educação (<strong>inclinação</strong>) é diferente entre mulheres e homens.</li>
+<li>Pela estimação, nota-se que o incremento no salário das mulheres para cada ano a mais de educação é 0,56% menor em relação aos homens:
+<ul>
+<li>Homens aumentam 8,24% (<code>educ</code>) o salário para cada ano de educação</li>
+<li>Mulheres aumentam 7,58% (= 0,0824 - 0,0056) o salário para cada ano de educação</li>
+</ul>
+</li>
+<li>No entanto, essa diferença é estatisticamente não-significante a 5% de significância.</li>
+</ul>
+<img src="../example_interaction.png" alt="">
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec9"  class="btn btn-primary px-3 py-3">👉 Proceed to Hypothesis Testing</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

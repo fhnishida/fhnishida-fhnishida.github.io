@@ -71,6 +71,20 @@ sections:
     title: Education
     date_format: Jan 2006
     items:
+    - company: Carnegie Mellon University
+      company_logo: org-cmu
+      company_url: ""
+      date_end: "2024-06-30"
+      date_start: "2023-07-01"
+      description: |2-
+      
+          - Article: "Impact of Natural Disasters on Public Finance"
+          - Co-Advisors:
+            - Prof. Sérgio Naruhiko Sakurai
+            - Prof. Edson Severnini
+          
+      location: Pittsburgh, USA
+      title: Ph.D. Visiting Student
     - company: University of São Paulo
       company_logo: org-usp
       company_url: ""

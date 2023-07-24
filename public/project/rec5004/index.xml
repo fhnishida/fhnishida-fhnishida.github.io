@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Econometrics I (Spring 2023) | Fábio Nishida</title>
+    <link>https://fhnishida.netlify.app/project/rec5004/</link>
+      <atom:link href="https://fhnishida.netlify.app/project/rec5004/index.xml" rel="self" type="application/rss+xml" />
+    <description>Econometrics I (Spring 2023)</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.netlify.app/project/rec5004/featured.jpg</url>
+      <title>Econometrics I (Spring 2023)</title>
+      <link>https://fhnishida.netlify.app/project/rec5004/</link>
+    </image>
+    
+    <item>
+      <title>Econometrics I (Spring 2023)</title>
+      <link>https://fhnishida.netlify.app/project/rec5004/</link>
+      <pubDate>Mon, 03 Apr 2023 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.netlify.app/project/rec5004/</guid>
+      <description>&lt;p&gt;Welcome to TA Sessions for Econometrics I course (jointly prepared with Felipe Bauer).&lt;/p&gt;
+&lt;p&gt;Course webpage (prof. Daniel Domingues dos Santos): &lt;a href=&#34;https://edisciplinas.usp.br/course/view.php?id=108682&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://edisciplinas.usp.br/course/view.php?id=108682&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Feel free to contact us if you have any question:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fábio Nishida: &lt;a href=&#34;mailto:fabio.nishida@usp.br&#34;&gt;fabio.nishida@usp.br&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Felipe Bauer: &lt;a href=&#34;mailto:felipebauer@usp.br&#34;&gt;felipebauer@usp.br&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;ul class=&#34;cta-group&#34;&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&#34;sec1&#34;  class=&#34;btn btn-primary px-3 py-3&#34;&gt;👉 Proceed to R Toolkit&lt;/a&gt;
+  &lt;/li&gt;
+  
+  
+&lt;/ul&gt;
+
+&lt;/br&gt;
+&lt;h2 id=&#34;listas-práticas&#34;&gt;Listas Práticas&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Pratica-1.pdf&#34;&gt;Lista Prática 1&lt;/a&gt; | &lt;a href=&#34;Lista-Pratica-1_Solucao.pdf&#34;&gt;Solução&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Pratica-2.pdf&#34;&gt;Lista Prática 2&lt;/a&gt; | &lt;a href=&#34;Lista-Pratica-2_Solucao_v2.pdf&#34;&gt;Solução (v2)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Pratica-3.pdf&#34;&gt;Lista Prática 3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Pratica-4.pdf&#34;&gt;Lista Prática 4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!--- comment ---&gt;
+&lt;h2 id=&#34;gravações-das-monitorias&#34;&gt;Gravações das Monitorias&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 12&lt;/strong&gt;: VI, MQ2E e Testes | &lt;a href=&#34;monitoria12.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=XMAD79vEoS8&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/XMAD79vEoS8/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 11&lt;/strong&gt;: MQG, MQP e MQGF | &lt;a href=&#34;monitoria11.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=feHhKe1DSkc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/feHhKe1DSkc/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 10&lt;/strong&gt;: Testes de Heterocedasticidade e MQO com Erros Padrão Robustos | &lt;a href=&#34;monitoria10.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=kOb4RHe9j8U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/kOb4RHe9j8U/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 9&lt;/strong&gt;: Testes de Hipótese | &lt;a href=&#34;monitoria09.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=0Kq11zaSGys&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 8&lt;/strong&gt;: Regressão Múltipla | &lt;a href=&#34;monitoria08.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=Gx3VFbWU7C4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/Gx3VFbWU7C4/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 7&lt;/strong&gt;: Otimização Numérica | &lt;a href=&#34;monitoria07.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://youtu.be/KjwznBd4QI8&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/KjwznBd4QI8/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 6&lt;/strong&gt;: Regressão Simples | &lt;a href=&#34;monitoria06.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=nU0U7M_MHNo&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/nU0U7M_MHNo/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 5&lt;/strong&gt;: Visualização de Dados e Distribuições  | &lt;a href=&#34;monitoria05.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=Kvt24TLrQVk&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/Kvt24TLrQVk/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 4&lt;/strong&gt;: Manipulação de Dados | &lt;a href=&#34;monitoria04.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=XcwJWp4W01A&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/XcwJWp4W01A/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 3&lt;/strong&gt;: Programação em R - Parte 2 | &lt;a href=&#34;monitoria03.R&#34;&gt;Script&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;O áudio ficou meio ruim em algumas partes. Caso não estejam entendendo, por favor, me avisem.
+&lt;a href=&#34;https://www.youtube.com/watch?v=b5FhLOj9Sn4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/b5FhLOj9Sn4/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 2&lt;/strong&gt;: Programação em R - Parte 1 | &lt;a href=&#34;monitoria02.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=rUTKEOu9a-M&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/rUTKEOu9a-M/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 1&lt;/strong&gt;: Ferramentas do R | &lt;a href=&#34;monitoria01.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=VlL4SfQN88I&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/VlL4SfQN88I/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[R Markdown](Segue o vídeo curto sobre o uso do R Markdown: &lt;a href=&#34;https://www.youtube.com/watch?v=kpQBfVM3mww&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.youtube.com/watch?v=kpQBfVM3mww&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

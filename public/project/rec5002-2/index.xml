@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Macroeconomics I, Part 2 (Spring 2021) | Fábio Nishida</title>
+    <link>https://fhnishida.netlify.app/project/rec5002-2/</link>
+      <atom:link href="https://fhnishida.netlify.app/project/rec5002-2/index.xml" rel="self" type="application/rss+xml" />
+    <description>Macroeconomics I, Part 2 (Spring 2021)</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 21 Jul 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.netlify.app/project/rec5002-2/featured.jpg</url>
+      <title>Macroeconomics I, Part 2 (Spring 2021)</title>
+      <link>https://fhnishida.netlify.app/project/rec5002-2/</link>
+    </image>
+    
+    <item>
+      <title>Macroeconomics I, Part 2 (Spring 2021)</title>
+      <link>https://fhnishida.netlify.app/project/rec5002-2/</link>
+      <pubDate>Wed, 21 Jul 2021 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.netlify.app/project/rec5002-2/</guid>
+      <description>&lt;p&gt;Welcome to TA Sessions for Macroeconomics I (Part 2) course!&lt;/p&gt;
+&lt;p&gt;Course webpage (prof. Luciano Nakabashi): &lt;a href=&#34;https://edisciplinas.usp.br/course/view.php?id=89644&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://edisciplinas.usp.br/course/view.php?id=89644&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;ul class=&#34;cta-group&#34;&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&#34;sec1&#34;  class=&#34;btn btn-primary px-3 py-3&#34;&gt;👉 Proceed to Session 1&lt;/a&gt;
+  &lt;/li&gt;
+  
+  
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;solutions-to-problem-sets&#34;&gt;Solutions to Problem Sets&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-1_Resolucao.pdf&#34;&gt;Problem Set 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-2_Resolucao.pdf&#34;&gt;Problem Set 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-3_Resolucao.pdf&#34;&gt;Problem Set 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;previous-exams&#34;&gt;Previous Exams&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;../Prova-2020_n12.pdf&#34;&gt;2020 v12&lt;/a&gt; | &lt;a href=&#34;../Prova-2020_n7.pdf&#34;&gt;2020 v7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;../Prova-2019.pdf&#34;&gt;2019&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;complementary-content&#34;&gt;Complementary Content&lt;/h2&gt;
+&lt;h4 id=&#34;latex&#34;&gt;LaTeX&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.edx.org/course/latex-for-students-engineers-and-scientists-2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX for Students, Engineers, and Scientists Course&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tablesgenerator.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LaTeX Table Generator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://detexify.kirelabs.org/classify.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Search for Math Symbol Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;r-markdown&#34;&gt;R Markdown:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.coursera.org/learn/reproducible-templates-analysis&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Reproducible Templates for Analysis and Dissemination Course&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;Install &lt;em&gt;tinytex&lt;/em&gt; package to generate pdf&amp;rsquo;s in RStudio&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;r-programming&#34;&gt;R Programming&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.edx.org/professional-certificate/harvardx-data-science?index=product&amp;amp;queryID=7c853e76cef8eaffced84cd6759b2af1&amp;amp;position=1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;HarvardX Data Science Specialization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.coursera.org/specializations/jhu-data-science&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;John Hopkins Data Science Specialization&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

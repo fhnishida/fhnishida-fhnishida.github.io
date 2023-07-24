@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Undergraduate | Fábio Nishida</title>
+    <link>https://fhnishida.netlify.app/tag/undergraduate/</link>
+      <atom:link href="https://fhnishida.netlify.app/tag/undergraduate/index.xml" rel="self" type="application/rss+xml" />
+    <description>Undergraduate</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
+      <title>Undergraduate</title>
+      <link>https://fhnishida.netlify.app/tag/undergraduate/</link>
+    </image>
+    
+    <item>
+      <title>Econometrics II (Spring 2023)</title>
+      <link>https://fhnishida.netlify.app/project/rec2312/</link>
+      <pubDate>Wed, 08 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.netlify.app/project/rec2312/</guid>
+      <description>&lt;p&gt;Sejam bem-vindas(os) ao conteúdo de Monitoria da disciplina de Econometria II!&lt;/p&gt;
+&lt;p&gt;Página do curso (prof. Daniel Domingues dos Santos):  &lt;a href=&#34;https://edisciplinas.usp.br/course/view.php?id=108687&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://edisciplinas.usp.br/course/view.php?id=108687&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Caso tenham dúvidas, podem enviar e-mail para: &lt;a href=&#34;mailto:fabio.nishida@usp.br&#34;&gt;fabio.nishida@usp.br&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Monitorias presenciais às quintas-feiras das 13h às 14h na sala 14-B1&lt;/p&gt;
+&lt;p&gt;Se necessário, usaremos a seguinte sala de Google Meet: &lt;a href=&#34;https://meet.google.com/qtr-upxi-nwu&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://meet.google.com/qtr-upxi-nwu&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;ul class=&#34;cta-group&#34;&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&#34;sec1&#34;  class=&#34;btn btn-primary px-3 py-3&#34;&gt;👉 Seguir para Revisão de R&lt;/a&gt;
+  &lt;/li&gt;
+  
+  
+&lt;/ul&gt;
+
+&lt;/br&gt;
+&lt;h2 id=&#34;gravações-das-monitorias&#34;&gt;Gravações das Monitorias&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 10 (20/06)&lt;/strong&gt;: VI, MQ2E e Testes | &lt;a href=&#34;monitoria10.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=7HrsKmRrm9g&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/7HrsKmRrm9g/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 9 (09/06)&lt;/strong&gt;: Testes de Hipótese | &lt;a href=&#34;monitoria09.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=0Kq11zaSGys&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 8 (18/05)&lt;/strong&gt;: Estimadores Within e de Primeiras Diferenças | &lt;a href=&#34;monitoria08.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=KbOV12t_Ki0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 7 (04/05)&lt;/strong&gt;: Matrizes de Tranformação e Estimador Between | &lt;a href=&#34;monitoria07.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=kh69ZHE8DNY&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 6 (27/04)&lt;/strong&gt;: Estimação de MQGF | &lt;a href=&#34;monitoria06.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=G-1AVqDQBqY&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 5 (20/04)&lt;/strong&gt;: Estimação da Matriz de Covariâncias dos Erros e de MQE | &lt;a href=&#34;monitoria05.R&#34;&gt;Script&lt;/a&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=uxEXcGDL_zM&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/uxEXcGDL_zM/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Monitoria 4 (13/04)&lt;/strong&gt;: Dados em Painel e Matriz de Covariâncias dos Erros | &lt;a href=&#34;monitoria04.R&#34;&gt;Script&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=6hZqBAGTNTc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/6hZqBAGTNTc/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 3 (30/03)&lt;/strong&gt;: MQO com Variáveis Categóricas | &lt;a href=&#34;monitoria03.R&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=AH4FIVMNDYM&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/AH4FIVMNDYM/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 2 (23/03)&lt;/strong&gt;: Mínimos Quadrados Ordinários | &lt;a href=&#34;monitoria02.R&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=5ye1mOJFe6k&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/5ye1mOJFe6k/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 1 (16/03)&lt;/strong&gt;: Revisão de Programação em R | &lt;a href=&#34;monitoria01.R&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=SS-NLIn9gJk&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.youtube.com/vi/SS-NLIn9gJk/maxresdefault.jpg&#34; alt=&#34;img&#34; width=70%/&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Econometrics I (Fall 2022)</title>
+      <link>https://fhnishida.netlify.app/project/rec2301/</link>
+      <pubDate>Mon, 05 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.netlify.app/project/rec2301/</guid>
+      <description>&lt;p&gt;Sejam bem-vindas(os) ao conteúdo de Monitoria da disciplina de Econometria I!&lt;/p&gt;
+&lt;p&gt;Página do curso (prof. Daniel Domingues dos Santos): &lt;a href=&#34;https://edisciplinas.usp.br/course/view.php?id=101585&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://edisciplinas.usp.br/course/view.php?id=99924&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;ul class=&#34;cta-group&#34;&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&#34;sec1&#34;  class=&#34;btn btn-primary px-3 py-3&#34;&gt;👉 Seguir para Ferramentas do R&lt;/a&gt;
+  &lt;/li&gt;
+  
+  
+&lt;/ul&gt;
+
+&lt;/br&gt;
+&lt;h2 id=&#34;listas-de-exercícios&#34;&gt;Listas de Exercícios&lt;/h2&gt;
+&lt;h3 id=&#34;listas-teóricas&#34;&gt;Listas Teóricas&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Teorica-Cap2_v2.pdf&#34;&gt;Lista Teórica - Capítulo 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Teorica-Cap3_v2.pdf&#34;&gt;Lista Teórica - Capítulo 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;listas-práticas&#34;&gt;Listas Práticas&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;Lista_Pratica_1.pdf&#34;&gt;Lista Prática 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista_Pratica_2.pdf&#34;&gt;Lista Prática 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista_Pratica_3.pdf&#34;&gt;Lista Prática 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/br&gt;
+&lt;h2 id=&#34;gravações-das-monitorias&#34;&gt;Gravações das Monitorias&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 1 (18/08)&lt;/strong&gt;: Introdução ao R, Operações básicas e Objetos (simples e vetores) | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_01.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=WclDYhHj_Fk&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/WclDYhHj_Fk/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 2 (25/08)&lt;/strong&gt;: Objetos (vetores, matrizes, listas e data frames) e Subconjuntos de objetos (até remoção de valores ausentes) | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_02.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=0DIlCKZb1gQ&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/0DIlCKZb1gQ/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 3 (01/09)&lt;/strong&gt;: Operações vetoriais/matriciais, Estruturas de controle (if/else, for e while), e Exemplos de otimização de funções | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_03.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=N2pkt0CBUOc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/N2pkt0CBUOc/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 4 (22/09)&lt;/strong&gt;: Funções, Resumo e Manipulação de dados | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_04.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=cZpXDH96XPw&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/cZpXDH96XPw/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 5 (29/09)&lt;/strong&gt;: Manipulação de dados via &lt;code&gt;dplyr&lt;/code&gt; | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_05.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=TycerslMhnU&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/TycerslMhnU/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 6 (06/10)&lt;/strong&gt;: Distribuições, Simulação, Intervalo de Confiança, Teste &lt;em&gt;t&lt;/em&gt; e P-valor | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_06.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=wkOGblJGuIw&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/wkOGblJGuIw/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Monitoria 7 (13/10)&lt;/strong&gt;: Modelo de regressão simples, função &lt;code&gt;lm()&lt;/code&gt;, transformação log e diferença de médias | &lt;a href=&#34;https://fhnishida.github.io/fearp/rec2301/monitoria_07.R&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Script&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=G0za24e0qj4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://img.youtube.com/vi/G0za24e0qj4/hqdefault.jpg&#34; alt=&#34;IMAGE ALT TEXT HERE&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

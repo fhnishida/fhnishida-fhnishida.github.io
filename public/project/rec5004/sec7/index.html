@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: July 24, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fábio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.netlify.app/project/rec5004/sec7/" />
+<link rel="canonical" href="https://fhnishida.netlify.app/project/rec5004/sec7/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fábio Nishida" />
+<meta property="og:url" content="https://fhnishida.netlify.app/project/rec5004/sec7/" />
+<meta property="og:title" content="Optimization | Fábio Nishida" />
+<meta property="og:description" content="The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed." /><meta property="og:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec7/index.xml" type="application/rss+xml" title="Fábio Nishida" />
+  
+
+  
+
+
+  
+  <title>Optimization | Fábio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="d1094f0fffc2d49d513b0aca974834fa" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/"><i class="fas fa-book pr-1"></i>Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/project/rec5004/">----------------------</a></li>
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">----------------</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#otimização-numérica">Otimização numérica</a>
+      <ul>
+        <li><a href="#métodos-livres-de-derivadas">Métodos livres de derivadas</a></li>
+        <li><a href="#métodos-baseados-em-gradiente">Métodos baseados em gradiente</a></li>
+      </ul>
+    </li>
+    <li><a href="#encontrando-mqo-por-diferentes-estratégias">Encontrando MQO por diferentes estratégias</a>
+      <ul>
+        <li><a href="#base-mtcars">Base <code>mtcars</code></a></li>
+        <li><a href="#a-minimização-da-função-perda">(a) Minimização da função perda</a></li>
+        <li><a href="#b-método-dos-momentos">(b) Método dos Momentos</a></li>
+        <li><a href="#c-máxima-verossimilhança">(c) Máxima Verossimilhança</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Optimization</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <h2 id="otimização-numérica">Otimização numérica</h2>
+<ul>
+<li>Essa seção tem o objetivo para dar uma intuição sobre alguns algoritmos de otimização numérica.</li>
+<li>Veremos dois grupos/famílias de métodos de otimização: <em>livres de derivadas</em> e <em>baseados em gradiente</em>.</li>
+</ul>
+<h3 id="métodos-livres-de-derivadas">Métodos livres de derivadas</h3>
+<h4 id="_grid-search_"><em>Grid Search</em></h4>
+<ul>
+<li>O método mais simples de otimização numérica é o <em>grid search</em>.</li>
+<li>Como o computador não lida com problemas com infinitos valores, discretizamos diversos possíveis valores dos parâmetros de escolha dentro de intervalos.</li>
+<li>Para cada possível combinação de parâmetros, calcula-se a função objetivo e escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.</li>
+<li>O exemplo abaixo considera apenas um parâmetro de escolha 
+
+$\theta$ e, para cada ponto escolhido dentro do intervalo 
+
+$[-1, 1]$, calcula-se a função objetivo:</li>
+</ul>
+<center><img src="../grid_search.png"></center>
+<ul>
+<li>Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis).</li>
+<li>Porém, depende da definição de intervalo para busca do valor ótimo e fica mais preciso com maiores quantidades de pontos.</li>
+<li>Como é necessário fazer o cálculo da função objetivo para cada ponto, o <em>grid search</em> tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimensões:</li>
+</ul>
+<center><img src="../multigrid_search.png" width=60%></center>
+<h4 id="nelder-mead">Nelder-Mead</h4>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=vOYlVvT3W80" target="_blank" rel="noopener">Stats 102A Lesson 8-2 Nelder Mead Method / Algorithm</a></li>
+<li>Nelder-Mead também conhecido como método simplex downhill, é um método de busca direta que é frequentemente aplicado a problemas de otimização não linear para os quais as derivadas podem não ser conhecidas.</li>
+<li>Ele opera em um simplex de <em>n + 1</em> pontos em um espaço <em>n</em>-dimensional e move e transforma iterativamente o simplex para encontrar o mínimo ou máximo de uma função objetivo.</li>
+</ul>
+<center><img src="../nelder-mead_iter.png" width=60%></center>
+<center><img src="../nelder-mead_example.gif" ></center>
+<!-- #### _Simulated Annealing_ (SANN) -->
+<!-- - O _simulated annealing_ é um algoritmo de otimização probabilístico que busca aproximar o ótimo global de uma função dada. -->
+<!-- - O nome do algoritmo vem do recozimento (_annealing_) em metalurgia, uma técnica que envolve o aquecimento e resfriamento controlado de um material para alterar suas propriedades físicas. -->
+<!-- - O algoritmo começa com uma solução inicial e, em seguida, melhora iterativamente a solução atual perturbando-a aleatoriamente e aceitando a perturbação com uma certa probabilidade. A probabilidade de aceitar uma solução pior é inicialmente alta e diminui gradualmente à medida que o número de iterações aumenta. -->
+<!-- <center><img src="../sann.gif" width=60%></center> -->
+<h3 id="métodos-baseados-em-gradiente">Métodos baseados em gradiente</h3>
+<ul>
+<li><a href="https://towardsdatascience.com/bfgs-in-a-nutshell-an-introduction-to-quasi-newton-methods-21b0e13ee504" target="_blank" rel="noopener">BFGS in a Nutshell: An Introduction to Quasi-Newton Methods</a></li>
+<li>Há uma outra família de algoritmos de otimização que utilizam o gradiente</li>
+</ul>
+<h4 id="_gradient-ascent-descent_"><em>Gradient Ascent (Descent)</em></h4>
+<ul>
+<li>O algoritmo desta família mais simples é o <em>gradient ascent</em> (<em>descent</em>).</li>
+<li>Queremos encontrar um 
+
+${\theta}^{*}$ que é o parâmetro que maximiza a função objetivo</li>
+<li>Passos para encontrar um máximo:
+<ol>
+<li>Comece com algum valor inicial de parâmetro, 
+
+${\theta}^0$</li>
+<li>Calcula-se o gradiente (vetor de derivadas parciais) avalia-se a possibilidade de &ldquo;andar para cima&rdquo; a um valor mais alto</li>
+<li>Caso possa, anda para 
+
+${\theta}^1$
+
+
+$$\theta^1 = \theta^0 + \alpha f'(\theta^0)$$
+ou, no caso multivariado:
+
+
+$$\boldsymbol{\theta}^1 = \boldsymbol{\theta}^0 + \alpha \nabla f(\boldsymbol{\theta}^0),$$
+em que 
+
+$\alpha$ é a taxa de aprendizado, e 
+
+$\nabla f(\cdot)$ é o gradiente (vetor de derivadas parciais).</li>
+<li>Repita os passos (2) e (3), andando para um novo 
+
+${\theta}^2, {\theta}^3, ...$ até atingir um ponto máximo</li>
+</ol>
+</li>
+</ul>
+<center><img src="../steepest_ascent.png"></center>
+<ul>
+<li>Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
+<ul>
+<li>No exemplo, se os chutes iniciais forem 
+
+${\theta}^0_A$ ou 
+
+${\theta}^0_B$, então consegue atingir o máximo global.</li>
+<li>Já se o chute inicial for 
+
+${\theta}^0_C$, então ele acaba atingindo um máximo local com 
+
+${\theta}^*$ (menor do que o máximo global em 
+
+${\theta}^{**}$).</li>
+</ul>
+</li>
+</ul>
+<video width="500px" height="500px" controls="controls"/>
+    <source src="../local-maxima.mp4" type="video/mp4">
+</video>
+<ul>
+<li>Por outro lado, é um método mais eficiente, pois calcula-se a função objetivo uma vez a cada passo, além de ser mais preciso nas estimações.</li>
+</ul>
+<h4 id="método-de-newton">Método de Newton</h4>
+<ul>
+<li>O método de Newton é um algoritmo de segunda ordem que usa tanto o gradiente quanto a matriz Hessiana da função objetivo para iterativamente atualizar a solução.</li>
+<li>Agora, a segunda derivada permite dar &ldquo;passos&rdquo; mais otimizados, acelerando a convergência:
+
+
+$$\theta^{n+1} = \theta^n + \frac{1}{f''(\theta^n)} f'(\theta^n)$$
+ou, no caso multivariado:
+
+
+$$\boldsymbol{\theta}^{n+1} = \boldsymbol{\theta}^n + \mathcal{H}^{-1}(\theta^n) \nabla f(\boldsymbol{\theta}^n),$$
+em que 
+
+$\mathcal{H}(\cdot)$ é a Hessiana (matriz de segundas derivadas parciais).</li>
+</ul>
+<center><img src="../gradient_newton.png"></center>
+<h4 id="métodos-de-quasi-newton">Métodos de quasi-Newton</h4>
+<ul>
+<li>Como o cálculo da Hessiana (e a sua inversão) é computacionalmente demandante, diversos métodos propõem cálculos para aproximações da Hessiana a partir do gradiente para agilizar o algoritmo.</li>
+<li>A qualidade da aproximação da matriz Hessiana pode afetar a eficácia destes métodos e suas taxas de convergência.</li>
+<li>Alguns exemplos são:
+<ul>
+<li><code>BFGS</code> (Broyden-Fletcher-Goldfarb-Shanno): um dos métodos quasi-newtonianos mais populares</li>
+<li><code>nlminb</code> (Nonlinear Minimization subject to Box Constraints): otimização sem restrições ou com restrições de caixa usando rotinas PORT do FORTRAN.</li>
+</ul>
+</li>
+</ul>
+</br>
+<h2 id="encontrando-mqo-por-diferentes-estratégias">Encontrando MQO por diferentes estratégias</h2>
+<ul>
+<li>Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) minimização da função perda, de (b) método dos momentos e de (c) máxima verossimilhança.</li>
+<li>Em cada uma delas, temos uma função objetivo distinta, que será avaliada a partir de um vetor com dois parâmetros, 
+
+$ \hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}. $ No R, vamos chamar esse vetor de <code>theta</code>.</li>
+</ul>
+<h3 id="base-mtcars">Base <code>mtcars</code></h3>
+<p>Usaremos dados extraídos da <em>Motor Trend</em> US magazine de 1974, que analisa o
+consumo de combustível e 10 aspectos técnicos de 32 automóveis.</p>
+<p>No <em>R</em>, a base de dados <code>mtcars</code> já está pré-carregada no programa e queremos estimar o seguinte modelo:
+
+
+ $$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon, $$ 
+em que:</p>
+<ul>
+<li><em>mpg</em>: consumo de combustível (milhas por galão)</li>
+<li><em>hp</em>: potência (cavalos-vapor)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Regressao MQO</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">mpg</span> <span class="o">~</span> <span class="n">hp</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)          hp 
+</span></span><span class="line"><span class="cl">## 30.09886054 -0.06822828
+</span></span></code></pre></div><h3 id="a-minimização-da-função-perda">(a) Minimização da função perda</h3>
+<ul>
+<li>A função perda adotada pela Teoria da Decisão é a <strong>função de soma dos quadrados dos resíduos</strong></li>
+<li>Por essa estratégia, queremos encontrar as estimativas que <strong>minimizam</strong> essa função.</li>
+</ul>
+<h4 id="1-criar-função-perda-que-calcula-a-soma-dos-resíduos-quadráticos">1. Criar função perda que calcula a soma dos resíduos quadráticos</h4>
+<ul>
+<li>A função para calcular a soma dos resíduos quadráticos recebe como inputs:
+<ul>
+<li>um <strong>vetor</strong> de possíveis valores 
+
+$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0,\ \hat{\beta}_1 \right\}$</li>
+<li>uma <strong>lista</strong> com
+<ul>
+<li>um <em>texto</em> com o nome da variável dependente</li>
+<li>um <em>vetor de texto</em> com os nomes das variáveis explicativas</li>
+<li>uma <em>base de dados</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">resid_quad</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">fn_args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo argumentos da lista fn_args</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yname</span> <span class="o">=</span> <span class="n">fn_args[[1]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">xname</span> <span class="o">=</span> <span class="n">fn_args[[2]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dta</span> <span class="o">=</span> <span class="n">fn_args[[3]]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo os parâmetros de theta</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b0hat</span> <span class="o">=</span> <span class="n">theta[1]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b1hat</span> <span class="o">=</span> <span class="n">theta[2]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># valores ajustados</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span> <span class="c1"># desvios = observados - ajustados</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">sum</span><span class="p">(</span><span class="n">ehat^2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="2-otimização">2. Otimização</h4>
+<ul>
+<li>Agora encontraremos os parâmetros que minimizam a função perda</li>
+</ul>
+
+
+$$ \underset{\hat{\boldsymbol{\theta}}}{\text{argmin}} \sum_{i=1}^{N}\hat{\varepsilon}^2_i \quad = \quad \underset{\hat{\boldsymbol{\theta}}}{\text{argmin}} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $$
+<ul>
+<li>Para isto usaremos a função <code>opm()</code> do pacote <code>optimx</code> que retorna os parâmetros que minimizam uma função (equivalente ao <em>argmin</em>):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">opm(par, fn, gr=NULL, hess=NULL, lower=-Inf, upper=Inf, </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="l">method=c(&#34;Nelder-Mead&#34;,&#34;BFGS&#34;), hessian=FALSE,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="l">control=list(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="l">...)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">par</span><span class="p">:</span><span class="w"> </span><span class="l">a vector of initial values for the parameters.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">fn</span><span class="p">:</span><span class="w"> </span><span class="l">A function to be minimized (or maximized), with a first argument the vector of parameters over which minimization is to take place. It should return a scalar result.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">gr</span><span class="p">:</span><span class="w"> </span><span class="l">A function to return (as a vector) the gradient for those methods that can use this information.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">hess</span><span class="p">:</span><span class="w"> </span><span class="l">A function to return (as a symmetric matrix) the Hessian of the objective function for those methods that can use this information.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">lower, upper</span><span class="p">:</span><span class="w"> </span><span class="l">Bounds on the variables for methods such as &#34;L-BFGS-B&#34; that can handle box (or bounds) constraints. These are vectors.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l">A vector of the methods to be used, each as a character string. Possible method codes are &#34;Nelder-Mead&#34;, &#34;BFGS&#34;, &#34;CG&#34;, &#34;L-BFGS-B&#34;, &#34;nlm&#34;, &#34;nlminb&#34;, &#34;spg&#34;, &#34;ucminf&#34;, &#34;newuoa&#34;, &#34;bobyqa&#34;, &#34;nmkb&#34;, &#34;hjkb&#34;, &#34;Rcgmin&#34;, and/or &#34;Rvmmin&#34;. It may be needed to install some optimization packages to perform them.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">hessian</span><span class="p">:</span><span class="w"> </span><span class="l">A logical control that if TRUE forces the computation of an approximation to the Hessian at the final set of parameters.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">control</span><span class="p">:</span><span class="w"> </span><span class="l">A list of control parameters. See ‘Details’.</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>Colocaremos como input:
+<ul>
+<li>a função perda criada <code>resid_quad()</code></li>
+<li>um chute inicial dos parâmetros
+<ul>
+<li>Note que a estimação pode ser mais ou menos sensível ao valores iniciais, dependendo do método de otimização utilizado</li>
+<li>O mais comum é encontrar como chute inicial um vetor de zeros <code>c(0, 0)</code>, por ser mais neutro em relação ao sinal das estimativas</li>
+</ul>
+</li>
+<li>Por padrão, temos o argumento <code>hessian = FALSE</code>, coloque <code>TRUE</code> se quiser calcular o erro padrão, estatística t e p-valor das estimativas.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimação por BFGS</span>
+</span></span><span class="line"><span class="cl"><span class="n">theta_ini</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="c1"># Chute inicial de b0, b1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">min_loss</span> <span class="o">=</span> <span class="n">optimx</span><span class="o">::</span><span class="nf">opm</span><span class="p">(</span><span class="n">par</span><span class="o">=</span><span class="n">theta_ini</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">resid_quad</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">fn_args</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="s">&#34;mpg&#34;</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="n">mtcars</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">method</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;Nelder-Mead&#34;</span><span class="p">,</span> <span class="s">&#34;BFGS&#34;</span><span class="p">,</span> <span class="s">&#34;nlminb&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">min_loss</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
+</span></span><span class="line"><span class="cl">## Nelder-Mead 30.0964 -0.0682 447.6744     93     NA           0    0    1  0.02
+</span></span><span class="line"><span class="cl">## BFGS        30.0989 -0.0682 447.6743     31      5           0    1    1  0.00
+</span></span><span class="line"><span class="cl">## nlminb      30.0989 -0.0682 447.6743     11     16           0    1    1  0.00
+</span></span></code></pre></div></br>
+<h3 id="b-método-dos-momentos">(b) Método dos Momentos</h3>
+<ul>
+<li>
+<p><a href="https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf" target="_blank" rel="noopener">Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)</a></p>
+</li>
+<li>
+<p><a href="https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199" target="_blank" rel="noopener">Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)</a></p>
+</li>
+<li>
+<p>Para estimar via GMM com <strong>dois momentos</strong> precisamos construir vetores relacionados aos seguintes momentos:</p>
+</li>
+</ul>
+
+
+$$ E(\boldsymbol{\varepsilon}) = 0 \qquad \text{ e } \qquad E(\boldsymbol{x \varepsilon}) = 0 $$
+<ul>
+<li>
+<p>Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.</p>
+</li>
+<li>
+<p>Os análogos amostrais são:
+
+
+$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} = 0 $$</p>
+</li>
+<li>
+<p>E queremos minimizar:
+
+
+$$ \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2 $$
+em que 
+
+$\alpha$ e 
+
+$\beta$ são dois escalares.</p>
+</li>
+</ul>
+</br>
+<ul>
+<li>Podemos calcular estes dois momentos amostrais em uma única multiplicação matricial.</li>
+<li>Primeiro, considere:</li>
+</ul>
+
+
+$$ \hat{\boldsymbol{\varepsilon}} = \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \qquad \text{e} \qquad \boldsymbol{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix} $$
+<ul>
+<li>
+<p>Vamos juntar uma coluna de 1&rsquo;s com 
+
+$\boldsymbol{x}$ e definir a matriz
+
+
+$$ \boldsymbol{X} = \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix} $$</p>
+</li>
+<li>
+<p>Fazendo a multiplicação matricial entre 
+
+$\hat{\boldsymbol{\varepsilon}}$ e 
+
+$\boldsymbol{X}$, temos o vetor dos momentos amostrais:</p>
+</li>
+</ul>
+<p>
+
+\begin{align} \boldsymbol{m} \equiv \boldsymbol{X}' \hat{\boldsymbol{\varepsilon}} &= \begin{bmatrix} 1 & 1 & \cdots & 1 \\ x_1 & x_2 & \cdots & x_N  \end{bmatrix} \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \\\
+&= \begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}  \propto \begin{bmatrix} \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \end{align}
+em que 
+
+$\propto$ significa &ldquo;proporcional a&rdquo;.</p>
+<ul>
+<li>
+<p>Agora, suponha a matriz de pesos (cuja soma não precisa ser igual a 1)
+
+
+$$ W = \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} $$
+em que 
+
+$\alpha$ e 
+
+$\beta$ são dois escalares.</p>
+</li>
+<li>
+<p>No GMM, queremos fazer com que esses momentos sejam o mais próximos de zero. Um forma de fazer isso é minimizar a soma (ponderada) dos quadrados dos momentos:</p>
+</li>
+</ul>
+
+
+\begin{align} \boldsymbol{m}' \boldsymbol{W m} &= \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
+&= \begin{bmatrix} \alpha \sum^N_{i=1}{\hat{\varepsilon}_i} & \beta \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
+&= \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2
+\end{align}
+<ul>
+<li>Note que, usamos os quadrados dos momentos amostrais, pois minimizar o valor absoluto tende a formar &ldquo;quinas&rdquo; (pontos não-diferenciáveis) na função objetivo.</li>
+</ul>
+<h4 id="otimização-numérica-para-gmm">Otimização Numérica para GMM</h4>
+<h5 id="1-chute-de-valores-iniciais-para-hahahugoshortcode-s38-hbhb-e-hahahugoshortcode-s39-hbhb">1. Chute de valores iniciais para 
+
+$\hat{\beta}_0$ e 
+
+$\hat{\beta}_1$</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">theta</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span> <span class="m">-0.05</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">yname</span> <span class="o">=</span> <span class="s">&#34;mpg&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">xname</span> <span class="o">=</span> <span class="s">&#34;hp&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">dta</span> <span class="o">=</span> <span class="n">mtcars</span>
+</span></span></code></pre></div><h5 id="2-seleção-da-base-de-dados-e-variáveis">2. Seleção da base de dados e variáveis</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extraindo os parâmetros de theta</span>
+</span></span><span class="line"><span class="cl"><span class="n">b0hat</span> <span class="o">=</span> <span class="n">theta[1]</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1hat</span> <span class="o">=</span> <span class="n">theta[2]</span>
+</span></span></code></pre></div><h5 id="3-cálculo-dos-valores-ajustados-e-dos-resíduos">3. Cálculo dos valores ajustados e dos resíduos</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Valores ajustados de y</span>
+</span></span><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Resíduos</span>
+</span></span><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span></code></pre></div><h5 id="4-soma-dos-quadrados-dos-momentos-amostrais">4. Soma dos quadrados dos momentos amostrais</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">m1</span> <span class="o">=</span> <span class="n">ehat</span> <span class="c1"># momento 1</span>
+</span></span><span class="line"><span class="cl"><span class="n">m2</span> <span class="o">=</span> <span class="n">ehat</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># momento 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">sum</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span><span class="n">^2</span> <span class="o">+</span> <span class="nf">sum</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span><span class="n">^2</span> <span class="c1"># soma dos quadrados com mesmos pesos (1 e 1)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 217374633
+</span></span></code></pre></div><ul>
+<li>Note que, como multiplicamos a constante igual a 1 com os resíduos 
+
+$\hat{\varepsilon}$, a 1ª coluna corresponde ao momento amostral 
+
+$\sum^N_{i=1}{\hat{\varepsilon}_i}$ (mas sem dividir por <em>N</em>).</li>
+<li>Já a coluna 2 correspode ao momento amostral 
+
+$\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}$ para a variável <em>hp</em> (mas sem dividir por <em>N</em>).</li>
+<li>Logicamente, para estimar por GMM, precisamos escolher os parâmetros 
+
+$\hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}$ que faça com que a soma dos quadrados dos momentos amostrais se aproxime ao máximo de zero.</li>
+</ul>
+<h5 id="5a-criação-de-função-com-os-momentos-para-opm">5a. Criação de função com os momentos para <code>opm()</code></h5>
+<ul>
+<li>Vamos criar uma função que tem como input um vetor de parâmetros (<code>theta</code>) e uma base de dados (<code>dta</code>), e que retorna uma matriz em que cada coluna representa um momento.</li>
+<li>Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">mom_ols1</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">fn_args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># No gmm(), só pode ter 1 input dos argumentos dessa função</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo argumentos da lista fn_args</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yname</span> <span class="o">=</span> <span class="n">fn_args[[1]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">xname</span> <span class="o">=</span> <span class="n">fn_args[[2]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dta</span> <span class="o">=</span> <span class="n">fn_args[[3]]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo os parâmetros de theta</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b0hat</span> <span class="o">=</span> <span class="n">theta[1]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b1hat</span> <span class="o">=</span> <span class="n">theta[2]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Valores ajustados de y</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Resíduos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Momentos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">m1</span> <span class="o">=</span> <span class="n">ehat</span> <span class="c1"># momento 1</span>
+</span></span><span class="line"><span class="cl">  <span class="n">m2</span> <span class="o">=</span> <span class="n">ehat</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># momento 2</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">sum</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span><span class="n">^2</span> <span class="o">+</span> <span class="nf">sum</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span><span class="n">^2</span> <span class="c1"># soma dos quadrados com mesmos pesos (1 e 1)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="6a-otimização-via-opm">6a. Otimização via <code>opm()</code></h5>
+<ul>
+<li>Assim como na minimização da função perda, vamos usar a função <code>opm()</code> do pacote <code>optimx</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">theta_ini</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">gmm1</span> <span class="o">=</span> <span class="n">optimx</span><span class="o">::</span><span class="nf">opm</span><span class="p">(</span><span class="n">theta_ini</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">mom_ols1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                   <span class="n">fn_args</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="s">&#34;mpg&#34;</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="n">mtcars</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                   <span class="n">method</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Nelder-Mead&#34;</span><span class="p">,</span> <span class="s">&#34;BFGS&#34;</span><span class="p">,</span> <span class="s">&#34;nlminb&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">gmm1</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  p1      p2    value fevals gevals convergence kkt1 kkt2 xtime
+</span></span><span class="line"><span class="cl">## Nelder-Mead  0.0320  0.1009 28256.45     39     NA           0    0    0  0.01
+</span></span><span class="line"><span class="cl">## BFGS        30.0989 -0.0682     0.00     66     11           0    0    0  0.00
+</span></span><span class="line"><span class="cl">## nlminb      30.0989 -0.0682     0.00     54     42           0    0    0  0.03
+</span></span></code></pre></div><h5 id="5b-criação-de-função-com-os-momentos-para-gmm">5b. Criação de função com os momentos para <code>gmm()</code></h5>
+<ul>
+<li>Note que 
+
+$X' \hat{\boldsymbol{\varepsilon}}$ um vetor dos momentos amostrais, mas a função <code>gmm()</code> exige uma matriz de dimensão 
+
+$g \times N$, sendo 
+
+$g$ o número de momentos e 
+
+$N$ o tamanho da amostra.</li>
+<li>No R, precisamos fazer <strong>multiplicação elemento a elemento por linha</strong> do vetor de resíduos 
+
+$\hat{\boldsymbol{\varepsilon}}$ com a matriz de covariadas 
+
+$\boldsymbol{X}$ (neste caso: constante <em>1</em> e <em>hp</em>), na forma:</li>
+</ul>
+<p>
+
+\begin{align} \hat{\boldsymbol{\varepsilon}} \odot \boldsymbol{X}\ =\ \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \odot \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}  \ =\ &\begin{bmatrix} \hat{\varepsilon}_1 & x_1.\hat{\varepsilon}_1  \\ \hat{\varepsilon}_2 & x_2.\hat{\varepsilon}_2 \\ \vdots & \vdots \\ \hat{\varepsilon}_N & x_N.\hat{\varepsilon}_N \end{bmatrix}\\
+\\ &\quad \Big\Downarrow \text{(Soma por coluna)} \\
+&\begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}, \end{align}
+em que 
+
+$\odot$ denota a multiplicação elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.</p>
+<p>Note que, para fazer o GMM no R, não devemos fazer a soma/média de cada coluna (a própria função <code>gmm()</code> fará isso).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">mom_ols2</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">fn_args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># No gmm(), só pode ter 1 input dos argumentos dessa função</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo argumentos da lista fn_args</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yname</span> <span class="o">=</span> <span class="n">fn_args[[1]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">xname</span> <span class="o">=</span> <span class="n">fn_args[[2]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dta</span> <span class="o">=</span> <span class="n">fn_args[[3]]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo os parâmetros de theta</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b0hat</span> <span class="o">=</span> <span class="n">theta[1]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b1hat</span> <span class="o">=</span> <span class="n">theta[2]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Valores ajustados de y</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Resíduos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Matriz de momentos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">m</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="o">*</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">m</span> <span class="c1"># output da função</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="6b-otimização-via-gmm">6b. Otimização via <code>gmm()</code></h5>
+<ul>
+<li>A função <code>gmm()</code> do pacote <code>gmm</code>, assim como a <code>opm()</code>, recebe uma função como argumento.</li>
+<li>No entanto, a função que entra no <code>gmm()</code> deve gerar uma matriz como output, cujas somas/médias das colunas queremos aproximar de zero.</li>
+<li>O argumento de função de otimização deve ser <code>fctopt = &quot;nlminb&quot;</code>, pois <code>fctopt = &quot;optim&quot;</code> é mais instável</li>
+<li>Note que, além do vetor de parâmetros, a função que entra como argumento (<code>gmm_ols()</code> neste caso) deve ter, no máximo, mais um argumento.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">gmm2</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">::</span><span class="nf">gmm</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">g</span><span class="o">=</span><span class="n">mom_ols2</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">  <span class="n">x</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="s">&#34;mpg&#34;</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="n">mtcars</span><span class="p">),</span> <span class="c1"># joga no 2o arg de ols_mom (fn_args)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">t0</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> <span class="c1"># chute inicial de theta</span>
+</span></span><span class="line"><span class="cl">  <span class="n">optfct</span> <span class="o">=</span> <span class="s">&#34;nlminb&#34;</span> <span class="c1"># função de otimização</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">gmm2</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##    Theta[1]    Theta[2] 
+</span></span><span class="line"><span class="cl">## 30.09886026 -0.06822828
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Comparando com estimativas via lm()</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## (Intercept)          hp 
+</span></span><span class="line"><span class="cl">## 30.09886054 -0.06822828
+</span></span></code></pre></div></br>
+<h3 id="c-máxima-verossimilhança">(c) Máxima Verossimilhança</h3>
+<ul>
+<li><a href="https://github.com/woerman/ResEcon703" target="_blank" rel="noopener">ResEcon 703</a> - Week 6 (University of Massachusetts Amherst)</li>
+<li>A função objetivo é a função de verossimilhança que, ao contrário da função de soma de quadrado dos resíduos, queremos maximizá-la</li>
+</ul>
+<h4 id="intuição-do-cálculo-da-função-de-verossimilhança">Intuição do cálculo da função de verossimilhança</h4>
+<ul>
+<li>
+<p>Apenas para ilustrar a construção da função de verossimilhança, 
+
+$\mathcal{L}$, considere um modelo de probabilidade linear:
+
+
+$$ \text{am} = \beta_0 + \beta_1 \text{cyl} + \varepsilon, $$
+em que <em>cyl</em> é a quantidade de cilindros do carro, e <em>am</em> é uma variável <em>dummy</em> que é igual a 1 se o carro for automático e 0 caso contrário.</p>
+</li>
+<li>
+<p>Queremos encontrar 
+
+$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1 \right\}$ que maximizam a função de verossimilhança.</p>
+</li>
+<li>
+<p>Considere um chute de parâmetros 
+
+$\hat{\boldsymbol{\theta}}_A = \left\{ \hat{\beta}^A_0 = 1.3, \hat{\beta}^A_1 = -0.14 \right\}$ que gerem os seguintes valores preditos/ajustados (probabilidades):</p>
+</li>
+</ul>
+<center><img src="../likelihood_A.png" width=80%></center>
+<ul>
+<li>
+<p>Logo, a verossimilhança, dado os parâmetros 
+
+$\hat{\boldsymbol{\theta}}_A$ é
+
+
+$$ \mathcal{L}(\hat{\boldsymbol{\theta}}_A) = 46\% \times 46\% \times 74\% \times 54\% \times 82\% = 6,9\% $$</p>
+</li>
+<li>
+<p>Agora, considere um segundo chute de parâmetros 
+
+$\hat{\boldsymbol{\theta}}_B = \left\{ \hat{\beta}^B_0=1.0, \hat{\beta}^B_1=-0.10 \right\}$ que gerem as seguintes probabilidades:</p>
+</li>
+</ul>
+<center><img src="../likelihood_B.png" width=80%></center>
+<ul>
+<li>Então, a verossimilhança, dado 
+
+$\hat{\boldsymbol{\theta}}_B$, é
+
+
+$$ \mathcal{L}(\hat{\boldsymbol{\theta}}_B) = 40\% \times 40\% \times 60\% \times 60\% \times 80\% = 4,6\% $$</li>
+<li>Como 
+
+$\mathcal{L}\left(\hat{\boldsymbol{\theta}}_A\right) = 6,9\% > 4,6\% = \mathcal{L}\left(\hat{\boldsymbol{\theta}}_B\right)$, então os parâmetros 
+
+$\hat{\boldsymbol{\theta}}_A$ se mostram mais adequados em relação a 
+
+$\hat{\boldsymbol{\theta}}_B$</li>
+<li>Na estratégia de máxima verossimilhança (ML), escolhe-se o conjunto de parâmetros 
+
+$\hat{\boldsymbol{\theta}}^*$ que maximiza a função de verossimilhança (ou log-verossimilhança).</li>
+</ul>
+<h4 id="otimização-numérica-para-máxima-verossimilhança">Otimização Numérica para Máxima Verossimilhança</h4>
+<ul>
+<li>
+<p>Em nosso modelo
+
+
+ $$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon, $$ 
+queremos estimar 3 parâmetros
+
+
+$$ \hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma} \right\}, $$
+em que 
+
+$\hat{\sigma}$ é desvio padrão do resíduo.</p>
+</li>
+<li>
+<p>No modelo de probabilidade linear, as probabilidades usadas para calcular a verossimilhança são os próprios valores ajustados (probabilidades) dos carros serem automáticos (manuais), dado que são automáticos (manuais).</p>
+</li>
+<li>
+<p>Já no modelo linear &ldquo;comum&rdquo;, usamos a função de densidade de probabilidade, a partir de uma distribuição normal com uma variância 
+
+$\hat{\sigma}^2$, para avaliar a &ldquo;probabilidade&rdquo; de cada observação, 
+
+$y_i$, ser o valor ajustado 
+
+$\hat{y}_i$.</p>
+</li>
+</ul>
+<p>A função log-verossimilhança é dada por
+
+
+$$ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \ln{L(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} = \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $$
+em que a distribuição condicional de cada 
+
+$y_i$ é</p>
+<p>
+
+$$ y_i | x_i \sim N(\hat{\beta}_0 + \hat{\beta}_1 x_i, \hat{\sigma}^2) $$
+o que implica que</p>
+
+
+$$\varepsilon_i | x_i \sim N(0, \sigma^2)$$
+<center><img src="../mle.jpg"></center> 
+<ul>
+<li>Como demonstra a figura acima, assumimos que o erro 
+
+$\varepsilon$ é normalmente distribuído para todo 
+
+$x$, com a mesma variância 
+
+$\sigma^2$ (homocedasticidade)</li>
+</ul>
+<h4 id="otimização-numérica-para-máxima-verossimilhança-1">Otimização Numérica para Máxima Verossimilhança</h4>
+<ul>
+<li>
+<p>Nosso objetivo é
+
+
+$$ \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $$</p>
+</li>
+<li>
+<p>Usaremos as funções <code>opm()</code> e <code>mle2()</code> do pacote <code>bbmle</code> para desempenhar a otimização numérica. Precisamos usar como input:</p>
+<ul>
+<li>Alguns valores inicias dos parâmetros, 
+
+$\hat{\boldsymbol{\theta}}^0 = \left\{ \hat{\beta}^0_0, \hat{\beta}^0_1, \hat{\sigma}^0 \right\}$</li>
+<li>Uma função que tome esses parâmetros como argumento e calcule a
+log-verossimilhança, 
+
+$\ln{L(\boldsymbol{\hat{\boldsymbol{\theta}}})}$.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Como as funções de otimização costumam encontrar o mínimo de uma função objetivo, precisamos adaptar o output para o negativo função de log-verossimilhança. Ao minimizar o negativo de log-lik, estamos maximizando log-lik.</p>
+</blockquote>
+<!-- <center><img src="../mle.jpg"></center> -->
+<p>Passos para estimar uma regressão por máxima verossimilhança:</p>
+<ol>
+<li>Chutar valores iniciais de</li>
+<li>Calcular os valores ajustados, 
+
+$\hat{y}$</li>
+<li>Calcular a densidade para cada 
+
+$y_i$, usando 
+
+$f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})$</li>
+<li>Calcular a log-verossimilhança, 
+
+$\sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}$</li>
+</ol>
+<h5 id="1-chute-de-valores-iniciais-para-hahahugoshortcode-s85-hbhb-e-hahahugoshortcode-s86-hbhb">1. Chute de valores iniciais para 
+
+$\hat{\beta}_0, \hat{\beta}_1$ e 
+
+$\hat{\sigma}^2$</h5>
+<ul>
+<li>Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância (
+
+$\hat{\sigma}^2$).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">theta</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span> <span class="m">-.05</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># (b0hat, b1hat , sighat)</span>
+</span></span></code></pre></div><h5 id="2-seleção-da-base-de-dados-e-variáveis-1">2. Seleção da base de dados e variáveis</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Inicializando</span>
+</span></span><span class="line"><span class="cl"><span class="n">yname</span> <span class="o">=</span> <span class="s">&#34;mpg&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">xname</span> <span class="o">=</span> <span class="s">&#34;hp&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">dta</span> <span class="o">=</span> <span class="n">mtcars</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extraindo os parâmetros de theta</span>
+</span></span><span class="line"><span class="cl"><span class="n">b0hat</span> <span class="o">=</span> <span class="n">theta[1]</span>
+</span></span><span class="line"><span class="cl"><span class="n">b1hat</span> <span class="o">=</span> <span class="n">theta[2]</span>
+</span></span><span class="line"><span class="cl"><span class="n">sighat</span> <span class="o">=</span> <span class="n">theta[3]</span>
+</span></span></code></pre></div><h5 id="3-cálculo-dos-valores-ajustados-e-das-densidades">3. Cálculo dos valores ajustados e das densidades</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Calculando valores ajustados de y</span>
+</span></span><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 24.50 24.50 25.35 24.50 21.25 24.75
+</span></span></code></pre></div><h5 id="4-cálculo-das-densidades">4. Cálculo das densidades</h5>
+
+
+$$ f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma}) $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Calculando as densidades de probabilidade de cada linha</span>
+</span></span><span class="line"><span class="cl"><span class="n">ypdf</span> <span class="o">=</span> <span class="nf">dnorm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">yhat</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">sighat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="n">ypdf</span><span class="p">,</span> <span class="m">4</span><span class="p">))</span> <span class="c1"># Primeiros valores da densidade</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.0431 0.0431 0.0885 0.0600 0.0885 0.0008
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">prod</span><span class="p">(</span><span class="n">ypdf</span><span class="p">)</span> <span class="c1"># Verossimilhança</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.400141e-61
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">sum</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">ypdf</span><span class="p">))</span> <span class="c1"># Log-Verossimilhança</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -140.1211
+</span></span></code></pre></div><ul>
+<li>Agora, vamos juntar visualizar os 6 primeiros elementos dos objetos trabalhados:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Juntando os vetores e visualizando os primeiros valores</span>
+</span></span><span class="line"><span class="cl"><span class="n">tab</span> <span class="o">=</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">yhat</span><span class="p">,</span> <span class="n">ypdf</span><span class="o">=</span><span class="nf">round</span><span class="p">(</span><span class="n">ypdf</span><span class="p">,</span> <span class="m">4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      y   x  yhat   ypdf
+</span></span><span class="line"><span class="cl">## 1 21.0 110 24.50 0.0431
+</span></span><span class="line"><span class="cl">## 2 21.0 110 24.50 0.0431
+</span></span><span class="line"><span class="cl">## 3 22.8  93 25.35 0.0885
+</span></span><span class="line"><span class="cl">## 4 21.4 110 24.50 0.0600
+</span></span><span class="line"><span class="cl">## 5 18.7 175 21.25 0.0885
+</span></span><span class="line"><span class="cl">## 6 18.1 105 24.75 0.0008
+</span></span></code></pre></div><ul>
+<li>Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
+<img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-3.png" width="672" /></li>
+<li>Logo, a verossimilhança (produto de todas densidades de probabilidade) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.</li>
+</ul>
+<h5 id="5-calculando-a-log-verossimilhança">5. Calculando a Log-Verossimilhança</h5>
+<p>A log-verossimilhança é a soma do log de todas probabilidades:</p>
+
+
+$$ \mathcal{l}(\hat{\beta}_0, \hat{\beta}_1, \hat{\sigma}) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma}) \right]} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Calculando a log-verossimilhanca</span>
+</span></span><span class="line"><span class="cl"><span class="n">loglik</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">ypdf</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">loglik</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -140.1211
+</span></span></code></pre></div><h5 id="6a-criando-a-função-de-log-verossimilhança-para-opm">6a. Criando a Função de Log-Verossimilhança para <code>opm()</code></h5>
+<ul>
+<li>Aqui, vamos <em>minimizar o negativo</em> da função de log-verossimilhança
+
+
+$$ \min_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} -\sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}} = \max_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}} $$</li>
+<li>Juntando tudo que fizemos anteriormente, podemos criar uma função no R que calcular a função de log-verossimilhança.</li>
+<li><strong>IMPORTANTE</strong>: Prefira já calcular a log-densidade de probabilidade direto do <code>dnorm()</code>, pois otimização fica mais estável.</li>
+<li>Isso não foi feito anteriormente por questão didática, mas será feito abaixo:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Criando função para calcular log-verossimilhanca de OLS</span>
+</span></span><span class="line"><span class="cl"><span class="n">loglik1</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">fn_args</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yname</span> <span class="o">=</span> <span class="n">fn_args[[1]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">xname</span> <span class="o">=</span> <span class="n">fn_args[[2]]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dta</span> <span class="o">=</span> <span class="n">fn_args[[3]]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo os parâmetros de theta</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b0hat</span> <span class="o">=</span> <span class="n">theta[1]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">b1hat</span> <span class="o">=</span> <span class="n">theta[2]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sighat</span> <span class="o">=</span> <span class="n">theta[3]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">## Calculando valores ajustados de y</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Calculando as densidades de probabilidade de cada linha</span>
+</span></span><span class="line"><span class="cl">  <span class="n">log_ypdf</span> <span class="o">=</span> <span class="nf">dnorm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">yhat</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">sighat</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Calculando a log-verossimilhanca</span>
+</span></span><span class="line"><span class="cl">  <span class="n">loglik</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">log_ypdf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Retornando o negativo da log-verossimilanca</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">loglik</span> <span class="c1"># Negativo, pois mle2() minimiza e queremos maximizar</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="7a-otimização-via-opm">7a. Otimização via <code>opm()</code></h5>
+<ul>
+<li><strong>IMPORTANTE</strong>: o chute inicial do erro padrão dos erros (<em>sighat</em>) deve ser um valor alto, pois o R tem um certo limite de casas decimais e acaba aproximando para zero (0) as probabilidades muito baixas (e o produtório da fórmula da Verossimilhança acaba ficando igual a zero).</li>
+<li>Similar aos anteriores:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">theta_ini</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">mle1</span> <span class="o">=</span> <span class="n">optimx</span><span class="o">::</span><span class="nf">opm</span><span class="p">(</span><span class="n">par</span><span class="o">=</span><span class="n">theta_ini</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">loglik1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                   <span class="n">fn_args</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="s">&#34;mpg&#34;</span><span class="p">,</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="n">mtcars</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                   <span class="n">method</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Nelder-Mead&#34;</span><span class="p">,</span> <span class="s">&#34;BFGS&#34;</span><span class="p">,</span> <span class="s">&#34;nlminb&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">mle1</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  p1      p2     p3   value fevals gevals convergence kkt1 kkt2
+</span></span><span class="line"><span class="cl">## Nelder-Mead 30.1003 -0.0682 3.7400 87.6193    196     NA           0    0    1
+</span></span><span class="line"><span class="cl">## BFGS        30.0989 -0.0682 3.7403 87.6193     52     20           0    1    1
+</span></span><span class="line"><span class="cl">## nlminb      30.0989 -0.0682 3.7403 87.6193     33     67           0    1    1
+</span></span><span class="line"><span class="cl">##             xtime
+</span></span><span class="line"><span class="cl">## Nelder-Mead  0.01
+</span></span><span class="line"><span class="cl">## BFGS         0.02
+</span></span><span class="line"><span class="cl">## nlminb       0.03
+</span></span></code></pre></div><h5 id="6b-criando-a-função-de-log-verossimilhança-para-mle2">6b. Criando a Função de Log-Verossimilhança para <code>mle2()</code></h5>
+<ul>
+<li>A função <code>mle2()</code> do pacote <code>bbmle</code>, assim como a <code>opm()</code>, recebe uma função como argumento.</li>
+<li>A função que entra como argumento (<code>loglik()</code> neste caso) deve ter apenas como argumentos apenas os parâmetros que queremos otimizar. Além disso, caso seja necessário incluir algum outro argumento, deve ser inserido no argumento <code>data</code> da função <code>mle2()</code> como um objeto <em>list</em>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Criando função para calcular log-verossimilhanca de OLS</span>
+</span></span><span class="line"><span class="cl"><span class="n">loglik</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">b0hat</span><span class="p">,</span> <span class="n">b1hat</span><span class="p">,</span> <span class="n">sighat</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extraindo as variáveis da base em vetores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">y</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">yname]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">x</span> <span class="o">=</span> <span class="n">dta[</span><span class="p">,</span><span class="n">xname]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1">## Calculando valores ajustados de y</span>
+</span></span><span class="line"><span class="cl">  <span class="n">yhat</span> <span class="o">=</span> <span class="n">b0hat</span> <span class="o">+</span> <span class="n">b1hat</span> <span class="o">*</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Calculando as densidades de probabilidade de cada linha</span>
+</span></span><span class="line"><span class="cl">  <span class="n">log_ypdf</span> <span class="o">=</span> <span class="nf">dnorm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mean</span> <span class="o">=</span> <span class="n">yhat</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">sighat</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Calculando a log-verossimilhanca</span>
+</span></span><span class="line"><span class="cl">  <span class="n">loglik</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">log_ypdf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1">## Retornando o negativo da log-verossimilanca</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span><span class="n">loglik</span> <span class="c1"># Negativo, pois mle2() minimiza e queremos maximizar</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="7b-otimização-via-mle2">7b. Otimização via <code>mle2()</code></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">## Maximizando a função log-verossimilhança de OLS</span>
+</span></span><span class="line"><span class="cl"><span class="n">mle2</span> <span class="o">=</span> <span class="n">bbmle</span><span class="o">::</span><span class="nf">mle2</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">minuslogl</span><span class="o">=</span><span class="n">loglik</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">start</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">b0hat</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">b1hat</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sighat</span><span class="o">=</span><span class="m">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">yname</span> <span class="o">=</span> <span class="s">&#34;mpg&#34;</span><span class="p">,</span> <span class="n">xname</span> <span class="o">=</span> <span class="s">&#34;hp&#34;</span><span class="p">,</span> <span class="n">dta</span> <span class="o">=</span> <span class="n">mtcars</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">hessian</span><span class="o">=</span><span class="bp">T</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">mle2</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## bbmle::mle2(minuslogl = loglik, start = list(b0hat = 0, b1hat = 0, 
+</span></span><span class="line"><span class="cl">##     sighat = 1), data = list(yname = &#34;mpg&#34;, xname = &#34;hp&#34;, dta = mtcars), 
+</span></span><span class="line"><span class="cl">##     hessian.opts = T)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">##       b0hat       b1hat      sighat 
+</span></span><span class="line"><span class="cl">## 30.09536167 -0.06820922  3.74137621 
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Log-likelihood: -87.62
+</span></span></code></pre></div></br>
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec8"  class="btn btn-primary px-3 py-3">👉 Proceed to Multiple Regression</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

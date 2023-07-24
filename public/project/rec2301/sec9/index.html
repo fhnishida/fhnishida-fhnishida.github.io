@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: July 24, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fábio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="This page is about statistical hypothesis testing using the Wald test. It explains how to construct hypothesis tests using matrices and vectors and provides examples of linear constraints. The page also includes R code for evaluating the null hypothesis with a single constraint and multiple linear constraints. Additionally, it discusses the F-test and provides an example using the mlb1 dataset from Wooldridge (2006)." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.netlify.app/project/rec2301/sec9/" />
+<link rel="canonical" href="https://fhnishida.netlify.app/project/rec2301/sec9/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fábio Nishida" />
+<meta property="og:url" content="https://fhnishida.netlify.app/project/rec2301/sec9/" />
+<meta property="og:title" content="Testes de Hipótese | Fábio Nishida" />
+<meta property="og:description" content="This page is about statistical hypothesis testing using the Wald test. It explains how to construct hypothesis tests using matrices and vectors and provides examples of linear constraints. The page also includes R code for evaluating the null hypothesis with a single constraint and multiple linear constraints. Additionally, it discusses the F-test and provides an example using the mlb1 dataset from Wooldridge (2006)." /><meta property="og:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec2301/sec9/index.xml" type="application/rss+xml" title="Fábio Nishida" />
+  
+
+  
+
+
+  
+  <title>Testes de Hipótese | Fábio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="e03fc5946f782fba6319ebaadd8a9e31" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Principal
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/"><i class="fas fa-book pr-1"></i>Principal</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/project/rec2301/">----------------------</a></li>
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec1/">Ferramentas do R</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec2/">Programação em R</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec3/">Manipulação de Dados</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec4/">Manipulação via dplyr</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec6/">Distribuições</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec5/">Visualização de Dados</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec7/">Regressão Simples</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec8/">Regressão Múltipla</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec2301/sec9/">Testes de Hipótese</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec2301/sec10/">Otimização Numérica</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#teste-de-wald">Teste de Wald</a>
+      <ul>
+        <li><a href="#uma-restrição-linear">Uma restrição linear</a></li>
+        <li><a href="#múltiplas-restrições-lineares">Múltiplas restrições lineares</a></li>
+        <li><a href="#aplicando-no-r-1">Aplicando no R</a></li>
+      </ul>
+    </li>
+    <li><a href="#teste-f">Teste F</a>
+      <ul>
+        <li><a href="#aplicando-no-r-2">Aplicando no R</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Testes de Hipótese</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <ul>
+<li>Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.</li>
+</ul>
+<h2 id="teste-de-wald">Teste de Wald</h2>
+<ul>
+<li>
+<p>Considere:</p>
+<ul>
+<li>
+
+$G$ o número de restrições lineares</li>
+<li>
+
+$\boldsymbol{\beta}$ é um vetor de parâmetros 
+
+$(K+1) \times 1$</li>
+<li>
+
+$\boldsymbol{h}$ é um vetor de constantes 
+
+$Q \times 1$</li>
+<li>
+
+$\boldsymbol{R}$ é uma matriz 
+
+$G \times (K+1)$, contida por diversos vetores-linha 
+
+$\boldsymbol{r}'_g$ de dimensões 
+
+$1 \times (K+1)$, para 
+
+$g=1, 2, ..., Q$</li>
+<li>Modelo multivariado:</li>
+</ul>
+
+
+$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + u$$
+</li>
+<li>
+<p>A partir destas matrizes e vetores, é possível construir testes de hipótese na forma:
+
+
+\begin{align}
+\text{H}_0: &\underset{G\times (K+1)}{\boldsymbol{R}} \underset{(K+1)\times 1}{\boldsymbol{\beta}} = \underset{G \times 1}{\boldsymbol{h}} \\
+\text{H}_0: &\left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \vdots \\ \boldsymbol{r}'_{G} \end{matrix} \right] \boldsymbol{\beta} = \left[ \begin{matrix} h_1 \\ h_2 \\ \vdots \\ h_G \end{matrix} \right] \\
+\text{H}_0: &\left\{ \begin{matrix} \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 \\ \boldsymbol{r}'_2 \boldsymbol{\beta} = h_2 \\ \vdots \\ \boldsymbol{r}'_G \boldsymbol{\beta} = h_G \end{matrix} \right.
+\end{align}</p>
+</li>
+</ul>
+<h3 id="uma-restrição-linear">Uma restrição linear</h3>
+<ul>
+<li>
+<p>Considere o modelo:
+
+
+$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$$</p>
+</li>
+<li>
+<p>Logo, há 
+
+$K=2$ variáveis explicativas (e há 3 parâmetros)</p>
+</li>
+<li>
+<p>1 restrição linear 
+
+$\Longrightarrow \ G=1$</p>
+</li>
+<li>
+<p>Logo, neste caso específico, temos
+
+
+$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $$</p>
+</li>
+</ul>
+<h4 id="exemplo-1-hahahugoshortcode-s16-hbhb">Exemplo 1: 
+
+H$_0: \ \beta_1 = 4$</h4>
+<ul>
+<li>Note que 
+
+$h_1 = 4$</li>
+<li>O vetor 
+
+$r'_1$ pode ser escrito como</li>
+</ul>
+
+
+$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $$
+<ul>
+<li>Então, a hipótese nula é
+
+
+$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $$</li>
+</ul>
+<h4 id="exemplo-2-hahahugoshortcode-s21-hbhb">Exemplo 2: 
+
+H$_0: \ \beta_1 + \beta_2 = 2$</h4>
+<ul>
+<li>Note que 
+
+$h_1 = 2$</li>
+<li>O vetor 
+
+$r'_1$ pode ser escrito como</li>
+</ul>
+
+
+$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $$
+<ul>
+<li>Então, a hipótese nula é
+
+
+$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $$</li>
+</ul>
+<h4 id="exemplo-3-hahahugoshortcode-s26-hbhb">Exemplo 3: 
+
+H$_0: \ \beta_1 = \beta_2$</h4>
+<ul>
+<li>
+<p>Note que
+
+
+$$\beta_1 = \beta_2 \iff \beta_1 - \beta_2 = 0 $$</p>
+</li>
+<li>
+<p>Logo, 
+
+$h_1 = 0$</p>
+</li>
+<li>
+<p>O vetor 
+
+$r'_1$ pode ser escrito como</p>
+</li>
+</ul>
+
+
+$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $$
+<ul>
+<li>Então, a hipótese nula é
+
+
+$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $$</li>
+</ul>
+<h4 id="aplicando-no-r">Aplicando no R</h4>
+<h4 id="avaliando-a-hipótese-nula-com-restrição-única">Avaliando a hipótese nula com restrição única</h4>
+<ul>
+<li>
+<p>Para o caso com uma única restrição, assumimos que
+
+
+$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)} r_1})$$</p>
+</li>
+<li>
+<p>Calcula-se a estatística <em>t</em>:
+
+
+$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)}} \boldsymbol{r}_1}} $$</p>
+</li>
+<li>
+<p>Note que, em pequenas amostras, precisamos assumir que 
+
+$ u|x \sim N(0; \sigma^2) $</p>
+</li>
+<li>
+<p>Escolhe-se o nível de significância 
+
+$\alpha$ e rejeita-se a hipótese nula se a estatística <em>t</em> não pertencer ao intervalo de confiança.</p>
+</li>
+</ul>
+<h5 id="continuação-exemplo-75---equação-do-log-do-salário-hora-wooldridge-2006">(Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)</h5>
+<ul>
+<li>Anteriormente, estimamos o seguinte modelo:</li>
+</ul>
+<p>
+
+\begin{align}
+\log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} +\\
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}
+em que:</p>
+<ul>
+<li><code>wage</code>: salário médio por hora</li>
+<li><code>female</code>: dummy em que (1) mulher e (0) homem</li>
+<li><code>married</code>: dummy em que (1) casado e (0) solteiro</li>
+<li><code>female*married</code>: interação (multiplicação) das <em>dummies</em> <code>female</code> e <code>married</code></li>
+<li><code>educ</code>: anos de educação</li>
+<li><code>exper</code>: anos de experiência (<code>expersq</code> = anos ao quadrado)</li>
+<li><code>tenure</code>: anos de trabalho no empregador atual (<code>tenursq</code> = anos ao quadrado)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Carregando a base de dados necessária</span>
+</span></span><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">wage1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">res_7.14</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">female</span><span class="o">*</span><span class="n">married</span> <span class="o">+</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">tenure</span> <span class="o">+</span> <span class="n">tenursq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wage1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">res_7.14</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)      0.3214     0.1000  3.2135   0.0014
+</span></span><span class="line"><span class="cl">## female          -0.1104     0.0557 -1.9797   0.0483
+</span></span><span class="line"><span class="cl">## married          0.2127     0.0554  3.8419   0.0001
+</span></span><span class="line"><span class="cl">## educ             0.0789     0.0067 11.7873   0.0000
+</span></span><span class="line"><span class="cl">## exper            0.0268     0.0052  5.1118   0.0000
+</span></span><span class="line"><span class="cl">## expersq         -0.0005     0.0001 -4.8471   0.0000
+</span></span><span class="line"><span class="cl">## tenure           0.0291     0.0068  4.3016   0.0000
+</span></span><span class="line"><span class="cl">## tenursq         -0.0005     0.0002 -2.3056   0.0215
+</span></span><span class="line"><span class="cl">## female:married  -0.3006     0.0718 -4.1885   0.0000
+</span></span></code></pre></div><ul>
+<li>Notamos que o efeito do casamento sobre mulheres é diferente do efeito sobre homens, pois o parâmetro de <code>female:married</code> (
+
+$\delta_2$) é significante.</li>
+<li>No entanto, para avaliar se o efeito do casamento sobre a mulher é significante, precisamos ver se 
+
+H$_0 :\ \beta_2 + \delta_2 = 0$.</li>
+<li>Como tem apenas uma restrição, a hipótese pode ser avaliada por teste <em>t</em>:</li>
+</ul>
+<img src="../t_test.png" alt="">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Extraindo objetos da regressão</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">res_7.14</span><span class="p">),</span> <span class="n">ncol</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># coeficientes como vetor-coluna</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">res_7.14</span><span class="p">)</span> <span class="c1"># matriz de variância-covariância do estimador</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">wage1</span><span class="p">)</span> <span class="c1"># número de observações</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="n">bhat</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span> <span class="c1"># número de covariadas</span>
+</span></span><span class="line"><span class="cl"><span class="n">uhat</span> <span class="o">=</span> <span class="nf">residuals</span><span class="p">(</span><span class="n">res_7.14</span><span class="p">)</span> <span class="c1"># resíduos da regressão</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando vetor-linha de restrição</span>
+</span></span><span class="line"><span class="cl"><span class="n">r1prime</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">nrow</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># vetor restrição</span>
+</span></span><span class="line"><span class="cl"><span class="n">h1</span> <span class="o">=</span> <span class="m">0</span> <span class="c1"># constante da H0</span>
+</span></span><span class="line"><span class="cl"><span class="n">G</span> <span class="o">=</span> <span class="m">1</span> <span class="c1"># número de restrições</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Fazendo teste t</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">r1prime</span> <span class="o">%*%</span> <span class="n">bhat</span> <span class="o">-</span> <span class="n">h1</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">r1prime</span> <span class="o">%*%</span> <span class="n">Vbhat</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">r1prime</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## [1,] 1.679475
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="nf">qt</span><span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="m">0.05</span><span class="o">/</span><span class="m">2</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.964563
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Calculando o p-valor</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="o">*</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            [,1]
+</span></span><span class="line"><span class="cl">## [1,] 0.09366368
+</span></span></code></pre></div><ul>
+<li>
+<p>Como 
+
+$|t| < 2$ (valor crítico aproximada para nível de significância de 5%), então não rejeitamos a hipótese nula e concluímos que o efeito do casamento sobre o salário de mulheres (
+
+$\beta_2 + \delta_2$) é estatisticamente não-significante.</p>
+</li>
+<li>
+<p>Também podemos fazer o mesmo pelo teste de Wald, mas avaliando a estatística pela distribuição 
+
+$\chi^2$ com 1 grau de liberdade (pois há apenas 
+
+$G=1$ restrição)</p>
+</li>
+<li>
+<p>Lembre-se também que usa-se o teste qui-quadrado unicaudal à direita.</p>
+</li>
+</ul>
+<img src="../chisq_test.png" alt="">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Calculando estatística de Wald</span>
+</span></span><span class="line"><span class="cl"><span class="n">aux</span> <span class="o">=</span> <span class="n">r1prime</span> <span class="o">%*%</span> <span class="n">bhat</span> <span class="o">-</span> <span class="n">h1</span> <span class="c1"># R \beta - h</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="nf">t</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="n">r1prime</span> <span class="o">%*%</span> <span class="n">Vbhat</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">r1prime</span><span class="p">))</span> <span class="o">%*%</span> <span class="n">aux</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## [1,] 2.820636
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Avaliando valor crítico em distribuição Qui-quadrado a 5% signif.</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="nf">qchisq</span><span class="p">(</span><span class="m">1-0.05</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">G</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 3.841459
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Calculando p-valor de w</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">G</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            [,1]
+</span></span><span class="line"><span class="cl">## [1,] 0.09305951
+</span></span></code></pre></div></br>
+<h3 id="múltiplas-restrições-lineares">Múltiplas restrições lineares</h3>
+<h4 id="exemplo-4-hahahugoshortcode-s43-hbhb">Exemplo 4: 
+
+H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2$</h4>
+<ul>
+<li>Note que 
+
+$h_1 = 0 \text{ e } h_2 = 2$</li>
+<li>Os vetores 
+
+$r'_1 \text{ e } r'_2$ podem ser escritos como</li>
+</ul>
+
+
+$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \quad \text{e} \quad r'_2 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $$
+<ul>
+<li>
+<p>Logo, 
+
+$\boldsymbol{R}$ é
+
+
+$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \end{matrix} \right] = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] $$</p>
+</li>
+<li>
+<p>Então, a hipótese nula é
+
+
+$$\text{H}_0:\ \boldsymbol{R} \boldsymbol{\beta} = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = \left[ \begin{matrix} h_1 \\ h_2 \end{matrix} \right]\ \iff\ \text{H}_0:\ \left\{  \begin{matrix} \beta_1 &= 0 \\ \beta_1 + \beta_2 &= 2 \end{matrix} \right. $$</p>
+</li>
+</ul>
+<h4 id="avaliando-a-hipótese-nula-com-múltiplas-restrições">Avaliando a hipótese nula com múltiplas restrições</h4>
+<ul>
+<li>
+<p>Para o caso com <em>G</em> restrições, assumimos que
+
+
+$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V_{\beta(x)} R'})$$</p>
+</li>
+<li>
+<p>Calcula-se a estatística de Wald
+
+
+$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $$</p>
+</li>
+<li>
+<p>Escolhe-se o nível de significância 
+
+$\alpha$ e rejeita-se a hipótese nula se a estatística 
+
+$ w(\hat{\boldsymbol{\beta}})$ não pertencer ao intervalo de confiança (do zero ao valor crítico).</p>
+</li>
+</ul>
+</br>
+<h3 id="aplicando-no-r-1">Aplicando no R</h3>
+<ul>
+<li>Como exemplo, usaremos o pacote de dados <code>mlb1</code> com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)</li>
+<li>Queremos estimar o modelo:
+
+
+\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}</li>
+</ul>
+<p>em que:</p>
+<ul>
+<li><code>log(salary)</code>: log do salário de 1993</li>
+<li><code>years</code>: anos jogando na 1ª divisão de beisebol americano</li>
+<li><code>gamesyr</code>: média de jogos por ano</li>
+<li><code>bavg</code>: média de rebatidas na carreira</li>
+<li><code>hrunsyr</code>: média de <em>home runs</em> por ano</li>
+<li><code>rbisyr</code>: média de corridas impulsionadas por ano</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">mlb1</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo completo (irrestrito)</span>
+</span></span><span class="line"><span class="cl"><span class="n">resMLB</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="n">years</span> <span class="o">+</span> <span class="n">gamesyr</span> <span class="o">+</span> <span class="n">bavg</span> <span class="o">+</span> <span class="n">hrunsyr</span> <span class="o">+</span> <span class="n">rbisyr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">resMLB</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span> <span class="c1"># coeficientes da estimação</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error  t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept) 11.19242    0.28882 38.75184  0.00000
+</span></span><span class="line"><span class="cl">## years        0.06886    0.01211  5.68430  0.00000
+</span></span><span class="line"><span class="cl">## gamesyr      0.01255    0.00265  4.74244  0.00000
+</span></span><span class="line"><span class="cl">## bavg         0.00098    0.00110  0.88681  0.37579
+</span></span><span class="line"><span class="cl">## hrunsyr      0.01443    0.01606  0.89864  0.36947
+</span></span><span class="line"><span class="cl">## rbisyr       0.01077    0.00717  1.50046  0.13440
+</span></span></code></pre></div><ul>
+<li>
+<p>Note que, individualmente, as variáveis <code>bavg</code>, <code>hrunsyr</code> e <code>rbisyr</code> são estatisticamente não significantes.</p>
+</li>
+<li>
+<p>Queremos avaliar se eles são estatisticamente significantes de forma conjunta, ou seja,
+
+
+$$ \text{H}_0:\ \left\{ \begin{matrix} \beta_3 = 0 \\ \beta_4 = 0 \\ \beta_5 = 0\end{matrix} \right.   $$</p>
+</li>
+<li>
+<p>Logo, temos que
+
+
+$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \boldsymbol{r}'_3 \end{matrix} \right] = \left[ \begin{matrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \end{matrix} \right] $$</p>
+</li>
+</ul>
+<h4 id="usando-função-waldtest">Usando função <code>Wald.test()</code></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Extraindo matriz de variância-covariância do estimador</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">resMLB</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             (Intercept)    years  gamesyr     bavg  hrunsyr   rbisyr
+</span></span><span class="line"><span class="cl">## (Intercept)     0.08342  0.00001 -0.00027 -0.00029 -0.00148  0.00082
+</span></span><span class="line"><span class="cl">## years           0.00001  0.00015 -0.00001  0.00000 -0.00002  0.00001
+</span></span><span class="line"><span class="cl">## gamesyr        -0.00027 -0.00001  0.00001  0.00000  0.00002 -0.00002
+</span></span><span class="line"><span class="cl">## bavg           -0.00029  0.00000  0.00000  0.00000  0.00000  0.00000
+</span></span><span class="line"><span class="cl">## hrunsyr        -0.00148 -0.00002  0.00002  0.00000  0.00026 -0.00010
+</span></span><span class="line"><span class="cl">## rbisyr          0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Calculando a estatística de Wald</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># install.packages(&#34;aod&#34;) # instalando o pacote necessário</span>
+</span></span><span class="line"><span class="cl"><span class="n">aod</span><span class="o">::</span><span class="nf">wald.test</span><span class="p">(</span><span class="n">Sigma</span> <span class="o">=</span> <span class="n">Vbhat</span><span class="p">,</span> <span class="c1"># matriz de variância-covariância</span>
+</span></span><span class="line"><span class="cl">               <span class="n">b</span> <span class="o">=</span> <span class="nf">coef</span><span class="p">(</span><span class="n">resMLB</span><span class="p">),</span> <span class="c1"># estimativas</span>
+</span></span><span class="line"><span class="cl">               <span class="n">Terms</span> <span class="o">=</span> <span class="m">4</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="c1"># posições dos parâmetros a serem testados</span>
+</span></span><span class="line"><span class="cl">               <span class="n">H0</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="c1"># Hipótese nula (tudo igual a zero)</span>
+</span></span><span class="line"><span class="cl">               <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## Wald test:
+</span></span><span class="line"><span class="cl">## ----------
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Chi-squared test:
+</span></span><span class="line"><span class="cl">## X2 = 28.7, df = 3, P(&gt; X2) = 2.7e-06
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Wald test for the effect of root</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># aod::wald.test(b = coef(resMLB), Sigma = vcov(resMLB), L=R, H0=h)</span>
+</span></span></code></pre></div><ul>
+<li>Observe que rejeitamos a hipótese nula e, portanto, os parâmetros 
+
+$\beta_3, \beta_4 \text{ e } \beta_5$ são conjuntamente significantes.</li>
+</ul>
+<h4 id="calculando-na-mão">Calculando &ldquo;na mão&rdquo;</h4>
+<ul>
+<li>Estimando o modelo</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Criando variavel log_salary</span>
+</span></span><span class="line"><span class="cl"><span class="n">mlb1</span><span class="o">$</span><span class="n">log_salary</span> <span class="o">=</span> <span class="nf">log</span><span class="p">(</span><span class="n">mlb1</span><span class="o">$</span><span class="n">salary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">name_y</span> <span class="o">=</span> <span class="s">&#34;log_salary&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">names_X</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;years&#34;</span><span class="p">,</span> <span class="s">&#34;gamesyr&#34;</span><span class="p">,</span> <span class="s">&#34;bavg&#34;</span><span class="p">,</span> <span class="s">&#34;hrunsyr&#34;</span><span class="p">,</span> <span class="s">&#34;rbisyr&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando o vetor y</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">mlb1[</span><span class="p">,</span><span class="n">name_y]</span><span class="p">)</span> <span class="c1"># transformando coluna de data frame em matriz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span> <span class="n">const</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">mlb1[</span><span class="p">,</span><span class="n">names_X]</span> <span class="p">)</span> <span class="p">)</span> <span class="c1"># juntando 1&#39;s com as covariadas</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pegando valores N e K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">mlb1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             [,1]
+</span></span><span class="line"><span class="cl">## const   11.19242
+</span></span><span class="line"><span class="cl">## years    0.06886
+</span></span><span class="line"><span class="cl">## gamesyr  0.01255
+</span></span><span class="line"><span class="cl">## bavg     0.00098
+</span></span><span class="line"><span class="cl">## hrunsyr  0.01443
+</span></span><span class="line"><span class="cl">## rbisyr   0.01077
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Calculando os resíduos</span>
+</span></span><span class="line"><span class="cl"><span class="n">uhat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Variância do termo de erro</span>
+</span></span><span class="line"><span class="cl"><span class="n">S2</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">uhat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">uhat</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Matriz de variância-covariância do estimador</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">S2</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            const    years  gamesyr     bavg  hrunsyr   rbisyr
+</span></span><span class="line"><span class="cl">## const    0.08342  0.00001 -0.00027 -0.00029 -0.00148  0.00082
+</span></span><span class="line"><span class="cl">## years    0.00001  0.00015 -0.00001  0.00000 -0.00002  0.00001
+</span></span><span class="line"><span class="cl">## gamesyr -0.00027 -0.00001  0.00001  0.00000  0.00002 -0.00002
+</span></span><span class="line"><span class="cl">## bavg    -0.00029  0.00000  0.00000  0.00000  0.00000  0.00000
+</span></span><span class="line"><span class="cl">## hrunsyr -0.00148 -0.00002  0.00002  0.00000  0.00026 -0.00010
+</span></span><span class="line"><span class="cl">## rbisyr   0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
+</span></span></code></pre></div><ul>
+<li>Agora, vamos criar a matriz das restrições</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Número de restrições</span>
+</span></span><span class="line"><span class="cl"><span class="n">G</span> <span class="o">=</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Matriz das restrições</span>
+</span></span><span class="line"><span class="cl"><span class="n">R</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">           <span class="n">nrow</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">R</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4] [,5] [,6]
+</span></span><span class="line"><span class="cl">## [1,]    0    0    0    1    0    0
+</span></span><span class="line"><span class="cl">## [2,]    0    0    0    0    1    0
+</span></span><span class="line"><span class="cl">## [3,]    0    0    0    0    0    1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Vetor de constantes h</span>
+</span></span><span class="line"><span class="cl"><span class="n">h</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">           <span class="n">nrow</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">h</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]    0
+</span></span><span class="line"><span class="cl">## [2,]    0
+</span></span><span class="line"><span class="cl">## [3,]    0
+</span></span></code></pre></div><ul>
+<li>Lembre-se que, por padrão, a função <code>matrix()</code> &ldquo;preenche&rdquo; a matrix por coluna.</li>
+<li>No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento <code>byrow=TRUE</code>.</li>
+<li>Calculando a estatística de Wald, dada por
+
+
+$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estatística de Wald</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="nf">t</span><span class="p">(</span> <span class="n">R</span> <span class="o">%*%</span> <span class="n">bhat</span> <span class="o">-</span> <span class="n">h</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="n">R</span> <span class="o">%*%</span> <span class="n">Vbhat</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="p">)</span> <span class="o">%*%</span> <span class="p">(</span><span class="n">R</span> <span class="o">%*%</span> <span class="n">bhat</span> <span class="o">-</span> <span class="n">h</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## [1,] 28.65076
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Encontrando valor crítico Qui-quadrado para 5% de signif.</span>
+</span></span><span class="line"><span class="cl"><span class="n">alpha</span> <span class="o">=</span> <span class="m">0.05</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="nf">qchisq</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">G</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 7.814728
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Comparando estatística de Wald e valor crítico</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">&gt;</span> <span class="n">c</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,] TRUE
+</span></span></code></pre></div><ul>
+<li>Como Estatística de Wald (= 28,65) é maior do que o valor crítico (= 7,81), então rejeitamos a hipótese nula conjunta de que todos parâmetros testados são iguais a zero.</li>
+<li>Também poderíamos verificar o p-valor por meio da estatística de Wald:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">G</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##              [,1]
+</span></span><span class="line"><span class="cl">## [1,] 2.651604e-06
+</span></span></code></pre></div><ul>
+<li>Como é menor do que 5%, rejeita-se a hipótese nula.</li>
+</ul>
+</br>
+<h2 id="teste-f">Teste F</h2>
+<ul>
+<li><a href="http://www.urfie.net/read/index.html#page/133" target="_blank" rel="noopener">Seção 4.3 de Heiss (2020)</a></li>
+<li>Uma outra forma de avaliar restrições múltiplas é por meio do teste F.</li>
+<li>Nele, estimamos dois modelos:
+<ul>
+<li>Irrestrito: inclui todas as as variáveis explicativas de interesse</li>
+<li>Restrito: exclui algumas variáveis da estimação</li>
+</ul>
+</li>
+<li>O teste F compara as somas dos quadrados dos resíduos (SQR) ou os 
+
+R$^2$ de ambos modelos.</li>
+<li>A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.</li>
+</ul>
+</br>
+<ul>
+<li>A estatística <em>F</em> pode ser calculada por:</li>
+</ul>
+
+
+$$ F = \frac{\text{SQR}_{r} - \text{SQR}_{ur}}{\text{SQR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $$
+<p>em que <code>ur</code> indica o modelo irrestrito, e <code>r</code> indica o modelo restrito.</p>
+<ul>
+<li>Depois, avalia-se a estatística <em>F</em> a partir de um teste unicaudal à direita em uma distribuição <em>F</em>:</li>
+</ul>
+<img src="../F_test.png" alt="">
+<h3 id="aplicando-no-r-2">Aplicando no R</h3>
+<ul>
+<li>
+<p>Aqui, continuaremos usando a base de dados <code>mlb1</code> da Seção 4.5 de Wooldridge (2006)</p>
+</li>
+<li>
+<p>O modelo irrestrito (com todas variáveis explicativas) é:
+
+
+\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}</p>
+</li>
+<li>
+<p>O modelo restrito (excluindo as variáveis) é:
+
+
+\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + u \end{align}</p>
+</li>
+</ul>
+<h4 id="usando-função-linearhypothesis">Usando função <code>linearHypothesis()</code></h4>
+<ul>
+<li>É possível fazer o teste <em>F</em> a partir da função <code>linearHypothesis()</code> do pacote <code>car</code></li>
+<li>Além de incluir o objeto resultante de uma estimação, é necessário incluir um vetor de texto com as restrições:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando o modelo irrestrito</span>
+</span></span><span class="line"><span class="cl"><span class="n">res.ur</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="n">years</span> <span class="o">+</span> <span class="n">gamesyr</span> <span class="o">+</span> <span class="n">bavg</span> <span class="o">+</span> <span class="n">hrunsyr</span> <span class="o">+</span> <span class="n">rbisyr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Criando vetor com as restrições</span>
+</span></span><span class="line"><span class="cl"><span class="n">myH0</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;bavg = 0&#34;</span><span class="p">,</span> <span class="s">&#34;hrunsyr = 0&#34;</span><span class="p">,</span> <span class="s">&#34;rbisyr = 0&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Aplicando o teste F</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># install.packages(&#34;car&#34;) # instalando o pacote necessário</span>
+</span></span><span class="line"><span class="cl"><span class="n">car</span><span class="o">::</span><span class="nf">linearHypothesis</span><span class="p">(</span><span class="n">res.ur</span><span class="p">,</span> <span class="n">myH0</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## Linear hypothesis test
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Hypothesis:
+</span></span><span class="line"><span class="cl">## bavg = 0
+</span></span><span class="line"><span class="cl">## hrunsyr = 0
+</span></span><span class="line"><span class="cl">## rbisyr = 0
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Model 1: restricted model
+</span></span><span class="line"><span class="cl">## Model 2: log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+</span></span><span class="line"><span class="cl">## 1    350 198.31                                  
+</span></span><span class="line"><span class="cl">## 2    347 183.19  3    15.125 9.5503 4.474e-06 ***
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span></code></pre></div><ul>
+<li>Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que é esperado)</li>
+<li>Para avaliar a hipótese nula (
+
+$\beta_3 = \beta_4 = \beta_5 = 0$), podemos verificar se a estatística <em>F</em> é maior do que um valor crítico (dado um nível de significância), ou avaliarmos se o p-valor é menor do que esse nível de significância.</li>
+<li>É possível ver acima, pelo segundo critério, que rejeitamos a hipótese nula.</li>
+<li>Podemos ver o valor crítico a 5% de significância via:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">qf</span><span class="p">(</span><span class="m">1-0.05</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2.630641
+</span></span></code></pre></div><ul>
+<li>Como 9,55 &gt; 2,63, então rejeitamos a hipótese nula.</li>
+</ul>
+<h4 id="calculando-na-mão-1">Calculando &ldquo;na mão&rdquo;</h4>
+<ul>
+<li>Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por <code>lm()</code> para não ter que fazer todos passos da estimação duas vezes.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimando o modelo irrestrito</span>
+</span></span><span class="line"><span class="cl"><span class="n">res.ur</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="n">years</span> <span class="o">+</span> <span class="n">gamesyr</span> <span class="o">+</span> <span class="n">bavg</span> <span class="o">+</span> <span class="n">hrunsyr</span> <span class="o">+</span> <span class="n">rbisyr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimando o modelo restrito</span>
+</span></span><span class="line"><span class="cl"><span class="n">res.r</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="o">~</span> <span class="n">years</span> <span class="o">+</span> <span class="n">gamesyr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mlb1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extraindo os R2 dos resultados das estimações</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2.ur</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">res.ur</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2.ur</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.6278028
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">r2.r</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">res.r</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2.r</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.5970716
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Calculando a estatística F</span>
+</span></span><span class="line"><span class="cl"><span class="bp">F</span> <span class="o">=</span> <span class="p">(</span> <span class="n">r2.ur</span> <span class="o">-</span> <span class="n">r2.r</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">r2.ur</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="o">/</span>  <span class="n">G</span>
+</span></span><span class="line"><span class="cl"><span class="bp">F</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 9.550254
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># p-valor do teste F</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pf</span><span class="p">(</span><span class="bp">F</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 4.473708e-06
+</span></span></code></pre></div></br>
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec9"  class="btn btn-primary px-3 py-3">👉 Seguir para Otimização Numérica</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

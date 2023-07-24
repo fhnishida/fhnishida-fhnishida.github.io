@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: July 24, 2023 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fábio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.netlify.app/project/rec5004/sec5/" />
+<link rel="canonical" href="https://fhnishida.netlify.app/project/rec5004/sec5/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@wowchemy" />
+  <meta property="twitter:creator" content="@wowchemy" />
+<meta property="twitter:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fábio Nishida" />
+<meta property="og:url" content="https://fhnishida.netlify.app/project/rec5004/sec5/" />
+<meta property="og:title" content="Distributions | Fábio Nishida" />
+<meta property="og:description" content="The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations." /><meta property="og:image" content="https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec5/index.xml" type="application/rss+xml" title="Fábio Nishida" />
+  
+
+  
+
+
+  
+  <title>Distributions | Fábio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="31f353af29250e02c4c389efae8d7db2" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fábio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/"><i class="fas fa-book pr-1"></i>Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  <li class=""><a href="/project/rec5004/">----------------------</a></li>
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">----------------</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#distribuições">Distribuições</a>
+      <ul>
+        <li><a href="#distribuição-normal">Distribuição Normal</a></li>
+        <li><a href="#distribuição-t-student">Distribuição t-Student</a></li>
+        <li><a href="#distribuição-qui-quadrado">Distribuição Qui-Quadrado</a></li>
+        <li><a href="#distribuição-f">Distribuição F</a></li>
+      </ul>
+    </li>
+    <li><a href="#simulação">Simulação</a>
+      <ul>
+        <li><a href="#geração-de-números-aleatórios">Geração de números aleatórios</a></li>
+        <li><a href="#amostragem-aleatória">Amostragem aleatória</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Distributions</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <ul>
+<li>A parte de Econometria no R é baseada no livro de Florian Heiss &ldquo;Using R for Introductory Econometrics&rdquo; (2ª edição, 2020)
+<ul>
+<li>Aplica no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)</li>
+<li>É possível ler gratuitamente a versão online em: <a href="http://www.urfie.net" target="_blank" rel="noopener">http://www.urfie.net</a></li>
+<li>Há também uma versão de Python do livro em: <a href="http://www.upfie.net" target="_blank" rel="noopener">http://www.upfie.net</a></li>
+</ul>
+</li>
+<li>A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote <code>wooldridge</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span>
+</span></span></code></pre></div></br>
+<h2 id="distribuições">Distribuições</h2>
+<ul>
+<li>
+<p><a href="http://www.urfie.net/read/index.html#page/65" target="_blank" rel="noopener">Seção 1.7 de Heiss (2020)</a></p>
+</li>
+<li>
+<p><a href="https://statisticsglobe.com/probability-distributions-in-r" target="_blank" rel="noopener">Probability Distributions in R (Examples): PDF, CDF &amp; Quantile Function (Statistics Globe)</a></p>
+</li>
+<li>
+<p><a href="https://rstudio-pubs-static.s3.amazonaws.com/100906_8e3a32dd11c14b839468db756cee7400.html" target="_blank" rel="noopener">Basic Probability Distributions in R (Greg Graham)</a></p>
+</li>
+<li>
+<p>As funções relacionadas a distribuições são dadas por <code>&lt;prefixo&gt;&lt;nome da distribuição&gt;</code></p>
+</li>
+<li>
+<p>Existem 4 prefixos que indicam qual ação será realizada:</p>
+<ul>
+<li><code>d</code>: retorna uma probabilidade a partir de uma função de densidade de probabilidade (pdf)</li>
+<li><code>p</code>: retorna uma probabilidade acumulada a partir de uma função de distribuição acumulada (cdf)</li>
+<li><code>q</code>: retorna uma estatística da distribuição (quantil) dada uma probabilidade acumulada</li>
+<li><code>r</code>: gera números aleatórios dada a distribuição</li>
+</ul>
+</li>
+<li>
+<p>Existem diversas distribuições disponíveis no R:</p>
+<ul>
+<li><code>norm</code>: Normal</li>
+<li><code>bern</code>: Bernoulli (pacote <code>Rlab</code>)</li>
+<li><code>binom</code>: Binomial</li>
+<li><code>pois</code>: Poisson</li>
+<li><code>chisq</code>: Qui-Quadrado (
+
+$\chi^2$)</li>
+<li><code>t</code>: t-Student</li>
+<li><code>f</code>: F</li>
+<li><code>unif</code>: Uniforme</li>
+<li><code>weibull</code>: Weibull</li>
+<li><code>gamma</code>: Gamma</li>
+<li><code>logis</code>: Logística</li>
+<li><code>exp</code>: Exponencial</li>
+</ul>
+</li>
+<li>
+<p>Seguem as principais distribuições e suas respectivas funções:</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Distribuição</strong></th>
+<th><strong>Densidade de Probabilidade</strong></th>
+<th><strong>Distribuição Acumulada</strong></th>
+<th><strong>Quantil</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal</td>
+<td><code>dnorm(x, mean, sd)</code></td>
+<td><code>pnorm(q, mean, sd)</code></td>
+<td><code>qnorm(p, mean, sd)</code></td>
+</tr>
+<tr>
+<td>Qui-Quadrado</td>
+<td><code>dchisq(x, df)</code></td>
+<td><code>pchisq(q, df)</code></td>
+<td><code>qchisq(p, df)</code></td>
+</tr>
+<tr>
+<td>t-Student</td>
+<td><code>dt(x, df)</code></td>
+<td><code>pt(q, df)</code></td>
+<td><code>qt(p, df)</code></td>
+</tr>
+<tr>
+<td>F</td>
+<td><code>df(x, df1, df2)</code></td>
+<td><code>pf(q, df1, df2)</code></td>
+<td><code>qf(p, df1, df2)</code></td>
+</tr>
+<tr>
+<td>Binomial</td>
+<td><code>dbinom(x, size, prob)</code></td>
+<td><code>pbinom(q, size, prob)</code></td>
+<td><code>qbinom(p, size, prob)</code></td>
+</tr>
+</tbody>
+</table>
+<p>em que <code>x</code> e <code>q</code> são estatísticas de cada distribuição (quantis), e <code>p</code> é probabilidade.</p>
+<h3 id="distribuição-normal">Distribuição Normal</h3>
+<ul>
+<li>Considere uma normal padrão, 
+
+$N(\mu=0, \sigma=1)$, e escores padrão 
+
+$Z=-1,96 \text{ e } 1,96$ (para intervalo de confiança de 
+
+$\approx 5\%$):</li>
+</ul>
+<center><img src="../standard-normal-distribution-with-critical-values.webp"></center>
+<ul>
+<li>[<code>d</code>]: Densidade a partir de uma pdf, dada estatística (escore padrão):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">dnorm</span><span class="p">(</span><span class="m">1.96</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># probabilidade para escore padrão de 1,96</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.05844094
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">dnorm</span><span class="p">(</span><span class="m">-1.96</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># probabilidade para escore padrão de -1,96</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.05844094
+</span></span></code></pre></div><ul>
+<li>[<code>p</code>]: Probabilidade acumulada a partir de uma cdf, dada estatística (escore padrão):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">pnorm</span><span class="p">(</span><span class="m">1.96</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># probabilidade acumulada para escore padrão de 1,96</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.9750021
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">pnorm</span><span class="p">(</span><span class="m">-1.96</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># probabilidade acumulada para escore padrão de -1,96</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.0249979
+</span></span></code></pre></div><p>Logo, a probabilidade de que uma variável aleatória com distribuição normal padrão esteja com valor entre -1,96 e 1,96 é de 95%</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">pnorm</span><span class="p">(</span><span class="m">1.96</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="o">-</span> <span class="nf">pnorm</span><span class="p">(</span><span class="m">-1.96</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.9500042
+</span></span></code></pre></div><ul>
+<li>[<code>q</code>]: Estatística (escore padrão) a partir de um quantil:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.975</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># quantil dada o quantil de 97,5%</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 1.959964
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">qnorm</span><span class="p">(</span><span class="m">0.025</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># quantil dada o quantil de 2,5%</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -1.959964
+</span></span></code></pre></div><p>Podemos criar gráficos usando a função <code>curve( function(x), from, to )</code>, na qual inserimos uma função com um <code>x</code> arbitrário e seus limites mínimo e máximo (<code>from</code> e <code>to</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># pdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3</span>
+</span></span><span class="line"><span class="cl"><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">-3</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># cdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3</span>
+</span></span><span class="line"><span class="cl"><span class="nf">curve</span><span class="p">(</span><span class="nf">pnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">-3</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># quantil de normal padrão com probabilidade acumulada no intervalo 0 e 1</span>
+</span></span><span class="line"><span class="cl"><span class="nf">curve</span><span class="p">(</span><span class="nf">qnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
+<h3 id="distribuição-t-student">Distribuição t-Student</h3>
+<ul>
+<li>Criaremos gráficos com diversos graus de liberdade</li>
+<li>Quanto maior os graus de liberdade, mais se aproxima de uma normal padrão</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">-3</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="s">&#34;.&#34;</span><span class="p">)</span> <span class="c1"># pdf normal padrão</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">for </span><span class="p">(</span><span class="n">n</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">10</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">curve</span><span class="p">(</span><span class="nf">dt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">n</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">-3</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="bp">T</span><span class="p">)</span> <span class="c1"># pdf t-student</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<h3 id="distribuição-qui-quadrado">Distribuição Qui-Quadrado</h3>
+<ul>
+<li>Criaremos gráficos com diversos graus de liberdade</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">curve</span><span class="p">(</span><span class="nf">dchisq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="m">1</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">6</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="c1"># pdf qui-quadrado</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">for </span><span class="p">(</span><span class="n">n</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">curve</span><span class="p">(</span><span class="nf">dchisq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">n</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">6</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="bp">T</span><span class="p">)</span> <span class="c1"># pdf qui-quadrado</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<h3 id="distribuição-f">Distribuição F</h3>
+<ul>
+<li>Criaremos gráficos com diversos graus de liberdade</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">curve</span><span class="p">(</span><span class="nf">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df1</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">df2</span><span class="o">=</span><span class="m">1</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">6</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="c1"># pdf F</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">for </span><span class="p">(</span><span class="n">n</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">curve</span><span class="p">(</span><span class="nf">df</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">df1</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">df2</span><span class="o">=</span><span class="n">n</span><span class="p">),</span> <span class="n">from</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="m">6</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="bp">T</span><span class="p">)</span> <span class="c1"># pdf F</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+</br>
+<h2 id="simulação">Simulação</h2>
+<h3 id="geração-de-números-aleatórios">Geração de números aleatórios</h3>
+<ul>
+<li><a href="https://www.coursera.org/learn/r-programming/lecture/ykXUb/simulation-random-sampling" target="_blank" rel="noopener">Simulation - Random sampling (John Hopkins/Coursera)</a></li>
+<li>Para gerar números aleatórios, usaremos o prefixo <code>r</code> junto de uma distribuição.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="m">5</span><span class="p">)</span> <span class="c1"># gerando 5 números aleatórios</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1]  1.9263422  0.8835259  0.4614015 -0.5351940 -0.2656456
+</span></span></code></pre></div><ul>
+<li>Para reproduzir resultados que usem números aleatórios, podemos definir &ldquo;sementes&rdquo; usando a função <code>set.seed()</code> e informando um número inteiro. Isso também é válido para a função <code>sample()</code>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># definindo seed</span>
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">2022</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1]  0.9001420 -1.1733458 -0.8974854 -1.4445014 -0.3310136
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># sem definir seed</span>
+</span></span><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] -2.9006290 -1.0592557  0.2779547  0.7494859  0.2415825
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># definindo seed</span>
+</span></span><span class="line"><span class="cl"><span class="nf">set.seed</span><span class="p">(</span><span class="m">2022</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1]  0.9001420 -1.1733458 -0.8974854 -1.4445014 -0.3310136
+</span></span></code></pre></div><h4 id="exemplo-criação-de-observações-x-e-y">Exemplo: Criação de observações x e y</h4>
+<p>Vamos criar observações da variável 
+
+$x$ a partir de uma distribuição uniforme no intervalo [0, 10]:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="m">100</span> <span class="c1"># número de observações</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="nf">runif</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span> <span class="c1"># nº aleatórios a partir de U[0,10]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.01862073 1.59799489 1.44741664 5.19396774 6.09476454 1.22510589
+</span></span></code></pre></div><p>Agora, vamos criar a variável 
+
+$y = 10 - 2x + \varepsilon, \ \varepsilon \sim N(0, 3^2)$ e plotar ambas variáveis em um scatterplot:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">e</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="m">10</span> <span class="o">-</span> <span class="m">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1">## scatterplot entre x e y</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="m">10</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="m">-2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+</br>
+<h3 id="amostragem-aleatória">Amostragem aleatória</h3>
+<ul>
+<li>Para fazer uma amostragem a partir de um dado vetor, usamos a função <code>sample()</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">sample(x, size, replace = FALSE, prob = NULL)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="l">either a vector of one or more elements from which to choose, or a positive integer. See ‘Details.’</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">n</span><span class="p">:</span><span class="w"> </span><span class="l">a positive number, the number of items to choose from.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l">a non-negative integer giving the number of items to choose.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="l">should sampling be with replacement?</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">prob</span><span class="p">:</span><span class="w"> </span><span class="l">a vector of probability weights for obtaining the elements of the vector being sampled.</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">sample</span><span class="p">(</span><span class="kc">letters</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span> <span class="c1"># Amostragem de 5 letras</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] &#34;p&#34; &#34;c&#34; &#34;u&#34; &#34;e&#34; &#34;j&#34;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># Amostragem de 4 números de 1 a 10</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 3 2 1 6
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)</span> <span class="c1"># Permutação (amostra mesma qtd de elementos do vetor)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##  [1]  7  3  5  8  6  4  9 10  2  1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># Amostragem com reposição</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##  [1]  3  5  4 10  2  9  7  4 10  1
+</span></span></code></pre></div><ul>
+<li>Note que, por padrão, a função <code>sample()</code> faz a amostragem sem reposição.</li>
+</ul>
+<h4 id="exemplo-lei-dos-grandes-números-lgn">Exemplo: Lei dos Grandes Números (LGN)</h4>
+<ul>
+<li>Podemos usar a amostragem para simular jogadas de dado não-viesado.</li>
+<li>Vamos jogar uma vez o dado:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="c1"># amostra um número dentro do vetor 1:6</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2
+</span></span></code></pre></div><ul>
+<li>Vamos jogar 1000 vezes o dado (usando função <code>replicate()</code>) e verificar sua distribuição:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">amostra</span> <span class="o">=</span> <span class="nf">replicate</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">table</span><span class="p">(</span><span class="n">amostra</span><span class="p">)</span> <span class="c1"># tabela com contagem das jogadas</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## amostra
+</span></span><span class="line"><span class="cl">##   1   2   3   4   5   6 
+</span></span><span class="line"><span class="cl">## 165 173 161 153 165 183
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Gráfico</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">amostra</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;h&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+- Note que não podemos usar a função `rep()` com simulação, pois ele sortearia um número e replicaria esse mesmo número 1000 vezes.
+- Agora, vamos jogar 2 vezes o dado e fazer a média entre eles
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">mean</span><span class="p">(</span><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2.5
+</span></span></code></pre></div><ul>
+<li>Fazendo isso 1000 vezes, temos:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">amostra</span> <span class="o">=</span> <span class="nf">replicate</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="nf">mean</span><span class="p">(</span><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">T</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">table</span><span class="p">(</span><span class="n">amostra</span><span class="p">)</span> <span class="c1"># tabela com contagem das médias de 2 jogadas</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## amostra
+</span></span><span class="line"><span class="cl">##   1 1.5   2 2.5   3 3.5   4 4.5   5 5.5   6 
+</span></span><span class="line"><span class="cl">##  33  51  72 105 138 192 122 104  78  68  37
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Gráfico</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">amostra</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;h&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<ul>
+<li>Note que, ao repetir 1000 vezes, o cálculo da média de 2 jogadas de dado, começou a dar mais peso para médias próximas à média populacional (3,5), mas ainda tem densidade nos valores mais extremos (1 e 6)</li>
+<li>Foi necessário usar o argumento <code>replace=TRUE</code> para ter &ldquo;reposição&rdquo; dos números do dado</li>
+<li>Calculando 1000 vezes a média de 
+
+$N=100$ jogadas de dado, temos:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="m">100</span> <span class="c1"># nº de observações</span>
+</span></span><span class="line"><span class="cl"><span class="n">amostra</span> <span class="o">=</span> <span class="nf">replicate</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="nf">mean</span><span class="p">(</span><span class="nf">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">T</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Gráfico</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">amostra</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;h&#34;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">6</span><span class="p">))</span>
+</span></span></code></pre></div><img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<ul>
+<li>Note que, quanto maior 
+
+$N$, a distribuição das médias vai se degenerando, tendo maior concentração na proximidade da média populacional (3,5), e sendo praticamente nula em médias mais distantes.</li>
+</ul>
+<!-- </br> -->
+<!-- ## Intervalos de Confiança -->
+<!-- - [Subseção 1.8.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/71) -->
+<!-- - No Apêndice C.5 de Wooldridge (2006, em português), são construídos intervalos de confiança de 95\%. -->
+<!-- - Para uma população normalmente distribuída com média 
+
+$\mu$ e variância 
+
+$\sigma^2$, o intervalo de confiança com significância de `\(\alpha\)` é dado por: -->
+<!-- $$ \text{IC}_\alpha = \left[\bar{y} - C_{\alpha/2}.se(\bar{y}),\quad \bar{y} + C_{\alpha/2}.se(\bar{y})\right] \tag{1.2} $$ -->
+<!-- em que: -->
+<!-- - 
+
+$\bar{y}$: média amostral -->
+<!-- - 
+
+$se(\bar{y}) = \frac{s}{\sqrt{n}}$: erro padrão de 
+
+$\bar{y}$ -->
+<!-- - 
+
+$s$: desvio padrão de 
+
+$\bar{y}$ -->
+<!-- - 
+
+$n$: tamanho da amostra -->
+<!-- - 
+
+$C_{\alpha/2}$: é o valor crítico do quantil de 
+
+$(1-\alpha/2)$ da distribuição 
+
+$t_{n-1}$. -->
+<!--     - Por exemplo, para 
+
+$\alpha = 5\%$, usa-se o quantil 97,5\% (
+
+$= 1 - 5\%/2$). -->
+<!--     - Quando o número de graus de liberdade é grande, a distribuição _t_ se aproxima ao de uma normal padrão. Logo, para um intervalo de confiança de 95\%, o valor crítico é 
+
+$C_{2,5\%} \approx 1,96$ -->
+<!-- #### Exemplo C.2: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
+<!-- - Holzer, Block, Cheatham e Knott (1993) estudaram os efeitos de subsídios de treinamentos corporativos sobre a produtividade dos trabalhadores -->
+<!-- - Para isto, avaliou-se a "taxa de refugo", isto é, a quantidade de itens descartados a cada 100 itens produzidos. -->
+<!-- - Entre 1987 e 1988, houve treinamento corporativo em 20 empresas e queremos saber se ele teve efeito sobre a taxa de refugo, ou seja, a diferença entre as médias dos anos foi estatisticamente significante (diferente de 0). -->
+<!-- - Comecemos criando vetores de taxa de refugos das 20 empresas para os anos de 1987 (_SR87_) e de 1988 (_SR88_): -->
+<!-- ```{r} -->
+<!-- SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98, -->
+<!--          1, .45, 5.03, 8, 9, 18, .28, 7, 3.97) -->
+<!-- SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5,  -->
+<!--          .61, 6.7, 4, 7, 19, .2, 5, 3.83) -->
+<!-- ``` -->
+<!-- - Criando o vetor das variações das taxas de refugo e extraindo estatísticas: -->
+<!-- ```{r} -->
+<!-- Change = SR88 - SR87 # vetor de variações -->
+<!-- n = length(Change) # quantidade de empresas/tamanho do vetor Variacao -->
+<!-- avgChange = mean(Change) # média do vetor Variacao -->
+<!-- sdChange = sd(Change) # desvio padrão do vetor Variacao -->
+<!-- ``` -->
+<!-- - Calculando o erro padrão e o valor crítico para intervalo de confiança de 95\%: -->
+<!-- ```{r} -->
+<!-- se = sdChange / sqrt(n) # erro padrão -->
+<!-- CV = qt(.975, n-1) # valor crítico para intervalo de confiança de 95% -->
+<!-- ``` -->
+<!-- - Finalmente, calcula-se o intervalo de confiança usando (1.2) -->
+<!-- ```{r} -->
+<!-- c(avgChange - CV*se, avgChange + CV*se) # limites inferior e superior do intervalo -->
+<!-- # também poderíamos escrever o intervalo mais sucintamente: -->
+<!-- avgChange + CV * c(-se, se) -->
+<!-- ``` -->
+<!-- - Note que o valor 0 está fora do intervalo de confiança de 95\% e, portanto, conclui-se que houve alteração na taxa de refugo (houve efeito negativo estatisticamente significante). -->
+<!-- </br> -->
+<!-- ## Teste _t_ e p-valores -->
+<!-- - [Subseções 1.8.2 e 1.8.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/74) -->
+<!-- - A estatística _t_ para testar uma hipótese sobre uma variável aleatória 
+
+$y$ normalmente distribuída com média 
+
+$\bar{y}$ é dado pela equação C.35 (Wooldridge, 2006). Dada a hipótese nula 
+
+$H_0: \bar{y} = \mu_0$, -->
+<!-- $$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $$ -->
+<!-- - Para rejeitarmos a hipótese nula, o módulo da estatística _t_ precisa ser maior do que o valor crítico, dado um nível de significância 
+
+$\alpha$. -->
+<!-- - Por exemplo, ao nível de significância 
+
+$\alpha = 5\%$ e com uma grande amostra (e, portanto, a distribuição _t_ se aproxima a de uma normal padrão), rejeitamos a hipótese nula se -->
+<!-- $$ |t| \ge 1,96 \approx \text{valor crítico ao nível de significância de 5%} $$ -->
+<!-- - A vantagem de utilizar o p-valor é a sua conveniência, pois pode-se compará-lo diretamente com o nível de significância. -->
+<!-- - Para testes _t_ bicaudais, a fórmula do p-valor é dado por (Wooldridge, 2006, equação C.42): -->
+<!-- $$ p = 2.Pr(T_{n-1} > |t|) = 2.[1 - F_{t_{n-1}}(|t|)] $$ -->
+<!-- em que 
+
+$F_{t_{n-1}}(\cdot)$ é a cdf da distribuição 
+
+$t_{n-1}$. -->
+<!-- <center><img src="../t-student_test.png"></center> -->
+<!-- - Rejeitamos a hipótese nula se o p-valor for menor do que o nível de significância 
+
+$\alpha$. -->
+<!-- #### Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
+<!-- - Continuação do exemplo C.2 -->
+<!-- - Considerando teste bicaudal (diferente dos livros), podemos calcular a estatística _t_ -->
+<!-- ```{r} -->
+<!-- # Estatística t para H0: mu = 0 -->
+<!-- t = (avgChange - 0) / se -->
+<!-- print(paste0("estatística t = ", abs(t), " > ", CV, " = valor crítico")) -->
+<!-- ``` -->
+<!-- - Como estatística _t_ é maior do que o valor crítico, rejeitamos 
+
+$H_0$ a nível de significância de 5\%. -->
+<!-- - De forma equivalente, podemos calcular o p-valor: -->
+<!-- ```{r} -->
+<!-- p = 2 * (1 - pt(abs(t), n-1)) -->
+<!-- print(paste0("p-valor = ", p, " < 0.05 = nível de significância")) -->
+<!-- ``` -->
+<!-- - Como o p-valor é maior do que 
+
+$\alpha = 5\%$, rejeitamos 
+
+$H_0$. -->
+<!-- ### Cálculos via `t.test()` -->
+<!-- ```yaml -->
+<!-- t.test(x, y = NULL, -->
+<!--        alternative = c("two.sided", "less", "greater"), -->
+<!--        mu = 0, paired = FALSE, var.equal = FALSE, -->
+<!--        conf.level = 0.95, ...) -->
+<!-- - x: (non-empty) numeric vector of data values. -->
+<!-- - alternative: a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter. -->
+<!-- - mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test). -->
+<!-- - conf.level: confidence level of the interval. -->
+<!-- ``` -->
+<!-- - Note que incluiremos um vetor de valor no argmento `x` e, por padrão, a função considera um teste bicaudal, testando a 
+
+$H_0$ se média verdadeira é igual a zero e com intervalo de confiança de 95\%. -->
+<!-- - Retornando aos exemplos C.2 e C.6 ("Efeito de subsídios de treinamento corporativo sobre a produtividade"), temos: -->
+<!-- ```{r} -->
+<!-- testresults = t.test(Change, mu = 0) -->
+<!-- testresults -->
+<!-- ``` -->
+<!-- - Dentro do objeto de resultado do teste, temos as seguintes informações: -->
+<!-- ```{r} -->
+<!-- names(testresults) -->
+<!-- ``` -->
+<!-- - Podemos, por exemplo, acessar o p-valor usando: -->
+<!-- ```{r} -->
+<!-- testresults$p.value -->
+<!-- ``` -->
+</br>
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec7"  class="btn btn-primary px-3 py-3">👉 Proceed to Simple Regression</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2023 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
