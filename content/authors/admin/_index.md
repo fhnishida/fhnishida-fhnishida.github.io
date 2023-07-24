@@ -51,5 +51,5 @@ superuser: true
 title: Fábio Nishida
 ---
 
-Fábio Nishida is a Ph.D. candidate in Economics at the University of São Paulo. His research interests include public sector, applied econometrics and environmetal economics.
+Fábio Nishida is a Ph.D. candidate in Economics at the University of São Paulo. Currently visiting Heinz College at Carnegie Mellon University. His research interests include public sector, applied econometrics and environmetal economics.
 {style="text-align: justify;"}
