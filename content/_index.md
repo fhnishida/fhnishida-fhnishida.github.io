@@ -298,12 +298,12 @@ sections:
 - block: contact
   content:
     address:
-      city: Ribeirão Preto
-      country: Brazil
-      country_code: BR
-      postcode: "- 14040-905"
-      region: SP, Brazil 
-      street: 3900 Bandeirantes Avenue
+      city: Pittsburgh
+      country: United States
+      country_code: US
+      postcode: "15213"
+      region: PA
+      street: 4800 Forbes Ave, HBH 2110A
     # appointment_url: https://calendly.com
     autolink: true
     contact_links:
