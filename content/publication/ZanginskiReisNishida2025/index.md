@@ -23,7 +23,7 @@ image:
 links:
 projects:
 - internal-project
-publication: "*Brazilian Journal of Applied Economics*, forthcoming"
+publication: "*Brazilian Journal of Applied Economics*, forthcoming. In Portuguese"
 publication_short: ""
 publication_types:
 - "2"

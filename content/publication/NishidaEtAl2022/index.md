@@ -17,7 +17,7 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: '*Brazilian Journal of Rural Economics and Sociology*, spe'
+publication: '*Brazilian Journal of Rural Economics and Sociology*, 60(spe). In Portuguese'
 publication_short: ""
 publication_types:
 - "2"
