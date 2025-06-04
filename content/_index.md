@@ -44,26 +44,30 @@ sections:
 - block: features
   content:
     items:
-    - description: #90%
+    - description: '*advanced*'
       icon: r-project-icon
       icon_pack: custom
       name: R
-    - description: #100%
+    - description: '*basic*'
       icon: python-icon
       icon_pack: custom
       name: Python
-    # - description: #100%
-    #   icon: icons8-matlab
-    #   icon_pack: custom
-    #   name: MatLab
-    # - description: #100%
-    #   icon: icons8-texshop
-    #   icon_pack: custom
-    #   name: LaTeX
-    - description: #100%
+    - description: '*basic*'
+      icon: stata
+      icon_pack: custom
+      name: Stata
+    - description: '*intermediate*'
+      icon: ArcGIS_Pro
+      icon_pack: custom
+      name: ArcGIS Pro
+    - description: '*intermediate/advanced*'
       icon: microsoft_vb-icon
       icon_pack: custom
       name: VBA/Excel
+    - description: '*intermediate*'
+      icon: overleaf-o-logo-primary
+      icon_pack: custom
+      name: LaTeX
     title: Programming Skills
     
 - block: education
@@ -71,56 +75,56 @@ sections:
     title: Education
     date_format: Jan 2006
     items:
-    - company: Carnegie Mellon University
+    - company: University of Sao Paulo (USP)
+      company_logo: org-usp
+      company_url: ""
+      date_end: "2025-03-06"
+      date_start: "2020-01-01"
+      description: |2-
+      
+          - "Essays on Fiscal Decentralization and Public Finance"
+          - Advisor: Prof. Sergio Naruhiko Sakurai
+          
+      location: Ribeirao Preto, Brazil
+      title: Ph.D. in Economics
+    - company: Carnegie Mellon University (CMU)
       company_logo: org-cmu
       company_url: ""
       date_end: "2024-06-30"
       date_start: "2023-07-01"
       description: |2-
       
-          - Article: "Impact of Natural Disasters on Public Finance"
+          - "Impact of Natural Disasters on Local Public Finance"
           - Co-Advisors:
-            - Prof. Sérgio Naruhiko Sakurai
+            - Prof. Sergio Naruhiko Sakurai
             - Prof. Edson Severnini
           
       location: Pittsburgh, USA
-      title: Ph.D. Visiting Student
-    - company: University of São Paulo
-      company_logo: org-usp
-      company_url: ""
-      date_end: ""
-      date_start: "2020-01-01"
-      description: |2-
-      
-          - Thesis: "Essays on Fiscal Federalism and Public Finance"
-          - Advisor: Prof. Sérgio Naruhiko Sakurai
-          
-      location: Ribeirão Preto, Brazil
-      title: Ph.D. Candidate in Economics
-    - company: Getúlio Vargas Foundation
+      title: Sandwich Doctorate Abroad
+    - company: Getulio Vargas Foundation (FGV)
       company_logo: org-fgv
       company_url: ""
       date_end: "2019-02-01"
       date_start: "2017-08-01"
       # description: Taught electronic engineering and researched semiconductor physics.
-      location: São Paulo, Brazil
+      location: Sao Paulo, Brazil
       title: Specialization in Economics and Management
-    - company: Jönköping University
-      company_logo: org-ju
-      company_url: ""
-      date_end: "2013-12-10"
-      date_start: "2013-08-10"
-      # description: Taught electronic engineering and researched semiconductor physics.
-      location: São Paulo, Brazil
-      title: Academic Undergraduate Exchange Program
-    - company: University of São Paulo
+    - company: University of Sao Paulo (USP)
       company_logo: org-usp
       company_url: ""
       date_end: "2014-12-31"
       date_start: "2010-03-01"
       # description: |2-
-      location: São Paulo, Brazil
+      location: Sao Paulo, Brazil
       title: B.Sc. in Business Administration
+    - company: Jonkoping University (JU)
+      company_logo: org-ju
+      company_url: ""
+      date_end: "2013-12-10"
+      date_start: "2013-08-10"
+      # description: Taught electronic engineering and researched semiconductor physics.
+      location: Sao Paulo, Brazil
+      title: Academic Exchange Program
     title: Education
   design:
     columns: "2"
@@ -130,37 +134,37 @@ sections:
     title: Experience
     date_format: Jan 2006
     items:
-    - company: Legislative Assembly of São Paulo (Alesp)
+    - company: Legislative Assembly of Sao Paulo (Alesp)
       company_logo: org-alesp
       company_url: "https://www.al.sp.gov.br/"
       date_end: "2020-01-06"
       date_start: "2019-03-01"
-      # description: 
-      location: São Paulo, Brazil
+      description: Conducted studies on bills to support the state deputy votes.
+      location: Sao Paulo, Brazil
       title: Legislative Assistant
-    - company: Municipal Government of São Paulo
+    - company: Municipal Government of Sao Paulo
       company_logo: org-pmsp
       company_url: "https://www.capital.sp.gov.br/"
       date_end: "2021-09-01"
       date_start: "2021-01-05"
-      # description: 
-      location: São Paulo, Brazil
+      description: Joined the team coordinating 22 municipal departments to develop Sao Paulo’s strategic plan (2017-2020) for the newly elected mayor.
+      location: Sao Paulo, Brazil
       title: Management and Planning Assistant
     - company: Sonne Consulting
       company_logo: org-sonne
       company_url: "https://www.sonne.global/"
       date_end: "2016-12-01"
       date_start: "2012-03-01"
-      # description: 
-      location: São Paulo, Brazil
+      description: Conducted business diagnostics and market research to provide insights for strategic and marketing planning of small and medium-sized companies in the education, hospitality, and staffing industries.
+      location: Sao Paulo, Brazil
       title: Market and Business Intelligence Analyst
     - company: Itaú BBA
       company_logo: org-itaubba
       company_url: "https://www.itau.com.br/itaubba-en/international"
       date_end: "2013-08-01"
       date_start: "2012-03-01"
-      # description: 
-      location: São Paulo, Brazil
+      description: Performed accounting reconciliations for financial operations with external agencies and supported back-office operations for the initial loan and FX products at the Colombian branch.
+      location: Sao Paulo, Brazil
       title: Controlling and Accounting Intern
     title: Professional Experience
   design:
@@ -222,6 +226,42 @@ sections:
 #     view: compact
 #   id: posts
   
+# - block: markdown
+#   content:
+#     subtitle: ""
+#     text: '{{< gallery album="demo" >}}'
+#     title: Gallery
+#   design:
+#     columns: "1"
+
+- block: collection
+  content:
+    filters:
+      featured_only: true
+      folders:
+      - publication
+    title: Featured paper
+  design:
+    columns: "2"
+    view: card
+  id: featured
+  
+- block: collection
+  content:
+    filters:
+      exclude_featured: true
+      folders:
+      - publication
+    # text: |-
+    #   {{% callout note %}}
+    #   [Filter papers](./publication/).
+    #   {{% /callout %}}
+    title: Research
+  design:
+    columns: "2"
+    view: citation
+    
+  
 - block: portfolio
   content:
     date_format: Jan 2006
@@ -243,41 +283,6 @@ sections:
     flip_alt_rows: false
     view: 6
   id: projects
-  
-# - block: markdown
-#   content:
-#     subtitle: ""
-#     text: '{{< gallery album="demo" >}}'
-#     title: Gallery
-#   design:
-#     columns: "1"
-
-- block: collection
-  content:
-    filters:
-      featured_only: true
-      folders:
-      - publication
-    title: Featured Publications
-  design:
-    columns: "2"
-    view: card
-  id: featured
-  
-# - block: collection
-#   content:
-#     filters:
-#       exclude_featured: true
-#       folders:
-#       - publication
-#     text: |-
-#       {{% callout note %}}
-#       Quickly discover relevant content by [filtering publications](./publication/).
-#       {{% /callout %}}
-#     title: Recent Publications
-#   design:
-#     columns: "2"
-#     view: citation
     
 # - block: collection
 #   content:
@@ -298,12 +303,12 @@ sections:
 - block: contact
   content:
     address:
-      city: Pittsburgh
-      country: United States
+      city: Sao Paulo
+      country: Brazil
       country_code: US
-      postcode: "15213"
-      region: PA
-      street: 4800 Forbes Ave, HBH 2110A
+    # postcode: "15213"
+      region: Brazil
+    # street: Vila Mariana
     # appointment_url: https://calendly.com
     autolink: true
     contact_links:
@@ -320,7 +325,7 @@ sections:
     #   link: https://zoom.com
     #   name: Zoom Me
     # directions: Enter Building 1 and take the stairs to Office 200 on Floor 2
-    email: fabio.nishida@usp.br
+    email: fhnishida@gmail.com
     # form:
     #   formspree:
     #     id: null

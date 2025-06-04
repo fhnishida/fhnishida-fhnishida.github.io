@@ -1,8 +1,8 @@
 ---
-cms_exclude: true
+title: "Research"
 header:
-  caption: ""
-  image: ""
-title: Publications
+  caption: ''
+  image: ''
+cms_exclude: true
 view: 4
 ---

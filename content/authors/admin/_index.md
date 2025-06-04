@@ -1,28 +1,28 @@
 ---
-bio: My research interests include public sector, applied econometrics and environmetal economics.
+bio: Public sector, environmental economics, and applied econometrics.
 education:
   courses:
   - course: Ph.D. in Economics
-    institution: University of São Paulo
-    year: 2020 -- Present
+    institution: University of Sao Paulo
+    year: 2020 -- 2025
   - course: Specialization in Economics and Management
-    institution: Getúlio Vargas Foundation
+    institution: Getulio Vargas Foundation
     year: 2077 -- 2019
   - course: B.Sc. in Business Administration
-    institution: University of São Paulo
+    institution: University of Sao Paulo
     year: 2010 -- 2014
-email: "fabio.nishida@usp.br"
-first_name: Fábio
+email: "fhnishida@gmail.com"
+first_name: Fabio
 highlight_name: true
 interests:
 - Public Sector
-- Applied Econometrics
 - Environmental Economics
+- Applied Econometrics
 last_name: Nishida
 organizations:
-- name: University of São Paulo
+- name: University of Sao Paulo
   url: https://www.fearp.usp.br
-role: Ph.D. Candidate in Economics
+role: Ph.D. in Economics
 social:
 - display:
     header: true
@@ -48,8 +48,9 @@ social:
 status:
   icon: null
 superuser: true
-title: Fábio Nishida
+title: Fabio Nishida
 ---
 
-Fábio Nishida is a Ph.D. candidate in Economics at the University of São Paulo. Currently visiting Heinz College at Carnegie Mellon University. His research interests include public sector, applied econometrics and environmetal economics.
+Fabio Nishida is a Ph.D. in Economics at the University of Sao Paulo. 
+His research interests include Public Sector, Environmental Economics, and Applied Econometrics.
 {style="text-align: justify;"}
