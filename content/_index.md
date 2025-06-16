@@ -134,6 +134,14 @@ sections:
     title: Experience
     date_format: Jan 2006
     items:
+    - company: Foundation for the Development of Legal Education and Research (FADEP)
+      company_logo: org-fadep
+      company_url: "https://fadeprp.org.br/"
+      date_end: "2021-05-30"
+      date_start: "2021-03-01"
+      description: Conducted a technical and financial feasibility study of the proposed Administrative Reform for the Municipality of Ribeirão Preto, assessing its budgetary impacts.
+      location: Ribeirao Preto, Brazil
+      title: Legislative Assistant
     - company: Legislative Assembly of Sao Paulo (Alesp)
       company_logo: org-alesp
       company_url: "https://www.al.sp.gov.br/"
