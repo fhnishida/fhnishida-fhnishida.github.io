@@ -52,5 +52,5 @@ title: Fabio Nishida
 ---
 
 Fabio Nishida is a Ph.D. in Economics at the University of Sao Paulo. 
-His research interests include Public Sector, Environmental Economics, and Applied Econometrics.
+His research interests include Public Sector, Development Economics, and Applied Econometrics.
 {style="text-align: justify;"}

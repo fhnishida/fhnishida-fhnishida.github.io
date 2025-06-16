@@ -141,7 +141,7 @@ sections:
       date_start: "2021-03-01"
       description: Conducted a technical and financial feasibility study of the proposed Administrative Reform for the Municipality of Ribeirão Preto, assessing its budgetary impacts.
       location: Ribeirao Preto, Brazil
-      title: Legislative Assistant
+      title: Financial Consultant
     - company: Legislative Assembly of Sao Paulo (Alesp)
       company_logo: org-alesp
       company_url: "https://www.al.sp.gov.br/"
