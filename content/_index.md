@@ -342,7 +342,7 @@ sections:
     #   provider: netlify
     # office_hours:
     # - Monday 10:00 to 13:00
-    # - Wednesday 09:00 to 10:00
+    # - Wednesday 09:00 to 11:00
     # phone: 888 888 88 88
     subtitle: null
     text: #Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mi diam, venenatis ut magna et, vehicula efficitur enim.
