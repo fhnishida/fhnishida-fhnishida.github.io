@@ -1,4 +1,4 @@
-install.packages("blogdown")
+install.packages("blogdown", "usethis")
 blogdown::install_hugo("0.110.0")
 
 remotes::install_github("rstudio/blogdown")
@@ -12,12 +12,13 @@ blogdown::new_site(theme = "wowchemy/wowchemy-hugo-modules")
 
 blogdown::serve_site() # Hospedar localmente o site (real-time)
 blogdown::stop_server() # Parar de hospedar localmente o site
-blogdown::new_post(title = "Hi Hugo", 
-                     ext = '.Rmarkdown', 
+blogdown::new_post(title = "Hi Hugo",
+                     ext = '.Rmarkdown',
                      subdir = "post")
 
 
 
-usethis::use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")
-usethis::use_git(message="") # Aplicar as alterações antes de dar 'Push'
+usethis::use_git_config(user.name = "fhnishida", user.email = "fhnishida@gmail.com")
 usethis::use_github() # requires a GitHub PAT
+usethis::use_git(message="") # Aplicar as alterações antes de dar 'Push'
+
