@@ -21,8 +21,7 @@ publishDate: "2025-03-05T00:00:00Z"
 slides: ""
 summary: The PMAT program, managed by BNDES, provides subsidized loans to improve municipal tax administration and boost own-source revenue while reducing reliance on transfers. This study assesses its impact using a difference-in-differences approach with multiple treatment periods, uniquely including municipalities that applied but did not receive funds as a control group. Contrary to previous findings, the results suggest the program did not significantly increase tax revenues, indicating that the financed modernization efforts were insufficient for meaningful revenue growth.
 tags:
-title: "Is it effective or not? Revisiting the effectiveness
-of PMAT"
+title: "Is it effective or not? Revisiting the effectiveness of PMAT"
 url_code: ""
 url_dataset: ''
 url_pdf: ""
