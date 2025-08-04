@@ -21,4 +21,3 @@ blogdown::new_post(title = "Hi Hugo",
 usethis::use_git_config(user.name = "fhnishida", user.email = "fhnishida@gmail.com")
 usethis::use_github() # requires a GitHub PAT
 usethis::use_git(message="") # Aplicar as alterações antes de dar 'Push'
-
