@@ -4,7 +4,7 @@ sections:
 # - block: hero
 #   content:
 #     cta:
-#       label: '**Get Started**'
+#       label: 'Homepage'
 #       url: https://wowchemy.com/templates/
 #     cta_alt:
 #       label: Ask a question
