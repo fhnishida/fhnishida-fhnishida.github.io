@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Econometrics I (Spring 2023) | Fabio Nishida</title><link>https://fhnishida.github.io/en/project/rec5004/</link><atom:link href="https://fhnishida.github.io/en/project/rec5004/index.xml" rel="self" type="application/rss+xml"/><description>Econometrics I (Spring 2023)</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate><image><url>https://fhnishida.github.io/en/project/rec5004/featured.jpg</url><title>Econometrics I (Spring 2023)</title><link>https://fhnishida.github.io/en/project/rec5004/</link></image><item><title>Econometrics I (Spring 2023)</title><link>https://fhnishida.github.io/en/project/rec5004/</link><pubDate>Mon, 03 Apr 2023 00:00:00 +0000</pubDate><guid>https://fhnishida.github.io/en/project/rec5004/</guid><description>&lt;p>Welcome to the TA materials for Econometrics I, prepared jointly with Felipe Bauer.&lt;/p>
+&lt;p>Course page (Prof. Daniel Domingues dos Santos): &lt;a href="https://edisciplinas.usp.br/course/view.php?id=108682" target="_blank" rel="noopener">https://edisciplinas.usp.br/course/view.php?id=108682&lt;/a>&lt;/p>
+&lt;p>Please feel free to contact us if you have any questions:&lt;/p>
+&lt;ul>
+&lt;li>Fábio Nishida: &lt;code>fabio.nishida@usp.br&lt;/code>&lt;/li>
+&lt;li>Felipe Bauer: &lt;code>felipebauer@usp.br&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;ul class="cta-group">
+&lt;li>
+&lt;a href="sec1" class="btn btn-primary px-3 py-3">👉 Proceed to the R Toolkit&lt;/a>
+&lt;/li>
+&lt;/ul>
+&lt;/br>
+&lt;h2 id="applied-problem-sets">Applied Problem Sets&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="Lista-Pratica-1.pdf">Applied Problem Set 1&lt;/a> | &lt;a href="Lista-Pratica-1_Solucao.pdf">Solution&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-Pratica-2.pdf">Applied Problem Set 2&lt;/a> | &lt;a href="Lista-Pratica-2_Solucao_v2.pdf">Solution (v2)&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-Pratica-3.pdf">Applied Problem Set 3&lt;/a> | &lt;a href="Lista-Pratica-3_Solucao.pdf">Solution&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-Pratica-4.pdf">Applied Problem Set 4&lt;/a> | &lt;a href="Lista-Pratica-4_Solucao.pdf">Solution&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="ta-session-recordings">TA Session Recordings&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>TA Session 12&lt;/strong>: IV, 2SLS, and hypothesis testing | &lt;a href="monitoria12.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=XMAD79vEoS8" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/XMAD79vEoS8/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 11&lt;/strong>: GLS, WLS, and feasible GLS | &lt;a href="monitoria11.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=feHhKe1DSkc" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/feHhKe1DSkc/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 10&lt;/strong>: Heteroskedasticity tests and OLS with robust standard errors | &lt;a href="monitoria10.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=kOb4RHe9j8U" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/kOb4RHe9j8U/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 9&lt;/strong>: Hypothesis testing | &lt;a href="monitoria09.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=0Kq11zaSGys" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 8&lt;/strong>: Multiple regression | &lt;a href="monitoria08.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=Gx3VFbWU7C4" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/Gx3VFbWU7C4/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 7&lt;/strong>: Numerical optimization | &lt;a href="monitoria07.R">Script&lt;/a>
+&lt;a href="https://youtu.be/KjwznBd4QI8" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/KjwznBd4QI8/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 6&lt;/strong>: Simple regression | &lt;a href="monitoria06.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=nU0U7M_MHNo" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/nU0U7M_MHNo/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 5&lt;/strong>: Data visualization and distributions | &lt;a href="monitoria05.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=Kvt24TLrQVk" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/Kvt24TLrQVk/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 4&lt;/strong>: Data manipulation | &lt;a href="monitoria04.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=XcwJWp4W01A" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/XcwJWp4W01A/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 3&lt;/strong>: R programming, Part 2 | &lt;a href="monitoria03.R">Script&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>The audio quality is not ideal in a few segments. If anything is unclear, please let us know.
+&lt;a href="https://www.youtube.com/watch?v=b5FhLOj9Sn4" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/b5FhLOj9Sn4/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 2&lt;/strong>: R programming, Part 1 | &lt;a href="monitoria02.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=rUTKEOu9a-M" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/rUTKEOu9a-M/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 1&lt;/strong>: R Toolkit | &lt;a href="monitoria01.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=VlL4SfQN88I" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/VlL4SfQN88I/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.youtube.com/watch?v=kpQBfVM3mww" target="_blank" rel="noopener">Short R Markdown video&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>

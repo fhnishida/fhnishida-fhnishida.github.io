@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Econometrics II (Spring 2023) | Fabio Nishida</title><link>https://fhnishida.github.io/project/rec2312/</link><atom:link href="https://fhnishida.github.io/project/rec2312/index.xml" rel="self" type="application/rss+xml"/><description>Econometrics II (Spring 2023)</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 00:00:00 +0000</lastBuildDate><image><url>https://fhnishida.github.io/project/rec2312/featured.jpg</url><title>Econometrics II (Spring 2023)</title><link>https://fhnishida.github.io/project/rec2312/</link></image><item><title>Econometrics II (Spring 2023)</title><link>https://fhnishida.github.io/project/rec2312/</link><pubDate>Wed, 08 Mar 2023 00:00:00 +0000</pubDate><guid>https://fhnishida.github.io/project/rec2312/</guid><description>&lt;p>Welcome to the TA materials for Econometrics II.&lt;/p>
+&lt;p>Course page (Prof. Daniel Domingues dos Santos): &lt;a href="https://edisciplinas.usp.br/course/view.php?id=108687" target="_blank" rel="noopener">https://edisciplinas.usp.br/course/view.php?id=108687&lt;/a>&lt;/p>
+&lt;p>If you have any questions, feel free to email me at &lt;code>fabio.nishida@usp.br&lt;/code>.&lt;/p>
+&lt;p>In-person TA hours take place on Thursdays from 1:00 PM to 2:00 PM in room 14-B1.&lt;/p>
+&lt;p>If needed, we will use the following Google Meet room: &lt;a href="https://meet.google.com/qtr-upxi-nwu" target="_blank" rel="noopener">https://meet.google.com/qtr-upxi-nwu&lt;/a>&lt;/p>
+&lt;ul class="cta-group">
+&lt;li>
+&lt;a href="sec1" class="btn btn-primary px-3 py-3">👉 Proceed to the R Review&lt;/a>
+&lt;/li>
+&lt;/ul>
+&lt;/br>
+&lt;h2 id="ta-session-recordings">TA Session Recordings&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>TA Session 10 (06/20)&lt;/strong>: IV, 2SLS, and hypothesis testing | &lt;a href="monitoria10.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=7HrsKmRrm9g" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/7HrsKmRrm9g/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 9 (06/09)&lt;/strong>: Hypothesis testing | &lt;a href="monitoria09.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=0Kq11zaSGys" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 8 (05/18)&lt;/strong>: Within and first-difference estimators | &lt;a href="monitoria08.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=KbOV12t_Ki0" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 7 (05/04)&lt;/strong>: Transformation matrices and the between estimator | &lt;a href="monitoria07.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=kh69ZHE8DNY" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 6 (04/27)&lt;/strong>: Feasible GLS estimation | &lt;a href="monitoria06.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=G-1AVqDQBqY" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 5 (04/20)&lt;/strong>: Estimating the error covariance matrix and GLS | &lt;a href="monitoria05.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=uxEXcGDL_zM" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/uxEXcGDL_zM/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 4 (04/13)&lt;/strong>: Panel data and the error covariance matrix | &lt;a href="monitoria04.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=6hZqBAGTNTc" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/6hZqBAGTNTc/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 3 (03/30)&lt;/strong>: OLS with categorical regressors | &lt;a href="monitoria03.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=AH4FIVMNDYM" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/AH4FIVMNDYM/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 2 (03/23)&lt;/strong>: Ordinary least squares | &lt;a href="monitoria02.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=5ye1mOJFe6k" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/5ye1mOJFe6k/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 1 (03/16)&lt;/strong>: Review of R programming | &lt;a href="monitoria01.R">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=SS-NLIn9gJk" target="_blank" rel="noopener">&lt;img src="https://img.youtube.com/vi/SS-NLIn9gJk/maxresdefault.jpg" alt="img" width=70%/>&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>
