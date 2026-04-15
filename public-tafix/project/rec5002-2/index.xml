@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Macroeconomics I, Part 2 (Spring 2021) | Fabio Nishida</title><link>https://fhnishida.github.io/project/rec5002-2/</link><atom:link href="https://fhnishida.github.io/project/rec5002-2/index.xml" rel="self" type="application/rss+xml"/><description>Macroeconomics I, Part 2 (Spring 2021)</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 21 Jul 2021 00:00:00 +0000</lastBuildDate><image><url>https://fhnishida.github.io/project/rec5002-2/featured.jpg</url><title>Macroeconomics I, Part 2 (Spring 2021)</title><link>https://fhnishida.github.io/project/rec5002-2/</link></image><item><title>Macroeconomics I, Part 2 (Spring 2021)</title><link>https://fhnishida.github.io/project/rec5002-2/</link><pubDate>Wed, 21 Jul 2021 00:00:00 +0000</pubDate><guid>https://fhnishida.github.io/project/rec5002-2/</guid><description>&lt;p>Welcome to TA Sessions for Macroeconomics I (Part 2) course!&lt;/p>
+&lt;p>Course webpage (prof. Luciano Nakabashi): &lt;a href="https://edisciplinas.usp.br/course/view.php?id=89644" target="_blank" rel="noopener">https://edisciplinas.usp.br/course/view.php?id=89644&lt;/a>&lt;/p>
+&lt;ul class="cta-group">
+&lt;li>
+&lt;a href="sec1" class="btn btn-primary px-3 py-3">👉 Proceed to Session 1&lt;/a>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="solutions-to-problem-sets">Solutions to Problem Sets&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="Lista-1_Resolucao.pdf">Problem Set 1&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-2_Resolucao.pdf">Problem Set 2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-3_Resolucao.pdf">Problem Set 3&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="previous-exams">Previous Exams&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="../Prova-2020_n12.pdf">2020 v12&lt;/a> | &lt;a href="../Prova-2020_n7.pdf">2020 v7&lt;/a>&lt;/li>
+&lt;li>&lt;a href="../Prova-2019.pdf">2019&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="complementary-content">Complementary Content&lt;/h2>
+&lt;h4 id="latex">LaTeX&lt;/h4>
+&lt;ul>
+&lt;li>&lt;a href="https://www.edx.org/course/latex-for-students-engineers-and-scientists-2" target="_blank" rel="noopener">LaTeX for Students, Engineers, and Scientists Course&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.tablesgenerator.com/" target="_blank" rel="noopener">LaTeX Table Generator&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://detexify.kirelabs.org/classify.html" target="_blank" rel="noopener">Search for Math Symbol Code&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h4 id="r-markdown">R Markdown:&lt;/h4>
+&lt;ul>
+&lt;li>&lt;a href="https://www.coursera.org/learn/reproducible-templates-analysis" target="_blank" rel="noopener">Reproducible Templates for Analysis and Dissemination Course&lt;/a>
+&lt;ul>
+&lt;li>Install &lt;em>tinytex&lt;/em> package to generate pdf&amp;rsquo;s in RStudio&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="r-programming">R Programming&lt;/h4>
+&lt;ul>
+&lt;li>&lt;a href="https://www.edx.org/professional-certificate/harvardx-data-science?index=product&amp;amp;queryID=7c853e76cef8eaffced84cd6759b2af1&amp;amp;position=1" target="_blank" rel="noopener">HarvardX Data Science Specialization&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.coursera.org/specializations/jhu-data-science" target="_blank" rel="noopener">John Hopkins Data Science Specialization&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

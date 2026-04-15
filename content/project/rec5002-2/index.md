@@ -1,6 +1,5 @@
 ---
 date: "2021-07-21T00:00:00Z"
-draft: true
 # external_link: https://fhnishida-rec5002-2.netlify.app/docs/
 image:
   # caption: Photo by Toa Heftiba on Unsplash
