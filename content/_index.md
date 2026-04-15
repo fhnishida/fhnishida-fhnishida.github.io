@@ -1,5 +1,7 @@
 ---
 date: "2022-10-24"
+title: Fabio Nishida
+summary: Academic website of Fabio Nishida, featuring research, publications, teaching materials, and work in public sector economics, environmental economics, public finance, and applied econometrics.
 sections:
 # - block: hero
 #   content:

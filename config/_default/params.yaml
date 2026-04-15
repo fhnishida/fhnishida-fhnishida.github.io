@@ -17,9 +17,9 @@ marketing:
   seo:
     site_type: Person
     local_business_type: ''
-    org_name: ''
-    description: ''
-    twitter: 'wowchemy'
+    org_name: 'University of Sao Paulo'
+    description: 'Academic website of Fabio Nishida, featuring research, publications, teaching materials, and work in public sector economics, environmental economics, public finance, and applied econometrics.'
+    twitter: ''
   analytics:
     google_analytics: ''
     baidu_tongji: ''

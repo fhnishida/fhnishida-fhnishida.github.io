@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Graduate | Fábio Nishida</title>
-    <link>https://fhnishida.netlify.app/tag/graduate/</link>
-      <atom:link href="https://fhnishida.netlify.app/tag/graduate/index.xml" rel="self" type="application/rss+xml" />
+    <title>Graduate | Fabio Nishida</title>
+    <link>https://fhnishida.github.io/tag/graduate/</link>
+      <atom:link href="https://fhnishida.github.io/tag/graduate/index.xml" rel="self" type="application/rss+xml" />
     <description>Graduate</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
+      <url>https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
       <title>Graduate</title>
-      <link>https://fhnishida.netlify.app/tag/graduate/</link>
+      <link>https://fhnishida.github.io/tag/graduate/</link>
     </image>
     
     <item>
       <title>Econometrics I (Spring 2023)</title>
-      <link>https://fhnishida.netlify.app/project/rec5004/</link>
+      <link>https://fhnishida.github.io/project/rec5004/</link>
       <pubDate>Mon, 03 Apr 2023 00:00:00 +0000</pubDate>
-      <guid>https://fhnishida.netlify.app/project/rec5004/</guid>
+      <guid>https://fhnishida.github.io/project/rec5004/</guid>
       <description>&lt;p&gt;Welcome to TA Sessions for Econometrics I course (jointly prepared with Felipe Bauer).&lt;/p&gt;
 &lt;p&gt;Course webpage (prof. Daniel Domingues dos Santos): &lt;a href=&#34;https://edisciplinas.usp.br/course/view.php?id=108682&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://edisciplinas.usp.br/course/view.php?id=108682&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Feel free to contact us if you have any question:&lt;/p&gt;
@@ -40,8 +40,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;Lista-Pratica-1.pdf&#34;&gt;Lista Prática 1&lt;/a&gt; | &lt;a href=&#34;Lista-Pratica-1_Solucao.pdf&#34;&gt;Solução&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;Lista-Pratica-2.pdf&#34;&gt;Lista Prática 2&lt;/a&gt; | &lt;a href=&#34;Lista-Pratica-2_Solucao_v2.pdf&#34;&gt;Solução (v2)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;Lista-Pratica-3.pdf&#34;&gt;Lista Prática 3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;Lista-Pratica-4.pdf&#34;&gt;Lista Prática 4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Pratica-3.pdf&#34;&gt;Lista Prática 3&lt;/a&gt; | &lt;a href=&#34;Lista-Pratica-3_Solucao.pdf&#34;&gt;Solução&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;Lista-Pratica-4.pdf&#34;&gt;Lista Prática 4&lt;/a&gt; | &lt;a href=&#34;Lista-Pratica-4_Solucao.pdf&#34;&gt;Solução&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;!--- comment ---&gt;
 &lt;h2 id=&#34;gravações-das-monitorias&#34;&gt;Gravações das Monitorias&lt;/h2&gt;
@@ -106,9 +106,9 @@
     
     <item>
       <title>Macroeconomics I, Part 2 (Spring 2021)</title>
-      <link>https://fhnishida.netlify.app/project/rec5002-2/</link>
+      <link>https://fhnishida.github.io/project/rec5002-2/</link>
       <pubDate>Wed, 21 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://fhnishida.netlify.app/project/rec5002-2/</guid>
+      <guid>https://fhnishida.github.io/project/rec5002-2/</guid>
       <description>&lt;p&gt;Welcome to TA Sessions for Macroeconomics I (Part 2) course!&lt;/p&gt;
 &lt;p&gt;Course webpage (prof. Luciano Nakabashi): &lt;a href=&#34;https://edisciplinas.usp.br/course/view.php?id=89644&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://edisciplinas.usp.br/course/view.php?id=89644&lt;/a&gt;&lt;/p&gt;
 
@@ -158,9 +158,9 @@
     
     <item>
       <title>Macroeconomics I, Part 1 (Spring 2021)</title>
-      <link>https://fhnishida.netlify.app/project/rec5002-1/</link>
+      <link>https://fhnishida.github.io/project/rec5002-1/</link>
       <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://fhnishida.netlify.app/project/rec5002-1/</guid>
+      <guid>https://fhnishida.github.io/project/rec5002-1/</guid>
       <description>&lt;p&gt;Welcome to TA Sessions for Macroeconomics I (Part 1) course!&lt;/p&gt;
 &lt;p&gt;Course webpage (prof. Fernando Barros Jr): &lt;a href=&#34;https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i&lt;/a&gt;&lt;/p&gt;
 

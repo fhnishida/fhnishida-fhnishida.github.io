@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Publications | Fábio Nishida</title>
-    <link>https://fhnishida.netlify.app/publication/</link>
-      <atom:link href="https://fhnishida.netlify.app/publication/index.xml" rel="self" type="application/rss+xml" />
-    <description>Publications</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <title>Research | Fabio Nishida</title>
+    <link>https://fhnishida.github.io/publication/</link>
+      <atom:link href="https://fhnishida.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
+    <description>Research</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 03 Aug 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://fhnishida.netlify.app/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
-      <title>Publications</title>
-      <link>https://fhnishida.netlify.app/publication/</link>
+      <url>https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
+      <title>Research</title>
+      <link>https://fhnishida.github.io/publication/</link>
     </image>
     
     <item>
-      <title>Impacts of rural pension on school dropout in Brazil</title>
-      <link>https://fhnishida.netlify.app/publication/journal-article/</link>
-      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
-      <guid>https://fhnishida.netlify.app/publication/journal-article/</guid>
+      <title>On the impacts of territorial fragmentation on voter engagement</title>
+      <link>https://fhnishida.github.io/publication/nishidahottsakurai2025/</link>
+      <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidahottsakurai2025/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>An example preprint / working paper</title>
-      <link>https://fhnishida.netlify.app/publication/preprint/</link>
-      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>https://fhnishida.netlify.app/publication/preprint/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;code, math, and images&lt;/a&gt;.&lt;/p&gt;
-</description>
+      <title>Impact of natural disasters on local public finance: Evidence from droughts and floods in Brazil</title>
+      <link>https://fhnishida.github.io/publication/nishidasakuraisevernini2025/</link>
+      <pubDate>Thu, 06 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidasakuraisevernini2025/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>An example conference paper</title>
-      <link>https://fhnishida.netlify.app/publication/conference-paper/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      <guid>https://fhnishida.netlify.app/publication/conference-paper/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Supplementary notes can be added here, including &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;code, math, and images&lt;/a&gt;.&lt;/p&gt;
-</description>
+      <title>Is it effective or not? Revisiting the effectiveness of PMAT</title>
+      <link>https://fhnishida.github.io/publication/nishidasakurai2025/</link>
+      <pubDate>Wed, 05 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidasakurai2025/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Who lost the most from Covid? Initial impacts of Covid-19 on the Brazilian labor market</title>
+      <link>https://fhnishida.github.io/publication/zanginskireisnishida2025/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/zanginskireisnishida2025/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Impacts of rural pension on school dropout in Brazil</title>
+      <link>https://fhnishida.github.io/publication/nishidaetal2022/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidaetal2022/</guid>
+      <description></description>
     </item>
     
   </channel>

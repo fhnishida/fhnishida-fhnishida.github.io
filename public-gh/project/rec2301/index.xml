@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Econometrics I (Fall 2022) | Fabio Nishida</title><link>https://fhnishida.github.io/project/rec2301/</link><atom:link href="https://fhnishida.github.io/project/rec2301/index.xml" rel="self" type="application/rss+xml"/><description>Econometrics I (Fall 2022)</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 05 Dec 2022 00:00:00 +0000</lastBuildDate><image><url>https://fhnishida.github.io/project/rec2301/featured.jpg</url><title>Econometrics I (Fall 2022)</title><link>https://fhnishida.github.io/project/rec2301/</link></image><item><title>Econometrics I (Fall 2022)</title><link>https://fhnishida.github.io/project/rec2301/</link><pubDate>Mon, 05 Dec 2022 00:00:00 +0000</pubDate><guid>https://fhnishida.github.io/project/rec2301/</guid><description>&lt;p>Sejam bem-vindas(os) ao conteúdo de Monitoria da disciplina de Econometria I!&lt;/p>
+&lt;p>Página do curso (prof. Daniel Domingues dos Santos): &lt;a href="https://edisciplinas.usp.br/course/view.php?id=101585" target="_blank" rel="noopener">https://edisciplinas.usp.br/course/view.php?id=99924&lt;/a>&lt;/p>
+&lt;ul class="cta-group">
+&lt;li>
+&lt;a href="sec1" class="btn btn-primary px-3 py-3">👉 Seguir para Ferramentas do R&lt;/a>
+&lt;/li>
+&lt;/ul>
+&lt;/br>
+&lt;h2 id="listas-de-exercícios">Listas de Exercícios&lt;/h2>
+&lt;h3 id="listas-teóricas">Listas Teóricas&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="Lista-Teorica-Cap2_v2.pdf">Lista Teórica - Capítulo 2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-Teorica-Cap3_v2.pdf">Lista Teórica - Capítulo 3&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="listas-práticas">Listas Práticas&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="Lista_Pratica_1.pdf">Lista Prática 1&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista_Pratica_2.pdf">Lista Prática 2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista_Pratica_3.pdf">Lista Prática 3&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/br>
+&lt;h2 id="gravações-das-monitorias">Gravações das Monitorias&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 1 (18/08)&lt;/strong>: Introdução ao R, Operações básicas e Objetos (simples e vetores) | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_01.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=WclDYhHj_Fk" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/WclDYhHj_Fk/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 2 (25/08)&lt;/strong>: Objetos (vetores, matrizes, listas e data frames) e Subconjuntos de objetos (até remoção de valores ausentes) | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_02.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=0DIlCKZb1gQ" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/0DIlCKZb1gQ/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 3 (01/09)&lt;/strong>: Operações vetoriais/matriciais, Estruturas de controle (if/else, for e while), e Exemplos de otimização de funções | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_03.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=N2pkt0CBUOc" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/N2pkt0CBUOc/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 4 (22/09)&lt;/strong>: Funções, Resumo e Manipulação de dados | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_04.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=cZpXDH96XPw" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/cZpXDH96XPw/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 5 (29/09)&lt;/strong>: Manipulação de dados via &lt;code>dplyr&lt;/code> | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_05.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=TycerslMhnU" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/TycerslMhnU/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 6 (06/10)&lt;/strong>: Distribuições, Simulação, Intervalo de Confiança, Teste &lt;em>t&lt;/em> e P-valor | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_06.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=wkOGblJGuIw" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/wkOGblJGuIw/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Monitoria 7 (13/10)&lt;/strong>: Modelo de regressão simples, função &lt;code>lm()&lt;/code>, transformação log e diferença de médias | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_07.R" target="_blank" rel="noopener">Script&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://www.youtube.com/watch?v=G0za24e0qj4" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/G0za24e0qj4/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p></description></item></channel></rss>

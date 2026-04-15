@@ -7,7 +7,7 @@ education:
     year: 2020 -- 2025
   - course: Specialization in Economics and Management
     institution: Getulio Vargas Foundation
-    year: 2077 -- 2019
+    year: 2017 -- 2019
   - course: B.Sc. in Business Administration
     institution: University of Sao Paulo
     year: 2010 -- 2014
@@ -51,6 +51,5 @@ superuser: true
 title: Fabio Nishida
 ---
 
-Fabio Nishida has a Ph.D. in Economics at the University of Sao Paulo. 
-His research interests include Public Sector, Development Economics, and Applied Econometrics.
+Fabio Nishida's academic website features research, publications, and teaching materials in public sector economics, environmental economics, public finance, and applied econometrics.
 {style="text-align: justify;"}
