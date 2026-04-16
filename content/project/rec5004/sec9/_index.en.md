@@ -1,10 +1,10 @@
----
+﻿---
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Hypothesis Testing
-summary: This page is about statistical hypothesis testing using the Wald test. It explains how to construct hypothesis tests using matrices and vectors and provides examples of linear constraints. The page also includes R code for evaluating the null hypothesis with a single constraint and multiple linear constraints. Additionally, it discusses the F-test and provides an example using the mlb1 dataset from Wooldridge (2006).
-title: Hypothesis Testing
+linktitle: "Hypothesis Testing"
+summary: "Hypothesis testing notes for econometrics, covering Wald tests, F-tests, linear restrictions, p-values, and matrix-based testing in R."
+title: "Hypothesis Testing in Econometrics"
 weight: 9
 output: md_document
 type: book
@@ -12,21 +12,20 @@ type: book
 
 
 
+- We now turn to more general forms of hypothesis testing that are not usually reported automatically in basic regression output.
 
-- Agora, veremos formas mais gerais de testes de hip�tese, que n�o s�o normalmente informadas nos resultados das regress�es.
 
-
-## Teste de Wald
-- Considere:
-  - {{<math>}}$G${{</math>}} o n�mero de restri��es lineares
-  - {{<math>}}$\boldsymbol{\beta}${{</math>}} � um vetor de par�metros {{<math>}}$(K+1) \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{h}${{</math>}} � um vetor de constantes {{<math>}}$G \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{R}${{</math>}} � uma matriz {{<math>}}$G \times (K+1)${{</math>}}, que empilha {{<math>}}$G${{</math>}} vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimens�es {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
-  - Modelo multivariado:
+## Wald Test
+- Consider:
+  - {{<math>}}$G${{</math>}}: the number of linear restrictions;
+  - {{<math>}}$\boldsymbol{\beta}${{</math>}}: the {{<math>}}$(K+1) \times 1${{</math>}} parameter vector;
+  - {{<math>}}$\boldsymbol{h}${{</math>}}: a {{<math>}}$G \times 1${{</math>}} vector of constants;
+  - {{<math>}}$\boldsymbol{R}${{</math>}}: a {{<math>}}$G \times (K+1)${{</math>}} matrix made up of row vectors {{<math>}}$\boldsymbol{r}'_g${{</math>}} of dimension {{<math>}}$1 \times (K+1)${{</math>}}, for {{<math>}}$g=1, 2, ..., G${{</math>}};
+  - the multivariate model:
   
-  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + \varepsilon$${{</math>}}
+  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + u$${{</math>}}
 
-- A partir destas matrizes e vetores, � poss�vel construir testes de hip�tese na forma:
+- Using these matrices and vectors, we can write hypothesis tests of the form:
 {{<math>}}\begin{align}
 \text{H}_0: &\underset{G\times (K+1)}{\boldsymbol{R}} \underset{(K+1)\times 1}{\boldsymbol{\beta}} = \underset{G \times 1}{\boldsymbol{h}} \\
 \text{H}_0: &\left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \vdots \\ \boldsymbol{r}'_{G} \end{matrix} \right] \boldsymbol{\beta} = \left[ \begin{matrix} h_1 \\ h_2 \\ \vdots \\ h_G \end{matrix} \right] \\
@@ -35,122 +34,88 @@ type: book
 
 
 
+### A Single Linear Restriction
 
-### Uma restri��o linear
+- Consider the model:
+  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$${{</math>}}
 
-- Considere o modelo:
-  {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \varepsilon$${{</math>}}
-
-- Logo, h� {{<math>}}$K=2${{</math>}} vari�veis explicativas (e h� 3 par�metros)
-- 1 restri��o linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
-- Logo, neste caso espec�fico, temos
+- There are {{<math>}}$K=2${{</math>}} explanatory variables, hence 3 parameters.
+- One linear restriction implies {{<math>}}$G=1${{</math>}}.
+- In this specific case,
 {{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
 
 
-#### Avaliando a hip�tese nula com restri��o �nica
-- Para o caso com uma �nica restri��o, assumimos que 
-{{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}}) r_1})$${{</math>}}
-
-- Calcula-se a estat�stica de Wald (igual � estat�stica _t_, quando tem uma �nica restri��o):
-{{<math>}}$$ w = t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1}} $${{</math>}}
-
-- Escolhe-se o n�vel de signific�ncia {{<math>}}$\alpha${{</math>}} e rejeita-se a hip�tese nula se a estat�stica _t_ n�o pertencer ao intervalo de confian�a.
-
-
-
-#### Exemplo 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
-- Note que {{<math>}}$h_1 = 4${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+#### Example 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
+- Here {{<math>}}$h_1 = 4${{</math>}}
+- The vector {{<math>}}$r'_1${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
 
-- Ent�o, a hip�tese nula �
-{{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
-
-- E o denomidor da estat�stica _t_ � igual a:
-{{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
-&= \sqrt{\left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right]  {\small \begin{bmatrix}
-var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
-cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2) \\
-cov(\hat{\beta}_0, \hat{\beta}_2) & cov(\hat{\beta}_1, \hat{\beta}_2) & var(\hat{\beta}_2) \\
-\end{bmatrix}}  \left[ \begin{matrix} 0 \\ 1 \\ 0 \end{matrix} \right]} \\
-&= \sqrt{\small{\begin{bmatrix}
-cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2)
-\end{bmatrix}} \left[ \begin{matrix} 0 \\ 1 \\ 0 \end{matrix} \right]} \\
-&= \sqrt{var(\hat{\beta}_1)} = se(\hat{\beta}_1) \end{align}{{</math>}}
+- So the null hypothesis is
+{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
 
 
-#### Exemplo 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
-- Note que {{<math>}}$h_1 = 2${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+
+#### Example 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
+- Here {{<math>}}$h_1 = 2${{</math>}}
+- The vector {{<math>}}$r'_1${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
-- Ent�o, a hip�tese nula �
-{{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
-
-- E o denomidor da estat�stica _t_ � igual a:
-{{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
-&= \sqrt{\left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right]  {\small \begin{bmatrix}
-var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
-cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2) \\
-cov(\hat{\beta}_0, \hat{\beta}_2) & cov(\hat{\beta}_1, \hat{\beta}_2) & var(\hat{\beta}_2) \\
-\end{bmatrix}}  \left[ \begin{matrix} 0 \\ 1 \\ 1 \end{matrix} \right]} \\
-&= \sqrt{\small{\begin{bmatrix}
-cov(\hat{\beta}_0, \hat{\beta}_1)+cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{\beta}_1) + cov(\hat{\beta}_1, \hat{\beta}_2) \\ cov(\hat{\beta}_1, \hat{\beta}_2) + var(\hat{\beta}_2)
-\end{bmatrix}}' \left[ \begin{matrix} 0 \\ 1 \\ 1 \end{matrix} \right]} \\
-&= \sqrt{var(\hat{\beta}_1) + var(\hat{\beta}_2) + 2cov(\hat{\beta}_1, \hat{\beta}_2)} = \sqrt{var(\hat{\beta}_1 + \hat{\beta}_2)} \end{align}{{</math>}}
+- So the null hypothesis is
+{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
 
 
-#### Exemplo 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
-- Note que
+#### Example 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
+- Note that
 {{<math>}}$$\beta_1 = \beta_2 \iff \beta_1 - \beta_2 = 0 $${{</math>}}
 
-- Logo, {{<math>}}$h_1 = 0${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+- Therefore {{<math>}}$h_1 = 0${{</math>}}
+- The vector {{<math>}}$r'_1${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $${{</math>}}
 
-- Ent�o, a hip�tese nula �
-{{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $${{</math>}}
-
-- E o denomidor da estat�stica _t_ � igual a:
-{{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
-&= \sqrt{\left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right]  {\small \begin{bmatrix}
-var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
-cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \hat{\beta}_2) \\
-cov(\hat{\beta}_0, \hat{\beta}_2) & cov(\hat{\beta}_1, \hat{\beta}_2) & var(\hat{\beta}_2) \\
-\end{bmatrix}}  \left[ \begin{matrix} 0 \\ 1 \\ -1 \end{matrix} \right]} \\
-&= \sqrt{\small{\begin{bmatrix}
-cov(\hat{\beta}_0, \hat{\beta}_1)-cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{\beta}_1) - cov(\hat{\beta}_1, \hat{\beta}_2) \\ cov(\hat{\beta}_1, \hat{\beta}_2) - var(\hat{\beta}_2)
-\end{bmatrix}}' \left[ \begin{matrix} 0 \\ 1 \\ -1 \end{matrix} \right]} \\
-&= \sqrt{var(\hat{\beta}_1) + var(\hat{\beta}_2) - 2cov(\hat{\beta}_1, \hat{\beta}_2)} = \sqrt{var(\hat{\beta}_1 - \hat{\beta}_2)} \end{align}{{</math>}}
+- So the null hypothesis is
+{{<math>}}$$\text{H}_0:\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $${{</math>}}
 
 
-#### Aplicando no R
 
-##### (Continua��o) Exemplo 7.5 - Equa��o do Log do Sal�rio-Hora (Wooldridge, 2006)
-- Anteriormente, estimamos o seguinte modelo:
+#### Implementing It in R
+
+#### Evaluating the Null with a Single Restriction
+- In the case of a single restriction, we assume that
+{{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)} r_1})$${{</math>}}
+
+- The corresponding _t_ statistic is
+{{<math>}}$$ t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V_{\beta(x)}} \boldsymbol{r}_1}} $${{</math>}}
+
+- In small samples, we also need to assume that {{<math>}}$ u|x \sim N(0; \sigma^2) ${{</math>}}.
+- Choose a significance level {{<math>}}$\alpha${{</math>}} and reject the null if the _t_ statistic falls outside the acceptance region.
+
+
+
+##### (Continued) Example 7.5: The Log Wage Equation (Wooldridge, 2006)
+- Earlier, we estimated the following model:
 
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} +\\
-&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
-em que:
+&\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
+where:
 
-- `wage`: sal�rio m�dio por hora
-- `female`: dummy em que (1) mulher e (0) homem
-- `married`: dummy em que (1) casado e (0) solteiro
-- `female*married`: intera��o (multiplica��o) das _dummies_ `female` e `married`
-- `educ`: anos de educa��o
-- `exper`: anos de experi�ncia (`expersq` = anos ao quadrado)
-- `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
+- `wage`: average hourly wage
+- `female`: dummy equal to 1 for women and 0 for men
+- `married`: dummy equal to 1 for married individuals and 0 for unmarried individuals
+- `female*married`: interaction between the `female` and `married` dummies
+- `educ`: years of education
+- `exper`: years of experience (`expersq` = years squared)
+- `tenure`: years with the current employer (`tenursq` = years squared)
 
 
 ```r
-# Carregando a base de dados necess�ria
+# Load the required dataset
 data(wage1, package="wooldridge")
 
-# Estimando o modelo
+# Estimate the model
 res_7.14 = lm(lwage ~ female*married + educ + exper + expersq + tenure + tenursq, data=wage1)
 round( summary(res_7.14)$coef, 4 )
 ```
@@ -168,27 +133,27 @@ round( summary(res_7.14)$coef, 4 )
 ## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
 
-- Notamos que o efeito do casamento sobre mulheres � diferente do efeito sobre homens, pois o par�metro de `female:married` ({{<math>}}$\delta_2${{</math>}}) � significante.
-- No entanto, para avaliar se o efeito do casamento sobre a mulher � significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}.
-- Como tem apenas uma restri��o, a hip�tese pode ser avaliada por teste _t_:
+- We already know that the effect of marriage differs between women and men because the coefficient on `female:married` ({{<math>}}$\delta_2${{</math>}}) is significant.
+- However, to assess whether the effect of marriage on women's wages is itself significant, we need to test whether {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}.
+- Since there is only one restriction, the hypothesis can be evaluated with a _t_ test:
 
-<img src="../t_test.png" alt="" width=60%>
+<img src="../t_test.png" alt="">
 
 
 ```r
-# Extraindo objetos da regress�o
-bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
-Vbhat = vcov(res_7.14) # matriz de vari�ncia-covari�ncia do estimador
-N = nrow(wage1) # n�mero de observa��es
-K = length(bhat) - 1 # n�mero de covariadas
-ehat = residuals(res_7.14) # res�duos da regress�o
+# Extract regression objects
+bhat = matrix(coef(res_7.14), ncol=1) # coefficients as a column vector
+Vbhat = vcov(res_7.14) # variance-covariance matrix of the estimator
+N = nrow(wage1) # number of observations
+K = length(bhat) - 1 # number of covariates
+uhat = residuals(res_7.14) # regression residuals
 
-# Criando vetor-linha de restri��o
-r1prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1) # vetor restri��o
-h1 = 0 # constante da H0
-G = 1 # n�mero de restri��es
+# Create the row vector that defines the restriction
+r1prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1) # restriction vector
+h1 = 0 # constant under H0
+G = 1 # number of restrictions
 
-# Fazendo teste t
+# Compute the t test
 t = (r1prime %*% bhat - h1) / sqrt(r1prime %*% Vbhat %*% t(r1prime))
 abs(t)
 ```
@@ -199,8 +164,18 @@ abs(t)
 ```
 
 ```r
-# Calculando o p-valor
-p = 2 * pt(-abs(t), N-K-1)
+# Compute the 5% two-sided critical value
+c = qt(1 - 0.05/2, df=N-K-1)
+c
+```
+
+```
+## [1] 1.964563
+```
+
+```r
+# Compute the p-value
+p = pt(-abs(t), N-K-1) * 2
 p
 ```
 
@@ -209,17 +184,19 @@ p
 ## [1,] 0.09366368
 ```
 
-- Como {{<math>}}$|t| < 2${{</math>}} (valor cr�tico aproximada para n�vel de signific�ncia de 5\%), ent�o n�o rejeitamos a hip�tese nula e conclu�mos que o efeito do casamento sobre o sal�rio de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) � estatisticamente n�o-significante.
+- Since {{<math>}}$|t| < 2${{</math>}} (an approximate 5\% critical value), we do not reject the null hypothesis and conclude that the effect of marriage on women's wages ({{<math>}}$\beta_2 + \delta_2${{</math>}}) is not statistically significant.
 
-- Tamb�m podemos fazer o mesmo pelo teste de Wald, mas avaliando a estat�stica pela distribui��o {{<math>}}$\chi^2${{</math>}} com 1 grau de liberdade (pois h� apenas {{<math>}}$G=1${{</math>}} restri��o)
-- Lembre-se tamb�m que usa-se o teste qui-quadrado unicaudal � direita.
+- We can also evaluate the same restriction using the Wald test and the {{<math>}}$\chi^2${{</math>}} distribution with 1 degree of freedom, since there is only one restriction ({{<math>}}$G=1${{</math>}}).
+- Remember that the chi-squared test is right-tailed.
 
+
+<img src="../chisq_test.png" alt="">
 
 
 
 ```r
-# Calculando estat�stica de Wald
-aux = r1prime %*% bhat - h1 # R \beta - h
+# Compute the Wald statistic
+aux = r1prime %*% bhat - h1 # R beta - h
 w = t(aux) %*% solve( r1prime %*% Vbhat %*% t(r1prime)) %*% aux
 w
 ```
@@ -230,7 +207,17 @@ w
 ```
 
 ```r
-# Calculando p-valor de w
+# Compute the 5% chi-squared critical value
+c = qchisq(1-0.05, df=G)
+c
+```
+
+```
+## [1] 3.841459
+```
+
+```r
+# Compute the p-value of w
 p = 1 - pchisq(w, df=G)
 p
 ```
@@ -244,58 +231,55 @@ p
 </br>
 
 
-### M�ltiplas restri��es lineares
+### Multiple Linear Restrictions
 
-#### Avaliando a hip�tese nula com m�ltiplas restri��es
-- Para o caso com _G_ restri��es, assumimos que 
-{{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V(\hat{\boldsymbol{\beta}}) R'})$${{</math>}}
-
-- Calcula-se a estat�stica de Wald
-{{<math>}}$$ w = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V(\hat{\beta}) R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
-
-- Escolhe-se o n�vel de signific�ncia {{<math>}}$\alpha${{</math>}} e rejeita-se a hip�tese nula se a estat�stica {{<math>}}$w${{</math>}} n�o pertencer ao intervalo de confian�a (do zero ao valor cr�tico).
-
-
-
-<img src="../chisq_test.png" alt="">
-
-
-#### Exemplo 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
-- Note que {{<math>}}$h_1 = 0 \text{ e } h_2 = 2${{</math>}}
-- Os vetores {{<math>}}$r'_1 \text{ e } r'_2${{</math>}} podem ser escritos como
+#### Example 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
+- Here {{<math>}}$h_1 = 0 \text{ and } h_2 = 2${{</math>}}
+- The vectors {{<math>}}$r'_1 \text{ and } r'_2${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \quad \text{e} \quad r'_2 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
-- Logo, {{<math>}}$\boldsymbol{R}${{</math>}} �
+- Therefore, {{<math>}}$\boldsymbol{R}${{</math>}} is
 {{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \end{matrix} \right] = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
-- Ent�o, a hip�tese nula �
+- So the null hypothesis is
 {{<math>}}$$\text{H}_0:\ \boldsymbol{R} \boldsymbol{\beta} = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = \left[ \begin{matrix} h_1 \\ h_2 \end{matrix} \right]\ \iff\ \text{H}_0:\ \left\{  \begin{matrix} \beta_1 &= 0 \\ \beta_1 + \beta_2 &= 2 \end{matrix} \right. $${{</math>}}
 
 
+#### Evaluating the Null with Multiple Restrictions
+- In the case of _G_ restrictions, we assume that
+{{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V_{\beta(x)} R'})$${{</math>}}
+
+- The Wald statistic is
+{{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
+
+- Choose a significance level {{<math>}}$\alpha${{</math>}} and reject the null if the statistic {{<math>}}$ w(\hat{\boldsymbol{\beta}})${{</math>}} exceeds the critical value.
+
 </br>
 
-### Aplicando no R
+### Implementing It in R
 
-- Como exemplo, usaremos a base de dados `mlb1` (pacote `wooldridge`) com estat�sticas de jogadores de beisebol (Wooldridge, 2006, Se��o 4.5)
-- Queremos estimar o modelo:
+- As an example, we use the `mlb1` dataset with statistics for Major League Baseball players (Wooldridge, 2006, Section 4.5).
+- We want to estimate the model:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
-&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
-em que:
-  - `log(salary)`: log do sal�rio de 1993
-  - `years`: anos jogando na 1� divis�o de beisebol americano
-  - `gamesyr`: m�dia de jogos por ano
-  - `bavg`: m�dia de rebatidas na carreira
-  - `hrunsyr`: m�dia de _home runs_ por ano
-  - `rbisyr`: m�dia de corridas impulsionadas por ano
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
+
+
+where:
+  - `log(salary)`: log of 1993 salary
+  - `years`: years playing in Major League Baseball
+  - `gamesyr`: average number of games per year
+  - `bavg`: career batting average
+  - `hrunsyr`: average home runs per year
+  - `rbisyr`: average runs batted in per year
 
 
 ```r
 data(mlb1, package="wooldridge")
 
-# Estimando o modelo completo (irrestrito)
+# Estimate the full (unrestricted) model
 resMLB = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
-round(summary(resMLB)$coef, 5) # coeficientes da estima��o
+round(summary(resMLB)$coef, 5) # estimated coefficients
 ```
 
 ```
@@ -308,19 +292,19 @@ round(summary(resMLB)$coef, 5) # coeficientes da estima��o
 ## rbisyr       0.01077    0.00717  1.50046  0.13440
 ```
 
-- Note que, individualmente, as vari�veis `bavg`, `hrunsyr` e `rbisyr` s�o estatisticamente n�o significantes.
-- Queremos avaliar se eles s�o estatisticamente significantes de forma conjunta, ou seja,
+- Notice that `bavg`, `hrunsyr`, and `rbisyr` are individually statistically insignificant.
+- We want to evaluate whether they are jointly significant, that is,
 {{<math>}}$$ \text{H}_0:\ \left\{ \begin{matrix} \beta_3 = 0 \\ \beta_4 = 0 \\ \beta_5 = 0\end{matrix} \right.   $${{</math>}}
 
-- Logo, temos que
+- Therefore,
 {{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \boldsymbol{r}'_3 \end{matrix} \right] = \left[ \begin{matrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \end{matrix} \right] $${{</math>}}
 
 
-#### Usando fun��o `Wald.test()`
+#### Using the `Wald.test()` Function
 
 
 ```r
-# Extraindo matriz de vari�ncia-covari�ncia do estimador
+# Extract the variance-covariance matrix of the estimator
 Vbhat = vcov(resMLB)
 round(Vbhat, 5)
 ```
@@ -336,12 +320,12 @@ round(Vbhat, 5)
 ```
 
 ```r
-# Calculando a estat�stica de Wald
-# install.packages("aod") # instalando o pacote necess�rio
-aod::wald.test(Sigma = Vbhat, # matriz de vari�ncia-covari�ncia
-               b = coef(resMLB), # estimativas
-               Terms = 4:6, # posi��es dos par�metros a serem testados
-               H0 = c(0, 0, 0) # vetor h (tudo igual a zero)
+# Compute the Wald statistic
+# install.packages("aod") # install the required package
+aod::wald.test(Sigma = Vbhat, # variance-covariance matrix
+               b = coef(resMLB), # estimates
+               Terms = 4:6, # positions of the parameters being tested
+               H0 = c(0, 0, 0) # null hypothesis (all equal to zero)
                )
 ```
 
@@ -353,30 +337,35 @@ aod::wald.test(Sigma = Vbhat, # matriz de vari�ncia-covari�ncia
 ## X2 = 28.7, df = 3, P(> X2) = 2.7e-06
 ```
 
-- Observe que rejeitamos a hip�tese nula e, portanto, os par�metros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} s�o conjuntamente significantes.
+```r
+# Wald test for the effect of root
+# aod::wald.test(b = coef(resMLB), Sigma = vcov(resMLB), L=R, H0=h)
+```
+
+- We reject the null hypothesis and conclude that the parameters {{<math>}}$\beta_3, \beta_4 \text{ and } \beta_5${{</math>}} are jointly significant.
 
 
-#### Calculando "na m�o"
+#### Computing It "By Hand"
 
-- Estimando o modelo
+- Estimate the model
 
 ```r
-# Criando variavel log_salary
+# Create the variable log_salary
 mlb1$log_salary = log(mlb1$salary)
 name_y = "log_salary"
 names_X = c("years", "gamesyr", "bavg", "hrunsyr", "rbisyr")
 
-# Criando o vetor y
-y = as.matrix(mlb1[,name_y]) # transformando coluna de data frame em matriz
+# Create vector y
+y = as.matrix(mlb1[,name_y]) # convert data-frame column into a matrix
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
-X = as.matrix( cbind( const=1, mlb1[,names_X] ) ) # juntando 1's com as covariadas
+# Create the covariate matrix X with a leading column of 1s
+X = as.matrix( cbind( const=1, mlb1[,names_X] ) ) # bind 1s to the covariates
 
-# Pegando valores N e K
+# Retrieve N and K
 N = nrow(mlb1)
 K = ncol(X) - 1
 
-# Estimando o modelo
+# Estimate the model
 bhat = solve( t(X) %*% X ) %*% t(X) %*% y
 round(bhat, 5)
 ```
@@ -392,14 +381,14 @@ round(bhat, 5)
 ```
 
 ```r
-# Calculando os res�duos
-ehat = y - X %*% bhat
+# Compute residuals
+uhat = y - X %*% bhat
 
-# Vari�ncia do termo de erro
-sig2hat = as.numeric( t(ehat) %*% ehat / (N-K-1) )
+# Error-term variance
+S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
 
-# Matriz de vari�ncia-covari�ncia do estimador
-Vbhat = sig2hat * solve( t(X) %*% X )
+# Variance-covariance matrix of the estimator
+Vbhat = S2 * solve( t(X) %*% X )
 round(Vbhat, 5)
 ```
 
@@ -413,13 +402,13 @@ round(Vbhat, 5)
 ## rbisyr   0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
 ```
 
-- Agora, vamos criar a matriz das restri��es
+- Now create the restriction matrix:
 
 ```r
-# N�mero de restri��es
+# Number of restrictions
 G = 3
 
-# Matriz das restri��es
+# Restriction matrix
 R = matrix(c(0, 0, 0, 1, 0, 0,
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1),
@@ -435,7 +424,7 @@ R
 ```
 
 ```r
-# Vetor de constantes h
+# Vector of constants h
 h = matrix(c(0, 0, 0),
            nrow=3, ncol=1)
 h
@@ -448,14 +437,14 @@ h
 ## [3,]    0
 ```
 
-- Lembre-se que, por padr�o, a fun��o `matrix()` "preenche" a matrix por coluna.
-- No entanto, � mais intuito preencher as restri��es por linha (j� que cada linha representa uma restri��o). Para isto, foi usado o argumento `byrow=TRUE`.
-- Calculando a estat�stica de Wald, dada por
+- Remember that `matrix()` fills by column by default.
+- Here it is more intuitive to fill the restrictions by row, since each row represents one restriction. That is why we used `byrow=TRUE`.
+- The Wald statistic is then
 {{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
 
 
 ```r
-# Estat�stica de Wald
+# Wald statistic
 w = t( R %*% bhat - h ) %*% solve( R %*% Vbhat %*% t(R) ) %*% (R %*% bhat - h)
 w
 ```
@@ -466,7 +455,7 @@ w
 ```
 
 ```r
-# Encontrando valor cr�tico Qui-quadrado para 5% de signif.
+# Find the 5% chi-squared critical value
 alpha = 0.05
 c = qchisq(1-alpha, df=G)
 c
@@ -477,7 +466,7 @@ c
 ```
 
 ```r
-# Comparando estat�stica de Wald e valor cr�tico
+# Compare the Wald statistic with the critical value
 w > c
 ```
 
@@ -486,8 +475,8 @@ w > c
 ## [1,] TRUE
 ```
 
-- Como Estat�stica de Wald (= 28,65) � maior do que o valor cr�tico (= 7,81), ent�o rejeitamos a hip�tese nula conjunta de que todos par�metros testados s�o iguais a zero.
-- Tamb�m poder�amos verificar o p-valor por meio da estat�stica de Wald:
+- Since the Wald statistic (= 28.65) is greater than the critical value (= 7.81), we reject the joint null that all tested parameters are equal to zero.
+- We can also evaluate the p-value from the Wald statistic:
 
 ```r
 1 - pchisq(w, df=G)
@@ -498,61 +487,61 @@ w > c
 ## [1,] 2.651604e-06
 ```
 
-- Como � menor do que 5%, rejeita-se a hip�tese nula.
+- Because it is below 5%, we reject the null hypothesis.
 
 
 </br>
 
 
-## Teste F
+## F Test
 
-- [Se��o 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
-- Uma outra forma de avaliar restri��es m�ltiplas � por meio do teste F.
-- Nele, estimamos dois modelos:
-  - Irrestrito: inclui todas as vari�veis explicativas de interesse
-  - Restrito: exclui algumas vari�veis da estima��o
-- O teste F compara as somas dos quadrados dos res�duos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
-- A ideia �: se as vari�veis exclu�das forem significantes conjuntamente, ent�o haver� uma diferen�a de poder explicativo entre os modelos e, logo, as vari�veis seriam significantes.
+- [Section 4.3 of Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
+- Another way to evaluate multiple restrictions is with the F test.
+- Here we estimate two models:
+  - unrestricted: includes all explanatory variables of interest;
+  - restricted: excludes some variables.
+- The F test compares the residual sum of squares (RSS) or the {{<math>}}R$^2${{</math>}} of the two models.
+- The intuition is straightforward: if the excluded variables are jointly significant, the unrestricted model should fit the data better.
 
 </br>
 
-- A estat�stica _F_ pode ser calculada por:
+- The _F_ statistic can be computed as
 
-{{<math>}}$$ F = \frac{\text{SSR}_{r} - \text{SSR}_{ur}}{\text{SSR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
+{{<math>}}$$ F = \frac{\text{SQR}_{r} - \text{SQR}_{ur}}{\text{SQR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
 
-em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
+where `ur` denotes the unrestricted model and `r` denotes the restricted model.
 
-- Depois, avalia-se a estat�stica _F_ a partir de um teste unicaudal � direita em uma distribui��o _F_:
+- We then evaluate the statistic using a right-tailed F test:
 
 <img src="../F_test.png" alt="">
 
 
 
-### Aplicando no R
+### Implementing It in R
 
-- Aqui, continuaremos usando a base de dados `mlb1` da Se��o 4.5 de Wooldridge (2006)
-- O modelo irrestrito (com todas vari�veis explicativas) �:
+- We continue using the `mlb1` dataset from Section 4.5 of Wooldridge (2006).
+- The unrestricted model, with all explanatory variables, is
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
-&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
+&\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + u \end{align}{{</math>}}
 
-- O modelo restrito (excluindo as vari�veis) �:
-{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \varepsilon \end{align}{{</math>}}
+- The restricted model, which excludes the tested variables, is
+{{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + u \end{align}{{</math>}}
 
 
-#### Usando fun��o `linearHypothesis()`
-- ?? poss�vel fazer o teste _F_ a partir da fun��o `linearHypothesis()` do pacote `car`
-- Al�m de incluir o objeto resultante de uma estima��o, � necess�rio incluir um vetor de texto com as restri��es:
+#### Using `linearHypothesis()`
+- We can run the F test with the `linearHypothesis()` function from the `car` package.
+- In addition to the estimated model object, we provide a character vector listing the restrictions:
 
 
 ```r
-# Estimando o modelo irrestrito
+# Estimate the unrestricted model
 res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 
-# Criando vetor com as restri��es
+# Create a vector with the restrictions
 myH0 = c("bavg = 0", "hrunsyr = 0", "rbisyr = 0")
 
-# Aplicando o teste F
-# install.packages("car") # instalando o pacote necess�rio
+# Apply the F test
+# install.packages("car") # install the required package
 car::linearHypothesis(res.ur, myH0)
 ```
 
@@ -574,10 +563,10 @@ car::linearHypothesis(res.ur, myH0)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-- Note que na 2� linha (modelo irrestrito), a soma dos quadrados dos res�duos (SQR/RSS) � menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que � esperado)
-- Para avaliar a hip�tese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estat�stica _F_ � maior do que um valor cr�tico (dado um n�vel de signific�ncia), ou avaliarmos se o p-valor � menor do que esse n�vel de signific�ncia.
-- ?? poss�vel ver acima, pelo segundo crit�rio, que rejeitamos a hip�tese nula.
-- Podemos ver o valor cr�tico a 5% de signific�ncia via:
+- Notice that in the second row, which corresponds to the unrestricted model, the residual sum of squares (RSS) is smaller than in the restricted model. Hence the larger set of covariates provides more explanatory power, as expected.
+- To evaluate the null hypothesis ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), we can either compare the _F_ statistic with a critical value or compare the p-value with the chosen significance level.
+- From the p-value criterion above, we reject the null hypothesis.
+- The 5% critical value can be obtained with:
 
 
 ```r
@@ -587,22 +576,22 @@ qf(1-0.05, G, N-K-1)
 ```
 ## [1] 2.630641
 ```
-- Como 9,55 > 2,63, ent�o rejeitamos a hip�tese nula.
+- Since 9.55 > 2.63, we reject the null hypothesis.
 
 
-#### Calculando "na m�o"
+#### Computing It "By Hand"
 
-- Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para n�o ter que fazer todos passos da estima��o duas vezes.
+- Here we use the unrestricted and restricted models estimated with `lm()` so that we do not need to redo the full estimation procedure twice.
 
 
 ```r
-# Estimando o modelo irrestrito
+# Estimate the unrestricted model
 res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 
-# Estimando o modelo restrito
+# Estimate the restricted model
 res.r = lm(log(salary) ~ years + gamesyr, data=mlb1)
 
-# Extraindo os R2 dos resultados das estima��es
+# Extract the R2 from each fitted model
 r2.ur = summary(res.ur)$r.squared
 r2.ur
 ```
@@ -621,7 +610,7 @@ r2.r
 ```
 
 ```r
-# Calculando a estat�stica F
+# Compute the F statistic
 F = ( r2.ur - r2.r ) / (1 - r2.ur) * (N-K-1) /  G
 F
 ```
@@ -631,7 +620,7 @@ F
 ```
 
 ```r
-# p-valor do teste F
+# p-value of the F test
 1 - pf(F, G, N-K-1)
 ```
 
@@ -640,9 +629,6 @@ F
 ```
 
 
-
 </br>
 
-{{< cta cta_text="?Y'? Proceed to Panel Data" cta_link="../sec10" >}}
-
-
+{{< cta cta_text="Proceed to Numerical Optimization" cta_link="../sec10" >}}

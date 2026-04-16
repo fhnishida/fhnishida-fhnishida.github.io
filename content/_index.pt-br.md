@@ -1,7 +1,7 @@
 ---
 date: "2022-10-24"
-title: Fabio Nishida
-summary: Página acadêmica de Fabio Nishida, com pesquisas, publicações, materiais de ensino e trabalhos em economia do setor público, economia ambiental, finanças públicas e econometria aplicada.
+title: "Fabio Nishida"
+summary: "Página acadêmica de Fabio Nishida, economista e doutorando na Universidade de São Paulo, com pesquisas, publicações, materiais de ensino e projetos em finanças públicas, economia ambiental e econometria aplicada."
 sections:
 - block: about.avatar
   content:
@@ -202,6 +202,6 @@ sections:
   design:
     columns: "2"
   id: contact
-title: null
+title: "Fabio Nishida"
 type: landing
 ---

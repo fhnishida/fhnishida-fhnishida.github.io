@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Distributions
-summary: The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations.
-title: Distributions
+linktitle: "Distribuições"
+summary: "Notas sobre distribuições de probabilidade e simulação no R para Econometria, incluindo distribuições normal, t, qui-quadrado e conceitos de amostragem."
+title: "Distribuições e simulação"
 weight: 5
 output: md_document
 type: book
@@ -524,4 +524,4 @@ plot(table(amostra), type="h", xlim=c(1,6))
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Simple Regression" cta_link="../sec7" >}}
+{{< cta cta_text="👉 Seguir para Regressão Simples" cta_link="../sec6" >}}

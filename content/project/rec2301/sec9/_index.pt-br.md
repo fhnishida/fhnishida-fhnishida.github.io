@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Testes de Hipótese
-summary: This page is about statistical hypothesis testing using the Wald test. It explains how to construct hypothesis tests using matrices and vectors and provides examples of linear constraints. The page also includes R code for evaluating the null hypothesis with a single constraint and multiple linear constraints. Additionally, it discusses the F-test and provides an example using the mlb1 dataset from Wooldridge (2006).
-title: Testes de Hipótese
+linktitle: "Testes de Hipótese"
+summary: "Notas sobre testes de Wald e F para restrições lineares, com exemplos resolvidos e código em R para hipóteses simples e conjuntas."
+title: "Testes de Hipótese em Econometria"
 weight: 9
 output: md_document
 type: book

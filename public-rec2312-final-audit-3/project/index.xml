@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects | Fabio Nishida</title>
+    <link>https://fhnishida.github.io/project/</link>
+      <atom:link href="https://fhnishida.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    <description>Projects</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
+      <title>Projects</title>
+      <link>https://fhnishida.github.io/project/</link>
+    </image>
+    
+    <item>
+      <title>Econometrics I (Fall 2022)</title>
+      <link>https://fhnishida.github.io/project/ta-rec2301/</link>
+      <pubDate>Mon, 05 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/project/ta-rec2301/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Econometrics II (Spring 2023)</title>
+      <link>https://fhnishida.github.io/project/ta-rec2312/</link>
+      <pubDate>Wed, 08 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/project/ta-rec2312/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Macroeconomics I, Part 1 (Spring 2021)</title>
+      <link>https://fhnishida.github.io/project/ta-rec5002-1/</link>
+      <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/project/ta-rec5002-1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Macroeconomics I, Part 2 (Spring 2021)</title>
+      <link>https://fhnishida.github.io/project/ta-rec5002-2/</link>
+      <pubDate>Wed, 21 Jul 2021 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/project/ta-rec5002-2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Econometrics I (Spring 2023)</title>
+      <link>https://fhnishida.github.io/project/ta-rec5004/</link>
+      <pubDate>Mon, 03 Apr 2023 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/project/ta-rec5004/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

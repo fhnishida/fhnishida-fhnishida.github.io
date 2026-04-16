@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Visualização de Dados
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Visualização de Dados
+linktitle: "Visualização de Dados"
+summary: "Notas introdutórias de visualização de dados com gráficos base do R, análise exploratória e exemplos com ggplot2."
+title: "Visualização de Dados no R"
 weight: 5
 output: md_document
 type: book

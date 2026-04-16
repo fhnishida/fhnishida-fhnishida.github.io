@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Programming
-summary: The page also contains a table of contents for his R programming project, which includes topics such as basic operations, objects in R, logical/boolean expressions, vectors, matrices, lists, data frames, extracting subsets, removing missing values (NA), vector/matrix operations, basic statistics on vectors and matrices, control structures (conditional (if), repetition (for), repetition (while)), and examples of optimization of univariate and bivariate functions.
-title: R Programming
+linktitle: "Programação"
+summary: "Notas de programação em R sobre objetos, vetores, matrizes, listas, data frames, valores ausentes, estruturas de controle e ferramentas usadas nas listas de Econometria."
+title: "Programação em R para Econometria"
 weight: 2
 output: md_document
 type: book
@@ -1542,4 +1542,4 @@ above(vetor, 14) # todos acima de 14
 
 
 
-{{< cta cta_text="👉 Proceed to Data Manipulation" cta_link="../sec3" >}}
+{{< cta cta_text="👉 Seguir para Manipulação de Dados" cta_link="../sec3" >}}

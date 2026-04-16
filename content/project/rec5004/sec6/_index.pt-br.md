@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Simple Regression
-summary: This page covers topics such as simple MQO regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
-title: Simple Regression
+linktitle: "Regressão Simples"
+summary: "Notas de regressão linear simples com MQO, hipóteses do modelo, interpretação, variáveis omitidas, análise de resíduos e exemplos em R."
+title: "Regressão linear simples"
 weight: 6
 output: md_document
 type: book
@@ -685,4 +685,4 @@ abline(lm(y ~ x), col="blue") # modelo estimado
 
 
 
-{{< cta cta_text="👉 Proceed to Optimization" cta_link="../sec7" >}}
+{{< cta cta_text="👉 Seguir para Otimização" cta_link="../sec7" >}}

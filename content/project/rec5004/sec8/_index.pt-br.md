@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Multiple Regression
-summary: This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed. 
-title: Multiple Regression
+linktitle: "Regressão Múltipla"
+summary: "Notas de regressão linear múltipla com vários regressores, variáveis qualitativas, termos de interação e exemplos aplicados em R."
+title: "Regressão linear múltipla"
 weight: 8
 output: md_document
 type: book
@@ -1593,4 +1593,4 @@ round( summary(reg)$coef, 4 )
 
 
 
-{{< cta cta_text="👉 Proceed to Hypothesis Testing" cta_link="../sec9" >}}
+{{< cta cta_text="👉 Seguir para Testes de Hipótese" cta_link="../sec9" >}}

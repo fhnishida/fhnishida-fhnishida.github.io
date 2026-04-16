@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Econometria I: notas de monitoria (2023) | Fabio Nishida</title>
+    <link>https://fhnishida.github.io/pt-br/project/rec5004/</link>
+      <atom:link href="https://fhnishida.github.io/pt-br/project/rec5004/index.xml" rel="self" type="application/rss+xml" />
+    <description>Econometria I: notas de monitoria (2023)</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>pt-br</language><lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.github.io/pt-br/project/rec5004/featured.jpg</url>
+      <title>Econometria I: notas de monitoria (2023)</title>
+      <link>https://fhnishida.github.io/pt-br/project/rec5004/</link>
+    </image>
+    
+  </channel>
+</rss>

@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Programa��o em R
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Programa��o em R
+linktitle: "R Programming"
+summary: "Core R programming notes on objects, vectors, matrices, lists, subsetting, vectorized operations, control structures, and user-defined functions."
+title: "R Programming Fundamentals"
 weight: 2
 output: md_document
 type: book

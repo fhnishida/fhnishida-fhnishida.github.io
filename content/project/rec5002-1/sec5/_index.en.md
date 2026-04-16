@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 5
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 5 (May 18, 2021)
+linktitle: "Problem Set 2"
+summary: "Worked solutions and code for the second Macroeconomics I problem set in the graduate TA sequence."
+title: "Session 5: Problem Set 2 Solutions"
 weight: 5
 output: md_document
 type: book

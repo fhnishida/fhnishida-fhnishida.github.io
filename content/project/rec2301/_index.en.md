@@ -4,11 +4,11 @@ date: "2022-12-05T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on OLS.
+summary: "Undergraduate Econometrics I teaching-assistance notes with R tutorials on OLS, data manipulation, visualization, probability distributions, numerical optimization, and hypothesis testing."
 tags:
 - Undergraduate
-title: Econometrics I (Fall 2022)
-linktitle: Principal
+title: "Econometrics I TA Notes (Fall 2022)"
+linktitle: "Main"
 type: book
 icon: book
 iconpack: fs

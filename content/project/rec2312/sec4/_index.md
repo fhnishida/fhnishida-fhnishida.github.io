@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Panel Data
-summary: This page includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I.
-title: Panel Data Estimation
+linktitle: "Panel Data"
+summary: "Panel data notes covering data structures, variance-covariance matrices, pooled OLS, random effects, fixed effects, and first-difference estimators in R."
+title: "Panel Data Estimation in R"
 weight: 4
 output: md_document
 type: book
@@ -15,46 +15,46 @@ type: book
 
 ## Data Structure
 
-- Section 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- A maioria das notações foram adaptadas de acordo com as notas de aula de Econometria I.
+- Section 2.1.1 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Most notation follows the Econometrics I lecture notes.
 
 
 ### Cross-Section
-So far, we have worked with cross-sectional datasets (ou _cross-section_, em inglês), ou seja, where cada linha representava um individual {{<math>}}$i  = 1, ..., N${{</math>}} e observamos as realizações da dependent variable {{<math>}}$y${{</math>}} e das explanatory variables {{<math>}}$k = 1, 2, ..., K${{</math>}}:
+So far, we have worked with cross-sectional datasets, that is, samples in which each row represents one individual {{<math>}}$i = 1, ..., N${{</math>}} and we observe realizations of the dependent variable {{<math>}}$y${{</math>}} and the explanatory variables {{<math>}}$k = 1, 2, ..., K${{</math>}}:
 
 <img src="../data_crosssection.png" alt="">
 
 
 #### Example
-Considerando {{<math>}}$N = 4${{</math>}} individuals e {{<math>}}$K = 2${{</math>}} covariates, segue o exemplo:
+Consider {{<math>}}$N = 4${{</math>}} individuals and {{<math>}}$K = 2${{</math>}} covariates:
 
 <img src="../data_crosssection_example.png" alt="">
 
 
 
-### Painel
-It is also common to use panel data, isto é, uma base de dados where observamos os individuals {{<math>}}$i = 1, ..., N${{</math>}} nos {{<math>}}$t = 1, ..., T${{</math>}} periods.
+### Panel Data
+It is also common to work with panel data, that is, datasets in which we observe the same individuals {{<math>}}$i = 1, ..., N${{</math>}} over {{<math>}}$t = 1, ..., T${{</math>}} periods.
 
-Este tipo de estrutura de dado permite, além de fazer comparações inter-individuals (_between_), avaliar diferenças intra-individuals (_within_) a partir das variações ocorridas ao longo do tempo para um mesmo individual.
+This type of structure allows us not only to compare individuals (_between_), but also to study within-individual variation (_within_) over time.
 
-Por simplicidade, consideramos que todos individuals possuem {{<math>}}$T${{</math>}} observations ao longo do tempo (**painel balanceado**). Panel data can also be organized in two layouts: long or wide.
+For simplicity, we assume a **balanced panel**, so every individual is observed for the same {{<math>}}$T${{</math>}} periods. Panel data can be organized in either long or wide format.
 
 
-##### Panel Data in Long Format (_long_, em inglês)
-Aqui, cada individual aparece em {{<math>}}$T${{</math>}} linhas. Cada observation é indicada pela dupla {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}} (key variables in the dataset). This is the standard layout used in econometrics.
+##### Panel Data in Long Format (_long_)
+In long format, each individual appears in {{<math>}}$T${{</math>}} rows. Each observation is indexed by the pair {{<math>}}$i${{</math>}} and {{<math>}}$t${{</math>}}, which serve as the key identifiers in the dataset. This is the standard layout used in econometrics.
 
 <img src="../data_panellong.png" alt="">
 
 
-##### Panel Data in Wide Format (_wide_, em inglês)
-Na forma curta, as informações das dependent variables e independentes aparecem repetidamente por {{<math>}}$T${{</math>}} vezes, where que cada repetição corresponde a um dos {{<math>}}$T${{</math>}} periods:
+##### Panel Data in Wide Format (_wide_)
+In wide format, the dependent and explanatory variables appear repeated across {{<math>}}$T${{</math>}} columns, with each repetition corresponding to one of the {{<math>}}$T${{</math>}} periods:
 
 <img src="../data_panelwide.png" alt="">
 
 
 
 #### Examples
-As an example, consider {{<math>}}$N = 4${{</math>}} individuals e {{<math>}}$K = 2${{</math>}} covariates e {{<math>}}$T = 2${{</math>}} periods. As bases de dados em paineis longo e curto, respectivamente, teriam as seguintes estruturas:
+As an example, consider {{<math>}}$N = 4${{</math>}} individuals, {{<math>}}$K = 2${{</math>}} covariates, and {{<math>}}$T = 2${{</math>}} periods. The corresponding long and wide panel layouts are:
 
 <img src="../data_panellong_example.png" alt="">
 
@@ -64,27 +64,27 @@ As an example, consider {{<math>}}$N = 4${{</math>}} individuals e {{<math>}}$K 
 
 ## Panel Data Model
 
-Para a observation do individual {{<math>}}$i \in \{1, ..., N\}${{</math>}} no period {{<math>}}$t \in \{1, ..., T\}${{</math>}}, we can write the model as:
+For observation {{<math>}}$(i,t)${{</math>}}, we can write the model as:
 
 {{<math>}}$$ y_{it} = \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{1} $$ {{</math>}}
-where {{<math>}}$\boldsymbol{\beta}${{</math>}} is a column vector of {{<math>}}$K${{</math>}} parâmetros
+where {{<math>}}$\boldsymbol{\beta}${{</math>}} is the column vector of parameters
 
 {{<math>}}$$ \boldsymbol{\beta} = \left[ \begin{array}{c} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{array} \right], $${{</math>}}
 
-{{<math>}}$y_{it}${{</math>}} é a dependent variable, {{<math>}}$\boldsymbol{x}'_{it}${{</math>}} is the row vector of dimension {{<math>}}$K+1${{</math>}}:
+{{<math>}}$y_{it}${{</math>}} is the dependent variable, and {{<math>}}$\boldsymbol{x}'_{it}${{</math>}} is the row vector of dimension {{<math>}}$K+1${{</math>}}:
 
 {{<math>}}$$ \boldsymbol{x}'_{it} = \left[ \begin{array}{c} 1 & x^1_{it} & x^2_{it} & \cdots & x^K_{it} \end{array} \right],  $${{</math>}}
 
 and the error {{<math>}}$\varepsilon_{it}${{</math>}} can be written as:
 
 {{<math>}}$$ \varepsilon_{it} = u_i + v_{it},  $${{</math>}}
-where {{<math>}}$u_i${{</math>}} o erro individual para o individual {{<math>}}$i${{</math>}} e {{<math>}}$v_{it}${{</math>}} é o erro idiossincrático (residual).
+where {{<math>}}$u_i${{</math>}} is the individual-specific error component for individual {{<math>}}$i${{</math>}}, and {{<math>}}$v_{it}${{</math>}} is the idiosyncratic error.
 
-Empilhando as equações (1) para todo individual {{<math>}}$i = 1, 2, ..., N${{</math>}} e todo period {{<math>}}$t = 1, 2, ..., T ${{</math>}}, temos
+Stacking equation (1) over all individuals {{<math>}}$i = 1, 2, ..., N${{</math>}} and periods {{<math>}}$t = 1, 2, ..., T${{</math>}}, we obtain
 
 {{<math>}}$$ \underbrace{\boldsymbol{y}}_{NT \times 1} = \left[ \begin{array}{c}
     y_{11} \\ y_{12} \\ \vdots \\ y_{1T} \\\hline y_{21} \\ y_{22} \\ \vdots \\ y_{2T} \\\hline \vdots \\\hline y_{N1} \\ y_{N2} \\ \vdots \\ y_{NT}
-\end{array} \right] \quad \text{ e } \quad 
+\end{array} \right] \quad \text{and} \quad 
 \underbrace{\boldsymbol{X}}_{NT \times K} = \left[ \begin{array}{c}
     \boldsymbol{x}'_{11} \\ \boldsymbol{x}'_{12} \\ \vdots \\ \boldsymbol{x}'_{1T} \\\hline
     \boldsymbol{x}'_{21} \\ \boldsymbol{x}'_{22} \\ \vdots \\ \boldsymbol{x}'_{2T} \\\hline
@@ -106,18 +106,17 @@ Empilhando as equações (1) para todo individual {{<math>}}$i = 1, 2, ..., N${{
     \vdots & \vdots & \vdots & \ddots & \vdots \\
     1 & x^1_{NT} & x^2_{NT} & \cdots & x^K_{NT}
 \end{array} \right] $$ {{</math>}}
-As linhas horizontais foram inseridas apenas para facilitar a visualização dos valores referentes a cada individual {{<math>}}$i${{</math>}}.
+The horizontal separators are included only to make it easier to visualize the rows associated with each individual {{<math>}}$i${{</math>}}.
 
 
 </br>
 
 ## Error Variance-Covariance Matrix
-- Section 2.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Section 2.2 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
-A Error Variance-Covariance Matrix relaciona um termo de erro, {{<math>}}$\varepsilon_{it}${{</math>}}, com todos os demais termos de erro {{<math>}}$\varepsilon_{js}${{</math>}}, para todo {{<math>}}$j = 1, ..., N${{</math>}} e todo {{<math>}}$a = 1, ..., T${{</math>}}.
+The error variance-covariance matrix links one error term, {{<math>}}$\varepsilon_{it}${{</math>}}, to every other error term {{<math>}}$\varepsilon_{js}${{</math>}}, for all {{<math>}}$j = 1, ..., N${{</math>}} and {{<math>}}$s = 1, ..., T${{</math>}}.
 
-Na matriz de covariância de erro, cada linha representa um {{<math>}}$\varepsilon_{it}${{</math>}} e cada coluna representa um {{<math>}}$\varepsilon_{jt}${{</math>}}. Seus elementos representam a covariância entre 
-{{<math>}}$\varepsilon_{it}${{</math>}} e {{<math>}}$\varepsilon_{jt}${{</math>}}, where que pode haver {{<math>}}$\varepsilon_{it} = \varepsilon_{jt}${{</math>}} (que, neste caso, torna-se variância):
+In this matrix, each row represents one {{<math>}}$\varepsilon_{it}${{</math>}} and each column represents one {{<math>}}$\varepsilon_{js}${{</math>}}. Each entry gives the covariance between {{<math>}}$\varepsilon_{it}${{</math>}} and {{<math>}}$\varepsilon_{js}${{</math>}}; when {{<math>}}$\varepsilon_{it} = \varepsilon_{js}${{</math>}}, the entry is a variance term:
 
 {{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{NT \times NT}{\boldsymbol{\Sigma}} =$${{</math>}}
 {{<math>}}$$ \left[ \tiny \begin{array}{cccc|ccc|c|ccc}
@@ -139,7 +138,7 @@ cov(\varepsilon_{{\color{red}N}T}, \varepsilon_{{\color{red}1}1}) & cov(\varepsi
 cov(\varepsilon_{{\color{red}N}T}, \varepsilon_{{\color{red}N}1}) & \cdots & var(\varepsilon_{{\color{red}N}T})
 \end{array} \right]$${{</math>}}
 
-Note que a Error Variance-Covariance Matrix possui matrizes menores que relacionam os erros do individual {{<math>}}$i${{</math>}} (linha) e do individual {{<math>}}$j${{</math>}} (coluna). Para escrever mais facilmente {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, podemos preenchê-la com matrizes menores de {{<math>}}$\boldsymbol{\Sigma}_{ij}${{</math>}}:
+Note that the error variance-covariance matrix can be partitioned into smaller blocks linking the errors of individual {{<math>}}$i${{</math>}} (row block) and individual {{<math>}}$j${{</math>}} (column block). To write {{<math>}}$\boldsymbol{\Sigma}${{</math>}} more compactly, we denote these blocks by {{<math>}}$\boldsymbol{\Sigma}_{ij}${{</math>}}:
 
 
 {{<math>}}$$ \underset{NT \times NT}{\boldsymbol{\Sigma}} = \left[ \begin{matrix} 
@@ -149,7 +148,7 @@ Note que a Error Variance-Covariance Matrix possui matrizes menores que relacion
 \boldsymbol{\Sigma}_{N1} & \boldsymbol{\Sigma}_{N2} & \cdots & \boldsymbol{\Sigma}_{N}
 \end{matrix} \right] \tag{1} $${{</math>}} 
 
-em que, quando {{<math>}}$i = j${{</math>}}, temos
+where, when {{<math>}}$i = j${{</math>}}, we have
 
 {{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_i} = \left[ \begin{matrix} 
 var(\varepsilon_{i1}) & cov(\varepsilon_{i1}, \varepsilon_{i2}) & \cdots & cov(\varepsilon_{i1}, \varepsilon_{iT}) \\
@@ -159,7 +158,7 @@ cov(\varepsilon_{i1}, \varepsilon_{iT}) & cov(\varepsilon_{i2}, \varepsilon_{iT}
 \end{matrix} \right] \tag{2} $${{</math>}}
 
 
-e, quando {{<math>}}$i \neq j${{</math>}}, temos
+and, when {{<math>}}$i \neq j${{</math>}}, we have
 {{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_{ij}} = \left[ \begin{matrix} 
 cov(\varepsilon_{i1}, \varepsilon_{j1}) & cov(\varepsilon_{i1}, \varepsilon_{j2}) & \cdots & cov(\varepsilon_{i1}, \varepsilon_{jT}) \\
 cov(\varepsilon_{i1}, \varepsilon_{j2}) & cov(\varepsilon_{i2}, \varepsilon_{j2}) & \cdots & cov(\varepsilon_{i2}, \varepsilon_{jT}) \\
@@ -168,10 +167,10 @@ cov(\varepsilon_{i1}, \varepsilon_{jT}) & cov(\varepsilon_{i2}, \varepsilon_{jT}
 \end{matrix} \right]. \tag{3} $${{</math>}}
 
 
-Because we assume random sampling where a covariância entre dois individuals distintos {{<math>}}($i \neq j$){{</math>}} é  
-{{<math>}}$$ cov(\varepsilon_{it}, \varepsilon_{jt}) = cov(\varepsilon_{it}, \varepsilon_{js}) = 0,  \qquad \text{para todo } i \neq j.$${{</math>}}
+Because we assume random sampling, the covariance between two distinct individuals {{<math>}}$(i \neq j)${{</math>}} is  
+{{<math>}}$$ cov(\varepsilon_{it}, \varepsilon_{jt}) = cov(\varepsilon_{it}, \varepsilon_{js}) = 0,  \qquad \text{for all } i \neq j.$${{</math>}}
 
-Logo, {{<math>}}$\boldsymbol{\Sigma}_{ij} = \boldsymbol{0}${{</math>}} (matriz de zeros):
+Therefore, {{<math>}}$\boldsymbol{\Sigma}_{ij} = \boldsymbol{0}${{</math>}} (the zero matrix):
 {{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_{ij}} =  \underset{T \times T}{\boldsymbol{0}} = \left[ \begin{matrix} 
 0 & 0 & \cdots & 0 \\
 0 & 0 & \cdots & 0 \\
@@ -180,7 +179,7 @@ Logo, {{<math>}}$\boldsymbol{\Sigma}_{ij} = \boldsymbol{0}${{</math>}} (matriz d
 \end{matrix} \right] $${{</math>}}
 
 
-Logo, podemos reescrever (1) como
+Therefore, we can rewrite (1) as
 
 {{<math>}}$$ \underset{NT \times NT}{\boldsymbol{\Sigma}} = \left[ \begin{matrix} 
 \boldsymbol{\Sigma}_1 & \boldsymbol{0} & \cdots & \boldsymbol{0} \\
@@ -189,12 +188,12 @@ Logo, podemos reescrever (1) como
 \boldsymbol{0} & \boldsymbol{0} & \cdots & \boldsymbol{\Sigma}_N
 \end{matrix} \right]. \tag{1'} $${{</math>}}
 
-Assumimos também que a Error Variance-Covariance Matrix do individual {{<math>}}$i${{</math>}} depende apenas dos parâmetros {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, já que:
+We also assume that the individual-level error variance-covariance matrix depends only on {{<math>}}$\sigma^2_u${{</math>}} and {{<math>}}$\sigma^2_v${{</math>}}, because:
 
-- Variância de um erro: {{<math>}}$ var(\varepsilon_{it}) = \sigma^2_u + \sigma^2_v ${{</math>}}
-- Covariância de dois erros de um mesmo individual {{<math>}}$i${{</math>}} em dois periods  {{<math>}}$t \neq s${{</math>}}: {{<math>}}$ cov(\varepsilon_{it}, \varepsilon_{is}) = \sigma^2_u ${{</math>}}
+- Variance of a single error term: {{<math>}}$ var(\varepsilon_{it}) = \sigma^2_u + \sigma^2_v ${{</math>}}
+- Covariance between two errors for the same individual {{<math>}}$i${{</math>}} across periods {{<math>}}$t \neq s${{</math>}}: {{<math>}}$ cov(\varepsilon_{it}, \varepsilon_{is}) = \sigma^2_u ${{</math>}}
 
-Substituindo em (2), segue que
+Substituting into (2), we obtain
 
 {{<math>}}$$ \underset{T \times T}{\boldsymbol{\Sigma}_i} = \left[ \begin{array}{cccc} 
 \sigma^2_u + \sigma^2_v & \sigma^2_u & \cdots & \sigma^2_u \\
@@ -205,7 +204,7 @@ Substituindo em (2), segue que
 
 
 ##### Example
-Por simplicidade, considere que {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}. Logo, a Error Variance-Covariance Matrix pode ser escrita como;
+For simplicity, let {{<math>}}$N = 2${{</math>}} and {{<math>}}$T = 3${{</math>}}. Then the error variance-covariance matrix can be written as:
 
 {{<math>}}\begin{align} \underset{6 \times 6}{\boldsymbol{\Sigma}}
 &= \left[ \begin{array}{cc}
@@ -221,12 +220,12 @@ Por simplicidade, considere que {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3$
 0 & 0 & 0 & \sigma^2_u & \sigma^2_u & \sigma^2_u + \sigma^2_v \\
 \end{array} \right] \end{align} {{</math>}}
 
-Note que acima foram utilizadas linhas verticais e horizontais apenas para facilitar a visualização dos elementos que substituíram cada matriz.
+The vertical and horizontal separators above are included only to highlight which elements belong to each block matrix.
 
 
-#### Calculando no R
+#### Computing It in R
 
-Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<math>}}$p \times p${{</math>}}:
+First, let {{<math>}}$I_p${{</math>}} denote the identity matrix of dimension {{<math>}}$p \times p${{</math>}}:
 
 {{<math>}}$$ \boldsymbol{I}_p= \left[ \begin{array}{cccc}
     1 & 0 & 0 & \cdots & 0 \\
@@ -236,11 +235,11 @@ Primeiro, denote {{<math>}}$I_p${{</math>}} a matriz identidade de dimensão {{<
     0 & 0 & 0 & \cdots & 1
 \end{array} \right]_{p \times p}, $$ {{</math>}}
 
-e considere {{<math>}}$\boldsymbol{\iota}_q${{</math>}} um vetor-coluna de 1's de tamanho {{<math>}}$q${{</math>}}:
+and let {{<math>}}$\boldsymbol{\iota}_q${{</math>}} denote a column vector of ones of length {{<math>}}$q${{</math>}}:
 {{<math>}}$$ \boldsymbol{\iota}_q = \left[ \begin{array}{c} 1 \\ 1 \\ \vdots \\ 1 \end{array} \right]_{q \times 1} $${{</math>}}
 
 
-Com dados em **corte transversal**, era fácil calcular a Error Variance-Covariance Matrix, pois só havia um termo de erro e, portanto, tínhamos {{<math>}}$\sigma^2${{</math>}} apenas na diagonal principal:
+With **cross-sectional data**, the error variance-covariance matrix is straightforward because there is only one error component, so {{<math>}}$\sigma^2${{</math>}} appears only on the main diagonal:
 
 {{<math>}}\begin{align}
 \boldsymbol{\Sigma}_{\scriptscriptstyle{OLS}} &= \sigma^2 \boldsymbol{I}_N \\
@@ -258,11 +257,11 @@ Com dados em **corte transversal**, era fácil calcular a Error Variance-Covaria
 \end{array} \right]_{N \times N} \end{align}{{</math>}}
 
 
-Agora, para **panel data**, como visto acima, possuímos duas variâncias de termos de erro, where que {{<math>}}$\sigma^2_v${{</math>}} aparece na diagonal principal, cujos elementos (e seus "vizinhos") precisam ser somados por {{<math>}}$\sigma^2_u${{</math>}}. Logo, a Error Variance-Covariance Matrix com panel data pode ser escrita na forma matricial como:
+For **panel data**, however, we have two error-component variances. The term {{<math>}}$\sigma^2_v${{</math>}} appears on the main diagonal, while the common individual effect adds {{<math>}}$\sigma^2_u${{</math>}} to all within-individual entries. Therefore, the panel-data error variance-covariance matrix can be written as:
 
 {{<math>}}$$ \boldsymbol{\Sigma} = \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u [\boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T] \tag{4} $${{</math>}}
 
-Note que o primeiro termo da soma cria uma diagonal principal de {{<math>}}$\sigma^2_v${{</math>}}.
+Note that the first term in the sum creates a main diagonal of {{<math>}}$\sigma^2_v${{</math>}}.
 
 {{<math>}}\begin{align}
 \sigma^2_v \boldsymbol{I}_{NT} &= \sigma^2_v \left[ \begin{array}{cccc} 
@@ -279,13 +278,13 @@ Note que o primeiro termo da soma cria uma diagonal principal de {{<math>}}$\sig
 \end{array} \right]_{NT \times NT} \end{align}{{</math>}}
 
 
-Agora, "só" precisamos somar {{<math>}}$\sigma^2_u${{</math>}} "na proximidade" dessa diagonal.
+Now we only need to add {{<math>}}$\sigma^2_u${{</math>}} to the entries around that diagonal.
 
-Por enquanto, vamos ignorar {{<math>}}$T \sigma^2_u${{</math>}} e vamos chamar a parte entre colchetes de matriz de transformação **inter-individuals (_between_)**:
+For the moment, ignore {{<math>}}$T \sigma^2_u${{</math>}} and denote the bracketed term by the **between (inter-individual)** transformation matrix:
 
 {{<math>}}$$ \boldsymbol{B}\ \equiv\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
 
-Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é chamada de  {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II (2021) do prof. Daniel.
+Note that the matrix {{<math>}}$\boldsymbol{B}${{</math>}} is denoted by {{<math>}}$\boldsymbol{N}${{</math>}} in Professor Daniel's 2021 Econometrics II lecture notes.
 
 {{<math>}}\begin{align}
     \boldsymbol{B} &\equiv \boldsymbol{I}_{N} \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \\
@@ -307,7 +306,7 @@ Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é chamada de  {{<math>}
     \end{array} \right]_{NT \times NT},
 \end{align}{{</math>}}
 
-where {{<math>}}$\otimes${{</math>}} é o produto de Kronecker. Agora, ao multiplicar por {{<math>}}$T \sigma^2_u${{</math>}}, todos elementos {{<math>}}$1/T${{</math>}} tornam-se {{<math>}}$\sigma^2_u${{</math>}}:
+where {{<math>}}$\otimes${{</math>}} is the Kronecker product. After multiplying by {{<math>}}$T \sigma^2_u${{</math>}}, every {{<math>}}$1/T${{</math>}} entry becomes {{<math>}}$\sigma^2_u${{</math>}}:
 
 {{<math>}}$$ 
     T \sigma^2_u \boldsymbol{B} = \left[ \begin{array}{rrr|r|rrr} 
@@ -319,10 +318,10 @@ where {{<math>}}$\otimes${{</math>}} é o produto de Kronecker. Agora, ao multip
         \vdots & \ddots & \vdots & \cdots & \vdots & \ddots & \vdots \\
         0 & \cdots & 0 & \cdots & \sigma^2_u & \cdots & \sigma^2_u
     \end{array} \right]_{NT \times NT},
-`$${{</math>}}
+$${{</math>}}
 
 
-Somando os dois termos de (4), conseguimos obter a Error Variance-Covariance Matrix:
+Adding the two terms in (4), we obtain the error variance-covariance matrix:
 
 {{<math>}}\begin{align}
     \boldsymbol{\Sigma} &= \sigma^2_v \boldsymbol{I}_{NT} + T \sigma^2_u \boldsymbol{B} \\
@@ -353,7 +352,7 @@ Somando os dois termos de (4), conseguimos obter a Error Variance-Covariance Mat
 
 
 ##### Example
-Considere o caso com {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}. Vamos, então, obter a seguinte Error Variance-Covariance Matrix:
+Consider the case {{<math>}}$N = 2${{</math>}} and {{<math>}}$T = 3${{</math>}}. Then we obtain the following error variance-covariance matrix:
 
 {{<math>}}$$\boldsymbol{\Sigma} = \left[ \begin{array}{ccc|ccc} 
         \sigma^2_u + \sigma^2_v & \sigma^2_u & \sigma^2_u & 0 & 0 & 0 \\
@@ -364,7 +363,7 @@ Considere o caso com {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}
         0 & 0 & 0 & \sigma^2_u & \sigma^2_u & \sigma^2_u + \sigma^2_v
     \end{array} \right]$${{</math>}}
 
-Assumindo {{<math>}}$\sigma^2_u = 2${{</math>}} e {{<math>}}$\sigma^2_v = 3${{</math>}}, segue que
+Assuming {{<math>}}$\sigma^2_u = 2${{</math>}} and {{<math>}}$\sigma^2_v = 3${{</math>}}, it follows that
 
 {{<math>}}$$\boldsymbol{\Sigma} = \left[ \begin{array}{ccc|ccc} 
         5 & 2 & 2 & 0 & 0 & 0 \\
@@ -380,20 +379,20 @@ Assumindo {{<math>}}$\sigma^2_u = 2${{</math>}} e {{<math>}}$\sigma^2_v = 3${{</
 </br>
 
 
-Para calcular no R, vamos definir:
+To compute this in R, define:
 
 ```r
-N = 2 # número de individuals
-T = 3 # números de periods
-sig2u = 2 # variância do termo de erro do individual
-sig2v = 3 # variância do termo de erro idiossincrático 
+N = 2 # number of individuals
+T = 3 # number of periods
+sig2u = 2 # variance of the individual error component
+sig2v = 3 # variance of the idiosyncratic error component
 ```
 
 
-O primeiro termo de {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é
+The first term of {{<math>}}$\boldsymbol{\Sigma}${{</math>}} is
 
 ```r
-I_NT = diag(N*T) # matriz identidade de tamanho NT
+I_NT = diag(N*T) # identity matrix of size NT
 I_NT
 ```
 
@@ -422,10 +421,10 @@ termo1
 ## [6,]    0    0    0    0    0    3
 ```
 
-Para o 2º termo de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, temos que criar a matriz identidade e o vetor de 1's primeiro:
+For the second term of {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, we first create the identity matrix and the vector of ones:
 
 ```r
-iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
+iota_T = matrix(1, T, 1) # column vector of 1s of length T
 iota_T
 ```
 
@@ -437,7 +436,7 @@ iota_T
 ```
 
 ```r
-I_N = diag(N) # matriz identidade de tamanho N
+I_N = diag(N) # identity matrix of size N
 I_N
 ```
 
@@ -447,11 +446,11 @@ I_N
 ## [2,]    0    1
 ```
 
-Vamos obter {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
+We now compute {{<math>}}$\boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}}
 
 ```r
-# Para obter matriz T x T preenchida por 1/T, where T = 3, temos que:
-t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
+# To obtain a T x T matrix filled with 1/T, where T = 3, we proceed as follows:
+t(iota_T) %*% iota_T # inner product of iotas equals T
 ```
 
 ```
@@ -460,7 +459,7 @@ t(iota_T) %*% iota_T # produto interno de iotas = quantidade T
 ```
 
 ```r
-solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
+solve(t(iota_T) %*% iota_T) # taking the inverse gives 1/T
 ```
 
 ```
@@ -469,7 +468,7 @@ solve(t(iota_T) %*% iota_T) # tomar a inversa = 1/T
 ```
 
 ```r
-iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar por iotas
+iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pre- and post-multiplying by the iota vector
 ```
 
 ```
@@ -479,7 +478,7 @@ iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T) # pré e pós-multiplicar p
 ## [3,] 0.3333333 0.3333333 0.3333333
 ```
 
-Agora, vamos calcular {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}} usando o operador de produto de Kronecker `%x%`:
+Now we compute {{<math>}}$\boldsymbol{B}\ =\ I_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T${{</math>}} using the Kronecker product operator `%x%`:
 
 ```r
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
@@ -496,7 +495,7 @@ round(B, 3)
 ## [6,] 0.000 0.000 0.000 0.333 0.333 0.333
 ```
 
-Multiplicando {{<math>}}$\boldsymbol{B}${{</math>}} por {{<math>}}$T \sigma^2_u${{</math>}}, obtemos o 2º termo de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}:
+Multiplying {{<math>}}$\boldsymbol{B}${{</math>}} by {{<math>}}$T \sigma^2_u${{</math>}}, we obtain the second term of {{<math>}}$\boldsymbol{\Sigma}${{</math>}}:
 
 ```r
 termo2 = T * sig2u * B
@@ -513,7 +512,7 @@ termo2
 ## [6,]    0    0    0    2    2    2
 ```
 
-Então, a Error Variance-Covariance Matrix é dada por:
+Therefore, the error variance-covariance matrix is given by:
 
 ```r
 Sigma = termo1 + termo2
@@ -533,14 +532,14 @@ Sigma
 
 
 
-### Estimação dos Componentes de Erro
-- Note que não temos {{<math>}}$\sigma^2_v${{</math>}} e {{<math>}}$\sigma^2_u${{</math>}} e, logo, {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é desconhecido.
+### Estimating the Error Components
+- Note that {{<math>}}$\sigma^2_v${{</math>}} and {{<math>}}$\sigma^2_u${{</math>}} are unknown, so {{<math>}}$\boldsymbol{\Sigma}${{</math>}} is also unknown.
 
-- Primeiro, considere a **matriz de transformação _within_**, dada por
+- First, consider the **within transformation matrix**, given by
 
 {{<math>}}$$ \boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B} $${{</math>}}
 
-- Note que podemos reescrever
+- Note that we can rewrite
 {{<math>}}\begin{align} \hat{\boldsymbol{\Sigma}} &= \hat{\sigma}^2_v \boldsymbol{I}_{NT} + T \hat{\sigma}^2_u \boldsymbol{B}\\ 
 &= \hat{\sigma}^2_v (\boldsymbol{W} + \boldsymbol{B}) + T \hat{\sigma}^2_u \boldsymbol{B}\\ 
 &= \hat{\sigma}^2_v \boldsymbol{W} + \hat{\sigma}^2_v \boldsymbol{B} + T \hat{\sigma}^2_u \boldsymbol{B}\\ 
@@ -550,15 +549,15 @@ where {{<math>}}$\boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B} \iff \bol
 
 </br>
 
-- Isso pode ser generalizado para:
+- This can be generalized as:
 {{<math>}}$$ \hat{\boldsymbol{\Sigma}}^p = (\hat{\sigma}^2_v)^p \boldsymbol{W} + (\hat{\sigma}^2_v + T \hat{\sigma}^2_u)^p \boldsymbol{B}, \tag{2.29} $${{</math>}}
-where {{<math>}}$p${{</math>}} é um escalar.
-- Essa fórmula será importante para calcularmos {{<math>}}$ \hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} ou {{<math>}}$ \hat{\boldsymbol{\Sigma}}^{-0,5}${{</math>}} mais adiante.
+where {{<math>}}$p${{</math>}} is a scalar.
+- This formula will be useful later when computing {{<math>}}$ \hat{\boldsymbol{\Sigma}}^{-1}${{</math>}} and {{<math>}}$ \hat{\boldsymbol{\Sigma}}^{-0.5}${{</math>}}.
 
 
 </br>
 
-- Se {{<math>}}$\boldsymbol{\varepsilon}${{</math>}} fosse conhecido, então poderíamos estimar as duas variâncias usando:
+- If {{<math>}}$\boldsymbol{\varepsilon}${{</math>}} were observed, we could estimate the two variances as follows:
 
 {{<math>}}\begin{align}
     \hat{\sigma}^2_v &= \frac{\boldsymbol{\varepsilon}' \boldsymbol{W} \boldsymbol{\varepsilon}}{N(T-1)} \tag{2.35} \\
@@ -567,27 +566,27 @@ where {{<math>}}$p${{</math>}} é um escalar.
     \hat{\sigma}^2_u &= \frac{1}{T} \left( \frac{\boldsymbol{\varepsilon}' \boldsymbol{B} \boldsymbol{\varepsilon}}{N} - \hat{\sigma}^2_v \right)
 \end{align}{{</math>}}
 
-- Como {{<math>}}$\boldsymbol{\varepsilon}${{</math>}} é desconhecido, então podemos usar resíduos de estimadores consistentes em seu lugar.
+- Because {{<math>}}$\boldsymbol{\varepsilon}${{</math>}} is unobserved, we instead use residuals from consistent estimators.
 
-- **Wallace e Hussain (1969)**: usam resíduos OLS
+- **Wallace and Hussain (1969)**: use OLS residuals.
 
 {{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N(T-1)} 
-    \quad \text{ e } \quad 
+\quad \text{and} \quad
     \hat{\sigma}^2_u =\frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N} - \hat{\sigma}^2_v \right)$${{</math>}}
 
-- **Amemiya (1971)**: usa resíduos _within_
+- **Amemiya (1971)**: uses _within_ residuals.
 {{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{N(T-1)}
-    \quad \text{ e } \quad
+\quad \text{and} \quad
     \hat{\sigma}^2_u = \frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{N} - \hat{\sigma}^2_v \right)$${{</math>}}
     
-- **Hausman e Taylor (1981)**: propuseram ajuste ao método de Amemiya (1971), where {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}${{</math>}} são regredidos em todas variáveis invariantes no tempo no modelo e são utilizados os resíduos dessa regressão, {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{HT}}${{</math>}}.
+- **Hausman and Taylor (1981)**: adjust Amemiya's method by regressing {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}${{</math>}} on all time-invariant regressors in the model and then using the resulting residuals, {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{HT}}${{</math>}}.
 
-- **Swamy e Arora (1972)**: usam resíduos _between_ e _within_ para calcular:
+- **Swamy and Arora (1972)**: use both _between_ and _within_ residuals to compute:
 {{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{N(T-1) - K}
-    \quad \text{ e } \quad
+\quad \text{and} \quad
     \hat{\sigma}^2_u = \frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{B}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{B}}}{N - K - 1} - \hat{\sigma}^2_v \right)$${{</math>}}
     
-- **Nerlove (1971)**: computa {{<math>}}$\sigma^2_u${{</math>}} empírica dos efeitos fixos do modelo _within_
+- **Nerlove (1971)**: computes {{<math>}}$\sigma^2_u${{</math>}} empirically from the fixed effects of the _within_ model.
 
 {{<math>}}\begin{align}
     \hat{u}_i &= \bar{y}_{i\cdot} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}\bar{x}_{i\cdot} \\
@@ -596,7 +595,7 @@ where {{<math>}}$p${{</math>}} é um escalar.
 \end{align}{{</math>}}
 
 
-Após obter {{<math>}}$\hat{\sigma}^2_u${{</math>}} e {{<math>}}$\hat{\sigma}^2_v${{</math>}}, só precisamos calcular {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}:
+After obtaining {{<math>}}$\hat{\sigma}^2_u${{</math>}} and {{<math>}}$\hat{\sigma}^2_v${{</math>}}, we only need to compute {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}:
 
 
 
@@ -616,19 +615,19 @@ Após obter {{<math>}}$\hat{\sigma}^2_u${{</math>}} e {{<math>}}$\hat{\sigma}^2_
 
 
 
-## Estimador GLS
-- Section 2.1.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Mínimos Quadrados Empilhados (GLS) faz a estimação igual ao OLS, porém a inferência considera {{<math>}}$\boldsymbol{\Sigma} \neq \sigma^2 \boldsymbol{I}${{</math>}}, considera correlação entre as observations de um mesmo individual {{<math>}}$i${{</math>}}.
+## GLS Estimator
+- Section 2.1.1 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Pooled GLS uses the same point estimates as OLS, but inference is based on {{<math>}}$\boldsymbol{\Sigma} \neq \sigma^2 \boldsymbol{I}${{</math>}}, allowing correlation among observations from the same individual {{<math>}}$i${{</math>}}.
 
 
-O modelo a ser estimado é
+The model to be estimated is
 {{<math>}}$$ \boldsymbol{y} = \boldsymbol{X\beta} + \boldsymbol{\varepsilon} $${{</math>}}
 
 
-- O estimador {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} de GLS (igual ao de OLS) é dado por
+- The GLS estimator {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} (which coincides with OLS in point estimation) is given by
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
 
-- Note que a Matriz de Variâncias-Covariâncias do Estimador de OLS, que supõe {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, simplifica para:
+- Note that the OLS estimator variance-covariance matrix, under {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, simplifies to:
 
 {{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}) 
 &= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\ 
@@ -637,12 +636,12 @@ O modelo a ser estimado é
 &= \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \end{align}{{</math>}}
 
 
-- A Matriz de Variâncias-Covariâncias do Estimador de GLS, que considera a correlação entre observations de um mesmo individual, é dada por
+- The GLS estimator variance-covariance matrix, which allows correlation among observations from the same individual, is given by
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
 
 
-### Estimação via `plm()`
-Para ilustrar as estimações OLS dos estimadores vistos anteriormente, usaremos a base de dados `TobinQ` do pacote `pder`, que conta com dados de 188 firmas por 35 anos (6580 observations).
+### Estimation via `plm()`
+To illustrate the estimators discussed above, we use the `TobinQ` dataset from the `pder` package, which contains data for 188 firms over 35 years (6,580 observations).
 
 ```r
 data("TobinQ", package = "pder")
@@ -667,36 +666,36 @@ str(TobinQ)
 ##  $ sb    : num  NA 1.98 1.55 1.65 1.64 ...
 ##  $ sn    : num  NA 4.02 3.3 3.09 2.94 ...
 ```
-- `cusip`: Identificador da empresa
-- `year`: Ano
-- `ikn`: Investimento dividido pelo capital
-- `qn`: Q de Tobin (razão entre valor da firma e o custo de reposição de seu capital físico). Se {{<math>}}$Q > 1${{</math>}}, então o lucro do investimento é maior do que seu custo.
+- `cusip`: Firm identifier
+- `year`: Year
+- `ikn`: Investment divided by capital
+- `qn`: Tobin's Q (the ratio between firm value and the replacement cost of physical capital). If {{<math>}}$Q > 1${{</math>}}, the return on investment exceeds its cost.
 
-Queremos estimar o seguinte modelo:
+We want to estimate the following model:
 {{<math>}}$$ \text{ikn} = \beta_0 + \text{qn} \beta_1 + \varepsilon $${{</math>}}
 
 
-Usaremos a função `plm()` (do pacote de mesmo nome) para estimar modelos lineares em panel data. Seus principais argumentos são:
+We use the `plm()` function from the package of the same name to estimate linear panel-data models. Its main arguments are:
 
-- `formula`: equação do modelo
-- `data`: base de dados em `data.frame` (precisa preencher `index`) ou `pdata.frame` (formato próprio do pacote que já indexa as colunas de individuals e de tempo)
-- `model`: estimador a ser computado 'pooling' (GLS), 'between', 'within' (Efeitos Fixos) ou 'random' (Efeitos Aleatórios/FGLS)
-- `index`: vetor de nomes das colunas dos identificadores de individual e de tempo
+- `formula`: model equation
+- `data`: the dataset, either as a `data.frame` (in which case `index` must be supplied) or as a `pdata.frame` (the package's indexed panel-data format)
+- `model`: estimator to compute: `pooling` (GLS), `between`, `within` (fixed effects), or `random` (random effects / FGLS)
+- `index`: vector with the names of the individual and time identifiers
 
-Note que a estimação do GLS (_pooled_) via `plm()`, faz a estimação considerando {{<math>}}$\boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I}${{</math>}} e, portanto, estará erroneamente desconsiderando as correlações entre erros de um mesmo individual:
+Note that pooled estimation via `plm()` still uses {{<math>}}$\boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I}${{</math>}}, so it incorrectly ignores within-individual error correlation:
 
 
 ```r
 library(plm)
 
-# Transformando no formato pdata frame, com indentificador de individual e de tempo
+# Converting to `pdata.frame` format with individual and time identifiers
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimação OLS
+# OLS estimation
 Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
 Q.ols = lm(ikn ~ qn, TobinQ)
 
-# Comparando ambos outputs
+# Comparing both outputs
 stargazer::stargazer(Q.pooling, Q.ols, type="text", omit.stat="f")
 ```
 
@@ -726,10 +725,10 @@ stargazer::stargazer(Q.pooling, Q.ols, type="text", omit.stat="f")
 ```
 
 
-- Precisamos fazer a inferência considerando uma Error Variance-Covariance Matrix apropriada. Para isto, vamos usar o argumento `vcov=vcovBK` dentro da função `summary()`:
+- We need to conduct inference using an appropriate error variance-covariance matrix. For that, we use the argument `vcov=vcovBK` inside `summary()`: 
 
 ```r
-# Estimação GLS - matriz de var-cov dos erros com correlação intra-indiv
+# GLS estimation with an error covariance matrix allowing within-individual correlation
 summary(Q.pooling, vcov=vcovBK)$coef
 ```
 
@@ -741,14 +740,14 @@ summary(Q.pooling, vcov=vcovBK)$coef
 
 
 
-### Estimação Analítica
-A estimação analítica do GLS é equivalente ao OLS vista anteriormente, mas no contexto de panel data. As principais diferenças são: o número de graus de liberdade é {{<math>}}$NT - K - 1${{</math>}} (pois possui {{<math>}}$NT${{</math>}} observations) e a modelagem da error variance-covariance matrix, {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, para o contexto de painel.
+### Analytical Estimation
+The analytical GLS derivation is the same as OLS, but adapted to the panel-data setting. The main differences are the degrees of freedom, {{<math>}}$NT - K - 1${{</math>}}, and the panel-specific structure of the error variance-covariance matrix {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
 
 ```r
-# Criando o vetor y
-y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+# Creating the y vector
+y = as.matrix(TobinQ[,"ikn"]) # converting the data frame column into a matrix
 head(y)
 ```
 
@@ -763,9 +762,9 @@ head(y)
 ```
 
 ```r
-# Criando a matriz de covariates X com primeira coluna de 1's
-X = cbind( 1, TobinQ[, "qn"] ) # juntando 1's com as covariates
-X = as.matrix(X) # transformando em matriz
+# Creating the covariate matrix X with a first column of ones
+X = cbind( 1, TobinQ[, "qn"] ) # adding a column of ones to the covariates
+X = as.matrix(X) # converting to a matrix
 head(X)
 ```
 
@@ -780,9 +779,9 @@ head(X)
 ```
 
 ```r
-# Pegando valores N, T e K
+# Retrieving N, T, and K
 N = length( unique(TobinQ$cusip) )
-N # nº de individuals i
+N # number of individuals
 ```
 
 ```
@@ -791,7 +790,7 @@ N # nº de individuals i
 
 ```r
 T = length( unique(TobinQ$year) )
-T # nº de periods t
+T # number of periods
 ```
 
 ```
@@ -800,14 +799,14 @@ T # nº de periods t
 
 ```r
 K = ncol(X) - 1
-K # nº de covariates
+K # number of covariates
 ```
 
 ```
 ## [1] 1
 ```
 
-b) Estimativas de GLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}${{</math>}}
+b) GLS estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
 
@@ -822,7 +821,7 @@ bhat
 ## [2,] 0.00439197
 ```
 
-c) Valores ajustados/preditos {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
+c) Fitted values {{<math>}}$\hat{\boldsymbol{y}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\boldsymbol{\beta}} $${{</math>}}
 
@@ -842,7 +841,7 @@ head(yhat)
 ## [6,] 0.1847810
 ```
 
-d) Resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}
+d) Residuals {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} $${{</math>}}
 
@@ -862,23 +861,23 @@ head(ehat)
 ## [6,] -0.089377633
 ```
 
-e) Variâncias dos termos de erro
+e) Error-term variances
 
 {{<math>}}\begin{align} \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N(T-1)} \\
     \hat{\sigma}^2_u &=\frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N} - \hat{\sigma}^2_v \right) \end{align}{{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2_u${{</math>}} e {{<math>}}$\hat{\sigma}^2_v${{</math>}} são escalares, é conveniente transformar as "matrizes 1x1" em números usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2_u${{</math>}} and {{<math>}}$\hat{\sigma}^2_v${{</math>}} are scalars, it is convenient to convert the resulting "1x1 matrices" into numbers with `as.numeric()`: 
 
 ```r
-# Criando matrizes between e within
-iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
-I_N = diag(N) # matriz identidade de tamanho N
-I_NT = diag(N*T) # matriz identidade de tamanho NT
+# Creating the between and within matrices
+iota_T = matrix(1, T, 1) # column vector of 1s of length T
+I_N = diag(N) # identity matrix of size N
+I_NT = diag(N*T) # identity matrix of size NT
 
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = I_NT - B
 
-# Calculando variâncias dos termos de erro (Wallace & Hussain)
+# Computing the error-component variances (Wallace and Hussain)
 sig2v = as.numeric( (t(ehat) %*% W %*% ehat) / (N*(T-1)) )
 sig2u = as.numeric( (1/T) * ( (t(ehat) %*% B %*% ehat)/N - sig2v ) )
 ```
@@ -889,19 +888,19 @@ f) Error Variance-Covariance Matrix
 
 
 ```r
-# Calculando a Error Variance-Covariance Matrix
+# Computing the error variance-covariance matrix
 Sigma = sig2v * W + (sig2v + T*sig2u) * B
 ```
 
 
 
-g) Matriz de Variâncias-Covariâncias do Estimador
+g) Estimator Variance-Covariance Matrix
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 bread = solve( t(X) %*% X )
 meat = t(X) %*% Sigma %*% X
 Vbhat = bread %*% meat %*% bread # sandwich
@@ -915,9 +914,9 @@ Vbhat
 ```
 
 
-h) Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
+h) Standard errors of the estimator {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_bhat = sqrt( diag(Vbhat) )
@@ -928,14 +927,14 @@ se_bhat
 ## [1] 0.0034936352 0.0003366365
 ```
 
-i) Estatística _t_
+i) _t_ statistic
 
 {{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_bhat = bhat / se_bhat
 t_bhat
 ```
@@ -946,13 +945,13 @@ t_bhat
 ## [2,] 13.04663
 ```
 
-j) P-valor
+j) p-value
 
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_bhat = 2 * pt(-abs(t_bhat), N*T-K-1)
 p_bhat
 ```
@@ -963,10 +962,10 @@ p_bhat
 ## [2,] 1.986019e-38
 ```
 
-k) Tabela-resumo
+k) Summary table
 
 ```r
-data.frame(bhat, se_bhat, t_bhat, p_bhat) # resultado GLS correto
+data.frame(bhat, se_bhat, t_bhat, p_bhat) # correct GLS result
 ```
 
 ```
@@ -976,7 +975,7 @@ data.frame(bhat, se_bhat, t_bhat, p_bhat) # resultado GLS correto
 ```
 
 ```r
-summary(Q.pooling)$coef # resultado OLS via plm() ou lm()
+summary(Q.pooling)$coef # OLS result via `plm()` or `lm()`
 ```
 
 ```
@@ -986,7 +985,7 @@ summary(Q.pooling)$coef # resultado OLS via plm() ou lm()
 ```
 
 ```r
-summary(Q.pooling, vcov=vcovBK)$coef # com matriz cov erros ajustada
+summary(Q.pooling, vcov=vcovBK)$coef # with the adjusted error covariance matrix
 ```
 
 ```
@@ -999,37 +998,37 @@ summary(Q.pooling, vcov=vcovBK)$coef # com matriz cov erros ajustada
 </br>
 
 
-## Estimador FGLS
+## FGLS Estimator
 
-- Section 2.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Também conhecido como **estimador de efeitos aleatórios**, pois considera que os efeitos individuais são aleatórios: {{<math>}}$E(\boldsymbol{u}) = 0${{</math>}}
-- Erros são relacionados pela Error Variance-Covariance Matrix {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
-- O estimador de FGLS é dado por
+- Section 2.3 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Also known as the **random-effects estimator**, because it treats individual effects as random: {{<math>}}$E(\boldsymbol{u}) = 0${{</math>}}
+- Errors are linked through the error variance-covariance matrix {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
+- The FGLS estimator is given by
 {{<math>}}$$ {\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) \tag{2.27} $${{</math>}}
 
-- A matriz de variâncias-covariâncias do estimador é dada por
+- The variance-covariance matrix of the estimator is given by
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} \tag{2.28} $${{</math>}}
-- A matriz {{<math>}}$\boldsymbol{\Sigma}${{</math>}} depende apenas de dois parâmetros: {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}}, temos:
+- The matrix {{<math>}}$\boldsymbol{\Sigma}${{</math>}} depends on only two parameters, {{<math>}}$\sigma^2_u${{</math>}} and {{<math>}}$\sigma^2_v${{</math>}}:
 {{<math>}}$$ \boldsymbol{\Sigma}^p = ({\sigma}^2_v)^p \boldsymbol{W} + ({\sigma}^2_v + T {\sigma}^2_u)^p \boldsymbol{B} \tag{2.29} $${{</math>}}
 
 </br>
 
-- Como desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, podemos calcular {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}} por meio da estimação dos componentes de erro usando, por exemplo, Wallace e Hussain (1969):
+- Because {{<math>}}$\boldsymbol{\Sigma}${{</math>}} is unknown, we can estimate {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} by estimating the error components using, for example, Wallace and Hussain (1969):
 
 {{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N(T-1)} 
-    \quad \text{ e } \quad 
+\quad \text{and} \quad
     \hat{\sigma}^2_u =\frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N} - \hat{\sigma}^2_v \right)$${{</math>}}
 
 
 
-### Estimação via `plm()`
-- Usaremos novamente a função `plm()`, mas definiremos `model = random` para que seja estimado via FGLS
-- em `random.method` podemos escolher o método de cálculo dos parâmetros de erro:
-    1. `"walhus"` para Wallace e Hussain (1969)
-    2. `"amemiya"` para Amemiya (1971)
-    3. `"ht"` para Hausman e Taylor (1981)
-    4. `"swar"` para Swamy e Arora (1972) [padrão]
-    5. `"nerlove"` para Nerlove (1971)
+### Estimation via `plm()`
+- We use `plm()` again, this time setting `model = "random"` so the model is estimated by FGLS.
+- In `random.method`, we can choose the procedure used to estimate the error-component parameters:
+    1. `"walhus"` for Wallace and Hussain (1969)
+    2. `"amemiya"` for Amemiya (1971)
+    3. `"ht"` for Hausman and Taylor (1981)
+    4. `"swar"` for Swamy and Arora (1972) [default]
+    5. `"nerlove"` for Nerlove (1971)
 
 
 ```r
@@ -1037,14 +1036,14 @@ library(plm)
 data("TobinQ", package = "pder")
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimações FGLS
+# FGLS estimations
 Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
 Q.amemiya = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "amemiya")
 Q.ht = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "ht")
 Q.swar = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "swar")
 Q.nerlove = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "nerlove")
 
-# Resumindo 5 estimações em única tabela
+# Summarizing the five estimations in a single table
 stargazer::stargazer(Q.walhus, Q.amemiya, Q.ht, Q.swar, Q.nerlove,
                      digits=5, type="text", omit.stat="f")
 ```
@@ -1071,32 +1070,32 @@ stargazer::stargazer(Q.walhus, Q.amemiya, Q.ht, Q.swar, Q.nerlove,
 ## Note:                                   *p<0.1; **p<0.05; ***p<0.01
 ```
 
-Neste caso específico, os resultados são praticamente idênticos.
+In this particular case, the results are virtually identical.
 
 
 
-### Estimação Analítica
-- Aqui, faremos a estimação analítica do FGLS usando o método de Wallace e Hussain (1969).
-- Primeiro, precisamos encontrar {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}${{</math>}} e {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}, para estimar {{<math>}}$\hat{\sigma}^2_{u}${{</math>}}, {{<math>}}$\hat{\sigma}^2_{v}${{</math>}} e {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}
-- Depois, fazemos a estimação de {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}} e de {{<math>}}$V_{\hat{\boldsymbol{\beta}}_{\tiny{FGLS}}}${{</math>}}
+### Analytical Estimation
+- Here, we derive the analytical FGLS estimator using the Wallace and Hussain (1969) method.
+- First, we compute {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}${{</math>}} and {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}} in order to estimate {{<math>}}$\hat{\sigma}^2_{u}${{</math>}}, {{<math>}}$\hat{\sigma}^2_{v}${{</math>}}, and {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}.
+- Then we estimate {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}} and its variance matrix {{<math>}}$V_{\hat{\boldsymbol{\beta}}_{\tiny{FGLS}}}${{</math>}}.
 
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
 
 ```r
-# Criando o vetor y
-y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+# Creating the y vector
+y = as.matrix(TobinQ[,"ikn"]) # converting the data frame column into a matrix
 
-# Criando a matriz de covariates X com primeira coluna de 1's
-X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # juntando 1's com as covariates
+# Creating the covariate matrix X with a first column of ones
+X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # adding a column of ones to the covariates
 
-# Pegando valores N, T e K
+# Retrieving N, T, and K
 N = length( unique(TobinQ$cusip) )
 T = length( unique(TobinQ$year) )
 K = ncol(X) - 1
 ```
 
-b) Estimativas de OLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}${{</math>}}
+b) OLS estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}} = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} $${{</math>}}
 
@@ -1104,7 +1103,7 @@ b) Estimativas de OLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OL
 bhat_OLS = solve( t(X) %*% X ) %*% t(X) %*% y
 ```
 
-c) Valores ajustados/preditos de OLS {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}}${{</math>}}
+c) OLS fitted values {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -1113,7 +1112,7 @@ c) Valores ajustados/preditos de OLS {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscr
 yhat_OLS = X %*% bhat_OLS
 ```
 
-d) Resíduos de OLS {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}
+d) OLS residuals {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -1122,23 +1121,23 @@ d) Resíduos de OLS {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyl
 ehat_OLS = y - yhat_OLS
 ```
 
-e) Variâncias dos termos de erro
+e) Error-term variances
 
 {{<math>}}\begin{align} \hat{\sigma}^2_v &= \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N(T-1)} \\
     \hat{\sigma}^2_u &=\frac{1}{T} \left( \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N} - \hat{\sigma}^2_v \right) \end{align}{{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2_u${{</math>}} e {{<math>}}$\hat{\sigma}^2_v${{</math>}} são escalares, é conveniente transformar as "matrizes 1x1" em números usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2_u${{</math>}} and {{<math>}}$\hat{\sigma}^2_v${{</math>}} are scalars, it is convenient to convert the resulting "1x1 matrices" into numbers with `as.numeric()`: 
 
 ```r
-# Criando matrizes between e within
-iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
-I_N = diag(N) # matriz identidade de tamanho N
-I_NT = diag(N*T) # matriz identidade de tamanho NT
+# Creating the between and within matrices
+iota_T = matrix(1, T, 1) # column vector of 1s of length T
+I_N = diag(N) # identity matrix of size N
+I_NT = diag(N*T) # identity matrix of size NT
 
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = I_NT - B
 
-# Calculando variâncias dos termos de erro (Wallace & Hussain)
+# Computing the error-component variances (Wallace and Hussain)
 sig2v = as.numeric( (t(ehat_OLS) %*% W %*% ehat_OLS) / (N*(T-1)) )
 sig2u = as.numeric( (1/T) * ( (t(ehat_OLS) %*% B %*% ehat_OLS)/N - sig2v ) )
 ```
@@ -1150,17 +1149,17 @@ f) Error Variance-Covariance Matrix
 
 
 ```r
-# Calculando a Error Variance-Covariance Matrix
+# Computing the error variance-covariance matrix
 Sigma = sig2v * W + (sig2v + T*sig2u) * B
 
-# Inversa da Matriz
+# Matrix inverse
 Sigma_1 = sig2v^(-1) * W + (sig2v + T*sig2u)^(-1) * B
 ```
 
-*Note que usar `solve()` na matriz `Sigma` demora mais tempo de processamento do que usar a fórmula
+*Note that using `solve()` on the `Sigma` matrix is computationally slower than using the formula
 
 
-g) Estimativas de FGLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}}
+g) FGLS estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y} $${{</math>}}
 
@@ -1176,13 +1175,13 @@ bhat_FGLS
 ```
 
 
-h) Matriz de Variâncias-Covariâncias do Estimador
+h) Estimator Variance-Covariance Matrix
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 Vbhat = solve( t(X) %*% Sigma_1 %*% X )
 Vbhat
 ```
@@ -1194,9 +1193,9 @@ Vbhat
 ```
 
 
-i) Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}})${{</math>}}
+i) Standard errors of the estimator {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_bhat = sqrt( diag(Vbhat) )
@@ -1207,14 +1206,14 @@ se_bhat
 ## [1] 0.0034164422 0.0001683526
 ```
 
-j) Estatística _t_
+j) _t_ statistic
 
 {{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_bhat = bhat_FGLS / se_bhat
 t_bhat
 ```
@@ -1225,13 +1224,13 @@ t_bhat
 ## [2,] 22.94370
 ```
 
-k) P-valor
+k) p-value
 
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(NT-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_bhat = 2 * pt(-abs(t_bhat), N*T-K-1)
 p_bhat
 ```
@@ -1242,10 +1241,10 @@ p_bhat
 ## [2,] 3.904386e-112
 ```
 
-l) Tabela-resumo
+l) Summary table
 
 ```r
-data.frame(bhat_FGLS, se_bhat, t_bhat, p_bhat) # resultado GLS correto
+data.frame(bhat_FGLS, se_bhat, t_bhat, p_bhat) # correct GLS result
 ```
 
 ```
@@ -1255,7 +1254,7 @@ data.frame(bhat_FGLS, se_bhat, t_bhat, p_bhat) # resultado GLS correto
 ```
 
 ```r
-summary(Q.walhus)$coef # resultado FGLS via plm()
+summary(Q.walhus)$coef # FGLS result via `plm()`
 ```
 
 ```
@@ -1266,10 +1265,10 @@ summary(Q.walhus)$coef # resultado FGLS via plm()
 
 
 
-#### Transformando e estimando por OLS
-Além da forma mostrada anteriormente, podemos também transformar as variáveis e resolver por OLS, pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{\Sigma}^{-0.5}${{</math>}}, e definindo:
+#### Transforming and Estimating by OLS
+In addition to the form shown above, we can transform the variables and solve by OLS after premultiplying {{<math>}}$\boldsymbol{X}${{</math>}} and {{<math>}}$\boldsymbol{y}${{</math>}} by {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, defining:
 
-{{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5} \boldsymbol{y}$${{</math>}}
+{{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5} \boldsymbol{X} \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5} \boldsymbol{y}$${{</math>}}
 
 f') Error Variance-Covariance Matrix
 
@@ -1280,13 +1279,13 @@ f') Error Variance-Covariance Matrix
 # Error Variance-Covariance Matrix ^ (-0.5)
 Sigma_05 = sig2v^(-0.5) * W + (sig2v + T*sig2u)^(-0.5) * B
 
-# Variáveis transformadas
+# Transformed variables
 X_til = Sigma_05 %*% X
 y_til = Sigma_05 %*% y
 ```
 
 
-g') Estimativas de FGLS via OLS
+g') FGLS estimates via OLS
 
 {{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} &= (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y} \\
 &= (\boldsymbol{X}' \boldsymbol{\Sigma}^{-0.5} \boldsymbol{\Sigma}^{-0.5} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma}^{-0.5} \boldsymbol{\Sigma}^{-0.5} \boldsymbol{y} \\
@@ -1295,7 +1294,7 @@ g') Estimativas de FGLS via OLS
 &\equiv (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}}= \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}}
 \end{align}{{</math>}}
 
-Note que {{<math>}}$\boldsymbol{\Sigma}'^{-0.5} = \boldsymbol{\Sigma}^{-0.5}${{</math>}}.
+Note that {{<math>}}$\boldsymbol{\Sigma}'^{-0.5} = \boldsymbol{\Sigma}^{-0.5}${{</math>}}.
 
 
 ```r
@@ -1309,17 +1308,17 @@ bhat_OLS
 ## [2,] 0.003862631
 ```
 
-h') Valores Ajustados e Resíduos OLS
-{{<math>}}$$\tilde{\hat{y}} = \tilde{\boldsymbol{X}} \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} \qquad \text{e} \qquad  \tilde{\hat{\boldsymbol{\varepsilon}}} = \boldsymbol{y} - \tilde{\hat{y}} $${{</math>}}
+h') Valores Ajustados e Residuals OLS
+{{<math>}}$$\tilde{\hat{y}} = \tilde{\boldsymbol{X}} \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} \qquad \text{and} \qquad  \tilde{\hat{\boldsymbol{\varepsilon}}} = \boldsymbol{y} - \tilde{\hat{y}} $${{</math>}}
 
 
 ```r
-yhat_OLS = X_til %*% bhat_OLS # Valores Ajustados
-ehat_OLS = y_til - yhat_OLS # Resíduos
+yhat_OLS = X_til %*% bhat_OLS # Fitted values
+ehat_OLS = y_til - yhat_OLS # Residuals
 ```
 
 
-i') Variância do termo de erro OLS
+i') Error-term variance OLS
 {{<math>}}$$\hat{\sigma}^2 =  \frac{\tilde{\hat{\boldsymbol{\varepsilon}}}'\tilde{\hat{\boldsymbol{\varepsilon}}}}{NT - K - 1} $${{</math>}}
 
 ```r
@@ -1343,7 +1342,7 @@ Vbhat_OLS
 ```
 
 
-k') Erro Padrão das Estimativas, Estatística t e P-valor
+k') Standard errors, t statistics, and p-values
 
 ```r
 se_bhat_OLS = sqrt( diag(Vbhat_OLS) )
@@ -1354,7 +1353,7 @@ p_bhat_OLS = 2 * pt(-abs(t_bhat_OLS), N*T-K-1)
 l') Comparativo
 
 ```r
-# FGLS via OLS Analítico
+# Analytical FGLS via OLS
 data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS)
 ```
 
@@ -1379,40 +1378,40 @@ summary(Q.walhus)$coef
 
 </br>
 
-## Matrizes de Transformação
-- Section 2.1.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+## Transformation Matrices
+- Section 2.1.2 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
 
 
 ### Panel Data Model (2)
 
-- Agora, iremos diferenciar as explanatory variables invariantes no tempo das variantes no tempo.
-- Considere que, das {{<math>}}$K${{</math>}} explanatory variables, temos {{<math>}}$J${{</math>}} variáveis invariantes no tempo e {{<math>}}$L${{</math>}} são variantes no tempo:
+- We now distinguish time-invariant explanatory variables from time-varying ones.
+- Suppose that among the {{<math>}}$K${{</math>}} explanatory variables, {{<math>}}$J${{</math>}} are time-invariant and {{<math>}}$L${{</math>}} are time-varying:
 
-O modelo (1) é:
+Model (1) is:
 {{<math>}}\begin{align} y_{it} &= \boldsymbol{x}'_{it} \boldsymbol{\beta} + \varepsilon_{it} \tag{1} \\
 &= 1.\beta_0 + x^1_{it} \beta_1 + ... + x^J_{it} \beta_J + x^{J+1}_{it} \beta_{J+1} + ... + x^K_{it} \beta_K + \varepsilon_{it} \end{align}{{</math>}}
-e pode ser reescrito como:
+and it can be rewritten as:
 {{<math>}}\begin{align} y_{it} &= \boldsymbol{x}'_{i} \boldsymbol{\Gamma} + \boldsymbol{x}^{*\prime}_{it} \boldsymbol{\delta} + \varepsilon_{it} \tag{2} \\
 &= 1.\Gamma_0 + x^1_{i} \Gamma_1 + ... + x^J_{i} \Gamma_J + x^{*1}_{it} \delta_{1} + ... + x^{*L}_{it} \delta_L + \varepsilon_{it} \end{align}{{</math>}}
-em que:
+where:
 
 - {{<math>}}$\boldsymbol{x}'_{it} = [\boldsymbol{x}'_{i}, \boldsymbol{x}^{*\prime}_{it}] ${{</math>}}
 
-- {{<math>}}$\boldsymbol{x}'_{i}${{</math>}} são as realizações das {{<math>}}$J${{</math>}} variáveis invariantes no tempo, junto de 1:
+- {{<math>}}$\boldsymbol{x}'_{i}${{</math>}} collects the realizations of the {{<math>}}$J${{</math>}} time-invariant variables, together with the intercept:
 {{<math>}}$$ \boldsymbol{x}'_{i} = \begin{bmatrix} 1 & x^1_i & x^2_i & \cdots & x^J_i \end{bmatrix}  $${{</math>}}
 
-- {{<math>}}$\boldsymbol{x}^{*\prime}_{it}${{</math>}} são as realizações das {{<math>}}$L${{</math>}} variáveis variantes no tempo:
+- {{<math>}}$\boldsymbol{x}^{*\prime}_{it}${{</math>}} collects the realizations of the {{<math>}}$L${{</math>}} time-varying variables:
 {{<math>}}$$ \boldsymbol{x}^{*\prime}_{it} = \begin{bmatrix} x^{*1}_{it} & x^{*2}_{it} & \cdots & x^{*L}_{it} \end{bmatrix} $${{</math>}}
 
 - {{<math>}}$\varepsilon_{it} = u_i + v_{it}${{</math>}}.
-- {{<math>}}$\boldsymbol{\Gamma}${{</math>}} e {{<math>}}$\boldsymbol{\delta}${{</math>}} são, respectivamente, os parâmetros das variáveis invariantes e variantes no tempo, tal que
+- {{<math>}}$\boldsymbol{\Gamma}${{</math>}} and {{<math>}}$\boldsymbol{\delta}${{</math>}} are the parameter vectors for time-invariant and time-varying variables, respectively, so that
 {{<math>}}\begin{align} \boldsymbol{\beta}\quad\ &\equiv \begin{bmatrix} \ \boldsymbol{\Gamma}\  \\ \ \boldsymbol{\delta}\  \end{bmatrix} \\
 \begin{bmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_J \\\hline \beta_{J+1} \\ \beta_{J+2} \\ \vdots \\ \beta_{K} \end{bmatrix} &\equiv \begin{bmatrix} \Gamma_0 \\ \Gamma_1 \\ \Gamma_2 \\ \vdots \\ \Gamma_J \\\hline \delta_1 \\ \delta_2 \\ \vdots \\ \delta_L \end{bmatrix} \end{align}{{</math>}}
 
 
-Empilhando as equações (2) para todo {{<math>}}$i${{</math>}} e {{<math>}}$t${{</math>}}, segue que
+Stacking equation (2) over all {{<math>}}$i${{</math>}} and {{<math>}}$t${{</math>}}, we obtain
 {{<math>}}$$ \boldsymbol{y}\ =\ \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \ =\ \boldsymbol{X}_0 \boldsymbol{\Gamma} + \boldsymbol{X}^{*} \boldsymbol{\delta} + \boldsymbol{\varepsilon} $${{</math>}}
-ou, usando
+or, using
 
 {{<math>}}\begin{align} \boldsymbol{X} &= \left[ \begin{array}{ccccc|cccc}
     1 & x^1_{11} & x^2_{11} & \cdots & x^J_{11} & x^{J+1}_{11} & x^{J+2}_{11} & \cdots & x^K_{11} \\
@@ -1471,14 +1470,14 @@ ou, usando
 
 
 ### _Between_
-A matriz de transformação **inter-individuals (_between_)** é denotada por:
+The **between (inter-individual)** transformation matrix is denoted by:
 {{<math>}}$$ \boldsymbol{B}\ =\ \boldsymbol{I}_N \otimes \Big[ \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big] $${{</math>}}
-Note que a matriz {{<math>}}$\boldsymbol{B}${{</math>}} é equivalente a {{<math>}}$\boldsymbol{N}${{</math>}} nas notas de aula de Econometria II.
+Note that the matrix {{<math>}}$\boldsymbol{B}${{</math>}} corresponds to {{<math>}}$\boldsymbol{N}${{</math>}} in the Econometrics II lecture notes.
 
-Pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} pela matriz de transformação _between_ {{<math>}}$\boldsymbol{B}${{</math>}}, temos:
+Premultiplying {{<math>}}$\boldsymbol{X}${{</math>}} by the _between_ transformation matrix {{<math>}}$\boldsymbol{B}${{</math>}} yields:
 {{<math>}}$$ x^k_{it}\ \overset{\boldsymbol{B}}{\Longrightarrow}\ \bar{x}^k_{i}\ =\ \frac{1}{T} \sum^T_{i=1}{x^k_{it}}, \qquad \forall i, t, k $${{</math>}}
 
-Logo,
+Thus,
 
 {{<math>}}$$ \boldsymbol{BX} = \left[ \begin{array}{ccccc|cccc}
     1 & x^1_{1} & x^2_{1} & \cdots & x^J_{1} & \bar{x}^{*1}_{1} & \bar{x}^{*2}_{1} & \cdots & \bar{x}^{*L}_{1} \\
@@ -1498,7 +1497,7 @@ Logo,
 
 </br>
 
-Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
+For example, when {{<math>}}$N = 2${{</math>}} and {{<math>}}$T = 3${{</math>}}, we have:
 
 {{<math>}}$$ \boldsymbol{B} = \left[ \begin{array}{rrrrrr} 
         1/3 & 1/3 & 1/3 & 0 & 0 & 0 \\
@@ -1510,7 +1509,7 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
     \end{array} \right]_{6 \times 6}, $${{</math>}}
 
 
-Por exemplo, suponha a matriz {{<math>}}$\boldsymbol{X}${{</math>}}, com {{<math>}}$J=1${{</math>}} variável invariante no tempo, e {{<math>}}$P=3${{</math>}} variantes: 
+For instance, suppose {{<math>}}$\boldsymbol{X}${{</math>}} has {{<math>}}$J=1${{</math>}} time-invariant variable and {{<math>}}$P=3${{</math>}} time-varying variables: 
 
 {{<math>}}$$ \boldsymbol{X} = \begin{bmatrix} \boldsymbol{X}_0 & \boldsymbol{X}^{*} \end{bmatrix} = \left[ \begin{array}{cc|ccc}
 1 & 3 & 1 & 3 & 6 \\
@@ -1521,9 +1520,9 @@ Por exemplo, suponha a matriz {{<math>}}$\boldsymbol{X}${{</math>}}, com {{<math
 1 & 7 & 1 & 9 & 9
 \end{array} \right]_{6 \times 5} $${{</math>}}
 
-Note que a linha horizontal na matriz acima foi colocada apenas para deixar claro que as três primeiras linhas correspondem ao mesmo individual {{<math>}}$i=1${{</math>}}, e as três últimas correspondem ao individual {{<math>}}$i=2${{</math>}}. São três linhas para cada um, pois assumimos {{<math>}}$t=1,2,3${{</math>}} periods.
+The horizontal separator is included only to emphasize that the first three rows refer to individual {{<math>}}$i=1${{</math>}} and the last three rows to individual {{<math>}}$i=2${{</math>}}. There are three rows for each because we assume {{<math>}}$t=1,2,3${{</math>}}.
 
-Logo, temos:
+Thus, we have:
 
 {{<math>}}\begin{align} \boldsymbol{BX} &=  
 \left[ \begin{array}{rrrrrr} 
@@ -1550,24 +1549,24 @@ Logo, temos:
 1 & 7 & 5 & 7 & 6
 \end{array} \right]_{6 \times 5} \end{align}{{</math>}}
 
-Note que, para cada individual {{<math>}}$i${{</math>}} e coluna {{<math>}}$k${{</math>}}, os elementos foram "preenchidos" com a média dos valores em {{<math>}}$t=1,2,3${{</math>}}.
+Note that, for each individual {{<math>}}$i${{</math>}} and column {{<math>}}$k${{</math>}}, the entries are filled with that individual's time average over {{<math>}}$t=1,2,3${{</math>}}.
 
 
 </br>
 
 
-Agora, vamos definir uma matriz de covariates `X` e pós-multiplicar pela matriz `B`
+Now let us define a covariate matrix `X` and premultiply it by `B`.
 
 ```r
 N = 2 # nº individuals
 T = 3 # nº periods
 K = 4 # nº explanatory variables
 
-# Calculando matriz de transformação between
-iota_T = matrix(1, nrow=T, ncol=1) # vetor de 1's de dimensão T
-I_N = diag(N) # Matriz identidade de dimensão N
+# Computing the between transformation matrix
+iota_T = matrix(1, nrow=T, ncol=1) # vector of ones of dimension T
+I_N = diag(N) # identity matrix of dimension N
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
-B # matriz de transformação between
+B # between transformation matrix
 ```
 
 ```
@@ -1581,13 +1580,13 @@ B # matriz de transformação between
 ```
 
 ```r
-# Matriz de covariates X
-X = matrix(c(rep(1, 6), # 1a coluna de 1's
+# Covariate matrix X
+X = matrix(c(rep(1, 6), # 1st column of 1s
              rep(3, 3), rep(7, 3), # 2a coluna
              1,9,8,6,8,1, # 3a coluna
              3,5,7,6,6,9, # 4a coluna
              6,4,2,8,1,9  # 5a coluna
-             ), ncol=K+1) # matriz covariates NT x (K+1)
+             ), ncol=K+1) # covariate matrix of dimension NT x (K+1)
 X
 ```
 
@@ -1602,8 +1601,8 @@ X
 ```
 
 ```r
-# Pré-multiplicando X por B
-B %*% X # matriz de médias das covariates dado individual (NT x K)
+# Premultiplying X by B
+B %*% X # matrix of individual-specific covariate means (NT x K)
 ```
 
 ```
@@ -1616,24 +1615,24 @@ B %*% X # matriz de médias das covariates dado individual (NT x K)
 ## [6,]    1    7    5    7    6
 ```
 
-Note que:
-- as colunas 1 e 2 permaneceram iguais após a transformação _between_, pois são invariantes no tempo (média de algo constante é a própria constante).
-- dada uma variável {{<math>}}$k${{</math>}}, temos um único valor (média) dentro de um mesmo individual {{<math>}}$i${{</math>}};
-- por isso, a amostra com {{<math>}}$NT${{</math>}} observations distintas, agora, **passa a possuir apenas {{<math>}}$N${{</math>}} observations distintas**, o que faz com que percamos graus de liberdade (perde {{<math>}}$N(T-1)${{</math>}} graus de liberdade)
+Note that:
+- Columns 1 and 2 remain unchanged after the _between_ transformation because they are time-invariant (the average of a constant is the constant itself).
+- for a given variable {{<math>}}$k${{</math>}}, each individual {{<math>}}$i${{</math>}} is represented by a single average value;
+- as a result, a sample with {{<math>}}$NT${{</math>}} observations is reduced to only {{<math>}}$N${{</math>}} distinct observations, so we lose {{<math>}}$N(T-1)${{</math>}} degrees of freedom.
 
 
 </br>
 
 ### _Within_
-Já a matriz de transformação **intra-individuals (_within_)** é dada por:
+The **within (intra-individual)** transformation matrix is given by:
 {{<math>}}$$ \boldsymbol{W}\ =\ \boldsymbol{I}_{NT} - \boldsymbol{B}\ =\ \boldsymbol{I}_{NT} - \Big[ \boldsymbol{I}_N \otimes \boldsymbol{\iota}_T (\boldsymbol{\iota}'_T \boldsymbol{\iota}_T)^{-1} \boldsymbol{\iota}'_T \Big]. $${{</math>}}
 
-Note que a matriz {{<math>}}$\boldsymbol{W}${{</math>}} é equivalente a {{<math>}}$\boldsymbol{M}${{</math>}} nas notas de aula de Econometria II (2021).
+Note that the matrix {{<math>}}$\boldsymbol{W}${{</math>}} corresponds to {{<math>}}$\boldsymbol{M}${{</math>}} in the Econometrics II lecture notes (2021).
 
-Pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} pela matriz de transformação _within_ {{<math>}}$\boldsymbol{W}${{</math>}}, temos:
+Premultiplying {{<math>}}$\boldsymbol{X}${{</math>}} by the _within_ transformation matrix {{<math>}}$\boldsymbol{W}${{</math>}} yields:
 {{<math>}}$$ x^{k}_{it}\ \overset{\boldsymbol{W}}{\Longrightarrow}\ x^{k}_{it} - \bar{x}^{k}_i\ =\ x^{k}_{it} - \frac{1}{T} \sum^T_{i=1}{x^{k}_{it}}, \qquad \forall i, t, l=1,...,L $${{</math>}}
 
-Logo,
+Thus,
 {{<math>}}\begin{align} \boldsymbol{WX} &= \left[ \begin{array}{ccc|cccc}
     0 & \cdots & 0 & x^{*1}_{11} - \bar{x}^{*1}_{1} & x^{*2}_{11} - \bar{x}^{*2}_{1} & \cdots & x^{*L}_{11} - \bar{x}^{*L}_{1} \\
     0 & \cdots & 0 & x^{*1}_{12} - \bar{x}^{*1}_{1} & x^{*2}_{12} - \bar{x}^{*2}_{1} & \cdots & x^{*2}_{1T} - \bar{x}^{*L}_{1} \\
@@ -1652,7 +1651,7 @@ Logo,
 &= \boldsymbol{WX}^* \end{align}{{</math>}}
 
 
-Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
+For example, when {{<math>}}$N = 2${{</math>}} and {{<math>}}$T = 3${{</math>}}, we have:
 
 {{<math>}}\begin{align}
     \boldsymbol{W} &= \boldsymbol{I}_{6} - \boldsymbol{B} \\
@@ -1682,7 +1681,7 @@ Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, s
 \end{align}{{</math>}}
 
 
-Logo, temos:
+Thus, we have:
 
 {{<math>}}\begin{align} \boldsymbol{WX} =  
 &\left[ \begin{array}{rrrrrr} 
@@ -1710,14 +1709,14 @@ Logo, temos:
 0 & 0 & -4 &  2 &  3
 \end{array} \right]_{6 \times 5} = \boldsymbol{WX}^* \end{align}{{</math>}}
 
-Note que perdemos toda variabilidade das duas primeiras colunas que eram invariantes no tempo. Portanto, "jogamos fora" toda submatriz {{<math>}}$\boldsymbol{X}_0${{</math>}}, sobrando apenas {{<math>}}$\boldsymbol{X}^{*}${{</math>}} (com covariates variantes no tempo).
+Note that we lose all variation in the first two columns, which are time-invariant. In other words, the entire submatrix {{<math>}}$\boldsymbol{X}_0${{</math>}} drops out, leaving only {{<math>}}$\boldsymbol{X}^{*}${{</math>}} with the time-varying covariates.
 
 
 
 ```r
-I_NT = diag(N*T) # Matriz identidade de dimensão NT
+I_NT = diag(N*T) # identity matrix of dimension NT
 W = I_NT - B 
-W # matriz de transformação within
+W # within transformation matrix
 ```
 
 ```
@@ -1731,8 +1730,8 @@ W # matriz de transformação within
 ```
 
 ```r
-# Pré-multiplicando X por W
-round(W %*% X, 10) # arredondando
+# Premultiplying X by W
+round(W %*% X, 10) # rounding
 ```
 
 ```
@@ -1746,17 +1745,17 @@ round(W %*% X, 10) # arredondando
 ```
 Observe que:
 
-- dada uma variável {{<math>}}$k${{</math>}}, temos os desvios em relação à média de um mesmo individual;
-- colunas 1 e 2, invariantes no tempo, viraram apenas 0 após a transformação _within_, fazendo com que as percamos em uma regressão.
-- coluna de 0's, no R, ficou muito próxima de 0 ({{<math>}}$1,11 \times 10^{-16}${{</math>}}), então foi necessário arredondar.
+- for each variable {{<math>}}$k${{</math>}}, we obtain deviations from the individual-specific mean;
+- columns 1 and 2, which are time-invariant, become zero after the _within_ transformation and therefore drop out of the regression.
+- the zero column in R is numerically very close to zero ({{<math>}}$1.11 \times 10^{-16}${{</math>}}), so rounding is useful.
 
 
 </br>
 
-### Primeiras-diferenças
-- A matriz de primeiras diferenças permite transformar as variáveis para as diferenças entre as realização entre os periods {{<math>}}$t+1${{</math>}} e {{<math>}}$t${{</math>}}, e tem a seguinte forma (não-quadrada):
+### First Differences
+- The first-difference matrix transforms variables into changes between periods {{<math>}}$t+1${{</math>}} and {{<math>}}$t${{</math>}}, and has the following non-square form:
 {{<math>}}$$\boldsymbol{D} = \boldsymbol{I}_N \otimes \boldsymbol{D}_i $${{</math>}}
-where {{<math>}}$\boldsymbol{I}_N${{</math>}} é uma matriz identidade de tamanho {{<math>}}$N${{</math>}}, e
+where {{<math>}}$\boldsymbol{I}_N${{</math>}} is the identity matrix of size {{<math>}}$N${{</math>}}, and
 
 {{<math>}}$$\boldsymbol{D}_i = \begin{bmatrix}
 -1 & 1 & 0 & \cdots & 0 & 0 \\
@@ -1764,13 +1763,13 @@ where {{<math>}}$\boldsymbol{I}_N${{</math>}} é uma matriz identidade de tamanh
 \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
 0 & 0 & 0 & \cdots & -1 & 1
 \end{bmatrix}_{(T-1)\times T}$${{</math>}}
-é não é uma matriz quadrada e possui "diagonais principais" iguais a {{<math>}}$-1${{</math>}} e a {{<math>}}$1${{</math>}}.
+This is not a square matrix and has the main off-diagonals equal to {{<math>}}$-1${{</math>}} and {{<math>}}$1${{</math>}}.
 
 
-Pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} pela matriz de transformação de _primeiras-diferenças_ {{<math>}}$\boldsymbol{D}${{</math>}}, temos:
+Premultiplying {{<math>}}$\boldsymbol{X}${{</math>}} by the first-difference transformation matrix {{<math>}}$\boldsymbol{D}${{</math>}} yields:
 {{<math>}}$$ x^{k}_{it}\ \overset{\boldsymbol{D}}{\Longrightarrow}\ \Delta x^{k}_{it} \ =\ x^{k}_{i,t+1} - x^{k}_{it}, \qquad \forall i, k, t = 1, 2, ..., T-1 $${{</math>}}
 
-Logo,
+Thus,
 {{<math>}}\begin{align} \boldsymbol{DX} &= \left[ \begin{array}{c|cccc}
     0 \cdots 0 & x^{*1}_{12} - x^{*1}_{11} & x^{*2}_{12} - x^{*2}_{11} & \cdots & x^{*L}_{12} - x^{*L}_{11} \\
     0 \cdots 0 & x^{*1}_{13} - x^{*1}_{12} & x^{*2}_{13} - x^{*2}_{12} & \cdots & x^{*2}_{13} - x^{*L}_{12} \\
@@ -1790,13 +1789,13 @@ Logo,
 
 </br>
 
-Por exemplo, para {{<math>}}$N = 2${{</math>}} e {{<math>}}$T = 3${{</math>}}, segue que:
+For example, when {{<math>}}$N = 2${{</math>}} and {{<math>}}$T = 3${{</math>}}, we have:
 
 {{<math>}}$$ \boldsymbol{D}_i = \begin{bmatrix} 
 -1 &  1 &  0 \\
  0 & -1 &  1 \end{bmatrix}_{2 \times 3},\quad i=1,2 $${{</math>}}
 
-Logo, temos que
+Thus, we have
 
 {{<math>}}\begin{align} \boldsymbol{DX} &=  
 \left[ \begin{array}{rrr|rrr} 
@@ -1820,13 +1819,13 @@ Logo, temos que
 0 & 0 & -7 & 3 &  8
 \end{array} \right]_{4 \times 5} = \boldsymbol{DX}^* \end{align}{{</math>}}
 
-Note que perdemos toda variabilidade das duas primeiras colunas que eram invariantes no tempo {{<math>}}$(\boldsymbol{X}_0)${{</math>}}. Além disso, perdemos um period para cada individual {{<math>}}$i${{</math>}}.
+Note that we lose all variation in the first two columns, which are time-invariant {{<math>}}$(\boldsymbol{X}_0)${{</math>}}. In addition, we lose one period for each individual {{<math>}}$i${{</math>}}.
 
 
 
-Para construir {{<math>}}$\boldsymbol{D}_i${{</math>}} no R, vamos:
+To build {{<math>}}$\boldsymbol{D}_i${{</math>}} in R, we:
 
-a) criar uma matriz identidade de tamanho {{<math>}}$T${{</math>}} e multiplicar por {{<math>}}$-1${{</math>}}
+a) create an identity matrix of size {{<math>}}$T${{</math>}} and multiply it by {{<math>}}$-1${{</math>}}
 {{<math>}}$$ -\boldsymbol{I}_T = \begin{bmatrix}
 -1 &  0 &  0 \\
  0 & -1 &  0 \\
@@ -1834,7 +1833,7 @@ a) criar uma matriz identidade de tamanho {{<math>}}$T${{</math>}} e multiplicar
 \end{bmatrix} $${{</math>}}.
 
 ```r
-Di = -diag(T) # diagonal -1
+Di = -diag(T) # main diagonal set to -1
 Di
 ```
 
@@ -1846,7 +1845,7 @@ Di
 ```
 
 
-b) alterar o valor da superdiagonal (é a diagonal da matriz identidade de tamanho {{<math>}}$T-1${{</math>}} (submatriz que exclui a primeira coluna e última linha da matriz de tamanho {{<math>}}$T${{</math>}})
+b) modify the superdiagonal, which is the diagonal of the {{<math>}}$(T-1)${{</math>}} identity submatrix obtained by excluding the first column and the last row of the {{<math>}}$T \times T${{</math>}} matrix
 {{<math>}}$$ \left[ \begin{array}{c|cc}
 -1 &  0 &  0 \\
  0 & -1 &  0 \\\hline
@@ -1858,7 +1857,7 @@ b) alterar o valor da superdiagonal (é a diagonal da matriz identidade de taman
 \end{array} \right] $${{</math>}}
 
 ```r
-diag(Di[-nrow(Di),-1]) = 1 # supradiagonal
+diag(Di[-nrow(Di),-1]) = 1 # superdiagonal
 Di
 ```
 
@@ -1869,14 +1868,14 @@ Di
 ## [3,]    0    0   -1
 ```
 
-c) excluir a última linha, tornando a matriz de dimensão {{<math>}}$(T-1)\times T${{</math>}}
+c) drop the last row, leaving a matrix of dimension {{<math>}}$(T-1)\times T${{</math>}}
 {{<math>}}$$ \Longrightarrow \boldsymbol{D}_i = \left[ \begin{array}{ccc}
 -1 &  1 &  0 \\
  0 & -1 &  1 
 \end{array} \right]_{2 \times 3} $${{</math>}}
 
 ```r
-Di = Di[-nrow(Di),] # retira última linha
+Di = Di[-nrow(Di),] # dropping the last row
 Di
 ```
 
@@ -1886,7 +1885,7 @@ Di
 ## [2,]    0   -1    1
 ```
 
-Depois, basta fazer o produto de Kronecker, {{<math>}}$\otimes${{</math>}}, entre a matriz identidade de tamanho {{<math>}}$N${{</math>}}, {{<math>}}$\boldsymbol{I}_N${{</math>}},e a matriz {{<math>}}$\boldsymbol{D}_i${{</math>}}:
+Then we simply take the Kronecker product, {{<math>}}$\otimes${{</math>}}, between the identity matrix {{<math>}}$\boldsymbol{I}_N${{</math>}} and {{<math>}}$\boldsymbol{D}_i${{</math>}}:
 
 
 {{<math>}}\begin{align}\boldsymbol{D} &= \boldsymbol{I}_N \otimes \boldsymbol{D}_i \\
@@ -1923,9 +1922,9 @@ Depois, basta fazer o produto de Kronecker, {{<math>}}$\otimes${{</math>}}, entr
 
 
 ```r
-I_N = diag(N) # matriz identidade de tamanho N
+I_N = diag(N) # identity matrix of size N
 D = I_N %x% Di
-D # matriz de primeiras-diferenças
+D # first-difference matrix
 ```
 
 ```
@@ -1937,7 +1936,7 @@ D # matriz de primeiras-diferenças
 ```
 
 ```r
-# Transformação DX
+# DX transformation
 D %*% X
 ```
 
@@ -1951,26 +1950,26 @@ D %*% X
 
 Observe que:
 
-- colunas 1 e 2, invariantes no tempo, viraram apenas 0 após a transformação de primeiras-diferenças, fazendo com que as percamos em uma regressão.
-- também perdemos uma linha por individual para calcular a variação entre os periods
+- columns 1 and 2, which are time-invariant, become zero after first differencing and therefore drop out of the regression.
+- we also lose one row per individual in order to compute changes across periods.
 
 
 
 
 </br>
 
-## Estimador _Between_
+## _Between_ Estimator
 
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$\boldsymbol{B} = \boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}}:
+The model to be estimated is OLS premultiplied by {{<math>}}$\boldsymbol{B} = \boldsymbol{I}_N \otimes \boldsymbol{\iota} (\boldsymbol{\iota}' \boldsymbol{\iota})^{-1} \boldsymbol{\iota}'${{</math>}}:
 {{<math>}}$$ \boldsymbol{By}\ =\ \boldsymbol{BX\beta} + \boldsymbol{B\varepsilon} $${{</math>}}
 
-- O estimador _between_ é dado por
+- The _between_ estimator is given by
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}\ =\ (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B} y $${{</math>}}
 
 - Defina
 {{<math>}}$$ \hat{\sigma}^2_l \equiv \hat{\sigma}^2_v + T \hat{\sigma}^2_u  $${{</math>}}
 
-- A matriz de covariâncias do estimador pode ser obtida usando
+- The covariance matrix of the estimator can be written as
 {{<math>}}\begin{align}
     V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}) &= (\boldsymbol{X}'\boldsymbol{BX})^{-1} \boldsymbol{X}' \boldsymbol{B}\boldsymbol{\Sigma} \boldsymbol{B} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{BX})^{-1} \\
     &\ \ \vdots \\
@@ -1978,22 +1977,22 @@ O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$\boldsymbol{B}
 \end{align}{{</math>}}
 
 
-- O estimador não-viesado de {{<math>}}$\sigma^2_l${{</math>}} é
+- The unbiased estimator of {{<math>}}$\sigma^2_l${{</math>}} is
 {{<math>}}$$ \hat{\sigma}^2_l = \frac{\hat{\boldsymbol{\varepsilon}_{\scriptscriptstyle{B}}}' \boldsymbol{B} \hat{\boldsymbol{\varepsilon}_{\scriptscriptstyle{B}}}}{N-K-1} $${{</math>}}
-where {{<math>}}$\boldsymbol{\varepsilon}_{\scriptscriptstyle{B}}${{</math>}} são os resíduos obtidos a partir da estimação {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}${{</math>}}.
+where {{<math>}}$\boldsymbol{\varepsilon}_{\scriptscriptstyle{B}}${{</math>}} denotes the residual vector obtained from {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}${{</math>}}.
 
-- O estimador _between_ também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz _between_ {{<math>}}$(\boldsymbol{B})${{</math>}}:
-{{<math>}}$$ \tilde{\boldsymbol{X}} \equiv \boldsymbol{BX} \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{By} $${{</math>}} 
+- The _between_ estimator can also be obtained by OLS after premultiplying the variables by the _between_ matrix {{<math>}}$(\boldsymbol{B})${{</math>}}:
+{{<math>}}$$ \tilde{\boldsymbol{X}} \equiv \boldsymbol{BX} \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{By} $${{</math>}}
 
-Então
+Then
 {{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}} &= (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B} y \\
 &= (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B} \boldsymbol{B} y \\
 &= (\boldsymbol{X}' \boldsymbol{B}' \boldsymbol{B} \boldsymbol{X} )^{-1} \boldsymbol{X}' \boldsymbol{B}' \boldsymbol{B} y \\
 &= ([\boldsymbol{B} \boldsymbol{X}]' \boldsymbol{B} \boldsymbol{X} )^{-1} [\boldsymbol{B} \boldsymbol{X}]' \boldsymbol{B} y \\
 &\equiv ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} = \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} \end{align}{{</math>}}
 
-Note que usamos:
-{{<math>}}$$ \boldsymbol{B} = \boldsymbol{B}\boldsymbol{B} \qquad \text{e} \qquad \boldsymbol{B}=\boldsymbol{B}' $${{</math>}}
+Note that we use:
+{{<math>}}$$ \boldsymbol{B} = \boldsymbol{B}\boldsymbol{B} \qquad \text{and} \qquad \boldsymbol{B}=\boldsymbol{B}' $${{</math>}}
 
 
 <!-- ```{r} -->
@@ -2001,9 +2000,9 @@ Note que usamos:
 <!-- N = 2 -->
 <!-- T = 3 -->
 
-<!-- # Calculando matriz de transformação between -->
-<!-- iota_T = matrix(1, nrow=T, ncol=1) # vetor de 1's de dimensão T -->
-<!-- I_N = diag(N) # Matriz identidade de dimensão N -->
+<!-- # Computing the between transformation matrix -->
+<!-- iota_T = matrix(1, nrow=T, ncol=1) # vector of ones of dimension T -->
+<!-- I_N = diag(N) # identity matrix of dimension N -->
 <!-- B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T)) -->
 <!-- B # matriz between -->
 <!-- B %*% B # multiplicação matricial de matrizes between -->
@@ -2011,20 +2010,20 @@ Note que usamos:
 <!-- ``` -->
 
 
-### Estimação via `plm()`
-Novamente, usaremos a base de dados `TobinQ` do pacote `pder` e queremos estimar o seguinte modelo:
+### Estimation via `plm()`
+Again, we use the `TobinQ` dataset from the `pder` package and estimate the following model:
 {{<math>}}$$ \text{ikn} = \beta_0 + \text{qn} \beta_1 + \varepsilon $${{</math>}}
 
 
 ```r
-# Carregando pacote e base de dados necessários
+# Loading the required package and dataset
 library(plm)
 data(TobinQ, package="pder")
 
-# Transformando no formato pdata frame, com indentificador de individual e de tempo
+# Converting to `pdata.frame` format with individual and time identifiers
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimações
+# Estimations
 Q.between = plm(ikn ~ qn, pTobinQ, model = "between")
 summary(Q.between)
 ```
@@ -2077,7 +2076,7 @@ summary(Q.between)
 <!-- # Estimação between via lm() -->
 <!-- Q.between.ols = lm(ikn_bar ~ qn_bar, TobinQ) -->
 
-<!-- # Comparando as estimativas -->
+<!-- # Comparing the estimates -->
 <!-- summary(Q.between.ols)$coef # between via OLS -->
 <!-- summary(Q.between)$coef # between ajustando graus de liberdade -->
 <!-- ``` -->
@@ -2100,20 +2099,20 @@ summary(Q.between)
 
 
 
-### Estimação Analítica
+### Analytical Estimation
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
 
 ```r
 data("TobinQ", package="pder")
 
-# Criando o vetor y
-y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+# Creating the y vector
+y = as.matrix(TobinQ[,"ikn"]) # converting the data frame column into a matrix
 
-# Criando a matriz de covariates X com primeira coluna de 1's
-X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # juntando 1's com as covariates
+# Creating the covariate matrix X with a first column of ones
+X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # adding a column of ones to the covariates
 
-# Pegando valores N, T e K
+# Retrieving N, T, and K
 N = length( unique(TobinQ$cusip) )
 T = length( unique(TobinQ$year) )
 K = ncol(X) - 1
@@ -2126,14 +2125,14 @@ b) Calculando a matriz _between_
 
 
 ```r
-# Criando matrizes between
-iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
-I_N = diag(N) # matriz identidade de tamanho N
+# Creating the between matrix
+iota_T = matrix(1, T, 1) # column vector of 1s of length T
+I_N = diag(N) # identity matrix of size N
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 ```
 
 
-c) Estimativas _Between_ {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}${{</math>}}
+c) _Between_ estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}} = (\boldsymbol{X}' \boldsymbol{B} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{B} \boldsymbol{y} $${{</math>}}
 
@@ -2148,7 +2147,7 @@ bhat_B
 ## [2,] 0.005184737
 ```
 
-d) Valores ajustados/preditos _Between_ {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{B}}${{</math>}}
+d) Fitted values _Between_ {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{B}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{B}} = \boldsymbol{X} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}} $${{</math>}}
 
@@ -2157,7 +2156,7 @@ d) Valores ajustados/preditos _Between_ {{<math>}}$\hat{\boldsymbol{y}}_{\script
 yhat_B = X %*% bhat_B
 ```
 
-e) Resíduos _Between_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{B}}${{</math>}}
+e) Residuals _Between_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{B}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{B}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{B}} $${{</math>}}
 
@@ -2166,26 +2165,26 @@ e) Resíduos _Between_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscripts
 ehat_B = y - yhat_B
 ```
 
-f) Variância do termo de erro
+f) Error-term variance
 
 {{<math>}}$$ \hat{\sigma}^2_l \equiv  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{B}} \boldsymbol{B} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{B}}}{N - K - 1} $${{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2_l${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2_l${{</math>}} is a scalar, it is convenient to convert the "1x1 matrix" into a number using `as.numeric()`: 
 
 ```r
-# Calculando variâncias dos termos de erro
+# Computing the error-term variances
 sig2l = as.numeric( (t(ehat_B) %*% B %*% ehat_B) / (N - K - 1) )
 ```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _between_ para {{<math>}}$N - K - 1${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
+**IMPORTANT**: Adjust the degrees of freedom of the _between_ estimator to {{<math>}}$N - K - 1${{</math>}} (instead of {{<math>}}$NT - K - 1${{</math>}}).
 
 
-g) Matriz de Variâncias-Covariâncias do Estimador _Between_
+g) Estimator Variance-Covariance Matrix _Between_
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}}) = \hat{\sigma}^2_l (\boldsymbol{X}' B \boldsymbol{X})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 Vbhat_B = sig2l * solve( t(X) %*% B %*% X )
 Vbhat_B
 ```
@@ -2197,9 +2196,9 @@ Vbhat_B
 ```
 
 
-i) Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}})${{</math>}}
+i) Standard errors {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{B}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_bhat_B = sqrt( diag(Vbhat_B) )
@@ -2210,14 +2209,14 @@ se_bhat_B
 ## [1] 0.0038820321 0.0007490711
 ```
 
-j) Estatística _t_
+j) _t_ statistic
 
 {{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_bhat_B = bhat_B / se_bhat_B
 t_bhat_B
 ```
@@ -2228,13 +2227,13 @@ t_bhat_B
 ## [2,]  6.921555
 ```
 
-k) P-valor
+k) p-value
 
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_bhat_B = 2 * pt(-abs(t_bhat_B), N-K-1)
 p_bhat_B
 ```
@@ -2245,10 +2244,10 @@ p_bhat_B
 ## [2,] 7.012814e-11
 ```
 
-l) Tabela-resumo
+l) Summary table
 
 ```r
-data.frame(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # resultado Between
+data.frame(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # _Between_ result
 ```
 
 ```
@@ -2258,7 +2257,7 @@ data.frame(bhat_B, se_bhat_B, t_bhat_B, p_bhat_B) # resultado Between
 ```
 
 ```r
-summary(Q.between)$coef # resultado Between via plm()
+summary(Q.between)$coef # _Between_ result via plm()
 ```
 
 ```
@@ -2269,21 +2268,21 @@ summary(Q.between)$coef # resultado Between via plm()
 
 
 
-#### Transformando e estimando por OLS
-Além da forma mostrada anteriormente, podemos também transformar as variáveis e resolver por OLS, pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{B}${{</math>}}, e definindo:
+#### Transforming and Estimating by OLS
+In addition to the form shown above, we can transform the variables and solve by OLS after premultiplying {{<math>}}$\boldsymbol{X}${{</math>}} and {{<math>}}$\boldsymbol{y}${{</math>}} by {{<math>}}$\boldsymbol{B}${{</math>}}, defining:
 
-{{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{B} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{B} \boldsymbol{y}$${{</math>}}
+{{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{B} \boldsymbol{X} \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{B} \boldsymbol{y}$${{</math>}}
 
-c') Estimativas _between_ via OLS
+c') _Between_ estimates via OLS
 
 {{<math>}}$$ \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} = (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $${{</math>}}
 
 ```r
-# Transformando variáveis
+# Transforming the variables
 X_til = B %*% X
 y_til = B %*% y
 
-# Estimando
+# Estimating
 bhat_OLS = solve( t(X_til) %*% X_til ) %*% t(X_til) %*% y_til
 bhat_OLS
 ```
@@ -2294,7 +2293,7 @@ bhat_OLS
 ## [2,] 0.005184737
 ```
 
-d') Valores ajustados/preditos _OLS_
+d') Fitted values _OLS_
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} = \tilde{\boldsymbol{X}} \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -2303,7 +2302,7 @@ d') Valores ajustados/preditos _OLS_
 yhat_OLS = X_til %*% bhat_OLS
 ```
 
-e') Resíduos OLS
+e') Residuals OLS
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -2312,26 +2311,26 @@ e') Resíduos OLS
 ehat_OLS = y_til - yhat_OLS
 ```
 
-f') Variância do termo de erro
+f') Error-term variance
 
 {{<math>}}$$ \hat{\sigma}^2 \equiv  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{N - K - 1} $${{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2${{</math>}} is a scalar, it is convenient to convert the "1x1 matrix" into a number using `as.numeric()`: 
 
 ```r
-# Calculando variâncias dos termos de erro
+# Computing the error-term variances
 sig2hat = as.numeric( (t(ehat_OLS) %*% ehat_OLS) / (N - K - 1) )
 ```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _between_ para {{<math>}}$N - K - 1${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
+**IMPORTANT**: Adjust the degrees of freedom of the _between_ estimator to {{<math>}}$N - K - 1${{</math>}} (instead of {{<math>}}$NT - K - 1${{</math>}}).
 
 
-g) Matriz de Variâncias-Covariâncias do Estimador OLS
+g) Estimator Variance-Covariance Matrix OLS
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}) = \hat{\sigma}^2 (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 Vbhat_OLS = sig2hat * solve( t(X_til) %*% X_til )
 Vbhat_OLS
 ```
@@ -2343,9 +2342,9 @@ Vbhat_OLS
 ```
 
 
-i) Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}})${{</math>}}
+i) Standard errors {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_bhat_OLS = sqrt( diag(Vbhat_OLS) )
@@ -2356,14 +2355,14 @@ se_bhat_OLS
 ## [1] 0.0038820321 0.0007490711
 ```
 
-j) Estatística _t_
+j) _t_ statistic
 
 {{<math>}}$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_bhat_OLS = bhat_OLS / se_bhat_OLS
 t_bhat_OLS
 ```
@@ -2374,13 +2373,13 @@ t_bhat_OLS
 ## [2,]  6.921555
 ```
 
-k) P-valor
+k) p-value
 
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_bhat_OLS = 2 * pt(-abs(t_bhat_OLS), N-K-1)
 p_bhat_OLS
 ```
@@ -2391,10 +2390,10 @@ p_bhat_OLS
 ## [2,] 7.012814e-11
 ```
 
-l) Tabela-resumo
+l) Summary table
 
 ```r
-data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # resultado Between via OLS
+data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # _Between_ result via OLS
 ```
 
 ```
@@ -2404,7 +2403,7 @@ data.frame(bhat_OLS, se_bhat_OLS, t_bhat_OLS, p_bhat_OLS) # resultado Between vi
 ```
 
 ```r
-summary(Q.between)$coef # resultado Between via plm()
+summary(Q.between)$coef # _Between_ result via plm()
 ```
 
 ```
@@ -2416,34 +2415,34 @@ summary(Q.between)$coef # resultado Between via plm()
 
 </br>
 
-## Estimador _Within_ (Efeitos Fixos)
-- Também conhecido como estimador de **Efeitos Fixos**
-- **Não assume que {{<math>}}$E(u | X) = 0${{</math>}}**
-- Ou seja, flexibilizamos o modelo para **{{<math>}}$E(u | X) \neq ${{</math>}} constante**
-- Avalia desvios em relação às médias individuais
+## _Within_ Estimator (Fixed Effects)
+- Also known as the **fixed-effects estimator**
+- **It does not assume that {{<math>}}$E(u \mid X) = 0${{</math>}}**
+- In other words, it allows the individual effect to be correlated with the regressors.
+- It works with deviations from individual means.
 
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$\boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B}${{</math>}}:
+The model to be estimated is OLS premultiplied by {{<math>}}$\boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B}${{</math>}}:
 {{<math>}}$$ \boldsymbol{Wy}\ =\ \boldsymbol{WX\beta} + \boldsymbol{W\varepsilon}\ =\ \boldsymbol{WX}^* \boldsymbol{\beta} + \boldsymbol{Wv}. $${{</math>}}
-Note que a transformação _within_ remove as variáveis invariantes no tempo, a coluna de 1's e o termo de erro individual {{<math>}}$u${{</math>}} (sobrando apenas {{<math>}}$\varepsilon = v${{</math>}}).
+Note that the _within_ transformation removes time-invariant variables, the intercept, and the individual effect {{<math>}}$u${{</math>}}, leaving only the idiosyncratic error {{<math>}}$\varepsilon = v${{</math>}}.
 
-- O estimador _within_ é dado por
+- The _within_ estimator is given by
 {{<math>}}$$ \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}}\ =\ (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{X}^{*} )^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 
 
-- A matriz de covariâncias do estimador pode ser obtida usando
+- The covariance matrix of the estimator can be written as
 {{<math>}}\begin{align}
     V(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}}) &= (\boldsymbol{X}^{*\prime}\boldsymbol{WX}^*)^{-1} \boldsymbol{X}' \boldsymbol{W}\boldsymbol{\Sigma} \boldsymbol{W} \boldsymbol{X} (\boldsymbol{X}^{*\prime}\boldsymbol{WX}^*)^{-1} \\
     &\ \ \vdots \\
     &= \sigma^2_v (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{X}^{*})^{-1}.
 \end{align}{{</math>}}
 
-- O estimador não-viesado de {{<math>}}$\sigma^2_v${{</math>}} é
+- The unbiased estimator of {{<math>}}$\sigma^2_v${{</math>}} is
 {{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{NT-K-N} $${{</math>}}
 
-- O estimador _within_ também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz _within_ {{<math>}}$(\boldsymbol{W})${{</math>}}:
-{{<math>}}$$ \tilde{\boldsymbol{X}}^* \equiv \boldsymbol{WX}^* \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{Wy} $${{</math>}} 
+- The _within_ estimator can also be obtained by OLS after premultiplying the variables by the _within_ matrix {{<math>}}$(\boldsymbol{W})${{</math>}}:
+{{<math>}}$$ \tilde{\boldsymbol{X}}^* \equiv \boldsymbol{WX}^* \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{Wy} $${{</math>}}
 
-Então
+Then
 
 {{<math>}}\begin{align} \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}} &= (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{X}^{*} )^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{y} \\
 &= (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{W} \boldsymbol{X}^{*} )^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{W} \boldsymbol{y} \\
@@ -2451,15 +2450,15 @@ Então
 &= ([\boldsymbol{W} \boldsymbol{X}^{*}]' \boldsymbol{W} \boldsymbol{X}^{*} )^{-1} [\boldsymbol{W} \boldsymbol{X}^{*}]' \boldsymbol{W} \boldsymbol{y} \\
 &\equiv ( \tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{X}^{*}} )^{-1} \tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{y}} = \tilde{\hat{\boldsymbol{\delta}}}_{\scriptscriptstyle{OLS}} \end{align}{{</math>}}
 
-Note que usamos:
-{{<math>}}$$ \boldsymbol{W} = \boldsymbol{W}\boldsymbol{W} \qquad \text{e} \qquad \boldsymbol{W}=\boldsymbol{W}' $${{</math>}}
+Note that we use:
+{{<math>}}$$ \boldsymbol{W} = \boldsymbol{W}\boldsymbol{W} \qquad \text{and} \qquad \boldsymbol{W}=\boldsymbol{W}' $${{</math>}}
 
 
 <!-- ```{r} -->
 <!-- # Example N = 2 e T = 3 -->
 <!-- N = 2 -->
 <!-- T = 3 -->
-<!-- I_NT = diag(N*T) # Matriz identidade de dimensão N -->
+<!-- I_NT = diag(N*T) # identity matrix of dimension N -->
 <!-- W = I_NT - B -->
 
 <!-- W # matriz within -->
@@ -2468,20 +2467,20 @@ Note que usamos:
 <!-- ``` -->
 
 
-### Estimação via `plm()`
-Novamente, usaremos a base de dados `TobinQ` do pacote `pder` e queremos estimar o seguinte modelo:
+### Estimation via `plm()`
+Again, we use the `TobinQ` dataset from the `pder` package and estimate the following model:
 {{<math>}}$$ \text{ikn} = \beta_0 + \text{qn} \beta + \varepsilon $${{</math>}}
 
 
 ```r
-# Carregando pacote e base de dados necessários
+# Loading the required package and dataset
 library(plm)
 data(TobinQ, package="pder")
 
-# Transformando no formato pdata frame, com indentificador de individual e de tempo
+# Converting to `pdata.frame` format with individual and time identifiers
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Comparando as estimativas
+# Comparing the estimates
 Q.within = plm(ikn ~ qn, pTobinQ, model = "within")
 summary(Q.within)
 ```
@@ -2510,9 +2509,9 @@ summary(Q.within)
 ## Adj. R-Squared: 0.042833
 ## F-statistic: 482.412 on 1 and 6391 DF, p-value: < 2.22e-16
 ```
-- Observe que:
-    - as variáveis entram na estimação sem nenhuma transformação e
-    - cada método possui diferentes graus de liberdade
+- Note that:
+    - the variables enter the estimation without any manual transformation; and
+    - each method has different degrees of freedom.
 
 
 <!-- ### Estimação via lm() -->
@@ -2535,7 +2534,7 @@ summary(Q.within)
 <!-- # Estimação within via lm() -->
 <!-- Q.within.ols = lm(ikn_desv ~ 0 + qn_desv, TobinQ) # retira intercepto com 0 -->
 
-<!-- # Comparando as estimativas -->
+<!-- # Comparing the estimates -->
 <!-- summary(Q.within.ols)$coef # within via OLS -->
 <!-- summary(Q.within)$coef # within ajustando graus de liberdade -->
 <!-- ``` -->
@@ -2558,43 +2557,43 @@ summary(Q.within)
 
 
 
-### Estimação Analítica
+### Analytical Estimation
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
 
 ```r
 data("TobinQ", package="pder")
 
-# Criando o vetor y
-y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+# Creating the y vector
+y = as.matrix(TobinQ[,"ikn"]) # converting the data frame column into a matrix
 
-# Criando a matriz/vetor de covariates variantes no tempo Xt
-Xt = as.matrix( TobinQ[, "qn"] ) # não junta com coluna de 1's
+# Creating the matrix/vector Xt of time-varying covariates
+Xt = as.matrix( TobinQ[, "qn"] ) # no intercept column is added
 
-# Pegando valores N, T e K
+# Retrieving N, T, and K
 N = length( unique(TobinQ$cusip) )
 T = length( unique(TobinQ$year) )
-K = ncol(Xt) # não subtrai 1
+K = ncol(Xt) # no intercept is subtracted
 ```
 
 
 b) Calculando as matrizes _between_ e _within_
 
-{{<math>}}$$ \boldsymbol{B} = \boldsymbol{I}_{N} \otimes \left[ \boldsymbol{\iota}_T \left( \boldsymbol{\iota}'_T \boldsymbol{\iota}_T  \right)^{-1} \boldsymbol{\iota}'_T \right] \qquad \text{e} \qquad \boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B} $${{</math>}}
+{{<math>}}$$ \boldsymbol{B} = \boldsymbol{I}_{N} \otimes \left[ \boldsymbol{\iota}_T \left( \boldsymbol{\iota}'_T \boldsymbol{\iota}_T  \right)^{-1} \boldsymbol{\iota}'_T \right] \qquad \text{and} \qquad \boldsymbol{W} = \boldsymbol{I}_{NT} - \boldsymbol{B} $${{</math>}}
 
 
 ```r
-# Criando matrizes between
-iota_T = matrix(1, T, 1) # vetor coluna de 1's de tamanho T
-I_N = diag(N) # matriz identidade de tamanho N
-I_NT = diag(N*T) # matriz identidade de tamanho NT
+# Creating the between matrix
+iota_T = matrix(1, T, 1) # column vector of 1s of length T
+I_N = diag(N) # identity matrix of size N
+I_NT = diag(N*T) # identity matrix of size NT
 
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = I_NT - B
 ```
 
 
-c) Estimativas _Within_ {{<math>}}$\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}}${{</math>}}
+c) _Within_ estimates {{<math>}}$\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}} = (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{X}^{*})^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 
@@ -2608,7 +2607,7 @@ dhat_W
 ## [1,] 0.003791948
 ```
 
-d) Valores ajustados/preditos _Within_ {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{W}}${{</math>}}
+d) Fitted values _Within_ {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{W}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{W}} = \boldsymbol{X}^{*} \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}} $${{</math>}}
 
@@ -2618,7 +2617,7 @@ yhat_W = Xt %*% dhat_W
 ```
 
 
-e) Resíduos _Within_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}${{</math>}}
+e) Residuals _Within_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{W}} $${{</math>}}
 
@@ -2627,26 +2626,26 @@ e) Resíduos _Within_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptst
 ehat_W = y - yhat_W
 ```
 
-f) Variância do termo de erro
+f) Error-term variance
 
 {{<math>}}$$ \hat{\sigma}^2_v =  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{W}}}{NT - K - N} $${{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2_v${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2_v${{</math>}} is a scalar, it is convenient to convert the "1x1 matrix" into a number using `as.numeric()`: 
 
 ```r
-# Calculando variâncias dos termos de erro
+# Computing the error-term variances
 sig2v = as.numeric( (t(ehat_W) %*% W %*% ehat_W) / (N*T - K - N) )
 ```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _within_ para {{<math>}}$NT - K - N${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
+**IMPORTANT**: Adjust the degrees of freedom of the _within_ estimator to {{<math>}}$NT - K - N${{</math>}} (instead of {{<math>}}$NT - K - 1${{</math>}}).
 
 
-g) Matriz de Variâncias-Covariâncias do Estimador _Within_
+g) Estimator Variance-Covariance Matrix _Within_
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}}) = \hat{\sigma}^2_v (\boldsymbol{X}^{*\prime} \boldsymbol{W} \boldsymbol{X}^{*})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 Vdhat_W = sig2v * solve( t(Xt) %*% W %*% Xt )
 Vdhat_W
 ```
@@ -2657,9 +2656,9 @@ Vdhat_W
 ```
 
 
-i) Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}})${{</math>}}
+i) Standard errors {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{W}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_dhat_W = sqrt( diag(Vdhat_W) )
@@ -2670,14 +2669,14 @@ se_dhat_W
 ## [1] 0.0001726447
 ```
 
-j) Estatística _t_
+j) _t_ statistic
 
 {{<math>}}$$ t_{\hat{\delta}_k} = \frac{\hat{\delta}_k}{\text{se}(\hat{\delta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_dhat_W = dhat_W / se_dhat_W
 t_dhat_W
 ```
@@ -2687,13 +2686,13 @@ t_dhat_W
 ## [1,] 21.96388
 ```
 
-k) P-valor
+k) p-value
 
 {{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_dhat_W = 2 * pt(-abs(t_dhat_W), N*T-K-N)
 p_dhat_W
 ```
@@ -2703,10 +2702,10 @@ p_dhat_W
 ## [1,] 3.854128e-103
 ```
 
-l) Tabela-resumo
+l) Summary table
 
 ```r
-cbind(dhat_W, se_dhat_W, t_dhat_W, p_dhat_W) # resultado Within
+cbind(dhat_W, se_dhat_W, t_dhat_W, p_dhat_W) # _Within_ result
 ```
 
 ```
@@ -2715,7 +2714,7 @@ cbind(dhat_W, se_dhat_W, t_dhat_W, p_dhat_W) # resultado Within
 ```
 
 ```r
-summary(Q.within)$coef # resultado Within via plm()
+summary(Q.within)$coef # _Within_ result via plm()
 ```
 
 ```
@@ -2725,21 +2724,21 @@ summary(Q.within)$coef # resultado Within via plm()
 
 
 
-#### Transformando e estimando por OLS
-Além da forma mostrada anteriormente, podemos também transformar as variáveis e resolver por OLS, pré-multiplicando {{<math>}}$\boldsymbol{X}^{*}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}${{</math>}}, e definindo:
+#### Transforming and Estimating by OLS
+In addition to the form shown above, we can transform the variables and solve by OLS after premultiplying {{<math>}}$\boldsymbol{X}^{*}${{</math>}} and {{<math>}}$\boldsymbol{y}${{</math>}} by {{<math>}}$\boldsymbol{W}${{</math>}}, defining:
 
-{{<math>}}$$\tilde{\boldsymbol{X}^{*}} \equiv \boldsymbol{W} \boldsymbol{X}^{*} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W} \boldsymbol{y}$${{</math>}}
+{{<math>}}$$\tilde{\boldsymbol{X}^{*}} \equiv \boldsymbol{W} \boldsymbol{X}^{*} \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W} \boldsymbol{y}$${{</math>}}
 
-c') Estimativas _within_ via OLS
+c') _Within_ estimates via OLS
 
 {{<math>}}$$ \tilde{\hat{\boldsymbol{\delta}}}_{\scriptscriptstyle{OLS}} = (\tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{X}^{*}})^{-1} \tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{y}} $${{</math>}}
 
 ```r
-# Transformando variáveis
+# Transforming the variables
 Xt_til = W %*% Xt
 y_til = W %*% y
 
-# Estimando
+# Estimating
 dhat_OLS = solve( t(Xt_til) %*% Xt_til ) %*% t(Xt_til) %*% y_til
 dhat_OLS
 ```
@@ -2749,7 +2748,7 @@ dhat_OLS
 ## [1,] 0.003791948
 ```
 
-d') Valores ajustados/preditos _OLS_
+d') Fitted values _OLS_
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} = \tilde{\boldsymbol{X}^{*}} \tilde{\hat{\boldsymbol{\delta}}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -2758,7 +2757,7 @@ d') Valores ajustados/preditos _OLS_
 yhat_OLS = Xt_til %*% dhat_OLS
 ```
 
-e') Resíduos OLS
+e') Residuals OLS
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -2767,26 +2766,26 @@ e') Resíduos OLS
 ehat_OLS = y_til - yhat_OLS
 ```
 
-f') Variância do termo de erro
+f') Error-term variance
 
 {{<math>}}$$ \hat{\sigma}^2 \equiv  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{NT - K - N} $${{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2${{</math>}} is a scalar, it is convenient to convert the "1x1 matrix" into a number using `as.numeric()`: 
 
 ```r
-# Calculando variâncias dos termos de erro
+# Computing the error-term variances
 sig2hat = as.numeric( (t(ehat_OLS) %*% ehat_OLS) / (N*T - K - N) )
 ```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _within_ para {{<math>}}$NT - K - N${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
+**IMPORTANT**: Adjust the degrees of freedom of the _within_ estimator to {{<math>}}$NT - K - N${{</math>}} (instead of {{<math>}}$NT - K - 1${{</math>}}).
 
 
-g') Matriz de Variâncias-Covariâncias do Estimador OLS
+g') Estimator Variance-Covariance Matrix OLS
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{OLS}}) = \hat{\sigma}^2 (\tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{X}^{*}})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 Vdhat_OLS = sig2hat * solve( t(Xt_til) %*% Xt_til )
 Vdhat_OLS
 ```
@@ -2797,9 +2796,9 @@ Vdhat_OLS
 ```
 
 
-h') Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{OLS}})${{</math>}}
+h') Standard errors {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{OLS}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_dhat_OLS = sqrt( diag(Vdhat_OLS) )
@@ -2810,14 +2809,14 @@ se_dhat_OLS
 ## [1] 0.0001726447
 ```
 
-i') Estatística _t_
+i') _t_ statistic
 
 {{<math>}}$$ t_{\hat{\delta}_k} = \frac{\hat{\delta}_k}{\text{se}(\hat{\delta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_dhat_OLS = dhat_OLS / se_dhat_OLS
 t_dhat_OLS
 ```
@@ -2827,13 +2826,13 @@ t_dhat_OLS
 ## [1,] 21.96388
 ```
 
-j') P-valor
+j') p-value
 
 {{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_dhat_OLS = 2 * pt(-abs(t_dhat_OLS), N*T-K-N)
 p_dhat_OLS
 ```
@@ -2843,10 +2842,10 @@ p_dhat_OLS
 ## [1,] 3.854128e-103
 ```
 
-k') Tabela-resumo
+k') Summary table
 
 ```r
-cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # resultado Within via OLS
+cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # _Within_ result via OLS
 ```
 
 ```
@@ -2855,7 +2854,7 @@ cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # resultado Within via OLS
 ```
 
 ```r
-summary(Q.within)$coef # resultado Within via plm()
+summary(Q.within)$coef # _Within_ result via plm()
 ```
 
 ```
@@ -2865,16 +2864,16 @@ summary(Q.within)$coef # resultado Within via plm()
 
 
 
-### Efeitos Fixos do _Within_
-- Para o estimador _within_, podemos usar a função `fixef()` para computar os efeitos individuais. É possível visualizar os efeitos fixos de três formas por meio do argumento `type`:
-    - `level`: valor padrão que retorna os interceptos individuais
+### Fixed Effects from the _Within_ Estimator
+- For the _within_ estimator, we can use `fixef()` to compute individual effects. The `type` argument lets us report these fixed effects in three ways:
+    - `level`: the default option, which returns the individual intercepts
     - `dfirst`: em desvios do 1º individual
-    - `dmean`: em desvios da média de efeitos individuais
+    - `dmean`: deviations from the mean individual effect
 
 
 ```r
-# 6 primeiros efeitos individuais de cada tipo
-head( fixef(Q.within, type="level") ) # 6 primeiros valores em nível
+# first 6 individual effects of each type
+head( fixef(Q.within, type="level") ) # first 6 level values
 ```
 
 ```
@@ -2883,7 +2882,7 @@ head( fixef(Q.within, type="level") ) # 6 primeiros valores em nível
 ```
 
 ```r
-head( fixef(Q.within, type="dfirst") ) # 6 primeiros valores em relação ao 1º indiv.
+head( fixef(Q.within, type="dfirst") ) # first 6 values relative to the first individual
 ```
 
 ```
@@ -2892,24 +2891,24 @@ head( fixef(Q.within, type="dfirst") ) # 6 primeiros valores em relação ao 1º
 ```
 
 ```r
-head( fixef(Q.within, type="dmean") ) # 6 primeiros valores em desvios da média
+head( fixef(Q.within, type="dmean") ) # first 6 values as deviations from the mean
 ```
 
 ```
 ##         2824         6284         9158        13716        17372        19411 
 ## -0.014213401 -0.031448285  0.098580596 -0.049491991 -0.032777823  0.009986116
 ```
-- Note que, como o `dfirst` retorna valores em relação ao 1º individual e, portanto, este não aparece no output do `fixef()`.
-- No caso linear, o estimador _within_ é equivalente à estimação por OLS com inclusão de dummies para cada individual (efeitos fixos dos individuals):
+- Because `dfirst` reports effects relative to the first individual, that individual does not appear in the `fixef()` output.
+- In the linear case, the _within_ estimator is equivalent to OLS with a dummy for each individual (individual fixed effects):
 
 ```r
-# Estimando OLS com dummies individuais - factor() tranforma cusip em var. categ.
+# Estimating OLS with individual dummies - `factor()` turns `cusip` into a categorical variable
 Q.dummies1 = lm(ikn ~ 0 + qn + factor(cusip), TobinQ)
 
-# Comparando as estimativas de qn e efeitos individuais
+# Comparing the `qn` coefficient and individual effects
 cbind(
   Q.dummies1$coef[1:7], # coef OLS incluindo dummies
-  c(Q.within$coef, fixef(Q.within, type="level")[1:6]) # coef within + 6 efeitos fixos
+  c(Q.within$coef, fixef(Q.within, type="level")[1:6]) # within coefficient + 6 fixed effects
 )
 ```
 
@@ -2924,18 +2923,18 @@ cbind(
 ## factor(cusip)19411 0.169489071 0.169489071
 ```
 
-- Se estimássemos o OLS com efeitos fixos usando um intercepto, o intercepto seria o valor do efeito fixo do 1º individual e os valores dos efeitos fixos dos demais individuals seriam em relação a este.
-  - A dummy do 1º individual seria retirado para não haver multicolinearidade perfeita
+- If we estimated OLS with fixed effects and an intercept, the intercept would correspond to the fixed effect of the first individual, and all other fixed effects would be measured relative to it.
+  - The dummy for the first individual would be omitted to avoid perfect multicollinearity.
 
 
 ```r
-# Estimando OLS com dummies individuais - factor() tranforma cusip em var. categ.
+# Estimating OLS with individual dummies - `factor()` turns `cusip` into a categorical variable
 Q.dummies2 = lm(ikn ~ qn + factor(cusip), TobinQ)
 
-# Comparando as estimativas de qn e efeitos individuais
+# Comparing the `qn` coefficient and individual effects
 cbind(
   Q.dummies2$coef[1:7], # coef OLS incluindo dummies
-  c(NA, Q.within$coef, fixef(Q.within, type="dfirst")[1:5]) # coef within + 6 efeitos fixos
+  c(NA, Q.within$coef, fixef(Q.within, type="dfirst")[1:5]) # within coefficient + 6 fixed effects
 )
 ```
 
@@ -2953,59 +2952,59 @@ cbind(
 
 </br>
 
-## Estimador de Primeiras-Diferenças
+## First-Difference Estimator
 
-- **Não assume que {{<math>}}$E(u | X) = 0${{</math>}}**
-- Ou seja, flexibilizamos o modelo para **{{<math>}}$E(u | X) \neq ${{</math>}} constante**
-- Avalia as variações de uma observation em relação à observation do period imediatamente seguinte
+- **It does not assume that {{<math>}}$E(u \mid X) = 0${{</math>}}**
+- In other words, it allows the individual effect to be correlated with the regressors.
+- It uses changes in an observation relative to the immediately preceding period.
 
-O modelo a ser estimado é o OLS pré-multiplicado por {{<math>}}$\boldsymbol{D}${{</math>}}:
+The model to be estimated is OLS premultiplied by {{<math>}}$\boldsymbol{D}${{</math>}}:
 {{<math>}}$$ \boldsymbol{Dy}\ =\ \boldsymbol{DX\beta} + \boldsymbol{D\varepsilon}\ =\ \boldsymbol{DX}^* \boldsymbol{\delta} + \boldsymbol{Dv}. $${{</math>}}
-Note que a transformação de primeiras-diferenças remove as variáveis invariantes no tempo, a coluna de 1's e o termo de erro individual {{<math>}}$\boldsymbol{u}${{</math>}} (sobrando apenas {{<math>}}$\boldsymbol{\varepsilon} = \boldsymbol{v}${{</math>}}).
+Note that first differencing removes time-invariant variables, the intercept, and the individual effect {{<math>}}$\boldsymbol{u}${{</math>}}, leaving only {{<math>}}$\boldsymbol{\varepsilon} = \boldsymbol{v}${{</math>}}.
 
-- O estimador de primeiras-diferenças é dado por
+- The first-difference estimator is given by
 {{<math>}}$$ \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}}\ =\ (\boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^{*} )^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{y} $${{</math>}}
 
-- O estimador não-viesado de {{<math>}}$\sigma^2_v${{</math>}} é
+- The unbiased estimator of {{<math>}}$\sigma^2_v${{</math>}} is
 {{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{D}' \boldsymbol{D} \hat{\boldsymbol{\varepsilon}}}{NT-K-N} $${{</math>}}
 
 
-- A matriz de covariâncias do estimador pode ser obtida usando
-{{<math>}}$$`
+- The covariance matrix of the estimator can be written as
+{{<math>}}$$
     V(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}}) = \sigma^2_v \Big[  (\boldsymbol{X}^{*\prime}  \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^*)^{-1} \boldsymbol{X}' \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X} (\boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^*)^{-1} \Big]
-`$${{</math>}}
+$${{</math>}}
 
-- O estimador de primeiras-diferenças também pode ser estimado por OLS, transformando as variáveis por pré-multiplicação da matriz primeiras-diferenças {{<math>}}$(\boldsymbol{D})${{</math>}}:
-{{<math>}}$$ \tilde{\boldsymbol{X}}^* \equiv \boldsymbol{DX}^* \qquad \text{ e } \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{Dy} $${{</math>}} 
+- The first-difference estimator can also be obtained by OLS after premultiplying the variables by the first-difference matrix {{<math>}}$(\boldsymbol{D})${{</math>}}:
+{{<math>}}$$ \tilde{\boldsymbol{X}}^* \equiv \boldsymbol{DX}^* \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{Dy} $${{</math>}}
 
-Então
+Then
 
 {{<math>}}\begin{align} \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}} &= (\boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^{*} )^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{y} \\
 &= ([\boldsymbol{D} \boldsymbol{X}^{*}]' \boldsymbol{D} \boldsymbol{X}^{*} )^{-1} [\boldsymbol{D} \boldsymbol{X}^{*}]' \boldsymbol{D} \boldsymbol{y} \\
 &\equiv ( \tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{X}^{*}} )^{-1} \tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{y}} = \tilde{\hat{\boldsymbol{\delta}}}_{\scriptscriptstyle{OLS}} \end{align}{{</math>}}
 
-Note que {{<math>}}$\boldsymbol{D}${{</math>}} não é uma matriz quadrada como as demais matrizes de transformação e, portanto:
-{{<math>}}$$ \boldsymbol{D} \neq \boldsymbol{D}\boldsymbol{D} \qquad \text{e} \qquad \boldsymbol{D} \neq \boldsymbol{D}' $${{</math>}}
+Note that {{<math>}}$\boldsymbol{D}${{</math>}} is not square, unlike the other transformation matrices, and therefore:
+{{<math>}}$$ \boldsymbol{D} \neq \boldsymbol{D}\boldsymbol{D} \qquad \text{and} \qquad \boldsymbol{D} \neq \boldsymbol{D}' $${{</math>}}
 
 
-### Estimação via `plm()`
-Novamente, usaremos a base de dados `TobinQ` do pacote `pder` e queremos estimar o seguinte modelo:
+### Estimation via `plm()`
+Again, we use the `TobinQ` dataset from the `pder` package and estimate the following model:
 {{<math>}}$$ \text{ikn} = \beta_0 + \text{qn} \beta + \varepsilon $${{</math>}}
 
 
 ```r
-# Carregando pacote e base de dados necessários
+# Loading the required package and dataset
 library(plm)
 data(TobinQ, package="pder")
 
-# Transformando no formato pdata frame, com indentificador de individual e de tempo
+# Converting to `pdata.frame` format with individual and time identifiers
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimações
-Q.fd = plm(ikn ~ 0 + qn, pTobinQ, model = "fd") # estimação primeiras-diferenças
-Q.within = plm(ikn ~ qn, pTobinQ, model = "within") # estimação within
+# Estimations
+Q.fd = plm(ikn ~ 0 + qn, pTobinQ, model = "fd") # first-difference estimation
+Q.within = plm(ikn ~ qn, pTobinQ, model = "within") # within estimation
 
-# Comparando as estimativas
+# Comparing the estimates
 stargazer::stargazer(Q.fd, Q.within, type="text")
 ```
 
@@ -3028,9 +3027,9 @@ stargazer::stargazer(Q.fd, Q.within, type="text")
 ## =======================================================
 ## Note:                       *p<0.1; **p<0.05; ***p<0.01
 ```
-- Observe que:
-    - as variáveis entram na estimação sem nenhuma transformação e
-    - ambos métodos possuem mesmos graus de liberdade
+- Note that:
+    - the variables enter the estimation without any manual transformation; and
+    - both methods have the same degrees of freedom.
 
 
 <!-- ### Estimação via lm() -->
@@ -3053,7 +3052,7 @@ stargazer::stargazer(Q.fd, Q.within, type="text")
 <!-- # Estimação within via lm() -->
 <!-- Q.within.ols = lm(ikn_desv ~ 0 + qn_desv, TobinQ) # retira intercepto com 0 -->
 
-<!-- # Comparando as estimativas -->
+<!-- # Comparing the estimates -->
 <!-- summary(Q.within.ols)$coef # within via OLS -->
 <!-- summary(Q.within)$coef # within ajustando graus de liberdade -->
 <!-- ``` -->
@@ -3075,27 +3074,27 @@ stargazer::stargazer(Q.fd, Q.within, type="text")
 <!-- ``` -->
 
 
-### Estimação Analítica
+### Analytical Estimation
 
 a) Criando vetores/matrizes e definindo _N_, _T_ e _K_
 
 ```r
 data("TobinQ", package="pder")
 
-# Criando o vetor y
-y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+# Creating the y vector
+y = as.matrix(TobinQ[,"ikn"]) # converting the data frame column into a matrix
 
-# Criando a matriz/vetor de covariates variantes no tempo Xt
-Xt = as.matrix( TobinQ[, "qn"] ) # não junta com coluna de 1's
+# Creating the matrix/vector Xt of time-varying covariates
+Xt = as.matrix( TobinQ[, "qn"] ) # no intercept column is added
 
-# Pegando valores N, T e K
+# Retrieving N, T, and K
 N = length( unique(TobinQ$cusip) )
 T = length( unique(TobinQ$year) )
-K = ncol(Xt) # não subtrai 1
+K = ncol(Xt) # no intercept is subtracted
 ```
 
 
-b) Calculando a matrizes de primeiras diferenças
+b) Computing the first-difference matrices
 
 {{<math>}}$$\boldsymbol{D} = \boldsymbol{I}_N \otimes \boldsymbol{D}_i $${{</math>}}
 em que
@@ -3108,16 +3107,16 @@ em que
 
 
 ```r
-Di = -diag(T) # diagonal -1
-diag(Di[-nrow(Di),-1]) = 1 # supradiagonal
-Di = Di[-nrow(Di),] # retira última linha
+Di = -diag(T) # main diagonal set to -1
+diag(Di[-nrow(Di),-1]) = 1 # superdiagonal
+Di = Di[-nrow(Di),] # dropping the last row
 
-I_N = diag(N) # matriz identidade de tamanho N
+I_N = diag(N) # identity matrix of size N
 D = I_N %x% Di
 ```
 
 
-c) Estimativas  de Primeiras-Diferenças {{<math>}}$\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}}${{</math>}}
+c) First-difference estimates {{<math>}}$\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}} = (\boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^{*})^{-1} \boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{y} $${{</math>}}
 
@@ -3131,7 +3130,7 @@ dhat_FD
 ## [1,] 0.004012382
 ```
 
-d) Valores ajustados/preditos de Primeiras-Diferenças {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{FD}}${{</math>}}
+d) First-difference fitted values {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{FD}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{FD}} = \boldsymbol{X}^{*} \hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}} $${{</math>}}
 
@@ -3141,7 +3140,7 @@ yhat_FD = Xt %*% dhat_FD
 ```
 
 
-e) Resíduos de Primeiras-Diferenças {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{FD}}${{</math>}}
+e) First-difference residuals {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{FD}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{FD}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{FD}} $${{</math>}}
 
@@ -3151,14 +3150,14 @@ ehat_FD = y - yhat_FD
 ```
 
 
-f) Variância do termo de erro
+f) Error-term variance
 
 {{<math>}}$$ \hat{\sigma}^2_v = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{D}' \boldsymbol{D} \hat{\boldsymbol{\varepsilon}}}{NT-K-N} $${{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2_v${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2_v${{</math>}} is a scalar, it is convenient to convert the "1x1 matrix" into a number using `as.numeric()`: 
 
 ```r
-# Calculando variâncias dos termos de erro
+# Computing the error-term variances
 sig2v = as.numeric( (t(ehat_FD) %*% t(D) %*% D %*% ehat_FD) / (N*T - K - N) )
 sig2v
 ```
@@ -3166,18 +3165,18 @@ sig2v
 ```
 ## [1] 0.006167647
 ```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _within_ para {{<math>}}$NT - K - N${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
+**IMPORTANT**: Adjust the degrees of freedom of the _within_ estimator to {{<math>}}$NT - K - N${{</math>}} (instead of {{<math>}}$NT - K - 1${{</math>}}).
 
 
-g) Matriz de Variâncias-Covariâncias do Estimador _Within_
+g) Estimator Variance-Covariance Matrix _Within_
 
-{{<math>}}$$`
+{{<math>}}$$
     V(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}}) = \sigma^2_v \Big[  (\boldsymbol{X}^{*\prime}  \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^*)^{-1} \boldsymbol{X}' \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X} (\boldsymbol{X}^{*\prime} \boldsymbol{D}' \boldsymbol{D} \boldsymbol{X}^*)^{-1} \Big]
-`$${{</math>}}
+$${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 bread = solve( t(Xt) %*% t(D) %*% D %*% Xt )
 meat = t(Xt) %*% t(D) %*% D %*% Xt
 Vdhat_FD = sig2v * (bread %*% meat %*% bread) # sandwich
@@ -3190,9 +3189,9 @@ Vdhat_FD
 ```
 
 
-i) Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}})${{</math>}}
+i) Standard errors {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{FD}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_dhat_FD = sqrt( diag(Vdhat_FD) )
@@ -3203,14 +3202,14 @@ se_dhat_FD
 ## [1] 0.0003068216
 ```
 
-j) Estatística _t_
+j) _t_ statistic
 
 {{<math>}}$$ t_{\hat{\delta}_k} = \frac{\hat{\delta}_k}{\text{se}(\hat{\delta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_dhat_FD = dhat_FD / se_dhat_FD
 t_dhat_FD
 ```
@@ -3220,13 +3219,13 @@ t_dhat_FD
 ## [1,] 13.07725
 ```
 
-k) P-valor
+k) p-value
 
 {{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_dhat_FD = 2 * pt(-abs(t_dhat_FD), N*T-K-N)
 p_dhat_FD
 ```
@@ -3236,10 +3235,10 @@ p_dhat_FD
 ## [1,] 1.385139e-38
 ```
 
-l) Tabela-resumo
+l) Summary table
 
 ```r
-cbind(dhat_FD, se_dhat_FD, t_dhat_FD, p_dhat_FD) # resultado Within
+cbind(dhat_FD, se_dhat_FD, t_dhat_FD, p_dhat_FD) # _Within_ result
 ```
 
 ```
@@ -3248,7 +3247,7 @@ cbind(dhat_FD, se_dhat_FD, t_dhat_FD, p_dhat_FD) # resultado Within
 ```
 
 ```r
-summary(Q.fd)$coef # resultado Within via plm()
+summary(Q.fd)$coef # _Within_ result via plm()
 ```
 
 ```
@@ -3258,21 +3257,21 @@ summary(Q.fd)$coef # resultado Within via plm()
 
 
 
-#### Transformando e estimando por OLS
-Além da forma mostrada anteriormente, podemos também transformar as variáveis e resolver por OLS, pré-multiplicando {{<math>}}$\boldsymbol{X}^{*}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{D}${{</math>}}, e definindo:
+#### Transforming and Estimating by OLS
+In addition to the form shown above, we can transform the variables and solve by OLS after premultiplying {{<math>}}$\boldsymbol{X}^{*}${{</math>}} and {{<math>}}$\boldsymbol{y}${{</math>}} by {{<math>}}$\boldsymbol{D}${{</math>}}, defining:
 
-{{<math>}}$$\tilde{\boldsymbol{X}^{*}} \equiv \boldsymbol{D} \boldsymbol{X}^{*} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{D} \boldsymbol{y}$${{</math>}}
+{{<math>}}$$\tilde{\boldsymbol{X}^{*}} \equiv \boldsymbol{D} \boldsymbol{X}^{*} \qquad \text{and} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{D} \boldsymbol{y}$${{</math>}}
 
-c') Estimativas _within_ via OLS
+c') First-difference estimates via OLS
 
 {{<math>}}$$ \tilde{\hat{\boldsymbol{\delta}}}_{\scriptscriptstyle{OLS}} = (\tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{X}^{*}})^{-1} \tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{y}} $${{</math>}}
 
 ```r
-# Transformando variáveis
+# Transforming the variables
 Xt_til = D %*% Xt
 y_til = D %*% y
 
-# Estimando
+# Estimating
 dhat_OLS = solve( t(Xt_til) %*% Xt_til ) %*% t(Xt_til) %*% y_til
 dhat_OLS
 ```
@@ -3282,7 +3281,7 @@ dhat_OLS
 ## [1,] 0.004012382
 ```
 
-d') Valores ajustados/preditos _OLS_
+d') Fitted values _OLS_
 
 {{<math>}}$$ \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} = \tilde{\boldsymbol{X}^{*}} \tilde{\hat{\boldsymbol{\delta}}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -3291,7 +3290,7 @@ d') Valores ajustados/preditos _OLS_
 yhat_OLS = Xt_til %*% dhat_OLS
 ```
 
-e') Resíduos OLS
+e') Residuals OLS
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}} = \boldsymbol{y} - \hat{\boldsymbol{y}}_{\scriptscriptstyle{OLS}} $${{</math>}}
 
@@ -3300,26 +3299,26 @@ e') Resíduos OLS
 ehat_OLS = y_til - yhat_OLS
 ```
 
-f') Variância do termo de erro
+f') Error-term variance
 
 {{<math>}}$$ \hat{\sigma}^2 \equiv  \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}}{NT - K - N} $${{</math>}}
 
-Como {{<math>}}$\hat{\sigma}^2${{</math>}} é escalar, é conveniente transformar em "matriz 1x1" em número usando `as.numeric()`:
+Because {{<math>}}$\hat{\sigma}^2${{</math>}} is a scalar, it is convenient to convert the "1x1 matrix" into a number using `as.numeric()`: 
 
 ```r
-# Calculando variâncias dos termos de erro
+# Computing the error-term variances
 sig2hat = as.numeric( (t(ehat_OLS) %*% ehat_OLS) / (N*T - K - N) )
 ```
-**IMPORTANTE**: Ajustar os graus de liberdade do estimador _within_ para {{<math>}}$NT - K - 1${{</math>}} (ao invés de {{<math>}}$NT - K - 1${{</math>}})
+**IMPORTANT**: adjust the degrees of freedom of the first-difference estimator to {{<math>}}$NT - K - N${{</math>}} (instead of {{<math>}}$NT - K - 1${{</math>}}).
 
 
-g') Matriz de Variâncias-Covariâncias do Estimador OLS
+g') Estimator Variance-Covariance Matrix OLS
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{OLS}}) = \hat{\sigma}^2 (\tilde{\boldsymbol{X}^{*\prime}} \tilde{\boldsymbol{X}^{*}})^{-1} $${{</math>}}
 
 
 ```r
-# Calculando a Matriz de variância-covariância dos estimadores
+# Computing the variance-covariance matrix of the estimators
 Vdhat_OLS = sig2hat * solve( t(Xt_til) %*% Xt_til )
 Vdhat_OLS
 ```
@@ -3330,9 +3329,9 @@ Vdhat_OLS
 ```
 
 
-h') Erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{OLS}})${{</math>}}
+h') Standard errors {{<math>}}$\text{se}(\hat{\boldsymbol{\delta}}_{\scriptscriptstyle{OLS}})${{</math>}}
 
-É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador
+It is the square root of the main diagonal of the estimator variance-covariance matrix.
 
 ```r
 se_dhat_OLS = sqrt( diag(Vdhat_OLS) )
@@ -3343,14 +3342,14 @@ se_dhat_OLS
 ## [1] 0.0003068216
 ```
 
-i') Estatística _t_
+i') _t_ statistic
 
 {{<math>}}$$ t_{\hat{\delta}_k} = \frac{\hat{\delta}_k}{\text{se}(\hat{\delta}_k)} \tag{4.6}
 $$ {{</math>}}
 
 
 ```r
-# Cálculo da estatística t
+# Computing the t statistic
 t_dhat_OLS = dhat_OLS / se_dhat_OLS
 t_dhat_OLS
 ```
@@ -3360,13 +3359,13 @@ t_dhat_OLS
 ## [1,] 13.07725
 ```
 
-j') P-valor
+j') p-value
 
 {{<math>}}$$ p_{\hat{\delta}_k} = 2.\Phi_{t_{(NT-K-N)}}(-|t_{\hat{\delta}_k}|), \tag{4.7} $${{</math>}}
 
 
 ```r
-# p-valor
+# p-value
 p_dhat_OLS = 2 * pt(-abs(t_dhat_OLS), N*T-K-N)
 p_dhat_OLS
 ```
@@ -3376,10 +3375,10 @@ p_dhat_OLS
 ## [1,] 1.385139e-38
 ```
 
-k') Tabela-resumo
+k') Summary table
 
 ```r
-cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # resultado FD via OLS
+cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # first-difference result via OLS
 ```
 
 ```
@@ -3388,7 +3387,7 @@ cbind(dhat_OLS, se_dhat_OLS, t_dhat_OLS, p_dhat_OLS) # resultado FD via OLS
 ```
 
 ```r
-summary(Q.fd)$coef # resultado FD via plm()
+summary(Q.fd)$coef # first-difference result via `plm()`
 ```
 
 ```
@@ -3400,18 +3399,18 @@ summary(Q.fd)$coef # resultado FD via plm()
 
 </br>
 
-## Comparativo dos Estimadores
+## Comparing the Estimators
 
-### FGLS: junção GLS e _Within_
-- Combinação de GLS (Efeitos Aleatórios) e de _Within_ (Efeitos Fixos)
-- Lembre-se que a Error Variance-Covariance Matrix é dada por
+### FGLS: Combining GLS and _Within_
+- A blend of GLS (random effects) and _within_ (fixed effects).
+- Recall that the error variance-covariance matrix is given by
 {{<math>}}$$ \hat{\boldsymbol{\Sigma}}^p = (\hat{\sigma}^2_v)^p \boldsymbol{W} + (\hat{\sigma}^2_v + T \hat{\sigma}^2_u)^p \boldsymbol{B}, \tag{2.29} $${{</math>}}
-where {{<math>}}$p${{</math>}} é um escalar.
+where {{<math>}}$p${{</math>}} is a scalar.
 
-- Usando {{<math>}}$p=-0.5${{</math>}} em (2.29), tem-se
+- Setting {{<math>}}$p=-0.5${{</math>}} in (2.29), we obtain
 {{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = \frac{1}{\sigma_v + T \sigma_u} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} $${{</math>}}
 
-- Anteriormente, transformamos FGLS usando {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5}Z${{</math>}}:
+- Earlier, we wrote FGLS using the transformed variables {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{\Sigma}^{-0.5}y${{</math>}} and {{<math>}}$\tilde{\boldsymbol{X}} \equiv \boldsymbol{\Sigma}^{-0.5}X${{</math>}}:
 
 {{<math>}}\begin{align}
     \hat{\boldsymbol{\beta}} &= (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{y}) \tag{2.27} \\
@@ -3419,7 +3418,7 @@ where {{<math>}}$p${{</math>}} é um escalar.
     &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}} \tilde{\boldsymbol{y}}
 \end{align}{{</math>}}
 
-Sem perda de generalidade, podemos pré-multiplicar o modelo por {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} (ao invés de {{<math>}}$\boldsymbol{\Sigma}^{-0.5})${{</math>}}, logo:
+Without loss of generality, we can premultiply the model by {{<math>}}$\sigma_v \boldsymbol{\Sigma}^{-0.5}${{</math>}} instead of {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, so:
 
 {{<math>}}\begin{align} \boldsymbol{\Sigma}^{-0.5} &= \sqrt{\frac{1}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} + \frac{1}{\sigma_v} \boldsymbol{W} \\
 &= \frac{1}{\sigma_v} \left[ \sigma_v \sqrt{\frac{1}{\sigma^2_v + T \sigma^2_u}} \boldsymbol{B} + \boldsymbol{W} \right] \\
@@ -3432,21 +3431,21 @@ Sem perda de generalidade, podemos pré-multiplicar o modelo por {{<math>}}$\sig
 
 
 
-Logo, quando pré-multiplicamos as variáveis por {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, para uma variável explicativa {{<math>}}$k${{</math>}} do individual {{<math>}}$i${{</math>}} no tempo {{<math>}}$t${{</math>}}, segue que:
+Thus, when we premultiply variables by {{<math>}}$\boldsymbol{\Sigma}^{-0.5}${{</math>}}, an explanatory variable {{<math>}}$x^k_{it}${{</math>}} becomes:
 {{<math>}}$$ \tilde{x}^k_{it}\ =\ \frac{1}{\sigma_v} \left[ x^k_{it} + \left(1 - \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \right) \bar{x}^k_{i}\right]\ \equiv\ \frac{1}{\sigma_v} \left[ x_{it} - \theta \bar{x}^k_{i}\right], $${{</math>}}
 where {{<math>}}$$\theta \equiv \left( 1 - \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T \sigma^2_u}} \right)$${{</math>}}
 
     
-Note que, quando:
+Note that, when:
 
 - {{<math>}}$\theta \rightarrow 1${{</math>}}
-  - os efeitos individuais dominam {{<math>}}$\sigma_u \rightarrow \infty${{</math>}}
-  - variável transformada se aproxima da em desvios: {{<math>}}$x^k_{it} - \bar{x}^k_{i}${{</math>}}
-  - FGLS se aproxima do estimador _within_
+  - individual effects dominate, {{<math>}}$\sigma_u \rightarrow \infty${{</math>}};
+  - the transformed variable approaches the demeaned form {{<math>}}$x^k_{it} - \bar{x}^k_{i}${{</math>}};
+  - FGLS approaches the _within_ estimator.
 - {{<math>}}$\theta \rightarrow 0${{</math>}}
-  - os efeitos individuais somem: {{<math>}}$\sigma_u \rightarrow 0${{</math>}}
-  - variável transformada se aproxima da não transformada: {{<math>}}$x^k_{it}${{</math>}}
-  - FGLS se aproxima do GLS 
+  - individual effects vanish, {{<math>}}$\sigma_u \rightarrow 0${{</math>}};
+  - the transformed variable approaches the untransformed regressor {{<math>}}$x^k_{it}${{</math>}};
+  - FGLS approaches GLS. 
 
 
 
@@ -3458,9 +3457,9 @@ library(plm)
 data("TobinQ", package = "pder")
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimações FGLS
+# FGLS estimations
 Q.walhus = plm(ikn ~ qn, pTobinQ, model = "random", random.method = "walhus")
-summary(Q.walhus) # output da estimação FGLS por Wallace e Hussain (1969)
+summary(Q.walhus) # FGLS output using Wallace and Hussain (1969)
 ```
 
 ```
@@ -3495,26 +3494,26 @@ summary(Q.walhus) # output da estimação FGLS por Wallace e Hussain (1969)
 ## Adj. R-Squared: 0.074038
 ## Chisq: 527.045 on 1 DF, p-value: < 2.22e-16
 ```
-Note que {{<math>}}$\theta = 73\%${{</math>}}, o que indica que, neste caso, o estimativa FGLS é mais próxima de _within_ ({{<math>}}$\theta=1${{</math>}}) do que de _between_ ({{<math>}}$\theta=0${{</math>}}). A grande quantidade de periods ({{<math>}}$T = 35${{</math>}}) provavelmente influencia este alto valor.
+Note that {{<math>}}$\theta = 73\%${{</math>}}, which indicates that in this case the FGLS estimate is closer to _within_ ({{<math>}}$\theta=1${{</math>}}) than to _between_ ({{<math>}}$\theta=0${{</math>}}). The large number of periods ({{<math>}}$T = 35${{</math>}}) likely contributes to this high value.
 
 
 
 ### Example 2
-- Section 2.4.4 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Usado por Kinal e Lahiri (1993) 
-- Queremos estabelecer relação entre importações (_imports_) e produto nacional (_gnp_)
+- Section 2.4.4 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Used by Kinal and Lahiri (1993) 
+- We want to study the relationship between imports (`imports`) and gross national product (`gnp`).
 
 ```r
 data("ForeignTrade", package = "pder")
 FT = pdata.frame(ForeignTrade, index=c("country", "year"))
 
-# Estimações FGLS
+# FGLS estimations
 FT.between = plm(imports ~ gnp, FT, model = "between")
 FT.pooled = plm(imports ~ gnp, FT, model = "pooling")
 FT.fgls = plm(imports ~ gnp, FT, model = "random", random.method = "walhus")
 FT.within = plm(imports ~ gnp, FT, model = "within")
 
-# Resumindo 4 estimações em única tabela
+# Summarizing the four estimations in a single table
 stargazer::stargazer(FT.between, FT.pooled, FT.fgls, FT.within,
                      digits=3, type="text", omit.stat="f")
 ```
@@ -3578,39 +3577,39 @@ summary(FT.fgls)
 ## Adj. R-Squared: 0.35686
 ## Chisq: 413.271 on 1 DF, p-value: < 2.22e-16
 ```
-- O estimador FGLS remove grande parte da variação inter-individuals, pois subtrai, da covariada, 94\% da média individual:
+- The FGLS transformation removes a large share of between-individual variation, subtracting 94\% of the individual mean from the covariate:
 {{<math>}}$$ \tilde{x}_{it}\ =\ x_{it} - \theta \bar{x}_{i}\ =\ x_{it} - 0,94 \bar{x}_{i} $${{</math>}}
 
 
 <center><img src="../example_panel-1.png"></center>
 
-- FGLS e _within_ são bastante parecidos
-- GLS é parecido com _between_, pois maior peso fica na variabilidade entre individuals
+- FGLS and _within_ are quite similar.
+- GLS is closer to _between_, because it places more weight on between-individual variation.
 
 
 </br>
 
-## Estimador MV
-- Section 3.3 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Uma alternativa aos estimadores de FGLS é o de máxima verossimilhança (MV).
-- Assume-se que a distribuição dos dois componentes de erro são normais:
-{{<math>}}$$ u | X \sim N(0, \sigma^2_u) \quad \text{ e } \quad v | u, X \sim N(0, \sigma^2_v) $${{</math>}}
+## Maximum Likelihood Estimator
+- Section 3.3 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- An alternative to FGLS is maximum likelihood (ML) estimation.
+- The two error components are assumed to be normally distributed:
+{{<math>}}$$ u | X \sim N(0, \sigma^2_u) \quad \text{and} \quad v | u, X \sim N(0, \sigma^2_v) $${{</math>}}
 
-- Ao invés de estimar {{<math>}}$\sigma^2_u${{</math>}} e {{<math>}}$\sigma^2_v${{</math>}} para depois calcular {{<math>}}$\boldsymbol{\beta}${{</math>}}, ambos são estimados simultaneamente.
+- Instead of estimating {{<math>}}$\sigma^2_u${{</math>}} and {{<math>}}$\sigma^2_v${{</math>}} first and then computing {{<math>}}$\boldsymbol{\beta}${{</math>}}, ML estimates them jointly.
 
 - Denote 
 {{<math>}}$\phi \equiv \sqrt{\frac{\sigma^2_v}{\sigma^2_v + T\sigma^2_u}},${{</math>}}
-a função de log-verossimilhança para um painel balanceado é:
+the log-likelihood function for a balanced panel is:
 
 
 <!-- {{<math>}}$$ \ln{L} = -\frac{NT}{2} \ln{2\pi} - \frac{NT}{2}\ln{\sigma^2_v} + \frac{N}{2} \ln{\phi^2} - \frac{1}{2\sigma^2_v} \left( \varepsilon' \boldsymbol{W} \varepsilon + \phi^2 \varepsilon' \boldsymbol{B} \varepsilon \right) $${{</math>}} -->
 
 
-e considere a transformação de variável pela pré-multiplicação por {{<math>}}$(\boldsymbol{I} - \phi \boldsymbol{B})${{</math>}}:
+and consider the variable transformation obtained by premultiplying by {{<math>}}$(\boldsymbol{I} - \phi \boldsymbol{B})${{</math>}}:
 
 {{<math>}}$$\tilde{\boldsymbol{X}}\ \equiv\ (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{X}\ =\ \boldsymbol{X} - \phi \boldsymbol{B} \boldsymbol{X}$${{</math>}}
 
-Logo,
+Thus,
 
 {{<math>}}\begin{align}
     \hat{\boldsymbol{\beta}} &= (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}'\tilde{\boldsymbol{y}} \tag{3.12} \\
@@ -3618,17 +3617,17 @@ Logo,
     \hat{\phi}^2 &=\frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{(T-1) \hat{\boldsymbol{\varepsilon}}'\boldsymbol{B}\hat{\boldsymbol{\varepsilon}}} \tag{3.14}
 \end{align}{{</math>}}
 
-A estimação pode ser feita iterativamente por FIML (Full Information Maximum Likelihood):
+Estimation can be implemented iteratively by FIML (Full Information Maximum Likelihood):
 
 
-1. Chute inicial de {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
-2. Calcular {{<math>}}$\hat{\phi}^2${{</math>}} usando (3.14)
-3. Calcular {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} usando (3.12) 
-4. Verificar convergência: se não convergiu, volta para o passo 2, usando o {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} calculado no passo 3.
-5. Calcular {{<math>}}$\sigma^2_v${{</math>}} usando (3.13)
+1. Start with an initial guess for {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}.
+2. Compute {{<math>}}$\hat{\phi}^2${{</math>}} using (3.14).
+3. Update {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} using (3.12).
+4. Check convergence. If the procedure has not converged, return to step 2 using the updated {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} from step 3.
+5. Compute {{<math>}}$\sigma^2_v${{</math>}} using (3.13).
 
 
-### Estimação via `pglm()`
+### Estimation via `pglm()`
 
 
 ```r
@@ -3636,15 +3635,15 @@ library(pglm)
 library(dplyr)
 data("TobinQ", package = "pder")
 
-# Transformando no formato pdata frame, com indentificador de individual e de tempo
+# Converting to `pdata.frame` format with individual and time identifiers
 pTobinQ = pdata.frame(TobinQ, index=c("cusip", "year"))
 
-# Estimação MV
-Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian") # Estimação MV
+# ML estimation
+Q.ml = pglm(ikn ~ qn, pTobinQ, family = "gaussian") # ML estimation
 Q.fgls = plm(ikn ~ qn, pTobinQ, model="random",
-             random.method="walhus") # Estimação FGLS
+             random.method="walhus") # FGLS estimation
 
-summary(Q.ml)$estimate # Coef. MV
+summary(Q.ml)$estimate # ML coefficients
 ```
 
 ```
@@ -3656,7 +3655,7 @@ summary(Q.ml)$estimate # Coef. MV
 ```
 
 ```r
-summary(Q.fgls)$coef # Coef. FGLS
+summary(Q.fgls)$coef # FGLS coefficients
 ```
 
 ```
@@ -3664,43 +3663,43 @@ summary(Q.fgls)$coef # Coef. FGLS
 ## (Intercept) 0.159325869 0.0034143937 46.66300  0.000000e+00
 ## qn          0.003862631 0.0001682516 22.95747 1.240977e-116
 ```
-- Note que o resultado por ML foi bem próximo ao do obtido por FGLS
+- Note that the ML result is very close to the FGLS estimate.
 
 
 
-### Estimação Analítica
+### Analytical Estimation
 
-a) Chutar valores iniciais para as estimativas {{<math>}}$\hat{\beta}_{\scriptscriptstyle{ini}}${{</math>}} (pode usar tudo 0)
+a) Choose initial values for {{<math>}}$\hat{\beta}_{\scriptscriptstyle{ini}}${{</math>}} (you can start from zeros)
 
 
 ```r
 data("TobinQ", package="pder")
 
-# Criando o vetor y
-y = as.matrix(TobinQ[,"ikn"]) # transformando coluna de data frame em matriz
+# Creating the y vector
+y = as.matrix(TobinQ[,"ikn"]) # converting the data frame column into a matrix
 
-# Criando a matriz de covariates X com primeira coluna de 1's
-X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # juntando 1's com as covariates
+# Creating the covariate matrix X with a first column of ones
+X = as.matrix( cbind(1, TobinQ[, "qn"]) ) # adding a column of ones to the covariates
 
-# Pegando valores N, T e K
+# Retrieving N, T, and K
 N = length( unique(TobinQ$cusip) )
 T = length( unique(TobinQ$year) )
 K = ncol(X) - 1
 
-# Matrizes Between e Within
+# Between and within matrices
 iota_T = matrix(1, nrow=T, ncol=1)
 I_N = diag(N)
 I_NT = diag(N*T)
 B = I_N %x% (iota_T %*% solve(t(iota_T) %*% iota_T) %*% t(iota_T))
 W = I_NT - B
 
-# Iremos realizar iterações até a convergência das estimativas
-tol = 1e-10 # tolerância para convergência
-dist = 1 # distância inicial, apenas para entrar no loop/while
-it = 0 # número de iterações
+# Iterating until the estimates converge
+tol = 1e-10 # convergence tolerance
+dist = 1 # initial distance, used only to enter the while loop
+it = 0 # number of iterations
 
-# (a) Chutar valores iniciais para as estimativas
-bhat_ini = matrix(0, nrow=2, ncol=1) # chute inicial de 0's
+# (a) Initial guesses for the parameter estimates
+bhat_ini = matrix(0, nrow=2, ncol=1) # initial zero vector
 bhat_ini
 ```
 
@@ -3710,62 +3709,62 @@ bhat_ini
 ## [2,]    0
 ```
 
-b) Obter {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}} e calcular 
+b) Obtain {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}} and compute
 		{{<math>}}$$ \hat{\phi}^2 = \frac{\hat{\varepsilon}' \boldsymbol{W} \hat{\varepsilon}}{(T-1)\hat{\varepsilon}' \boldsymbol{B} \hat{\varepsilon}} \tag{3.14} $${{</math>}}
 		
 		
-c) Calcular as novas estimativas {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}}${{</math>}} novo usando
+c) Compute the updated estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}}${{</math>}} using
 		{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}} = (\tilde{\boldsymbol{X}}'\tilde{\boldsymbol{X}})^{-1} \tilde{X}'\tilde{y}, \tag{3.12} $${{</math>}}
-		where {{<math>}}$\tilde{\boldsymbol{X}} = (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{X}${{</math>}}, e {{<math>}}$\tilde{\boldsymbol{y}} = (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{y}${{</math>}}
+where {{<math>}}$\tilde{\boldsymbol{X}} = (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{X}${{</math>}}, and {{<math>}}$\tilde{\boldsymbol{y}} = (\boldsymbol{I} - \phi \boldsymbol{B}) \boldsymbol{y}${{</math>}}
 
 
-d) Verificar convergência das estimativas de acordo com:
-		{{<math>}}$$ \text{distância}\ =\ \max\{\text{abs}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{ini}})\}\}\ <\ 1 \times 10^{-10}\ =\ \text{tolerância}$${{</math>}}
-		Se não convergiu (i.e., expressão acima não foi satisfeita), volte ao passo (b), definindo {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{ini}} \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}}${{</math>}} e iniciando uma nova iteração
+d) Check convergence according to:
+		{{<math>}}$$ \text{distance} = \max\{\text{abs}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{ini}})\} < 1 \times 10^{-10} = \text{tolerance}$${{</math>}}
+		If convergence has not been reached, return to step (b), redefine {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{ini}} \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{fim}}${{</math>}}, and start a new iteration.
 
 
 
 ```r
 while (dist > tol) {
-	# Mostrar a iteração atual e as estimativas atuais beta
-	print(paste0("iteração ", it,
+	# Display the current iteration and current beta estimates
+	print(paste0("iteration ", it,
 	      ": b0 = ", round(bhat_ini[1], 6),
         " | b1 = ", round(bhat_ini[2], 6)
 	))
 	
-	# (b)  Obter valores ajustados, resíduos e estimar phi
+	# (b) Obtain fitted values, residuals, and estimate phi
 	y_hat = X %*% bhat_ini
 	e = y - y_hat
 	phi2_hat = as.numeric((t(e) %*% W %*% e) / ((T-1) * (t(e) %*% B %*% e)))
 	phi_hat = sqrt(phi2_hat)
 
-	# (c) Calcular o novas estimativas
+	# (c) Compute the updated estimates
 	X_til = (I_NT - phi_hat * B) %*% X
 	y_til = (I_NT - phi_hat * B) %*% y
 	bhat_fim = solve(t(X_til) %*% X_til) %*% t(X_til) %*% y_til
 	
-	# (d) Verificar convergência das estimativas
-	dist = max(abs(bhat_fim - bhat_ini)) # calculando distância
+	# (d) Check convergence of the estimates
+	dist = max(abs(bhat_fim - bhat_ini)) # computing the distance
 	bhat_ini = bhat_fim
 	it = it + 1
 }
 ```
 
 ```
-## [1] "iteração 0: b0 = 0 | b1 = 0"
-## [1] "iteração 1: b0 = 0.158127 | b1 = 0.004341"
-## [1] "iteração 2: b0 = 0.158491 | b1 = 0.004196"
-## [1] "iteração 3: b0 = 0.158491 | b1 = 0.004196"
-## [1] "iteração 4: b0 = 0.158491 | b1 = 0.004196"
+## [1] "iteration 0: b0 = 0 | b1 = 0"
+## [1] "iteration 1: b0 = 0.158127 | b1 = 0.004341"
+## [1] "iteration 2: b0 = 0.158491 | b1 = 0.004196"
+## [1] "iteration 3: b0 = 0.158491 | b1 = 0.004196"
+## [1] "iteration 4: b0 = 0.158491 | b1 = 0.004196"
 ```
 
 
-e) Obter {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}} e {{<math>}}$ \hat{\phi}^2 ${{</math>}} para calcular
-		{{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\varepsilon}' \boldsymbol{W} \hat{\varepsilon} + \hat{\phi}^2 \hat{\varepsilon}' \boldsymbol{B} \hat{\varepsilon}}{NT} \tag{3.13} \qquad \text{e} \qquad \sigma^2_l = \frac{\sigma^2_v}{\hat{\phi}^2}  $${{</math>}}
+e) Obtain {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}}${{</math>}} and {{<math>}}$\hat{\phi}^2${{</math>}} in order to compute
+{{<math>}}$$\hat{\sigma}^2_v = \frac{\hat{\varepsilon}' \boldsymbol{W} \hat{\varepsilon} + \hat{\phi}^2 \hat{\varepsilon}' \boldsymbol{B} \hat{\varepsilon}}{NT} \tag{3.13} \qquad \text{and} \qquad \sigma^2_l = \frac{\sigma^2_v}{\hat{\phi}^2}  $${{</math>}}
 
 
 ```r
-# (e) Calcular phi, sigma^2_v, e sigma^2_l
+# (e) Compute phi, sigma^2_v, and sigma^2_l
 y_hat = X %*% bhat_fim
 e = y - y_hat
 phi2_hat = as.numeric((t(e) %*% W %*% e) / ((T-1)*(t(e) %*% B %*% e)))
@@ -3779,7 +3778,7 @@ g) Calcular {{<math>}}$V(\hat{\beta})${{</math>}} usando:
 		{{<math>}}$$ V(\hat{\beta}) = \left( \frac{1}{\hat{\sigma}^2_v} \boldsymbol{X}' \boldsymbol{W X} + \frac{1}{\hat{\sigma}^2_l} \boldsymbol{X}' \boldsymbol{B X}\right)^{-1} $${{</math>}}
 
 ```r
-# (g) Calcular V(bhat)
+# (g) Compute V(bhat)
 Vbhat = solve(c(1/sig2v) * t(X) %*% W %*% X + c(1/sig2l) * t(X) %*% B %*% X)
 Vbhat
 ```
@@ -3790,15 +3789,15 @@ Vbhat
 ## [2,] -7.095051e-08  2.831961e-08
 ```
 
-h) Obter erros padrão das estimativas, estatísticas t e p-valores
+h) Obtain the standard errors, t statistics, and p-values
 
 ```r
-# (h) Erros padrão, estatistica t e p-valores
+# (h) Standard errors, t statistics, and p-values
 se_bhat = sqrt(diag(Vbhat))
 t_bhat = bhat_fim / se_bhat
 p_bhat = pt(-abs(t_bhat), df = N*T-K-1) # NT - K - 1
 
-data.frame(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
+data.frame(bhat_fim, se_bhat, t_bhat, p_bhat) # Results
 ```
 
 ```
@@ -3808,7 +3807,7 @@ data.frame(bhat_fim, se_bhat, t_bhat, p_bhat) # Resultados
 ```
 
 ```r
-summary(Q.ml)$estimate # Estimação MV via pglm()
+summary(Q.ml)$estimate # ML estimation via pglm()
 ```
 
 ```
@@ -3822,32 +3821,32 @@ summary(Q.ml)$estimate # Estimação MV via pglm()
 
 </br>
 
-## Testes de Presença de Efeitos Individuais
+## Tests for the Presence of Individual Effects
 
 ### Breusch-Pagan
 
-- Section 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- É um teste baseado em multiplicadores de Lagrange (LM) nos resíduos de OLS, where {{<math>}}$H_0: \sigma^2_u = 0${{</math>}} (ausência de efeitos individuais)
-- A estatística teste é dada por 
+- Section 4.1 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- This is a Lagrange multiplier (LM) test based on OLS residuals, with {{<math>}}$H_0: \sigma^2_u = 0${{</math>}} (no individual effects).
+- The test statistic is given by
 {{<math>}}$$ LM_u = \frac{NT}{2(T-1)} \left( T \frac{\hat{\boldsymbol{\varepsilon}}' B_u \hat{\boldsymbol{\varepsilon}}}{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}} - 1 \right)^2  $${{</math>}}
-que é assintoticamente distribuída como ua `\(\chi^2\)` com 1 grau de liberdade.
-- Há algumas variações deste teste:
+which is asymptotically distributed as a `\(\chi^2\)` with 1 degree of freedom.
+- There are several variants of this test:
     - Breusch and Pagan (1980),
     - Gourieroux et al. (1982),
-    - Honda (1985), e
+    - Honda (1985), and
     - King and Wu (1997).
 
 
-### Testes F
-- Section 4.1 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo _within_ {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W${{</math>}} e {{<math>}}$N(T-1) - K${{</math>}}, respectivamente.
-- Sejam a soma dos resíduos ao quadrado e os graus de liberdade do modelo pooled OLS {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}}\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}} e {{<math>}}$NT - K - 1${{</math>}}, respectivamente.
-- Sob hipótese nula de que não há efeitos individuais, a estatística teste é dada por
+### F Tests
+- Section 4.1 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- Let the residual sum of squares and degrees of freedom for the _within_ model be {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W${{</math>}} and {{<math>}}$N(T-1) - K${{</math>}}, respectively.
+- Let the residual sum of squares and degrees of freedom for pooled OLS be {{<math>}}$\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}}\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}} and {{<math>}}$NT - K - 1${{</math>}}, respectively.
+- Under the null of no individual effects, the test statistic is
 {{<math>}}$$ \frac{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{OLS}} \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}} - \hat{\boldsymbol{\varepsilon}}'_W\hat{\boldsymbol{\varepsilon}}_W}{\hat{\boldsymbol{\varepsilon}}'_{\scriptscriptstyle{W}}\boldsymbol{W} \hat{\boldsymbol{\varepsilon}}_W} \frac{NT - K - N + 1}{N-1} $${{</math>}}
-que segue uma distribuição F de Fisher-Snedecor com {{<math>}}$N-1${{</math>}} e {{<math>}}$NT - K - N + 1${{</math>}} graus de liberdade.
+which follows an F distribution with {{<math>}}$N-1${{</math>}} and {{<math>}}$NT - K - N + 1${{</math>}} degrees of freedom.
 
 
-### Aplicando no R
+### Implementing in R
 
 ```r
 data("TobinQ", package = "pder")
@@ -3857,7 +3856,7 @@ Q.within = plm(ikn ~ qn, pTobinQ, model = "within")
 Q.gls = plm(ikn ~ qn, pTobinQ, model = "random")
 Q.pooling = plm(ikn ~ qn, pTobinQ, model = "pooling")
 
-# Teste de Breusch-Pagan/LM
+# Breusch-Pagan / LM test
 plmtest(Q.pooling, effect="individual") # Honda (1985)
 ```
 
@@ -3869,11 +3868,11 @@ plmtest(Q.pooling, effect="individual") # Honda (1985)
 ## normal = 91.377, p-value < 2.2e-16
 ## alternative hypothesis: significant effects
 ```
-O teste LM (Breusch-Pagan) acusou efeitos individuais significativos.
+The LM (Breusch-Pagan) test indicates significant individual effects.
 
 
 ```r
-# Teste F
+# F test
 pFtest(Q.within, Q.pooling)
 ```
 
@@ -3885,41 +3884,41 @@ pFtest(Q.within, Q.pooling)
 ## F = 14.322, df1 = 187, df2 = 6391, p-value < 2.2e-16
 ## alternative hypothesis: significant effects
 ```
-Assim como o teste LM, Pelo teste F, observam-se efeitos individuais significativos.
+As with the LM test, the F test also indicates significant individual effects.
 
 
 </br>
 
-## Testes de Efeitos Correlacionados
-- Section 4.2 de "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
-- Continuamos assumindo que {{<math>}}$E(v|X) = 0${{</math>}}, where {{<math>}}$v${{</math>}} é o termo de erro idiossincrático.
-- Nestes testes, verificamos se {{<math>}}$E(u|X) = 0${{</math>}}, ou seja, se os efeitos individuais são ou não são correlacionados com as covariates.
+## Tests for Correlated Effects
+- Section 4.2 of "Panel Data Econometrics with R" (Croissant \& Millo, 2018)
+- We continue to assume {{<math>}}$E(v \mid X) = 0${{</math>}}, where {{<math>}}$v${{</math>}} is the idiosyncratic error term.
+- These tests examine whether {{<math>}}$E(u \mid X) = 0${{</math>}}, that is, whether individual effects are correlated with the covariates.
 
-### Teste de Hausman
-- O princípio geral do teste de Hausman consiste em comparar dois modelos {{<math>}}$A${{</math>}}e {{<math>}}$B${{</math>}} tal que
-    - sob {{<math>}}$H_0${{</math>}}: {{<math>}}$A${{</math>}} e {{<math>}}$B${{</math>}} são ambos consistentes, mas {{<math>}}$B${{</math>}} é mais eficiente que {{<math>}}$A${{</math>}}
-    - sob {{<math>}}$H_1${{</math>}}: apenas {{<math>}}$A${{</math>}} é consistente
-- Se {{<math>}}$H_0${{</math>}} é verdadeiro, então os coeficientes dos dois modelos não devem divergir.
-- O teste é baseado em {{<math>}}$\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B${{</math>}} e Hausman mostrou que, sob {{<math>}}$H_0${{</math>}}, temos {{<math>}}$cov(\hat{\boldsymbol{\beta}}_A, \hat{\boldsymbol{\beta}}_B) = 0${{</math>}} e, logo, a variância dessa diferença é simplesmente {{<math>}}$V(\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B) = V(\hat{\boldsymbol{\beta}}_A) - V(\hat{\boldsymbol{\beta}}_B)${{</math>}}
+### Hausman Test
+- The general idea of the Hausman test is to compare two models, {{<math>}}$A${{</math>}} and {{<math>}}$B${{</math>}}, such that
+    - under {{<math>}}$H_0${{</math>}}: both {{<math>}}$A${{</math>}} and {{<math>}}$B${{</math>}} are consistent, but {{<math>}}$B${{</math>}} is more efficient than {{<math>}}$A${{</math>}};
+    - under {{<math>}}$H_1${{</math>}}: only {{<math>}}$A${{</math>}} is consistent.
+- If {{<math>}}$H_0${{</math>}} is true, the coefficients from the two models should not differ systematically.
+- The test is based on {{<math>}}$\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B${{</math>}}. Hausman showed that under {{<math>}}$H_0${{</math>}}, {{<math>}}$cov(\hat{\boldsymbol{\beta}}_A, \hat{\boldsymbol{\beta}}_B) = 0${{</math>}}, so the variance of the difference is simply {{<math>}}$V(\hat{\boldsymbol{\beta}}_A - \hat{\boldsymbol{\beta}}_B) = V(\hat{\boldsymbol{\beta}}_A) - V(\hat{\boldsymbol{\beta}}_B)${{</math>}}.
 
-- No contexto de dados em painéis, compara-se o estimador _within_ (efeitos fixos) e o de FGLS (efeitos aleatórios)
-- Quando {{<math>}}$E(u|X) = 0${{</math>}} ambos estimadores são consistentes, ou seja,
+- In panel-data applications, the comparison is typically between the _within_ estimator (fixed effects) and FGLS (random effects).
+- When {{<math>}}$E(u \mid X) = 0${{</math>}}, both estimators are consistent, that is,
 {{<math>}}$$ \hat{q} \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} - \hat{\boldsymbol{\beta}}_W\ \overset{p}{\rightarrow}\ 0 $${{</math>}}
-então é preferível usar o mais eficiente (FGLS, pois usa ambas variações inter e intra-individuals).
+so we prefer the more efficient estimator, namely FGLS, because it uses both between- and within-individual variation.
 
-- Se {{<math>}}$E(u|X) \neq 0${{</math>}}, então {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}\neq 0${{</math>}} e apenas o modelo robusto a {{<math>}}$E(u|X) \neq 0${{</math>}} (_within_) é consistente.
-- A variância é dada por 
+- If {{<math>}}$E(u \mid X) \neq 0${{</math>}}, then {{<math>}}$\hat{q} \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} - \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}} \neq 0${{</math>}}, and only the estimator robust to this correlation, the _within_ estimator, remains consistent.
+- Its variance is given by
 {{<math>}}\begin{align}
     V(\hat{q}) &= V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} - \hat{\boldsymbol{\beta}}_W) = V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}) + V(\hat{\boldsymbol{\beta}}_W) - 2 cov(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{W}}, \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}) \\
     &= \sigma^2_v (\boldsymbol{X}' \boldsymbol{W X})^{-1} - (\boldsymbol{X}'\boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1}
 \end{align}{{</math>}}
-- Logo, a estatística teste se torna
+- Therefore, the test statistic becomes
 {{<math>}}$$ \hat{q}'\ V(\hat{q})^{-1}\ \hat{q} $${{</math>}}
-que, sob {{<math>}}$H_0${{</math>}}, é distribuida como {{<math>}}$\chi^2${{</math>}} com {{<math>}}$K${{</math>}} graus de liberdade.
+which, under {{<math>}}$H_0${{</math>}}, is distributed as {{<math>}}$\chi^2${{</math>}} with {{<math>}}$K${{</math>}} degrees of freedom.
 
 
 ```r
-# Teste de Hausman
+# Hausman test
 phtest(Q.within, Q.gls)
 ```
 
@@ -3931,11 +3930,18 @@ phtest(Q.within, Q.gls)
 ## chisq = 3.3044, df = 1, p-value = 0.06909
 ## alternative hypothesis: one model is inconsistent
 ```
-Não se rejeita a hipótese nula de que ambos modelos são consistentes a 5\%.
+We do not reject the null that both models are consistent at the 5\% level.
 
 
 </br>
 
 
-{{< cta cta_text="👉 Seguir para Manipulação de Panel Data" cta_link="../sec5" >}}
+{{< cta cta_text="👉 Proceed to Panel Data Manipulation" cta_link="../sec5" >}}
+
+
+
+
+
+
+
 

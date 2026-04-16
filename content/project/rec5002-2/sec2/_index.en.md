@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 2
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 2 (June 29, 2021)
+linktitle: "Inflation-Unemployment"
+summary: "TA notes on dynamic optimization with inflation-unemployment trade-offs, based on Chiang's optimal control framework."
+title: "Session 2: Inflation-Unemployment Trade-off"
 weight: 2
 output: md_document
 type: book
@@ -23,4 +22,4 @@ Presentation: [AP_Monitoria-2_pt2.pdf](../AP_Monitoria-2_pt2.pdf)
 
 
 
-{{< cta cta_text="�Y'? Proceed to Session 3" cta_link="../chapter3" >}}
+{{< cta cta_text="Proceed to Session 3" cta_link="../sec3" >}}

@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regressão Múltipla
-summary: This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed. 
-title: Regressão Múltipla
+linktitle: "Regressão Múltipla"
+summary: "Notas de econometria aplicada sobre regressão múltipla, notação matricial, inferência, variáveis qualitativas e interações no R."
+title: "Regressão Linear Múltipla por MQO"
 weight: 8
 output: md_document
 type: book

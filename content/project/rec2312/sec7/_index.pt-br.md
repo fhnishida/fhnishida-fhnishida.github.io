@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: VI / MQ2E
-summary: The IV / 2SLS section of the current web page context discusses Instrumental Variable and Two-Stage Least Squares methods. These are statistical techniques used to estimate causal relationships when there is a concern about endogeneity, or when one or more of the independent variables are correlated with the error term. The section includes references to several academic sources on these topics, including sections from books by Heiss (2020), Cameron and Trivedi (2005), Wooldridge (2010), and Davidson and MacKinnon (1999). The section also includes mathematical notation and equations related to these methods. For example, it presents a multivariate model with K regressors, matrix notation, and the definition of an instrumental variable. The section also includes information on how to estimate an instrumental variable using R code, including an example using the mroz dataset from the wooldridge package. Overall, this section provides a detailed introduction to instrumental variable and two-stage least squares methods, including both theoretical background and practical examples using R code.
-title: Variável Instrumental e Mínimos Quadrados em 2 Estágios
+linktitle: "VI / MQ2E"
+summary: "Notas detalhadas de VI e MQ2E com notação, condições de identificação, fórmulas matriciais e exemplos aplicados em R."
+title: "Variáveis Instrumentais e Mínimos Quadrados em Dois Estágios (MQ2E)"
 weight: 7
 output: md_document
 type: book
@@ -1015,7 +1015,7 @@ summary(reg.2nd.mod)$coef
 - No teste de instrumentos fracos, testamos a hipótese nula **conjunta** de que os parâmetros dos instrumentos são iguais a zero, ou seja:
 {{<math>}}$$H_0: \quad \ \boldsymbol{\gamma}^* = \boldsymbol{0}\ \iff\ \begin{bmatrix} \gamma^*_1 \\ \gamma^*_2 \\ \vdots \\ \gamma^*_L \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}$${{</math>}}
 - Podemos verificar isso por meio dos Testes de Wald ou F.
-- Para maior detalhes, ver [Seção de Teste de Hipótese](../sec9).
+- Para mais detalhes, veja a [seção de Testes de Hipótese](../sec3).
 
 
 #### (a) Teste de Wald
@@ -1295,5 +1295,3 @@ sarg = N * r2 # sempre positivo
 <!-- </br> -->
 
 
-
-<!-- {{< cta cta_text="👉 Proceed to GMM" cta_link="../sec12" >}} -->

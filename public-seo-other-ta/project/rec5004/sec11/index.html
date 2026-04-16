@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: April 16, 2026 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fabio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="Instrumental variables and 2SLS notes covering endogeneity, valid instruments, first-stage relevance, overidentification tests, and R estimation examples." />
+
+
+
+  <link rel="alternate" hreflang="pt-br" href="https://fhnishida.github.io/pt-br/project/rec5004/sec11/" />
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.github.io/project/rec5004/sec11/" />
+<link rel="canonical" href="https://fhnishida.github.io/project/rec5004/sec11/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fabio Nishida" />
+<meta property="og:url" content="https://fhnishida.github.io/project/rec5004/sec11/" />
+<meta property="og:title" content="Instrumental Variables and 2SLS | Fabio Nishida" />
+<meta property="og:description" content="Instrumental variables and 2SLS notes covering endogeneity, valid instruments, first-stage relevance, overidentification tests, and R estimation examples." /><meta property="og:image" content="https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec11/index.xml" type="application/rss+xml" title="Fabio Nishida" />
+  
+
+  
+
+
+  
+  <title>Instrumental Variables and 2SLS | Fabio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="37df2bf5df398db26a3a58aa610536a9" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fabio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fabio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Research</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">English</span></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://fhnishida.github.io/pt-br/project/rec5004/sec11/">
+              <span>Português (Brasil)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/">Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">R Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">GMM</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Panel Setup</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#notation">Notation</a></li>
+    <li><a href="#iv-estimator">IV Estimator</a>
+      <ul>
+        <li></li>
+        <li><a href="#estimation-with-ivreg">Estimation with <code>ivreg()</code></a></li>
+        <li><a href="#analytical-estimation">Analytical Estimation</a></li>
+        <li><a href="#overidentification-adjustment">Overidentification Adjustment</a></li>
+      </ul>
+    </li>
+    <li><a href="#2sls-estimator">2SLS Estimator</a>
+      <ul>
+        <li><a href="#estimation-with-ivreg-1">Estimation with <code>ivreg()</code></a></li>
+        <li><a href="#estimation-with-lm">Estimation with <code>lm()</code></a></li>
+        <li><a href="#analytical-estimation-1-1">Analytical Estimation 1</a></li>
+        <li><a href="#analytical-estimation-2">Analytical Estimation 2</a></li>
+      </ul>
+    </li>
+    <li><a href="#diagnostic-tests">Diagnostic Tests</a>
+      <ul>
+        <li><a href="#endogeneity-test">Endogeneity Test</a></li>
+        <li><a href="#weak-instrument-tests">Weak-Instrument Tests</a></li>
+        <li><a href="#overidentification-tests">Overidentification Tests</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Instrumental Variables and 2SLS</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf" target="_blank" rel="noopener">Sections 15.1 to 15.5 of Heiss (2020)</a></li>
+</ul>
+<h2 id="notation">Notation</h2>
+<ul>
+<li>
+<p>Consider the multivariate model with 
+
+$K$ regressors:
+
+
+$$ \boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}^*_{1} + ... + \beta_J \boldsymbol{x}^*_{J} + \beta_{J+1} \boldsymbol{x}_{J+1} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} $$
+where 
+
+$\boldsymbol{x}^*_1, ..., \boldsymbol{x}^*_{J}$ are the 
+
+$J$ endogenous regressors in the model, with 
+
+$N$ observations.</p>
+</li>
+<li>
+<p>In matrix form, we can write (1) as:
+
+
+$$ \boldsymbol{y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \tag{2} $$
+where
+
+
+$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \begin{bmatrix} 1 & x^*_{11} & \cdots & x^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & x^*_{21} & \cdots & x^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & x^*_{N1} & \cdots & x^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix}, $$
+
+
+$$ \underset{N \times 1}{\boldsymbol{y}} = \left[ \begin{matrix} \boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_N \end{matrix} \right] \quad \text{ e } \quad  \underset{N \times 1}{\boldsymbol{\varepsilon}} = \left[ \begin{matrix} \boldsymbol{\varepsilon}_1 \\ \boldsymbol{\varepsilon}_2 \\ \vdots \\ \boldsymbol{\varepsilon}_N \end{matrix} \right] $$</p>
+</li>
+<li>
+<p>Let 
+
+$\boldsymbol{Z}$ denote the instrument matrix with 
+
+$L$ instrumental variables, 
+
+$\boldsymbol{z}_k$, and 
+
+$K-J$ exogenous variables, 
+
+$\boldsymbol{x}_k$:
+
+
+$$ \underset{N \times (1+L+K-J)}{\boldsymbol{Z}} = \begin{bmatrix}
+1 & z_{11} & \cdots & z_{1L} & x_{1,J+1} & \cdots & x_{1K} \\
+1 & z_{21} & \cdots & z_{2L} & x_{2,J+1} & \cdots & x_{2K} \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+1 & z_{N1} & \cdots & z_{NL} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix},$$
+where 
+
+$J \le L$, so 
+
+$\boldsymbol{Z}$ has at least as many columns as 
+
+$\boldsymbol{X}$.</p>
+</li>
+<li>
+<p>Note that:</p>
+<ul>
+<li>
+
+$\boldsymbol{z}_1$ is the instrument for the endogenous variable 
+
+$\boldsymbol{x}^*_1$.</li>
+<li>The best instruments for exogenous regressors are the variables themselves (
+
+$\boldsymbol{x}_{J+1}, ..., \boldsymbol{x}_K$).</li>
+<li><strong>Only when 
+
+$J = L$ (number of endogenous regressors equals number of instruments)</strong> does 
+
+$\boldsymbol{Z}$ have the same dimensions as 
+
+$\boldsymbol{X}$:</li>
+</ul>
+</li>
+</ul>
+
+
+$$ \underset{N \times (K+1)}{\boldsymbol{Z}} = \left[ \begin{matrix} 1 & z_{11} & \cdots & z_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & z_{21} & \cdots & z_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & z_{N1} & \cdots & z_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{matrix} \right], $$
+<ul>
+<li>
+<p>Let 
+
+$\boldsymbol{Z}^*$ denote the submatrix formed by the 
+
+$(L+1)$ columns of 
+
+$\boldsymbol{Z}$ containing the intercept and the 
+
+$L$ instruments for the endogenous regressors:
+
+
+$$ \underset{N \times (L+1)}{\boldsymbol{Z}^*} = \left[ \begin{matrix} 1 & z_{11} & z_{12} & \cdots & z_{1L} \\ 1 & z_{21} & z_{22} & \cdots & z_{2L} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & z_{N1} & z_{N2} & \cdots & z_{NL} \end{matrix} \right], $$</p>
+</li>
+<li>
+<p>The notation here differs slightly from the instructor&rsquo;s lecture notes.</p>
+</li>
+</ul>
+</br>
+<h2 id="iv-estimator">IV Estimator</h2>
+<ul>
+<li>
+<p>The <strong>instrumental-variables (IV) estimator</strong> is
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}} = (\boldsymbol{Z}'\boldsymbol{X})^{-1} \boldsymbol{Z}' \boldsymbol{y} $$</p>
+</li>
+<li>
+<p>Notice that the <strong>IV estimator requires 
+
+$\boldsymbol{Z}$ and 
+
+$\boldsymbol{X}$ to have the same dimensions</strong>. Otherwise, 
+
+$\boldsymbol{Z'X}$ is not square and therefore cannot be inverted.</p>
+</li>
+<li>
+<p>The <strong>variance-covariance matrix of the estimator</strong> is
+
+
+$$ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{VI}})= \left( \boldsymbol{Z}' \boldsymbol{X}\right)^{-1} \boldsymbol{Z}' \boldsymbol{\Sigma} \boldsymbol{Z} \left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1} $$</p>
+</li>
+<li>
+<p>Under homoskedasticity, 
+
+$\boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I}$, so the expression simplifies to:
+
+
+\begin{align} V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{VI}}) &= \left( \boldsymbol{Z}' \boldsymbol{X}\right)^{-1} \boldsymbol{Z}' (\sigma^2 \boldsymbol{I}) \boldsymbol{Z} \left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1} \\
+&= \sigma^2 {\color{red}\left( \boldsymbol{Z}' \boldsymbol{X}\right)^{-1}} {\color{green}\boldsymbol{Z}' \boldsymbol{Z}} {\color{blue}\left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1}} \\
+&\overset{*}{=} \sigma^2 \left( {\color{blue}\boldsymbol{X}' \boldsymbol{Z}} {\color{green}(\boldsymbol{Z}' \boldsymbol{Z})^{-1}} {\color{red}\boldsymbol{Z}' \boldsymbol{X}} \right)^{-1} \\
+&= \sigma^2 \left( \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} \right)^{-1}  \end{align}
+where 
+
+$\boldsymbol{P_{\scriptscriptstyle{Z}}}$ is the orthogonal projection matrix onto the column space of 
+
+$\boldsymbol{Z}$. (*) Since each matrix pair has dimension K x K, we can invert the expression from right to left, starting with the inverse of 
+
+$\left(\boldsymbol{Z}' \boldsymbol{X} \right)^{-1}$, then the inverse of 
+
+$\boldsymbol{Z}' \boldsymbol{Z}$, and finally the inverse of 
+
+$\left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1}$.</p>
+</li>
+<li>
+<p>The <strong>error variance</strong> can be estimated as:
+
+
+$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{N-K-1} $$</p>
+</li>
+</ul>
+</br>
+<h4 id="example-151-returns-to-education-for-women-wooldridge-2019">Example 15.1: Returns to Education for Women (Wooldridge, 2019)</h4>
+<ul>
+<li>We use the <code>mroz</code> dataset from the <code>wooldridge</code> package to estimate the following model:</li>
+</ul>
+
+
+$$ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ}^* + \beta_2 \text{exper} + \beta_3 \text{exper}^2 + \varepsilon $$
+<ul>
+<li>For comparison, we first estimate the model by OLS:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">mroz</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span> <span class="c1"># loading the dataset</span>
+</span></span><span class="line"><span class="cl"><span class="n">mroz</span> <span class="o">=</span> <span class="n">mroz[</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">mroz</span><span class="o">$</span><span class="n">wage</span><span class="p">),</span><span class="n">]</span> <span class="c1"># dropping observations with missing wages</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">reg.ols</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">mroz</span><span class="p">)</span> <span class="c1"># OLS regression</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">3</span> <span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   -0.522      0.199  -2.628    0.009
+</span></span><span class="line"><span class="cl">## educ           0.107      0.014   7.598    0.000
+</span></span><span class="line"><span class="cl">## exper          0.042      0.013   3.155    0.002
+</span></span><span class="line"><span class="cl">## expersq       -0.001      0.000  -2.063    0.040
+</span></span></code></pre></div><h3 id="estimation-with-ivreg">Estimation with <code>ivreg()</code></h3>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/ivreg/vignettes/ivreg.html" target="_blank" rel="noopener">CRAN - Package ivreg</a></li>
+<li>To estimate an instrumental-variables regression, we use the <code>ivreg()</code> function from the <code>ivreg</code> package (also available in <code>AER</code>, by the same author).</li>
+<li>We must include the instrument for <em>educ</em> (in this case, father&rsquo;s education, <em>fatheduc</em>) as well as the instruments for the exogenous regressors (namely, the exogenous regressors themselves) after the <code>|</code> in the formula:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ivreg</span><span class="p">)</span> <span class="c1"># loading the ivreg package</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.iv</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span> 
+</span></span><span class="line"><span class="cl">                 <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span> <span class="c1"># IV regression</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Comparison</span>
+</span></span><span class="line"><span class="cl"><span class="n">stargazer</span><span class="o">::</span><span class="nf">stargazer</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">,</span> <span class="n">reg.iv</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## ====================================================================
+</span></span><span class="line"><span class="cl">##                                         Dependent variable:         
+</span></span><span class="line"><span class="cl">##                                -------------------------------------
+</span></span><span class="line"><span class="cl">##                                                lwage                
+</span></span><span class="line"><span class="cl">##                                          OLS            instrumental
+</span></span><span class="line"><span class="cl">##                                                           variable  
+</span></span><span class="line"><span class="cl">##                                          (1)                (2)     
+</span></span><span class="line"><span class="cl">## --------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">## educ                                  0.1075***           0.0702**  
+</span></span><span class="line"><span class="cl">##                                        (0.0141)           (0.0344)  
+</span></span><span class="line"><span class="cl">##                                                                     
+</span></span><span class="line"><span class="cl">## exper                                 0.0416***          0.0437***  
+</span></span><span class="line"><span class="cl">##                                        (0.0132)           (0.0134)  
+</span></span><span class="line"><span class="cl">##                                                                     
+</span></span><span class="line"><span class="cl">## expersq                               -0.0008**          -0.0009**  
+</span></span><span class="line"><span class="cl">##                                        (0.0004)           (0.0004)  
+</span></span><span class="line"><span class="cl">##                                                                     
+</span></span><span class="line"><span class="cl">## Constant                              -0.5220***          -0.0611   
+</span></span><span class="line"><span class="cl">##                                        (0.1986)           (0.4364)  
+</span></span><span class="line"><span class="cl">##                                                                     
+</span></span><span class="line"><span class="cl">## --------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">## Observations                             428                428     
+</span></span><span class="line"><span class="cl">## R2                                      0.1568             0.1430   
+</span></span><span class="line"><span class="cl">## Adjusted R2                             0.1509             0.1370   
+</span></span><span class="line"><span class="cl">## Residual Std. Error (df = 424)          0.6664             0.6719   
+</span></span><span class="line"><span class="cl">## F Statistic                    26.2862*** (df = 3; 424)             
+</span></span><span class="line"><span class="cl">## ====================================================================
+</span></span><span class="line"><span class="cl">## Note:                                    *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</span></span></code></pre></div><h3 id="analytical-estimation">Analytical Estimation</h3>
+<p><strong>a)</strong> Building the vectors/matrices and defining <em>N</em> and <em>K</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Building the y vector</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">mroz[</span><span class="p">,</span><span class="s">&#34;lwage&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># converting the data-frame column into a matrix</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the covariate matrix X with a leading column of 1s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;educ&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the instrument matrix Z with a leading column of 1s</span>
+</span></span><span class="line"><span class="cl"><span class="n">Z</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;fatheduc&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Retrieving N and K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span></code></pre></div><p><strong>b)</strong> IV Estimates 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}$</p>
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}} = (\boldsymbol{Z}' \boldsymbol{X})^{-1} \boldsymbol{Z}' \boldsymbol{y} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                 [,1]
+</span></span><span class="line"><span class="cl">## 1       -0.061116933
+</span></span><span class="line"><span class="cl">## educ     0.070226291
+</span></span><span class="line"><span class="cl">## exper    0.043671588
+</span></span><span class="line"><span class="cl">## expersq -0.000882155
+</span></span></code></pre></div><p><strong>c)</strong> Fitted Values 
+
+$\hat{\boldsymbol{y}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">## 1 1.2200984
+</span></span><span class="line"><span class="cl">## 2 0.9779026
+</span></span><span class="line"><span class="cl">## 3 1.2381875
+</span></span><span class="line"><span class="cl">## 4 1.0118705
+</span></span><span class="line"><span class="cl">## 5 1.1845267
+</span></span><span class="line"><span class="cl">## 6 1.2620942
+</span></span></code></pre></div><p><strong>d)</strong> Residuals 
+
+$\hat{\boldsymbol{\varepsilon}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##           [,1]
+</span></span><span class="line"><span class="cl">## 1 -0.009944725
+</span></span><span class="line"><span class="cl">## 2 -0.649390526
+</span></span><span class="line"><span class="cl">## 3  0.275950227
+</span></span><span class="line"><span class="cl">## 4 -0.919747190
+</span></span><span class="line"><span class="cl">## 5  0.339745535
+</span></span><span class="line"><span class="cl">## 6  0.294385830
+</span></span></code></pre></div><p><strong>e)</strong> Estimated Error Variance 
+
+$\hat{\sigma}^2$
+
+
+$$\hat{\sigma}^2_{\scriptscriptstyle{VI}} =  \frac{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">sig2hat</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ehat</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.4513836
+</span></span></code></pre></div><p><strong>f)</strong> Variance-Covariance Matrix of the Estimator</p>
+
+
+$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}) = \hat{\sigma}^2 (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">Pz</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Z</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">sig2hat</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                     1          educ         exper       expersq
+</span></span><span class="line"><span class="cl">## 1        1.904852e-01 -1.467376e-02 -2.903230e-04  4.591458e-07
+</span></span><span class="line"><span class="cl">## educ    -1.467376e-02  1.186299e-03 -6.701635e-05  2.259110e-06
+</span></span><span class="line"><span class="cl">## exper   -2.903230e-04 -6.701635e-05  1.795632e-04 -5.122537e-06
+</span></span><span class="line"><span class="cl">## expersq  4.591458e-07  2.259110e-06 -5.122537e-06  1.607344e-07
+</span></span></code></pre></div><p><strong>g)</strong> Standard Errors of the Estimator 
+
+$\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}})$</p>
+<p>They are the square roots of the main diagonal of the estimator&rsquo;s variance-covariance matrix.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">se</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">se</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##           1        educ       exper     expersq 
+</span></span><span class="line"><span class="cl">## 0.436446128 0.034442694 0.013400121 0.000400917
+</span></span></code></pre></div><p><strong>h)</strong> <em>t</em> Statistic</p>
+
+
+$$ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} 
+$$ 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="n">bhat</span> <span class="o">/</span> <span class="n">se</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##               [,1]
+</span></span><span class="line"><span class="cl">## 1       -0.1400332
+</span></span><span class="line"><span class="cl">## educ     2.0389314
+</span></span><span class="line"><span class="cl">## exper    3.2590443
+</span></span><span class="line"><span class="cl">## expersq -2.2003431
+</span></span></code></pre></div><p><strong>i)</strong> p-value</p>
+
+
+$$ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                [,1]
+</span></span><span class="line"><span class="cl">## 1       0.888700281
+</span></span><span class="line"><span class="cl">## educ    0.042076572
+</span></span><span class="line"><span class="cl">## exper   0.001207928
+</span></span><span class="line"><span class="cl">## expersq 0.028321194
+</span></span></code></pre></div><p><strong>j)</strong> Summary Table</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># IV results</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            bhat     se       t      p
+</span></span><span class="line"><span class="cl">## 1       -0.0611 0.4364 -0.1400 0.8887
+</span></span><span class="line"><span class="cl">## educ     0.0702 0.0344  2.0389 0.0421
+</span></span><span class="line"><span class="cl">## exper    0.0437 0.0134  3.2590 0.0012
+</span></span><span class="line"><span class="cl">## expersq -0.0009 0.0004 -2.2003 0.0283
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg.iv</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span> <span class="c1"># IV results from ivreg()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                 Estimate  Std. Error    t value    Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept) -0.061116933 0.436446128 -0.1400332 0.888700281
+</span></span><span class="line"><span class="cl">## educ         0.070226291 0.034442694  2.0389314 0.042076572
+</span></span><span class="line"><span class="cl">## exper        0.043671588 0.013400121  3.2590443 0.001207928
+</span></span><span class="line"><span class="cl">## expersq     -0.000882155 0.000400917 -2.2003431 0.028321194
+</span></span><span class="line"><span class="cl">## attr(,&#34;df&#34;)
+</span></span><span class="line"><span class="cl">## [1] 424
+</span></span><span class="line"><span class="cl">## attr(,&#34;nobs&#34;)
+</span></span><span class="line"><span class="cl">## [1] 428
+</span></span></code></pre></div></br>
+<h3 id="overidentification-adjustment">Overidentification Adjustment</h3>
+<ul>
+<li>
+<p>As an example, consider the case with 
+
+$L = 2$ instruments for 
+
+$J = 1$ endogenous regressor 
+
+$\boldsymbol{x}_1^*$.</p>
+</li>
+<li>
+<p>Since 
+
+$L > J$, the model is overidentified.</p>
+</li>
+<li>
+<p>To perform IV estimation, we can <strong>create a new instrument</strong>, 
+
+$\boldsymbol{z}_1^*$, as a linear combination of the other two instruments using the following model:
+
+
+\begin{align} \boldsymbol{x}_1^* &= \gamma_0 + \gamma_1 \boldsymbol{z}_1 + \gamma_2 \boldsymbol{z}_2 + \boldsymbol{u} \\
+&= \boldsymbol{Z}^*\boldsymbol{\gamma} + \boldsymbol{u} \end{align}
+where
+
+
+$$ \boldsymbol{\gamma} = \begin{bmatrix} \gamma_0 \\ \gamma_1 \\ \gamma_2 \end{bmatrix}, \quad \boldsymbol{x}_{1}^* = \begin{bmatrix} x_{11}^* \\ x_{21}^* \\ \vdots \\ x_{N1}^* \end{bmatrix} \quad \text{ e } \quad \boldsymbol{Z}^* = \begin{bmatrix} 1 & z_{11} & z_{12} \\ 1 & z_{21} & z_{22} \\ \vdots & \vdots & \vdots \\ 1 & z_{N1} & z_{N2} \end{bmatrix} $$</p>
+</li>
+<li>
+<p>We need to estimate:
+
+
+$$ \hat{\boldsymbol{\gamma}} = (\boldsymbol{Z}^{*\prime} \boldsymbol{Z}^{*})^{-1} \boldsymbol{Z}^{*\prime} \boldsymbol{x}_1^*  $$ </p>
+</li>
+<li>
+<p>We can then use the fitted value from this model, 
+
+$\hat{\boldsymbol{x}}_1^*$, as the instrument for 
+
+$\boldsymbol{x}_1^*$ inside 
+
+$\boldsymbol{Z}$:
+
+
+$$ \boldsymbol{z}^*_1 \equiv \hat{\boldsymbol{x}}_1^* = \boldsymbol{Z}^*\hat{\boldsymbol{\gamma}}$$ </p>
+</li>
+<li>
+<p>The resulting instrument matrix, now with the same dimensions as 
+
+$\boldsymbol{X}$, is:</p>
+</li>
+</ul>
+
+
+$$ \underset{N \times (K+1)}{\boldsymbol{Z}} = \left[ \begin{matrix} 1 & \hat{x}^*_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & \hat{x}^*_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & \hat{x}^*_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right], $$
+<h4 id="analytical-estimation-1">Analytical Estimation</h4>
+<ul>
+<li>Here we construct a new instrumental variable &ldquo;by hand&rdquo; from the two available instruments.</li>
+<li>Continuing with Wooldridge&rsquo;s Example 15.1, we add another instrumental variable (<em>motheduc</em>), in addition to <em>fatheduc</em>, for the endogenous regressor <em>educ</em>.</li>
+<li>Recall that we want to estimate the following model:
+
+
+$$ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ}^* + \beta_2 \text{exper} + \beta_3 \text{exper}^2 + \varepsilon $$</li>
+</ul>
+<p><strong>a1)</strong> Building the vectors/matrices and defining <em>N</em> and <em>K</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Building the y vector</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">mroz[</span><span class="p">,</span><span class="s">&#34;lwage&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># converting the data-frame column into a matrix</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the covariate matrix X with a leading column of 1s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;educ&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the vector with the endogenous variable x1*</span>
+</span></span><span class="line"><span class="cl"><span class="n">x1star</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">mroz[</span><span class="p">,</span><span class="s">&#34;educ&#34;</span><span class="n">]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the matrix containing ONLY the instruments for the endogenous regressor x1*</span>
+</span></span><span class="line"><span class="cl"><span class="n">Zstar</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;fatheduc&#34;</span><span class="p">,</span><span class="s">&#34;motheduc&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Retrieving N and K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span></code></pre></div><p><strong>a2)</strong> Estimating 
+
+$\hat{\boldsymbol{\gamma}}$, obtaining 
+
+$\boldsymbol{z}_{1} = \hat{\boldsymbol{x}}^*_1$, and constructing 
+
+$\boldsymbol{Z}$</p>
+
+
+$$ \hat{\boldsymbol{\gamma}} = (\boldsymbol{Z}^{*\prime} \boldsymbol{Z}^{*})^{-1} \boldsymbol{Z}^{*\prime} \boldsymbol{x}_1^* \quad \text{ e } \quad \hat{\boldsymbol{x}}^*_1 = \boldsymbol{Z}^* \hat{\boldsymbol{\gamma}} $$ 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimating ghat and x1hat</span>
+</span></span><span class="line"><span class="cl"><span class="n">ghat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Zstar</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Zstar</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Zstar</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">x1star</span>
+</span></span><span class="line"><span class="cl"><span class="n">x1hat</span> <span class="o">=</span> <span class="n">Zstar</span> <span class="o">%*%</span> <span class="n">ghat</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the instrument matrix Z</span>
+</span></span><span class="line"><span class="cl"><span class="n">Z</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">x1hat</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##   1    x1hat exper expersq
+</span></span><span class="line"><span class="cl">## 1 1 12.67324    14     196
+</span></span><span class="line"><span class="cl">## 2 1 11.89140     5      25
+</span></span><span class="line"><span class="cl">## 3 1 12.67324    15     225
+</span></span><span class="line"><span class="cl">## 4 1 11.89140     6      36
+</span></span><span class="line"><span class="cl">## 5 1 13.98993     7      49
+</span></span><span class="line"><span class="cl">## 6 1 12.98598    33    1089
+</span></span></code></pre></div><p><strong>b &ndash; j)</strong> The remaining steps are the same as before:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Estimation, fitted values, and residuals</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Variance-covariance matrix</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ehat</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Pz</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Z</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">sig2hat</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Standard errors, t-statistics, and p-values</span>
+</span></span><span class="line"><span class="cl"><span class="n">se</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="n">bhat</span> <span class="o">/</span> <span class="n">se</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Summary table</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.iv2</span> <span class="o">=</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="c1"># overidentified IV results</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">reg.iv2</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            bhat     se       t      p
+</span></span><span class="line"><span class="cl">## 1        0.0481 0.4003  0.1201 0.9044
+</span></span><span class="line"><span class="cl">## educ     0.0614 0.0314  1.9530 0.0515
+</span></span><span class="line"><span class="cl">## exper    0.0442 0.0134  3.2883 0.0011
+</span></span><span class="line"><span class="cl">## expersq -0.0009 0.0004 -2.2380 0.0257
+</span></span></code></pre></div></br>
+<h2 id="2sls-estimator">2SLS Estimator</h2>
+<ul>
+<li>
+<p>Because the IV estimator requires the number of instruments to equal the number of endogenous regressors, it is not used directly in overidentified models unless we apply the adjustment shown above.</p>
+</li>
+<li>
+<p>When 
+
+$L>J$, the standard approach is to use Two-Stage Least Squares (2SLS), also known as the generalized IV estimator.</p>
+</li>
+<li>
+<p>The <strong>two-stage least squares (2SLS) estimator</strong> is
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} = (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} $$
+where 
+
+$\boldsymbol{P_{\scriptscriptstyle{Z}}}$ is the orthogonal projection matrix onto the column space of 
+
+$\boldsymbol{Z}$.</p>
+</li>
+<li>
+<p>Note also that 2SLS collapses to IV when the model is exactly identified (that is, when 
+
+$\boldsymbol{Z}$ and 
+
+$\boldsymbol{X}$ have the same dimensions):
+
+
+\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+&= ({\color{blue}\boldsymbol{X}' \boldsymbol{Z}} {\color{green}(\boldsymbol{Z}' \boldsymbol{Z})^{-1}} {\color{red}\boldsymbol{Z}' \boldsymbol{X}})^{-1} \boldsymbol{X}' \boldsymbol{Z} (\boldsymbol{Z}' \boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{y} \\
+&= {\color{red}(\boldsymbol{Z}' \boldsymbol{X})^{-1}} {\color{green}\boldsymbol{Z}' \boldsymbol{Z}} \underbrace{{\color{blue}(\boldsymbol{X}' \boldsymbol{Z})^{-1}} \boldsymbol{X}' \boldsymbol{Z}}_{\boldsymbol{I}} (\boldsymbol{Z}' \boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{y} \\
+&= (\boldsymbol{Z}' \boldsymbol{X})^{-1}  \underbrace{\boldsymbol{Z}' \boldsymbol{Z} (\boldsymbol{Z}' \boldsymbol{Z})^{-1}}_{\boldsymbol{I}}  \boldsymbol{Z}' \boldsymbol{y} \\
+&= (\boldsymbol{Z}' \boldsymbol{X})^{-1} \boldsymbol{Z}' \boldsymbol{y} = \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{IV}} \end{align}</p>
+</li>
+<li>
+<p>The <strong>variance-covariance matrix of the estimator</strong> is
+
+
+\begin{align} V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) &= \left( \boldsymbol{X}' \boldsymbol{Z}\right)^{-1} \boldsymbol{Z}' \boldsymbol{S} \boldsymbol{Z} \left(\boldsymbol{Z}' \boldsymbol{X} \right)^{-1} \\
+&\overset{*}{=} \sigma^2 \left( \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} \right)^{-1} \end{align}
+where 
+
+$\boldsymbol{S} = N^{-1} \sum_i {\hat{\varepsilon}^2_i \boldsymbol{z}_i \boldsymbol{z}'_i}$. (*) Under homoskedasticity.</p>
+</li>
+<li>
+<p>The <strong>error variance</strong> can be estimated as:
+
+
+$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{N-K-1} $$</p>
+</li>
+</ul>
+</br>
+<ul>
+<li>
+<p>If we define 
+
+$\hat{\boldsymbol{X}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}$ and 
+
+$\tilde{\boldsymbol{y}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y}$ (we avoid 
+
+$\hat{\boldsymbol{y}}$ here so it is not confused with fitted values), then the 2SLS estimator can be rewritten as
+
+
+\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+&= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+&= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+&= ([\boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}]' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} [\boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}]' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+&\equiv (\hat{\boldsymbol{X}}' \hat{\boldsymbol{X}})^{-1} \hat{\boldsymbol{X}}' \tilde{\boldsymbol{y}}
+\end{align}
+because 
+
+$\boldsymbol{P_{\scriptscriptstyle{Z}}}$ is idempotent 
+
+$(\boldsymbol{P_{\scriptscriptstyle{Z}}}\boldsymbol{P_{\scriptscriptstyle{Z}}}=\boldsymbol{P_{\scriptscriptstyle{Z}}})$ and symmetric 
+
+$(\boldsymbol{P_{\scriptscriptstyle{Z}}}=\boldsymbol{P_{\scriptscriptstyle{Z}}}')$.</p>
+</li>
+<li>
+<p>Once the variables are transformed, the estimator can be computed by OLS, which is why the method is called &ldquo;two-stage&rdquo; least squares.</p>
+</li>
+<li>
+<p>The 1st OLS stage appears when we pre-multiply by 
+
+$\boldsymbol{P_{\scriptscriptstyle{Z}}}$, since this matrix projects 
+
+$\boldsymbol{X}$ onto the column space of 
+
+$\boldsymbol{Z}$:
+
+
+\begin{align} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} &= \boldsymbol{P_{\scriptscriptstyle{Z}}} \begin{bmatrix} 1 & x^*_{11} & \cdots & x^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & x^*_{21} & \cdots & x^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & x^*_{N1} & \cdots & x^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix} \\
+&= \ \quad \begin{bmatrix} 1 & \hat{x}^*_{11} & \cdots & \hat{x}^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & \hat{x}^*_{21} & \cdots & \hat{x}^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & \hat{x}^*_{N1} & \cdots & \hat{x}^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix} \equiv \hat{\boldsymbol{X}} \end{align}
+where each variable in 
+
+$\boldsymbol{X}$ has been regressed on all instruments (and exogenous regressors) in 
+
+$\boldsymbol{Z}$:
+
+
+$$\hat{\boldsymbol{x}}^*_{k} = \hat{\gamma}_{k0} + \hat{\gamma}_{k1} \boldsymbol{z}^*_1 + \cdots + \hat{\gamma}_{kL} \boldsymbol{z}^*_L + \hat{\gamma}_{k,J+1} \boldsymbol{x}_{J+1} + \cdots + \hat{\gamma}_{kK} \boldsymbol{x}_{K}  ,$$
+for 
+
+$k = 1, ..., J $, and
+
+
+\begin{align} \hat{\boldsymbol{x}}_{k} &= \hat{\gamma}_{k0} + \hat{\gamma}_{k1} \boldsymbol{z}^*_1 + \cdots + \hat{\gamma}_{kL} \boldsymbol{z}_L + \hat{\gamma}_{k,J+1} \boldsymbol{x}_{J+1} + \cdots + \hat{\gamma}_{kK} \boldsymbol{x}_{K} \\
+&= 0 + \cdots + 0 + \hat{\gamma}_{kk} \boldsymbol{x}_k + 0 + \cdots + 0 \\
+&= 0 + \cdots + 0 + 1 \boldsymbol{x}_k + 0 + \cdots + 0\ \ =\ \ \boldsymbol{x}_{k},
+\end{align}
+for 
+
+$k = J+1, ..., K$.</p>
+</li>
+<li>
+<p>Naturally, the exogenous regressors are unchanged by 
+
+$\boldsymbol{P_{\scriptscriptstyle{Z}}}$, because they belong to both the column space of 
+
+$\boldsymbol{X}$ and that of 
+
+$\boldsymbol{Z}$.</p>
+</li>
+</ul>
+<h3 id="estimation-with-ivreg-1">Estimation with <code>ivreg()</code></h3>
+<ul>
+<li>We only need to add the new instrument after the <code>|</code> in the <code>ivreg()</code> formula.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ivreg</span><span class="p">)</span> <span class="c1"># loading the ivreg package</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.2sls</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span> 
+</span></span><span class="line"><span class="cl">                 <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span> <span class="c1"># 2SLS regression</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Comparison</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># 2SLS results from ivreg()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   0.0481     0.4003  0.1202   0.9044
+</span></span><span class="line"><span class="cl">## educ          0.0614     0.0314  1.9530   0.0515
+</span></span><span class="line"><span class="cl">## exper         0.0442     0.0134  3.2883   0.0011
+</span></span><span class="line"><span class="cl">## expersq      -0.0009     0.0004 -2.2380   0.0257
+</span></span><span class="line"><span class="cl">## attr(,&#34;df&#34;)
+</span></span><span class="line"><span class="cl">## [1] 424
+</span></span><span class="line"><span class="cl">## attr(,&#34;nobs&#34;)
+</span></span><span class="line"><span class="cl">## [1] 428
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">reg.iv2</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># overidentified IV results</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            bhat     se       t      p
+</span></span><span class="line"><span class="cl">## 1        0.0481 0.4003  0.1201 0.9044
+</span></span><span class="line"><span class="cl">## educ     0.0614 0.0314  1.9530 0.0515
+</span></span><span class="line"><span class="cl">## exper    0.0442 0.0134  3.2883 0.0011
+</span></span><span class="line"><span class="cl">## expersq -0.0009 0.0004 -2.2380 0.0257
+</span></span></code></pre></div><h3 id="estimation-with-lm">Estimation with <code>lm()</code></h3>
+<ul>
+<li>1st OLS: <code>educ ~ fatheduc + motheduc + exper + expersq</code></li>
+<li>Obtain the fitted values <code>educ_hat</code></li>
+<li>2nd OLS: <code>lwage ~ educ_hat + exper + expersq</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># 1st step: regress educ on the instruments</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.1st</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">educ</span> <span class="o">~</span> <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">educ_hat</span> <span class="o">=</span> <span class="nf">fitted</span><span class="p">(</span><span class="n">reg.1st</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2nd step: regress lwage on educ_hat and the remaining exogenous regressors</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.2nd</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ_hat</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Comparison</span>
+</span></span><span class="line"><span class="cl"><span class="n">stargazer</span><span class="o">::</span><span class="nf">stargazer</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">,</span> <span class="n">reg.2nd</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## ===================================================================
+</span></span><span class="line"><span class="cl">##                                        Dependent variable:         
+</span></span><span class="line"><span class="cl">##                                ------------------------------------
+</span></span><span class="line"><span class="cl">##                                               lwage                
+</span></span><span class="line"><span class="cl">##                                instrumental           OLS          
+</span></span><span class="line"><span class="cl">##                                  variable                          
+</span></span><span class="line"><span class="cl">##                                    (1)                (2)          
+</span></span><span class="line"><span class="cl">## -------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">## educ                             0.0614*                           
+</span></span><span class="line"><span class="cl">##                                  (0.0314)                          
+</span></span><span class="line"><span class="cl">##                                                                    
+</span></span><span class="line"><span class="cl">## educ_hat                                            0.0614*        
+</span></span><span class="line"><span class="cl">##                                                    (0.0330)        
+</span></span><span class="line"><span class="cl">##                                                                    
+</span></span><span class="line"><span class="cl">## exper                           0.0442***          0.0442***       
+</span></span><span class="line"><span class="cl">##                                  (0.0134)          (0.0141)        
+</span></span><span class="line"><span class="cl">##                                                                    
+</span></span><span class="line"><span class="cl">## expersq                         -0.0009**          -0.0009**       
+</span></span><span class="line"><span class="cl">##                                  (0.0004)          (0.0004)        
+</span></span><span class="line"><span class="cl">##                                                                    
+</span></span><span class="line"><span class="cl">## Constant                          0.0481            0.0481         
+</span></span><span class="line"><span class="cl">##                                  (0.4003)          (0.4198)        
+</span></span><span class="line"><span class="cl">##                                                                    
+</span></span><span class="line"><span class="cl">## -------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">## Observations                       428                428          
+</span></span><span class="line"><span class="cl">## R2                                0.1357            0.0498         
+</span></span><span class="line"><span class="cl">## Adjusted R2                       0.1296            0.0431         
+</span></span><span class="line"><span class="cl">## Residual Std. Error (df = 424)    0.6747            0.7075         
+</span></span><span class="line"><span class="cl">## F Statistic                                 7.4046*** (df = 3; 424)
+</span></span><span class="line"><span class="cl">## ===================================================================
+</span></span><span class="line"><span class="cl">## Note:                                   *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01
+</span></span></code></pre></div><h3 id="analytical-estimation-1-1">Analytical Estimation 1</h3>
+<p><strong>a)</strong> Building the vectors/matrices and defining <em>N</em> and <em>K</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Building the y vector</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">mroz[</span><span class="p">,</span><span class="s">&#34;lwage&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># converting the data-frame column into a matrix</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the covariate matrix X with a leading column of 1s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;educ&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the overidentified instrument matrix Z and the projection matrix Pz</span>
+</span></span><span class="line"><span class="cl"><span class="n">Z</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;fatheduc&#34;</span><span class="p">,</span><span class="s">&#34;motheduc&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Pz</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Z</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Retrieving N and K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span></code></pre></div><p><strong>b)</strong> 2SLS Estimates 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}}$</p>
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} = (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  [,1]
+</span></span><span class="line"><span class="cl">## 1        0.0481003069
+</span></span><span class="line"><span class="cl">## educ     0.0613966287
+</span></span><span class="line"><span class="cl">## exper    0.0441703929
+</span></span><span class="line"><span class="cl">## expersq -0.0008989696
+</span></span></code></pre></div><p><strong>c)</strong> Fitted Values 
+
+$\hat{\boldsymbol{y}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##        [,1]
+</span></span><span class="line"><span class="cl">## 1 1.2270473
+</span></span><span class="line"><span class="cl">## 2 0.9832376
+</span></span><span class="line"><span class="cl">## 3 1.2451476
+</span></span><span class="line"><span class="cl">## 4 1.0175193
+</span></span><span class="line"><span class="cl">## 5 1.1727963
+</span></span><span class="line"><span class="cl">## 6 1.2635049
+</span></span></code></pre></div><p><strong>d)</strong> Residuals 
+
+$\hat{\boldsymbol{\varepsilon}}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## 1 -0.01689361
+</span></span><span class="line"><span class="cl">## 2 -0.65472547
+</span></span><span class="line"><span class="cl">## 3  0.26899016
+</span></span><span class="line"><span class="cl">## 4 -0.92539598
+</span></span><span class="line"><span class="cl">## 5  0.35147585
+</span></span><span class="line"><span class="cl">## 6  0.29297511
+</span></span></code></pre></div><p><strong>e)</strong> Estimated Error Variance 
+
+$\hat{\sigma}^2_{\scriptscriptstyle{2SLS}}$
+
+
+$$\hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">sig2hat</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ehat</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.4552359
+</span></span></code></pre></div><p><strong>f)</strong> Variance-Covariance Matrix of the Estimator</p>
+
+
+$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}) = \hat{\sigma}^2 (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">sig2hat</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                     1          educ         exper       expersq
+</span></span><span class="line"><span class="cl">## 1        1.602626e-01 -1.222421e-02 -4.382549e-04  5.366299e-06
+</span></span><span class="line"><span class="cl">## educ    -1.222421e-02  9.882658e-04 -5.582906e-05  1.881989e-06
+</span></span><span class="line"><span class="cl">## exper   -4.382549e-04 -5.582906e-05  1.804314e-04 -5.143861e-06
+</span></span><span class="line"><span class="cl">## expersq  5.366299e-06  1.881989e-06 -5.143861e-06  1.613513e-07
+</span></span></code></pre></div><p><strong>g)</strong> Standard Errors, t-Statistics, p-values, and Summary Table</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">se</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="n">bhat</span> <span class="o">/</span> <span class="n">se</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Summary table</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># analytical 2SLS results</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            bhat     se       t      p
+</span></span><span class="line"><span class="cl">## 1        0.0481 0.4003  0.1202 0.9044
+</span></span><span class="line"><span class="cl">## educ     0.0614 0.0314  1.9530 0.0515
+</span></span><span class="line"><span class="cl">## exper    0.0442 0.0134  3.2883 0.0011
+</span></span><span class="line"><span class="cl">## expersq -0.0009 0.0004 -2.2380 0.0257
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># 2SLS results from ivreg()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   0.0481     0.4003  0.1202   0.9044
+</span></span><span class="line"><span class="cl">## educ          0.0614     0.0314  1.9530   0.0515
+</span></span><span class="line"><span class="cl">## exper         0.0442     0.0134  3.2883   0.0011
+</span></span><span class="line"><span class="cl">## expersq      -0.0009     0.0004 -2.2380   0.0257
+</span></span><span class="line"><span class="cl">## attr(,&#34;df&#34;)
+</span></span><span class="line"><span class="cl">## [1] 424
+</span></span><span class="line"><span class="cl">## attr(,&#34;nobs&#34;)
+</span></span><span class="line"><span class="cl">## [1] 428
+</span></span></code></pre></div><h3 id="analytical-estimation-2">Analytical Estimation 2</h3>
+<ul>
+<li>We can also compute 2SLS through OLS applied to the transformed variables.</li>
+</ul>
+<p><strong>a)</strong> Building the vectors/matrices and defining <em>N</em> and <em>K</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Building the y vector</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">mroz[</span><span class="p">,</span><span class="s">&#34;lwage&#34;</span><span class="n">]</span><span class="p">)</span> <span class="c1"># converting the data-frame column into a matrix</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the covariate matrix X with a leading column of 1s</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;educ&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Building the overidentified instrument matrix Z and the projection matrix Pz</span>
+</span></span><span class="line"><span class="cl"><span class="n">Z</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span> <span class="nf">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">mroz[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;fatheduc&#34;</span><span class="p">,</span><span class="s">&#34;motheduc&#34;</span><span class="p">,</span><span class="s">&#34;exper&#34;</span><span class="p">,</span><span class="s">&#34;expersq&#34;</span><span class="p">)</span><span class="n">]</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Pz</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Z</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Retrieving N and K</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span>
+</span></span></code></pre></div><p><strong>b1)</strong> Obtaining 
+
+$\hat{\boldsymbol{X}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}$ and 
+
+$\tilde{\boldsymbol{y}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y}$</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">ytil</span> <span class="o">=</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">Xhat</span> <span class="o">=</span> <span class="n">Pz</span> <span class="o">%*%</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Xhat</span><span class="p">))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##   1 educ exper expersq 1     educ exper expersq
+</span></span><span class="line"><span class="cl">## 1 1   12    14     196 1 12.75602    14     196
+</span></span><span class="line"><span class="cl">## 2 1   12     5      25 1 11.73356     5      25
+</span></span><span class="line"><span class="cl">## 3 1   12    15     225 1 12.77198    15     225
+</span></span><span class="line"><span class="cl">## 4 1   12     6      36 1 11.76768     6      36
+</span></span><span class="line"><span class="cl">## 5 1   14     7      49 1 13.91461     7      49
+</span></span><span class="line"><span class="cl">## 6 1   12    33    1089 1 13.02938    33    1089
+</span></span></code></pre></div><ul>
+<li>Notice that even after pre-multiplying 
+
+$\boldsymbol{X}$ by 
+
+$\boldsymbol{P_{\scriptscriptstyle{Z}}}$, <strong>the exogenous regressors keep the same values</strong>, because <em>exper</em> and <em>expersq</em> belong to both 
+
+$\boldsymbol{X}$ and 
+
+$\boldsymbol{Z}$.</li>
+<li>The endogenous regressor is replaced by its fitted counterpart from the first-stage projection onto the instrument space.</li>
+</ul>
+<p><strong>b2)</strong> 2SLS Estimates 
+
+$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}}$</p>
+
+
+$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} = (\hat{\boldsymbol{X}}' \hat{\boldsymbol{X}})^{-1} \hat{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $$
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">bhat</span> <span class="o">=</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">Xhat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">Xhat</span> <span class="p">)</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">Xhat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ytil</span>
+</span></span><span class="line"><span class="cl"><span class="n">bhat</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  [,1]
+</span></span><span class="line"><span class="cl">## 1        0.0481003069
+</span></span><span class="line"><span class="cl">## educ     0.0613966287
+</span></span><span class="line"><span class="cl">## exper    0.0441703929
+</span></span><span class="line"><span class="cl">## expersq -0.0008989696
+</span></span></code></pre></div><p><strong>c &ndash; g)</strong> The remaining steps are the same as before:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">yhat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">%*%</span> <span class="n">bhat</span>
+</span></span><span class="line"><span class="cl"><span class="n">ehat</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">yhat</span>
+</span></span><span class="line"><span class="cl"><span class="n">sig2hat</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">ehat</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">ehat</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vbhat</span> <span class="o">=</span> <span class="n">sig2hat</span> <span class="o">*</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">%*%</span> <span class="n">X</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">se</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span> <span class="nf">diag</span><span class="p">(</span><span class="n">Vbhat</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="n">bhat</span> <span class="o">/</span> <span class="n">se</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="m">2</span> <span class="o">*</span> <span class="nf">pt</span><span class="p">(</span><span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Summary table</span>
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">data.frame</span><span class="p">(</span><span class="n">bhat</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># analytical 2SLS results</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            bhat     se       t      p
+</span></span><span class="line"><span class="cl">## 1        0.0481 0.2011  0.2392 0.8111
+</span></span><span class="line"><span class="cl">## educ     0.0614 0.0143  4.2867 0.0000
+</span></span><span class="line"><span class="cl">## exper    0.0442 0.0133  3.3113 0.0010
+</span></span><span class="line"><span class="cl">## expersq -0.0009 0.0004 -2.2580 0.0245
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span> <span class="c1"># 2SLS results from ivreg()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##             Estimate Std. Error t value Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)   0.0481     0.4003  0.1202   0.9044
+</span></span><span class="line"><span class="cl">## educ          0.0614     0.0314  1.9530   0.0515
+</span></span><span class="line"><span class="cl">## exper         0.0442     0.0134  3.2883   0.0011
+</span></span><span class="line"><span class="cl">## expersq      -0.0009     0.0004 -2.2380   0.0257
+</span></span><span class="line"><span class="cl">## attr(,&#34;df&#34;)
+</span></span><span class="line"><span class="cl">## [1] 424
+</span></span><span class="line"><span class="cl">## attr(,&#34;nobs&#34;)
+</span></span><span class="line"><span class="cl">## [1] 428
+</span></span></code></pre></div><!-- ### Simultaneous Equations -->
+<!-- - Simultaneous Equations Models (MES/SEM) -->
+</br>
+<h2 id="diagnostic-tests">Diagnostic Tests</h2>
+<ul>
+<li>For the tests below, consider the multivariate model with 
+
+$J=1$ endogenous regressor:
+
+
+$$ \boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}^*_{1} + \beta_{2} \boldsymbol{x}_{2} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} $$
+where 
+
+$\boldsymbol{x}^*_1$ is the endogenous regressor in a model with 
+
+$K$ regressors.</li>
+<li>To estimate the model by 2SLS, we run the first stage of the endogenous regressor on its 
+
+$L$ instruments and the remaining exogenous regressors:
+
+
+$$ \boldsymbol{x}^*_{1} = \gamma_0 + \gamma^*_1 \boldsymbol{z}_{1} + \gamma^*_2 \boldsymbol{z}_{2} + ... + \gamma^*_L \boldsymbol{z}_{L} + \gamma_{2} \boldsymbol{x}_{2} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u} $$</li>
+</ul>
+<p>Using <code>summary()</code> on an object created by <code>ivreg()</code>, we already obtain three diagnostic tests:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">data</span><span class="p">(</span><span class="n">mroz</span><span class="p">,</span> <span class="n">package</span><span class="o">=</span><span class="s">&#34;wooldridge&#34;</span><span class="p">)</span> <span class="c1"># loading the dataset</span>
+</span></span><span class="line"><span class="cl"><span class="n">mroz</span> <span class="o">=</span> <span class="n">mroz[</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">mroz</span><span class="o">$</span><span class="n">wage</span><span class="p">),</span><span class="n">]</span> <span class="c1"># dropping observations with missing wages</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Regression and detailed summary output</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.2sls</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span> 
+</span></span><span class="line"><span class="cl">                 <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span> <span class="c1"># 2SLS regression</span>
+</span></span><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Call:
+</span></span><span class="line"><span class="cl">## ivreg(formula = lwage ~ educ + exper + expersq | fatheduc + motheduc + 
+</span></span><span class="line"><span class="cl">##     exper + expersq, data = mroz)
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Residuals:
+</span></span><span class="line"><span class="cl">##     Min      1Q  Median      3Q     Max 
+</span></span><span class="line"><span class="cl">## -3.0986 -0.3196  0.0551  0.3689  2.3493 
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Coefficients:
+</span></span><span class="line"><span class="cl">##               Estimate Std. Error t value Pr(&gt;|t|)   
+</span></span><span class="line"><span class="cl">## (Intercept)  0.0481003  0.4003281   0.120  0.90442   
+</span></span><span class="line"><span class="cl">## educ         0.0613966  0.0314367   1.953  0.05147 . 
+</span></span><span class="line"><span class="cl">## exper        0.0441704  0.0134325   3.288  0.00109 **
+</span></span><span class="line"><span class="cl">## expersq     -0.0008990  0.0004017  -2.238  0.02574 * 
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Diagnostic tests:
+</span></span><span class="line"><span class="cl">##                  df1 df2 statistic p-value    
+</span></span><span class="line"><span class="cl">## Weak instruments   2 423    55.400  &lt;2e-16 ***
+</span></span><span class="line"><span class="cl">## Wu-Hausman         1 423     2.793  0.0954 .  
+</span></span><span class="line"><span class="cl">## Sargan             1  NA     0.378  0.5386    
+</span></span><span class="line"><span class="cl">## ---
+</span></span><span class="line"><span class="cl">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Residual standard error: 0.6747 on 424 degrees of freedom
+</span></span><span class="line"><span class="cl">## Multiple R-Squared: 0.1357,	Adjusted R-squared: 0.1296 
+</span></span><span class="line"><span class="cl">## Wald test: 8.141 on 3 and 424 DF,  p-value: 2.787e-05
+</span></span></code></pre></div><ul>
+<li>We now examine these tests in more detail.</li>
+</ul>
+</br>
+<h3 id="endogeneity-test">Endogeneity Test</h3>
+<h4 id="a-hausman-test">(a) Hausman Test</h4>
+<ul>
+<li>To check for endogeneity, we can use the <strong>Hausman test</strong> (also known as the Durbin-Wu-Hausman test).</li>
+<li>This is a more general test that <strong>compares</strong> two vectors of estimates to determine whether they are statistically equal.</li>
+<li>It is based on a contrast vector, that is, the difference between the two vectors of estimates.</li>
+</ul>
+<p>The logic of the Hausman test is:</p>
+<ul>
+<li>We choose two estimation methods/models that differ in how robust they are to a particular &ldquo;problem.&rdquo;</li>
+<li>Both estimators are <strong>consistent when the problem is absent</strong>.
+<ul>
+<li>The &ldquo;less robust&rdquo; estimator is more efficient when the problem is absent.</li>
+<li>The &ldquo;more robust&rdquo; estimator remains <strong>unbiased/consistent when the problem is present</strong>.</li>
+</ul>
+</li>
+<li>If the difference between the estimates is statistically
+<ul>
+<li><em>significant</em>, that suggests the problem is present, making the &ldquo;less robust&rdquo; estimator biased/inconsistent and therefore different from the &ldquo;more robust&rdquo; estimator;</li>
+<li><em>insignificant</em>, then the problem is likely absent and the more efficient (but &ldquo;less robust&rdquo;) estimator is preferred.</li>
+</ul>
+</li>
+</ul>
+</br>  
+<p>In the instrumental-variables setting:</p>
+<ul>
+<li>
+<p>We compare the OLS and 2SLS/IV estimators, where the relevant &ldquo;problem&rdquo; is endogeneity.</p>
+</li>
+<li>
+<p>If <strong>endogeneity is present</strong>, the 2SLS/IV estimator is unbiased/consistent, so its estimates should tend to differ from OLS, which is biased.</p>
+</li>
+<li>
+<p>If <strong>endogeneity is absent</strong>, both estimators are consistent (they converge to the true 
+
+$\boldsymbol{\beta}$), but <strong>OLS is more efficient</strong>.
+
+
+$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}'  \boldsymbol{X})^{-1}\right] \quad \text{ e } \quad \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \right]$$
+Hence, we can test
+
+
+$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[0,\ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}) \right] $$
+using a quadratic-form (Wald-type) statistic:
+
+
+$$ w = (\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}})' \left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}) \right]^{-1} (\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}})\, \sim\, \chi^2_{(J)} $$
+where the chi-square degrees of freedom equal the number of endogenous regressors in the model (
+
+$J$).</p>
+</li>
+<li>
+<p>Note that inverting the difference between the two variance-covariance matrices, 
+
+$\left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}) \right]^{-1}$, can be numerically unstable. If that causes an error, you may need a <strong>generalized inverse</strong> (<code>MASS::ginv()</code> in R).</p>
+</li>
+</ul>
+</br>
+<p>Applying this to the example in R:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># estimating the OLS model</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.ols</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># estimating the 2SLS model</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.2sls</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">                   <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">contrast</span> <span class="o">=</span> <span class="nf">coef</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span> <span class="o">-</span> <span class="nf">coef</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">)</span> <span class="c1"># contrast vector</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">contrast</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span> <span class="o">-</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">reg.ols</span><span class="p">)</span> <span class="p">)</span> <span class="o">%*%</span> <span class="n">contrast</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="c1"># Wald statistic</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##         [,1]
+</span></span><span class="line"><span class="cl">## [1,] 2.69566
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">df</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># chi-square p-value</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##           [,1]
+</span></span><span class="line"><span class="cl">## [1,] 0.1006218
+</span></span></code></pre></div><ul>
+<li>The p-value is close to 10%, so the difference between the OLS and 2SLS estimators (the contrast vector) is not significant at conventional significance levels.</li>
+<li>This suggests that there is no strong evidence of endogeneity, since OLS would be biased in the presence of endogeneity and would therefore tend to differ from 2SLS/IV.</li>
+</ul>
+<h4 id="b-regression-based-hausman-test">(b) Regression-Based Hausman Test</h4>
+<p>As shown by Hausman (1978, 1983), <strong>we can obtain an asymptotically equivalent statistic by regression</strong>:</p>
+<ul>
+<li>Run the first-stage regression
+
+
+$$ \boldsymbol{x}^*_{1} = \gamma_0 + \gamma^*_1 \boldsymbol{z}_{1} + \gamma^*_2 \boldsymbol{z}_{2} + ... + \gamma^*_L \boldsymbol{z}_{L} + \gamma_{2} \boldsymbol{x}_{2} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u} $$</li>
+<li>Obtain the first-stage residuals 
+
+$\hat{\boldsymbol{u}}$</li>
+<li>Estimate the modified second stage, including the first-stage residuals as an additional regressor:
+
+
+$$ \boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}^*_{1} + \beta_{2} \boldsymbol{x}_{2} + ... + \beta_K \boldsymbol{x}_{K} + \delta \hat{\boldsymbol{u}} + \boldsymbol{\varepsilon} $$
+where 
+
+$\boldsymbol{x}^*_1$ remains the endogenous regressor.</li>
+<li>Then evaluate the p-value on the first-stage residual coefficient, 
+
+$\delta$.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># 1st stage</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.1st</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">educ</span> <span class="o">~</span> <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">uhat</span> <span class="o">=</span> <span class="nf">resid</span><span class="p">(</span><span class="n">reg.1st</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># modified 2nd stage (including first-stage residuals as a regressor)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.2nd.mod</span>  <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">+</span> <span class="n">uhat</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">reg.2nd.mod</span><span class="p">)</span><span class="o">$</span><span class="n">coef</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                  Estimate   Std. Error   t value     Pr(&gt;|t|)
+</span></span><span class="line"><span class="cl">## (Intercept)  0.0481003069 0.3945752571  0.121904 0.9030329286
+</span></span><span class="line"><span class="cl">## educ         0.0613966287 0.0309849420  1.981499 0.0481823507
+</span></span><span class="line"><span class="cl">## exper        0.0441703929 0.0132394473  3.336272 0.0009240749
+</span></span><span class="line"><span class="cl">## expersq     -0.0008989696 0.0003959133 -2.270622 0.0236719150
+</span></span><span class="line"><span class="cl">## uhat         0.0581666128 0.0348072757  1.671105 0.0954405509
+</span></span></code></pre></div><ul>
+<li>The p-value for <em>uhat</em> is close to the one obtained from the actual Hausman test, though not exactly identical (here it is significant at 10%).</li>
+<li>This regression-based p-value is the one reported by <code>summary(ivreg(...))</code>.</li>
+</ul>
+</br>
+<h3 id="weak-instrument-tests">Weak-Instrument Tests</h3>
+<ul>
+<li>In the weak-instrument setting, we test the <strong>joint</strong> null that the coefficients on the instruments are equal to zero:
+
+
+$$H_0: \quad \ \boldsymbol{\gamma}^* = \boldsymbol{0}\ \iff\ \begin{bmatrix} \gamma^*_1 \\ \gamma^*_2 \\ \vdots \\ \gamma^*_L \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}$$</li>
+<li>We can examine this using either Wald or F tests.</li>
+<li>For more details, see the <a href="../sec9">Hypothesis Testing section</a>.</li>
+</ul>
+<h4 id="a-wald-test">(a) Wald Test</h4>
+<p>
+
+$$ w(\hat{\boldsymbol{\gamma}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\gamma}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\gamma}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\gamma}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $$
+where:</p>
+<ul>
+<li>
+
+$G$ is the number of linear restrictions</li>
+<li>
+
+$\boldsymbol{\gamma}$ is a parameter vector of dimension 
+
+$(K+1) \times 1$</li>
+<li>
+
+$\boldsymbol{h}$ is a vector of constants of dimension 
+
+$G \times 1$</li>
+<li>
+
+$\boldsymbol{R}$ is a 
+
+$G \times (K+1)$ matrix composed of row vectors 
+
+$\boldsymbol{r}'_g$ of dimension 
+
+$1 \times (K+1)$, for 
+
+$g=1, 2, ..., G$</li>
+</ul>
+<p>In the weak-instrument case, we have 
+
+$G=L$,
+
+
+$$\underset{L \times 1}{\boldsymbol{h}} = \boldsymbol{0} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}, \qquad \qquad \underset{(1+L+K-J) \times 1}{\boldsymbol{\gamma}} = \begin{bmatrix} \gamma_0 \\ \gamma^*_1 \\ \gamma^*_2 \\ \vdots \\ \gamma^*_L \\ \gamma_{J+1} \\ \vdots \\ \gamma_K \end{bmatrix} $$</p>
+
+
+$$ \underset{L \times (1+L+K-J)}{\boldsymbol{R}} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \vdots \\ \boldsymbol{r}'_L \end{matrix} \right] =  \begin{matrix} 
+\begin{matrix} \ \end{matrix}  \\
+\left[ \begin{array}{c|cccc|ccc}
+\ 0\  & \ 1 & \ 0 & \cdots & \ 0 & \ 0 & \ \cdots & \ 0\  \\
+\ 0\  & \ 0 & \ 1 & \cdots & \ 0 & \ 0 & \ \cdots & \ 0\  \\
+\ \vdots\ & \ \vdots & \ \vdots & \ddots & \ \vdots & \ \vdots & \ \ddots & \ \vdots\  \\
+\ 0\  & \ 0 & \ 0 & \cdots & \ 1 & \ 0 & \ \cdots & \ 0\  \\
+\end{array} \right] \\  
+\begin{matrix} \color{red}\gamma_0 & \color{red}\gamma^*_1 & \color{red}\gamma^*_2 & \color{red}\cdots & \color{red}\gamma^*_L & \color{red}\gamma_{J+1} & \color{red}\cdots & \color{red}\gamma_{K} \end{matrix}  \end{matrix} $$
+<ul>
+<li>Hence, the null hypothesis is
+
+
+\begin{align} \text{H}_0:\quad \boldsymbol{R} \hat{\boldsymbol{\gamma}}\ &=\ \boldsymbol{h} \\
+\begin{bmatrix} \gamma^*_1 \\ \gamma^*_2 \\ \vdots \\ \gamma^*_L \end{bmatrix} &= \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \ \iff\ \boldsymbol{\gamma}^* = \boldsymbol{0} \end{align}</li>
+</ul>
+</br>
+<p>Applying this to the example in R:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># 1st step: regress educ on the instruments</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.1st</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">educ</span> <span class="o">~</span> <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Vghat</span> <span class="o">=</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">reg.1st</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">ghat</span> <span class="o">=</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">reg.1st</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">G</span> <span class="o">=</span> <span class="m">2</span> <span class="c1"># number of restrictions = number of instruments L</span>
+</span></span><span class="line"><span class="cl"><span class="n">R</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">  <span class="p">),</span> <span class="n">nrow</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">byrow</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">R</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1] [,2] [,3] [,4] [,5]
+</span></span><span class="line"><span class="cl">## [1,]    0    1    0    0    0
+</span></span><span class="line"><span class="cl">## [2,]    0    0    1    0    0
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">h</span> <span class="o">=</span> <span class="nf">matrix</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="n">G</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">h</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]    0
+</span></span><span class="line"><span class="cl">## [2,]    0
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">aux</span> <span class="o">=</span> <span class="n">R</span> <span class="o">%*%</span> <span class="n">ghat</span> <span class="o">-</span> <span class="n">h</span> <span class="c1"># Rg = h</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="nf">t</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="n">R</span> <span class="o">%*%</span> <span class="n">Vghat</span> <span class="o">%*%</span> <span class="nf">t</span><span class="p">(</span><span class="n">R</span><span class="p">))</span> <span class="o">%*%</span> <span class="n">aux</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="c1"># Wald statistic</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##          [,1]
+</span></span><span class="line"><span class="cl">## [1,] 110.8006
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">df</span><span class="o">=</span><span class="n">G</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      [,1]
+</span></span><span class="line"><span class="cl">## [1,]    0
+</span></span></code></pre></div><p>The p-value is essentially zero, so we reject the null that the instruments are jointly equal to zero.</p>
+<h4 id="b-f-test">(b) F Test</h4>
+<ul>
+<li>Another way to evaluate multiple restrictions is with the F test.</li>
+<li>We estimate two models:
+<ul>
+<li>Unrestricted (<em>ur</em>): includes all explanatory variables of interest</li>
+<li>Restricted (<em>r</em>): excludes some variables from the regression</li>
+</ul>
+</li>
+<li>The F test compares the sums of squared residuals (SSR) or the 
+
+R$^2$ from the two models.</li>
+<li>The idea is simple: if the excluded variables are jointly significant, then the unrestricted model should display greater explanatory power.</li>
+</ul>
+<p>In the instrumental-variables setting, we estimate the first stage:</p>
+<ul>
+<li>with all instruments (unrestricted)</li>
+<li>without any instrument (restricted)
+and then compute the F statistic.</li>
+</ul>
+
+
+$$ F = \frac{\text{SSR}_{r} - \text{SSR}_{ur}}{\text{SSR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} $$
+<ul>
+<li>The <em>F</em> statistic is then evaluated with a right-tailed test using an <em>F</em> distribution with 
+
+$G$ and 
+
+$N-K-1$ degrees of freedom.</li>
+</ul>
+</br>
+<p>Applying this to the example in R:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Retrieving values</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">mroz</span><span class="p">)</span> <span class="c1"># number of observations</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span> <span class="o">=</span> <span class="m">4</span> <span class="c1"># number of covariates</span>
+</span></span><span class="line"><span class="cl"><span class="n">G</span> <span class="o">=</span> <span class="m">2</span> <span class="c1"># number of restrictions/instruments</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimating the unrestricted model (same as above)</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.1st_ur</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">educ</span> <span class="o">~</span> <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimating the restricted model</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.1st_r</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">educ</span> <span class="o">~</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extracting the R-squared values</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2.ur</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg.1st_ur</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2.ur</span> <span class="c1"># unrestricted R-squared</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.2114706
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">r2.r</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">reg.1st_r</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2.r</span> <span class="c1"># restricted R-squared</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.004923277
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Computing the F statistic</span>
+</span></span><span class="line"><span class="cl"><span class="bp">F</span> <span class="o">=</span> <span class="p">(</span> <span class="n">r2.ur</span> <span class="o">-</span> <span class="n">r2.r</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">r2.ur</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span> <span class="o">/</span>  <span class="n">G</span>
+</span></span><span class="line"><span class="cl"><span class="bp">F</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 55.4003
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># p-value of the F test</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pf</span><span class="p">(</span><span class="bp">F</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="n">K</span><span class="m">-1</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0
+</span></span></code></pre></div><p>As with the Wald test, the p-value from the F test is essentially zero, so we reject the null that the instruments are jointly equal to zero.</p>
+</br>
+<h3 id="overidentification-tests">Overidentification Tests</h3>
+<ul>
+<li>When more instruments are available than endogenous regressors 
+
+$(L>J)$, it is tempting to include as many instruments as possible in order to improve efficiency.</li>
+<li>However, we must be careful not to include instruments that are not truly exogenous (independent of the error term), because doing so can destroy consistency 
+
+(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}).</li>
+</ul>
+<h4 id="a-hausman-test-1">(a) Hausman Test</h4>
+<ul>
+<li>Here we again use the <strong>(Durbin-Wu-)Hausman test</strong>, but now comparing two 2SLS estimators:
+<ul>
+<li>[Unrestricted - <em>ur</em>]: an estimator that uses <strong>all available instruments</strong> for the endogenous regressor
+<ul>
+<li>It is <strong>more efficient if the extra instruments are exogenous</strong>.</li>
+</ul>
+</li>
+<li>[Restricted - <em>r</em>]: an estimator that uses only the 
+
+$L=J$ &ldquo;best&rdquo; instruments, meaning the ones assumed to be exogenous.
+<ul>
+<li>This yields an exactly identified model.</li>
+<li>If the extra instruments are endogenous, this restricted model is still assumed to be consistent.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The Hausman test compares the difference between the two 2SLS estimates (the contrast vector). If the estimates are statistically:
+<ul>
+<li>different, then the extra instruments are probably endogenous and produce inconsistent estimates;</li>
+<li>equal, then the extra instruments are probably exogenous and can be retained.</li>
+</ul>
+</li>
+</ul>
+<p>Formalmente:</p>
+<ul>
+<li>Under the null hypothesis, both the restricted (<em>r</em>) and unrestricted (<em>ur</em>) models are consistent and therefore estimate 
+
+$\boldsymbol{\beta}$ consistently:
+
+
+$$ \hat{\boldsymbol{\beta}}^{ur}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}}^{ur} \boldsymbol{X})^{-1}\right] \quad \text{ e } \quad \hat{\boldsymbol{\beta}}^{r}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}}^{r} \boldsymbol{X})^{-1} \right] $$
+therefore,
+
+
+$$ \hat{\boldsymbol{\beta}}^{ur} - \hat{\boldsymbol{\beta}}^{r}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[0,\ V(\hat{\boldsymbol{\beta}}^{ur}) - V(\hat{\boldsymbol{\beta}}^{r}) \right] $$
+we can test this using the Wald statistic:</li>
+</ul>
+
+
+$$ w = (\hat{\boldsymbol{\beta}}^{ur} - \hat{\boldsymbol{\beta}}^{r})' \left[ V(\hat{\boldsymbol{\beta}}^{ur}) - V(\hat{\boldsymbol{\beta}}^{r}) \right]^{-1} (\hat{\boldsymbol{\beta}}^{ur} - \hat{\boldsymbol{\beta}}^{r})\, \sim\, \chi^2_{(L-M)} $$
+<ul>
+<li>As before, inverting the difference between the two variance-covariance matrices, 
+
+$\left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{ur}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{r}}) \right]^{-1}$, can be numerically unstable. If necessary, use a <strong>generalized inverse</strong> (<code>MASS::ginv()</code> in R).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># estimating the unrestricted model</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.ur</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span> 
+</span></span><span class="line"><span class="cl">                 <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># estimating the restricted model</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.r</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">                <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">contrast</span> <span class="o">=</span> <span class="nf">coef</span><span class="p">(</span><span class="n">reg.ur</span><span class="p">)</span> <span class="o">-</span> <span class="nf">coef</span><span class="p">(</span><span class="n">reg.r</span><span class="p">)</span> <span class="c1"># contrast vector</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">contrast</span><span class="p">)</span> <span class="o">%*%</span> <span class="nf">solve</span><span class="p">(</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">reg.ur</span><span class="p">)</span> <span class="o">-</span> <span class="nf">vcov</span><span class="p">(</span><span class="n">reg.r</span><span class="p">)</span> <span class="p">)</span> <span class="o">%*%</span> <span class="n">contrast</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="c1"># Wald statistic</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##            [,1]
+</span></span><span class="line"><span class="cl">## [1,] -0.3936859
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">df</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="c1"># chi-square p-value</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##           [,1]
+</span></span><span class="line"><span class="cl">## [1,] 0.5303683
+</span></span></code></pre></div><ul>
+<li>The test p-value indicates that the estimates from the two models are not statistically different, so there is no evidence here that the extra instruments are endogenous.</li>
+<li>Still, some caution is warranted: it is possible for both the restricted and unrestricted models to be asymptotically biased in similar ways, which would make the difference between them look small.</li>
+</ul>
+<h4 id="b-wald-test">(b) Wald Test</h4>
+<ul>
+<li>Alternatively, we can <strong>test the relationship between the error term and the instruments directly</strong>.</li>
+<li>The steps are:
+<ul>
+<li>Estimate the model by 2SLS using all available instruments.</li>
+<li>Obtain the residuals 
+
+$\hat{\boldsymbol{\varepsilon}}$.</li>
+<li>Regress those residuals on all instruments and exogenous regressors.</li>
+<li>Test whether the coefficients on the candidate instruments are jointly equal to zero using a Wald test, much like in the weak-instrument case.</li>
+</ul>
+</li>
+</ul>
+<h4 id="c-sargan-test">(c) Sargan Test</h4>
+<ul>
+<li>Sargan proposed a test that is equivalent to the Wald approach above but expressed through a regression.</li>
+<li>It uses the same steps as above, but instead of computing a Wald statistic after regressing the residuals on the instruments and exogenous regressors, we compute
+
+
+$$NR^2\ \overset{A}{\sim}\ \chi^2_{(L-J)}$$</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Retrieving values</span>
+</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">L</span> <span class="o">=</span> <span class="m">2</span> <span class="c1"># number of instruments </span>
+</span></span><span class="line"><span class="cl"><span class="n">J</span> <span class="o">=</span> <span class="m">1</span> <span class="c1"># number of endogenous regressors</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Estimation</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg.2sls</span> <span class="o">=</span> <span class="nf">ivreg</span><span class="p">(</span><span class="n">lwage</span> <span class="o">~</span> <span class="n">educ</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span> <span class="o">|</span> 
+</span></span><span class="line"><span class="cl">                 <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span> <span class="c1"># 2SLS regression</span>
+</span></span><span class="line"><span class="cl"><span class="n">res.aux</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="nf">resid</span><span class="p">(</span><span class="n">reg.2sls</span><span class="p">)</span> <span class="o">~</span> <span class="n">fatheduc</span> <span class="o">+</span> <span class="n">motheduc</span> <span class="o">+</span> <span class="n">exper</span> <span class="o">+</span> <span class="n">expersq</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mroz</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Sargan statistic</span>
+</span></span><span class="line"><span class="cl"><span class="n">r2</span> <span class="o">=</span> <span class="nf">summary</span><span class="p">(</span><span class="n">res.aux</span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span>
+</span></span><span class="line"><span class="cl"><span class="n">sarg</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">r2</span> <span class="c1"># always positive</span>
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="o">-</span> <span class="nf">pchisq</span><span class="p">(</span><span class="n">sarg</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">L</span><span class="o">-</span><span class="n">J</span><span class="p">)</span> <span class="c1"># p-value</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 0.5386372
+</span></span></code></pre></div><ul>
+<li>Note that this test concerns <strong>all instruments jointly</strong>, since it does not compare separate models built with different instrument sets.</li>
+<li>If we reject this test, we need to revisit the set of instruments used in the model.</li>
+<li>However, the test does not identify which instrument is not exogenous; it could be one, several, or all of them.</li>
+</ul>
+<!-- </br> -->
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2026 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

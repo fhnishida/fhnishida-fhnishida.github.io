@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Research | Fabio Nishida</title>
+    <link>https://fhnishida.github.io/publication/</link>
+      <atom:link href="https://fhnishida.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
+    <description>Research</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 03 Aug 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png</url>
+      <title>Research</title>
+      <link>https://fhnishida.github.io/publication/</link>
+    </image>
+    
+    <item>
+      <title>On the impacts of territorial fragmentation on voter engagement</title>
+      <link>https://fhnishida.github.io/publication/nishidahottsakurai2025/</link>
+      <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidahottsakurai2025/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Impact of natural disasters on local public finance: Evidence from droughts and floods in Brazil</title>
+      <link>https://fhnishida.github.io/publication/nishidasakuraisevernini2025/</link>
+      <pubDate>Thu, 06 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidasakuraisevernini2025/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Is it effective or not? Revisiting the effectiveness of PMAT</title>
+      <link>https://fhnishida.github.io/publication/nishidasakurai2025/</link>
+      <pubDate>Wed, 05 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidasakurai2025/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Who lost the most from Covid? Initial impacts of Covid-19 on the Brazilian labor market</title>
+      <link>https://fhnishida.github.io/publication/zanginskireisnishida2025/</link>
+      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/zanginskireisnishida2025/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Impacts of rural pension on school dropout in Brazil</title>
+      <link>https://fhnishida.github.io/publication/nishidaetal2022/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>https://fhnishida.github.io/publication/nishidaetal2022/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Revisão de R
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Revisão de Programação em R
+linktitle: "Revisão de R"
+summary: "Revisão breve de objetos, matrizes, data frames e comandos básicos de importação de dados utilizados ao longo de Econometria II."
+title: "Revisão de R para Econometria"
 weight: 1
 output: md_document
 type: book

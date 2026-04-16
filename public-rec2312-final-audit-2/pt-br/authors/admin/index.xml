@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fabio Nishida</title>
+    <link>https://fhnishida.github.io/pt-br/authors/admin/</link>
+      <atom:link href="https://fhnishida.github.io/pt-br/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    <description>Fabio Nishida</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>pt-br</language>
+    <image>
+      <url>https://fhnishida.github.io/pt-br/authors/admin/avatar_hu5c13f9c18b7f137233abedec6279d9c7_105654_270x270_fill_q75_lanczos_center.jpg</url>
+      <title>Fabio Nishida</title>
+      <link>https://fhnishida.github.io/pt-br/authors/admin/</link>
+    </image>
+    
+  </channel>
+</rss>

@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: MQO
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Mínimos Quadrados Ordinários (MQO)
+linktitle: "MQO"
+summary: "Notas de MQO multivariado com notação matricial, estimação, inferência, interpretação de resultados e exemplos aplicados em R."
+title: "Mínimos Quadrados Ordinários (MQO)"
 weight: 2
 output: md_document
 type: book

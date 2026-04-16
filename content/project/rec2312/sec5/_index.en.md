@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipula��o via tidyr
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Manipula��o de Dados em Painel via tidyr
+linktitle: "Panel Data with tidyr"
+summary: "Practical R notes on building and reshaping panel datasets with tidyr, dplyr, and PNAD Continua microdata."
+title: "Panel Data Manipulation with tidyr"
 weight: 5
 output: md_document
 type: book

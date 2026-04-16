@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Panel Data
-summary: This page includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I (2022).
-title: Panel Data Estimation
+linktitle: "Dados em Painel"
+summary: "Notas de estimação com dados em painel no R, cobrindo estrutura de painel, matriz de covariância, intuição de GLS e FGLS e os estimadores between, within e de primeiras diferenças."
+title: "Estimação com dados em painel no R"
 weight: 13
 output: md_document
 type: book
@@ -12,7 +12,7 @@ type: book
 
 
 
-## Gravações REC2312
+## Gravacoes complementares de dados em painel
 
 - **Monitoria 4**: Dados em Painel e Matriz de Covariâncias dos Erros | [Script](https://fhnishida.netlify.app/project/rec2312/monitoria04.R)
     [<img src="https://img.youtube.com/vi/6hZqBAGTNTc/maxresdefault.jpg" alt="img" width=50%/>](https://www.youtube.com/watch?v=6hZqBAGTNTc)

@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regressão Simples
-summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
-title: Regressão Simples
+linktitle: "Regressão Simples"
+summary: "Notas de Econometria I sobre regressão linear simples, valores ajustados, resíduos, transformações logarítmicas, erros-padrão e violações de hipóteses."
+title: "Regressão Linear Simples por MQO"
 weight: 7
 output: md_document
 type: book

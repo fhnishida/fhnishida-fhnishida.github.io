@@ -4,11 +4,11 @@ date: "2021-05-30T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Graduate TA Sessions on Neoclassical Growth Model and Recursive Methods.
+summary: "Notas de monitoria de Macroeconomia I sobre fundamentos de Python, métodos recursivos, modelo de crescimento neoclássico, incerteza, lazer e listas resolvidas."
 tags:
 - Graduate
-title: Macroeconomics I, Part 1 (Spring 2021)
-linktitle: Main
+title: "Macroeconomia I, Parte 1: notas de monitoria (2021)"
+linktitle: "Principal"
 type: book
 icon: book
 iconpack: fs
@@ -16,17 +16,17 @@ weight: 1
 ---
 
 
-Welcome to TA Sessions for Macroeconomics I (Part 1) course!
+Bem-vindo(a) às notas de monitoria de Macroeconomia I (Parte 1)!
 
-Course webpage (prof. Fernando Barros Jr): [https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i](https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i)
+Página da disciplina (prof. Fernando Barros Jr): [https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i](https://sites.google.com/view/fernandobarros/teaching/macroeconomics-i)
 
-{{< cta cta_text="�Y'? Proceed to Session 1" cta_link="sec1" >}}
-
-
+{{< cta cta_text="👉 Seguir para a Sessão 1" cta_link="sec1" >}}
 
 
-## Solutions to Problem Sets
-- [Problem Set 1](Lista-1_Resolucao_v2.pdf) | [Python Script](Lista-1.py)
-- [Problem Set 2](Lista-2_Resolucao.pdf) | [Python Script](Lista-2_v2.py)
-- [Problem Set 3](Lista-3_Resolucao.pdf)
-- [Problem Set 4](Lista-4_Resolucao_v2.pdf) | [Python Script](Lista-4.py)
+
+
+## Soluções das Listas
+- [Lista 1](Lista-1_Resolucao_v2.pdf) | [Script em Python](Lista-1.py)
+- [Lista 2](Lista-2_Resolucao.pdf) | [Script em Python](Lista-2_v2.py)
+- [Lista 3](Lista-3_Resolucao.pdf)
+- [Lista 4](Lista-4_Resolucao_v2.pdf) | [Script em Python](Lista-4.py)

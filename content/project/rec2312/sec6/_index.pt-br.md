@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Variáveis Instrumentais
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Variáveis Instrumentais
+linktitle: "Variáveis Instrumentais"
+summary: "Notas introdutórias sobre variáveis instrumentais em regressão simples, com identificação, intuição econométrica e estimação em R."
+title: "Variáveis Instrumentais em Regressão Simples"
 weight: 6
 output: md_document
 type: book

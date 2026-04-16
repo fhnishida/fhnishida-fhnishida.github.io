@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: 16 de abril de 2026 --><html lang="pt-br" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fabio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="Notas introdutorias sobre R para Econometria, cobrindo instalacao do R e do RStudio, pacotes, R Markdown, arquivos e fluxo de trabalho para analise empirica." />
+
+
+
+  <link rel="alternate" hreflang="en" href="https://fhnishida.github.io/project/rec5004/sec1/" />
+
+<link rel="alternate" hreflang="pt-br" href="https://fhnishida.github.io/pt-br/project/rec5004/sec1/" />
+<link rel="canonical" href="https://fhnishida.github.io/pt-br/project/rec5004/sec1/" />
+
+
+
+  <link rel="manifest" href="/pt-br/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fabio Nishida" />
+<meta property="og:url" content="https://fhnishida.github.io/pt-br/project/rec5004/sec1/" />
+<meta property="og:title" content="Ferramentas de R para Econometria | Fabio Nishida" />
+<meta property="og:description" content="Notas introdutorias sobre R para Econometria, cobrindo instalacao do R e do RStudio, pacotes, R Markdown, arquivos e fluxo de trabalho para analise empirica." /><meta property="og:image" content="https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="pt-br" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/pt-br/project/rec5004/sec1/index.xml" type="application/rss+xml" title="Fabio Nishida" />
+  
+
+  
+
+
+  
+  <title>Ferramentas de R para Econometria | Fabio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="ee24aa12ea6b4ff9e0ed9ff9fe1d7496" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/pt-br/">Fabio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/pt-br/">Fabio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/pt-br/#about"><span>Início</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/pt-br/#featured"><span>Pesquisa</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/pt-br/#projects"><span>Monitoria</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/pt-br/#contact"><span>Contato</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/pt-br/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">Português (Brasil)</span></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>Português (Brasil)</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://fhnishida.github.io/project/rec5004/sec1/">
+              <span>English</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Principal
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/pt-br/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/"><i class="fas fa-book pr-1"></i>Principal</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/pt-br/project/rec5004/sec1/">Ferramentas R</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec2/">Programacao</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec3/">Manipulacao</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec4/">Visualizacao</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec5/">Distribuicoes</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec6/">Regressao Simples</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec7/">Otimizacao</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec8/">Regressao Multipla</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec9/">Testes de Hipoteses</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec12/">GMM</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec13/">Dados em Painel</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/pt-br/project/rec5004/sec14/">Painel</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#instalando-r">Instalando R</a></li>
+    <li><a href="#usando-r-studio">Usando R Studio</a>
+      <ul>
+        <li><a href="#diretãrio-de-trabalho">DiretÃ³rio de trabalho</a></li>
+        <li><a href="#executando-comandos">Executando comandos</a></li>
+        <li><a href="#ajuda-para-comandos">Ajuda para comandos</a></li>
+      </ul>
+    </li>
+    <li><a href="#pacotes-no-r">Pacotes no R</a>
+      <ul>
+        <li><a href="#instalaãão-via-cran">InstalaÃ§Ã£o via CRAN</a></li>
+        <li><a href="#usando-pacotes">Usando pacotes</a></li>
+        <li><a href="#atualizando-pacotes">Atualizando pacotes</a></li>
+      </ul>
+    </li>
+    <li><a href="#ajuda">Ajuda</a>
+      <ul>
+        <li><a href="#chatgpt-e-bing-chat">ChatGPT e Bing Chat</a></li>
+      </ul>
+    </li>
+    <li><a href="#sincronizaãão-no-github">SincronizaÃ§Ã£o no GitHub</a></li>
+    <li><a href="#r-markdown">R Markdown</a>
+      <ul>
+        <li><a href="#uso-do-r-markdown">Uso do R Markdown</a></li>
+        <li><a href="#incluindo-grãficos">Incluindo GrÃ¡ficos</a></li>
+        <li><a href="#formataãão-no-r-markdown">FormataÃ§Ã£o no R Markdown</a></li>
+        <li><a href="#quebra-de-texto">Quebra de texto</a></li>
+        <li><a href="#escrita-em-latex">Escrita em LaTeX</a></li>
+        <li><a href="#exportando-documentos-em-outros-formatos">Exportando documentos em outros formatos</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Ferramentas de R para Econometria</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <p>Principais referÃªncias desse material de Econometria com R:</p>
+<ul>
+<li>Cursos da <a href="https://www.coursera.org/specializations/jhu-data-science" target="_blank" rel="noopener"><em>EspecializaÃ§Ã£o em Data Science</em></a> da John Hopkins.
+<ul>
+<li>Ã‰ possÃ­vel &ldquo;participar como ouvinte&rdquo; (<em>audit course</em>) desses cursos, o que permite acessar a todo material (mas nÃ£o pode fazer os testes e ganhar os certificados de conclusÃ£o).</li>
+</ul>
+</li>
+<li>Livro <a href="http://www.urfie.net/" target="_blank" rel="noopener">&quot;<em>Using R for Introductory Econometrics</em>&quot; de Heiss (2020)</a> (versÃ£o online gratuita)</li>
+<li>Livro <a href="https://www.amazon.com.br/Panel-Data-Econometrics-R-English-ebook/dp/B07GCY35N3" target="_blank" rel="noopener">&quot;<em>Panel Data Econometrics with R</em>&quot; de Croissant e Millo (2018)</a></li>
+</ul>
+</br>
+<h2 id="instalando-r">Instalando R</h2>
+<ul>
+<li><a href="https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r" target="_blank" rel="noopener">Installing R (John Hopkins/Coursera)</a></li>
+</ul>
+<ol>
+<li>
+<p>InstalaÃ§Ã£o da base do R (<a href="https://cran.r-project.org/" target="_blank" rel="noopener">CRAN</a>)</p>
+<ul>
+<li>Download R X.X.X for Windows</li>
+<li>Se o computador for 64-bits, opte pela versÃ£o 64-bits (+ rÃ¡pido)</li>
+</ul>
+</li>
+<li>
+<p>InstalaÃ§Ã£o do Rtools (<a href="https://cran.r-project.org/" target="_blank" rel="noopener">CRAN</a>)</p>
+<ul>
+<li>RTools X.X &gt; Rtools installer</li>
+<li>Ã‰ um conjunto de ferramentas de compilaÃ§Ã£o de vÃ¡rias linguagens (C, C++ e Fortran) que sÃ£o necessÃ¡rias para o funcionamento de alguns pacotes no R</li>
+</ul>
+</li>
+<li>
+<p>InstalaÃ§Ã£o do RStudio (<a href="https://www.rstudio.com/products/rstudio/download/#download" target="_blank" rel="noopener">RStudio Dowload</a>)</p>
+<ul>
+<li>Download RStudio Desktop</li>
+<li>Ã‰ uma interface de usuÃ¡rio para facilitar o uso do R</li>
+</ul>
+</li>
+</ol>
+</br>
+<h2 id="usando-r-studio">Usando R Studio</h2>
+<ul>
+<li><a href="https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour" target="_blank" rel="noopener">RStudio Tour (John Hopkins/Coursera)</a></li>
+</ul>
+<p>RStudio Ã© dividido em 4 quadrantes:</p>
+<ul>
+<li>superior/esquerdo: source - onde ficam &ldquo;blocos de nota&rdquo; (scripts) com comandos a serem salvos</li>
+<li>superior/direito: ambiente - visualizar variÃ¡veis</li>
+<li>inferior/esquerdo: console - executar os comandos e ver resultados (Ã© o R &ldquo;bruto&rdquo;)</li>
+<li>inferior/direito: arquivos/grÃ¡ficos/pacotes/ajuda</li>
+</ul>
+<blockquote>
+<p><strong>Dica</strong>: Alterar o tema do RStudio (fundo branco pode cansar mais a visÃ£o durante o uso prolongado do software)<br/><br>
+Tools &gt; Global Options&hellip; &gt; Appearance &gt; Editor theme &gt; Cobalt (meu preferido)</p>
+</blockquote>
+<h3 id="diretãrio-de-trabalho">DiretÃ³rio de trabalho</h3>
+<p>Definir um diretÃ³rio de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).</p>
+<blockquote>
+<p>Session &gt; Set Working Directory &gt; Choose Directory&hellip;</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">setwd</span><span class="p">(</span><span class="s">&#34;C:/Users/Fabio/OneDrive/FEA-RP&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>Dica</strong>: O comando para definir o diretÃ³rio de trabalho aparecerÃ¡ no console. Copie e cole no seu script para nÃ£o precisar definir toda vez que abre o R Studio.</p>
+</blockquote>
+<ul>
+<li>Note que usa o &ldquo;slash&rdquo; (/) ao invÃ©s do &ldquo;backslash&rdquo; (\), entÃ£o nÃ£o dÃ¡ para copiar diretamente o endereÃ§o de uma pasta e colar no R sem fazer ajustes:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">setwd</span><span class="p">(</span><span class="s">&#34;C:\Users\Fabio\OneDrive\FEA-RP&#34;</span><span class="p">)</span> <span class="c1"># ERRADO!</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">setwd</span><span class="p">(</span><span class="s">&#34;C:/Users/Fabio/OneDrive/FEA-RP&#34;</span><span class="p">)</span> <span class="c1"># CORRETO!</span>
+</span></span><span class="line"><span class="cl"><span class="nf">setwd</span><span class="p">(</span><span class="s">&#34;C:\\Users\\Fabio\\OneDrive\\FEA-RP&#34;</span><span class="p">)</span> <span class="c1"># CORRETO!</span>
+</span></span></code></pre></div><p>VocÃª pode trocar <em>backslash</em> (/) por <em>slash</em>(\), ou  por dois <em>backslashs</em> (\\).</p>
+<h3 id="executando-comandos">Executando comandos</h3>
+<ul>
+<li>ExecuÃ§Ã£o direta no console: escreva <code>1 + 1</code> no console e dÃª &lt;Enter&gt;</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="m">1</span> <span class="o">+</span> <span class="m">1</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## [1] 2
+</span></span></code></pre></div><ul>
+<li>ExecuÃ§Ã£o pelo script: escreva o seguinte cÃ³digo abaixo, e dÃª <code>Ctrl + Enter</code> na linha ou no cÃ³digo destacado. Note que o cÃ³digo do script Ã© &ldquo;jogado&rdquo; no console.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="m">10</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>  <span class="c1"># Gerar 10 nÃºmeros ~ N(0, 1)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##  [1]  0.70143921  0.62622352 -2.43105248 -1.37197530  0.53581775 -1.66196220
+</span></span><span class="line"><span class="cl">##  [7] -0.09034954 -0.18229396  0.22264535  0.80023880
+</span></span></code></pre></div><h3 id="ajuda-para-comandos">Ajuda para comandos</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="o">?</span><span class="n">rnorm</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">rnorm(n, mean = 0, sd = 1)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">n</span><span class="p">:</span><span class="w"> </span><span class="l">number of observations.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">mean</span><span class="p">:</span><span class="w"> </span><span class="l">vector of means.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">sd</span><span class="p">:</span><span class="w"> </span><span class="l">vector of standard deviations.</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>Note acima em &ldquo;Usage&rdquo; que jÃ¡ hÃ¡ valores prÃ©-definidos para <code>mean = 0</code> e <code>sd = 1</code>. Portanto, se vocÃª sÃ³ informar o <code>n</code>, a funÃ§Ã£o irÃ¡ funcionar, considerando os valores prÃ©-definidos para os demais argumentos.</li>
+<li>Ã‰ possÃ­vel escrever o cÃ³digo sem os nomes dos argumentos, mas devem ser inseridos na mesma ordem prÃ©-definida da funÃ§Ã£o.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>TambÃ©m podemos trocar a ordem explicitando o nome do argumento (NÃƒO RECOMENDADO)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">rnorm</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="m">10</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</span></span></code></pre></div></br>
+<h2 id="pacotes-no-r">Pacotes no R</h2>
+<ul>
+<li>Pacotes sÃ£o coleÃ§Ãµes de funÃ§Ãµes, dados e cÃ³digos escritos por outras pessoas</li>
+<li>Por ser um software <em>open source</em>, o R possui muitos pacotes disponibilizados pela internet e muitos estatÃ­sticos/econometristas desenvolvem e disponibilizam seus prÃ³prios pacotes na internet.</li>
+<li>A instalaÃ§Ã£o de um pacote sÃ³ precisa ser feita uma Ãºnica vez.</li>
+<li>No entanto, caso vocÃª atualize uma nova versÃ£o do R, Ã© necessÃ¡rio instalar novamente todos os pacotes.</li>
+<li>Os pacotes podem ser obtidos em bibliotecas (<em>libraries</em>), como CRAN, e de indivÃ­duos (normalmente disponibilizados no GitHub)</li>
+<li>O CRAN Ã© administrado e, como existe uma curadoria para inserÃ§Ã£o e manutenÃ§Ã£o de pacotes, garante qualidade dos pacotes disponibilizados</li>
+<li>Tome cuidado com pacotes disponibilizados por individuos desconhecidos: pode haver cÃ³digos maliciosos!</li>
+</ul>
+<h3 id="instalaãão-via-cran">InstalaÃ§Ã£o via CRAN</h3>
+<blockquote>
+<p>quadrante inferior/direito &gt; Packages &gt; Install &gt; (Nomes dos pacotes)</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;ggplot2&#34;</span><span class="p">)</span> <span class="c1"># Pacote para criar graficos</span>
+</span></span></code></pre></div><h3 id="usando-pacotes">Usando pacotes</h3>
+<p>Depois de instalar o pacote desejado, vocÃª precisa carregÃ¡-lo Ã  sua sessÃ£o no R. Isto pode ser feito de duas formas</p>
+<ol>
+<li>Usar <code>library(nome_do_pacote)</code></li>
+<li>Chamar o pacote indiretamente por meio de uma funÃ§Ã£o contida no pacote <code>&lt;nome_do_pacote&gt;::&lt;funcao_do_pacote&gt;</code></li>
+</ol>
+<h4 id="exemplo-instalando-pacotes-do-github">Exemplo: Instalando pacotes do Github</h4>
+<ul>
+<li>Github Ã© um site que programadores podem disponibilizar e armazenar arquivos, como cÃ³digos, bases de dados, pacotes de R, etc.</li>
+<li>Ã‰ possÃ­vel instalar um pacote disponibilizado no Github diretamente do R.</li>
+<li>Primeiro, Ã© necessÃ¡rio instalar o pacote <code>devtools</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;devtools&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>Depois, Ã© preciso obter o nome do author (do GitHub) e nome do pacote. Como exemplo, iremos baixar o pacote <code>dplyr</code> do autor <code>hadley</code> (este pacote, na realidade, pode ser baixado direto do CRAN).</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># 2) chamando o pacote indiretamente</span>
+</span></span><span class="line"><span class="cl"><span class="n">devtools</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;hadley/dplyr&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1) carregando pacote e depois usando sua funÃ§Ã£o</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">devtools</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">install_github</span><span class="p">(</span><span class="s">&#34;hadley/dplyr&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>CUIDADO! Ao carregar vÃ¡rios pacotes, talvez sejam carregadas suas funÃ§Ãµes com mesmo nome
+<ul>
+<li>Neste caso, o R prioriza a funÃ§Ã£o do pacote carregada por Ãºltimo</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1"># Pacote para manipulacao de base de dados</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Attaching package: &#39;dplyr&#39;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## The following objects are masked from &#39;package:stats&#39;:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##     filter, lag
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## The following objects are masked from &#39;package:base&#39;:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##     intersect, setdiff, setequal, union
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">MASS</span><span class="p">)</span> <span class="c1"># Normalmente nao eh carregado diretamente (via outro pacote)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Attaching package: &#39;MASS&#39;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## The following object is masked from &#39;package:dplyr&#39;:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##     select
+</span></span></code></pre></div><ul>
+<li>Uma forma de contornar o problema Ã© usar <code>&lt;nome_do_pacote&gt;::&lt;funcao_do_pacote&gt;</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">select</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span> <span class="c1"># do pacote MASS</span>
+</span></span><span class="line"><span class="cl"><span class="n">MASS</span><span class="o">:</span><span class="nf">select</span><span class="p">(</span><span class="kc">...</span><span class="p">)</span> <span class="c1"># do pacote MASS</span>
+</span></span><span class="line"><span class="cl"><span class="n">dplyr</span><span class="o">::</span><span class="nf">select</span><span class="p">(</span><span class="n">.data</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span> <span class="c1"># do pacote dplyr</span>
+</span></span></code></pre></div><h3 id="atualizando-pacotes">Atualizando pacotes</h3>
+<blockquote>
+<p>quadrante inferior/direito &gt; Packages &gt; Update &gt; Select All &gt; Install Updates</p>
+</blockquote>
+</br>
+<h2 id="ajuda">Ajuda</h2>
+<ul>
+<li>Caso saiba o nome da funÃ§Ã£o, Ã© possÃ­vel olhar sua documentaÃ§Ã£o escrevendo <code>?&lt;nome_da_funcao&gt;</code> (como visto anteriormente)</li>
+<li>Caso saiba o nome do pacote, em alguns casos funciona <code>?&lt;nome_do_pacote&gt;</code>, mas o ideal Ã© buscar sua documentaÃ§Ã£o no CRAN (diretamente no site ou via Google)</li>
+<li>Por exemplo, podemos acessar a pÃ¡gina do <a href="https://cran.r-project.org/web/packages/dplyr/index.html" target="_blank" rel="noopener">pacote <code>dplyr</code> no CRAN</a>:</li>
+<li>Nela Ã© possÃ­vel ver a partir de qual versÃ£o do R funciona, os pacotes necessÃ¡rios para o seu funcionamento (Imports), os autores e sites.</li>
+<li>Em &lsquo;Documentation&rsquo;, Ã© possÃ­vel ver o seu &lsquo;Reference manual&rsquo; onde sÃ£o expostos o objetivo do pacotes e as funÃ§Ãµes, incluindo explicaÃ§Ãµes de seu funcionamento.</li>
+</ul>
+<center><img src="../dplyr_cran.png"></center>
+<ul>
+<li>
+<p>AlÃ©m disso, pode ser interessante ver aplicaÃ§Ãµes do pacote e suas funÃ§Ãµes nas &lsquo;vignettes&rsquo;. Normalmente sÃ£o expostas de maneira que podem ser replicadas no seu computador, o que acaba auxiliando na sua aplicaÃ§Ã£o (verificar estrutura de base de dados necessÃ¡ria, sintaxes, etc.).</p>
+</li>
+<li>
+<p>Caso nÃ£o saiba quais funÃ§Ãµes/pacotes sÃ£o utilizados para fazer algo, muitas vezes Ã© possÃ­vel encontrar a soluÃ§Ã£o no Google utilizando palavras-chave (preferencialmente em inglÃªs) junto de &ldquo;R&rdquo;.</p>
+</li>
+</ul>
+<center><img src="../google_help.png"></center>
+<ul>
+<li>
+<p>AlÃ©m de sites especializados em R e vÃ­deos com exemplos de aplicaÃ§Ãµes, Ã© comum aparecer questÃµes no site Stack Overflow (ou em Cross Validated, pertencente ao mesmo grupo) que Ã© o site mais utilizado por programadores em diversas linguagens para esclarecer dÃºvidas.</p>
+</li>
+<li>
+<p>Por R ser uma linguagem open source, hÃ¡ muitos usuÃ¡rios e, portanto, Ã© comum achar perguntas/respostas que jÃ¡ solucionam o seu problema. Eventualmente, vocÃª pode fazer a sua pergunta, caso nÃ£o encontre uma satisfatÃ³ria.</p>
+</li>
+</ul>
+<center><img src="../stackoverflow_help.png"></center>
+<h3 id="chatgpt-e-bing-chat">ChatGPT e Bing Chat</h3>
+<ul>
+<li>Ã‰ possÃ­vel ter um assistente para aprender a usar o R usando o chatbots como ChatGPT (<a href="https://chat.openai.com" target="_blank" rel="noopener">https://chat.openai.com</a>) e Bing Chat (<a href="https://www.bing.com/chat" target="_blank" rel="noopener">https://www.bing.com/chat</a>).</li>
+<li>Ambos ChatGPT e Bing Chat sÃ£o alimentados por um modelo de linguagem natural (LLN) criado pela OpenAI, que sÃ£o treinados com trilhÃµes de documentos (pÃ¡ginas de internet, livros, artigos, etc.) e conseguem gerar textos baseados em contexto.</li>
+<li>A diferenÃ§a entre os dois Ã© que o ChatGPT utiliza o modelo GPT 3.5-turbo, enquanto o Bing Chat usa o GPT-4 e estÃ¡ ligado Ã  internet.</li>
+<li>Especificamente para programaÃ§Ã£o, gera-se respostas confiÃ¡veis a perguntas feitas ao chatbot, tornando-o uma ferramenta interessante para auxiliar o aprendizado no R.</li>
+</ul>
+<center><img src="../ChatGPT.png"></center>
+<center><img src="../BingChat.png"></center>
+</br>
+<h2 id="sincronizaãão-no-github">SincronizaÃ§Ã£o no GitHub</h2>
+<p>NÃ£o serÃ¡ detalhado aqui, mas Ã© algo interessante para olhar.</p>
+<ul>
+<li><a href="https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r" target="_blank" rel="noopener">CriaÃ§Ã£o de projetos</a></li>
+<li><a href="https://www.coursera.org/learn/data-scientists-tools/lecture/PjlHw/version-control" target="_blank" rel="noopener">Controle de versÃ£o</a></li>
+<li><a href="https://www.coursera.org/learn/data-scientists-tools/lecture/VOh24/github-and-git" target="_blank" rel="noopener">GitHub e Git</a></li>
+<li><a href="https://www.coursera.org/learn/data-scientists-tools/lecture/wbfrX/projects-under-version-control" target="_blank" rel="noopener">Projetos sob controle de versÃµes</a></li>
+</ul>
+</br>
+<h2 id="r-markdown">R Markdown</h2>
+<p>Markdown Ã© uma sintaxe de formataÃ§Ã£o simples para criar documento HTML, PDF ou Word.</p>
+<p>Para mais detalhes de uso, veja:</p>
+<ul>
+<li><a href="https://www.coursera.org/lecture/data-scientists-tools/r-markdown-134kE" target="_blank" rel="noopener">R Markdown (John Hopkins/Coursera)</a></li>
+<li>Curso <a href="https://www.coursera.org/learn/reproducible-templates-analysis" target="_blank" rel="noopener"><em>Reproducible Templates for Analysis and Dissemination</em> (Emory/Coursera)</a></li>
+<li>Livros: <a href="https://bookdown.org/yihui/rmarkdown/" target="_blank" rel="noopener"><em>R Markdown: The Definitive Guide</em></a> e <a href="https://bookdown.org/yihui/rmarkdown-cookbook" target="_blank" rel="noopener"><em>R Markdown Cookbook</em></a></li>
+</ul>
+<h3 id="uso-do-r-markdown">Uso do R Markdown</h3>
+<p>Quando vocÃª clicar no botÃ£o <strong>Knit</strong>, um documento serÃ¡ gerado, incluindo o conteÃºdo textual e os resultados dos <em>chunks</em> com cÃ³digos em R embutidos no documento.</p>
+<blockquote>
+<p>Para gerar em pdf, pode ser necessÃ¡rio instalar o pacote <code>tinytex</code></p>
+</blockquote>
+<p>VocÃª pode embutir um <em>chunk</em> de cÃ³digo em R:</p>
+<ol>
+<li>abrindo com 3 acentos graves (`)</li>
+<li>{r nome_do_pedaco},</li>
+<li>cÃ³digo em R,</li>
+<li>e fechando com 3 acentos graves (`)</li>
+</ol>
+<p>Por exemplo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">```{r cars}</span><span class="w"> </span><span class="c"># Chamando esse _chunk_ com cÃ³digo de R como &#39;cars&#39; </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">head(cars)</span><span class="w"> </span><span class="c"># Visualizando 6 linhas iniciais da base de dados &#39;cars&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">summary(cars)</span><span class="w"> </span><span class="c"># Resumindo base de dados &#39;cars&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">```</span><span class="w">
+</span></span></span></code></pre></div><p>output:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span> <span class="c1"># Visualizando 6 linhas iniciais da base de dados &#39;cars&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##   speed dist
+</span></span><span class="line"><span class="cl">## 1     4    2
+</span></span><span class="line"><span class="cl">## 2     4   10
+</span></span><span class="line"><span class="cl">## 3     7    4
+</span></span><span class="line"><span class="cl">## 4     7   22
+</span></span><span class="line"><span class="cl">## 5     8   16
+</span></span><span class="line"><span class="cl">## 6     9   10
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span> <span class="c1"># Resumindo base de dados &#39;cars&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##      speed           dist       
+</span></span><span class="line"><span class="cl">##  Min.   : 4.0   Min.   :  2.00  
+</span></span><span class="line"><span class="cl">##  1st Qu.:12.0   1st Qu.: 26.00  
+</span></span><span class="line"><span class="cl">##  Median :15.0   Median : 36.00  
+</span></span><span class="line"><span class="cl">##  Mean   :15.4   Mean   : 42.98  
+</span></span><span class="line"><span class="cl">##  3rd Qu.:19.0   3rd Qu.: 56.00  
+</span></span><span class="line"><span class="cl">##  Max.   :25.0   Max.   :120.00
+</span></span></code></pre></div><p>TambÃ©m, no topo do quadrante sup-esq, Ã© possÃ­vel criar clicando no Ã­cone &ldquo;+C&rdquo; e selecionando &ldquo;R&rdquo; (ou apertando Ctrl + Alt + I).</p>
+<h3 id="incluindo-grãficos">Incluindo GrÃ¡ficos</h3>
+<p>VocÃª pode incluir grÃ¡ficos no documento usando <code>plot()</code> dentro do <em>chunk</em> com cÃ³digo R. AlÃ©m disso, o parÃ¢metro <code>echo = FALSE</code> retira do PDF/HTML gerado o <em>chunk</em> de cÃ³digo, gerando apenas, neste caso, a figura.</p>
+<p>Por exemplo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">```{r pressure, echo = FALSE}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">plot(pressure)</span><span class="w"> </span><span class="c"># GrÃ¡fico da base de dados `pressure`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">```</span><span class="w">
+</span></span></span></code></pre></div><p>output:</p>
+<img src="/project/rec5004/sec1/_index_files/figure-html/pressure-1.png" width="672" />
+<p>*Ao invÃ©s de escrever <code>echo = FALSE</code>, Ã© possÃ­vel alterar a configuraÃ§Ã£o do <em>chunk</em> apÃ³s criÃ¡-lo:<br/><br>
+Ãcone de Config &gt; Output &gt; Show output only</p>
+<h3 id="formataãão-no-r-markdown">FormataÃ§Ã£o no R Markdown</h3>
+<h4 id="bullets">Bullets:</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="l">bullet 1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="l">bullet 2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="l">bullet 3</span><span class="w">
+</span></span></span></code></pre></div><p>output:</p>
+<ul>
+<li>bullet 1</li>
+<li>bullet 2</li>
+<li>bullet 3</li>
+</ul>
+<h4 id="formataãão-de-texto">FormataÃ§Ã£o de texto:</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="m">1</span><span class="l">. **negrito**</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="m">2</span><span class="l">. *itÃ¡lico* ou _itÃ¡lico_</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">3. link</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;http://rmarkdown.rstudio.com&gt;.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="m">4</span><span class="l">. [link R Markdown](http://rmarkdown.rstudio.com)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="m">5</span><span class="l">. destaque para `cÃ³digo em r`</span><span class="w">
+</span></span></span></code></pre></div><p>output:</p>
+<ol>
+<li><strong>negrito</strong></li>
+<li><em>itÃ¡lico</em> ou <em>itÃ¡lico</em></li>
+<li>link: <a href="http://rmarkdown.rstudio.com" target="_blank" rel="noopener">http://rmarkdown.rstudio.com</a>.</li>
+<li><a href="http://rmarkdown.rstudio.com" target="_blank" rel="noopener">link R Markdown</a></li>
+<li>destaque para <code>cÃ³digo em r</code></li>
+</ol>
+<h4 id="tãtulos-de-seããµes-e-subseããµes">TÃ­tulos de seÃ§Ãµes e subseÃ§Ãµes</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># TÃ­tulo - 1Âº NÃ­vel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">## TÃ­tulo - 2Âº NÃ­vel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c">### TÃ­tulo - 3Âº NÃ­vel</span><span class="w">
+</span></span></span></code></pre></div><h3 id="quebra-de-texto">Quebra de texto</h3>
+<p>Ao terminar de escrever uma linha ou parÃ¡grafo, Ã© necessÃ¡rio apertar &lt;Enter&gt; duas vezes. Caso aperta apenas uma vez, o R Markdown considerarÃ¡ que o texto continua na mesma linha:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">NÃ£o pula linha</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">NÃ£o pula linha</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Pula linha</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Pula linha</span><span class="w">
+</span></span></span></code></pre></div><p>output:</p>
+<p>NÃ£o pula linha
+NÃ£o pula linha</p>
+<p>Pula linha</p>
+<p>Pula linha</p>
+<h3 id="escrita-em-latex">Escrita em LaTeX</h3>
+<p>TambÃ©m Ã© possÃ­vel usar os cÃ³digos em LaTeX para escrever expressÃµes matemÃ¡ticas usando <code>$</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="l">Para incluir uma expressÃ£o LaTeX no meio do texto, como $\alpha + \beta + \gamma$,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">usa-se cifrÃ£o (`$`) Ãºnico em cada lado.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="l">Para destacar uma expressÃ£o, como $$\alpha + \beta + \gamma, \tag{1}$$ Ã© necessÃ¡rio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">colocar 2 cifrÃµes (`$`) de cada lado da expressÃ£o, assim como no LaTeX.</span><span class="w">
+</span></span></span></code></pre></div><p>output:</p>
+<ul>
+<li>Para incluir uma expressÃ£o em LaTeX no meio do texto, como 
+
+$\alpha + \beta + \gamma$, usa-se cifrÃ£o (<code>$</code>) Ãºnico em cada lado.</li>
+<li>Para destacar uma expressÃ£o, como 
+
+$$\alpha + \beta + \gamma, \tag{1}$$ Ã© necessÃ¡rio colocar 2 cifrÃµes (<code>$</code>) de cada lado da expressÃ£o, assim como no LaTeX.</li>
+</ul>
+<p>Para aprender a usar LaTeX:</p>
+<ul>
+<li>Curso <a href="www.edx.org/course/latex-for-students-engineers-and-scientists-2"><em>LaTeX for Students, Engineers and Scientists</em> (edX)</a> (Ã© possÃ­vel cursar sem pagar - <em>audit course</em>)</li>
+</ul>
+<h3 id="exportando-documentos-em-outros-formatos">Exportando documentos em outros formatos</h3>
+<p>No cÃ³digo inicial do .Rmd, Ã© possÃ­vel alterar o formato exportado pelo documento:</p>
+<ul>
+<li>para PDF: <code>output: pdf_document</code></li>
+<li>para HTML: <code>output: html_document</code></li>
+</ul>
+<h4 id="templates-para-html">Templates para HTML</h4>
+<p>Existem diversos templates para documentos HTML e, para utilizÃ¡-los, Ã© preciso instalar
+o pacote <code>rmdsformats</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">install.packages(&#34;rmdformats&#34;)
+</span></span></code></pre></div><p>ApÃ³s a instalaÃ§Ã£o, teste:</p>
+<ul>
+<li><code>output: rmdformats::material</code></li>
+<li><code>output: rmdformats::readthedown</code></li>
+<li><code>output: rmdformats::downcute</code></li>
+<li><code>output: rmdformats::robobook</code></li>
+<li><code>output: rmdformats::html_clean</code></li>
+<li><code>output: rmdformats::html_docco</code></li>
+</ul>
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec2"  class="btn btn-primary px-3 py-3">ðŸ‘‰ Proceed to R Programming</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on set. 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2026 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/pt-br/js/wowchemy.min.25f96c597d1ce95db466a8be1b403a2e.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

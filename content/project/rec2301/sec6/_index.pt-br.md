@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Distribuições
-summary: The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations.
-title: Distribuições
+linktitle: "Distribuições"
+summary: "Notas em R sobre distribuições de probabilidade, simulação, intervalos de confiança, teste t, p-valor e computação estatística introdutória."
+title: "Distribuições de Probabilidade e Simulação"
 weight: 5
 output: md_document
 type: book

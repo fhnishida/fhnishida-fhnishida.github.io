@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 2
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 2 (April 27, 2021)
+linktitle: "Python II"
+summary: "Continuation of the Python review with lists, modules, and matrix basics used in quantitative macroeconomics."
+title: "Session 2: Python Basics II"
 weight: 2
 output: md_document
 type: book

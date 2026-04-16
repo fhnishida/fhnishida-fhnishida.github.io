@@ -29,8 +29,8 @@ Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/vi
 
 
 ## Previous Exams
-- [2020 v12](../Prova-2020_n12.pdf) | [2020 v7](../Prova-2020_n7.pdf)
-- [2019](../Prova-2019.pdf)
+- [2020 v12](Prova-2020_n12.pdf) | [2020 v7](Prova-2020_n7.pdf)
+- [2019](Prova-2019.pdf)
 
 
 ## Complementary Content
@@ -46,4 +46,3 @@ Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/vi
 #### R Programming
 - [HarvardX Data Science Specialization](https://www.edx.org/professional-certificate/harvardx-data-science?index=product&queryID=7c853e76cef8eaffced84cd6759b2af1&position=1)
 - [John Hopkins Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science)
-

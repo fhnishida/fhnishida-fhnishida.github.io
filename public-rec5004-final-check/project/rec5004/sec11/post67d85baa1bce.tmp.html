@@ -1,0 +1,525 @@
+<ul>
+<li><a href="http://www.urfie.net/downloads/PDF/URfIE_web.pdf">Seções 15.1 a 15.5 de Heiss (2020)</a></li>
+<li>Seção 4.8 de Cameron e Trivedi (2005)</li>
+<li>Capítulo 5 de Wooldridge (2010)</li>
+</ul>
+<div id="notações" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Notações</h2>
+<ul>
+<li><p>Considere, para a observação {{<math>}}<span class="math inline">\(i\)</span>{{</math>}}, o modelo multivariado com {{<math>}}<span class="math inline">\(K\)</span>{{</math>}} regressores:
+{{<math>}}<span class="math display">\[ y_i = \beta_0 + \beta_1 x^*_{i1} + ... + \beta_J x^*_{iJ} + \beta_{J+1} x_{i,J+1} + ... + \beta_K x_{iK} + \varepsilon_i, \qquad i=1, 2, ..., N \tag{1} \]</span>{{</math>}}
+em que {{<math>}}<span class="math inline">\(\boldsymbol{x}^*_1, ..., \boldsymbol{x}^*_{iJ}\)</span>{{</math>}} são as {{<math>}}<span class="math inline">\(J\)</span>{{</math>}} variáveis endógenas do modelo, com {{<math>}}<span class="math inline">\(N\)</span>{{</math>}} observações.</p></li>
+<li><p>Matricialmente, podemos escrever (1) como:
+{{<math>}}<span class="math display">\[ \boldsymbol{y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \tag{2} \]</span>{{</math>}}
+em que
+{{<math>}}<span class="math display">\[ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} 1 &amp; x^*_{11} &amp; \cdots &amp; x_{1J} &amp; x_{1,J+1} &amp; \cdots &amp; x_{1K}   \\ 1 &amp; x^*_{21} &amp; \cdots &amp; x^*_{2J} &amp; x_{2,J+1} &amp; \cdots &amp; x_{2K} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; x^*_{N1} &amp; \cdots &amp; z_{NJ} &amp; x^*_{N,J+1} &amp; \cdots &amp; x_{NK} \end{matrix} \right], \]</span>{{</math>}}
+{{<math>}}<span class="math display">\[ \underset{N \times 1}{\boldsymbol{y}} = \left[ \begin{matrix} \boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_N \end{matrix} \right] \quad \text{ e } \quad  \underset{N \times 1}{\boldsymbol{\varepsilon}} = \left[ \begin{matrix} \boldsymbol{\varepsilon}_1 \\ \boldsymbol{\varepsilon}_2 \\ \vdots \\ \boldsymbol{\varepsilon}_N \end{matrix} \right] \]</span>{{</math>}}</p></li>
+<li><p>Denote {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}} a matriz de instrumentos das {{<math>}}<span class="math inline">\(J\)</span>{{</math>}} variáveis endógenas e das variáveis exógenas:
+{{<math>}}<span class="math display">\[ \underset{N \times (K+1)}{\boldsymbol{Z}} = \left[ \begin{matrix} 1 &amp; z_{11} &amp; \cdots &amp; z_{1J} &amp; x_{1,J+1} &amp; \cdots &amp; x_{1K}   \\ 1 &amp; z_{21} &amp; \cdots &amp; z_{2J} &amp; x_{2,J+1} &amp; \cdots &amp; x_{2K} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; z_{N1} &amp; \cdots &amp; z_{NJ} &amp; x_{N,J+1} &amp; \cdots &amp; x_{NK} \end{matrix} \right], \]</span>{{</math>}}</p></li>
+<li><p>Note que:</p>
+<ul>
+<li>{{<math>}}<span class="math inline">\(\boldsymbol{z}_1\)</span>{{</math>}} é o instrumento da variável exógena {{<math>}}<span class="math inline">\(\boldsymbol{x}^*_1\)</span>{{</math>}}</li>
+<li>os (melhores) instrumentos de variáveis exógenas são elas mesmas ({{<math>}}<span class="math inline">\(\boldsymbol{x}_2, ..., \boldsymbol{x}_K\)</span>{{</math>}})</li>
+</ul></li>
+</ul>
+<p></br></p>
+</div>
+<div id="estimador-vi" class="section level2" number="0.2">
+<h2><span class="header-section-number">0.2</span> Estimador VI</h2>
+<ul>
+<li><p>O <strong>estimador de variáveis instrumentais (VI)</strong> é dado por
+{{<math>}}<span class="math display">\[ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}} = \left[ \begin{matrix} \hat{\beta}_0^{\scriptscriptstyle{VI}} \\ \hat{\beta}_1^{\scriptscriptstyle{VI}} \\ \hat{\beta}_2^{\scriptscriptstyle{VI}} \\ \vdots \\ \hat{\beta}_K^{\scriptscriptstyle{VI}} \end{matrix} \right] = (\boldsymbol{Z}&#39;\boldsymbol{X})^{-1} \boldsymbol{Z}&#39; \boldsymbol{y} \]</span>{{</math>}}</p></li>
+<li><p>A <strong>matriz de variâncias-covariâncias do estimador</strong> é dada por
+{{<math>}}<span class="math display">\[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{VI}})= \sigma^2 \left( \boldsymbol{X}&#39; \boldsymbol{Z}&#39; (\boldsymbol{Z}&#39; \boldsymbol{Z})^{-1} \boldsymbol{Z}&#39; \boldsymbol{X} \right)^{-1} \equiv \sigma^2 \left( \boldsymbol{X}&#39; \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} \right)^{-1}  \]</span>{{</math>}}
+em que {{<math>}}<span class="math inline">\(\boldsymbol{P_{\scriptscriptstyle{Z}}}\)</span>{{</math>}} é a matriz de projeção ortogonal em {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}}.</p></li>
+<li><p>A <strong>variância do termo de erro</strong> pode ser estimada usando:
+{{<math>}}<span class="math display">\[ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}&#39;\hat{\boldsymbol{\varepsilon}}}{N-K-1}  \]</span>{{</math>}}</p></li>
+</ul>
+<div id="exemplo-15.1-retorno-da-educação-para-mulheres-casadas-wooldridge-2019" class="section level4" number="0.2.0.1">
+<h4><span class="header-section-number">0.2.0.1</span> Exemplo 15.1: Retorno da Educação para Mulheres Casadas (Wooldridge, 2019)</h4>
+<ul>
+<li>Vamos usar a base de dados <code>mroz</code> do pacote <code>wooldridge</code> para estimar o seguinte modelo</li>
+</ul>
+<p>{{<math>}}<span class="math display">\[ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ} + \beta_2 \text{exper} + \beta_3 \text{exper}^2 + \varepsilon \]</span>{{</math>}}</p>
+<ul>
+<li>Apenas para comparação, vamos estimar por MQO:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mroz, <span class="at">package=</span><span class="st">&quot;wooldridge&quot;</span>) <span class="co"># carregando base de dados</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mroz <span class="ot">=</span> mroz[<span class="sc">!</span><span class="fu">is.na</span>(mroz<span class="sc">$</span>wage),] <span class="co"># retirando valores ausentes de salário</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>reg.ols <span class="ot">=</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> expersq, mroz) <span class="co"># regressão por MQO</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>( <span class="fu">summary</span>(reg.ols)<span class="sc">$</span>coef, <span class="dv">3</span> )</span></code></pre></div>
+<pre><code>##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   -0.522      0.199  -2.628    0.009
+## educ           0.107      0.014   7.598    0.000
+## exper          0.042      0.013   3.155    0.002
+## expersq       -0.001      0.000  -2.063    0.040</code></pre>
+</div>
+<div id="estimação-via-ivreg" class="section level3" number="0.2.1">
+<h3><span class="header-section-number">0.2.1</span> Estimação via <code>ivreg()</code></h3>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/ivreg/vignettes/ivreg.html">CRAN - Package ivreg</a></li>
+<li>Para fazer regressão com variável instrumental, vamos usar a função <code>ivreg()</code> do pacote <code>ivreg</code> (também presente no pacote <code>AER</code>, do mesmo autor).</li>
+<li>É necessário incluir a variável instrumental de <em>educ</em> (que neste caso é a educação do pai - <em>fatheduc</em>) e dos demais instrumentos das variáveis exógenas (elas mesmas), após informar o modelo, incluindo um <code>|</code>:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ivreg) <span class="co"># carregando pacote com ivreg</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reg.iv1 <span class="ot">=</span> <span class="fu">ivreg</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> expersq <span class="sc">|</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                 fatheduc <span class="sc">+</span> exper <span class="sc">+</span> expersq, <span class="at">data=</span>mroz) <span class="co"># regressão por VI</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparando com MQO</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(reg.ols, reg.iv1, <span class="at">type=</span><span class="st">&quot;text&quot;</span>, <span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## 
+## ===================================================================
+##                                        Dependent variable:         
+##                                ------------------------------------
+##                                               lwage                
+##                                          OLS           instrumental
+##                                                          variable  
+##                                          (1)               (2)     
+## -------------------------------------------------------------------
+## educ                                  0.107***           0.070**   
+##                                        (0.014)           (0.034)   
+##                                                                    
+## exper                                 0.042***           0.044***  
+##                                        (0.013)           (0.013)   
+##                                                                    
+## expersq                               -0.001**           -0.001**  
+##                                       (0.0004)           (0.0004)  
+##                                                                    
+## Constant                              -0.522***           -0.061   
+##                                        (0.199)           (0.436)   
+##                                                                    
+## -------------------------------------------------------------------
+## Observations                             428               428     
+## R2                                      0.157             0.143    
+## Adjusted R2                             0.151             0.137    
+## Residual Std. Error (df = 424)          0.666             0.672    
+## F Statistic                    26.286*** (df = 3; 424)             
+## ===================================================================
+## Note:                                   *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+<div id="estimação-analítica" class="section level3" number="0.2.2">
+<h3><span class="header-section-number">0.2.2</span> Estimação analítica</h3>
+<ol style="list-style-type: lower-alpha">
+<li>Criando vetores/matrizes e definindo <em>N</em> e <em>K</em></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando o vetor y</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">as.matrix</span>(mroz[,<span class="st">&quot;lwage&quot;</span>]) <span class="co"># transformando coluna de data frame em matriz</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">as.matrix</span>( <span class="fu">cbind</span>(<span class="dv">1</span>, mroz[,<span class="fu">c</span>(<span class="st">&quot;educ&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;expersq&quot;</span>)]) )</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a matriz de instrumentos Z com primeira coluna de 1&#39;s</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">=</span> <span class="fu">as.matrix</span>( <span class="fu">cbind</span>(<span class="dv">1</span>, mroz[,<span class="fu">c</span>(<span class="st">&quot;fatheduc&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;expersq&quot;</span>)]) )</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Pegando valores N e K</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(X)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>K <span class="ot">=</span> <span class="fu">ncol</span>(X) <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Estimativas VI {{<math>}}<span class="math inline">\(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}\)</span>{{</math>}}</li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}} = (\boldsymbol{Z}&#39; \boldsymbol{X})^{-1} \boldsymbol{Z}&#39; \boldsymbol{y} \]</span>{{</math>}}</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bhat <span class="ot">=</span> <span class="fu">solve</span>( <span class="fu">t</span>(Z) <span class="sc">%*%</span> X ) <span class="sc">%*%</span> <span class="fu">t</span>(Z) <span class="sc">%*%</span> y</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bhat</span></code></pre></div>
+<pre><code>##                 [,1]
+## 1       -0.061116933
+## educ     0.070226291
+## exper    0.043671588
+## expersq -0.000882155</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Valores ajustados {{<math>}}<span class="math inline">\(\hat{\boldsymbol{y}}_{\scriptscriptstyle{VI}}\)</span>{{</math>}}</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">=</span> X <span class="sc">%*%</span> bhat</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat)</span></code></pre></div>
+<pre><code>##        [,1]
+## 1 1.2200984
+## 2 0.9779026
+## 3 1.2381875
+## 4 1.0118705
+## 5 1.1845267
+## 6 1.2620942</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Resíduos {{<math>}}<span class="math inline">\(\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{VI}}\)</span>{{</math>}}</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">=</span> y <span class="sc">-</span> yhat</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ehat)</span></code></pre></div>
+<pre><code>##           [,1]
+## 1 -0.009944725
+## 2 -0.649390526
+## 3  0.275950227
+## 4 -0.919747190
+## 5  0.339745535
+## 6  0.294385830</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Estimativa da variância do erro {{<math>}}<span class="math inline">\(\hat{\sigma}^2_{\scriptscriptstyle{VI}}\)</span>{{</math>}}
+{{<math>}}<span class="math display">\[\hat{\sigma}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}&#39; \hat{\boldsymbol{\varepsilon}}}{N - K - 1} \]</span>{{</math>}}</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sig2hat <span class="ot">=</span> <span class="fu">as.numeric</span>( <span class="fu">t</span>(ehat) <span class="sc">%*%</span> ehat <span class="sc">/</span> (N<span class="sc">-</span>K<span class="dv">-1</span>) )</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sig2hat</span></code></pre></div>
+<pre><code>## [1] 0.4513836</code></pre>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Matriz de Variâncias-Covariâncias do Estimador</li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}) = (\boldsymbol{X}&#39; \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \]</span>{{</math>}}</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Pz <span class="ot">=</span> Z <span class="sc">%*%</span> <span class="fu">solve</span>( <span class="fu">t</span>(Z) <span class="sc">%*%</span> Z ) <span class="sc">%*%</span> <span class="fu">t</span>(Z)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Vbhat <span class="ot">=</span> sig2hat <span class="sc">*</span> <span class="fu">solve</span>( <span class="fu">t</span>(X) <span class="sc">%*%</span> Pz <span class="sc">%*%</span> X )</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Vbhat</span></code></pre></div>
+<pre><code>##                     1          educ         exper       expersq
+## 1        1.904852e-01 -1.467376e-02 -2.903230e-04  4.591458e-07
+## educ    -1.467376e-02  1.186299e-03 -6.701635e-05  2.259110e-06
+## exper   -2.903230e-04 -6.701635e-05  1.795632e-04 -5.122537e-06
+## expersq  4.591458e-07  2.259110e-06 -5.122537e-06  1.607344e-07</code></pre>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Erros-padrão do estimador {{<math>}}<span class="math inline">\(\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}})\)</span>{{</math>}}</li>
+</ol>
+<p>É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">=</span> <span class="fu">sqrt</span>( <span class="fu">diag</span>(Vbhat) )</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>se</span></code></pre></div>
+<pre><code>##           1        educ       exper     expersq 
+## 0.436446128 0.034442694 0.013400121 0.000400917</code></pre>
+<ol start="8" style="list-style-type: lower-alpha">
+<li>Estatística <em>t</em></li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} 
+\]</span> {{</math>}}</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> bhat <span class="sc">/</span> se</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>t</span></code></pre></div>
+<pre><code>##               [,1]
+## 1       -0.1400332
+## educ     2.0389314
+## exper    3.2590443
+## expersq -2.2003431</code></pre>
+<ol style="list-style-type: lower-roman">
+<li>P-valor</li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \]</span>{{</math>}}</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t), N<span class="sc">-</span>K<span class="dv">-1</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<pre><code>##                [,1]
+## 1       0.888700281
+## educ    0.042076572
+## exper   0.001207928
+## expersq 0.028321194</code></pre>
+<ol start="10" style="list-style-type: lower-alpha">
+<li>Tabela-resumo</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(bhat, se, t, p) <span class="co"># resultado VI</span></span></code></pre></div>
+<pre><code>##                 bhat          se          t           p
+## 1       -0.061116933 0.436446128 -0.1400332 0.888700281
+## educ     0.070226291 0.034442694  2.0389314 0.042076572
+## exper    0.043671588 0.013400121  3.2590443 0.001207928
+## expersq -0.000882155 0.000400917 -2.2003431 0.028321194</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg.iv1)<span class="sc">$</span>coef <span class="co"># resultado VI via ivreg()</span></span></code></pre></div>
+<pre><code>##                 Estimate  Std. Error    t value    Pr(&gt;|t|)
+## (Intercept) -0.061116933 0.436446128 -0.1400332 0.888700281
+## educ         0.070226291 0.034442694  2.0389314 0.042076572
+## exper        0.043671588 0.013400121  3.2590443 0.001207928
+## expersq     -0.000882155 0.000400917 -2.2003431 0.028321194
+## attr(,&quot;df&quot;)
+## [1] 424
+## attr(,&quot;nobs&quot;)
+## [1] 428</code></pre>
+<p></br></p>
+</div>
+</div>
+<div id="estimador-vi-sobreidentificado" class="section level2" number="0.3">
+<h2><span class="header-section-number">0.3</span> Estimador VI sobreidentificado</h2>
+<blockquote>
+<p><strong>ATENÇÃO</strong>: Nas notas de aula do professor, usa-se {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}} para matrizes de diferentes dimensões, então estou usando de maneira um pouco distinta:
+- {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}} (maiúsculo) é SEMPRE uma matriz de instrumentos de mesma dimensão de {{<math>}}<span class="math inline">\(\boldsymbol{X}\)</span>{{</math>}}, {{<math>}}<span class="math inline">\(N \times (K+1)\)</span>{{</math>}}:
+{{<math>}}<span class="math display">\[ \underset{N \times (K+1)}{\boldsymbol{Z}} = \left[ \begin{matrix} 1 &amp; z_{11} &amp; \cdots &amp; z_{1J} &amp; x_{1,J+1} &amp; \cdots &amp; x_{1K}   \\ 1 &amp; z_{21} &amp; \cdots &amp; z_{2J} &amp; x_{2,J+1} &amp; \cdots &amp; x_{2K} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; z_{N1} &amp; \cdots &amp; z_{NJ} &amp; x_{N,J+1} &amp; \cdots &amp; x_{NK} \end{matrix} \right], \]</span>{{</math>}}
+- {{<math>}}<span class="math inline">\(\boldsymbol{z}^*\)</span>{{</math>}} (minúsculo) é uma matriz cuja APENAS com os {{<math>}}<span class="math inline">\(L (&gt;J)\)</span>{{</math>}} instrumentos das {{<math>}}<span class="math inline">\(J\)</span>{{</math>}} variáveis endógenas (além da coluna de 1’s):
+{{<math>}}<span class="math display">\[ \underset{N \times (L+1)}{\boldsymbol{z}^*} = \left[ \begin{matrix} 1 &amp; z^*_{11} &amp; z^*_{12} &amp; \cdots &amp; z^*_{1L} \\ 1 &amp; z^*_{21} &amp; z^*_{22} &amp; \cdots &amp; z^*_{2L} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; z^*_{N1} &amp; z^*_{N2} &amp; \cdots &amp; z^*_{NL} \end{matrix} \right], \]</span>{{</math>}}
+em que {{<math>}}<span class="math inline">\(L\)</span>{{</math>}} é o número de instrumentos.
+- {{<math>}}<span class="math inline">\(\boldsymbol{Z}^*\)</span>{{</math>}} (Maiúsculo) é uma matriz “sobreidentificada” com todos os {{<math>}}<span class="math inline">\(L (&gt;J)\)</span>{{</math>}} instrumentos das {{<math>}}<span class="math inline">\(J\)</span>{{</math>}} variáveis endógenas e todas as {{<math>}}<span class="math inline">\((K-J)\)</span>{{</math>}} variáveis exógenas (além da coluna de 1’s):
+{{<math>}}<span class="math display">\[ \underset{N \times (1+L+K-J)}{\boldsymbol{Z}^*} = \left[ \begin{matrix} 1 &amp; z^*_{11} &amp; \cdots &amp; z^*_{1L} &amp; x_{1,J+1} &amp; \cdots &amp; x_{1K}   \\ 1 &amp; z^*_{21} &amp; \cdots &amp; z^*_{2L} &amp; x_{2,J+1} &amp; \cdots &amp; x_{2K} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; z^*_{N1} &amp; \cdots &amp; z^*_{NL} &amp; x_{N,J+1} &amp; \cdots &amp; x_{NK} \end{matrix} \right] \]</span>{{</math>}}</p>
+</blockquote>
+<p></br></p>
+<ul>
+<li>Tome, como exemplo, um caso com {{<math>}}<span class="math inline">\(L = 2\)</span>{{</math>}} instrumentos para {{<math>}}<span class="math inline">\(J = 1\)</span>{{</math>}} variável endógena {{<math>}}<span class="math inline">\(\boldsymbol{x}_1^*\)</span>{{</math>}}</li>
+</ul>
+<p><strong>(1)</strong> Para fazer a estimação VI, podemos <strong>criar um novo instrumento</strong> que é uma combinação linear dos outros dois a partir do seguinte modelo:
+{{<math>}}<span class="math display">\[ \boldsymbol{x}_1^* = \gamma_0 + \gamma_1 z^*_1 + \gamma_2 z^*_2 + u \]</span> {{</math>}}</p>
+<ul>
+<li><p>Calculamos as estimativas:
+{{<math>}}<span class="math display">\[ \hat{\boldsymbol{\gamma}} = (\boldsymbol{z}^{*\prime} \boldsymbol{z}^{*})^{-1} \boldsymbol{z}^{*\prime} \boldsymbol{x}_1^*  \]</span> {{</math>}}
+em que
+{{<math>}}<span class="math display">\[ \underset{N \times 3}{\boldsymbol{z}^*} = \left[ \begin{matrix} 1 &amp; z^*_{11} &amp; z^*_{12} \\ 1 &amp; z^*_{21} &amp; z^*_{22} \\ \vdots &amp; \vdots &amp; \vdots \\ 1 &amp; z^*_{N1} &amp; z^*_{N2} \end{matrix} \right] \quad \text{ e } \quad \boldsymbol{x}_{1}^* = \begin{bmatrix} x_{11}^* \\ x_{21}^* \\ \vdots \\ x_{N1}^* \end{bmatrix} \]</span>{{</math>}}</p></li>
+<li><p>Aí, podemos usar o valor ajustado do modelo acima como instrumento dentro de {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}}:
+{{<math>}}<span class="math display">\[ \boldsymbol{z}_1 = \hat{\boldsymbol{x}}_1^* = \boldsymbol{x}_1^*\hat{\boldsymbol{\gamma}}\]</span> {{</math>}}</p></li>
+</ul>
+<p></br></p>
+<p><strong>(2)</strong> Uma <strong>outra opção</strong> “mais direta”, é criarmos a matriz de instrumentos “sobreidentificada” {{<math>}}<span class="math inline">\(\boldsymbol{Z}^*\)</span>{{</math>}}, cujo número de colunas é maior do que de {{<math>}}<span class="math inline">\(\boldsymbol{X}\)</span>{{</math>}} e, portanto, não pode ser usada diretamente para estimação
+{{<math>}}<span class="math display">\[ \underset{N \times (K+2)}{\boldsymbol{Z}^*} = \left[ \begin{matrix} 1 &amp; z^*_{11} &amp; z^*_{12} &amp; x_{12} &amp; \cdots &amp; x_{1K}   \\ 1 &amp; z^*_{21} &amp; z^*_{22} &amp; x_{22} &amp; \cdots &amp; x_{2K} \\ \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; z^*_{N1} &amp; z^*_{N2} &amp; x_{N2} &amp; \cdots &amp; x_{NK} \end{matrix} \right] \]</span>{{</math>}}</p>
+<ul>
+<li><p>A matriz {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}} pode ser obtida usando
+{{<math>}}<span class="math display">\[ \boldsymbol{Z} = \boldsymbol{P_{\scriptscriptstyle{\boldsymbol{Z}^*}}} \boldsymbol{X}\]</span>{{</math>}}
+em que
+{{<math>}}<span class="math display">\[ \underset{N \times N}{\boldsymbol{P_{\scriptscriptstyle{\boldsymbol{Z}^*}} }} = \boldsymbol{Z}^* (\boldsymbol{Z}^{*\prime} \boldsymbol{Z}^*)^{-1} \boldsymbol{Z}^{*\prime} \]</span>{{</math>}}</p></li>
+<li><p>Agora</p></li>
+</ul>
+<div id="estimação-via-ivreg-1" class="section level3" number="0.3.1">
+<h3><span class="header-section-number">0.3.1</span> Estimação via <code>ivreg()</code></h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ivreg) <span class="co"># carregando pacote com ivreg</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>reg.iv2 <span class="ot">=</span> <span class="fu">ivreg</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> expersq <span class="sc">|</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                 fatheduc <span class="sc">+</span> motheduc <span class="sc">+</span> exper <span class="sc">+</span> expersq, <span class="at">data=</span>mroz) <span class="co"># regressão por VI</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparando com MQO</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(reg.ols, reg.iv1, reg.iv2, <span class="at">type=</span><span class="st">&quot;text&quot;</span>, <span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## 
+## ========================================================================
+##                                           Dependent variable:           
+##                                -----------------------------------------
+##                                                  lwage                  
+##                                          OLS             instrumental   
+##                                                            variable     
+##                                          (1)             (2)      (3)   
+## ------------------------------------------------------------------------
+## educ                                  0.107***         0.070**   0.061* 
+##                                        (0.014)         (0.034)  (0.031) 
+##                                                                         
+## exper                                 0.042***         0.044*** 0.044***
+##                                        (0.013)         (0.013)  (0.013) 
+##                                                                         
+## expersq                               -0.001**         -0.001** -0.001**
+##                                       (0.0004)         (0.0004) (0.0004)
+##                                                                         
+## Constant                              -0.522***         -0.061   0.048  
+##                                        (0.199)         (0.436)  (0.400) 
+##                                                                         
+## ------------------------------------------------------------------------
+## Observations                             428             428      428   
+## R2                                      0.157           0.143    0.136  
+## Adjusted R2                             0.151           0.137    0.130  
+## Residual Std. Error (df = 424)          0.666           0.672    0.675  
+## F Statistic                    26.286*** (df = 3; 424)                  
+## ========================================================================
+## Note:                                        *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+<div id="estimação-analítica-1" class="section level3" number="0.3.2">
+<h3><span class="header-section-number">0.3.2</span> Estimação analítica (1)</h3>
+<ul>
+<li>Aqui vamos criar “na mão” uma nova variável instrumental a partir das duas existentes</li>
+</ul>
+<p>a1) Criando vetores/matrizes e definindo <em>N</em> e <em>K</em></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando o vetor y</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">as.matrix</span>(mroz[,<span class="st">&quot;lwage&quot;</span>]) <span class="co"># transformando coluna de data frame em matriz</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">as.matrix</span>( <span class="fu">cbind</span>(<span class="dv">1</span>, mroz[,<span class="fu">c</span>(<span class="st">&quot;educ&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;expersq&quot;</span>)]) )</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando vetor com variável x1* endógena</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>x1star <span class="ot">=</span> <span class="fu">as.matrix</span>(mroz[,<span class="st">&quot;educ&quot;</span>])</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a matriz dos instrumentos APENAS das variáveis endógenas z*</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>zstar <span class="ot">=</span> <span class="fu">as.matrix</span>(<span class="fu">cbind</span>(<span class="dv">1</span>, mroz[,<span class="fu">c</span>(<span class="st">&quot;fatheduc&quot;</span>,<span class="st">&quot;motheduc&quot;</span>)]))</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Pegando valores N e K</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(X)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>K <span class="ot">=</span> <span class="fu">ncol</span>(X) <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<p>a2) Estimando {{<math>}}<span class="math inline">\(\hat{\boldsymbol{\gamma}}\)</span>{{</math>}}, obtendo {{<math>}}<span class="math inline">\(\boldsymbol{z}_{1} = \hat{\boldsymbol{x}}^*_1\)</span>{{</math>}} e construindo {{<math>}}$  $ {{</math>}}</p>
+<p>{{<math>}}<span class="math display">\[ \hat{\boldsymbol{\gamma}} = (\boldsymbol{z}^{*\prime} \boldsymbol{z}^{*})^{-1} \boldsymbol{z}^{*\prime} \boldsymbol{x}_1^*, \qquad \hat{\boldsymbol{x}}^*_1 = \boldsymbol{x}^*_1 \hat{\boldsymbol{\gamma}} \]</span> {{</math>}}</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimando ghat e x1hat</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ghat <span class="ot">=</span> <span class="fu">solve</span>( <span class="fu">t</span>(zstar) <span class="sc">%*%</span> zstar ) <span class="sc">%*%</span> <span class="fu">t</span>(zstar) <span class="sc">%*%</span> x1star</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>x1hat <span class="ot">=</span> zstar <span class="sc">%*%</span> ghat</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Construindo matriz de instrumentos Z</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">=</span> <span class="fu">as.matrix</span>( <span class="fu">cbind</span>(<span class="dv">1</span>, x1hat, mroz[,<span class="fu">c</span>(<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;expersq&quot;</span>)]) )</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Z)</span></code></pre></div>
+<pre><code>##   1    x1hat exper expersq
+## 1 1 12.67324    14     196
+## 2 1 11.89140     5      25
+## 3 1 12.67324    15     225
+## 4 1 11.89140     6      36
+## 5 1 13.98993     7      49
+## 6 1 12.98598    33    1089</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Estimativas VI {{<math>}}<span class="math inline">\(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}\)</span>{{</math>}}</li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}} = (\boldsymbol{Z}&#39; \boldsymbol{X})^{-1} \boldsymbol{Z}&#39; \boldsymbol{y} \]</span>{{</math>}}</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>bhat <span class="ot">=</span> <span class="fu">solve</span>( <span class="fu">t</span>(Z) <span class="sc">%*%</span> X ) <span class="sc">%*%</span> <span class="fu">t</span>(Z) <span class="sc">%*%</span> y</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>bhat</span></code></pre></div>
+<pre><code>##                  [,1]
+## 1        0.0480913538
+## educ     0.0613973525
+## exper    0.0441703521
+## expersq -0.0008989682</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Valores ajustados {{<math>}}<span class="math inline">\(\hat{\boldsymbol{y}}_{\scriptscriptstyle{VI}}\)</span>{{</math>}}</li>
+</ol>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">=</span> X <span class="sc">%*%</span> bhat</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat)</span></code></pre></div>
+<pre><code>##        [,1]
+## 1 1.2270467
+## 2 0.9832371
+## 3 1.2451470
+## 4 1.0175188
+## 5 1.1727973
+## 6 1.2635048</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Resíduos {{<math>}}<span class="math inline">\(\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{VI}}\)</span>{{</math>}}</li>
+</ol>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">=</span> y <span class="sc">-</span> yhat</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ehat)</span></code></pre></div>
+<pre><code>##          [,1]
+## 1 -0.01689304
+## 2 -0.65472504
+## 3  0.26899073
+## 4 -0.92539552
+## 5  0.35147489
+## 6  0.29297523</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Estimativa da variância do erro {{<math>}}<span class="math inline">\(\hat{\sigma}^2_{\scriptscriptstyle{VI}}\)</span>{{</math>}}
+{{<math>}}<span class="math display">\[\hat{\sigma}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}&#39; \hat{\boldsymbol{\varepsilon}}}{N - K - 1} \]</span>{{</math>}}</li>
+</ol>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sig2hat <span class="ot">=</span> <span class="fu">as.numeric</span>( <span class="fu">t</span>(ehat) <span class="sc">%*%</span> ehat <span class="sc">/</span> (N<span class="sc">-</span>K<span class="dv">-1</span>) )</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sig2hat</span></code></pre></div>
+<pre><code>## [1] 0.4552355</code></pre>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Matriz de Variâncias-Covariâncias do Estimador</li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}}) = (\boldsymbol{X}&#39; \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \]</span>{{</math>}}</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>Pz <span class="ot">=</span> Z <span class="sc">%*%</span> <span class="fu">solve</span>( <span class="fu">t</span>(Z) <span class="sc">%*%</span> Z ) <span class="sc">%*%</span> <span class="fu">t</span>(Z)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>Vbhat <span class="ot">=</span> sig2hat <span class="sc">*</span> <span class="fu">solve</span>( <span class="fu">t</span>(X) <span class="sc">%*%</span> Pz <span class="sc">%*%</span> X )</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>Vbhat</span></code></pre></div>
+<pre><code>##                     1          educ         exper       expersq
+## 1        1.602624e-01 -1.222420e-02 -4.382545e-04  5.366295e-06
+## educ    -1.222420e-02  9.882651e-04 -5.582902e-05  1.881987e-06
+## exper   -4.382545e-04 -5.582902e-05  1.804313e-04 -5.143857e-06
+## expersq  5.366295e-06  1.881987e-06 -5.143857e-06  1.613512e-07</code></pre>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Erros-padrão do estimador {{<math>}}<span class="math inline">\(\text{se}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{VI}})\)</span>{{</math>}}</li>
+</ol>
+<p>É a raiz quadrada da diagonal principal da Matriz de Variâncias-Covariâncias do Estimador</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">=</span> <span class="fu">sqrt</span>( <span class="fu">diag</span>(Vbhat) )</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>se</span></code></pre></div>
+<pre><code>##            1         educ        exper      expersq 
+## 0.4003279243 0.0314366836 0.0134324704 0.0004016855</code></pre>
+<ol start="8" style="list-style-type: lower-alpha">
+<li>Estatística <em>t</em></li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ t_{\hat{\beta}_k} = \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} 
+\]</span> {{</math>}}</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> bhat <span class="sc">/</span> se</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>t</span></code></pre></div>
+<pre><code>##               [,1]
+## 1        0.1201299
+## educ     1.9530480
+## exper    3.2883268
+## expersq -2.2379904</code></pre>
+<ol style="list-style-type: lower-roman">
+<li>P-valor</li>
+</ol>
+<p>{{<math>}}<span class="math display">\[ p_{\hat{\beta}_k} = 2.\Phi_{t_{(N-K-1)}}(-|t_{\hat{\beta}_k}|), \]</span>{{</math>}}</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t), N<span class="sc">-</span>K<span class="dv">-1</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<pre><code>##                [,1]
+## 1       0.904437148
+## educ    0.051471347
+## exper   0.001091845
+## expersq 0.025740197</code></pre>
+<ol start="10" style="list-style-type: lower-alpha">
+<li>Tabela-resumo</li>
+</ol>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(bhat, se, t, p) <span class="co"># resultado VI</span></span></code></pre></div>
+<pre><code>##                  bhat           se          t           p
+## 1        0.0480913538 0.4003279243  0.1201299 0.904437148
+## educ     0.0613973525 0.0314366836  1.9530480 0.051471347
+## exper    0.0441703521 0.0134324704  3.2883268 0.001091845
+## expersq -0.0008989682 0.0004016855 -2.2379904 0.025740197</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg.iv2)<span class="sc">$</span>coef <span class="co"># resultado VI via ivreg()</span></span></code></pre></div>
+<pre><code>##                  Estimate   Std. Error    t value    Pr(&gt;|t|)
+## (Intercept)  0.0481003069 0.4003280776  0.1201522 0.904419479
+## educ         0.0613966287 0.0314366956  1.9530242 0.051474174
+## exper        0.0441703929 0.0134324755  3.2883286 0.001091838
+## expersq     -0.0008989696 0.0004016856 -2.2379930 0.025740027
+## attr(,&quot;df&quot;)
+## [1] 424
+## attr(,&quot;nobs&quot;)
+## [1] 428</code></pre>
+</div>
+<div id="estimação-analítica-2" class="section level3" number="0.3.3">
+<h3><span class="header-section-number">0.3.3</span> Estimação analítica (2)</h3>
+<p>a1’) Criando vetores/matrizes e definindo <em>N</em> e <em>K</em></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando o vetor y</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">as.matrix</span>(mroz[,<span class="st">&quot;lwage&quot;</span>]) <span class="co"># transformando coluna de data frame em matriz</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a matriz de covariadas X com primeira coluna de 1&#39;s</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">as.matrix</span>( <span class="fu">cbind</span>(<span class="dv">1</span>, mroz[,<span class="fu">c</span>(<span class="st">&quot;educ&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;expersq&quot;</span>)]) )</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a matriz &quot;sobreidentificada&quot; de instrumentos Z* [L endóg + (K-J) exóg]</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>Zstar <span class="ot">=</span> <span class="fu">as.matrix</span>( <span class="fu">cbind</span>(<span class="dv">1</span>, mroz[,<span class="fu">c</span>(<span class="st">&quot;fatheduc&quot;</span>,<span class="st">&quot;motheduc&quot;</span>,<span class="st">&quot;exper&quot;</span>,<span class="st">&quot;expersq&quot;</span>)]) )</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Pegando valores N e K</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(X)</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>K <span class="ot">=</span> <span class="fu">ncol</span>(X) <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<p>a2’) Obtendo {{<math>}}<span class="math inline">\(\boldsymbol{P_{\scriptscriptstyle{Z^*}}}\)</span>{{</math>}} e {{<math>}}$ <span class="math inline">\({{&lt;/math&gt;}} {{&lt;math&gt;}}\)</span>$  = <sup>* (</sup>{<em>} ^</em>)^{-1} ^{*}   =   $${{</math>}}</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Pzstar <span class="ot">=</span> Zstar <span class="sc">%*%</span> <span class="fu">solve</span>( <span class="fu">t</span>(Zstar) <span class="sc">%*%</span> Zstar ) <span class="sc">%*%</span> <span class="fu">t</span>(Zstar) <span class="co"># matriz de projeção em Z*</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">=</span> Pzstar <span class="sc">%*%</span> X <span class="co"># matriz Z</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Z)</span></code></pre></div>
+<pre><code>##   1     educ exper expersq
+## 1 1 12.75602    14     196
+## 2 1 11.73356     5      25
+## 3 1 12.77198    15     225
+## 4 1 11.76768     6      36
+## 5 1 13.91461     7      49
+## 6 1 13.02938    33    1089</code></pre>
+<ul>
+<li>Note que, mesmo pré-multiplicando {{<math>}}<span class="math inline">\(\boldsymbol{X}\)</span>{{</math>}} por {{<math>}}<span class="math inline">\(\boldsymbol{P_{\scriptscriptstyle{Z^*}}}\)</span>{{</math>}}, <strong>as variáveis exógenas permaneceram com os mesmos valores</strong>, já que as dimensões <em>exper</em> e <em>expersq</em> estão presentes em ambas matrizes {{<math>}}<span class="math inline">\(\boldsymbol{X}\)</span>{{</math>}} e {{<math>}}<span class="math inline">\(\boldsymbol{Z}^*\)</span>{{</math>}} e são projetadas nas próprias dimensões.</li>
+<li>Embora o instrumento {{<math>}}<span class="math inline">\(\boldsymbol{x}^*_1\)</span>{{</math>}} em {{<math>}}<span class="math inline">\(\boldsymbol{Z}\)</span>{{</math>}} não esteja exatamente igual no passo (a2), estão bastante próximas.</li>
+<li>A partir do item (b), os passos são os mesmos dos aplicados anteriormente:</li>
+</ul>
+<p>b – j)</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimação, valores preditos e resíduos</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>bhat <span class="ot">=</span> <span class="fu">solve</span>( <span class="fu">t</span>(Z) <span class="sc">%*%</span> X ) <span class="sc">%*%</span> <span class="fu">t</span>(Z) <span class="sc">%*%</span> y</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">=</span> X <span class="sc">%*%</span> bhat</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">=</span> y <span class="sc">-</span> yhat</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de variâncias-covariâncias</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>sig2hat <span class="ot">=</span> <span class="fu">as.numeric</span>( <span class="fu">t</span>(ehat) <span class="sc">%*%</span> ehat <span class="sc">/</span> (N<span class="sc">-</span>K<span class="dv">-1</span>) )</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>Pz <span class="ot">=</span> Z <span class="sc">%*%</span> <span class="fu">solve</span>( <span class="fu">t</span>(Z) <span class="sc">%*%</span> Z ) <span class="sc">%*%</span> <span class="fu">t</span>(Z)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>Vbhat <span class="ot">=</span> sig2hat <span class="sc">*</span> <span class="fu">solve</span>( <span class="fu">t</span>(X) <span class="sc">%*%</span> Pz <span class="sc">%*%</span> X )</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Erro padrão, estatística t e p-valor</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>se <span class="ot">=</span> <span class="fu">sqrt</span>( <span class="fu">diag</span>(Vbhat) )</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> bhat <span class="sc">/</span> se</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t), N<span class="sc">-</span>K<span class="dv">-1</span>)</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabela-resumo</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(bhat, se, t, p) <span class="co"># resultado VI</span></span></code></pre></div>
+<pre><code>##                  bhat           se          t           p
+## 1        0.0481003069 0.4003280776  0.1201522 0.904419479
+## educ     0.0613966287 0.0314366956  1.9530242 0.051474174
+## exper    0.0441703929 0.0134324755  3.2883286 0.001091838
+## expersq -0.0008989696 0.0004016856 -2.2379930 0.025740027</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg.iv2)<span class="sc">$</span>coef <span class="co"># resultado VI via ivreg()</span></span></code></pre></div>
+<pre><code>##                  Estimate   Std. Error    t value    Pr(&gt;|t|)
+## (Intercept)  0.0481003069 0.4003280776  0.1201522 0.904419479
+## educ         0.0613966287 0.0314366956  1.9530242 0.051474174
+## exper        0.0441703929 0.0134324755  3.2883286 0.001091838
+## expersq     -0.0008989696 0.0004016856 -2.2379930 0.025740027
+## attr(,&quot;df&quot;)
+## [1] 424
+## attr(,&quot;nobs&quot;)
+## [1] 428</code></pre>
+<p></br></p>
+</div>
+</div>
+<div id="estimador-mq2e" class="section level2" number="0.4">
+<h2><span class="header-section-number">0.4</span> Estimador MQ2E</h2>
+<ul>
+<li>Um alternativa à estimação por IV é o uso de Mínimos Quadrados em 2 Estágios (MQ2E/2SLS).</li>
+</ul>
+<div id="testes" class="section level3" number="0.4.1">
+<h3><span class="header-section-number">0.4.1</span> Testes</h3>
+<p></br></p>
+</div>
+</div>
+<div id="equações-simultâneas" class="section level2" number="0.5">
+<h2><span class="header-section-number">0.5</span> Equações Simultâneas</h2>
+<ul>
+<li>Modelos de Equações Simultâneas (MES/SEM)</li>
+</ul>
+<p></br></p>
+<p>{{&lt; cta cta_text=“👉 Proceed to GMM” cta_link=“../sec11” &gt;}}</p>
+</div>

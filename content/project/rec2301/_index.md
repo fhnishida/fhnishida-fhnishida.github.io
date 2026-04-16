@@ -4,11 +4,11 @@ date: "2022-12-05T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA materials for Econometrics I, with support on OLS, R, data manipulation, visualization, distributions, and hypothesis testing.
+summary: "Undergraduate Econometrics I teaching-assistance notes with R tutorials on OLS, data manipulation, visualization, probability distributions, numerical optimization, and hypothesis testing."
 tags:
 - Undergraduate
-title: Econometrics I (Fall 2022)
-linktitle: Main
+title: "Econometrics I TA Notes (Fall 2022)"
+linktitle: "Main"
 type: book
 weight: 1
 ---

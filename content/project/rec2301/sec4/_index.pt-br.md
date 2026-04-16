@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipulação via dplyr
-summary: The page provides an introduction to the dplyr package and its functions for column manipulation (select, rename, mutate), row manipulation (filter, arrange), and grouping of rows (summarize). The page also includes examples of using these functions with the Star Wars dataset. Additionally, the page discusses the use of the pipe operator (%>%) and join functions for merging data frames.
-title: Manipulação via dplyr
+linktitle: "dplyr"
+summary: "Notas aplicadas de R com fluxos em dplyr, incluindo select, rename, mutate, filter, arrange, group_by, summarize, joins e pipes."
+title: "Manipulação de Dados com dplyr"
 weight: 4
 output: md_document
 type: book

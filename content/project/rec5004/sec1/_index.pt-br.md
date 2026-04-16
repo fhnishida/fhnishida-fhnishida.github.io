@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: R Toolkit
-summary: This page is a tutorial on using R Toolkit. It covers topics such as installing R and R Studio, working with R packages, using R Markdown, and more. The tutorial is based on courses from the Data Science specialization at Johns Hopkins University available on Coursera. It provides detailed instructions and examples to help users learn how to use R for data manipulation, visualization, and analysis.
-title: R Toolkit
+linktitle: "Ferramentas de R"
+summary: "Notas introdutorias sobre R para Econometria, cobrindo instalacao do R e do RStudio, pacotes, R Markdown, arquivos e fluxo de trabalho para analise empirica."
+title: "Ferramentas de R para Econometria"
 weight: 1
 output: md_document
 type: book
@@ -443,7 +443,7 @@ output:
 
 Para aprender a usar LaTeX:
 
-- Curso [_LaTeX for Students, Engineers and Scientists_ (edX)](www.edx.org/course/latex-for-students-engineers-and-scientists-2) (é possível cursar sem pagar - _audit course_)
+- Curso [_LaTeX for Students, Engineers and Scientists_ (edX)](https://www.edx.org/course/latex-for-students-engineers-and-scientists-2) (é possível cursar sem pagar - _audit course_)
 
 
 ### Exportando documentos em outros formatos
@@ -472,5 +472,5 @@ Após a instalação, teste:
 
 
 
-{{< cta cta_text="👉 Proceed to R Programming" cta_link="../sec2" >}}
+{{< cta cta_text="👉 Seguir para Programação em R" cta_link="../sec2" >}}
 

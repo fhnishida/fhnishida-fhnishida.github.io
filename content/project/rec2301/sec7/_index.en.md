@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regress�o Simples
-summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
-title: Regress�o Simples
+linktitle: "Simple Regression"
+summary: "Econometrics I notes on simple OLS regression, fitted values, residuals, log transformations, standard errors, and assumption violations."
+title: "Simple OLS Regression"
 weight: 7
 output: md_document
 type: book

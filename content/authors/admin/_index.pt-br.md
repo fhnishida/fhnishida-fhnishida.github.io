@@ -22,7 +22,7 @@ last_name: Nishida
 organizations:
 - name: Universidade de São Paulo
   url: https://www.fearp.usp.br
-role: Doutorando em Economia
+role: Doutor em Economia
 social:
 - display:
     header: true
@@ -37,12 +37,12 @@ social:
   link: https://www.linkedin.com/in/fabionishida/
 - icon: cv
   icon_pack: ai
-  link: uploads/resume.pdf
+  link: https://fhnishida.github.io/uploads/resume.pdf
 status:
   icon: null
 superuser: true
 title: Fabio Nishida
 ---
 
-O site acadêmico de Fabio Nishida reúne pesquisas, publicações e materiais de ensino nas áreas de economia do setor público, economia ambiental, finanças públicas e econometria aplicada.
+Este site reúne minhas pesquisas, publicações e materiais de ensino nas áreas de setor público, economia do desenvolvimento e econometria aplicada.
 {style="text-align: justify;"}

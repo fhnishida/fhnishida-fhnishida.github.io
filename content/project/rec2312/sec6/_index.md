@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Instrumental Variables
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Instrumental Variables
+linktitle: "Instrumental Variables"
+summary: "Introductory notes on instrumental variables in simple regression, including identification, intuition, and estimation in R."
+title: "Instrumental Variables in Simple Regression"
 weight: 6
 output: md_document
 type: book
@@ -14,39 +13,39 @@ type: book
 
 
 
-## Instrumental Variables em Simple Regression
+## Instrumental Variables in Simple Regression
 
-- [Section 15.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/247)
-- Considere a regressão linear simples:
+- [Section 15.1 of Heiss (2020)](http://www.urfie.net/read/index.html#page/247)
+- Consider the simple linear regression:
 
 {{<math>}}$$ y = \beta_0 + \beta_1 x + \varepsilon \tag{15.1} $${{</math>}}
 
-O estimador de OLS seria:
+The OLS estimator is:
 
 {{<math>}}$$ \beta^{OLS}_1 = \frac{cov(x, y)}{var(x)} $${{</math>}}
 
-Supondo que o regressor {{<math>}}$x${{</math>}} está relacionado com o termo de erro {{<math>}}$\varepsilon${{</math>}}, então o estimador de OLS será viesado.
+If the regressor {{<math>}}$x${{</math>}} is correlated with the error term {{<math>}}$\varepsilon${{</math>}}, then the OLS estimator is biased.
 
-Considerando a existência de uma instrumental variable válida {{<math>}}$z${{</math>}}, o estimador de instrumental variable (VI) é:
+Given a valid instrumental variable {{<math>}}$z${{</math>}}, the IV estimator becomes:
 
 {{<math>}}$$ \beta^{VI}_1 = \frac{cov(z, y)}{cov(z,x)} $${{</math>}}
 
 
-### Aplicando no R
+### Implementing IV in R
 
-#### Example 15.1: Returns to Education para Mulheres Casadas (Wooldridge, 2019)
+#### Example 15.1: Returns to Education for Married Women (Wooldridge, 2019)
 
-- Vamos usar a base de dados `mroz` do pacote `wooldridge` para estimar o seguinte modelo
+- We will use the `mroz` dataset from the `wooldridge` package to estimate the following model:
 
 {{<math>}}$$ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ} + \varepsilon $${{</math>}}
 
-- Apenas para comparação, vamos estimar por OLS:
+- For comparison, we first estimate the model by OLS:
 
 ```r
-data(mroz, package="wooldridge") # carregando base de dados
-mroz = mroz[!is.na(mroz$wage),] # retirando valores ausentes de salário
+data(mroz, package="wooldridge") # loading the dataset
+mroz = mroz[!is.na(mroz$wage),] # dropping missing wage observations
 
-reg.ols = lm(lwage ~ educ, mroz) # regressão por OLS
+reg.ols = lm(lwage ~ educ, mroz) # OLS regression
 round( summary(reg.ols)$coef, 5 )
 ```
 
@@ -57,14 +56,14 @@ round( summary(reg.ols)$coef, 5 )
 ```
 
 
-#### Usando a função `ivreg()`
+#### Using `ivreg()`
 
-- Para fazer regressão com instrumental variable, vamos usar a função `ivreg()` do pacote `AER`.
-- É necessário incluir a instrumental variable (que neste caso é a educação do pai - `fatheduc`), após informar a variável explicativa `educ`, separada por uma `|`:
+- To estimate an instrumental-variables regression, we can use the `ivreg()` function from the `AER` package.
+- After specifying the endogenous regressor `educ`, we add the instrument on the right-hand side of `|`. In this example, the father's education (`fatheduc`) is used as the instrument:
 
 
 ```r
-library(AER) # carregando pacote com ivreg
+library(AER) # loading the package that includes ivreg
 ```
 
 ```
@@ -115,7 +114,7 @@ library(AER) # carregando pacote com ivreg
 ```
 
 ```r
-reg.iv = ivreg(lwage ~ educ | fatheduc, data=mroz) # regressão por VI
+reg.iv = ivreg(lwage ~ educ | fatheduc, data=mroz) # IV regression
 round( summary(reg.iv)$coef, 5 )
 ```
 
@@ -130,36 +129,40 @@ round( summary(reg.iv)$coef, 5 )
 ```
 
 
-#### Estimação "by hand"
+#### By-hand derivation
 
-##### (1) Estimativas {{<math>}}$$ \beta^{VI} $${{</math>}}
+##### (1) IV estimate {{<math>}}$$ \beta^{VI} $${{</math>}}
 
-<<<< Talvez fazer apenas para VI multivariado >>>>
-
-</br>
-
-
-## Instrumental Variables em Multiple Regression
-
-- [Section 15.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/249)
-
-
+- The simple-regression formula above is useful for intuition.
+- In practice, the multivariate IV setup is more relevant in econometrics, so the full matrix derivation is developed in the next section.
 
 </br>
 
 
-## Testando a Exogeneidade dos Regressores
+## Instrumental Variables in Multiple Regression
 
-- [Section 15.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
+- [Section 15.2 of Heiss (2020)](http://www.urfie.net/read/index.html#page/249)
+- The next section extends the IV estimator to the multivariate case, where we combine endogenous and exogenous regressors in matrix form.
 
 
 
 </br>
 
 
-## Testando Restrições Sobre-identificadas
+## Testing Regressor Exogeneity
 
-- [Section 15.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
+- [Section 15.4 of Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
+- Once we allow for endogeneity, an important empirical question is whether OLS and IV differ enough to justify treating a regressor as endogenous.
+
+
+
+</br>
+
+
+## Testing Overidentifying Restrictions
+
+- [Section 15.5 of Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
+- When the model has more instruments than endogenous regressors, we can test whether the extra instruments are jointly consistent with the exogeneity assumptions.
 
 
 
@@ -167,9 +170,10 @@ round( summary(reg.iv)$coef, 5 )
 </br>
 
 
-## Mínimos Quadrados em 2 Estágios
+## Two-Stage Least Squares
 
-- [Section 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+- [Section 15.3 of Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+- Two-stage least squares (2SLS) is the standard operational form of IV estimation in multivariate models and will be the main focus of the following section.
 
 
 
@@ -180,10 +184,11 @@ round( summary(reg.iv)$coef, 5 )
 
 ## Simultaneous Equations Models
 
-- [Section 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+- [Section 15.3 of Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+- Simultaneous-equations settings provide a classic motivation for IV methods, since endogenous variables are determined jointly within the system.
 
 
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Simultaneous Equations" cta_link="../sec7" >}}
+{{< cta cta_text="👉 Proceed to IV / 2SLS" cta_link="../sec7" >}}

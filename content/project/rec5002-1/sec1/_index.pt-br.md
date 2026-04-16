@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 1
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 1 (April 20, 2021)
+linktitle: "Python I"
+summary: "Notas de monitoria sobre operações, variáveis, condicionais, laço while e funções em Python para exercícios de macroeconomia."
+title: "Sessão 1: Fundamentos de Python I"
 weight: 1
 output: md_document
 type: book
@@ -14,25 +13,25 @@ type: book
 
 
 
-Introduction to Python (Part 1):
+Introdução ao Python (Parte 1):
 
-- Operations
-- Variables/Objects
-- Conditions and `If` statements
-- `while` loop
-- Functions
+- Operações
+- Variáveis/Objetos
+- Condicionais e instruções `If`
+- Laço `while`
+- Funções
 
-## TA Session 1 Recording (in Portuguese)
+## Gravação da Monitoria 1
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/rjp7h4lG4Zs/maxresdefault.jpg)](https://www.youtube.com/watch?v=rjp7h4lG4Zs)
-Script file: [Monitoria-1.py](../Monitoria-1.py)
+Arquivo de script: [Monitoria-1.py](../Monitoria-1.py)
 
 
-## Complementary content
+## Conteúdo complementar
 
 - [Spyder Installation Guide](https://docs.spyder-ide.org/current/installation.html)
-- [Python Course (in Portuguese): "Introdu��o � Ci�ncia da Computa��o com Python Parte 1"](https://www.coursera.org/learn/ciencia-computacao-python-conceitos) (F�bio Kon, IME-USP)
+- [Curso de Python em português: "Introdução à Ciência da Computação com Python Parte 1"](https://www.coursera.org/learn/ciencia-computacao-python-conceitos) (Fábio Kon, IME-USP)
 
 
-{{< cta cta_text="?Y'? Proceed to Session 2" cta_link="../sec2" >}}
+{{< cta cta_text="👉 Seguir para a Sessão 2" cta_link="../sec2" >}}
 

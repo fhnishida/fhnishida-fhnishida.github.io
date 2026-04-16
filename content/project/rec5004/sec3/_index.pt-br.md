@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipulation
-summary: It covers topics such as data manipulation, apply functions, etc. Also provides an introduction to the dplyr package and its functions for column manipulation (select, rename, mutate), row manipulation (filter, arrange), and grouping of rows (summarize). The page also includes examples of using these functions with the Star Wars dataset. Additionally, the page discusses the use of the pipe operator (%>%) and join functions for merging data frames.
-title: Data Manipulation
+linktitle: "Manipulação"
+summary: "Notas de manipulação de dados no R com base R e dplyr, incluindo resumos, funções apply, filtros, ordenação, joins e cálculos por grupos."
+title: "Manipulação de dados no R"
 weight: 3
 output: md_document
 type: book
@@ -1757,6 +1757,6 @@ right_join(bd1, bd2, by="name")
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Data Visualization" cta_link="../sec4" >}}
+{{< cta cta_text="👉 Seguir para Visualização de Dados" cta_link="../sec4" >}}
 
 

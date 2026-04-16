@@ -4,11 +4,11 @@ date: "2021-05-30T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Graduate TA Sessions on Neoclassical Growth Model and Recursive Methods.
+summary: "Graduate macroeconomics TA notes on Python basics, recursive methods, the neoclassical growth model, uncertainty, leisure, and solved problem sets."
 tags:
 - Graduate
-title: Macroeconomics I, Part 1 (Spring 2021)
-linktitle: Main
+title: "Macroeconomics I, Part 1 TA Notes (Spring 2021)"
+linktitle: "Main"
 type: book
 icon: book
 iconpack: fs

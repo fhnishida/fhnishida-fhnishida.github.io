@@ -4,12 +4,12 @@ date: "2023-03-08T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on Panel Data and IV.
+summary: "Notas de monitoria de Econometria II com materiais em R sobre MQO multivariado, dados em painel, variáveis instrumentais, MQ2E e testes de hipótese."
 tags:
 - Undergraduate
-title: Econometrics II (Spring 2023)
+title: "Econometria II: notas de monitoria (2023)"
 type: book
-linktitle: Início
+linktitle: "Início"
 weight: 1
 icon: book
 iconpack: fs

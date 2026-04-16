@@ -1,11 +1,11 @@
 ---
 date: "2021-07-21T00:00:00Z"
 # external_link: https://fhnishida-rec5002-2.netlify.app/docs/
-summary: Graduate TA Sessions on Neoclassical Theory of Optimal Control.
+summary: "Graduate macroeconomics TA notes on dynamic optimization, optimal control, political business cycles, optimal growth, and solved problem sets."
 tags:
 - Graduate
-title: Macroeconomics I, Part 2 (Spring 2021)
-linktitle: Main
+title: "Macroeconomics I, Part 2 TA Notes (Spring 2021)"
+linktitle: "Main"
 type: book
 icon: book
 iconpack: fs
@@ -27,8 +27,8 @@ Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/vi
 
 
 ## Previous Exams
-- [2020 v12](../Prova-2020_n12.pdf) | [2020 v7](../Prova-2020_n7.pdf)
-- [2019](../Prova-2019.pdf)
+- [2020 v12](Prova-2020_n12.pdf) | [2020 v7](Prova-2020_n7.pdf)
+- [2019](Prova-2019.pdf)
 
 
 ## Complementary Content

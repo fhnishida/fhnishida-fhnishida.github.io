@@ -1,10 +1,10 @@
----
+﻿---
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: R Toolkit
-summary: This page is a tutorial on using R Toolkit. It covers topics such as installing R and R Studio, working with R packages, using R Markdown, and more. The tutorial is based on courses from the Data Science specialization at Johns Hopkins University available on Coursera. It provides detailed instructions and examples to help users learn how to use R for data manipulation, visualization, and analysis.
-title: R Toolkit
+linktitle: "R Toolkit"
+summary: "Introductory R toolkit notes for Econometrics I, covering R and RStudio setup, packages, R Markdown, file handling, and workflow tips for empirical analysis."
+title: "R Toolkit for Econometrics"
 weight: 1
 output: md_document
 type: book
@@ -12,46 +12,39 @@ type: book
 
 
 
-Principais referências desse material de Econometria com R:
+- This section draws mainly on the [_Data Science Specialization_](https://www.coursera.org/specializations/jhu-data-science) offered by Johns Hopkins University on Coursera.
+- The specialization is not fully free, but you can audit the courses, which gives you access to most of the material even though you cannot complete the graded assignments or receive a certificate.
+- For each topic, I cite the relevant references and include video material so you can go deeper whenever needed.
 
-- Cursos da [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da John Hopkins.
-  - É possível "participar como ouvinte" (_audit course_) desses cursos, o que permite acessar a todo material (mas não pode fazer os testes e ganhar os certificados de conclusão). 
-- Livro ["_Using R for Introductory Econometrics_" de Heiss (2020)](http://www.urfie.net/) (versão online gratuita)
-- Livro ["_Panel Data Econometrics with R_" de Croissant e Millo (2018)](https://www.amazon.com.br/Panel-Data-Econometrics-R-English-ebook/dp/B07GCY35N3)
-
-
-</br>
 
 ## Installing R
-- [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
+- [Installing R (Johns Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Install the base R distribution ([CRAN](https://cran.r-project.org/))
-    - Download R X.X.X for Windows
-    - If your computer is 64-bit, choose the 64-bit version. (+ rápido)
+1. Install the base R distribution from [CRAN](https://cran.r-project.org)
+    - Download R for Windows > base > Download R X.X.X for Windows
+    - If your computer is 64-bit, choose the 64-bit version.
 
-2. Install Rtools ([CRAN](https://cran.r-project.org/))
-    - RTools X.X > Rtools installer
-    - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessárias para o funcionamento de alguns pacotes no R
+2. Install Rtools from [CRAN](https://cran.r-project.org)
+    - Download R for Windows > Rtools > Installing Rtools > rtools40-x86_XX.exe
+    - Rtools is a collection of compilation tools for several languages, including C, C++, and Fortran, that some R packages require.
 
-3. Install RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
+3. Install [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
     - Download RStudio Desktop
-    - RStudio is a user interface that makes it easier to work with R.
+    - RStudio is an interface that makes it easier to work with R.
 
-
-</br>
 
 ## Using RStudio
-- [RStudio Tour (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
+- [RStudio Tour (Johns Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
 
 RStudio is divided into four panes:
 
-- upper-left: source pane, where scripts and notes are edited and saved
-- upper-right: environment pane, where you can inspect variables
-- lower-left: console pane, where commands run and results appear
-- lower-right: files, plots, packages, and help
+- upper left: source pane, where scripts and notes are edited and saved
+- upper right: environment pane, where you can inspect objects
+- lower left: console pane, where commands are executed and results appear
+- lower right: files, plots, packages, and help
 
-> **Tip**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão durante o uso prolongado do software)<br/>  
-Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
+> **Tip**: If you spend many hours in the editor, it may be worth switching to a darker theme.<br/>
+Tools > Global Options... > Appearance > Editor theme > Cobalt (my preferred option)
 
 
 ### Working directory
@@ -65,21 +58,21 @@ setwd("C:/Users/Fabio/OneDrive/FEA-RP")
 
 > **Tip**: The command used to set the working directory will appear in the console. Copy it into your script so you do not need to redefine it every time you open RStudio.
 
-- Note que usa o "slash" (/) ao invés do "backslash" (\\), então não dá para copiar diretamente o endereço de uma pasta e colar no R sem fazer ajustes:
+- Note that R uses forward slashes (`/`) instead of backslashes (`\\`), so you cannot simply copy a folder address and paste it into R without adjusting it:
 ```r
-setwd("C:\Users\Fabio\OneDrive\FEA-RP") # ERRADO!
+setwd("C:\Users\Fabio\OneDrive\FEA-RP") # WRONG!
 ```
 
 ```r
-setwd("C:/Users/Fabio/OneDrive/FEA-RP") # CORRETO!
-setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRETO!
+setwd("C:/Users/Fabio/OneDrive/FEA-RP") # CORRECT!
+setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRECT!
 ```
 
-Você pode trocar _backslash_ (/) por _slash_(\\), ou  por dois _backslashs_ (\\\\).
+You can replace backslashes with forward slashes, or escape them by writing double backslashes.
 
 
-### Executando comandos
-- Direct execution in the console: escreva `1 + 1` no console e dê \<Enter\>
+### Running commands
+- Direct execution in the console: type `1 + 1` in the console and press \<Enter\>
 
 ```r
 1 + 1
@@ -88,16 +81,23 @@ Você pode trocar _backslash_ (/) por _slash_(\\), ou  por dois _backslashs_ (\\
 ```
 ## [1] 2
 ```
-- Execution from a script: escreva o seguinte código abaixo, e dê `Ctrl + Enter` na linha ou no código destacado. Note que o código do script é "jogado" no console.
+- Execution from a script: type the code below in a script and press `Ctrl + Enter` on the line or highlighted block. RStudio sends the selected code to the console.
 
 ```r
-rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
+rnorm(n=10, mean=0, sd=1)  # Generate 10 draws from N(0, 1)
 ```
 
 ```
-##  [1]  0.70143921  0.62622352 -2.43105248 -1.37197530  0.53581775 -1.66196220
-##  [7] -0.09034954 -0.18229396  0.22264535  0.80023880
+##  [1] -2.4753553 -1.7254668 -0.6607834 -0.6169755 -1.2807018 -0.7161177
+##  [7] -1.2834356 -0.6774113  0.9275769 -0.3290734
 ```
+
+```r
+hist(rnorm(n=1000, mean=0, sd=1))  # Histogram of the simulated draws
+```
+
+<img src="/project/rec2301/sec1/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
 
 
 ### Help for commands
@@ -108,369 +108,150 @@ rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
 ```yaml
 rnorm(n, mean = 0, sd = 1)
 
-n: number of observations.
+n: number of observations. If length(n) > 1, the length is taken to be the number required.
 mean: vector of means.
 sd: vector of standard deviations.
 ```
 
-- Note acima em "Usage" que já há valores pré-definidos para `mean = 0` e `sd = 1`. Portanto, se você só informar o `n`, a função irá funcionar, considerando os valores pré-definidos para os demais argumentos.
-- É possível escrever o código sem os nomes dos argumentos, mas devem ser inseridos na mesma ordem pré-definida da função.
+- Notice that the "Usage" section already shows default values for `mean = 0` and `sd = 1`. Therefore, if you provide only `n`, the function will still run using those default values.
+- You can call the function without writing the argument names, as long as the inputs are passed in the order shown in the documentation.
 ```r
 rnorm(10, 0, 1)
 ```
-- Também podemos trocar a ordem explicitando o nome do argumento (NÃO RECOMENDADO)
+- You can also change the order by explicitly naming the arguments, although this is usually unnecessary.
 ```r
 rnorm(mean=0, n=10, sd=1)
 ```
 
 
-</br>
-
-## R Packages
-- Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
-- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos estatísticos/econometristas desenvolvem e disponibilizam seus próprios pacotes na internet.
-- A instalação de um pacote só precisa ser feita uma única vez.
-- No entanto, caso você atualize uma nova versão do R, é necessário instalar novamente todos os pacotes.
-- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de individuals (normalmente disponibilizados no GitHub)
-- O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes, garante qualidade dos pacotes disponibilizados
-- Tome cuidado com pacotes disponibilizados por individuos desconhecidos: pode haver códigos maliciosos!
+## R packages
+- Packages are collections of functions, data, and code written by other users.
+- Because R is open-source software, there are many packages available online, and many economists, especially econometricians, publish packages implementing new methods.
+- A package only needs to be installed once.
+- However, if you upgrade to a new version of R, you typically need to reinstall your packages.
+- Packages can be obtained from package libraries such as CRAN or directly from individual developers, usually through GitHub.
+- CRAN is curated, so packages hosted there go through maintenance and review procedures that help ensure quality.
+- Be careful with packages distributed outside the main repositories. In principle, R code can create or delete files on your computer.
 
 
 ### Installation via CRAN
-> quadrante inferior/direito > Packages > Install > (Nomes dos pacotes)
+> lower-right pane > Packages > Install > (package names)
 
 ```r
-install.packages("ggplot2") # Pacote para criar graficos
+install.packages("ggplot2") # Package for creating graphs
 ```
 
-### Usando pacotes
-
-Depois de instalar o pacote desejado, você precisa carregá-lo à sua sessão no R. Isto pode ser feito de duas formas
-
-1. Usar `library(nome_do_pacote)`
-2. Chamar o pacote indiretamente por meio de uma função contida no pacote `<nome_do_pacote>::<funcao_do_pacote>`
-
-
-#### Example: Instalando pacotes do Github
-
-- Github é um site que programadores podem disponibilizar e armazenar arquivos, como códigos, bases de dados, pacotes de R, etc.
-- É possível instalar um pacote disponibilizado no Github diretamente do R.
-- Primeiro, é necessário instalar o pacote `devtools`
+### Installation via GitHub
+- First, install the `devtools` package:
 ```r
 install.packages("devtools")
 ```
-- Depois, é preciso obter o nome do author (do GitHub) e nome do pacote. Como exemplo, iremos baixar o pacote `dplyr` do autor `hadley` (este pacote, na realidade, pode ser baixado direto do CRAN).
+- Then identify the GitHub username and the package name. As an example, we can install the `dplyr` package from the user `hadley` (although `dplyr` is also available directly on CRAN).
+- To call a function from a package without attaching the whole package, we can use `<package>::<function>`
 ```r
-# 2) chamando o pacote indiretamente
 devtools::install_github("hadley/dplyr")
+```
 
-# 1) carregando pacote e depois usando sua função
+- Alternatively, you can attach the package and then call the function from the loaded environment:
+```r
 library(devtools)
 install_github("hadley/dplyr")
 ```
 
-- CUIDADO! Ao carregar vários pacotes, talvez sejam carregadas suas funções com mesmo nome
-    - Neste caso, o R prioriza a função do pacote carregada por último
+- Be careful: when you load several packages, two packages may contain functions with the same name.
+    - R gives priority to the package loaded most recently.
 
 ```r
-library(dplyr) # Pacote para manipulacao de base de dados
+library(dplyr) # Package for data manipulation
 ```
 
 ```
-## 
+## Warning: package 'dplyr' was built under R version 4.2.2
+```
+
+```
+##
 ## Attaching package: 'dplyr'
 ```
 
 ```
 ## The following objects are masked from 'package:stats':
-## 
+##
 ##     filter, lag
 ```
 
 ```
 ## The following objects are masked from 'package:base':
-## 
+##
 ##     intersect, setdiff, setequal, union
 ```
 
 ```r
-library(MASS) # Normalmente nao eh carregado diretamente (via outro pacote)
+library(MASS) # Usually attached indirectly through other packages
 ```
 
 ```
-## 
+## Warning: package 'MASS' was built under R version 4.2.2
+```
+
+```
+##
 ## Attaching package: 'MASS'
 ```
 
 ```
 ## The following object is masked from 'package:dplyr':
-## 
+##
 ##     select
 ```
 
-- Uma forma de contornar o problema é usar `<nome_do_pacote>::<funcao_do_pacote>`
+- One way to avoid this issue is to use `<package>::<function>`
 ```r
-select(...) # do pacote MASS
-MASS:select(...) # do pacote MASS
-dplyr::select(.data, ...) # do pacote dplyr
+select(obj) # from the MASS package
+dplyr::select(.data, ...) # from the dplyr package
 ```
 
 ### Updating packages
-> quadrante inferior/direito > Packages > Update > Select All > Install Updates
+> lower-right pane > Packages > Update > Select All > Install Updates
 
 
-</br>
 
-## Ajuda
-- Caso saiba o nome da função, é possível olhar sua documentação escrevendo `?<nome_da_funcao>` (como visto anteriormente)
-- Caso saiba o nome do pacote, em alguns casos funciona `?<nome_do_pacote>`, mas o ideal é buscar sua documentação no CRAN (diretamente no site ou via Google)
-- Por exemplo, podemos acessar a página do [pacote `dplyr` no CRAN](https://cran.r-project.org/web/packages/dplyr/index.html):
-- Nela é possível ver a partir de qual versão do R funciona, os pacotes necessários para o seu funcionamento (Imports), os autores e sites.
-- Em 'Documentation', é possível ver o seu 'Reference manual' onde são expostos o objetivo do pacotes e as funções, incluindo explicações de seu funcionamento.
+## Help and documentation
+- If you know the function name, you can open its documentation by typing `?<function_name>` as shown above.
+- If you know the package name, in some cases `?<package_name>` also works, but the best practice is usually to check the package documentation on CRAN, either directly on the site or through Google.
+- For example, you can open the [CRAN page for the `dplyr` package](https://cran.r-project.org/web/packages/dplyr/index.html):
+- There you can see the required R version, package dependencies, authors, and related websites.
+- In the Documentation section, you can open the reference manual, which describes the package objectives and the available functions.
 
 <center><img src="../dplyr_cran.png"></center>
 
 
-- Além disso, pode ser interessante ver aplicações do pacote e suas funções nas 'vignettes'. Normalmente são expostas de maneira que podem ser replicadas no seu computador, o que acaba auxiliando na sua aplicação (verificar estrutura de base de dados necessária, sintaxes, etc.). 
+- It is also useful to look at package applications in the vignettes. They are usually written so you can replicate the examples on your own computer, which helps when learning the required data structure and the relevant syntax. You can also access them directly from R using `browseVignettes()`:
 
-- Caso não saiba quais funções/pacotes são utilizados para fazer algo, muitas vezes é possível encontrar a solução no Google utilizando palavras-chave (preferencialmente em inglês) junto de "R".
+```r
+browseVignettes("dplyr") # Opens a vignette page in your browser
+```
+
+- If you do not know which function or package can solve a given problem, Google searches with relevant keywords, preferably in English, together with "R", often work well.
 
 <center><img src="../google_help.png"></center>
 
-- Além de sites especializados em R e vídeos com exemplos de aplicações, é comum aparecer questões no site Stack Overflow (ou em Cross Validated, pertencente ao mesmo grupo) que é o site mais utilizado por programadores em diversas linguagens para esclarecer dúvidas.
+- In addition to specialized R websites and tutorial videos, many answers appear on Stack Overflow or Cross Validated, which belong to the same network and are widely used by programmers and quantitative researchers.
 
-- Por R ser uma linguagem open source, há muitos usuários e, portanto, é comum achar perguntas/respostas que já solucionam o seu problema. Eventualmente, você pode fazer a sua pergunta, caso não encontre uma satisfatória.
+- Because R has a very large open-source user community, it is common to find that someone has already asked a question similar to yours. If not, you can post your own question there.
 
 <center><img src="../stackoverflow_help.png"></center>
 
 
-### ChatGPT e Bing Chat
 
-- É possível ter um assistente para aprender a usar o R usando o chatbots como ChatGPT ([https://chat.openai.com](https://chat.openai.com)) e Bing Chat ([https://www.bing.com/chat](https://www.bing.com/chat)).
-- Ambos ChatGPT e Bing Chat são alimentados por um modelo de linguagem natural (LLN) criado pela OpenAI, que são treinados com trilhões de documentos (páginas de internet, livros, artigos, etc.) e conseguem gerar textos baseados em contexto.
-- A diferença entre os dois é que o ChatGPT utiliza o modelo GPT 3.5-turbo, enquanto o Bing Chat usa o GPT-4 e está ligado à internet.
-- Especificamente para programação, gera-se respostas confiáveis a perguntas feitas ao chatbot, tornando-o uma ferramenta interessante para auxiliar o aprendizado no R.
+## GitHub and version control
+This section will not go into detail, but the topic is well worth exploring.
 
+- [Creating projects](https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r)
+- [Version control](https://www.coursera.org/learn/data-scientists-tools/lecture/PjlHw/version-control)
+- [GitHub and Git](https://www.coursera.org/learn/data-scientists-tools/lecture/VOh24/github-and-git)
+- [Projects under version control](https://www.coursera.org/learn/data-scientists-tools/lecture/wbfrX/projects-under-version-control)
 
-<center><img src="../ChatGPT.png"></center>
 
 
-
-<center><img src="../BingChat.png"></center>
-
-
-
-</br>
-
-## Sincronização no GitHub
-Não será detalhado aqui, mas é algo interessante para olhar.
-
-- [Criação de projetos](https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r)
-- [Controle de versão](https://www.coursera.org/learn/data-scientists-tools/lecture/PjlHw/version-control)
-- [GitHub e Git](https://www.coursera.org/learn/data-scientists-tools/lecture/VOh24/github-and-git)
-- [Projetos sob controle de versões](https://www.coursera.org/learn/data-scientists-tools/lecture/wbfrX/projects-under-version-control)
-
-
-
-</br>
-
-## R Markdown
-Markdown é uma sintaxe de formatação simples para criar documento HTML, PDF ou Word.
-
-Para mais detalhes de uso, veja:
-
-- [R Markdown (John Hopkins/Coursera)](https://www.coursera.org/lecture/data-scientists-tools/r-markdown-134kE)
-- Curso [_Reproducible Templates for Analysis and Dissemination_ (Emory/Coursera)]( https://www.coursera.org/learn/reproducible-templates-analysis)
-- Livros: [_R Markdown: The Definitive Guide_](https://bookdown.org/yihui/rmarkdown/) e [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook)
-
-
-
-### Uso do R Markdown
-Quando você clicar no botão **Knit**, um documento será gerado, incluindo o conteúdo textual e os resultados dos _chunks_ com códigos em R embutidos no documento.
-
-> Para gerar em pdf, pode ser necessário instalar o pacote `tinytex`
-
-Você pode embutir um _chunk_ de código em R: 
-
-1. abrindo com 3 acentos graves (\`) 
-2. {r nome_do_pedaco},
-3. código em R, 
-4. e fechando com 3 acentos graves (\`)
-
-Por exemplo:
-
-````yaml
-```{r cars} # Chamando esse _chunk_ com código de R como 'cars' 
-head(cars) # Visualizando 6 linhas iniciais da base de dados 'cars'
-summary(cars) # Resumindo base de dados 'cars'
-```
-````
-
-output:
-
-
-```r
-head(cars) # Visualizando 6 linhas iniciais da base de dados 'cars'
-```
-
-```
-##   speed dist
-## 1     4    2
-## 2     4   10
-## 3     7    4
-## 4     7   22
-## 5     8   16
-## 6     9   10
-```
-
-```r
-summary(cars) # Resumindo base de dados 'cars'
-```
-
-```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-```
-
-Também, no topo do quadrante sup-esq, é possível criar clicando no ícone "+C" e selecionando "R" (ou apertando Ctrl + Alt + I).
-
-
-
-### Incluindo Gráficos
-Você pode incluir gráficos no documento usando `plot()` dentro do _chunk_ com código R. Além disso, o parâmetro `echo = FALSE` retira do PDF/HTML gerado o _chunk_ de código, gerando apenas, neste caso, a figura.
-
-Por exemplo:
-
-````yaml
-```{r pressure, echo = FALSE}
-plot(pressure) # Gráfico da base de dados `pressure`
-```
-````
-
-output:
-
-<img src="/project/rec5004/sec1/_index_files/figure-html/pressure-1.png" width="672" />
-
-*Ao invés de escrever `echo = FALSE`, é possível alterar a configuração do _chunk_ após criá-lo:<br/>  
-Ícone de Config > Output > Show output only
-
-
-### Formatação no R Markdown
-
-#### Bullets:
-````yaml
-- bullet 1
-- bullet 2
-- bullet 3
-````
-
-output:
-
-- bullet 1
-- bullet 2
-- bullet 3
-
-
-#### Formatação de texto:
-````yaml
-1. **negrito**
-2. *itálico* ou _itálico_
-3. link: <http://rmarkdown.rstudio.com>.
-4. [link R Markdown](http://rmarkdown.rstudio.com)
-5. destaque para `código em r`
-````
-
-output:
-
-1. **negrito**
-2. *itálico* ou _itálico_
-3. link: <http://rmarkdown.rstudio.com>.
-4. [link R Markdown](http://rmarkdown.rstudio.com)
-5. destaque para `código em r`
-
-
-
-#### Títulos de seções e subseções
-````yaml
-# Título - 1º Nível
-## Título - 2º Nível
-### Título - 3º Nível
-````
-
-
-### Quebra de texto
-Ao terminar de escrever uma linha ou parágrafo, é necessário apertar \<Enter\> duas vezes. Caso aperta apenas uma vez, o R Markdown considerará que o texto continua na mesma linha:
-```yaml
-Não pula linha
-Não pula linha
-
-Pula linha
-
-Pula linha
-
-```
-
-output:
-
-Não pula linha
-Não pula linha
-
-Pula linha
-
-Pula linha
-
-
-### Escrita em LaTeX
-Também é possível usar os códigos em LaTeX para escrever expressões matemáticas usando `$`:
-
-```yaml
-- Para incluir uma expressão LaTeX no meio do texto, como $\alpha + \beta + \gamma$,
-usa-se cifrão (`$`) único em cada lado.
-- Para destacar uma expressão, como $$\alpha + \beta + \gamma, \tag{1}$$ é necessário
-colocar 2 cifrões (`$`) de cada lado da expressão, assim como no LaTeX.
-```
-
-output:
-
-- Para incluir uma expressão em LaTeX no meio do texto, como {{<math>}}$\alpha + \beta + \gamma${{</math>}}, usa-se cifrão (`$`) único em cada lado.
-- Para destacar uma expressão, como {{<math>}}$$\alpha + \beta + \gamma, \tag{1}$${{</math>}} é necessário colocar 2 cifrões (`$`) de cada lado da expressão, assim como no LaTeX.
-
-
-Para aprender a usar LaTeX:
-
-- Curso [_LaTeX for Students, Engineers and Scientists_ (edX)](www.edx.org/course/latex-for-students-engineers-and-scientists-2) (é possível cursar sem pagar - _audit course_)
-
-
-### Exportando documentos em outros formatos
-No código inicial do .Rmd, é possível alterar o formato exportado pelo documento:
-
-- para PDF: `output: pdf_document`
-- para HTML: `output: html_document`
-
-
-#### Templates para HTML
-Existem diversos templates para documentos HTML e, para utilizá-los, é preciso instalar
-o pacote `rmdsformats`
-
-```
-install.packages("rmdformats")
-```
-
-Após a instalação, teste:
-
-- `output: rmdformats::material`
-- `output: rmdformats::readthedown`
-- `output: rmdformats::downcute`
-- `output: rmdformats::robobook`
-- `output: rmdformats::html_clean`
-- `output: rmdformats::html_docco`
-
-
-
-{{< cta cta_text="👉 Proceed to R Programming" cta_link="../sec2" >}}
-
+{{< cta cta_text="Proceed to R Programming" cta_link="../sec2" >}}

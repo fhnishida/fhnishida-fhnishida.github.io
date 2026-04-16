@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Panel Data Manipulation with tidyr
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Manipulação de Panel Data via tidyr
+linktitle: "Panel Data with tidyr"
+summary: "Practical R notes on building and reshaping panel datasets with tidyr, dplyr, and PNAD Continua microdata."
+title: "Panel Data Manipulation with tidyr"
 weight: 5
 output: md_document
 type: book
@@ -14,20 +13,20 @@ type: book
 
 
 
-## Manipulação de panel data
-- Para o que estamos estudando, é normalmente exigido que os dados estejam
-    - no formato _long_: para cada individual, temos uma linha para cada period;
-    - _balanceados_: o tamanho da amostra é {{<math>}}$N \times T${{</math>}}, com {{<math>}}$N${{</math>}} individuals e {{<math>}}$T${{</math>}} periods; e
-    - devidamente ordenados por individuals e, depois, por tempo.
+## Panel Data Manipulation
+- In the applications we are studying, the dataset is typically required to be
+    - in _long_ format: for each individual, we have one row per period;
+    - _balanced_: the sample size is {{<math>}}$N \times T${{</math>}}, with {{<math>}}$N${{</math>}} individuals and {{<math>}}$T${{</math>}} periods; and
+    - properly ordered by individual and then by time.
 
 <center><img src="../panel-example.jpg"></center>
 
-- Em muitos casos, as informações são disponibilizadas em várias bases de dados de cortes transversais (_cross sections_), então é necessário estruturar a base de panel data.
-- Isso por ser feito no R de, pelo menos, duas formas:
-    - empilhando as bases de dados e filtrando apenas individuals que aparecem em todos periods; ou
-    - fazendo a junção interna (_inner join_) das bases por individual e transformando do formato _wide_ para o _long_.
-- Como exemplo, usaremos a PNAD Contínua que é publicada trimestralmente e possui o pacote `PNADcIBGE` que auxilia na sua utilização.
-- Os dados podem ser obtidos via`read_pnadc(microdata, input_txt)` que necessita que você faça download das **bases de dados** e do **txt com informações das variáveis (_input_txt_)** no [FTP do IBGE](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2021):
+- In many empirical applications, the information is released as a collection of cross-sectional datasets, so we first need to build the panel structure.
+- In R, there are at least two ways to do this:
+    - stack the datasets and keep only the individuals who appear in every period; or
+    - perform an inner join by individual and then convert the data from _wide_ to _long_.
+- As an example, we will use PNAD Contínua, which is released quarterly and can be handled with the `PNADcIBGE` package.
+- The data can be imported with `read_pnadc(microdata, input_txt)`, which requires downloading both the **microdata files** and the **text file containing the variable metadata (`input_txt`)** from the [IBGE FTP](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2021):
 
 ```r
 # install.packages("PNADcIBGE")
@@ -35,12 +34,12 @@ type: book
 library(PNADcIBGE)
 library(dplyr)
 ```
-- O arquivo compactado .zip é cerca de 12\% do arquivo descompactado .txt (133mb {{<math>}}$\times${{</math>}} 1,08gb). Para não precisar manter o arquivo .txt no computador, podemos usar a função `unz()` para descompactar arquivos temporariamente:
+- The compressed `.zip` file is about 12\% of the size of the uncompressed `.txt` file (133 MB {{<math>}}$\times${{</math>}} 1.08 GB). To avoid keeping the `.txt` file permanently on the computer, we can use `unz()` to extract it temporarily:
 
 
 
 ```r
-# Descompactando as bases da PNADc e carregando no R
+# Unzipping the PNADc files and loading them into R
 pnad_012021 = read_pnadc(unz("PNADC_012021_20220224.zip", "PNADC_012021.txt"),
                          input_txt = "input_PNADC_trimestral.txt")
 
@@ -48,28 +47,28 @@ pnad_022021 = read_pnadc(unz("PNADC_022021_20220224.zip", "PNADC_022021.txt"),
                          input_txt = "input_PNADC_trimestral.txt")
 ```
 
-- Para identificar um individual na base do PNAD, o IBGE usa as seguintes [variáveis-chave](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
-    - _UPA_: Unidade Primária de Amostragem / UF (2) + Nº Sequencial (6) + DV (1)
-    - _V1008_: Número do domicílio (01 a 14)
-    - _V1014_: Painel/Grupo de amostra (01 a 99)
-    - _V2003_: Número de ordem (01 a 30)
-- Pesquisadores do Ipea ([Teixeira Júnior et al., 2020](http://repositorio.ipea.gov.br/bitstream/11058/9951/1/bmt_67_nt_pesos_longitudinais.pdf)) usam mais algumas variáveis-chave invariantes no tempo para tornar esse 
-    - _V2007_: Sexo
-    - _V2008_/_V20081_/_V20082_: Data de nascimento (dia/mês/ano)
-- Além disso, vamos adicionar mais algumas variáveis:
-    - _invariante no tempo_:
-        - _UF_: Unidade da Federação
-    - _variantes no tempo_:
-        - _V2009_: Idade (em anos)
-        - _VD4020_: Rendimento mensal efetivo de todos os trabalhos para pessoas de 14 anos ou mais de idade
+- To identify an individual in the PNAD data, IBGE uses the following [key variables](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
+    - _UPA_: Primary Sampling Unit / State code (2) + Sequential Number (6) + Check Digit (1)
+    - _V1008_: Household number (01 to 14)
+    - _V1014_: Panel/sample group (01 to 99)
+    - _V2003_: Within-household order number (01 to 30)
+- Researchers at Ipea ([Teixeira Júnior et al., 2020](http://repositorio.ipea.gov.br/bitstream/11058/9951/1/bmt_67_nt_pesos_longitudinais.pdf)) add a few time-invariant key variables to make this identifier more robust:
+    - _V2007_: Sex
+    - _V2008_/_V20081_/_V20082_: Date of birth (day/month/year)
+- In addition, we will keep a few more variables:
+    - _time-invariant_:
+        - _UF_: State
+    - _time-varying_:
+        - _V2009_: Age (in years)
+        - _VD4020_: Effective monthly labor income for people aged 14 or older
 
 
 ```r
-# Lista de variáveis que vamos utilizar
+# List of variables used in the example
 lista_var = c("Trimestre", "UPA", "V1008", "V1014", "V2003", "V2007", "V2008",
               "V20081", "V20082", "UF", "V2009", "VD4020")
 
-# Selecionando e renomeando variáveis, e filtrando apenas maiores de 14 anos 
+# Selecting and renaming variables, and keeping only people aged 14 or older
 pnad_1 = pnad_012021 %>% select(all_of(lista_var)) %>%
     rename(DOMIC = V1008, PAINEL = V1014, ORDEM = V2003, SEXO = V2007, 
            DIA_NASC = V2008, MES_NASC = V20081, ANO_NASC = V20082, 
@@ -85,8 +84,8 @@ pnad_2 = pnad_022021 %>% select(all_of(lista_var)) %>%
 
 
 
-### Empilhando bases de dados e filtrando individuals que aparecem em todos os periods
-- Primeiro, empilharemos as bases de dados usando `rbind()`. É necessário garantir que tenham o mesmo número de colunas e estas sejam da mesma classe (_character_, _numeric_, etc.):
+### Stacking datasets and keeping individuals observed in every period
+- First, we stack the two datasets with `rbind()`. They must have the same number of columns, and the corresponding columns must share the same class (_character_, _numeric_, etc.):
 
 ```r
 pnad_bind = rbind(pnad_1, pnad_2)
@@ -106,12 +105,12 @@ head(pnad_bind)
 ## # … with 1 more variable: RENDA <dbl>, and abbreviated variable names
 ## #   ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
 ```
-- Note que a 2ª observation não corresponde à mesma pessoa da 1º linha. Vamos criar uma variável `ID`, juntando informações de todas variáveis-chave, e rearranjar a base de dados de acordo com ela e o trimestre:
+- Note that the 2nd observation does not correspond to the same person as the 1st row. We therefore create an `ID` variable by concatenating all key variables and then reorder the data by that identifier and by quarter:
 
 ```r
 pnad_bind = pnad_bind %>% mutate(
     ID = paste0(UPA, DOMIC, PAINEL, ORDEM, SEXO, DIA_NASC, MES_NASC, ANO_NASC)
-    ) %>% select(ID, everything()) %>% # reordenando variáveis, começando com ID
+    ) %>% select(ID, everything()) %>% # reorder variables so ID comes first
     arrange(ID, Trimestre)
 head(pnad_bind, 10)
 ```
@@ -133,7 +132,7 @@ head(pnad_bind, 10)
 ## # … with 2 more variables: IDADE <dbl>, RENDA <dbl>, and abbreviated variable
 ## #   names ¹​Trimestre, ²​DIA_NASC, ³​MES_NASC, ⁴​ANO_NASC
 ```
-- Observe que o base de panel data não está balanceada, ou seja, nem todos os individuals aparecem nos 2 trimestres. Portanto, vamos criar um objeto auxiliar com a contagem de vezes que o `ID` aparece em `pnad_bind`
+- Observe that the panel is not balanced: not every individual appears in both quarters. So we first create an auxiliary object that counts how many times each `ID` appears in `pnad_bind`:
 
 ```r
 cont_ID = pnad_bind %>% group_by(ID) %>% summarise(cont = n())
@@ -155,7 +154,7 @@ head(cont_ID, 10)
 ##  9 110000016030802103092000     2
 ## 10 110000016030804118091954     2
 ```
-- Em `cont_ID`, vamos filtrar apenas os caso que aparecem 2 vezes
+- In `cont_ID`, we keep only the cases that appear exactly twice:
 
 ```r
 cont_ID = cont_ID %>% filter(cont == 2)
@@ -177,7 +176,7 @@ head(cont_ID, 10)
 ##  9 110000016040804217051997     2
 ## 10 110000016050801105071965     2
 ```
-- Voltando para a base `pnad_bind`, vamos filtrar apenas ID's que aparecem no vetor `cont_ID$ID`:
+- Back in `pnad_bind`, we filter the sample to keep only IDs that are present in `cont_ID$ID`:
 
 ```r
 pnad_bind = pnad_bind %>% filter(ID %in% cont_ID$ID)
@@ -199,8 +198,8 @@ head(pnad_bind)
 ```
 
 ```r
-N = pnad_bind$ID %>% unique() %>% length() # Nº de individuals únicos
-T = pnad_bind$Trimestre %>% unique() %>% length() # Nº de trimestre únicos
+N = pnad_bind$ID %>% unique() %>% length() # number of unique individuals
+T = pnad_bind$Trimestre %>% unique() %>% length() # number of unique quarters
 paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 ```
 
@@ -209,15 +208,15 @@ paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 ```
 
 
-### Juntado as bases e transformando de _wide_ para _long_
-- Agora, juntaremos a base usando a função `inner_join()` que apenas mantém individuals que aparecem em ambas bases de dados:
+### Joining the datasets and converting from _wide_ to _long_
+- Now we join the datasets with `inner_join()`, which keeps only the individuals who appear in both files:
 
 ```r
 pnad_joined = inner_join(pnad_1, pnad_2, 
                          by=c("UPA", "DOMIC", "PAINEL", "ORDEM", "SEXO",
                               "DIA_NASC", "MES_NASC", "ANO_NASC"),
-                         suffix=c("_1", "_2")) # evite usar . como separador
-colnames(pnad_joined) # nomes das colunas
+                         suffix=c("_1", "_2")) # avoid using . as a separator
+colnames(pnad_joined) # column names
 ```
 
 ```
@@ -228,22 +227,22 @@ colnames(pnad_joined) # nomes das colunas
 ```
 
 ```r
-dim(pnad_joined) # dimensões da base de dados
+dim(pnad_joined) # dataset dimensions
 ```
 
 ```
 ## [1] 174468     16
 ```
-- Note que obtivemos a base no formato _wide_ (1 linha para cada individual) e as informações relativas aos 2 periods (1º e 2º trimestres de 2021) estão em colunas:
-    - Os sufixos foram utilizamos para duplicar colunas de informações contidas em ambas bases (e que não foram inseridas no argumento `by`).
-    - A variável invariante no tempo _UF_ foi duplicada, então seria interessante incluí-la também como uma ``variável-chave''
+- The joined data are now in _wide_ format (one row per individual), and the information for the 2 periods (the first and second quarters of 2021) appears in separate columns:
+    - The suffixes were added to duplicate columns present in both datasets but not listed in `by`.
+    - The time-invariant variable _UF_ was duplicated as well, so it makes sense to include it among the key variables.
 
 ```r
 pnad_joined = inner_join(pnad_1, pnad_2, 
                          by=c("UPA", "DOMIC", "PAINEL", "ORDEM", "SEXO",
                               "DIA_NASC", "MES_NASC", "ANO_NASC", "UF"),
-                         suffix=c("_1", "_2")) # evite usar . como separador
-colnames(pnad_joined) # nomes das colunas
+                         suffix=c("_1", "_2")) # avoid using . as a separator
+colnames(pnad_joined) # column names
 ```
 
 ```
@@ -253,31 +252,31 @@ colnames(pnad_joined) # nomes das colunas
 ```
 
 ```r
-dim(pnad_joined) # dimensões da base de dados
+dim(pnad_joined) # dataset dimensions
 ```
 
 ```
 ## [1] 174468     15
 ```
-- Observe que temos uma única coluna _UF_ agora e o número de observations manteve-se inalterado, pois os domicílios da amostra de fato não alteraram suas UFs entre estes trimestres.
-    - Caso alterasse o número de linhas, a variável invariante no tempo possui algumas observations que alteraram entre os periods e estas foram excluídas da amostra.
-- Também podemos retirar as colunas "Trimestre.1" e "Trimestre.2":
+- We now have a single _UF_ column, and the number of observations remains unchanged because sampled households did not actually switch states between these quarters.
+    - If the number of rows had changed, that would indicate that some supposedly time-invariant observations differed across periods and were therefore dropped.
+- We can also remove the columns `Trimestre_1` and `Trimestre_2`:
 
 ```r
 pnad_joined = pnad_joined %>% select(-Trimestre_1, -Trimestre_2)
 ```
-- Estando no formato _wide_, precisamos transformar para o formato _long_
+- Since the dataset is still in _wide_ format, we now convert it to _long_ format.
 
 
-#### Transformando a base de _wide_ para _long_ via `tidyr`
+#### Converting from _wide_ to _long_ with `tidyr`
 - [Pivoting (_tidyr_)](https://tidyr.tidyverse.org/articles/pivot.html)
 
-- Para fazer transformações em _wide_ ou _long_ usaremos o pacote `tidyr` e suas funções `pivot_longer()`, `pivot_wider()` e `separate()`
+- To reshape data between _wide_ and _long_ formats, we will use `tidyr` and the functions `pivot_longer()`, `pivot_wider()`, and `separate()`.
 
 ```r
 library(tidyr)
 ```
-- `pivot_longer()`: transforma várias colunas em duas: de nomes e de valores (aumenta o nº de linhas e diminui o de colunas)
+- `pivot_longer()`: converts several columns into two columns, one for names and one for values (it increases the number of rows and decreases the number of columns)
 ```yaml
 pivot_longer(
   data,
@@ -287,7 +286,7 @@ pivot_longer(
   ...
 )
 ```
-- `pivot_wider()`: transforma nomes (valores únicos) de uma variável em várias colunas (aumenta o nº de colunas e diminui o de linhas)
+- `pivot_wider()`: converts unique values of a variable into separate columns (it increases the number of columns and decreases the number of rows)
 ```yaml
 pivot_wider(
   data,
@@ -297,7 +296,7 @@ pivot_wider(
   ...
 )
 ```
-- `separate()`: divide uma coluna em outras a partir de um caracter ``separador''
+- `separate()`: splits one column into multiple columns using a separator character
 ```yaml
 separate(
   data,
@@ -308,15 +307,15 @@ separate(
 )
 ```
 
-- Primeiro, vamos transformar as colunas variantes no tempo (com sufixos `_1` ou `_2`) em duas colunas
+- First, we reshape the time-varying columns (with suffixes `_1` or `_2`) into two columns:
 
 ```r
 library(tidyr)
 pnad_joined2 = pnad_joined %>%
     pivot_longer(
         cols = c(ends_with("_1"), ends_with("_2") ),
-        names_to = "VAR_TRI", # nome da coluna que vão os nomes das colunas antigas
-        values_to = "VALUE" # nome da coluna com os valores das colunas transformadas
+        names_to = "VAR_TRI", # new column that stores former column names
+        values_to = "VALUE" # new column that stores the reshaped values
     )
 head(pnad_joined2)
 ```
@@ -333,15 +332,15 @@ head(pnad_joined2)
 ## 6 110000016 02    08     02    1     99      99      9999    11    RENDA_1    NA
 ## # … with abbreviated variable names ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
 ```
-- Note que, ao invés de ter 2 linhas por individual, temos 4 (pois temos 2 variáveis variantes no tempo).
-- Precisamos jogar metade das linhas de volta para colunas. Vamos usar a função `separate()` para separar _VAR.TRI_ (com 4 valores únicos: _IDADE_1_, _IDADE_2_, _RENDA_1_ e _RENDA_2_) em 2 colunas: _VAR_ (2 valores únicos: _IDADE_ e _RENDA_) e _TRI_ (2 valores únicos: _1_ e _2_).
+- Instead of having 2 rows per individual, we now have 4 because there are 2 time-varying variables.
+- We therefore need to move half of those rows back into columns. We use `separate()` to split _VAR_TRI_ (with 4 unique values: _IDADE_1_, _IDADE_2_, _RENDA_1_, and _RENDA_2_) into 2 columns: _VAR_ (with 2 unique values: _IDADE_ and _RENDA_) and _TRI_ (with 2 unique values: _1_ and _2_).
 
 ```r
 pnad_joined3 = pnad_joined2[1:100,] %>%
     separate(
         col = "VAR_TRI",
-        into = c("VAR", "TRI"), # nomes das colunas separadas
-        sep = "_" # caracter que separa as valores da coluna VAR_TRI
+        into = c("VAR", "TRI"), # names of the new columns
+        sep = "_" # separator used in VAR_TRI
     )
 head(pnad_joined3)
 ```
@@ -359,7 +358,7 @@ head(pnad_joined3)
 ## # … with abbreviated variable names ¹​DIA_NASC, ²​MES_NASC, ³​ANO_NASC
 ```
 
-- Para finalizar, vamos transformar a coluna _VAR_ (com 2 valores únicos: _IDADE_ e _RENDA_) em 2 colunas (_IDADE_ e _RENDA_):
+- Finally, we convert the _VAR_ column (with the 2 unique values _IDADE_ and _RENDA_) into 2 separate columns:
 
 ```r
 pnad_joined4 = pnad_joined3 %>%
@@ -399,12 +398,12 @@ pnad_joined4 %>% select(TRI, everything()) %>% head(20)
 ```
 
 
-#### Extra: Criação de dummies via `pivot_wider()`
-- Primeiro, é necessário criar uma coluna de 1's
-- Depois usar a função `pivot_wider()`, indicando a variável categórica e a coluna de 1's, preenchendo os NA's com zero (`fill = 0`) :
+#### Extra: Creating dummies with `pivot_wider()`
+- First, create a column of 1s.
+- Then use `pivot_wider()`, specifying the categorical variable and the column of 1s, while replacing missing values with zero (`fill = 0`):
 
 ```r
-dummies_sexo = pnad_1 %>% mutate(const = 1) %>% # criando coluna de 1's
+dummies_sexo = pnad_1 %>% mutate(const = 1) %>% # creating a column of 1s
     pivot_wider(names_from = SEXO,
                 values_from = const,
                 values_fill = 0)
@@ -426,8 +425,8 @@ head(dummies_sexo)
 ```
 
 
-#### Outro exemplo 1: _wide_ para _long_
-- A base de dados abaixo possui informações de 5 condados com suas repectivas áreas territoriais, proporções de adultos com ensino superior e nº de vagas de emprego em 4 anos distintos:
+#### Another example 1: _wide_ to _long_
+- The dataset below contains information for 5 counties, including land area, the share of adults with college education, and the number of jobs in 4 different years:
 
 ```r
 bd_counties = data.frame(
@@ -459,14 +458,14 @@ bd_counties
 ## 4      4276      5564      6098
 ## 5      9490     11811     16503
 ```
-- Queremos estruturar a base de dados de modo que, para cada condado, tenhamos 4 linhas (cada uma corresponde a um dos anos: 1970, 1980, 1990 ou 2020). Portanto, teremos 5 colunas: _county_, _year_, _area_, _college_ e _jobs_. Começamos transformando as colunas cujos nomes iniciam com `college_` e com `jobs_` em linhas via `pivot_longer()`:
+- We want to reshape the dataset so that each county has 4 rows, one for each year: 1970, 1980, 1990, or 2000. The final structure should therefore have 5 columns: _county_, _year_, _area_, _college_, and _jobs_. We begin by stacking the columns whose names start with `college_` and `jobs_` using `pivot_longer()`:
 
 ```r
 bd_counties2 = bd_counties %>%
     pivot_longer(
         cols = c( starts_with("college_"), starts_with("jobs_") ),
-        names_to = "var_year", # nome da coluna que vão os nomes das colunas antigas
-        values_to = "value" # nome da coluna com os valores das colunas transformadas
+        names_to = "var_year", # new column that stores the former column names
+        values_to = "value" # new column that stores the reshaped values
     )
 head(bd_counties2, 10)
 ```
@@ -486,14 +485,14 @@ head(bd_counties2, 10)
 ##  9 Baldwin  1578 college_1970     0.065
 ## 10 Baldwin  1578 college_1980     0.121
 ```
-- Note que, para cada condado, há duas linhas para cada ano, já que há 2 que variam no tempo (_college_ e _jobs_). Precisamos tirar essa duplicidade de anos. Começamos usando a função `separate()` para separar a variável `var_year` em duas colunas (que chamaremos de `var` e `year`):
+- For each county, there are now two rows per year because there are 2 time-varying variables (_college_ and _jobs_). We remove this duplication by using `separate()` to split `var_year` into two columns, which we call `var` and `year`:
 
 ```r
 bd_counties3 = bd_counties2 %>%
     separate(
         col = "var_year",
-        into = c("var", "year"), # nomes das colunas separadas
-        sep = "_" # caracter que separa as valores na coluna antiga "var_year" 
+        into = c("var", "year"), # names of the new columns
+        sep = "_" # separator used in the original column "var_year"
     )
 head(bd_counties3, 10)
 ```
@@ -513,7 +512,7 @@ head(bd_counties3, 10)
 ##  9 Baldwin  1578 college 1970      0.065
 ## 10 Baldwin  1578 college 1980      0.121
 ```
-- Agora, transformaremos a coluna `var` em 2 colunas (`college`, `jobs`), usando a função `pivot_wider()`:
+- Next, we transform the `var` column into 2 columns (`college` and `jobs`) with `pivot_wider()`:
 
 ```r
 bd_counties4 = bd_counties3 %>%
@@ -539,15 +538,15 @@ bd_counties4 %>% select(county, year, everything()) %>% head(10)
 ##  9 Barbour 1970    891   0.073  9448
 ## 10 Barbour 1980    891   0.092  9755
 ```
-- Observe que, se só houvesse uma variável variante no tempo, não seria necessário usar o `pivot_wider()`, pois haveria 1 linha para cada ano para cada condado.
+- If there were only one time-varying variable, `pivot_wider()` would not be necessary because there would already be one row per county-year observation.
 
 
-#### Outro exemplo 2: _long_ para _wide_
-- Usaremos agora a base de dados `TravelMode` do pacote `AER` que possui 840 observations where 210 individuals escolhem um modo de viagem entre 4 opções: carro, aéreo, trem ou ônibus.
-- Note que cada um dos 210 individuals aparecem em 4 linhas, where cada um corresponde a um dos modos de viagem.
-- Há variáveis específicas de
-    - individual (_individual_, _income_ e _size_) que são repetidas nas 4 linhas where aparece, e
-    - escolha (_choice_, _wait_, _vcost_, _travel_ e _gcost_) que variam de acordo com os modos de viagem.
+#### Another example 2: _long_ to _wide_
+- We now use the `TravelMode` dataset from the `AER` package, which contains 840 observations in which 210 individuals choose among 4 travel modes: car, air, train, or bus.
+- Each of the 210 individuals appears in 4 rows, one for each travel mode.
+- The dataset contains variables specific to
+    - the individual (_individual_, _income_, and _size_), which are repeated across the 4 rows where that person appears; and
+    - the choice occasion (_choice_, _wait_, _vcost_, _travel_, and _gcost_), which vary with the travel mode.
 
 ```r
 data("TravelMode", package = "AER")
@@ -565,13 +564,13 @@ head(TravelMode, 8)
 ## 7          2   bus     no   53    25    399    85     30    2
 ## 8          2   car    yes    0    11    255    50     30    2
 ```
-- Agora, vamos fazer com que haja apenas uma linha por individual, retirando a coluna _mode_ e gerando diversas colunas para cada possível modo de viagem.
+- We now reshape the dataset so that each individual appears in only one row, dropping the _mode_ column and generating several columns for each possible travel mode.
 
 ```r
 TravelMode2 = TravelMode %>% 
     pivot_wider(
         names_from = "mode",
-        values_from = c("choice":"gcost") # variáveis específicas do modo
+        values_from = c("choice":"gcost") # mode-specific variables
     )
 head(TravelMode2)
 ```
@@ -593,8 +592,8 @@ head(TravelMode2)
 ## #   ¹​individual, ²​choice_air, ³​choice_train, ⁴​choice_bus, ⁵​choice_car,
 ## #   ⁶​wait_air, ⁷​wait_train, ⁸​wait_bus
 ```
-- Note que, para cada modo de viagem, foram criadas 5 colunas, que correspondem às 5 variáveis específicas de escolha. No total, foram retiradas 6 colunas (_mode_ + 5 variáveis específicas de escolha) e foram criadas 20 (4 modos {{<math>}}$\times${{</math>}} 5 variáveis específicas de escolha) colunas.
-- Em algumas aplicações econométricas (e.g. logit multinomial) é necessário que haja apenas uma coluna indicando a escolha da opção. Então, criaremos a coluna `choice` indicando qual opção escolheu (_air_, _train_, _bus_ ou _car_) e vamos retirar as 4 colunas que começam com "choice_":
+- For each travel mode, 5 columns were created, corresponding to the 5 mode-specific variables. In total, 6 columns were removed (_mode_ plus the 5 mode-specific variables) and 20 columns were created instead (4 modes {{<math>}}$\times${{</math>}} 5 mode-specific variables).
+- In some econometric applications, such as multinomial logit, we want a single column indicating the chosen alternative. We therefore create a `choice` column that records the selected option (_air_, _train_, _bus_, or _car_) and then drop the 4 columns whose names start with `choice_`:
 
 ```r
 TravelMode3 = TravelMode2 %>% 
@@ -634,4 +633,4 @@ TravelMode3 %>% head(10)
 ```
 
 
-{{< cta cta_text="👉 Seguir para Instrumental Variables" cta_link="../sec6" >}}
+{{< cta cta_text="👉 Proceed to Instrumental Variables" cta_link="../sec6" >}}

@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Dados em Painel
-summary: This page includes a section on panel data estimation with R and provides examples of data structures and models. The content is based on the book “Panel Data Econometrics with R” by Croissant & Millo (2018) and adapted from lecture notes on Econometrics I.
-title: Estimação com Dados em Painel
+linktitle: "Dados em Painel"
+summary: "Notas sobre dados em painel cobrindo estruturas dos dados, matrizes de variância-covariância, pooled OLS, efeitos aleatórios, efeitos fixos e primeiras diferenças no R."
+title: "Estimação com Dados em Painel no R"
 weight: 4
 output: md_document
 type: book

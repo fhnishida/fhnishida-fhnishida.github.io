@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Visualization
-summary: The page includes examples of using R for data analysis with the help of graphs such as boxplots, histograms, barplots and scatterplots. It also provides information on the Grammar of Graphics (ggplot2) and its components.
-title: Data Visualization
+linktitle: "Visualização"
+summary: "Notas de visualização de dados no R com gráficos exploratórios, histogramas, boxplots, gráficos de barras, dispersão e ggplot2 para Econometria."
+title: "Visualização de dados no R"
 weight: 4
 output: md_document
 type: book
@@ -334,4 +334,4 @@ g + geom_point(aes(color=cyl), size=9, alpha=0.4) # colorindo por variável - pr
 
 
 
-{{< cta cta_text="👉 Proceed to Distributions" cta_link="../sec5" >}}
+{{< cta cta_text="👉 Seguir para Distribuições" cta_link="../sec5" >}}

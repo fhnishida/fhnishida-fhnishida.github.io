@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 6
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 6 (May 25, 2021)
+linktitle: "Growth with Uncertainty"
+summary: "TA notes on neoclassical growth models with uncertainty and leisure, including presentation slides and Python scripts."
+title: "Session 6: Growth with Uncertainty and Leisure"
 weight: 6
 output: md_document
 type: book

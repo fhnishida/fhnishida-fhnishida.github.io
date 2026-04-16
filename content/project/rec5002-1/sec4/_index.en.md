@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 4
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 4 (May 11, 2021)
+linktitle: "Growth Model"
+summary: "Graduate macroeconomics notes on the neoclassical growth model, with presentation slides and Python materials for recursive methods practice."
+title: "Session 4: Neoclassical Growth Model"
 weight: 4
 output: md_document
 type: book

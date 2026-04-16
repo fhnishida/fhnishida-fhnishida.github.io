@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: IV/2SLS
-summary: The IV / 2SLS section of the current web page context discusses Instrumental Variable and Two-Stage Least Squares methods. These are statistical techniques used to estimate causal relationships when there is a concern about endogeneity, or when one or more of the independent variables are correlated with the error term. The section includes references to several academic sources on these topics, including sections from books by Heiss (2020), Cameron and Trivedi (2005), Wooldridge (2010), and Davidson and MacKinnon (1999). The section also includes mathematical notation and equations related to these methods. For example, it presents a multivariate model with K regressors, matrix notation, and the definition of an instrumental variable. The section also includes information on how to estimate an instrumental variable using R code, including an example using the mroz dataset from the wooldridge package. Overall, this section provides a detailed introduction to instrumental variable and two-stage least squares methods, including both theoretical background and practical examples using R code.
-title: Instrumental Variable and Two-Stage Least Squares
+linktitle: "IV/MQ2E"
+summary: "Notas sobre variáveis instrumentais e MQ2E, cobrindo endogeneidade, instrumentos válidos, relevância da primeira etapa, testes de sobreidentificação e estimação no R."
+title: "Variáveis instrumentais e MQ2E"
 weight: 11
 output: md_document
 type: book
@@ -1299,4 +1299,4 @@ sarg = N * r2 # sempre positivo
 
 
 
-{{< cta cta_text="👉 Proceed to Panel Data" cta_link="../sec13" >}}
+{{< cta cta_text="👉 Seguir para Dados em Painel" cta_link="../sec13" >}}

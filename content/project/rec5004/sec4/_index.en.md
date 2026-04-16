@@ -1,10 +1,10 @@
----
+﻿---
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Visualization
-summary: The page includes examples of using R for data analysis with the help of graphs such as boxplots, histograms, barplots and scatterplots. It also provides information on the Grammar of Graphics (ggplot2) and its components.
-title: Data Visualization
+linktitle: "Visualization"
+summary: "Data visualization notes in R covering exploratory graphs, histograms, boxplots, bar charts, scatterplots, and ggplot2 for econometrics and data analysis."
+title: "Data Visualization in R"
 weight: 4
 output: md_document
 type: book
@@ -16,35 +16,58 @@ type: book
 - [Base plotting system - Part 2 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/m4P1I/base-plotting-system-part-2)
 - [Base plotting demonstration (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/yUFDH/base-plotting-demonstration)
 
-- [Aplica��es R Base (The R Graph Gallery)](https://r-graph-gallery.com/base-R.html)
-- Objetivos dos gr�ficos em an�lise de dados:
-    1. Entender as propriedades dos dados
-    2. Encontrar padr�es nos dados
-    3. Sugerir estrat�gias de modelagem
-    4. Analisar "bugs"
-    5. Comunicar resultados
+- [Base R applications (The R Graph Gallery)](https://r-graph-gallery.com/base-R.html)
+- Main objectives of graphs in data analysis:
+    1. Understand the properties of the data
+    2. Detect patterns in the data
+    3. Suggest modeling strategies
+    4. Diagnose potential "bugs"
+    5. Communicate results
+    
 
+## Exploratory Data Analysis (EDA)
+- Exploratory graphs cover the first four objectives above, so they are not primarily designed to communicate a final result.
+- Typical features:
+    1. They are produced quickly and in large numbers
+    2. Their main goal is to understand the data
+    3. Axes and legends are often simplified or removed
+    4. Colors and sizes are used mainly to convey information
+- Main simple graphs:
+    a. Boxplot
+    b. Histograms
+    c. Barplot
+    d. Scatterplot
 
-</br> 
-
-## An�lise Explorat�ria de Dados (EDA)
-- Os gr�ficos para an�lise explorat�ria abrangem os 4 primeiros objetivos, ou seja, n�o s�o para comunicar um resultado final do seu trabalho.
-- Caracter�sticas:
-    1. Feitas rapidamente e em grande quantidade
-    2. O objetivo � o entendimento dos dados
-    3. Eixos/legendas normalmente s�o retiradas
-    4. Cores/tamanhos s�o primariamente usadas para informa��o
-- Principais gr�ficos:
-    1. Diagrama de caixa (_Boxplot_)
-    2. Histogramas
-    3. Gr�fico de barra (_Barplot_)
-    4. Gr�fico de dispers�o (_Scatterplot_)
-
-Como exemplo, usaremos dados da Ag�ncia de Prote��o Ambiental dos EUA (EPA), [avgpm25.csv](https://fhnishida.netlify.app/project/rec5004/avgpm25.csv), que informa a quantidade de polui��o por part�cula fina (PM2.5). A m�dia anual de PM2.5 que n�o pode exceder 12 {{<math>}}$\mu g/m^3${{</math>}}. 
+As an example, we use data from the U.S. Environmental Protection Agency (EPA), [avgpm25.csv](https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv), which reports fine particulate pollution (PM2.5). The annual mean PM2.5 concentration should not exceed 12 `\(\mu g/m^3\)`.
 
 
 ```r
-pollution = read.csv("https://fhnishida.netlify.app/project/rec5004/avgpm25.csv")
+library(dplyr)
+```
+
+```
+## Warning: package 'dplyr' was built under R version 4.2.2
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
+pollution = read.csv("https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv")
 summary(pollution)
 ```
 
@@ -66,71 +89,72 @@ summary(pollution)
 ```
 
 ### Diagrama de caixa (_Boxplot_)
-- Apresenta m�nimo, m�ximo, os quartis e outliers.
+### Boxplot
+- Displays the minimum, maximum, quartiles, and outliers.
 
 ```r
 boxplot(pollution$pm25, col="blue")
-abline(h=12, col="red") # Linha horizontal no valor 12
+abline(h=12, col="red") # horizontal line at 12
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
-- Para m�ltiplos boxplots, usamos `<vari�vel_num�rica> ~ <vari�vel categ�rica>`:
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+- For multiple boxplots, we use `<numeric_variable> ~ <categorical_variable>`:
 
 
 ```r
 boxplot(pollution$pm25 ~ pollution$region, col="blue")
-abline(h=12, col="red") # Linha horizontal no valor 12
+abline(h=12, col="red") # horizontal line at 12
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 
 
-### Histograma
+### Histogram
 
 ```r
 hist(pollution$pm25, col="green")
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ```r
-hist(pollution$pm25, col="green", breaks=100) # 100 quebras
-rug(pollution$pm25) # Tra�os dos valores da amostra abaixo do histograma 
-abline(v=12, col="red") # Linha vertical no valor 12
+hist(pollution$pm25, col="green", breaks=100) # 100 bins
+rug(pollution$pm25) # marks the sample values below the histogram
+abline(v=12, col="red") # vertical line at 12
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
-- Podemos colocar mais de um gr�fico numa figura usando a fun��o `par(mfrow, mar)`:
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
+- We can place more than one graph in the same figure using `par(mfrow, mar)`:
 
 ```r
-par(mfrow=c(2, 1), mar=c(4, 4, 2, 1)) # Criando figura com 2 linhas e 1 coluna + margens
+par(mfrow=c(2, 1), mar=c(4, 4, 2, 1)) # create a figure with 2 rows and 1 column plus margins
 
-pol_west = pollution[pollution$region == "west",]
-pol_east = pollution[pollution$region == "east",]
+pol_west = pollution %>% filter(region == "west")
+pol_east = pollution %>% filter(region == "east")
 
 hist(pol_west$pm25, col="green")
 hist(pol_east$pm25, col="green")
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
-- Note que voc� precisa usar `par(mfrow=c(1, 1))` para voltar a incluir apenas 1 gr�fico na figura. 
+- Notice that you need `par(mfrow=c(1, 1))` to return to a single graph per figure.
 
 
-### Gr�fico de barra (_Barplot_)
+### Barplot
 
 ```r
 barplot(table(pollution$region), col="wheat",
-        main="N� de pa�ses em cada regi�o")
+        main="Number of counties in each region")
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 
 
-### Gr�fico de dispers�o (_Scatterplot_)
-- Gera gr�ficos sob 2 dimens�es
+### Scatterplot
+- Produces two-dimensional graphs.
 
 ```r
 plot(pollution$latitude, pollution$pm25)
@@ -138,77 +162,74 @@ abline(h=12, lwd=1.5, lty=2, col="red")
 abline(lm(pm25 ~ latitude, data=pollution), col="blue")
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 
 ```r
-par(mfrow=c(1, 2), mar=c(4, 4, 2, 1)) # Criando figura com 1 linha e 2 colunas + margens
+par(mfrow=c(1, 2), mar=c(4, 4, 2, 1)) # create a figure with 1 row and 2 columns plus margins
 
 plot(pol_west$latitude, pol_west$pm25, main="West")
 plot(pol_east$latitude, pol_east$pm25, main="East")
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-- Tamb�m � poss�vel adicionar objetos gr�ficos e textos no gr�fico gerado por `plot()`:
-    - `abline()`: adiciona linhas horizontal, vertical ou de regress�o
-    - `points()`: adiciona pontos ao gr�fico
-    - `lines()`: adiciona linhas ao gr�fico
-    - `text()`: adiciona texto ao gr�fico
-    - `title()`: adiciona anota��es aos eixos, t�tulo, subt�tulo e margem exterior
-    - `mtext()`: adiciona texto �s margens (interna e externa) do gr�fico
-    - `axis()`: adiciona tra�os/r�tulos aos eixos
+- We can also add graphical elements and text to a figure produced by `plot()`:
+    - `abline()`: adds horizontal, vertical, or regression lines
+    - `points()`: adds points
+    - `lines()`: adds lines
+    - `text()`: adds text
+    - `title()`: adds axis annotations, title, subtitle, and outer margin text
+    - `mtext()`: adds text to the inner or outer margins
+    - `axis()`: adds tick marks and axis labels
 
 
 ```r
-par(mfrow=c(1, 1)) # Retornando ao padr�o
+par(mfrow=c(1, 1)) # return to the default
 
-air_may = airquality[airquality$Month==5,]
-air_other = airquality[airquality$Month!=5,]
+air_may = airquality %>% filter(Month==5)
+air_other = airquality %>% filter(Month!=5)
 
 plot(airquality$Wind, airquality$Ozone, main="Ozone and Wind in NYC")
 points(air_may$Wind, air_may$Ozone, col="blue")
 points(air_other$Wind, air_other$Ozone, col="red")
-legend("topright", pch=1, col=c("blue", "red"),
-       legend=c("May", "Other Months"))
+legend("topright", pch=1, col=c("blue", "red"), legend=c("May", "Other Months"))
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 
-Alguns par�metros gr�ficos importantes:
+Some important graphical parameters:
 
-- `pch`: s�mbolo dos pontos gr�ficos (padr�o � c�rculo)
-- `lty`: tipo da linha (padr�o � linha s�lida, mais pode ser pontilhado, etc.)
-- `lwd`: grossura da linha (integer)
-- `col`: cor, especificada como n�mero, texto ou c�digo hex (fun��o `colors()` d� um vetor de cores por nome)
-- `xlab`: r�tulo do eixo x
-- `ylab`: r�tulo do eixo y
-- `par()`: fun��o que especifica par�metros *globais* que afetam todas figuras:
-    - `las`: orienta��o dos r�tulos 
-    - `bg`: cor de fundo
-    - `mar`: tamanho da margem
-    - `oma`: tamanho da margem externa (padr�o � 0)
-    - `mfrow`: n�mero de gr�ficos por linha
-    - `mfcol`: n�mero de gr�ficos por coluna
+- `pch`: plotting symbol for points (the default is a circle)
+- `lty`: line type (the default is a solid line, but it can also be dotted, etc.)
+- `lwd`: line width (integer)
+- `col`: color, specified as a number, a text name, or a hexadecimal code (`colors()` returns a vector of named colors)
+- `xlab`: label for the x-axis
+- `ylab`: label for the y-axis
+- `par()`: function used to specify *global* parameters that affect all figures:
+    - `las`: label orientation
+    - `bg`: background color
+    - `mar`: margin size
+    - `oma`: outer margin size (default is 0)
+    - `mfrow`: number of graphs per row
+    - `mfcol`: number of graphs per column
 
 
-
-</br> 
 
 ## Grammar of Graphics (`ggplot2`)
 - [_ggplot2_ - Part 3 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/idcsq/ggplot2-part-3)
 - [_ggplot2_ - Part 4 (John Hopkins/Coursera)](https://www.coursera.org/learn/exploratory-data-analysis/lecture/cj6RA/ggplot2-part-4)
 - [_ggplot2_ Cheat Sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
-- [Aplica��es _ggplot2_ (The R Graph Gallery)](https://r-graph-gallery.com/ggplot2-package.html)
+- [Applications with _ggplot2_ (The R Graph Gallery)](https://r-graph-gallery.com/ggplot2-package.html)
 
 
-- Componentes b�sicos do `ggplot2`:
-    - um **data frame**
-    - est�tica (**aesthetics**): como os dados s�o mapeados (tamanho, forma, cor)
-    - objetos geom�tricos (**geoms**): pontos, linhas, formas
-    - **facets**: para gr�ficos condicionais
-- Ao inv�s de criar um gr�fico diretamente, os gr�ficos do `ggplot2` s�o constru�dos em camadas (layers)
+- Basic components of `ggplot2`:
+    - a **data frame**
+    - **aesthetics**: how the data are mapped into visual attributes such as size, shape, and color
+    - geometric objects (**geoms**): points, lines, shapes
+    - **facets**: for conditional plots
+- Instead of creating a graph directly, `ggplot2` constructs graphs in layers.
 
 
 
@@ -228,110 +249,117 @@ head(mtcars)
 ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
 ```
 
-2. Base do Gr�fico (`ggplot()`)
-    - dados que ser�o inclu�dos no gr�fico
-    - toda vez que for incluir uma vari�vel, � necess�rio precisa usar a fun��o `aes()` sobre elas
+2. Plot foundation (`ggplot()`)
+    - the data that will be included in the graph
+    - whenever we map variables into the plot, we use the `aes()` function
 
 ```r
 library(ggplot2)
-g = ggplot(data=mtcars, aes(mpg, wt)) # Criando a base do gr�fico
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 4.2.2
+```
+
+```r
+g = ggplot(data=mtcars, aes(mpg, wt)) # create the foundation of the graph
 g
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
-3. Layer geom�tico (`geom`)
-    - incluindos formas, linhas e pontos
-    - caso n�o sejam informadas novas vari�veis, a fun��o para criar um objeto geom�trico ir� usar as vari�veis-base definidas na fun��o `ggplot()` inicial
-    - Junta-se a base do gr�fico com outras layers usando o sinal `+`
+3. Geometric layer (`geom`)
+    - adds shapes, lines, and points
+    - if no new variables are supplied, the geometric layer uses the base variables defined in the initial `ggplot()` call
+    - we combine the plot foundation with additional layers using `+`
 
 ```r
 g + geom_point()
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
-4. Layer de suaviza��o/tend�ncia (`smooth`)
+4. Smoothing/trend layer (`smooth`)
+```yaml
+geom_smooth(
+  mapping = NULL, data = NULL, ...,
+  method = NULL, formula = NULL, se = TRUE, level = 0.95
+)
 
-<!-- ```yaml -->
-<!-- geom_smooth( -->
-<!--   mapping = NULL, data = NULL, ..., -->
-<!--   method = NULL, formula = NULL, se = TRUE, level = 0.95 -->
-<!-- ) -->
-
-<!-- - mapping: Set of aesthetic mappings created by aes() or aes_(). If specified and inherit.aes = TRUE (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping. -->
-<!-- - data: The data to be displayed in this layer. If NULL, the default, the data is inherited from the plot data as specified in the call to ggplot(). -->
-<!-- - method: Smoothing method (function) to use, accepts either NULL or a character vector, e.g. "lm", "glm", "gam", "loess" or a function (...). -->
-<!-- - formula: Formula to use in smoothing function, eg. y ~ x, y ~ poly(x, 2), y ~ log(x). -->
-<!-- - se: Display confidence interval around smooth? (TRUE by default, see level to control.) -->
-<!-- - level: Level of confidence interval to use (0.95 by default). -->
-<!-- ``` -->
+mapping: Set of aesthetic mappings created by aes() or aes_(). If specified and inherit.aes = TRUE (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping.
+data: The data to be displayed in this layer. If NULL, the default, the data is inherited from the plot data as specified in the call to ggplot().
+method: Smoothing method (function) to use, accepts either NULL or a character vector, e.g. "lm", "glm", "gam", "loess" or a function (...).
+formula: Formula to use in smoothing function, eg. y ~ x, y ~ poly(x, 2), y ~ log(x).
+se: Display confidence interval around smooth? (TRUE by default, see level to control.)
+level: Level of confidence interval to use (0.95 by default).
+```
 
 
 ```r
-g + geom_point() + geom_smooth(method="lm") # suaviza��o a partir de OLS
+g + geom_point() + geom_smooth(method="lm") # OLS smoothing line
 ```
 
 ```
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 
 
-5. Layers condicionais (facets)
+5. Conditional layers
+Facets (using `cyl`)
 
 
 ```r
-g + geom_point() + geom_smooth(method="lm") + facet_grid(. ~ cyl) # agrupando por n� cilindros horizontalmente
+g + geom_point() + geom_smooth(method="lm") + facet_grid(. ~ cyl) # group horizontally by number of cylinders
 ```
 
 ```
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 ```r
-g + geom_point() + geom_smooth(method="lm") + facet_grid(cyl ~ .) # agrupando por n� cilindros verticalmente
+g + geom_point() + geom_smooth(method="lm") + facet_grid(cyl ~ .) # group vertically by number of cylinders
 ```
 
 ```
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-14-2.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-14-2.png" width="672" />
 
-6. Anota��es
-    - R�tulos: `xlab()`, `ylab()`, `labs()`, `ggtitle()`
-    - Cada _geom_ tem op��es para modificar, mas use `theme()` para op��es globais do gr�fico. Use `?theme` e veja a quantidade de configura��es voc� pode fazer no seu gr�fico.
-    - Se quiser temas pr�-definidos, h� 2 templates padr�o `theme_gray()` e `theme_bw()` (preto/branco). Tamb�m � poss�vel usar outros usando o pacote `ggthemes`.
+6. Annotations
+    - Labels: `xlab()`, `ylab()`, `labs()`, `ggtitle()`
+    - Each _geom_ has its own customization options, but use `theme()` for global plot settings. Type `?theme` to see how many adjustments are available.
+    - If you want predefined themes, two standard templates are `theme_gray()` and `theme_bw()` (black and white). Other themes are also available through the `ggthemes` package.
 
 ```r
 g + geom_point() + ggthemes::theme_economist() + 
-    ylab("Peso (libras)") + xlab("Milhas por gal�o") +
-    ggtitle("Milhas por gal�o X Peso do carro")
+    ylab("Weight (pounds)") + xlab("Miles per gallon") +
+    ggtitle("Miles per gallon vs. vehicle weight")
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 
-7. Modificando Est�tica
-    - Dentro de cada _geom_, podemos definir a cor (`color`), o tamanho (`size`) e a transpar�ncia (`alpha`)
+7. Modifying aesthetics
+    - Within each _geom_, we can define color (`color`), size (`size`), and transparency (`alpha`)
 
 ```r
 g + geom_point(color="steelblue", size=9, alpha=0.4)
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 ```r
-g + geom_point(aes(color=cyl), size=9, alpha=0.4) # colorindo por vari�vel - precisa usar aes()
+g + geom_point(aes(color=cyl), size=9, alpha=0.4) # color by a variable - requires aes()
 ```
 
-<img src="/project/rec5004/sec4/_index_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+<img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-16-2.png" width="672" />
 
 
 
-{{< cta cta_text="?Y'? Proceed to Distributions" cta_link="../sec5" >}}
+{{< cta cta_text="Proceed to Statistics Review" cta_link="../sec6" >}}

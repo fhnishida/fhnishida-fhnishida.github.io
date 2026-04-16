@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 1
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 1 (June 22, 2021)
+linktitle: "Modelo de Evans"
+summary: "Notas de macroeconomia sobre o modelo de Evans para otimização dinâmica de um monopolista, com apresentação e referências ao Chiang."
+title: "Sessão 1: Otimização Dinâmica de um Monopolista"
 weight: 1
 output: md_document
 type: book
@@ -13,14 +12,14 @@ type: book
 
 
 
-## Dynamic Optimization of a Monopolist: Evans Model
-- Chiang (1999): Section 2.4 
+## Otimização Dinâmica de um Monopolista: Modelo de Evans
+- Chiang (1999): Seção 2.4 
 
-## TA Session 1 Recording (in Portuguese)
+## Gravação da Monitoria 1
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/8amOXuJBLiY/maxresdefault.jpg)](https://www.youtube.com/watch?v=8amOXuJBLiY)
-Presentation: [AP_Monitoria-1_pt2_v2.pdf](../AP_Monitoria-1_pt2_v2.pdf)
+Apresentação: [AP_Monitoria-1_pt2_v2.pdf](../AP_Monitoria-1_pt2_v2.pdf)
 
 
-{{< cta cta_text="�Y'? Proceed to Session 2" cta_link="../chapter2" >}}
+{{< cta cta_text="👉 Seguir para a Sessão 2" cta_link="../sec2" >}}
 

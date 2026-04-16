@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Simple Regression
-summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
-title: Simple Regression
+linktitle: "Simple Regression"
+summary: "Econometrics I notes on simple OLS regression, fitted values, residuals, log transformations, standard errors, and assumption violations."
+title: "Simple OLS Regression"
 weight: 7
 output: md_document
 type: book
@@ -12,39 +12,39 @@ type: book
 
 
 
-## Regressão simples por OLS
-- [Section 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
-- Considere o seguinte modelo empírico
+## Simple OLS Regression
+- [Section 2.1 of Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
+- Consider the following empirical model:
 $$ y = \beta_0 + \beta_1 x + u \tag{2.1} $$
-- Os estimadores de mínimos quadrados ordinários (OLS), segundo Wooldridge (2006, Section 2.2) é dado por
+- According to Wooldridge (2006, Section 2.2), the ordinary least squares (OLS) estimators are given by
 
 {{<math>}}\begin{align}
     \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x} \tag{2.2}\\
     \hat{\beta}_1 &= \frac{Cov(x,y)}{Var(x)} \tag{2.3}
 \end{align}{{</math>}}
 
-- E os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}} é dado por
+- The fitted (predicted) values, {{<math>}}$\hat{y}${{</math>}}, are given by
 $$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
-tal que 
+such that
 $$ y = \hat{y} + \hat{u} $$
 
-### Example 2.3: Salário de Diretores Executivos e Retornos de Ações (Wooldridge, 2006)
+### Example 2.3: CEO Compensation and Stock Returns (Wooldridge, 2006)
 
-- Considere o seguinte modelo de regressão simples
+- Consider the following simple regression model:
 $$ \text{salary} = \beta_0 + \beta_1 \text{roe} + u $$
-where `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o investimento em percentual.
+where `salary` is CEO compensation in thousands of dollars and `roe` is the return on equity, measured in percentage points.
 
 
-#### Estimando regressão simples "by hand"
+#### Estimating Simple Regression "By Hand"
 
 
 ```r
-# Carregando a base de dados do pacote 'wooldridge'
+# Load the dataset from the 'wooldridge' package
 data(ceosal1, package="wooldridge")
 
-attach(ceosal1) # para não precisar escrever 'ceosal1$' antes de toda variável
+attach(ceosal1) # avoids writing 'ceosal1$' before every variable
 
-cov(salary, roe) # covariância entre dependent variable e independente
+cov(salary, roe) # covariance between the dependent and independent variables
 ```
 
 ```
@@ -52,7 +52,7 @@ cov(salary, roe) # covariância entre dependent variable e independente
 ```
 
 ```r
-var(roe) # variância do retorno sobre o investimento
+var(roe) # variance of the return on equity
 ```
 
 ```
@@ -60,7 +60,7 @@ var(roe) # variância do retorno sobre o investimento
 ```
 
 ```r
-mean(roe) # média do retorno sobre o investimento
+mean(roe) # mean return on equity
 ```
 
 ```
@@ -68,7 +68,7 @@ mean(roe) # média do retorno sobre o investimento
 ```
 
 ```r
-mean(salary) # média do salário
+mean(salary) # mean salary
 ```
 
 ```
@@ -76,8 +76,8 @@ mean(salary) # média do salário
 ```
 
 ```r
-# Cálculo "by hand" dos coeficientes de OLS
-( b1_hat = cov(salary, roe) / var(roe) ) # por (2.3)
+# Compute the OLS coefficients "by hand"
+( b1_hat = cov(salary, roe) / var(roe) ) # by (2.3)
 ```
 
 ```
@@ -85,7 +85,7 @@ mean(salary) # média do salário
 ```
 
 ```r
-( b0_hat = mean(salary) - var(roe)*mean(salary) ) # por (2.2)
+( b0_hat = mean(salary) - var(roe)*mean(salary) ) # by (2.2)
 ```
 
 ```
@@ -93,15 +93,15 @@ mean(salary) # média do salário
 ```
 
 ```r
-detach(ceosal1) # para parar de procurar variável dentro do objeto 'ceosal1'
+detach(ceosal1) # stop looking for variables inside the 'ceosal1' object
 ```
 
-- Vemos que um incremento de uma unidade (porcento) no retorno sobre o investimento (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos diretores executivos.
+- We see that a one-percentage-point increase in return on equity (`roe`) is associated with an increase of about 18 thousand dollars in CEO compensation.
 
 
-#### Estimando regressão simples via `lm()`
-- Uma maneira mais conveniente de fazer a estimação por OLS é usando a função `lm()`
-- Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (`~`):
+#### Estimating Simple Regression with `lm()`
+- A more convenient way to estimate an OLS model is to use the `lm()` function.
+- In a univariate model, we write the dependent and independent variables separated by a tilde (`~`):
 
 ```r
 lm(ceosal1$salary ~ ceosal1$roe)
@@ -117,7 +117,7 @@ lm(ceosal1$salary ~ ceosal1$roe)
 ##       963.2         18.5
 ```
 
-- Também podemos deixar de usar o prefixo `ceosal1$` antes dos nomes do vetores preenchermos o argumento `data = ceosal1`
+- We can also omit the `ceosal1$` prefix by supplying `data = ceosal1`.
 
 ```r
 lm(salary ~ roe, data=ceosal1)
@@ -133,28 +133,28 @@ lm(salary ~ roe, data=ceosal1)
 ##       963.2         18.5
 ```
 
-- Podemos usar a função `lm()` para incluir uma reta de regressão no gráfico
+- We can use `lm()` to add the regression line to a scatterplot.
 
 ```r
-# Gráfico de dispersão (scatter)
+# Scatterplot
 plot(ceosal1$roe, ceosal1$salary)
 
-# Adicionando a reta de regressão
+# Add the regression line
 abline(lm(salary ~ roe, data=ceosal1), col="red")
 ```
 
 <img src="/project/rec2301/sec7/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 
-## Coeficientes, Valores Ajustados e Resíduos
-- [Section 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
-- Podemos "guardar" os resultados da estimação em um objeto (da classe `list`) e, depois, extrair informações dele.
+## Coefficients, Fitted Values, and Residuals
+- [Section 2.2 of Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
+- We can store the estimation results in an object (a `list`) and then extract information from it.
 
 ```r
-# atribuindo o resultado da regressão em um objeto
+# Store the regression results in an object
 CEOregres = lm(salary ~ roe, data=ceosal1)
 
-# verificando os "nomes" das informações contidas no objeto
+# Check the names of the components stored in the object
 names(CEOregres)
 ```
 
@@ -164,7 +164,7 @@ names(CEOregres)
 ##  [9] "xlevels"       "call"          "terms"         "model"
 ```
 
-- Podemos usar a função `coef()` para extrairmos um data frame com os coeficientes da regressão
+- We can use `coef()` to extract the estimated regression coefficients.
 
 ```r
 ( bhat = coef(CEOregres) )
@@ -176,11 +176,11 @@ names(CEOregres)
 ```
 
 ```r
-bhat_0 = bhat["(Intercept)"] # ou bhat[1]
-bhat_1 = bhat["roe"] # ou bhat[2]
+bhat_0 = bhat["(Intercept)"] # or bhat[1]
+bhat_1 = bhat["roe"] # or bhat[2]
 ```
 
-- Dados estes parâmetros estimados, podemos calcular os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}}, e os desvios, {{<math>}}$\hat{u}${{</math>}}, para cada observation {{<math>}}$i=1, ..., n${{</math>}}:
+- Given these estimated parameters, we can calculate the fitted values, {{<math>}}$\hat{y}${{</math>}}, and the residuals, {{<math>}}$\hat{u}${{</math>}}, for each observation {{<math>}}$i=1, ..., n${{</math>}}:
 
 {{<math>}}\begin{align}
     \hat{y}_i &= \hat{\beta}_0 + \hat{\beta}_1 . x_i \tag{2.5} \\
@@ -189,17 +189,17 @@ bhat_1 = bhat["roe"] # ou bhat[2]
 
 
 ```r
-# Extraindo colunas de ceosal1 em vetores
+# Extract ceosal1 columns as vectors
 sal = ceosal1$salary
 roe = ceosal1$roe
 
-# Calculando os valores ajustados/preditos
+# Compute fitted values
 sal_hat = bhat_0 + (bhat_1 * roe)
 
-# Calculando os desvios
+# Compute residuals
 u_hat = sal - sal_hat
 
-# Visualizando as 6 primerias linhas de sal, roe, sal_hat e u_hat
+# Display the first 6 rows of sal, roe, sal_hat, and u_hat
 head( cbind(sal, roe, sal_hat, u_hat) )
 ```
 
@@ -213,7 +213,7 @@ head( cbind(sal, roe, sal_hat, u_hat) )
 ## [6,] 1145 20.0 1333.215 -188.2151
 ```
 
-- Com as funções `fitted()` e `resid()` podemos extrair os valores ajustados e os resíduos do objeto com resultado da regressão:
+- With `fitted()` and `resid()`, we can extract the fitted values and residuals directly from the regression object:
 
 ```r
 head( cbind(fitted(CEOregres), resid(CEOregres)) )
@@ -230,7 +230,7 @@ head( cbind(fitted(CEOregres), resid(CEOregres)) )
 ```
 
 ```r
-# Ou também
+# Or equivalently
 head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 ```
 
@@ -245,18 +245,18 @@ head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 ```
 
 
-- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por OLS assume as seguintes hipóteses:
+- In Section 2.3 of Wooldridge (2006), OLS estimation implies the following sample properties:
 {{<math>}}\begin{align}
     &\sum^n_{i=1}{\hat{u}_i} = 0 \quad \implies \quad \bar{\hat{u}} = 0 \tag{2.7} \\
     &\sum^n_{i=1}{x_i \hat{u}_i} = 0 \quad \implies \quad Cov(x,\hat{u}) = 0 \tag{2.8} \\
     &\bar{y}=\hat{\beta}_0 + \hat{\beta}_1.\bar{x} \tag{2.9}
 \end{align}{{</math>}}
 
-- Podemos verificá-los em nosso exemplo:
+- We can verify them in our example:
 
 ```r
-# Verificando (2.7)
-mean(u_hat) # bem próximo de 0
+# Checking (2.7)
+mean(u_hat) # very close to 0
 ```
 
 ```
@@ -264,8 +264,8 @@ mean(u_hat) # bem próximo de 0
 ```
 
 ```r
-# Verificando (2.8)
-cor(ceosal1$roe, u_hat) # bem próximo de 0
+# Checking (2.8)
+cor(ceosal1$roe, u_hat) # very close to 0
 ```
 
 ```
@@ -273,7 +273,7 @@ cor(ceosal1$roe, u_hat) # bem próximo de 0
 ```
 
 ```r
-# Verificando (2.9)
+# Checking (2.9)
 mean(ceosal1$salary)
 ```
 
@@ -289,45 +289,45 @@ mean(sal_hat)
 ## [1] 1281.12
 ```
 
-- **IMPORTANTE**: Isso só quer dizer que o OLS escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
-- Isto **NÃO** quer dizer que, para o modelo empírico/populacional, as seguintes hipóteses sejam verdadeiras:
+- **IMPORTANT**: This only means that OLS chooses {{<math>}}$\hat{\beta}_0${{</math>}} and {{<math>}}$\hat{\beta}_1${{</math>}} so that 2.7, 2.8, and 2.9 hold in the sample.
+- This does **NOT** mean that the following population assumptions are necessarily true:
 {{<math>}}\begin{align}
     &E(u) = 0 \tag{2.7'} \\
     &Cov(x, u) = 0 \tag{2.8'}
 \end{align}{{</math>}}
-- De fato, se 2.7' e 2.8' não forem válidos, a estimação por OLS (que assume 2.7, 2.8 e 2.9) será viesada.
+- In fact, if 2.7' and 2.8' do not hold, OLS estimation will be biased.
 
 
-## Transformações log
-- [Section 2.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
-- Também podemos fazer estimações transformando variáveis em nível para logaritmo.
-- É especialmente importante para transformar modelos não-lineares em lineares - quando o parâmetro está no expoente ao invés estar multiplicando:
+## Log Transformations
+- [Section 2.4 of Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- We can also estimate models after transforming variables from levels into logarithms.
+- This is especially useful for turning nonlinear models into linear ones, such as when the parameter appears in the exponent rather than multiplicatively:
   
 $$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $$
 
-- Também é frequentemente utilizada em dependent variables {{<math>}}$y \ge 0${{</math>}}
+- Log transformations are also commonly used for dependent variables with {{<math>}}$y \ge 0${{</math>}}.
 
 
 <center><img src="../tab_2-3.png"></center>
 
-- Há duas maneiras de fazer a transformação log:
-    - Criar um novo vetor/coluna com a variável em log, ou
-    - Usar a função `log()` diretamente no vetor dentro da função `lm()`
+- There are two main ways to apply a log transformation:
+    - create a new vector/column containing the logged variable, or
+    - use the `log()` function directly inside `lm()`.
 
 
-### Example 2.11: Salário de Diretores Executivos e Vendas das Empresas (Wooldridge, 2006)
-- Considere as variáveis:
-    - `wage`: salário anual em milhares de dólares
-    - `sales`: vendas em milhões de dólares
+### Example 2.11: CEO Compensation and Firm Sales (Wooldridge, 2006)
+- Consider the variables:
+    - `wage`: annual salary, in thousands of dollars
+    - `sales`: firm sales, in millions of dollars
 
 
-- _Modelo nível-nível_:
+- _Level-level model_:
 
 ```r
-# Carregando a base de dados
+# Load the dataset
 data(ceosal1, package="wooldridge")
 
-# Estimando modelo nível-nível
+# Estimate the level-level model
 lm(salary ~ sales, data=ceosal1)
 ```
 
@@ -340,11 +340,11 @@ lm(salary ~ sales, data=ceosal1)
 ## (Intercept)        sales  
 ##   1.174e+03    1.547e-02
 ```
-- Um aumento em US\$ 1 milhão em vendas está relacionado incremento de US\$ 0,01547 milhares de dólares do salário do diretor executivo.
-- _Modelo log-nível_:
+- An increase of US\$1 million in sales is associated with an increase of US\$0.01547 thousand in CEO compensation.
+- _Log-level model_:
 
 ```r
-# Estimando modelo log-nível
+# Estimate the log-level model
 lm(log(salary) ~ sales, data=ceosal1)
 ```
 
@@ -357,11 +357,11 @@ lm(log(salary) ~ sales, data=ceosal1)
 ## (Intercept)        sales  
 ##   6.847e+00    1.498e-05
 ```
-- Um aumento em US\$ 1 milhão em vendas tende a elevar em 0,0015\% ($=100 \beta_1\%$ ) o salário do diretor executivo.
-- _Modelo log-log_:
+- An increase of US\$1 million in sales tends to raise CEO salary by about 0.0015\% ($=100 \beta_1\%$).
+- _Log-log model_:
 
 ```r
-# Estimando modelo log-log
+# Estimate the log-log model
 lm(log(salary) ~ log(sales), data=ceosal1)
 ```
 
@@ -374,12 +374,12 @@ lm(log(salary) ~ log(sales), data=ceosal1)
 ## (Intercept)   log(sales)  
 ##      4.8220       0.2567
 ```
-- Um aumento em 1\% das vendas aumenta o salário em cerca de 0,257\% ($=\beta_1\%$) maior.
+- A 1\% increase in sales is associated with an increase of about 0.257\% in salary ($=\beta_1\%$).
 
 
-## Regressão a partir da origem e sobre uma constante
-- [Section 2.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
-- Para esstimar o modelo sem o intercepto (constante), precisamos adicionar `0 +` nos regressores na função `lm()`:
+## Regression Through the Origin and on a Constant
+- [Section 2.5 of Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- To estimate the model without an intercept, we need to add `0 +` to the regressors inside `lm()`:
 
 ```r
 data(ceosal1, package="wooldridge")
@@ -396,7 +396,7 @@ lm(salary ~ 0 + roe, data=ceosal1)
 ## 63.54
 ```
 
-- Ao regredirmos uma dependent variable sobre uma constante (1), obtemos a média desta variável.
+- If we regress a dependent variable on a constant only (`1`), we obtain its sample mean.
 
 ```r
 lm(salary ~ 1, data=ceosal1)
@@ -421,10 +421,10 @@ mean(ceosal1$salary, na.rm=TRUE)
 ```
 
 
-## Diferença de médias
-- Baseado no Example C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006)
-- Poderíamos ter calculado a diferença de médias por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
-- Primeiro vamos criar um vetor único de taxas de refugo (vamos empilhar `SR87` e `SR88`)
+## Difference in Means
+- Based on Example C.6: the effect of job-training grants on worker productivity (Wooldridge, 2006).
+- We can calculate a difference in means by regressing on a dummy variable that takes values 0 or 1.
+- First, we create a single vector of scrap rates by stacking `SR87` and `SR88`:
 
 ```r
 SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
@@ -432,7 +432,7 @@ SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
 SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5, 
          .61, 6.7, 4, 7, 19, .2, 5, 3.83)
 
-( SR = c(SR87, SR88) ) # empilhando SR87 e SR88 em único vetor
+( SR = c(SR87, SR88) ) # stack SR87 and SR88 into a single vector
 ```
 
 ```
@@ -442,11 +442,11 @@ SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5,
 ## [37] 19.00  0.20  5.00  3.83
 ```
 
-- Note que os 20 primeiros valores são relativos às taxas de refugo no ano de 1987 e os 20 últimos valores são de 1988.
-- Vamos criar uma variável _dummy_ chamada de _group88_ que atribui valor 1 as observations do ano de 1988 e o valor 0 para as de 1987:
+- Note that the first 20 values refer to scrap rates in 1987 and the last 20 refer to 1988.
+- Next, we create a dummy variable called `group88` that assigns value 1 to observations from 1988 and 0 to observations from 1987:
 
 ```r
-( group88 = c(rep(0, 20), rep(1, 20)) ) # valores 0/1 para 20 primeiras/últimas observations
+( group88 = c(rep(0, 20), rep(1, 20)) ) # 0/1 values for the first/last 20 observations
 ```
 
 ```
@@ -454,7 +454,7 @@ SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5,
 ## [39] 1 1
 ```
 
-- Ao regredirmos a taxa de refugo em relação à _dummy_ obtemos a diferença das médias
+- Regressing the scrap rate on the dummy yields the difference in means:
 
 ```r
 lm(SR ~ group88)
@@ -472,17 +472,17 @@ lm(SR ~ group88)
 
 
 
-## Valores esperados, Variância e Erros padrão
-- [Section 2.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/106)
+## Expected Values, Variance, and Standard Errors
+- [Section 2.6 of Heiss (2020)](http://www.urfie.net/read/index.html#page/106)
 
 
-- Wooldridge (2006, Section 2.5) deriva o estimador do termo de erro:
+- Wooldridge (2006, Section 2.5) derives the estimator of the error variance:
 $$ \hat{\sigma}^2 = \frac{1}{n-2} \sum^n_{i=1}{\hat{u}^2_i} = \frac{n-1}{n-2} Var(\hat{u}) \tag{2.14} $$
 where {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</math>}}.
 
-- Observe que precisamos considerar os graus de liberdade, dado que estamos estimando dois parâmetros ({{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}).
-- Note que {{<math>}}$\hat{\sigma} = \sqrt{\hat{\sigma}^2}${{</math>}} é chamado de erro padrão da regressão (EPR). No R, é chamado de erro padrão residual 
-- também podemos obter os erros padrão (EP) dos estimadores:
+- Notice that we need to account for degrees of freedom because we are estimating two parameters ({{<math>}}$\hat{\beta}_0${{</math>}} and {{<math>}}$\hat{\beta}_1${{</math>}}).
+- Note that {{<math>}}$\hat{\sigma} = \sqrt{\hat{\sigma}^2}${{</math>}} is called the standard error of the regression (SER). In R, this appears as the residual standard error.
+- We can also obtain the standard errors of the estimators:
 
 {{<math>}}\begin{align}
     se(\hat{\beta}_0) &= \sqrt{\frac{\hat{\sigma}\bar{x}^2}{\sum^n_{i=1}{(x_i - \bar{x})^2}}} = \frac{1}{\sqrt{n-1}} \frac{\hat{\sigma}}{sd(x)} \sqrt{\bar{x^2}} \tag{2.15}\\
@@ -490,22 +490,22 @@ where {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</math
 \end{align}{{</math>}}
 
 
-### Example 2.12: Desempenho em Matemática de Estudante e o Programa de Merenda Escolar (Wooldridge, 2006)
-- Sejam as variáveis
-    - `math10`: o percentual de alunos de primeiro ano de ensino médio aprovados em exame de matemática
-    - `lnchprg`: o percentual de estudante aptos para participar do programa de merenda escolar
-    
-- O modelo de regressão simples é
+### Example 2.12: Student Math Performance and the School Lunch Program (Wooldridge, 2006)
+- Consider the variables:
+    - `math10`: the percentage of tenth graders who pass a standardized math exam
+    - `lnchprg`: the percentage of students eligible for the school lunch program
+
+- The simple regression model is
 $$ \text{math10} = \beta_0 + \beta_1 \text{lnchprg} + u $$
 
 
 ```r
 data(meap93, package="wooldridge")
 
-# Estimando o modelo e atribuindo no objeto 'results'
+# Estimate the model and store it in the object 'results'
 results = lm(math10 ~ lnchprg, data=meap93)
 
-# Extraindo número de observations
+# Extract the number of observations
 ( n = nobs(results) )
 ```
 
@@ -514,7 +514,7 @@ results = lm(math10 ~ lnchprg, data=meap93)
 ```
 
 ```r
-# Calculando o Erro Padrão da Regressão (raiz quadrada de 2.14)
+# Compute the standard error of the regression (square root of 2.14)
 ( SER = sqrt( (n-1)/(n-2) ) * sd(resid(results)) )
 ```
 
@@ -523,8 +523,8 @@ results = lm(math10 ~ lnchprg, data=meap93)
 ```
 
 ```r
-# Erro padrão de bhat_0 (2.15)
-(1 / sqrt(n-1)) * (SER / sd(meap93$lnchprg)) * sqrt( mean(meap93$lnchprg^2) ) # Erro padrão de bhat_1 (2.16)
+# Standard error of bhat_0 (2.15)
+(1 / sqrt(n-1)) * (SER / sd(meap93$lnchprg)) * sqrt( mean(meap93$lnchprg^2) ) # Standard error of bhat_0
 ```
 
 ```
@@ -539,7 +539,7 @@ results = lm(math10 ~ lnchprg, data=meap93)
 ## [1] 0.03483933
 ```
 
-- Os cálculos dos erros padrão podem ser obtidos via uso da função `summary()` sobre o objeto com resultado da regressão:
+- The standard-error calculations can also be obtained with the `summary()` function applied to the regression object:
 
 ```r
 summary(results)
@@ -566,13 +566,13 @@ summary(results)
 ## F-statistic: 83.77 on 1 and 406 DF,  p-value: < 2.2e-16
 ```
 
-- Observe também que, por padrão, são feitos testes de hipótese (bicaudais), cujas hipóteses nulas são {{<math>}}$\beta_0 = 0${{</math>}} e {{<math>}}$\beta_1=0${{</math>}}.
-- Ou seja, avalia se as estimativas calculadas são estatisticamente nulas e também mostra as respectivas estatísticas t e p-valores.
-- Neste caso, como os p-valores são bem pequenos (`<2e-16` = menor do que {{<math>}}$2 \times 10^{-16}${{</math>}}), rejeitamos ambas hipóteses nulas e, portanto, as estimativas são estatisticamente significantes.
-- Também podemos calcular essas estimativas "by hand":
+- Also note that, by default, `summary()` reports two-sided hypothesis tests whose null hypotheses are {{<math>}}$\beta_0 = 0${{</math>}} and {{<math>}}$\beta_1=0${{</math>}}.
+- In other words, it tests whether the estimated coefficients are statistically equal to zero and reports the corresponding t statistics and p-values.
+- In this case, the p-values are extremely small (`<2e-16`, that is, smaller than {{<math>}}$2 \times 10^{-16}${{</math>}}), so we reject both null hypotheses and conclude that the estimates are statistically significant.
+- We can also compute these statistics by hand:
 
 ```r
-# Extraindo as estimativas
+# Extract the estimated coefficients
 ( estim = coef(summary(results)) )
 ```
 
@@ -583,7 +583,7 @@ summary(results)
 ```
 
 ```r
-# Estatísticas t para H0: bhat = 0
+# t statistics for H0: bhat = 0
 ( t_bhat_0 = (estim["(Intercept)", "Estimate"] - 0) / estim["(Intercept)", "Std. Error"] )
 ```
 
@@ -600,8 +600,8 @@ summary(results)
 ```
 
 ```r
-# p-valores para H0: bhat = 0
-2 * (1 - pt(abs(t_bhat_0), n-1)) # p-valor para bhat_0
+# p-values for H0: bhat = 0
+2 * (1 - pt(abs(t_bhat_0), n-1)) # p-value for bhat_0
 ```
 
 ```
@@ -609,7 +609,7 @@ summary(results)
 ```
 
 ```r
-2 * (1 - pt(abs(t_bhat_1), n-1)) # p-valor para bhat_1
+2 * (1 - pt(abs(t_bhat_1), n-1)) # p-value for bhat_1
 ```
 
 ```
@@ -617,48 +617,48 @@ summary(results)
 ```
 
 
-## Violações de hipótese
-- [Subseção 2.7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/113), mas usando como exemplo o teste elaborado 1.
+## Assumption Violations
+- [Subsection 2.7.3 of Heiss (2020)](http://www.urfie.net/read/index.html#page/113), but using the material from Worked Example 1.
 - [Simulating a linear model (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model)
-- Na prática, fazemos regressões a partir de observations contidas em bases de dados e não sabemos qual é o _modelo real_ que gerou essas observations.
-- No R, podemos supor um _modelo real_ e simular suas observations no R para analisar o que ocorre quando há violação de hipótese de algum modelo econométrico ou estimador.
-- Usaremos o exemplo dado no Teste Elaborado 1, no qual queremos encontrar a relação das horas de prática em culinária com o número de queimaduras na cozinha.
+- In practice, we run regressions using observed data and do not know the true model that generated those observations.
+- In R, however, we can posit a true data-generating process and simulate observations to study what happens when an econometric assumption is violated.
+- We will use the example from Worked Example 1, where we want to study the relationship between hours of cooking practice and the number of kitchen burns.
 
 
-### Sem violação de hipótese: Example 1
-- Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas gastas aprendendo a cozinhar.
-- Suponha o _modelo real_:
+### No Assumption Violation: Example 1
+- Let {{<math>}}$y${{</math>}} denote the number of kitchen burns and {{<math>}}$x${{</math>}} the number of hours spent learning how to cook.
+- Suppose the true model is
 $$ y = a_0 + b_0 x + \varepsilon, \qquad \varepsilon \sim N(0, 2^2) \tag{1}$$
-where {{<math>}}$a_0=50${{</math>}} e {{<math>}}$b_0=-5${{</math>}}.
+where {{<math>}}$a_0=50${{</math>}} and {{<math>}}$b_0=-5${{</math>}}.
 
-1. Definindo {{<math>}}$a_0${{</math>}} e {{<math>}}$b_0${{</math>}} e gerando por simulação as "observations" de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
-    - Apenas para facilitar, geraremos valores aleatórios {{<math>}}$x \sim N(5; 0,5^2)${{</math>}}. Aqui, não importa a distribuição de {{<math>}}$x${{</math>}}. 
+1. Set {{<math>}}$a_0${{</math>}} and {{<math>}}$b_0${{</math>}}, then simulate observations of {{<math>}}$x${{</math>}} and {{<math>}}$y${{</math>}}.
+    - For convenience, we generate random draws from {{<math>}}$x \sim N(5; 0.5^2)${{</math>}}. Here, the specific distribution of {{<math>}}$x${{</math>}} is not important.
 
 ```r
 a0 = 50
 b0 = -5
-N = 200 # Número de observations
+N = 200 # number of observations
 
 set.seed(1)
-u = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-y = a0 + b0*x + u # calculando observations y a partir de "e" e "x"
+u = rnorm(N, 0, 2) # disturbances: 200 obs. with mean 0 and sd 2
+x = rnorm(N, 5, 0.5) # 200 obs. with mean 5 and sd 0.5
+y = a0 + b0*x + u # compute y from u and x
 
 plot(x, y)
 ```
 
 <img src="/project/rec2301/sec7/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
-Simulamos as observations {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que são, na prática, as informações que observamos.
+These simulated {{<math>}}$x${{</math>}} and {{<math>}}$y${{</math>}} values are the information we would observe in practice.
 
-2. Estimando por OLS os parâmetros {{<math>}}$\hat{a}${{</math>}} e {{<math>}}$\hat{b}${{</math>}} a partir das observations simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
-    - Um economista supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
+2. Estimate the parameters {{<math>}}$\hat{a}${{</math>}} and {{<math>}}$\hat{b}${{</math>}} by OLS using the simulated observations of {{<math>}}$y${{</math>}} and {{<math>}}$x${{</math>}}.
+    - Suppose an economist writes the following empirical model:
     $$ y = a + b x + u, \tag{1a}$$
-    assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
-    - Para estimar o modelo por OLS, usamos a função `lm()`
+    assuming that {{<math>}}$E[u] = 0${{</math>}} and {{<math>}}$E[ux]=0${{</math>}}.
+    - To estimate the model by OLS, we use `lm()`.
     
 
 ```r
-lm(y ~ x) # regredindo por OLS a var. dependente y pela var. x
+lm(y ~ x) # regress y on x by OLS
 ```
 
 ```
@@ -671,47 +671,47 @@ lm(y ~ x) # regredindo por OLS a var. dependente y pela var. x
 ##      50.463       -5.078
 ```
 
-- Note que foi possível recuperar os parâmetros populacionais ({{<math>}}$\hat{a} = 50,268 \approx 50 = a_0${{</math>}} e {{<math>}}$\hat{b} = -5,039 \approx -5 = b_0${{</math>}}).
+- Notice that the population parameters are recovered reasonably well ({{<math>}}$\hat{a} \approx 50 = a_0${{</math>}} and {{<math>}}$\hat{b} \approx -5 = b_0${{</math>}}).
 
 
 ```r
-plot(x, y) # Figura de x contra y
-abline(a=50, b=-5, col="red") # reta do modelo real
-abline(lm(y ~ x), col="blue") # reta estimada a partir das observations
+plot(x, y) # plot x against y
+abline(a=50, b=-5, col="red") # true model line
+abline(lm(y ~ x), col="blue") # estimated line from the observed data
 ```
 
 <img src="/project/rec2301/sec7/_index_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
-### Sem violação de hipótese: Example 2
-- Agora, no _modelo real_, suponha que o número de queimaduras {{<math>}}$y${{</math>}} é determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
+### No Assumption Violation: Example 2
+- Now suppose that, in the true model, the number of burns {{<math>}}$y${{</math>}} is determined both by hours of practice {{<math>}}$x${{</math>}} and by hours actually spent cooking {{<math>}}$z${{</math>}}:
 
 $$ y = a_0 + b_0 x + c_0 z + u, \qquad u \sim N(0, 2^2) \tag{2} $$
-where {{<math>}}$a_0=50${{</math>}}, {{<math>}}$b_0=-5${{</math>}} e {{<math>}}$c_0=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim N(5; 0,5^2)${{</math>}} e {{<math>}}$z \sim N(1,875; 0,25^2)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, não é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
+where {{<math>}}$a_0=50${{</math>}}, {{<math>}}$b_0=-5${{</math>}}, and {{<math>}}$c_0=3${{</math>}}. For convenience, we generate random draws from {{<math>}}$x \sim N(5; 0.5^2)${{</math>}} and {{<math>}}$z \sim N(1.875; 0.25^2)${{</math>}}. By construction, {{<math>}}$z${{</math>}} is uncorrelated with {{<math>}}$x${{</math>}} in the true model.
 
-- Primeiro, vamos simular as observations:
+- First, let us simulate the observations:
 
 ```r
 a0 = 50
 b0 = -5
 c0 = 3
-N = 200 # Número de observations
+N = 200 # number of observations
 
 set.seed(1)
-u = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-z = rnorm(N, 1.875, 0.25) # Gerando 200 obs. de média 1,875 e desv pad 0.25
-y = a0 + b0*x + c0*z + u # calculando observations y a partir de "e", "x" e "z"
+u = rnorm(N, 0, 2) # disturbances: 200 obs. with mean 0 and sd 2
+x = rnorm(N, 5, 0.5) # 200 obs. with mean 5 and sd 0.5
+z = rnorm(N, 1.875, 0.25) # 200 obs. with mean 1.875 and sd 0.25
+y = a0 + b0*x + c0*z + u # compute y from u, x, and z
 ```
 
-- Considere que um economista suponha a relação entre as variáveis pelo seguinte _modelo empírico_:
+- Suppose an economist writes the following empirical model:
     $$ y = a + b x + u, \tag{2a}$$
-    assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux] = 0${{</math>}}.
+    assuming that {{<math>}}$E[u] = 0${{</math>}} and {{<math>}}$E[ux] = 0${{</math>}}.
 
-- Note que o economista deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba ``entrando'' no erro da estimação.
-- No entanto, como {{<math>}}$z${{</math>}} não tem relação com {{<math>}}$x${{</math>}}, então isso não afeta a estimativa de {{<math>}}$\hat{b}${{</math>}}:
+- Notice that the economist omitted the hours-cooking variable {{<math>}}$z${{</math>}}, so it is absorbed into the regression error term.
+- However, because {{<math>}}$z${{</math>}} is unrelated to {{<math>}}$x${{</math>}}, this omission does not bias the estimate of {{<math>}}$\hat{b}${{</math>}}:
 
 ```r
-cor(x, z) # correlação de x e z -> próxima de 0
+cor(x, z) # correlation between x and z -> close to 0
 ```
 
 ```
@@ -719,7 +719,7 @@ cor(x, z) # correlação de x e z -> próxima de 0
 ```
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # OLS estimation
 ```
 
 ```
@@ -731,37 +731,37 @@ lm(y ~ x) # estimação por OLS
 ## (Intercept)            x  
 ##       56.27        -5.12
 ```
-- Note que {{<math>}}$\hat{b} = -5,12 \approx -5 = b_0${{</math>}}, portanto a estimação por OLS conseguiu recuperar o parâmetro populacional {{<math>}}$b_0${{</math>}}, apesar do economista não ter incluído {{<math>}}$z${{</math>}} no modelo.
-- Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$E(ux) = 0${{</math>}} (ou seja, que nenhuma variável explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro).
+- Since {{<math>}}$\hat{b} \approx -5 = b_0${{</math>}}, OLS successfully recovers the population parameter {{<math>}}$b_0${{</math>}} even though the economist excluded {{<math>}}$z${{</math>}} from the model.
+- In many economic applications, the main goal is to estimate the relationship or causal effect between {{<math>}}$y${{</math>}} and {{<math>}}$x${{</math>}}. We therefore do not need to include every variable that affects {{<math>}}$y${{</math>}}, as long as {{<math>}}$E(ux) = 0${{</math>}} holds; that is, as long as no omitted explanatory variable correlated with {{<math>}}$x${{</math>}} is hiding inside the error term.
 
 
 
-### Violação de E(ux)=0
-- Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} está relacionada com {{<math>}}$z${{</math>}}).
-    - Considere que {{<math>}}$z \sim N(1,875x; (0,25)^2)${{</math>}}:
+### Violation of E(ux)=0
+- Now suppose that, in the true model, the more someone practices cooking, the more time they actually spend cooking. In other words, {{<math>}}$x${{</math>}} is related to {{<math>}}$z${{</math>}}.
+    - Assume that {{<math>}}$z \sim N(1.875x; (0.25)^2)${{</math>}}:
     
 
 ```r
 set.seed(1)
-e = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-z = rnorm(N, 1.875*x, 0.25) # Gerando 200 obs. de média 1,875x e desv pad 0.25x
-y = a0 + b0*x + c0*z + e # calculando observations y a partir de "e", "x" e "z"
-cor(x, z) # correlação de x e z
+e = rnorm(N, 0, 2) # disturbances: 200 obs. with mean 0 and sd 2
+x = rnorm(N, 5, 0.5) # 200 obs. with mean 5 and sd 0.5
+z = rnorm(N, 1.875*x, 0.25) # 200 obs. with mean 1.875x and sd 0.25
+y = a0 + b0*x + c0*z + e # compute y from e, x, and z
+cor(x, z) # correlation between x and z
 ```
 
 ```
 ## [1] 0.9618748
 ```
 
-- Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} são consideravalmente correlacionados
-- Vamos estimar o _modelo empírico_:
+- Now {{<math>}}$x${{</math>}} and {{<math>}}$z${{</math>}} are strongly correlated.
+- Estimate the empirical model
     $$ y = a + b x + u,$$
-    assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
+    assuming that {{<math>}}$E[u] = 0${{</math>}} and {{<math>}}$E[ux]=0${{</math>}}.
     
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # OLS estimation
 ```
 
 ```
@@ -774,8 +774,8 @@ lm(y ~ x) # estimação por OLS
 ##     50.6406       0.5053
 ```
 
-- Observe que {{<math>}}$\hat{b} = 0,5 \neq -5 = b_0${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o desvio {{<math>}}$\hat{u}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$E(ux)\neq 0${{</math>}} (violando a hipótese do OLS).
-- Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}:
+- Here, {{<math>}}$\hat{b} = 0.5 \neq -5 = b_0${{</math>}}. This happens because {{<math>}}$z${{</math>}} was omitted from the model and is therefore absorbed into the residual {{<math>}}$\hat{u}${{</math>}}. Since {{<math>}}$z${{</math>}} is correlated with {{<math>}}$x${{</math>}}, we have {{<math>}}$E(ux)\neq 0${{</math>}}, which violates the key OLS exogeneity assumption.
+- If we include {{<math>}}$z${{</math>}} in the regression, we recover an estimate close to {{<math>}}$b_0${{</math>}}:
 
 
 ```r
@@ -792,9 +792,9 @@ lm(y ~ x + z)
 ##      50.435       -5.953        3.470
 ```
 
-### Violação de E(u)=0
-- Agora, consideraremos que {{<math>}}$E[u] = k${{</math>}}, where {{<math>}}$k \neq 0${{</math>}} uma constante.
-- Assuma que {{<math>}}$k = 10${{</math>}}:
+### Violation of E(u)=0
+- Now assume that {{<math>}}$E[u] = k${{</math>}}, where {{<math>}}$k \neq 0${{</math>}} is a constant.
+- Let {{<math>}}$k = 10${{</math>}}:
 
 ```r
 a0 = 50
@@ -802,14 +802,14 @@ b0 = -5
 k = 10
 
 set.seed(1)
-u = rnorm(N, k, 2) # Desvios: 200 obs. de média k e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-y = a0 + b0*x + u # calculando observations y a partir de "e" e "x"
+u = rnorm(N, k, 2) # disturbances: 200 obs. with mean k and sd 2
+x = rnorm(N, 5, 0.5) # 200 obs. with mean 5 and sd 0.5
+y = a0 + b0*x + u # compute y from u and x
 ```
-- Caso um economista considere um _modelo empírico_ com {{<math>}}$E[u] = 0${{</math>}}, segue que:
+- If an economist estimates an empirical model that imposes {{<math>}}$E[u] = 0${{</math>}}, then:
 
 ```r
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # OLS estimation
 ```
 
 ```
@@ -821,22 +821,22 @@ lm(y ~ x) # estimação por OLS
 ## (Intercept)            x  
 ##      60.463       -5.078
 ```
-- Note que o fato de {{<math>}}$E[u] \neq 0${{</math>}} afeta apenas a estimação de {{<math>}}$\hat{a} \neq a_0${{</math>}}, porém não afeta a de {{<math>}}$\hat{b} \approx b_0${{</math>}}, que é normalmente o parâmetro de interesse em estudos econômicos.
+- Notice that {{<math>}}$E[u] \neq 0${{</math>}} affects the intercept estimate, so {{<math>}}$\hat{a} \neq a_0${{</math>}}, but it does not affect {{<math>}}$\hat{b} \approx b_0${{</math>}}, which is usually the parameter of primary interest in economic applications.
 
 
-### Violação de Homocedasticidade
-- Agora, consideraremos que {{<math>}}$u \sim N(0, (2x)^2)${{</math>}}, ou seja, a variância cresce com {{<math>}}$x${{</math>}} ({{<math>}}$u${{</math>}} não é independente de {{<math>}}$x${{</math>}}/não vale homocedasticidade).
+### Violation of Homoskedasticity
+- Now suppose that {{<math>}}$u \sim N(0, (2x)^2)${{</math>}}, so the variance increases with {{<math>}}$x${{</math>}}. In other words, the error variance depends on {{<math>}}$x${{</math>}}, and homoskedasticity fails.
 
 ```r
 a0 = 50
 b0 = -5
 
 set.seed(1)
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-u = rnorm(N, 0, 2*x) # Desvios: 200 obs. de média k e desv pad 2x
-y = a0 + b0*x + u # calculando observations y a partir de "e" e "x"
+x = rnorm(N, 5, 0.5) # 200 obs. with mean 5 and sd 0.5
+u = rnorm(N, 0, 2*x) # disturbances with sd equal to 2x
+y = a0 + b0*x + u # compute y from u and x
 
-lm(y ~ x) # estimação por OLS
+lm(y ~ x) # OLS estimation
 ```
 
 ```
@@ -848,13 +848,13 @@ lm(y ~ x) # estimação por OLS
 ## (Intercept)            x  
 ##      51.221       -5.166
 ```
-- Note que, mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}. Mas, observe também que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{b} \neq b_0${{</math>}}. Teste diversas vezes para {{<math>}}$N${{</math>}} menores.
+- Even with heteroskedasticity, we can still recover {{<math>}}$\hat{b} \approx b_0${{</math>}} in this simulation. But with a smaller sample, it becomes more likely that {{<math>}}$\hat{b} \neq b_0${{</math>}}. Try repeating the exercise with smaller values of {{<math>}}$N${{</math>}}.
 
 
 
-## Qualidade do ajuste
-- [Section 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101)
-- A soma de quadrados total (SQT), a soma de quadrados explicada (SQE) e a soma de quadrados dos resíduos (SQR) podem ser escritos como:
+## Goodness of Fit
+- [Section 2.3 of Heiss (2020)](http://www.urfie.net/read/index.html#page/101)
+- The total sum of squares (TSS), explained sum of squares (ESS), and residual sum of squares (RSS) can be written as
 
 {{<math>}}\begin{align}
     SQT &= \sum^n_{i=1}{(y_i - \bar{y})^2} = (n-1) . Var(y) \tag{2.10}\\
@@ -863,16 +863,16 @@ lm(y ~ x) # estimação por OLS
 \end{align}{{</math>}}
 where {{<math>}}$Var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}.
 
-- Wooldridge (2006) define o coeficiente de determinação como:
+- Wooldridge (2006) defines the coefficient of determination as
 {{<math>}}\begin{align}
     R^2 &= \frac{SQE}{SQT} = 1 - \frac{SQR}{SQT}\\
         &= \frac{Var(\hat{y})}{Var(y)} = 1 - \frac{Var(\hat{u})}{Var(y)} \tag{2.13}
 \end{align}{{</math>}}
-pois {{<math>}}$SQT = SQE + SQR${{</math>}}.
+because {{<math>}}$SQT = SQE + SQR${{</math>}}.
 
 
 ```r
-# Calculando R^2 de três maneiras:
+# Compute R^2 in three equivalent ways:
 var(sal_hat) / var(sal)
 ```
 
@@ -889,14 +889,14 @@ var(sal_hat) / var(sal)
 ```
 
 ```r
-cor(sal, sal_hat)^2 # correlação ao quadrado da dependent variable com valores ajustados
+cor(sal, sal_hat)^2 # squared correlation between the dependent variable and fitted values
 ```
 
 ```
 ## [1] 0.01318862
 ```
 
-- Para obter o {{<math>}}$R^2${{</math>}} de forma mais conveniente, pode-se usar a função `summary()` sobre o objeto de resultado da regressão. Esta função fornece uma visualização dos resultados mais detalhada, incluindo o {{<math>}}$R^2${{</math>}}:
+- A more convenient way to obtain {{<math>}}$R^2${{</math>}} is to use `summary()` on the regression object. This produces a more detailed regression table, including {{<math>}}$R^2${{</math>}}:
 
 ```r
 summary(CEOregres)
@@ -925,4 +925,4 @@ summary(CEOregres)
 
 
 
-{{< cta cta_text="👉 Seguir para Multiple Regression" cta_link="../sec8" >}}
+{{< cta cta_text="👉 Proceed to Multiple Regression" cta_link="../sec8" >}}

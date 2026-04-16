@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Otimização Numérica
-summary: The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed.
-title: (Extra) Otimização Numérica
+linktitle: "Otimização Numérica"
+summary: "Notas complementares de otimização numérica em econometria, com busca em grade, maximização, estimação por verossimilhança e intuição de método dos momentos."
+title: "Otimização Numérica para MQO"
 weight: 10
 output: md_document
 type: book

@@ -4,10 +4,10 @@ date: "2023-03-08T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on Panel Data and IV.
+summary: "Notas de monitoria de Econometria II sobre dados em painel e variáveis instrumentais."
 tags:
 - Undergraduate
-title: Econometrics II (Spring 2023)
+title: "Econometria II (1º semestre de 2023)"
 type: book
 linktitle: ------------------------
 weight: 1

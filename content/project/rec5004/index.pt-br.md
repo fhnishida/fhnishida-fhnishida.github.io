@@ -4,26 +4,26 @@ date: "2023-04-03T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Graduate TA Sessions on OLS, GLS, IV and Panel Data.
+summary: "Notas de monitoria de Econometria I com materiais em R sobre MQO, heterocedasticidade, variáveis instrumentais, dados em painel, otimização e testes de hipótese."
 tags:
 - Graduate
-title: Econometrics I (Spring 2023)
+title: "Econometria I (1º semestre de 2023)"
 linktitle: ----------------------
 type: book
 weight: 1
 ---
 
 
-Welcome to TA Sessions for Econometrics I course (jointly prepared with Felipe Bauer).
+Bem-vindo(a) às notas de monitoria de Econometria I, preparadas em conjunto com Felipe Bauer.
 
-Course webpage (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.br/course/view.php?id=108682](https://edisciplinas.usp.br/course/view.php?id=108682)
+Página da disciplina (prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.br/course/view.php?id=108682](https://edisciplinas.usp.br/course/view.php?id=108682)
 
-Feel free to contact us if you have any question:
+Se tiver qualquer dúvida, entre em contato conosco:
  - Fábio Nishida: fabio.nishida@usp.br
  - Felipe Bauer: felipebauer@usp.br
 
 
-{{< cta cta_text="👉 Proceed to R Toolkit" cta_link="sec1" >}}
+{{< cta cta_text="👉 Seguir para Ferramentas de R" cta_link="sec1" >}}
 
 </br>
 

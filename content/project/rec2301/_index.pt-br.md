@@ -4,11 +4,11 @@ date: "2022-12-05T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on OLS.
+summary: "Notas de monitoria de Econometria I com materiais em R sobre MQO, manipulação de dados, visualização, distribuições, otimização numérica e testes de hipótese."
 tags:
 - Undergraduate
-title: Econometrics I (Fall 2022)
-linktitle: Principal
+title: "Econometria I: notas de monitoria (2022)"
+linktitle: "Principal"
 type: book
 icon: book
 iconpack: fs

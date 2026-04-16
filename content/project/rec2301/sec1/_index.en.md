@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Ferramentas do R
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Ferramentas do R
+linktitle: "R Toolkit"
+summary: "Introductory R notes for Econometrics I covering installation, RStudio, package management, documentation, and the basic workflow used in the course."
+title: "R Toolkit for Econometrics"
 weight: 1
 output: md_document
 type: book

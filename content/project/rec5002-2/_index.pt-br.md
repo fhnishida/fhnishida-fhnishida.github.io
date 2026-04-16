@@ -1,37 +1,37 @@
 ---
 date: "2021-07-21T00:00:00Z"
 # external_link: https://fhnishida-rec5002-2.netlify.app/docs/
-summary: Graduate TA Sessions on Neoclassical Theory of Optimal Control.
+summary: "Notas de monitoria de Macroeconomia I sobre otimização dinâmica, controle ótimo, ciclos políticos de negócios, crescimento ótimo e listas resolvidas."
 tags:
 - Graduate
-title: Macroeconomics I, Part 2 (Spring 2021)
-linktitle: Main
+title: "Macroeconomia I, Parte 2: notas de monitoria (2021)"
+linktitle: "Principal"
 type: book
 icon: book
 iconpack: fs
 weight: 1
 ---
 
-Welcome to TA Sessions for Macroeconomics I (Part 2) course!
+Bem-vindo(a) às notas de monitoria de Macroeconomia I (Parte 2)!
 
-Course webpage (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/view.php?id=89644](https://edisciplinas.usp.br/course/view.php?id=89644)
+Página da disciplina (prof. Luciano Nakabashi): [https://edisciplinas.usp.br/course/view.php?id=89644](https://edisciplinas.usp.br/course/view.php?id=89644)
 
-{{< cta cta_text="�Y'? Proceed to Session 1" cta_link="sec1" >}}
-
-
-
-## Solutions to Problem Sets
-- [Problem Set 1](Lista-1_Resolucao.pdf)
-- [Problem Set 2](Lista-2_Resolucao.pdf)
-- [Problem Set 3](Lista-3_Resolucao.pdf)
+{{< cta cta_text="👉 Seguir para a Sessão 1" cta_link="sec1" >}}
 
 
-## Previous Exams
-- [2020 v12](../Prova-2020_n12.pdf) | [2020 v7](../Prova-2020_n7.pdf)
-- [2019](../Prova-2019.pdf)
+
+## Soluções das Listas
+- [Lista 1](Lista-1_Resolucao.pdf)
+- [Lista 2](Lista-2_Resolucao.pdf)
+- [Lista 3](Lista-3_Resolucao.pdf)
 
 
-## Complementary Content
+## Provas anteriores
+- [2020 v12](Prova-2020_n12.pdf) | [2020 v7](Prova-2020_n7.pdf)
+- [2019](Prova-2019.pdf)
+
+
+## Conteúdo complementar
 #### LaTeX
 - [LaTeX for Students, Engineers, and Scientists Course](https://www.edx.org/course/latex-for-students-engineers-and-scientists-2) 
 - [LaTeX Table Generator](https://www.tablesgenerator.com/)

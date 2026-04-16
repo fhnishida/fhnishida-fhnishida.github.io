@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Vari�veis Instrumentais
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Vari�veis Instrumentais
+linktitle: "Instrumental Variables"
+summary: "Introductory notes on instrumental variables in simple regression, including identification, intuition, and estimation in R."
+title: "Instrumental Variables in Simple Regression"
 weight: 6
 output: md_document
 type: book

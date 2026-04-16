@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipula��o de Dados
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Manipula��o de Dados
+linktitle: "Data Manipulation"
+summary: "Econometrics I notes on summary statistics, the apply family, sorting, subsetting, transformations, and basic data merging in R."
+title: "Data Manipulation in R"
 weight: 3
 output: md_document
 type: book

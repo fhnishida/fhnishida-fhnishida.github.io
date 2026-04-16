@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Distribui��es
-summary: The page also includes examples of how to use R for statistical analysis, working with probability distributions and simulations.
-title: Distribui��es
+linktitle: "Distributions"
+summary: "R notes on probability distributions, simulation, confidence intervals, t tests, p-values, and introductory statistical computing."
+title: "Probability Distributions and Simulation"
 weight: 5
 output: md_document
 type: book

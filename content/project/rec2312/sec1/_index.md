@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: R Review
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: R Review
+linktitle: "R Review"
+summary: "Brief R review covering core objects, matrices, data frames, and basic data import commands used throughout Econometrics II."
+title: "R Review for Econometrics"
 weight: 1
 output: md_document
 type: book
@@ -17,7 +16,7 @@ type: book
 ## Basic operations
 
 ```r
-# Soma
+# Addition
 1 + 1
 ```
 
@@ -26,7 +25,7 @@ type: book
 ```
 
 ```r
-# Subtração
+# Subtraction
 2 - 3
 ```
 
@@ -35,7 +34,7 @@ type: book
 ```
 
 ```r
-# Multiplicação
+# Multiplication
 2 * 3
 ```
 
@@ -44,7 +43,7 @@ type: book
 ```
 
 ```r
-# Divisão
+# Division
 6 / 4
 ```
 
@@ -53,17 +52,17 @@ type: book
 ```
 
 
-## Objetos básicos
+## Basic Objects
  - [Data types, R objects and attributes (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/OS8hs/data-types-r-objects-and-attributes)
  
-Para criar um objeto, atribuímos algo (neste caso, um valor) a um nome por meio do operador de atribuição `<-` ou `=`:
+To create an object, we assign something to a name, in this case a value, using the assignment operator `<-` or `=`:
 
 ```r
 obj1 <- 5
 obj2 = 5 + 2
 ```
 
-Note que ambos objetos foram criados e aparecem no quadrante superior/direito (_Environment_). Agora, podemos imprimir os seus valores executando o nome do objeto
+Notice that both objects were created and appear in the upper-right panel (_Environment_). We can print their values simply by typing the object name:
 
 ```r
 obj1
@@ -72,7 +71,7 @@ obj1
 ```
 ## [1] 5
 ```
-ou imprimindo explicitamente por meio da função `print()`:
+or by explicitly calling `print()`:
 
 ```r
 print(obj2)
@@ -82,7 +81,7 @@ print(obj2)
 ## [1] 7
 ```
 
-Note que, podemos alterar um objeto atribuindo algo novo a ele:
+We can also overwrite an object by assigning it a new value:
 
 ```r
 obj1 = 3
@@ -93,7 +92,7 @@ obj1
 ## [1] 3
 ```
 
-É possível visualizar o tipo de objeto usando a função `class()`:
+We can inspect the object's type with `class()`:
 
 ```r
 class(obj1)
@@ -103,17 +102,17 @@ class(obj1)
 ## [1] "numeric"
 ```
 
-Logo, `obj1` é um número real. Há 5 tipos de classes de objetos "atômicos" (que contêm apenas 1 valor):
+So `obj1` is a real number. There are 5 basic atomic classes of objects (each storing a single value):
 
- - `character`: texto
- - `numeric`: número real
- - `integer`: número inteiro
- - `complex`: número complexo
- - `logical`: verdadeiro/falso (1 ou 0)
+ - `character`: text
+ - `numeric`: real number
+ - `integer`: integer
+ - `complex`: complex number
+ - `logical`: true/false (1 or 0)
  
 
 ```r
-num_inteiro = 3L # para número inteiro, usar sufixo L
+num_inteiro = 3L # use suffix L to create an integer
 num_inteiro
 ```
 
@@ -130,7 +129,7 @@ class(num_inteiro)
 ```
 
 ```r
-texto = "Oi"
+texto = "Hi"
 texto
 ```
 
@@ -147,7 +146,7 @@ class(texto)
 ```
 
 ```r
-boolean1 = TRUE # ou = T
+boolean1 = TRUE # or = T
 boolean1
 ```
 
@@ -164,7 +163,7 @@ class(boolean1)
 ```
 
 ```r
-boolean2 = FALSE # ou = T
+boolean2 = FALSE # or = F
 boolean2
 ```
 
@@ -180,8 +179,8 @@ class(boolean2)
 ## [1] "logical"
 ```
 
-### Expressões lógicas/booleanas
-São expressões que retornam o valor Verdadeiro ou Falso:
+### Logical / Boolean Expressions
+These expressions return either `TRUE` or `FALSE`:
 
 ```r
 2 < 20 # TRUE
@@ -215,13 +214,13 @@ São expressões que retornam o valor Verdadeiro ou Falso:
 ## [1] FALSE
 ```
 
-É possível escrever expressões compostas utilizando `|` (ou) e `&` (e):
+We can build compound logical expressions with `|` (or) and `&` (and):
 
 ```r
-x = 20 # atribuindo 20 a x
+x = 20 # assigning 20 to x
 
-# Expressões lógicas compostas
-x < 0 | x^2 > 100 # TRUE se UMA das expressões for TRUE
+# Compound logical expressions
+x < 0 | x^2 > 100 # TRUE if ONE of the expressions is TRUE
 ```
 
 ```
@@ -229,7 +228,7 @@ x < 0 | x^2 > 100 # TRUE se UMA das expressões for TRUE
 ```
 
 ```r
-x < 0 & x^2 > 100 # TRUE se TODAS expressões for TRUE
+x < 0 & x^2 > 100 # TRUE if ALL expressions are TRUE
 ```
 
 ```
@@ -237,41 +236,41 @@ x < 0 & x^2 > 100 # TRUE se TODAS expressões for TRUE
 ```
 
 
-> **Tabela de Precedência de Operadores**
+> **Operator Precedence Table**
 > 
-> - Nível 6 - potenciação: `^`
-> - Nível 5 - multiplicação: `*`, `/`
-> - Nível 4 - adição: `+`, `-`
-> - Nível 3 - relacional: `==`, `!=`, `<=`, `>=`, `>`, `<`
-> - Nível 2 - lógico: `&` (e)
-> - Nível 1 - lógico: `|` (ou)
+> - Level 6 - exponentiation: `^`
+> - Level 5 - multiplication: `*`, `/`
+> - Level 4 - addition: `+`, `-`
+> - Level 3 - relational: `==`, `!=`, `<=`, `>=`, `>`, `<`
+> - Level 2 - logical: `&` (and)
+> - Level 1 - logical: `|` (or)
 
-- **Níveis 4 a 6**: são utilizados para CALCULAR valores
-- **Nível 3**: é usado para relacionar 2 valores para CRIAR UMA expressão lógica
-- **Níveis 1 e 2**: são usados para JUNTAR expressões lógicas
-
-
-
-## Vetores e Matrizes
-
-- Depois das 5 classes de objetos apresentadas acima, as mais básicas são vetores e matrizes, que possuem mais de um elemento dentro do objeto.
-- Ambos necessariamente exigwhere os seus elementos sejam da mesma classe. 
+- **Levels 4 to 6** are used to CALCULATE values.
+- **Level 3** compares 2 values to CREATE A logical expression.
+- **Levels 1 and 2** are used to COMBINE logical expressions.
 
 
-### Vetores
+
+## Vectors and Matrices
+
+- After the 5 atomic object classes above, the next basic structures are vectors and matrices, which contain more than one element.
+- In both cases, all elements must belong to the same class.
+
+
+### Vectors
 - [Data types - Vectors and lists (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/wkAHm/data-types-vectors-and-lists)
-- Podemos criar um vetor usando a função `c()` e incluindo os valores separados por `,`:
+- We can create a vector with `c()` by listing values separated by commas:
 
 ```r
 x = c(0.5, 0.6) # numeric
 x = c(TRUE, FALSE) # logical
 x = c("a", "b", "c") # character
-x = 9:12 # integer (é igual a c(9, 10, 11, 12))
+x = 9:12 # integer (equivalent to c(9, 10, 11, 12))
 ```
 
 
-### Matrizes
-Matrizes são vetores (e, portanto, possuem elementos de mesma classe) com atributo de _dimensão_ (nº linhas por nº colunas). Uma matriz pode ser criada usando a função `matrix()`:
+### Matrices
+Matrices are vectors, and therefore also store elements of the same class, but they carry a _dimension_ attribute (number of rows by number of columns). A matrix can be created with `matrix()`:
 
 ```yaml
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, ...)
@@ -284,7 +283,7 @@ byrow: logical. If FALSE (the default) the matrix is filled by columns, otherwis
 
 
 ```r
-m = matrix(nrow=2, ncol=3) # matriz vazia
+m = matrix(nrow=2, ncol=3) # empty matrix
 m
 ```
 
@@ -294,11 +293,11 @@ m
 ## [2,]   NA   NA   NA
 ```
 
-Pode-se preencher todos elementos de uma matriz com um único valor informando um único escalar:
+We can fill every entry of a matrix with the same scalar value:
 
 
 ```r
-m = matrix(0, nrow=2, ncol=3) # matriz vazia
+m = matrix(0, nrow=2, ncol=3) # matrix filled with zeros
 m
 ```
 
@@ -308,7 +307,7 @@ m
 ## [2,]    0    0    0
 ```
 
-É possível construir uma matriz "preenchida" incluindo um vetor com (nº linhas {{<math>}}$\times${{</math>}} nº colunas) elementos. 
+We can also create a fully populated matrix by passing a vector with exactly (number of rows {{<math>}}$\times${{</math>}} number of columns) elements.
 
 ```r
 m = matrix(1:6, nrow=2, ncol=3)
@@ -322,7 +321,7 @@ m
 ```
 
 
-Os elementos do vetor `1:6` preenchem primeiro todas linhas de uma coluna para, depois, preencher a próxima coluna (_column-wise_). Para preencher por linha, usamos o argumento `byrow=TRUE`:
+The elements of the vector `1:6` fill all rows of the first column before moving to the next column (_column-wise_). To fill the matrix by row instead, use `byrow=TRUE`:
 
 ```r
 m = matrix(1:6, nrow=2, ncol=3, byrow=TRUE)
@@ -336,7 +335,7 @@ m
 ```
 
 
-Note que muitas vezes é redundante informar ambos números de linhas e de colunas:
+In many cases, it is redundant to specify both the number of rows and the number of columns:
 
 ```r
 m = matrix(1:6, nrow=2, byrow=TRUE)
@@ -349,10 +348,10 @@ m
 ## [2,]    4    5    6
 ```
 
-Podemos criar vetores-linha ou vetores-coluna inserindo, respectivamente, `nrow=1` e `ncol=1`:
+We can create row vectors or column vectors by setting `nrow=1` or `ncol=1`, respectively:
 
 ```r
-# vetor-linha
+# row vector
 vrow = matrix(1:3, nrow=1)
 vrow
 ```
@@ -363,7 +362,7 @@ vrow
 ```
 
 ```r
-# vetor-coluna
+# column vector
 vcol = matrix(1:3, ncol=1)
 vcol
 ```
@@ -376,10 +375,10 @@ vcol
 ```
 
 
-Podemos criar matrizes identidade facilmente utilizando a função `diag()` e informando o nº de elementos na diagonal principal da matriz:
+We can create identity matrices easily with `diag()` by specifying the number of elements on the main diagonal:
 
 ```r
-I = diag(3) # matriz identidade com 3 elementos na diagonal
+I = diag(3) # identity matrix with 3 diagonal elements
 I
 ```
 
@@ -393,16 +392,16 @@ I
 
 </br>
 
-Outra maneira de criar matrizes é juntando vetores em colunas (_column-binding_) ou em linhas (_row-binding_), usando as funções `cbind()` e `rbind()`, respectivamente:
+Another way to create matrices is to combine vectors by column (_column-binding_) or by row (_row-binding_) using `cbind()` and `rbind()`:
 
 
 ```r
-# Criando 2 vetores
+# Creating 2 vectors
 x = 1:3
 y = 10:12
 
-# Criando/Visualizando matrizes
-X = cbind(x, y) # juntando vetores por coluna
+# Creating / displaying matrices
+X = cbind(x, y) # binding vectors by column
 X
 ```
 
@@ -414,7 +413,7 @@ X
 ```
 
 ```r
-Y = rbind(x, y) # juntando vetores por linha
+Y = rbind(x, y) # binding vectors by row
 Y
 ```
 
@@ -425,8 +424,8 @@ Y
 ```
 
 ```r
-# Caso juntemos um escalar com um vetor, o escalar é replicado:
-Z = cbind(1, y) # juntando escalar com vetor por coluna
+# If we combine a scalar with a vector, the scalar is replicated:
+Z = cbind(1, y) # binding a scalar and a vector by column
 Z
 ```
 
@@ -438,16 +437,16 @@ Z
 ```
 
 
-### Operações matriciais
+### Matrix Operations
 - [Vectorized operations (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/nobfZ/vectorized-operations)
-- Ao utilizar as operações matemáticas convencionais em vetores, cada elemento é operacionalizado com o elemento na mesma posição do outro vetor
+- When we use standard arithmetic operations on vectors, each element is combined with the element in the same position in the other vector.
 
 ```r
-# Criando vetores-coluna
-x = matrix(1:4, ncol=1) # vetor-coluna
-y = matrix(6:9, ncol=1) # vetor-coluna
+# Creating column vectors
+x = matrix(1:4, ncol=1) # column vector
+y = matrix(6:9, ncol=1) # column vector
 
-x + y # soma de cada elemento na mesma posição
+x + y # addition of elements in the same position
 ```
 
 ```
@@ -459,7 +458,7 @@ x + y # soma de cada elemento na mesma posição
 ```
 
 ```r
-x + 2 # soma de de cada elemento com um mesmo escalar
+x + 2 # adding the same scalar to each element
 ```
 
 ```
@@ -471,7 +470,7 @@ x + 2 # soma de de cada elemento com um mesmo escalar
 ```
 
 ```r
-x * y # multiplicação de cada elemento na mesma posição
+x * y # multiplication of elements in the same position
 ```
 
 ```
@@ -483,7 +482,7 @@ x * y # multiplicação de cada elemento na mesma posição
 ```
 
 ```r
-x / y # divisão de cada elemento na mesma posição
+x / y # division of elements in the same position
 ```
 
 ```
@@ -493,10 +492,10 @@ x / y # divisão de cada elemento na mesma posição
 ## [3,] 0.3750000
 ## [4,] 0.4444444
 ```
-- Para fazer o produto vetorial usa-se `%*%`. Por padrão, o R considera que o 1º vetor é um vetor-linha e o 2º é um vetor-coluna.
+- To compute a matrix product, we use `%*%`. By default, R interprets the first vector as a row vector and the second as a column vector.
 
 ```r
-t(x) %*% y # Produto interno: x vetor-linha / y vetor-coluna
+t(x) %*% y # Inner product: x as a row vector / y as a column vector
 ```
 
 ```
@@ -505,7 +504,7 @@ t(x) %*% y # Produto interno: x vetor-linha / y vetor-coluna
 ```
 
 ```r
-x %*% t(y) # Produto externo: x vetor-coluna / y vetor-linha
+x %*% t(y) # Outer product: x as a column vector / y as a row vector
 ```
 
 ```
@@ -516,7 +515,7 @@ x %*% t(y) # Produto externo: x vetor-coluna / y vetor-linha
 ## [4,]   24   28   32   36
 ```
 
-- O mesmo é válido para matrizes, e também é possível tomar a inversa de uma matriz quadrada usando `solve()`:
+- The same logic applies to matrices, and we can compute the inverse of a square matrix with `solve()`:
 
 ```r
 X = matrix(6:1, nrow=3, ncol=2)
@@ -543,7 +542,7 @@ Y
 ```
 
 ```r
-X + Y # Soma de elementos na mesma posição
+X + Y # Addition of elements in the same position
 ```
 
 ```
@@ -554,7 +553,7 @@ X + Y # Soma de elementos na mesma posição
 ```
 
 ```r
-X + 2 # Soma de cada elemento da matriz com um mesmo escalar
+X + 2 # Add the same scalar to each matrix element
 ```
 
 ```
@@ -565,7 +564,7 @@ X + 2 # Soma de cada elemento da matriz com um mesmo escalar
 ```
 
 ```r
-X * Y # Multiplicação de elementos na mesma posição
+X * Y # Multiplication of elements in the same position
 ```
 
 ```
@@ -576,7 +575,7 @@ X * Y # Multiplicação de elementos na mesma posição
 ```
 
 ```r
-t(X) %*% X # Multiplicação matricial
+t(X) %*% X # Matrix multiplication
 ```
 
 ```
@@ -586,7 +585,7 @@ t(X) %*% X # Multiplicação matricial
 ```
 
 ```r
-solve( t(X) %*% X ) # inversa de X'X
+solve( t(X) %*% X ) # inverse of X'X
 ```
 
 ```
@@ -595,11 +594,11 @@ solve( t(X) %*% X ) # inversa de X'X
 ## [2,] -0.5925926  1.4259259
 ```
 
-- E, é claro, dá para fazer operações entre vetor e matriz:
+- And of course, we can also perform operations involving a vector and a matrix:
 
 ```r
-# Criando ps objetos
-X = matrix(6:1, nrow=3, ncol=2) # matriz 3x2
+# Creating the objects
+X = matrix(6:1, nrow=3, ncol=2) # 3x2 matrix
 X
 ```
 
@@ -611,7 +610,7 @@ X
 ```
 
 ```r
-e = matrix(-1:1, ncol=1) # vetor-coluna 3x1
+e = matrix(-1:1, ncol=1) # 3x1 column vector
 e
 ```
 
@@ -623,7 +622,7 @@ e
 ```
 
 ```r
-t(X) %*% e # Multiplicação matricial
+t(X) %*% e # Matrix multiplication
 ```
 
 ```
@@ -634,35 +633,35 @@ t(X) %*% e # Multiplicação matricial
 
 
 
-## Data frames
+## Data Frames
 - [Data types - Data frames (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/kz1Lh/data-types-data-frames)
 
-- Diferente de matrizes, cada elemento de um _data frame_ pode ser de uma classe diferente 
-- Normalmente um data frame é "criado" a partir da leitura de uma base de dados em .txt ou .csv via `read.table()` ou `read.csv()`
+- Unlike matrices, each column of a _data frame_ can have a different class.
+- In practice, a data frame is often created by reading a `.txt` or `.csv` dataset with `read.table()` or `read.csv()`.
 
 
-### Importando bases de arquivos
+### Importing Data Files
 - [Reading tabular data (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/bQ5B9/reading-tabular-data)
-- Para leitura de base de dados, as funções mais utilizadas são `read.table()` e `read.csv()`
-- O `read.table()` tem o seguinte argumentos (que também podem ser visto nas demais funções de leitura de base de dados):
-    - `file`: caminho/endereço do arquivo, incluindo a sua extensão
-    - `header`: `TRUE` ou `FALSE` indicando se a 1ª linha da base de dados é um cabeçalho
-    - `sep`: indica como as colunas são separadas
-    - `stringAsFactors`: `TRUE` ou `FALSE` se as variáveis de texto devem ser transformadas em _factors_.
+- The most commonly used functions for reading tabular data are `read.table()` and `read.csv()`.
+- `read.table()` takes the following main arguments, which also appear in related import functions:
+    - `file`: full file path, including the extension
+    - `header`: `TRUE` or `FALSE`, indicating whether the first row is a header
+    - `sep`: how columns are separated
+    - `stringAsFactors`: `TRUE` or `FALSE`, indicating whether text variables should be converted to _factors_
 ```r
-data_txt = read.table("mtcars.txt") # também lê .csv
+data_txt = read.table("mtcars.txt") # also reads .csv
 data_csv = read.csv("mtcars.csv")
 ```
-- Caso queira testar, faça download das bases: [mtcars.txt](../mtcars.txt) e [mtcars.csv](../mtcars.csv)
-- Note que, caso você não tenha definido o diretório de trabalho ou queria fazer download diretamente da internet, é necessário informar o caminho/endereço inteiro da base de dados que você quer importar:
+- If you want to test this, download the files [mtcars.txt](../mtcars.txt) and [mtcars.csv](../mtcars.csv).
+- If you have not set the working directory, or if you want to download directly from the internet, you need to provide the full path or URL of the dataset you want to import:
 
 ```r
 data = read.csv("C:/Users/Fabio/OneDrive/FEA-RP/mtcars.csv")
 data = read.csv("https://fhnishida.netlify.app/project/rec2312/mtcars.csv")
 ```
 
-### Carregando bases de pacotes
-Há algumas bases de dados já presentes no pacote `base` (já carregado automaticamente) do R. Para listá-las, pode-se usar a função `data()`:
+### Loading Datasets from Packages
+Some datasets are already available in R's `base` environment. We can list them with `data()`:
 ```r
 data()
 ```
@@ -680,7 +679,7 @@ data()
 ## (...)
 ```
 
-É possível acessá-las apenas escrevendo seu nome. Vamos ver as 6 primeras linhas (função `head()`) de uma base de dados listada:
+We can access them simply by typing their names. For example, here are the first 6 rows of one of the listed datasets using `head()`:
 
 ```r
 head( CO2 )
@@ -696,15 +695,15 @@ head( CO2 )
 ## 6   Qn1 Quebec nonchilled  675   39.2
 ```
 
-Além disso, é possível baixar um pacote e usar uma de suas bases de dados usando a função `data()`. Abaixo, vamos instalar o pacote `wooldridge` e carregar a de suas bases de dados `gpa1`:
+We can also install a package and load one of its datasets with `data()`. Below, we install the `wooldridge` package and load its dataset `gpa1`:
 
 ```r
-install.packages("wooldridge") # instalando a base de dados
+install.packages("wooldridge") # installing the package
 ```
 
 ```r
-data(gpa1, package="wooldridge") # carregando base de dados do pacote wooldridge
-head(gpa1) # visualizando 6 primeiras linhas
+data(gpa1, package="wooldridge") # loading a dataset from the wooldridge package
+head(gpa1) # displaying the first 6 rows
 ```
 
 ```
@@ -733,13 +732,13 @@ head(gpa1) # visualizando 6 primeiras linhas
 
 
 
-### Extraindo subconjuntos de data frames
+### Extracting Subsets of Data Frames
 - [Subsetting - Matrices (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/4gSc1/subsetting-matrices)
-- Para extrair um pedaço de uma matriz ou de um data frame, indicamos as linhas e as colunas dentro do operador `[]`
-- Como exemplo, vamos usar a base de dados `mtcars`:
+- To extract a subset of a matrix or data frame, we specify rows and columns inside `[]`.
+- As an example, we use the `mtcars` dataset:
 
 ```r
-head(mtcars) # Visualizando 6 primeiras linhas
+head(mtcars) # displaying the first 6 rows
 ```
 
 ```
@@ -753,7 +752,7 @@ head(mtcars) # Visualizando 6 primeiras linhas
 ```
 
 ```r
-mtcars[1, 2] # linha 1 e coluna 2 da matriz X
+mtcars[1, 2] # row 1 and column 2
 ```
 
 ```
@@ -761,7 +760,7 @@ mtcars[1, 2] # linha 1 e coluna 2 da matriz X
 ```
 
 ```r
-mtcars[1:2, 3:4] # linha 1 e colunas 3 e 4 da matriz X
+mtcars[1:2, 3:4] # rows 1 to 2 and columns 3 to 4
 ```
 
 ```
@@ -770,10 +769,10 @@ mtcars[1:2, 3:4] # linha 1 e colunas 3 e 4 da matriz X
 ## Mazda RX4 Wag  160 110
 ```
 
-- Podemos selecionar linhas ou colunas inteiras ao não informar os índices:
+- We can select entire rows or columns by leaving one set of indices blank:
 
 ```r
-mtcars[1, ] # linha 1 e todas colunas
+mtcars[1, ] # row 1 and all columns
 ```
 
 ```
@@ -782,7 +781,7 @@ mtcars[1, ] # linha 1 e todas colunas
 ```
 
 ```r
-mtcars[, c(1, 4)] # todos valores das colunas 1 e 4
+mtcars[, c(1, 4)] # all values from columns 1 and 4
 ```
 
 ```
@@ -821,11 +820,11 @@ mtcars[, c(1, 4)] # todos valores das colunas 1 e 4
 ## Volvo 142E          21.4 109
 ```
 
-- Também é possível selecionar diversas colunas usando os nomes delas:
+- We can also select columns by name:
 
 ```r
-# 1a forma: incluindo vetor com os nomes dentro de []
-mtcars[, c("mpg", "hp")] # todos valores das colunas 2 e 4
+# 1st method: put a vector of column names inside []
+mtcars[, c("mpg", "hp")] # all values from the mpg and hp columns
 ```
 
 ```
@@ -865,7 +864,7 @@ mtcars[, c("mpg", "hp")] # todos valores das colunas 2 e 4
 ```
 
 ```r
-# 2a forma: usando $ (possível selecionar apenas 1 coluna)
+# 2nd method: using $ (only one column at a time)
 mtcars$mpg
 ```
 
@@ -876,24 +875,24 @@ mtcars$mpg
 ```
 
 
-### Novas variáveis em data frames
+### New Variables in Data Frames
 
-- Podemos criar novas variáveis usando os operadores `$` para nomear uma nova coluna e `=` para atribuir um vetor.
-- Normalmente, preenchemos essa nova variável a partir da informação de outras variáveis pré-existentes.
-- Usando a base de dados `mtcars`, vamos criar as variáveis:
-  - `mpg2`: variável `mpg` ao quadrado,
-  - `mpg_neg`: negativo de `mpg` (multiplicado por -1),
-  - `mpg_neg_abs`: valor absoluto de `mpg_neg`
-  - `mpg_am`: interação (multiplicação) da variável `mpg` com a `am`, que é uma variável _dummy_ (valores são apenas 0 e 1)
+- We can create new variables with `$` to name a new column and `=` to assign a vector.
+- Usually, the new variable is constructed from information already stored in existing variables.
+- Using the `mtcars` dataset, we create the following variables:
+  - `mpg2`: the squared value of `mpg`
+  - `mpg_neg`: the negative of `mpg`
+  - `mpg_neg_abs`: the absolute value of `mpg_neg`
+  - `mpg_am`: the interaction between `mpg` and `am`, where `am` is a dummy variable (its values are only 0 and 1)
 
 
 ```r
-mtcars$mpg2 = mtcars$mpg ^ 2 # mpg ao quadrado
-mtcars$mpg_neg = mtcars$mpg * (-1) # negativo de mpg
-mtcars$mpg_neg_abs = abs(mtcars$mpg_neg)# absoluo do negativo de mpg
-mtcars$mpg_am = mtcars$mpg * mtcars$am # interação entre mpg e am
+mtcars$mpg2 = mtcars$mpg ^ 2 # mpg squared
+mtcars$mpg_neg = mtcars$mpg * (-1) # negative of mpg
+mtcars$mpg_neg_abs = abs(mtcars$mpg_neg) # absolute value of negative mpg
+mtcars$mpg_am = mtcars$mpg * mtcars$am # interaction between mpg and am
 
-head(mtcars) # primeiras 6 linhas de mtcars
+head(mtcars) # first 6 rows of mtcars
 ```
 
 ```
@@ -918,4 +917,4 @@ head(mtcars) # primeiras 6 linhas de mtcars
 </br>
 
 
-{{< cta cta_text="👉 Seguir para Ordinary Least Squares (OLS)" cta_link="../sec2" >}}
+{{< cta cta_text="👉 Proceed to Ordinary Least Squares (OLS)" cta_link="../sec2" >}}

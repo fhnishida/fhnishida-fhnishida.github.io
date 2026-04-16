@@ -22,7 +22,7 @@ last_name: Nishida
 organizations:
 - name: University of Sao Paulo
   url: https://www.fearp.usp.br
-role: Ph.D. in Economics
+role: PhD in Economics
 social:
 - display:
     header: true
@@ -44,12 +44,12 @@ social:
   link: https://www.linkedin.com/in/fabionishida/
 - icon: cv
   icon_pack: ai
-  link: uploads/resume.pdf
+  link: https://fhnishida.github.io/uploads/resume.pdf
 status:
   icon: null
 superuser: true
 title: Fabio Nishida
 ---
 
-Fabio Nishida's academic website features research, publications, and teaching materials in public sector economics, environmental economics, public finance, and applied econometrics.
+This website brings together my research, publications, and teaching materials in the areas of the public sector, development economics, and applied econometrics.
 {style="text-align: justify;"}

@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 1
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 1 (April 20, 2021)
+linktitle: "Python I"
+summary: "Graduate TA notes introducing Python operations, variables, conditional statements, while loops, and user-defined functions for macroeconomics problem solving."
+title: "Session 1: Python Basics I"
 weight: 1
 output: md_document
 type: book

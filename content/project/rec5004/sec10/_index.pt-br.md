@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: GLS/WLS/FGLS
-summary: The section covers topics such as the variance-covariance matrix of errors, heteroskedasticity tests (including the Breusch-Pagan and White tests), and various estimators such as OLS with robust standard errors, GLS, WLS, and FGLS. The section provides R code examples for performing these analyses and includes references to relevant literature. Overall, this section of the webpage provides a comprehensive overview of econometric methods and techniques for analyzing data using R. It is a valuable resource for anyone interested in learning more about these topics.
-title: Heterocedasticidade
+linktitle: "GLS/WLS/FGLS"
+summary: "Notas sobre heterocedasticidade, matriz de variância dos erros, testes de Breusch-Pagan e White, erros-padrão robustos, GLS, WLS e FGLS no R."
+title: "Heterocedasticidade, GLS, WLS e FGLS"
 weight: 10
 output: md_document
 type: book
@@ -1363,6 +1363,6 @@ round(summary(reg.fgls)$coef, 4) # resultado MQGF via lm()
 
 
 
-{{< cta cta_text="👉 Proceed to Instrumental Variable" cta_link="../sec11" >}}
+{{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec11" >}}
 
 

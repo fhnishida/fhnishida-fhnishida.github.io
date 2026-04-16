@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 3
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 3 (May 04, 2021)
+linktitle: "Python III"
+summary: "TA notes on matrices, for loops, plotting, and coding style, with materials tied to the first macroeconomics problem set."
+title: "Session 3: Matrices, Loops, and Figures in Python"
 weight: 3
 output: md_document
 type: book

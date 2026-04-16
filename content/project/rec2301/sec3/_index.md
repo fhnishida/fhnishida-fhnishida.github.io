@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Data Manipulation
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Data Manipulation
+linktitle: "Data Manipulation"
+summary: "Econometrics I notes on summary statistics, the apply family, sorting, subsetting, transformations, and basic data merging in R."
+title: "Data Manipulation in R"
 weight: 3
 output: md_document
 type: book
@@ -14,17 +13,17 @@ type: book
 
 
 
-## Resumindo dados
+## Summarizing data
 
-### Funções básicas
+### Basic functions
 - [Summarizing data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/e5qVi/summarizing-data)
-- Para esta seção, usaremos a base de dados `airquality`, já presente no R.
-- Verificaremos o **dimensões** da base com `dim()` e visualizaremos as 6 **primeiras** e **últimas** linhas da base via `head()` e `tail()`, respectivamente.
+- In this section, we use the `airquality` dataset, which is already available in R.
+- We check the dataset **dimensions** with `dim()` and inspect the first and last six rows with `head()` and `tail()`, respectively.
 
 ```r
-# data() # lista de base de dados presentes no R
+# data() # list of datasets available in R
 
-dim(airquality) # Verificar tamanho da base (linhas x colunas)
+dim(airquality) # Check dataset size (rows x columns)
 ```
 
 ```
@@ -32,7 +31,7 @@ dim(airquality) # Verificar tamanho da base (linhas x colunas)
 ```
 
 ```r
-head(airquality) # Visualizando as 6 primeiras linhas
+head(airquality) # view the first 6 rows
 ```
 
 ```
@@ -46,7 +45,7 @@ head(airquality) # Visualizando as 6 primeiras linhas
 ```
 
 ```r
-tail(airquality) # Visualizando as 6 últimas linhas
+tail(airquality) # View the last six rows
 ```
 
 ```
@@ -58,10 +57,10 @@ tail(airquality) # Visualizando as 6 últimas linhas
 ## 152    18     131  8.0   76     9  29
 ## 153    20     223 11.5   68     9  30
 ```
-- Usando `str()`, podemos visualizar a **estrutura** da base:
-    - todas a variáveis (colunas),
-    - a classe de cada uma delas e
-    - algumas de suas observations.
+- Using `str()`, we can inspect the **structure** of the dataset:
+    - all variables (columns),
+    - the class of each variable, and
+    - a sample of their observations.
 
 ```r
 str(airquality)
@@ -78,7 +77,7 @@ str(airquality)
 ```
 
 
-- Para fazer um **resumo** de todas as variáveis da base, podemos usar a função `summary()` que, para variáveis numéricas, calcula a média e os quartis, e mostra a quantidade de `NA`.
+- To generate a **summary** for all variables in the dataset, we can use `summary()`. For numeric variables, it reports the mean, quartiles, and the number of `NA`s.
 
 ```r
 summary(airquality)
@@ -102,7 +101,7 @@ summary(airquality)
 ##  Max.   :9.000   Max.   :31.0  
 ## 
 ```
-- Também podemos calcular os **quantis** via `quantile()`
+- We can also compute **quantiles** with `quantile()`.
 
 ```r
 quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
@@ -113,10 +112,10 @@ quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
 ##   1.00  18.00  31.50  63.25 168.00
 ```
 
-- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a contagem de cada categoria/possível valor:
+- For logical, text, or categorical variables (`factor`), the output shows the frequency of each category or possible value:
 
 ```r
-summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
+summary(CO2) # dataset 'Carbon Dioxide Uptake in Grass Plants'
 ```
 
 ```
@@ -129,7 +128,7 @@ summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
 ##  Qc2    : 7                                    Max.   :1000   Max.   :45.50  
 ##  (Other):42
 ```
-- Para variáveis de texto, pode ser interessante fazer uma **tabela com a contagem** de cada possível categoria de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
+- For text or categorical variables, it is often useful to build a **frequency table** for each possible category. We can do this with `table()`, and we can use `prop.table(table())` to express the same information in **percentages**.
 
 ```r
 table(CO2$Type) # contagem
@@ -150,7 +149,7 @@ prop.table(table(CO2$Type)) # percentual
 ##      Quebec Mississippi 
 ##         0.5         0.5
 ```
-- Também podemos incluir mais uma variável em `table()` para visualizar a contagem considerando 2 variáveis:
+- We can also include a second variable in `table()` to display counts jointly for two variables:
 
 ```r
 table(CO2$Type, CO2$Treatment)
@@ -164,20 +163,20 @@ table(CO2$Type, CO2$Treatment)
 ```
 
 
-### Família de funções _apply_
-Veremos uma família de funções _apply_ que permitem executar comandos em loop de maneira compacta:
-- `apply`: aplica uma função sobre as margens (linha ou coluna) de uma matrix/array
-- `lapply`: loop sobre uma lista e avalia uma função em cada elemento
-    - função auxiliar `split` é útil ao ser utilizada em conjunto da `lapply`
-- `sapply`: mesmo que o `lapply`, mas simplifica o resultado
+### The _apply_ family of functions
+We now look at the _apply_ family, which provides compact ways to run operations in loop form:
+- `apply`: applies a function over the margins (rows or columns) of a matrix/array
+- `lapply`: loops over a list and evaluates a function on each element
+    - the helper function `split` is useful when combined with `lapply`
+- `sapply`: similar to `lapply`, but tries to simplify the result
 
 
 
-#### Função `apply()`
+#### The `apply()` function
 - [Loop functions - apply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/IUUhK/loop-functions-apply)
-- Usado para avaliar, por meio de uma função, margens de um array
-- Frequentemente é utilizado para aplicar uma função a linhas ou a colunas de uma matriz
-- Não é mais rápido do que escrever um loop, mas funciona em uma única linha
+- Used to evaluate array margins through a function
+- Frequently used to apply a function to the rows or columns of a matrix
+- It is not necessarily faster than writing an explicit loop, but it is concise and readable
 ```yaml
 apply(X, MARGIN, FUN, ...)
 
@@ -201,7 +200,7 @@ x
 ```
 
 ```r
-apply(x, 1, mean) # médias das linhas
+apply(x, 1, mean) # row means
 ```
 
 ```
@@ -209,21 +208,21 @@ apply(x, 1, mean) # médias das linhas
 ```
 
 ```r
-apply(x, 2, mean) # médias das colunas
+apply(x, 2, mean) # column means
 ```
 
 ```
 ## [1]  3  8 13 18
 ```
-- Há funções pré-definidas que aplicam `apply` com soma e com média:
+- There are built-in functions that reproduce `apply()` with sums and means:
     - `rowSums = apply(x, 1, sum)`
     - `rowMeans = apply(x, 1, mean)`
     - `colSums = apply(x, 2, sum)`
     - `colMeans = apply(x, 2, mean)`
-- Podemos, por exemplo, também calcular os quantis de uma matriz usando a função `quantile()`
+- For example, we can also compute the quantiles of each matrix column using `quantile()`.
 
 ```r
-x = matrix(1:50, 10, 5) # matriz 20x10 - 200 números ~ N(0, 1)
+x = matrix(1:50, 10, 5) # 10x5 matrix
 x
 ```
 
@@ -242,7 +241,7 @@ x
 ```
 
 ```r
-apply(x, 2, quantile) # obtendo os quantis de cada coluna
+apply(x, 2, quantile) # compute quantiles for each column
 ```
 
 ```
@@ -253,7 +252,7 @@ apply(x, 2, quantile) # obtendo os quantis de cada coluna
 ## 75%   7.75 17.75 27.75 37.75 47.75
 ## 100% 10.00 20.00 30.00 40.00 50.00
 ```
-- Com também podemos verificar quais são os valores únicos de cada variável em um data frame combinando `apply()` e `unique()`
+- We can also inspect the unique values of each variable in a data frame by combining `apply()` and `unique()`.
 
 ```r
 apply(mtcars, 2, unique)
@@ -304,10 +303,10 @@ apply(mtcars, 2, unique)
 ```
 
 
-- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
+- We can compute the **number of `NA`s** in each column by applying `sum` over `is.na(airquality)` with `apply()` or `colSums()`.
 
 ```r
-head( is.na(airquality) ) # 6 primeiras linhas aplicando is.na()
+head( is.na(airquality) ) # first 6 rows after applying is.na()
 ```
 
 ```
@@ -321,7 +320,7 @@ head( is.na(airquality) ) # 6 primeiras linhas aplicando is.na()
 ```
 
 ```r
-apply(is.na(airquality), 2, sum) # somando cada coluna de TRUE/FALSE
+apply(is.na(airquality), 2, sum) # sum each TRUE/FALSE column
 ```
 
 ```
@@ -330,9 +329,9 @@ apply(is.na(airquality), 2, sum) # somando cada coluna de TRUE/FALSE
 ```
 
 
-#### Função `lapply()`
+#### The `lapply()` function
 - [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
-- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
+- `lapply` uses three arguments: a **list**, a function name, and additional arguments, including those passed to the function itself
 ```yaml
 lapply(X, FUN, ...)
 
@@ -342,7 +341,7 @@ FUN: the function to be applied to each element of X: see ‘Details’. In the 
 ```
 
 ```r
-# Criando uma lista com vetor de dimensões distintas
+# Create a list with vectors of different lengths
 x = list(a=1:5, b=rnorm(10), c=c(1, 4, 65, 6))
 x
 ```
@@ -360,7 +359,7 @@ x
 ```
 
 ```r
-lapply(x, mean) # retorna médias de cada vetor dentro da lista
+lapply(x, mean) # return the mean of each vector in the list
 ```
 
 ```
@@ -375,7 +374,7 @@ lapply(x, mean) # retorna médias de cada vetor dentro da lista
 ```
 
 ```r
-lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
+lapply(x, summary) # return six descriptive statistics for each vector in the list
 ```
 
 ```
@@ -393,7 +392,7 @@ lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
 ```
 
 ```r
-class(lapply(x, mean)) # classe do objeto retornado pelo lapply
+class(lapply(x, mean)) # class of the object returned by lapply
 ```
 
 ```
@@ -401,23 +400,23 @@ class(lapply(x, mean)) # classe do objeto retornado pelo lapply
 ```
 
 
-#### Função `sapply()`
-Similar ao `lapply`, mas `sapply` tenta simplificar o output:
+#### The `sapply()` function
+`sapply` is similar to `lapply`, but it tries to simplify the output:
 
-- Se o resultado for uma lista where todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
+- If the result is a list where every element has length 1, it returns a vector
 
 ```r
-sapply(x, mean) # retorna um vetor
+sapply(x, mean) # returns a vector
 ```
 
 ```
 ##          a          b          c 
 ##  3.0000000 -0.2621439 19.0000000
 ```
-- Se o resultado for uma lista where cada elemento tem mesmo comprimento, retorna uma matriz
+- If the result is a list where every element has the same length, it returns a matrix
 
 ```r
-sapply(x, summary) # retorna uma matriz
+sapply(x, summary) # returns a matrix
 ```
 
 ```
@@ -433,13 +432,13 @@ sapply(x, summary) # retorna uma matriz
 
 
 
-## Manipulando dados
+## Manipulating data
 
 > “Between 30% to 80% of the data analysis task is spent on cleaning and understanding the data.” (Dasu \& Johnson, 2003)
 
-### Extração de subconjuntos
+### Subsetting
 - [Subsetting and sorting (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/aqd2Y/subsetting-and-sorting)
-- Como exemplo, criaremos um _data frame_ com três variáveis, em que, para misturar a ordem dos números, usaremos a função `sample()` num vetor de números e também incluiremos alguns valores ausentes `NA`.
+- As an example, we create a _data frame_ with three variables. To shuffle the order of the numbers, we use `sample()` on numeric vectors and also include a few missing values (`NA`).
 
 ```r
 set.seed(2022)
@@ -469,10 +468,10 @@ x
 ## 4    1   10   15
 ## 5    5    6   14
 ```
-- Lembre-se que, para extrair um subconjunto de um data frame, usamos as chaves `[]` indicando vetores de linhas e de colunas (ou também os nomes das colunas).
+- Recall that, to extract a subset from a data frame, we use `[]` together with row and column vectors or column names.
 
 ```r
-x[, 1] # Todas linhas e 1ª coluna
+x[, 1] # all rows and first column
 ```
 
 ```
@@ -480,7 +479,7 @@ x[, 1] # Todas linhas e 1ª coluna
 ```
 
 ```r
-x[, "var1"] # Todas linhas e 1ª coluna (usando seu nome)
+x[, "var1"] # all rows and first column (using its name)
 ```
 
 ```
@@ -488,13 +487,13 @@ x[, "var1"] # Todas linhas e 1ª coluna (usando seu nome)
 ```
 
 ```r
-x[1:2, "var2"] # Linhas 1 e 2, e 2ª coluna (usando seu nome)
+x[1:2, "var2"] # rows 1 and 2, second column (using its name)
 ```
 
 ```
 ## [1] NA  7
 ```
-- Note que, podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair uma parte do data frame. Por exemplo, queremos obter apenas as observations where a variável 1 seja menor ou igual a 3 **E** (`&`) que a variável 3 seja estritamente maior do que 11:
+- We can also use logical expressions, that is, vectors of `TRUE` and `FALSE`, to extract part of a data frame. For example, suppose we want only the observations where variable 1 is less than or equal to 3 **and** (`&`) variable 3 is strictly greater than 11:
 
 ```r
 x$var1 <= 3 & x$var3 > 11
@@ -505,7 +504,7 @@ x$var1 <= 3 & x$var3 > 11
 ```
 
 ```r
-# Extraindo as linhas de x
+# Extract the rows of x
 x[x$var1 <= 3 & x$var3 > 11, ]
 ```
 
@@ -514,7 +513,7 @@ x[x$var1 <= 3 & x$var3 > 11, ]
 ## 3    2   NA   12
 ## 4    1   10   15
 ```
-- Poderíamos também obter apenas as observations where a variável 1 seja menor ou igual a 3 **OU** (`|`) que a variável 3 seja estritamente maior do que 11:
+- We could also keep the observations where variable 1 is less than or equal to 3 **or** (`|`) variable 3 is strictly greater than 11:
 
 ```r
 x[x$var1 <= 3 | x$var3 > 11, ]
@@ -528,10 +527,10 @@ x[x$var1 <= 3 | x$var3 > 11, ]
 ## 4    1   10   15
 ## 5    5    6   14
 ```
-- Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale `==` com mais de um valor)
+- We can also check whether certain values belong to a given vector, which is the analogue of `==` with more than one value.
 
 ```r
-x$var1 %in% c(1, 5) # obs where var1 é igual a 1 ou 5
+x$var1 %in% c(1, 5) # observations where var1 equals 1 or 5
 ```
 
 ```
@@ -548,7 +547,7 @@ x[x$var1 %in% c(1, 5), ]
 ## 5    5    6   14
 ```
 
-- Note que, ao escrevermos uma expressão lógica para um vetor que contém valores ausentes, gerará um vetor com `TRUE`, `FALSE` e `NA`
+- Notice that when we evaluate a logical expression on a vector containing missing values, the result may contain `TRUE`, `FALSE`, and `NA`.
 
 ```r
 x$var2 > 8
@@ -568,7 +567,7 @@ x[x$var2 > 8, ]
 ## NA.1   NA   NA   NA
 ## 4       1   10   15
 ```
-- Para contornar este problema, podemos usar a função `which()` que, ao invés de gerar um vetor de `TRUE`/`FALSE`, retorna um vetor com as posições dos elementos que tornam a expressão lógica verdadeira
+- To avoid this issue, we can use `which()`. Instead of generating a `TRUE`/`FALSE` vector, it returns the positions of the elements for which the logical expression is true.
 
 ```r
 which(x$var2 > 8)
@@ -586,8 +585,8 @@ x[which(x$var2 > 8), ]
 ##   var1 var2 var3
 ## 4    1   10   15
 ```
-- Outra forma de contornar os valores ausentes é incluir a condição 
-de não incluir valores ausentes `!is.na()`:
+- Another way to handle missing values is to include the condition
+that excludes missing observations via `!is.na()`:
 
 ```r
 x$var2 > 8 & !is.na(x$var2)
@@ -607,11 +606,11 @@ x[x$var2 > 8 & !is.na(x$var2), ]
 ```
 
 
-### Ordenação
-- Podemos usar a função `sort()` para ordenar um vetor de maneira crescente (padrão) ou decrescente:
+### Sorting
+- We can use `sort()` to arrange a vector in ascending order by default or in descending order:
 
 ```r
-sort(x$var1) # ordenando de maneira crescente
+sort(x$var1) # ascending order
 ```
 
 ```
@@ -619,16 +618,16 @@ sort(x$var1) # ordenando de maneira crescente
 ```
 
 ```r
-sort(x$var1, decreasing=TRUE) # ordenando de maneira decrescente
+sort(x$var1, decreasing=TRUE) # descending order
 ```
 
 ```
 ## [1] 5 4 3 2 1
 ```
-- Por padrão, o `sort()` retira os valores ausentes. Para mantê-los e deixá-los no final, precisamos usar o argumento `na.last=TRUE`
+- By default, `sort()` removes missing values. To keep them and place them at the end, use the argument `na.last = TRUE`.
 
 ```r
-sort(x$var2) # ordenando e retirando NA
+sort(x$var2) # sort and drop NAs
 ```
 
 ```
@@ -636,13 +635,13 @@ sort(x$var2) # ordenando e retirando NA
 ```
 
 ```r
-sort(x$var2, na.last=TRUE) # ordenando e mantendo NA no final
+sort(x$var2, na.last=TRUE) # sort and keep NAs at the end
 ```
 
 ```
 ## [1]  6  7 10 NA NA
 ```
-- Note que não podemos usar a função `sort()` para ordenar um data frame, pois a função retorna valores e, portanto, não retorna suas posições.
+- Notice that we cannot use `sort()` to order an entire data frame, because the function returns values rather than row positions.
 
 ```r
 sort(x$var3)
@@ -653,7 +652,7 @@ sort(x$var3)
 ```
 
 ```r
-x[sort(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
+x[sort(x$var3), ] # Incorrect: values are not valid row indices here
 ```
 
 ```
@@ -664,7 +663,7 @@ x[sort(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
 ## NA.3   NA   NA   NA
 ## NA.4   NA   NA   NA
 ```
-- Para ordenar data frames, precisamos utilizar a função `order()` que, ao invés de retorar os valores em algum ordem, retorna as suas posições
+- To order data frames, we use `order()`, which returns positions instead of sorted values.
 
 ```r
 order(x$var3)
@@ -675,7 +674,7 @@ order(x$var3)
 ```
 
 ```r
-x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
+x[order(x$var3), ] # Correct row ordering based on var3
 ```
 
 ```
@@ -687,8 +686,8 @@ x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
 ## 4    1   10   15
 ```
 
-### Inclusão de novas colunas/variáveis
-- Para incluir novas variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
+### Adding new columns/variables
+- To include new variables, we can use `$<new_variable_name>` and assign a vector with the same length, that is, the same number of rows:
 
 ```r
 set.seed(1234)
@@ -705,10 +704,10 @@ x
 ## 5    5    6   14  0.4291247
 ```
 
-- [Algumas transformações comuns de variáveis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
+- [Common transformations for variables (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
 
 ```r
-abs(x$var4) # valor absoluto
+abs(x$var4) # absolute value
 ```
 
 ```
@@ -720,7 +719,7 @@ sqrt(x$var4) # raiz quadrada
 ```
 
 ```
-## Warning in sqrt(x$var4): NaNs produzidos
+## Warning in sqrt(x$var4): NaNs produced
 ```
 
 ```
@@ -728,7 +727,7 @@ sqrt(x$var4) # raiz quadrada
 ```
 
 ```r
-ceiling(x$var4) # valor inteiro acima
+ceiling(x$var4) # smallest integer above each value
 ```
 
 ```
@@ -736,7 +735,7 @@ ceiling(x$var4) # valor inteiro acima
 ```
 
 ```r
-floor(x$var4) # valor inteiro abaixo
+floor(x$var4) # largest integer below each value
 ```
 
 ```
@@ -744,7 +743,7 @@ floor(x$var4) # valor inteiro abaixo
 ```
 
 ```r
-round(x$var4, digits=1) # arredondamento com 1 dígito
+round(x$var4, digits=1) # rounding to 1 decimal place
 ```
 
 ```
@@ -752,7 +751,7 @@ round(x$var4, digits=1) # arredondamento com 1 dígito
 ```
 
 ```r
-cos(x$var4) # cosseno
+cos(x$var4) # cosine
 ```
 
 ```
@@ -760,7 +759,7 @@ cos(x$var4) # cosseno
 ```
 
 ```r
-sin(x$var4) # seno
+sin(x$var4) # sine
 ```
 
 ```
@@ -768,11 +767,11 @@ sin(x$var4) # seno
 ```
 
 ```r
-log(x$var4) # logaritmo natural
+log(x$var4) # natural logarithm
 ```
 
 ```
-## Warning in log(x$var4): NaNs produzidos
+## Warning in log(x$var4): NaNs produced
 ```
 
 ```
@@ -780,11 +779,11 @@ log(x$var4) # logaritmo natural
 ```
 
 ```r
-log10(x$var4) # logaritmo base 10
+log10(x$var4) # base-10 logarithm
 ```
 
 ```
-## Warning: NaNs produzidos
+## Warning: NaNs produced
 ```
 
 ```
@@ -792,7 +791,7 @@ log10(x$var4) # logaritmo base 10
 ```
 
 ```r
-exp(x$var4) # exponencial
+exp(x$var4) # exponential
 ```
 
 ```
@@ -801,11 +800,11 @@ exp(x$var4) # exponencial
 
 
 
-### Juntando bases de dados
+### Combining datasets
 
-#### Acrescentando colunas e linhas via `cbind()` e `rbind()`
+#### Appending columns and rows with `cbind()` and `rbind()`
 
-- Uma maneira de juntar o data frame com um vetor de mesmo tamanho é usando `cbind()`
+- One way to combine a data frame with a vector of the same length is to use `cbind()`.
 
 ```r
 y = rnorm(5)
@@ -821,7 +820,7 @@ x
 ## 4    1   10   15 -2.3456977 -0.5644520
 ## 5    5    6   14  0.4291247 -0.8900378
 ```
-- Também podemos acrescentar linhas usando `rbind()`, desde que o vetor tenha a quantidade de elementos igual ao número de colunas (ou data frame a ser incluído tenha o mesmo número de colunas)
+- We can also append rows using `rbind()`, provided the vector has the same number of elements as the number of columns, or the appended data frame has the same number of columns.
 
 ```r
 z = rnorm(5)
@@ -839,10 +838,10 @@ x
 ## 6 -0.4771927 -0.9983864 -0.7762539  0.06445882  0.9594941
 ```
 
-#### Mesclando base de dados com `merge()`
+#### Merging datasets with `merge()`
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
-- Podemos juntar base de dados a partir de uma variável-chave que aparece em ambas bases.
-- Como exemplo, utilizaremos duas bases de dados de respostas a perguntas ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) e de correções feitas por seus pares ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
+- We can merge datasets using a key variable that appears in both sources.
+- As an example, we use two datasets: one with answers to questions ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) and another with peer reviews of those answers ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
 
 ```r
 solutions = read.csv("https://fhnishida-rec5004.netlify.app/docs/solutions.csv")
@@ -873,10 +872,10 @@ head(reviews)
 ## 5  5          10          29 1304095456 1304095469      2043      1
 ## 6  6           2          29 1304095471 1304095513      1999      1
 ```
-- Note que:
-    - as primeiras colunas das bases `solutions` e `reviews`` são os identificadores únicos das soluções e dos reviews, respectivamente.
-    - na base `reviews` há a coluna _problem_id_ que faz a ligação entre esta base com a coluna _id_ da base `solutions`.
-- Usaremos a função `merge()` para juntar ambas bases em uma só, a partir do id da solução.
+- Notice that:
+    - the first columns of `solutions` and `reviews` are the unique identifiers for solutions and reviews, respectively
+    - in the `reviews` dataset, the column _problem_id_ links this dataset to the _id_ column in `solutions`
+- We use the `merge()` function to combine both datasets into a single one using the solution id.
 
 ```yaml
 merge(x, y, by = intersect(names(x), names(y)),
@@ -920,8 +919,8 @@ head(mergedData)
 ## 6        384         27 1304095131 1304095270        2242      C
 ```
 
-- Note que, como há colunas de mesmos nomes, e especificamos que a variável chave era somente o id de solução, então as colunas de nomes iguais foram renomeadas com sufixos `.x` e `.y`, correspondendo às 1ª e 2ª bases inseridas na função `merge()`
-- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a função `intersect()` em conjunto com a função `names()`:
+- Since some columns share the same names, and we specified that the merge key was only the solution id, identical column names were renamed with suffixes `.x` and `.y`, corresponding to the first and second datasets passed to `merge()`.
+- To check which columns have the same names in two datasets, we can combine `intersect()` with `names()`:
 
 ```r
 intersect( names(solutions), names(reviews) )
@@ -930,7 +929,7 @@ intersect( names(solutions), names(reviews) )
 ```
 ## [1] "id"        "start"     "stop"      "time_left"
 ```
-- Se não especificássemos nenhuma variável-chave, a função `merge()` utilizaria como variável-chave todas as colunas com nomes iguais em ambas bases de dados 
+- If we did not specify any key variable, `merge()` would use all columns with identical names in both datasets as merge keys.
 
 ```r
 wrong = merge(reviews, solutions,
@@ -957,4 +956,4 @@ head(wrong)
 
 
 
-{{< cta cta_text="👉 Seguir para Manipulação via `dplyr`" cta_link="../sec4" >}}
+{{< cta cta_text="Proceed to Data Manipulation with `dplyr`" cta_link="../sec4" >}}

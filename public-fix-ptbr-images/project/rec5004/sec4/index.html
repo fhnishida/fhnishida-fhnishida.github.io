@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<!-- This site was created with Wowchemy. https://www.wowchemy.com -->
+<!-- Last Published: April 16, 2026 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.7.0 for Hugo" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.16f785cdb553c8c4431db6775122af35.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.2/css/academicons.min.css" integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.0f229d4b7ebad1917a9a357cba2effab.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Fabio Nishida" />
+
+
+
+
+
+  
+
+<meta name="description" content="Data visualization notes in R covering exploratory graphs, histograms, boxplots, bar charts, scatterplots, and ggplot2 for econometrics and data analysis." />
+
+
+
+  <link rel="alternate" hreflang="pt-br" href="https://fhnishida.github.io/pt-br/project/rec5004/sec4/" />
+
+<link rel="alternate" hreflang="en-us" href="https://fhnishida.github.io/project/rec5004/sec4/" />
+<link rel="canonical" href="https://fhnishida.github.io/project/rec5004/sec4/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" />
+<meta property="og:site_name" content="Fabio Nishida" />
+<meta property="og:url" content="https://fhnishida.github.io/project/rec5004/sec4/" />
+<meta property="og:title" content="Data Visualization in R | Fabio Nishida" />
+<meta property="og:description" content="Data visualization notes in R covering exploratory graphs, histograms, boxplots, bar charts, scatterplots, and ggplot2 for econometrics and data analysis." /><meta property="og:image" content="https://fhnishida.github.io/media/icon_hu47f6d4834e8bfd33c99c8c5b57562587_11044_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00" />
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    <link rel="alternate" href="/project/rec5004/sec4/index.xml" type="application/rss+xml" title="Fabio Nishida" />
+  
+
+  
+
+
+  
+  <title>Data Visualization in R | Fabio Nishida</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="cbe848159cca86e14c92337aa080aee8" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.ec9d49ca50e4b80bdb08f0417a28ed84.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Fabio Nishida</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Fabio Nishida</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Research</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Teaching Assistance</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="/#contact"  aria-label="envelope">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown i18n-dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+             aria-haspopup="true" aria-label="Languages">
+            <i class="fas fa-globe mr-1" aria-hidden="true"></i><span class="d-none d-lg-inline">English</span></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-item dropdown-item-active">
+              <span>English</span>
+            </div>
+            
+            <a class="dropdown-item" href="https://fhnishida.github.io/pt-br/project/rec5004/sec4/">
+              <span>Português (Brasil)</span>
+            </a>
+            
+          </div>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    
+
+
+
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+        
+          Main
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
+
+  
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
+  
+  
+    
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/project/"><i class="fas fa-arrow-left pr-1"></i>Projects</a></li>
+      </ul>
+
+      
+      
+        
+          
+        
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/">Main</a>
+    
+      
+        <ul class="nav docs-sidenav">
+      
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec1/">R Toolkit</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec2/">R Programming</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec3/">Manipulation</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/project/rec5004/sec4/">Visualization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec5/">Distributions</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec6/">Simple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec7/">Optimization</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec8/">Multiple Regression</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec9/">Hypothesis Testing</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec10/">GLS/WLS/FGLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec11/">IV/2SLS</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec12/">GMM</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec13/">Panel Data</a>
+    
+
+    
+      </div>
+    
+
+
+
+  
+    
+    
+    
+    
+      
+    
+    
+
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link " href="/project/rec5004/sec14/">Panel Setup</a>
+    
+
+    
+      </div>
+    
+
+      
+        </ul>
+      
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a>
+      <ul>
+        <li><a href="#diagrama-de-caixa-_boxplot_">Diagrama de caixa (<em>Boxplot</em>)</a></li>
+        <li><a href="#boxplot">Boxplot</a></li>
+        <li><a href="#histogram">Histogram</a></li>
+        <li><a href="#barplot">Barplot</a></li>
+        <li><a href="#scatterplot">Scatterplot</a></li>
+      </ul>
+    </li>
+    <li><a href="#grammar-of-graphics-ggplot2">Grammar of Graphics (<code>ggplot2</code>)</a></li>
+  </ul>
+</nav>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <div class="docs-article-container">
+        
+      </div>
+
+      
+      
+      
+
+      <div class="docs-article-container">
+        
+        <h1>Data Visualization in R</h1>
+
+        <article class="article-style">
+
+          
+          
+
+          <ul>
+<li>
+<p><a href="https://www.coursera.org/learn/exploratory-data-analysis/lecture/ilRAK/exploratory-graphs-part-1" target="_blank" rel="noopener">Exploratory graphs - Part 1 (John Hopkins/Coursera)</a></p>
+</li>
+<li>
+<p><a href="https://www.coursera.org/learn/exploratory-data-analysis/lecture/m4P1I/base-plotting-system-part-2" target="_blank" rel="noopener">Base plotting system - Part 2 (John Hopkins/Coursera)</a></p>
+</li>
+<li>
+<p><a href="https://www.coursera.org/learn/exploratory-data-analysis/lecture/yUFDH/base-plotting-demonstration" target="_blank" rel="noopener">Base plotting demonstration (John Hopkins/Coursera)</a></p>
+</li>
+<li>
+<p><a href="https://r-graph-gallery.com/base-R.html" target="_blank" rel="noopener">Base R applications (The R Graph Gallery)</a></p>
+</li>
+<li>
+<p>Main objectives of graphs in data analysis:</p>
+<ol>
+<li>Understand the properties of the data</li>
+<li>Detect patterns in the data</li>
+<li>Suggest modeling strategies</li>
+<li>Diagnose potential &ldquo;bugs&rdquo;</li>
+<li>Communicate results</li>
+</ol>
+</li>
+</ul>
+<h2 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
+<ul>
+<li>Exploratory graphs cover the first four objectives above, so they are not primarily designed to communicate a final result.</li>
+<li>Typical features:
+<ol>
+<li>They are produced quickly and in large numbers</li>
+<li>Their main goal is to understand the data</li>
+<li>Axes and legends are often simplified or removed</li>
+<li>Colors and sizes are used mainly to convey information</li>
+</ol>
+</li>
+<li>Main simple graphs:
+a. Boxplot
+b. Histograms
+c. Barplot
+d. Scatterplot</li>
+</ul>
+<p>As an example, we use data from the U.S. Environmental Protection Agency (EPA), <a href="https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv" target="_blank" rel="noopener">avgpm25.csv</a>, which reports fine particulate pollution (PM2.5). The annual mean PM2.5 concentration should not exceed 12 <code>\(\mu g/m^3\)</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="err">##</span> <span class="nx">Warning</span><span class="p">:</span> <span class="kn">package</span> <span class="err">&#39;</span><span class="nx">dplyr</span><span class="err">&#39;</span> <span class="nx">was</span> <span class="nx">built</span> <span class="nx">under</span> <span class="nx">R</span> <span class="nx">version</span> <span class="mf">4.2.2</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">## Attaching package: &#39;dplyr&#39;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## The following objects are masked from &#39;package:stats&#39;:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##     filter, lag
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## The following objects are masked from &#39;package:base&#39;:
+</span></span><span class="line"><span class="cl">## 
+</span></span><span class="line"><span class="cl">##     intersect, setdiff, setequal, union
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">pollution</span> <span class="o">=</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&#34;https://fhnishida-rec5004.netlify.app/docs/avgpm25.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">pollution</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##       pm25             fips          region            longitude      
+</span></span><span class="line"><span class="cl">##  Min.   : 3.383   Min.   : 1003   Length:576         Min.   :-158.04  
+</span></span><span class="line"><span class="cl">##  1st Qu.: 8.549   1st Qu.:16038   Class :character   1st Qu.: -97.38  
+</span></span><span class="line"><span class="cl">##  Median :10.047   Median :28034   Mode  :character   Median : -87.37  
+</span></span><span class="line"><span class="cl">##  Mean   : 9.836   Mean   :28431                      Mean   : -91.65  
+</span></span><span class="line"><span class="cl">##  3rd Qu.:11.356   3rd Qu.:41045                      3rd Qu.: -80.72  
+</span></span><span class="line"><span class="cl">##  Max.   :18.441   Max.   :56039                      Max.   : -68.26  
+</span></span><span class="line"><span class="cl">##     latitude    
+</span></span><span class="line"><span class="cl">##  Min.   :19.68  
+</span></span><span class="line"><span class="cl">##  1st Qu.:35.30  
+</span></span><span class="line"><span class="cl">##  Median :39.09  
+</span></span><span class="line"><span class="cl">##  Mean   :38.56  
+</span></span><span class="line"><span class="cl">##  3rd Qu.:41.75  
+</span></span><span class="line"><span class="cl">##  Max.   :64.82
+</span></span></code></pre></div><h3 id="diagrama-de-caixa-_boxplot_">Diagrama de caixa (<em>Boxplot</em>)</h3>
+<h3 id="boxplot">Boxplot</h3>
+<ul>
+<li>Displays the minimum, maximum, quartiles, and outliers.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">boxplot</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">12</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span> <span class="c1"># horizontal line at 12</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+- For multiple boxplots, we use `<numeric_variable> ~ <categorical_variable>`:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">boxplot</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">pm25</span> <span class="o">~</span> <span class="n">pollution</span><span class="o">$</span><span class="n">region</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">12</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span> <span class="c1"># horizontal line at 12</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<h3 id="histogram">Histogram</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">hist</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;green&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">hist</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;green&#34;</span><span class="p">,</span> <span class="n">breaks</span><span class="o">=</span><span class="m">100</span><span class="p">)</span> <span class="c1"># 100 bins</span>
+</span></span><span class="line"><span class="cl"><span class="nf">rug</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">pm25</span><span class="p">)</span> <span class="c1"># marks the sample values below the histogram</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="m">12</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span> <span class="c1"># vertical line at 12</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-4-2.png" width="672" />
+- We can place more than one graph in the same figure using `par(mfrow, mar)`:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="c1"># create a figure with 2 rows and 1 column plus margins</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pol_west</span> <span class="o">=</span> <span class="n">pollution</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;west&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pol_east</span> <span class="o">=</span> <span class="n">pollution</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;east&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">hist</span><span class="p">(</span><span class="n">pol_west</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;green&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">hist</span><span class="p">(</span><span class="n">pol_east</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;green&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<ul>
+<li>Notice that you need <code>par(mfrow=c(1, 1))</code> to return to a single graph per figure.</li>
+</ul>
+<h3 id="barplot">Barplot</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">barplot</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">region</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;wheat&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">main</span><span class="o">=</span><span class="s">&#34;Number of counties in each region&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<h3 id="scatterplot">Scatterplot</h3>
+<ul>
+<li>Produces two-dimensional graphs.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">pollution</span><span class="o">$</span><span class="n">latitude</span><span class="p">,</span> <span class="n">pollution</span><span class="o">$</span><span class="n">pm25</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">12</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">abline</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">pm25</span> <span class="o">~</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">pollution</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span> <span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="c1"># create a figure with 1 row and 2 columns plus margins</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">pol_west</span><span class="o">$</span><span class="n">latitude</span><span class="p">,</span> <span class="n">pol_west</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&#34;West&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">pol_east</span><span class="o">$</span><span class="n">latitude</span><span class="p">,</span> <span class="n">pol_east</span><span class="o">$</span><span class="n">pm25</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&#34;East&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<ul>
+<li>We can also add graphical elements and text to a figure produced by <code>plot()</code>:
+<ul>
+<li><code>abline()</code>: adds horizontal, vertical, or regression lines</li>
+<li><code>points()</code>: adds points</li>
+<li><code>lines()</code>: adds lines</li>
+<li><code>text()</code>: adds text</li>
+<li><code>title()</code>: adds axis annotations, title, subtitle, and outer margin text</li>
+<li><code>mtext()</code>: adds text to the inner or outer margins</li>
+<li><code>axis()</code>: adds tick marks and axis labels</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="c1"># return to the default</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">air_may</span> <span class="o">=</span> <span class="n">airquality</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">Month</span><span class="o">==</span><span class="m">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">air_other</span> <span class="o">=</span> <span class="n">airquality</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">Month</span><span class="o">!=</span><span class="m">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">plot</span><span class="p">(</span><span class="n">airquality</span><span class="o">$</span><span class="n">Wind</span><span class="p">,</span> <span class="n">airquality</span><span class="o">$</span><span class="n">Ozone</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&#34;Ozone and Wind in NYC&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">points</span><span class="p">(</span><span class="n">air_may</span><span class="o">$</span><span class="n">Wind</span><span class="p">,</span> <span class="n">air_may</span><span class="o">$</span><span class="n">Ozone</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">points</span><span class="p">(</span><span class="n">air_other</span><span class="o">$</span><span class="n">Wind</span><span class="p">,</span> <span class="n">air_other</span><span class="o">$</span><span class="n">Ozone</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#34;red&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">legend</span><span class="p">(</span><span class="s">&#34;topright&#34;</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;blue&#34;</span><span class="p">,</span> <span class="s">&#34;red&#34;</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;May&#34;</span><span class="p">,</span> <span class="s">&#34;Other Months&#34;</span><span class="p">))</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<p>Some important graphical parameters:</p>
+<ul>
+<li><code>pch</code>: plotting symbol for points (the default is a circle)</li>
+<li><code>lty</code>: line type (the default is a solid line, but it can also be dotted, etc.)</li>
+<li><code>lwd</code>: line width (integer)</li>
+<li><code>col</code>: color, specified as a number, a text name, or a hexadecimal code (<code>colors()</code> returns a vector of named colors)</li>
+<li><code>xlab</code>: label for the x-axis</li>
+<li><code>ylab</code>: label for the y-axis</li>
+<li><code>par()</code>: function used to specify <em>global</em> parameters that affect all figures:
+<ul>
+<li><code>las</code>: label orientation</li>
+<li><code>bg</code>: background color</li>
+<li><code>mar</code>: margin size</li>
+<li><code>oma</code>: outer margin size (default is 0)</li>
+<li><code>mfrow</code>: number of graphs per row</li>
+<li><code>mfcol</code>: number of graphs per column</li>
+</ul>
+</li>
+</ul>
+<h2 id="grammar-of-graphics-ggplot2">Grammar of Graphics (<code>ggplot2</code>)</h2>
+<ul>
+<li>
+<p><a href="https://www.coursera.org/learn/exploratory-data-analysis/lecture/idcsq/ggplot2-part-3" target="_blank" rel="noopener"><em>ggplot2</em> - Part 3 (John Hopkins/Coursera)</a></p>
+</li>
+<li>
+<p><a href="https://www.coursera.org/learn/exploratory-data-analysis/lecture/cj6RA/ggplot2-part-4" target="_blank" rel="noopener"><em>ggplot2</em> - Part 4 (John Hopkins/Coursera)</a></p>
+</li>
+<li>
+<p><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf" target="_blank" rel="noopener"><em>ggplot2</em> Cheat Sheet</a></p>
+</li>
+<li>
+<p><a href="https://r-graph-gallery.com/ggplot2-package.html" target="_blank" rel="noopener">Applications with <em>ggplot2</em> (The R Graph Gallery)</a></p>
+</li>
+<li>
+<p>Basic components of <code>ggplot2</code>:</p>
+<ul>
+<li>a <strong>data frame</strong></li>
+<li><strong>aesthetics</strong>: how the data are mapped into visual attributes such as size, shape, and color</li>
+<li>geometric objects (<strong>geoms</strong>): points, lines, shapes</li>
+<li><strong>facets</strong>: for conditional plots</li>
+</ul>
+</li>
+<li>
+<p>Instead of creating a graph directly, <code>ggplot2</code> constructs graphs in layers.</p>
+</li>
+</ul>
+<ol>
+<li>Data Frame</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+</span></span><span class="line"><span class="cl">## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+</span></span><span class="line"><span class="cl">## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+</span></span><span class="line"><span class="cl">## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+</span></span><span class="line"><span class="cl">## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+</span></span><span class="line"><span class="cl">## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+</span></span><span class="line"><span class="cl">## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+</span></span></code></pre></div><ol start="2">
+<li>Plot foundation (<code>ggplot()</code>)
+<ul>
+<li>the data that will be included in the graph</li>
+<li>whenever we map variables into the plot, we use the <code>aes()</code> function</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="err">##</span> <span class="nx">Warning</span><span class="p">:</span> <span class="kn">package</span> <span class="err">&#39;</span><span class="nx">ggplot2</span><span class="err">&#39;</span> <span class="nx">was</span> <span class="nx">built</span> <span class="nx">under</span> <span class="nx">R</span> <span class="nx">version</span> <span class="mf">4.2.2</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">=</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span> <span class="n">wt</span><span class="p">))</span> <span class="c1"># create the foundation of the graph</span>
+</span></span><span class="line"><span class="cl"><span class="n">g</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<ol start="3">
+<li>Geometric layer (<code>geom</code>)
+<ul>
+<li>adds shapes, lines, and points</li>
+<li>if no new variables are supplied, the geometric layer uses the base variables defined in the initial <code>ggplot()</code> call</li>
+<li>we combine the plot foundation with additional layers using <code>+</code></li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">()</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<ol start="4">
+<li>Smoothing/trend layer (<code>smooth</code>)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">geom_smooth(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">mapping = NULL, data = NULL, ...,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">method = NULL, formula = NULL, se = TRUE, level = 0.95</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">mapping</span><span class="p">:</span><span class="w"> </span><span class="l">Set of aesthetic mappings created by aes() or aes_(). If specified and inherit.aes = TRUE (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="l">The data to be displayed in this layer. If NULL, the default, the data is inherited from the plot data as specified in the call to ggplot().</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l">Smoothing method (function) to use, accepts either NULL or a character vector, e.g. &#34;lm&#34;, &#34;glm&#34;, &#34;gam&#34;, &#34;loess&#34; or a function (...).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">formula</span><span class="p">:</span><span class="w"> </span><span class="l">Formula to use in smoothing function, eg. y ~ x, y ~ poly(x, 2), y ~ log(x).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">se</span><span class="p">:</span><span class="w"> </span><span class="l">Display confidence interval around smooth? (TRUE by default, see level to control.)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">Level of confidence interval to use (0.95 by default).</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">()</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#34;lm&#34;</span><span class="p">)</span> <span class="c1"># OLS smoothing line</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## `geom_smooth()` using formula = &#39;y ~ x&#39;
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<ol start="5">
+<li>Conditional layers
+Facets (using <code>cyl</code>)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">()</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#34;lm&#34;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">facet_grid</span><span class="p">(</span><span class="n">. </span><span class="o">~</span> <span class="n">cyl</span><span class="p">)</span> <span class="c1"># group horizontally by number of cylinders</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## `geom_smooth()` using formula = &#39;y ~ x&#39;
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">()</span> <span class="o">+</span> <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">&#34;lm&#34;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">facet_grid</span><span class="p">(</span><span class="n">cyl</span> <span class="o">~</span> <span class="n">.)</span> <span class="c1"># group vertically by number of cylinders</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">## `geom_smooth()` using formula = &#39;y ~ x&#39;
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-14-2.png" width="672" />
+<ol start="6">
+<li>Annotations
+<ul>
+<li>Labels: <code>xlab()</code>, <code>ylab()</code>, <code>labs()</code>, <code>ggtitle()</code></li>
+<li>Each <em>geom</em> has its own customization options, but use <code>theme()</code> for global plot settings. Type <code>?theme</code> to see how many adjustments are available.</li>
+<li>If you want predefined themes, two standard templates are <code>theme_gray()</code> and <code>theme_bw()</code> (black and white). Other themes are also available through the <code>ggthemes</code> package.</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">()</span> <span class="o">+</span> <span class="n">ggthemes</span><span class="o">::</span><span class="nf">theme_economist</span><span class="p">()</span> <span class="o">+</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">ylab</span><span class="p">(</span><span class="s">&#34;Weight (pounds)&#34;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">xlab</span><span class="p">(</span><span class="s">&#34;Miles per gallon&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#34;Miles per gallon vs. vehicle weight&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<ol start="7">
+<li>Modifying aesthetics
+<ul>
+<li>Within each <em>geom</em>, we can define color (<code>color</code>), size (<code>size</code>), and transparency (<code>alpha</code>)</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">&#34;steelblue&#34;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="m">9</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0.4</span><span class="p">)</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">g</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cyl</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="m">9</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0.4</span><span class="p">)</span> <span class="c1"># color by a variable - requires aes()</span>
+</span></span></code></pre></div><img src="/project/rec2301/sec5/_index_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+
+
+<ul class="cta-group">
+  
+  <li>
+    <a href="../sec6"  class="btn btn-primary px-3 py-3">Proceed to Statistics Review</a>
+  </li>
+  
+  
+</ul>
+
+
+
+        </article>
+
+        
+
+
+
+
+
+        
+
+
+
+        
+        
+        <div class="article-widget">
+          
+<div class="post-nav">
+  
+  
+</div>
+
+        </div>
+        
+      </div>
+
+      <div class="body-footer">
+        <p>Last updated on Sep 9, 2018</p>
+
+        
+
+
+
+
+        
+
+
+
+
+        
+
+
+      </div>
+
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2026 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.d26509351aa0ff874abbee824e982e9b.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/bryanbraun/anchorjs@4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+<script>
+  anchors.add();
+</script>
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":false}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.e8ee06ba8371980ffde659871dd593b0.js"></script>
+
+
+
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.68f8d7090562ca65fc6d3cb3f8f2d2cb.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

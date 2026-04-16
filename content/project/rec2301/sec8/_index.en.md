@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regress�o M�ltipla
-summary: This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed. 
-title: Regress�o M�ltipla
+linktitle: "Multiple Regression"
+summary: "Applied econometrics notes on multiple regression, matrix notation, inference, dummy variables, and interaction terms in R."
+title: "Multiple OLS Regression"
 weight: 8
 output: md_document
 type: book

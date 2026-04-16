@@ -1,10 +1,10 @@
----
+﻿---
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: GLS/WLS/FGLS
-summary: The section covers topics such as the variance-covariance matrix of errors, heteroskedasticity tests (including the Breusch-Pagan and White tests), and various estimators such as OLS with robust standard errors, GLS, WLS, and FGLS. The section provides R code examples for performing these analyses and includes references to relevant literature. Overall, this section of the webpage provides a comprehensive overview of econometric methods and techniques for analyzing data using R. It is a valuable resource for anyone interested in learning more about these topics.
-title: Heterocedasticidade
+linktitle: "GLS/WLS/FGLS"
+summary: "Heteroskedasticity notes covering error variance matrices, Breusch-Pagan and White tests, robust standard errors, GLS, WLS, and feasible GLS in R."
+title: "Heteroskedasticity, GLS, WLS, and FGLS"
 weight: 10
 output: md_document
 type: book
@@ -12,14 +12,14 @@ type: book
 
 
 
-- [Se��es 8.2 e 8.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
-- Se��es 5.5, 7.1 a 7.4 de Davidson e MacKinnon (1999)
-- Se��es 4.2.3 e 4.2.4 de Wooldridge
+- [Sections 8.2 and 8.3 of Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- Sections 5.5 and 7.1 to 7.4 of Davidson and MacKinnon (1999)
+- Sections 4.2.3 and 4.2.4 of Wooldridge
 
 
-## Matriz de vari�ncias-covari�ncias dos erros
+## Error variance-covariance matrix
 
-Relembre que a matriz de vari�ncias-covari�ncias dos erros � dada por:
+Recall that the error variance-covariance matrix is given by:
 
 {{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
 \left[ \begin{array}{cccc}
@@ -29,10 +29,10 @@ cov(\varepsilon_{2}, \varepsilon_{1}) & var(\varepsilon_{2}) & \cdots & cov(\var
 cov(\varepsilon_{N}, \varepsilon_{1}) & cov(\varepsilon_{N}, \varepsilon_{2}) & \cdots & var(\varepsilon_{N}) 
 \end{array} \right]$${{</math>}}
 
-Como assumimos amostragem aleat�ria, a covari�ncia entre dois indiv�duos distintos {{<math>}}($i \neq j$){{</math>}} �  
-{{<math>}}$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{para todo } i \neq j.$${{</math>}}
+Because we assume random sampling, the covariance between two distinct individuals {{<math>}}$(i \neq j)${{</math>}} is  
+{{<math>}}$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{for all } i \neq j.$${{</math>}}
 
-Logo, 
+Therefore, 
 {{<math>}}$$ \boldsymbol{\Sigma} = 
 \left[ \begin{array}{cccc}
 var(\varepsilon_{1}) & 0 & \cdots & 0 \\
@@ -42,8 +42,8 @@ var(\varepsilon_{1}) & 0 & \cdots & 0 \\
 \end{array} \right]$${{</math>}}
 
 
-Para MQO, assum�amos homocedasticidade e, portanto, a diagonal principal era toda preenchida por um mesmo {{<math>}}$ var(\varepsilon_i) = \sigma^2,\ \forall i${{</math>}}.
-Na presen�a de **heteroscedasticidade**, segue que {{<math>}}$ var(\varepsilon_i) = \sigma^2_i,\ \forall i${{</math>}} e, logo:
+Under OLS, we assume homoskedasticity, so the main diagonal is filled by a common {{<math>}}$ var(\varepsilon_i) = \sigma^2,\ \forall i${{</math>}}.
+In the presence of **heteroskedasticity**, it follows that {{<math>}}$ var(\varepsilon_i) = \sigma^2_i,\ \forall i${{</math>}} and therefore:
 
 {{<math>}}$$ \boldsymbol{\Sigma} = 
 \left[ \begin{array}{cccc}
@@ -53,7 +53,7 @@ Na presen�a de **heteroscedasticidade**, segue que {{<math>}}$ var(\varepsilon
 0 & 0 & \cdots & \sigma^2_N 
 \end{array} \right] \ \neq\ \sigma^2 I_N $${{</math>}}
 
-Como � uma matriz diagonal, � f�cil computar a inversa da matriz:
+Because this is a diagonal matrix, its inverse is straightforward to compute:
 
 {{<math>}}$$ \boldsymbol{\Sigma}^{-1} = 
 \left[ \begin{array}{cccc}
@@ -62,7 +62,7 @@ Como � uma matriz diagonal, � f�cil computar a inversa da matriz:
 \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & 1/\sigma^2_N 
 \end{array} \right]$${{</math>}}
-e
+and
 {{<math>}}$$\boldsymbol{\Sigma}^{-0.5} = 
 \left[ \begin{array}{cccc}
 1/\sigma_1 & 0 & \cdots & 0 \\
@@ -76,47 +76,47 @@ e
 
 
 
-## Testes de heterocedasticidade
+## Heteroskedasticity Tests
 
-- A ideia os testes de heterocedasticidade � pegar os res�duos da estima��o por MQO, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}, e verificar sua correla��o com as vari�veis explicativas, {{<math>}}$\boldsymbol{X}${{</math>}}. Em caso de homocedasticidade, essa correla��o deveria ser estatisticamente nula.
-- Podemos testar isso por meio do testes de Breusch-Pagan ou de White.
+- The idea behind heteroskedasticity tests is to take the OLS residuals, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}, and check whether they are correlated with the explanatory variables, {{<math>}}$\boldsymbol{X}${{</math>}}. Under homoskedasticity, this correlation should be statistically zero.
+- We can test this using either the Breusch-Pagan test or the White test.
 
 
-### Teste de Breusch-Pagan
+### Breusch-Pagan Test
 
-- Inicialmente, considere o seguinte modelo linear
+- First, consider the following linear model:
 {{<math>}}$$\boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}_{1} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
-- Ao estim�-lo por MQO, obtemos os res�duos
+- After estimating it by OLS, we obtain the residuals
 {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} = \boldsymbol{y} - \boldsymbol{X} \hat{\boldsymbol{\beta}}${{</math>}}
-- Depois, fazemos a regress�o dos res�duos ao quadrado em fun��o das covariadas:
+- Next, we regress the squared residuals on the covariates:
 {{<math>}}$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + \gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u} = \boldsymbol{X} \boldsymbol{\gamma} + \boldsymbol{u} $${{</math>}}
-- Breusch-Pagan (1979) e Koenker (1981) propuseram testar a hip�tese nula **conjunta** de que todos os par�metros s�o iguais a zero:
+- Breusch-Pagan (1979) and Koenker (1981) proposed testing the **joint** null hypothesis that all coefficients are equal to zero:
 {{<math>}}$$H_0: \quad \boldsymbol{\gamma} = \boldsymbol{0} \iff \begin{bmatrix} \gamma_1 \\ \gamma_2 \\ \vdots \\ \gamma_K \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} $${{</math>}}
 
-- A verifica��o dessa hip�tese pode ser feita via estat�stica LM 
+- This hypothesis can be evaluated using the LM statistic:
 
 {{<math>}}$$ LM = N. R^2_{\scriptstyle{\hat{\varepsilon}}}\ \sim\ \chi^2_K $${{</math>}}
 
 
-#### Exemplo 8.7: Demanda por Cigarros (Wooldridge)
-- Nesta se��o, vamos usar a base de dados `smoke` do pacote `wooldridge` para estimar o seguinte modelo:
+#### Example 8.7: Cigarette Demand (Wooldridge)
+- In this section, we use the `smoke` dataset from the `wooldridge` package to estimate the following model:
 {{<math>}}\begin{align}\text{cigs} = &\beta_0 + \beta_1 \text{lincome} + \beta_2 \text{lcigpric} + \beta_3 \text{educ} + \beta_4 \text{age}\\ &+ \beta_5 \text{agesq} + \beta_6 \text{restaurn} + \varepsilon \end{align}{{</math>}}
-em que:
+where:
 
-- _cigs_: cigarros fumados por dia
-- _lincome_: log da renda
-- _lcigpric_: log do pre�o do cigarro
-- _educ_: anos de escolaridade
-- _age_: idade
-- _agesq_: idade ao quadrado
-- _restaurn_: dummy resturante tem restri��es de fumo
+- _cigs_: cigarettes smoked per day
+- _lincome_: log income
+- _lcigpric_: log cigarette price
+- _educ_: years of schooling
+- _age_: age
+- _agesq_: age squared
+- _restaurn_: indicator for whether restaurants have smoking restrictions
 
 
 ```r
-library(lmtest) # precisa ser instalado
+library(lmtest) # needs to be installed
 data(smoke, package="wooldridge")
 
-# Regress�o do modelo
+# Estimate the model
 reg = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn, data=smoke)
 bptest(reg)
 ```
@@ -130,7 +130,7 @@ bptest(reg)
 ```
 
 ```r
-# Teste BP na "m�o"
+# Manual BP test
 N = nrow(smoke)
 K = ncol(model.matrix(reg)) - 1
 
@@ -145,12 +145,12 @@ LM = N * r2e
 ## [1] 1.455779e-05
 ```
 
-- Alternativamente, o teste tamb�m pode ser feito pela estat�stica LM (ou, tamb�m, Wald):
+- Alternatively, the test can also be computed using the F statistic (or, equivalently, a Wald test):
 {{<math>}}$$ F_{\scriptscriptstyle{K, (N-K-1)}} = \frac{R^2_{\scriptstyle{\hat{\varepsilon}}}/K}{(1 - R^2_{\scriptstyle{\hat{\varepsilon}}}) / (N-K-1)} $${{</math>}}
 
 
 ```r
-# Teste F j� vem calculado no summary(lm())
+# The F test is already reported by summary(lm())
 summary(reg.resid)
 ```
 
@@ -182,7 +182,7 @@ summary(reg.resid)
 ```
 
 ```r
-# Teste F na "m�o"
+# Manual F test
 F = (r2e / K) / ((1-r2e) / (N-K-1))
 F
 ```
@@ -199,33 +199,33 @@ F
 ## [1] 1.188811e-05
 ```
 
-- Note que os testes avaliam se h� heterocedasticidade, mas n�o mostra quais vari�veis s�o respons�veis por isso.
-- Por isso, pode ser interessante tamb�m visualizar os testes t de cada regressor na regress�o sobre o quadrado do res�duos. Neste caso, aparenta ocorrer pela vari�vel _age_, _agesq_ e _restaurn_.
+- Note that these tests detect whether heteroskedasticity is present, but they do not identify which variables are driving it.
+- For that reason, it is often useful to inspect the individual t tests from the auxiliary regression of squared residuals. In this example, the evidence points to _age_, _agesq_, and _restaurn_.
 
 
 
-### Teste de White
+### White Test
 
-- Embora o teste de Breusch-Pagan seja interessante, ele avalia os erros apenas de forma linear nas vari�veis explicativas:
+- Although the Breusch-Pagan test is useful, it only evaluates the errors as a linear function of the explanatory variables:
 {{<math>}}$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + \gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u}$${{</math>}}
-- Portanto, para capturar mais formas de heterocedasticidade, � interessante colocar tamb�m as **intera��es entre os regressores e seus quadrados** na forma:
+- To capture richer forms of heteroskedasticity, it is useful to include **regressor interactions and squared terms** in the auxiliary regression:
 {{<math>}}\begin{align} \hat{\boldsymbol{\varepsilon}}^2 = & \alpha + {\color{blue}\gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K}} + {\color{red}\delta_{11} \boldsymbol{x}^2_{1} + \delta_{12} (\boldsymbol{x}_{1}\boldsymbol{x}_{2}) + ... + \delta_{1K} (\boldsymbol{x}_{1}\boldsymbol{x}_{K})}\\
 & {\color{red}+ \delta_{22} \boldsymbol{x}^2_{2} + \delta_{23} (\boldsymbol{x}_{2}\boldsymbol{x}_{3}) + ... + \delta_{KK}\boldsymbol{x}^2_{K}} + \boldsymbol{u} \end{align}{{</math>}}
-- Ent�o, o teste de hip�tese seria:
+- The corresponding hypothesis test is then:
 {{<math>}}$$H_0: \quad \begin{bmatrix}\boldsymbol{\gamma} \\ \boldsymbol{\delta} \end{bmatrix} = \boldsymbol{0} \iff \begin{bmatrix} \gamma_1 \\ \gamma_2 \\ \vdots \\ \gamma_K \\ \delta_{11} \\ \delta_{12} \\ \vdots \\ \delta_{KK} \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} $${{</math>}}
-- O problema � que se perdem muitos graus de liberdade quando inclu�mos par�metros para todas as intera��es e os quadrados dos regressores.
-- White (1980) ent�o mostrou que � poss�vel fazer um teste equivalente incluindo apenas {{<math>}}$\hat{\boldsymbol{y}}${{</math>}} e {{<math>}}$\hat{\boldsymbol{y}}^2${{</math>}} como regressores no modelo do res�duo ao quadrado:
+- The problem is that we lose many degrees of freedom when we include all interaction and squared terms explicitly.
+- White (1980) showed that an equivalent test can be implemented by including only {{<math>}}$\hat{\boldsymbol{y}}${{</math>}} and {{<math>}}$\hat{\boldsymbol{y}}^2${{</math>}} as regressors in the squared-residual regression:
 {{<math>}}$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + {\color{blue}\gamma \hat{\boldsymbol{y}}} + {\color{red}\delta \hat{\boldsymbol{y}}^2} + \boldsymbol{u}$${{</math>}}
-- E o teste de hip�tese se torna apenas
+- The hypothesis test then becomes simply
 {{<math>}}$$H_0: \quad \begin{bmatrix}\gamma \\ \delta \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} $${{</math>}}
-que tamb�m pode ser testada pelas estat�sticas LM (Breusch-Pagan) ou F.
+which can again be tested using either the LM (Breusch-Pagan) or F statistic.
 
 
 ```r
-# Valores ajustados
+# Fitted values
 yhat = fitted(reg)
 
-# Teste via bptest()
+# Test via bptest()
 bptest(reg, ~ yhat + I(yhat^2))
 ```
 
@@ -238,7 +238,7 @@ bptest(reg, ~ yhat + I(yhat^2))
 ```
 
 ```r
-# Teste BP/LM "na m�o"
+# Manual BP/LM test
 reg.resid = lm(resid(reg)^2 ~ yhat + I(yhat^2), data=smoke)
 r2e = summary(reg.resid)$r.squared
 LM = N * r2e
@@ -254,35 +254,35 @@ LM = N * r2e
 <br>
 
 
-## Estimador MQO com erros padr�o robustos
+## OLS with Heteroskedasticity-Robust Standard Errors
 
-- O estimador de MQO permanece n�o-viesado/consistente sob heterocedasticidade, mas perde efici�ncia.
-- Um forma de contornar esse problema � modelarmos a matriz de vari�ncias-covari�ncias **dos erros** {{<math>}}$\boldsymbol{\Sigma}${{</math>}}
-- Primeiro, lembre-se que a matriz de vari�ncias-covari�ncias **do estimador de MQO** � dada por
+- The OLS estimator remains unbiased and consistent under heteroskedasticity, but it is no longer efficient.
+- One way to deal with this problem is to model the **error** variance-covariance matrix {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
+- First, recall that the variance-covariance matrix of the **OLS estimator** is given by
 {{<math>}}$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$${{</math>}}
-- Como h� heterocedasticidade, essa matriz n�o se simplifica para {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) = \sigma^2 (\boldsymbol{X}' \boldsymbol{X})^{-1}${{</math>}}, por�m tamb�m n�o conhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, que precisa ser estimado.
-- A forma mais simples de obter {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} foi sugerido por White (1980), que � preencher sua diagonal com o quadrado do res�duo de cada indiv�duo (obtido por estima��o MQO):
+- Under heteroskedasticity, this matrix does not simplify to {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}) = \sigma^2 (\boldsymbol{X}' \boldsymbol{X})^{-1}${{</math>}}. At the same time, {{<math>}}$\boldsymbol{\Sigma}${{</math>}} is unknown and must be estimated.
+- The simplest way to obtain {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}, suggested by White (1980), is to fill its diagonal with the squared OLS residual for each individual:
 {{<math>}}$$\hat{\boldsymbol{\Sigma}} = \begin{bmatrix}
 \hat{\varepsilon}^2_1 & 0 & \cdots & 0 \\
 0 & \hat{\varepsilon}^2_2 & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & \hat{\varepsilon}^2_N \end{bmatrix}$${{</math>}}
-- Portanto, temos o estimador de matriz de covari�ncias consistente com heterocedasticidade (HCCME)
+- Therefore, we obtain the heteroskedasticity-consistent covariance matrix estimator (HCCME)
 {{<math>}}$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$${{</math>}}
-que � tamb�m � conhecido como estimador sandu�che, pois {{<math>}}$(\boldsymbol{X}' \boldsymbol{X})^{-1}${{</math>}} est� nos extremos da f�rmula (p�o/_bread_), que "sanduicham" o termo {{<math>}}$\boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X}${{</math>}} (carne/_meat_).
+which is also known as the sandwich estimator, because {{<math>}}$(\boldsymbol{X}' \boldsymbol{X})^{-1}${{</math>}} appears on both ends of the formula (the _bread_), sandwiching the term {{<math>}}$\boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X}${{</math>}} (the _meat_).
 
-### Estima��o via lm() e vcovHC()
+### Estimation via lm() and vcovHC()
 
 
 ```r
-# Usando f�rmula vcovHC() do pacote sandwich
+# Using vcovHC() from the sandwich package
 library(lmtest)
-library(sandwich) # precisa ser instalado
+library(sandwich) # needs to be installed
 
-# Regress�o do modelo
+# Estimate the model
 reg = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn, data=smoke)
 
-# Construindo matriz vcov do estimador ajustado por heterocedasticidade
+# Build the heteroskedasticity-adjusted covariance matrix
 vcov_sandwich = vcovHC(reg, type="HC0")
 round(vcov_sandwich, 3)
 ```
@@ -299,8 +299,8 @@ round(vcov_sandwich, 3)
 ```
 
 ```r
-# Resultados
-round(coeftest(reg), 3) # resultado padr�o do MQO
+# Results
+round(coeftest(reg), 3) # standard OLS output
 ```
 
 ```
@@ -320,7 +320,7 @@ round(coeftest(reg), 3) # resultado padr�o do MQO
 ```
 
 ```r
-round(coeftest(reg, vcov=vcov_sandwich), 3) # resultado com corre��o
+round(coeftest(reg, vcov=vcov_sandwich), 3) # results with the correction
 ```
 
 ```
@@ -339,27 +339,27 @@ round(coeftest(reg, vcov=vcov_sandwich), 3) # resultado com corre��o
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-- Note que, neste caso, os erros padr�o foram pouco alterados com o ajuste.
-- Para ter ganho em efici�ncia, {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} precisa ser bem especificado. H� tamb�m outras formas de modelar {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} na pr�pria fun��o `vcovHC()`.
+- Note that, in this example, the standard errors change only modestly after the correction.
+- To gain efficiency, {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} must be well specified. The `vcovHC()` function also offers alternative ways of modeling {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}}.
 
 
-### Estima��o Anal�tica
-- Tamb�m podemos fazer a infer�ncia robusta a heterocedasticidade analiticamente:
+### Analytical Estimation
+- We can also carry out heteroskedasticity-robust inference analytically:
 
 
 ```r
-# Criando o vetor y
-y = as.matrix(smoke[,"cigs"]) # transformando coluna de data frame em matriz
+# Create the y vector
+y = as.matrix(smoke[,"cigs"]) # convert the data-frame column to a matrix
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Create the covariate matrix X with a leading column of ones
 X = as.matrix( cbind(1, smoke[,c("lincome", "lcigpric", "educ", "age", "agesq",
-                                 "restaurn")]) ) # juntando 1's com x
+                                 "restaurn")]) ) # bind the column of ones to x
 
-# Pegando valores N e K
+# Store the values of N and K
 N = nrow(X)
 K = ncol(X) - 1
 
-# Estimativas MQO, valores preditos e res�duos
+# OLS estimates, fitted values, and residuals
 bhat = solve(t(X) %*% X) %*% t(X) %*% y
 yhat = X %*% bhat
 ehat = y - yhat
@@ -376,7 +376,7 @@ head(ehat^2)
 ## 6   5.950747
 ```
 
-- Agora vamos estimar a matriz de vari�ncias-covari�ncias dos erros pelo m�todo de White, preenchendo a sua diagonal com os res�duos ao quadrado para cada indiv�duo:
+- We now estimate the error variance-covariance matrix using White's method, filling the diagonal with the squared residual for each individual:
 {{<math>}}$$\hat{\boldsymbol{\Sigma}} = diag(\hat{\varepsilon}_1, \hat{\varepsilon}_2, ..., \hat{\varepsilon}_N)  = \begin{bmatrix}
 \hat{\varepsilon}^2_1 & 0 & \cdots & 0 \\
 0 & \hat{\varepsilon}^2_2 & \cdots & 0 \\
@@ -385,8 +385,8 @@ head(ehat^2)
 
 
 ```r
-# Estimando matriz de vcov dos erros (diagonal com res�duo^2 de cada indiv)
-Sigma = diag(as.numeric(ehat^2)) # transformar em numeric p/ preencher diagonal
+# Estimate the error vcov matrix (diagonal filled with each residual squared)
+Sigma = diag(as.numeric(ehat^2)) # convert to numeric before filling the diagonal
 round(Sigma[1:7, 1:7], 3)
 ```
 
@@ -400,13 +400,13 @@ round(Sigma[1:7, 1:7], 3)
 ## [6,]   0.000   0.000  0.000   0.000  0.000 5.951   0.000
 ## [7,]   0.000   0.000  0.000   0.000  0.000 0.000 142.419
 ```
-- Note que foi necess�rio transformar `ehat^2` em numeric para aplicar o operador `diag()`. Caso n�o fosse feito, iria retornar um n�mero ao inv�s de criar uma matriz diagonal preenchida com os res�duos ao quadrado.
-- Agora, o podemos estimar a matriz de vari�ncias-covari�ncias do estimador robusta a heterocedasticidade:
+- Note that `ehat^2` must be converted to numeric in order to apply `diag()`. Otherwise, R would return a scalar instead of building a diagonal matrix filled with squared residuals.
+- Now we can estimate the heteroskedasticity-robust variance-covariance matrix of the estimator:
 {{<math>}}$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \hat{\boldsymbol{\Sigma}} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$${{</math>}}
 
 
 ```r
-# Matriz de vari�ncias-covari�ncia do estimador
+# Variance-covariance matrix of the estimator
 bread = solve(t(X) %*% X)
 meat = t(X) %*% Sigma %*% X
 Vbhat = bread %*% meat %*% bread
@@ -423,16 +423,16 @@ round(Vbhat, 3)
 ## agesq       0.005   0.000   -0.001  0.000  0.000  0.000    0.000
 ## restaurn    3.823  -0.077   -0.783 -0.012 -0.002  0.000    1.007
 ```
-- S� falta calcular os erros padr�o, est�sticas t e p-valores:
+- We only need to compute the standard errors, t statistics, and p-values:
 
 ```r
-# Erro padr�o robusto, estat t e p-valor
+# Robust standard errors, t statistics, and p-values
 se = sqrt(diag(Vbhat))
 t = bhat / se
 p = 2 * pt(-abs(t), N-K-1)
 
-# Resultados
-round(data.frame(bhat, se, t, p), 3) # resultado obtido analiticamente
+# Results
+round(data.frame(bhat, se, t, p), 3) # analytical results
 ```
 
 ```
@@ -447,7 +447,7 @@ round(data.frame(bhat, se, t, p), 3) # resultado obtido analiticamente
 ```
 
 ```r
-round(coeftest(reg, vcov=vcov_sandwich), 3) # obtido por fun��es
+round(coeftest(reg, vcov=vcov_sandwich), 3) # obtained using the built-in functions
 ```
 
 ```
@@ -470,30 +470,30 @@ round(coeftest(reg, vcov=vcov_sandwich), 3) # obtido por fun��es
 
 <br>
 
-## Estimador MQG
+## GLS Estimator
 
-- Alternativamente, podemos fazer a estima��o e a infer�ncia modelando a matriz de vari�ncias-covari�ncias dos erros, {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
-- O estimador de M�nimos Quadrados Generalizados (MQG/GLS), assumindo dados em corte transversal, � dado por
-{{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQG}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
+- Alternatively, we can perform estimation and inference by modeling the error variance-covariance matrix, {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
+- The Generalized Least Squares (GLS) estimator, assuming cross-sectional data, is given by
+{{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{GLS}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
 
-- A matriz de vari�ncias-covari�ncias do estimador � dada por
-{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
+- The variance-covariance matrix of the estimator is given by
+{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
 
-- O problema � que desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, e precisamos fazer mais premissas sobre a forma da matriz de vari�ncias-covari�ncias dos erros (e sua inversa) para estimar {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
+- The problem is that {{<math>}}$\boldsymbol{\Sigma}${{</math>}} is unknown, so we need additional assumptions about the structure of the error variance-covariance matrix (and its inverse) in order to estimate {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
 
 
 
 <br>
 
-## Estimador MQP
+## WLS Estimator
 
-- [Se��o 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 4.1 of Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - [Weighted Least Squares (Yibi Huang)](https://www.stat.uchicago.edu/~yibi/teaching/stat224/L14.pdf)
 
-- Um caso especial de MQG � o estimador de M�nimos Quadrados Ponderados (MQP/WLS), que considera que a vari�ncia do erro de cada observa��o � conhecida e proporcional a das demais.
-- A vari�ncia do erro individual � a partir uma fun��o das vari�veis explicativas, {{<math>}}$h(\boldsymbol{x}'_i)${{</math>}}:
+- A special case of GLS is the Weighted Least Squares (WLS) estimator, which assumes that each observation's error variance is known up to proportionality.
+- The individual error variance is modeled as a function of the explanatory variables, {{<math>}}$h(\boldsymbol{x}'_i)${{</math>}}:
 {{<math>}}$$ Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2.h(\boldsymbol{x}'_i), $${{</math>}}
-ou seja,
+that is,
 {{<math>}}\begin{align} \boldsymbol{\Sigma} &= 
 \left[ \begin{array}{cccc}
 \sigma^2 h(\boldsymbol{x}'_1) & 0 & \cdots & 0 \\
@@ -509,7 +509,7 @@ h(\boldsymbol{x}'_1) & 0 & \cdots & 0 \\
 \end{array} \right] \\
 &\equiv \sigma^2 \boldsymbol{W}^{-1}
 \end{align}{{</math>}}
-em que {{<math>}}$\boldsymbol{W}${{</math>}} � uma matriz de pesos:
+where {{<math>}}$\boldsymbol{W}${{</math>}} is a weight matrix:
 {{<math>}}$$ \boldsymbol{W} = \left[ \begin{array}{cccc}
 \frac{1}{h(\boldsymbol{x}'_1)} & 0 & \cdots & 0 \\
 0 & \frac{1}{h(\boldsymbol{x}'_2)} & \cdots & 0 \\
@@ -521,17 +521,17 @@ w_1 & 0 & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & w_N
 \end{array} \right] $${{</math>}}
-em que {{<math>}}$w_i${{</math>}} s�o os pesos da estima��o.
+where {{<math>}}$w_i${{</math>}} are the estimation weights.
 
 <br>
 
-- Por exemplo, considere que a vari�ncia das mulheres � o dobro da vari�ncia dos homens ({{<math>}}$\sigma^2_M = 2.\sigma^2_H ${{</math>}}), ent�o:
+- For example, suppose the error variance for women is twice the error variance for men ({{<math>}}$\sigma^2_M = 2.\sigma^2_H ${{</math>}}). Then:
 {{<math>}}$$ h(\text{female}_i) = \left\{ \begin{matrix} 
-2, &\text{se female}_i = 1 \\
-1, &\text{se female}_i = 0
+2, &\text{if female}_i = 1 \\
+1, &\text{if female}_i = 0
 \end{matrix} \right. $${{</math>}}
 
-- Considerando que as {{<math>}}$M${{</math>}} primeiras linhas s�o de mulheres, a matriz de vari�ncias-covari�ncias dos erros pode ser simplificada para:
+- If the first {{<math>}}$M${{</math>}} rows correspond to women, the error variance-covariance matrix can be simplified to:
 {{<math>}}\begin{align} \boldsymbol{\Sigma} &= 
 \left[ \begin{array}{cccc}
 \sigma^2_M & \cdots & 0 & 0 & \cdots & 0 \\
@@ -568,7 +568,7 @@ em que {{<math>}}$w_i${{</math>}} s�o os pesos da estima��o.
 \end{align}{{</math>}}
 
 
-- Por ser uma matriz diagonal, as seguintes matrizes s�o facilmente calculadas:
+- Because this matrix is diagonal, the following matrices are easy to compute:
 {{<math>}}$$ \boldsymbol{\Sigma}^{-1} = 
 \frac{1}{\sigma^2} \left[ \begin{array}{cccc}
 \frac{1}{2} & \cdots & 0 & 0 & \cdots & 0 \\
@@ -579,7 +579,7 @@ em que {{<math>}}$w_i${{</math>}} s�o os pesos da estima��o.
 0 & \cdots & 0 & 0 & \cdots & \frac{1}{1} \\
 \end{array} \right] \equiv 
 \frac{1}{\sigma^2} \boldsymbol{W}, $${{</math>}}
-e
+and
 {{<math>}}$$ \boldsymbol{\Sigma}^{-0.5} = 
 \frac{1}{\sigma} \left[ \begin{array}{cccc}
 \frac{1}{\sqrt{2}} & \cdots & 0 & 0 & \cdots & 0 \\
@@ -594,34 +594,34 @@ e
 
 <br>
 
-- Disto, podemos obter o estimador {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}${{</math>}}:
+- From this, we obtain the {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}${{</math>}} estimator:
 
-{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}} &= (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) \\
+{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}} &= (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) \\
 &= \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{y} \right) \\
 &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \frac{1}{\sigma^2} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \\
-&= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}
+&= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}
 \end{align}{{</math>}}
 
 
-- A matriz de vari�ncias-covari�ncias do estimador de MQP � dada por
+- The variance-covariance matrix of the WLS estimator is given by
 
-{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) &= \left(\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X} \right)^{-1} \\
+{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}) &= \left(\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X} \right)^{-1} \\
 &= \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
-&= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} = V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) \end{align}{{</math>}}
+&= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} = V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}) \end{align}{{</math>}}
 
 
-<!-- - Note que, para calcularmos {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}${{</math>}} precisamos estimar {{<math>}}$\sigma^2${{</math>}}. Por�m, a vari�ncia dos erros � estimada a partir de res�duos, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}, que por sua vez s�o obtidos a partir de estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}. -->
+<!-- To compute {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}${{</math>}}, we need an estimate of {{<math>}}$\sigma^2${{</math>}}. However, the error variance is itself estimated from residuals, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}, which in turn depend on {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}. -->
 
-- A vari�ncia dos erros, {{<math>}}$\sigma^2${{</math>}}, pode ser estimada usando:
+- The error variance, {{<math>}}$\sigma^2${{</math>}}, can be estimated by
 {{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N-K-1} $${{</math>}}
 
 
 <br>
 
-- Tamb�m podemos transformar as vari�veis e resolver por MQO, pr�-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, e definindo:
+- We can also transform the variables and solve by OLS, pre-multiplying {{<math>}}$\boldsymbol{X}${{</math>}} and {{<math>}}$\boldsymbol{y}${{</math>}} by {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, and defining:
 {{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{y}$${{</math>}}
 
-- No exemplo em que a vari�ncia da mulher � o dobro da vari�ncia do homem, temos:
+- In the example where the variance for women is twice the variance for men, we have:
 {{<math>}}\begin{align} \boldsymbol{W}^{0.5} \boldsymbol{y} &= \begin{bmatrix}
 2^{0.5} & \cdots & 0 & 0 & \cdots & 0 \\
 \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
@@ -639,63 +639,63 @@ e
 0 & \cdots & 0 & 0 & \cdots & \frac{1}{\sqrt{1}} \\
 \end{bmatrix} \begin{bmatrix}  y_1 \\ \vdots \\ y_M \\ y_{M+1} \\ \vdots \\ y_N \end{bmatrix} \\
 &= \begin{bmatrix} \frac{1}{\sqrt{2}} y_1 \\ \vdots \\ \frac{1}{\sqrt{2}}  y_M \\ \frac{1}{\sqrt{1}}  y_{M+1} \\ \vdots \\ \frac{1}{\sqrt{1}} y_N \end{bmatrix} \end{align}{{</math>}}
-em que {{<math>}}$M${{</math>}} � o n�mero de mulheres na base de dados.
+where {{<math>}}$M${{</math>}} is the number of women in the sample.
 
-- Note que as vari�veis {{<math>}}$\boldsymbol{y}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}} ficam multiplicadas pelo inverso da raiz de seus respectivos pesos, quando as pr�-multiplicamos por {{<math>}}$\boldsymbol{W}${{</math>}}.
+- Note that {{<math>}}$\boldsymbol{y}${{</math>}} and {{<math>}}$\boldsymbol{X}${{</math>}} are multiplied by the inverse square root of their corresponding weights when we pre-multiply them by {{<math>}}$\boldsymbol{W}${{</math>}}.
 
 
-- Observe tamb�m que os estimadores s�o equivalentes:
-{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}} &= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \\
+- Note also that the estimators are equivalent:
+{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}} &= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \\
 &= \left(\boldsymbol{X}' \boldsymbol{W}^{0.5} \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W}^{0.5} \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
 &= \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
 &= \left( \left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
-&= ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} ) \equiv \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}} \end{align}{{</math>}}
+&= ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} ) \equiv \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} \end{align}{{</math>}}
 e
-{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
+{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}) &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}} \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
-V(\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}) &= \sigma^2 (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1}
+V(\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}}) &= \sigma^2 (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1}
 \end{align}{{</math>}}
 
-em que usamos {{<math>}}$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}${{</math>}} (matriz sim�trica).
+where we use {{<math>}}$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}${{</math>}} (a symmetric matrix).
 
 
 
-### Estima��o via `lm()`
+### Estimation via `lm()`
 
-- Aqui usaremos um exemplo parecido com o que simulamos em uma se��o anterior, pois � dif�cil encontrar um exemplo que saiba o formato exato da heterocedasticidade � priori.
-- Vamos criar observa��es do seguinte modelo real com presen�a de heterocedasticidade:
+- Here we use an example similar to the one simulated in an earlier section, since it is hard to find a case where the exact form of heteroskedasticity is known a priori.
+- We generate observations from the following data-generating process with heteroskedasticity:
 {{<math>}}$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, (10x)^2) $${{</math>}}
-logo
+therefore
 {{<math>}}$$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 (10x_i)^2 \quad \implies\quad sd(\tilde{\varepsilon}_i | x_i) = \sigma (10x_i) $${{</math>}}
-- Para estimar o MQP via `lm()`, precisamos informar os pesos no argumento `weights`
+- To estimate WLS with `lm()`, we need to provide the weights in the `weights` argument.
 
 
 ```r
-# Definindo par�metros
+# Set the parameters
 b0til = 50
 b1til = -5
 N = 100
 
-# Gerando x e y por simula��o
+# Generate x and y by simulation
 set.seed(123)
-x = runif(N, 1, 9) # Gerando 100 obs. de x
-e_til = rnorm(N, 0, 10*x) # Erros: 100 obs. de m�dia 0 e desv pad 10x
-y = b0til + b1til*x + e_til # calculando observa��es y
+x = runif(N, 1, 9) # generate 100 observations of x
+e_til = rnorm(N, 0, 10*x) # errors: 100 observations with mean 0 and sd 10x
+y = b0til + b1til*x + e_til # compute y observations
 plot(x, y)
 ```
 
 <img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
-- Agora, vamos estimar por MQO e MQP o seguinte modelo emp�rico
+- Now let us estimate by OLS and WLS the following empirical model:
 {{<math>}}$$ y = \beta_0 + \beta_1 x + \varepsilon $${{</math>}}
 
 
 ```r
-# Estima��es
-reg.ols = lm(y ~ x) # estima��o por MQO
-reg.wls = lm(y ~ x, weights=1/(10*x)^2) # estima��o por MQP
+# Estimation
+reg.ols = lm(y ~ x) # OLS estimation
+reg.wls = lm(y ~ x, weights=1/(10*x)^2) # WLS estimation
 stargazer::stargazer(reg.ols, reg.wls, digits=2, type="text", omit.stat="f")
 ```
 
@@ -722,13 +722,13 @@ stargazer::stargazer(reg.ols, reg.wls, digits=2, type="text", omit.stat="f")
 ## Note:                          *p<0.1; **p<0.05; ***p<0.01
 ```
 
-- Veja que a estima��o por MQP foi mais eficiente - produziu erros padr�o menores, dado que **j� sab�amos que a vari�ncia do erro era proporcional � vari�vel _x_**.
-- Na pr�tica, � dif�cil conhecer/defender uma forma exata da heterocedasticidade, j� que n�o conhecemos o modelo real da vari�ncia do erro.
-- Abaixo, segue uma estima��o feita com pesos errados {{<math>}}$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 \left(\frac{1}{10 x_i}\right)^2${{</math>}} e note que, inclusive, afeta a estimativas (al�m de piorar os erros padr�o):
+- WLS is more efficient here, producing smaller standard errors because **we already know that the error variance is proportional to _x_**.
+- In practice, it is difficult to know or justify the exact form of heteroskedasticity because we do not observe the true variance model.
+- Below we estimate the model with incorrect weights, {{<math>}}$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 \left(\frac{1}{10 x_i}\right)^2${{</math>}}. Note that this even affects the coefficient estimates, in addition to worsening the standard errors:
 
 ```r
-# Estima��es
-reg.wls2 = lm(y ~ x, weights=x^2) # estima��o por MQP
+# Estimation
+reg.wls2 = lm(y ~ x, weights=x^2) # WLS estimation
 stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.stat="f")
 ```
 
@@ -757,14 +757,14 @@ stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.sta
 
 
 <!-- - Vamos continuar com a base de dados de cigarros -->
-<!-- - Aqui, vamos assumir que a vari�ncia dos erros � dada por -->
+<!-- Here, we would continue with the cigarette dataset. -->
 <!-- {{<math>}}$$ Var(\varepsilon_i | \text{age}_i) = \sigma^2 (\text{age}_i + \text{age}^2_i)$${{</math>}} -->
-<!-- - Agora, vamos estimar por MQO e MQP: -->
+<!-- Here, we would assume a specific form for the error variance. -->
 
 <!-- ```{r warning=FALSE} -->
 <!-- data(smoke, package="wooldridge") -->
 
-<!-- # Regress�o do modelo -->
+<!-- Estimate the model. -->
 <!-- reg.ols = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn, data=smoke) -->
 <!-- reg.wls = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn, -->
 <!--              weights=1/(age + agesq), data=smoke) -->
@@ -774,26 +774,26 @@ stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.sta
 
 
 
-### Estima��o Anal�tica
+### Analytical Estimation
 
-**a)** Criando vetores/matrizes e definindo _N_ e _K_
+**a)** Create the vectors/matrices and define _N_ and _K_
 
 ```r
-# Criando o vetor y
-y = as.matrix(y) # transformando coluna de data frame em matriz
+# Create the y vector
+y = as.matrix(y) # convert the data-frame column to a matrix
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
-X = as.matrix( cbind(1, x) ) # juntando 1's com x
+# Create the covariate matrix X with a leading column of ones
+X = as.matrix( cbind(1, x) ) # bind the column of ones to x
 
-# Pegando valores N e K
+# Store the values of N and K
 N = nrow(X)
 K = ncol(X) - 1
 ```
 
 
-**b)** Matriz de pesos {{<math>}}$\boldsymbol{W}${{</math>}}
+**b)** Weight matrix {{<math>}}$\boldsymbol{W}${{</math>}}
 
-- ?? a matriz cuja diagonal principal � preenchida pelos pesos, {{<math>}}$w_i = 1/x^2_i${{</math>}} 
+- This is the matrix whose main diagonal is filled with the weights, {{<math>}}$w_i = 1/x^2_i${{</math>}} 
 
 
 ```r
@@ -815,9 +815,9 @@ round(W[1:10,1:10], 2)
 ## [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.05
 ```
 
-**c)** Estimativas MQP {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}${{</math>}}
+**c)** WLS estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 
 
 ```r
@@ -831,7 +831,7 @@ bhat_wls
 ## x -5.923353
 ```
 
-**d)** Valores ajustados {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQP}}${{</math>}}
+**d)** Fitted values {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{WLS}}${{</math>}}
 
 ```r
 yhat_wls = X %*% bhat_wls
@@ -849,7 +849,7 @@ head(yhat_wls)
 ```
 
 
-**e)** Res�duos {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQP}}${{</math>}}
+**e)** Residuals {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{WLS}}${{</math>}}
 
 ```r
 ehat_wls = y - yhat_wls
@@ -866,7 +866,7 @@ head(ehat_wls)
 ## [6,]  20.5180944
 ```
 
-**f)** Estimativa da vari�ncia do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{MQP}}${{</math>}}
+**f)** Error variance estimate {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{WLS}}${{</math>}}
 {{<math>}}$$\hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $${{</math>}}
 
 
@@ -879,9 +879,9 @@ sig2hat_wls
 ## [1] 93.95364
 ```
 
-**h)** Matriz de Vari�ncias-Covari�ncias do Estimador
+**h)** Variance-Covariance Matrix of the Estimator
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) = \hat{\sigma}^2 (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} $${{</math>}}
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{WLS}}) = \hat{\sigma}^2 (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} $${{</math>}}
 
 
 ```r
@@ -896,15 +896,15 @@ round(Vbhat_wls, 3)
 ```
 
 
-**i)** Erros-padr�o, estat�sticas t e p-valores
+**i)** Standard Errors, t Statistics, and p-values
 
 ```r
 se_wls = sqrt( diag(Vbhat_wls) )
 t_wls = bhat_wls / se_wls
 p_wls = 2 * pt(-abs(t_wls), N-K-1)
 
-# Resultados
-data.frame(bhat_wls, se_wls, t_wls, p_wls) # resultado MQP
+# Results
+data.frame(bhat_wls, se_wls, t_wls, p_wls) # WLS results
 ```
 
 ```
@@ -914,7 +914,7 @@ data.frame(bhat_wls, se_wls, t_wls, p_wls) # resultado MQP
 ```
 
 ```r
-summary(reg.wls)$coef # resultado MQP via lm()
+summary(reg.wls)$coef # WLS results via lm()
 ```
 
 ```
@@ -925,15 +925,15 @@ summary(reg.wls)$coef # resultado MQP via lm()
 
 
 
-#### Transformando e estimando por MQO
-- Agora, vamos transformar as vari�veis e resolver por MQO, pr�-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, e definindo:
+#### Transforming and Estimating by OLS
+- We can now transform the variables and solve by OLS, pre-multiplying {{<math>}}$\boldsymbol{X}${{</math>}} and {{<math>}}$\boldsymbol{y}${{</math>}} by {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, and defining:
 
 {{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{y}$${{</math>}}
 
 
-**b')** Matriz de pesos {{<math>}}$\boldsymbol{W}^{0.5}${{</math>}}
+**b')** Weight matrix {{<math>}}$\boldsymbol{W}^{0.5}${{</math>}}
 
-- ?? a matriz cuja diagonal principal � preenchida pelas ra�zes quadradas dos pesos
+- This is the matrix whose main diagonal is filled with the square roots of the weights.
 
 
 ```r
@@ -955,31 +955,31 @@ round(W_0.5[1:10,1:10], 2)
 ## [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.02
 ```
 
-**b'')** Vari�veis transformadas {{<math>}}$\tilde{\boldsymbol{y}}${{</math>}} e {{<math>}}$\tilde{\boldsymbol{X}}${{</math>}}
+**b'')** Transformed variables {{<math>}}$\tilde{\boldsymbol{y}}${{</math>}} and {{<math>}}$\tilde{\boldsymbol{X}}${{</math>}}
 
 ```r
 ytil = W_0.5 %*% y
 Xtil = W_0.5 %*% X
-# Gr�ficos
+# Plots
 plot(x, ytil, ylim=c(-125,175), 
-     main=expression(paste("Gr�fico ", x ," \u00D7 ", tilde(y))),
-     xlab=expression(x), ylab=expression(tilde(y))) # plot xtil e ytil
+     main=expression(paste("Plot ", x ," \u00D7 ", tilde(y))),
+     xlab=expression(x), ylab=expression(tilde(y))) # plot x_tilde and y_tilde
 ```
 
 <img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 ```r
 plot(x, y, ylim=c(-125,175), 
-     main=expression(paste("Gr�fico ", x ," \u00D7 ", y)),
-     xlab=expression(x), ylab=expression(y)) # plot x e y
+     main=expression(paste("Plot ", x ," \u00D7 ", y)),
+     xlab=expression(x), ylab=expression(y)) # plot x and y
 ```
 
 <img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
 
 
-**c')** Estimativas MQO {{<math>}}$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**c')** OLS estimates {{<math>}}$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
-{{<math>}}$$ \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQo}} = (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $${{</math>}}
+{{<math>}}$$ \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} = (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $${{</math>}}
 
 
 ```r
@@ -993,7 +993,7 @@ bhat_ols
 ## x -5.923353
 ```
 
-**d')** Valores ajustados {{<math>}}$\tilde{\hat{\boldsymbol{y}}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**d')** Fitted values {{<math>}}$\tilde{\hat{\boldsymbol{y}}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 ```r
 yhat_ols = Xtil %*% bhat_ols
@@ -1011,7 +1011,7 @@ head(yhat_ols)
 ```
 
 
-**e')** Res�duos {{<math>}}$\tilde{\hat{\boldsymbol{\varepsilon}}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**e')** Residuals {{<math>}}$\tilde{\hat{\boldsymbol{\varepsilon}}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 ```r
 ehat_ols = ytil - yhat_ols
@@ -1028,7 +1028,7 @@ head(ehat_ols)
 ## [6,]  1.50376081
 ```
 
-**f')** Estimativa da vari�ncia do erro {{<math>}}$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{MQO}}${{</math>}}
+**f')** Error variance estimate {{<math>}}$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{OLS}}${{</math>}}
 {{<math>}}$$\tilde{\hat{\sigma}}^2 =  \frac{\tilde{\hat{\boldsymbol{\varepsilon}}}' \tilde{\hat{\boldsymbol{\varepsilon}}}}{N - K - 1} $${{</math>}}
 
 
@@ -1041,9 +1041,9 @@ sig2hat_ols
 ## [1] 0.9395364
 ```
 
-**h')** Matriz de Vari�ncias-Covari�ncias do Estimador
+**h')** Variance-Covariance Matrix of the Estimator
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) = \tilde{\hat{\sigma}}^2(\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} $${{</math>}}
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}) = \tilde{\hat{\sigma}}^2(\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} $${{</math>}}
 
 
 ```r
@@ -1058,15 +1058,15 @@ round(Vbhat_ols, 3)
 ```
 
 
-**i')** Erros-padr�o, estat�sticas t e p-valores
+**i')** Standard Errors, t Statistics, and p-values
 
 ```r
 se_ols = sqrt( diag(Vbhat_ols) )
 t_ols = bhat_ols / se_ols
 p_ols = 2 * pt(-abs(t_ols), N-K-1)
 
-# Resultados
-data.frame(bhat_ols, se_ols, t_ols, p_ols) # resultado MQO transformado
+# Results
+data.frame(bhat_ols, se_ols, t_ols, p_ols) # transformed OLS results
 ```
 
 ```
@@ -1076,7 +1076,7 @@ data.frame(bhat_ols, se_ols, t_ols, p_ols) # resultado MQO transformado
 ```
 
 ```r
-summary(reg.wls)$coef # resultado MQP via lm()
+summary(reg.wls)$coef # WLS results via lm()
 ```
 
 ```
@@ -1088,44 +1088,44 @@ summary(reg.wls)$coef # resultado MQP via lm()
 
 <br>
 
-## Estimador MQGF
+## FGLS Estimator
 
-- Na pr�tica, � dif�cil conhecer a priori a matriz de vari�ncias-covari�ncias dos erros.
-- Uma forma razo�vel � supor que {{<math>}}$\boldsymbol{\Sigma}${{</math>}} � uma fun��o de par�metros de um modelo linear {{<math>}}$\boldsymbol{\gamma}${{</math>}} desconhecidos.
-- Assim, podemos calcular {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} para obter {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}}, a partir de res�duos de MQO.
-- Esse tipo de procedimento � conhecido como M�nimos Quadrados Generalizados Fact�veis (MQGF/FGLS), pois seu c�lculo � poss�vel enquanto o MQG n�o �.
+- In practice, it is difficult to know the error variance-covariance matrix a priori.
+- A reasonable approach is to assume that {{<math>}}$\boldsymbol{\Sigma}${{</math>}} is a function of unknown parameters from a linear model, collected in {{<math>}}$\boldsymbol{\gamma}${{</math>}}.
+- We can then estimate {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} from OLS residuals and use it to construct {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}}.
+- This procedure is known as Feasible Generalized Least Squares (FGLS), because its calculation is feasible even when GLS itself is not.
 
-- Note que, se {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}} n�o for uma boa aproxima��o de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, ent�o as estimativas e infer�ncias por MQGF poder�o ser ruins.
+- Note that if {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}} is a poor approximation to {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, then the resulting FGLS estimates and inference may perform poorly.
 
 
 <br>
 
-- Queremos estimar o modelo
+- We want to estimate the model
 {{<math>}}$$y_i = \beta_0 + \beta_1 x_{i1} + ... + \beta_K x_{iK} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{1} $${{</math>}}
-enquanto, geralmente, assume-se a vari�ncia do erro individual � dada por:
+while the individual error variance is typically assumed to be given by:
 {{<math>}}$$Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2 \exp(\boldsymbol{x}'_i \boldsymbol{\gamma}). $${{</math>}}
 
-- A fun��o {{<math>}}$\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})${{</math>}} � um exemplo de fun��o _skedastic_, que garante que, ap�s c�lculo de {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}}, o valor ajustado n�o seja negativo (para a vari�ncia do indiv�duo ser sempre positiva).
+- The function {{<math>}}$\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})${{</math>}} is an example of a _skedastic_ function, ensuring that the fitted value is never negative after estimating {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} and thus keeping the variance positive for every individual.
 
-- Para estimar {{<math>}}$\boldsymbol{\gamma}${{</math>}}, � necess�rio ter estimativas {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} consistentes. A forma mais comum � come�ar calculando {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}.
-- Depois, � feita a regress�o linear auxiliar
+- To estimate {{<math>}}$\boldsymbol{\gamma}${{</math>}}, we need consistent estimates of {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}. The usual starting point is to compute {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}.
+- Next, we run the auxiliary linear regression
 {{<math>}}$$ \log{\hat{\varepsilon}}^2_i = \boldsymbol{x}'_i \boldsymbol{\gamma} + u_i, \tag{2} $${{</math>}}
-- A partir da estima��o, podemos usar os valores ajustados para calcular
+- From that estimation, we use the fitted values to compute
 {{<math>}}$$h(\boldsymbol{x}'_i) = \exp(\boldsymbol{x}'_i \boldsymbol{\gamma})$${{</math>}}
-que � a inverso do peso
+which is the inverse of the weight
 {{<math>}}$$w_i = \frac{1}{h(\boldsymbol{x}'_i)} = \frac{1}{\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})}$${{</math>}}
 
-- Com {{<math>}}$\boldsymbol{W}${{</math>}} estimado, podemos calcular {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} e {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}})${{</math>}}, seguindo os mesmos passos de MQP.
-- Podemos usar esse {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} estimado para estimar um novo {{<math>}}$\boldsymbol{\gamma}${{</math>}} e um novo {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}}. Isso pode ser feito iteradamente at� sua converg�ncia (se isso ocorrer) ou at� um certo n�mero de repeti��es.
+- With the estimated {{<math>}}$\boldsymbol{W}${{</math>}}, we can compute {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}} and {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}})${{</math>}}, following the same steps as for WLS.
+- We can then use the estimated {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}} to estimate a new {{<math>}}$\boldsymbol{\gamma}${{</math>}} and a new {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}}. This can be iterated until convergence (if it occurs) or for a fixed number of iterations.
 
 
-### Estima��o via lm()
+### Estimation via lm()
 
 
 ```r
 data(smoke, package="wooldridge")
 
-# Estima��o por MQO
+# OLS estimation
 reg.ols = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn,
              data=smoke)
 round(summary(reg.ols)$coef, 4)
@@ -1143,13 +1143,13 @@ round(summary(reg.ols)$coef, 4)
 ```
 
 ```r
-# Obten��o dos pesos wi = 1/h(zi) = 1/exp(Xg)
+# Obtain the weights w_i = 1/h(z_i) = 1/exp(Xg)
 logu2 = log(resid(reg.ols)^2)
 reg.var = lm(logu2 ~ lincome + lcigpric + educ + age + agesq + restaurn,
              data=smoke)
 w = 1/exp(fitted(reg.var))
 
-# Estima��o por MQGF
+# FGLS estimation
 reg.fgls = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn,
               weight=w, data=smoke)
 round(summary(reg.fgls)$coef, 4)
@@ -1167,25 +1167,25 @@ round(summary(reg.fgls)$coef, 4)
 ```
 
 
-### Estima��o Anal�tica
-- Parecida com MQP, apenas o in�cio � diferente:
-**a)** Criando vetores/matrizes e definindo _N_ e _K_
+### Analytical Estimation
+- This is similar to WLS; only the beginning changes:
+**a)** Create the vectors/matrices and define _N_ and _K_
 
 ```r
-# Criando o vetor y
-y = as.matrix(smoke[,"cigs"]) # transformando coluna de data frame em matriz
+# Create the y vector
+y = as.matrix(smoke[,"cigs"]) # convert the data-frame column to a matrix
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Create the covariate matrix X with a leading column of ones
 X = as.matrix( cbind(1, smoke[,c("lincome", "lcigpric", "educ", "age", "agesq",
-                                 "restaurn")]) ) # juntando 1's com x
+                                 "restaurn")]) ) # bind the column of ones to x
 
-# Pegando valores N e K
+# Store the values of N and K
 N = nrow(X)
 K = ncol(X) - 1
 ```
 
 
-**b1)** Estima��o por MQO para obter {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**b1)** OLS estimation to obtain {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 
 ```r
@@ -1194,7 +1194,7 @@ yhat = X %*% bhat_ols
 ehat = y - yhat
 ```
 
-**b2)** Regress�o do log dos res�duos ao quadrado e estima��o de {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}}
+**b2)** Regress the log squared residuals and estimate {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}}
 {{<math>}}$$ \log{\hat{\boldsymbol{\varepsilon}}}^2 = \boldsymbol{X} \boldsymbol{\gamma} + \boldsymbol{u} $${{</math>}}
 
 ```r
@@ -1202,7 +1202,7 @@ ghat = solve( t(X) %*% X ) %*% t(X) %*% log(ehat^2)
 ```
 
 
-**b3)** Matriz de pesos {{<math>}}$\boldsymbol{W}${{</math>}}
+**b3)** Weight matrix {{<math>}}$\boldsymbol{W}${{</math>}}
 {{<math>}}$$\boldsymbol{W} = diag\left(\frac{1}{\exp(\boldsymbol{X} \hat{\boldsymbol{\gamma}})}\right) = \begin{bmatrix}
 \frac{1}{\exp(\boldsymbol{x}'_1\hat{\boldsymbol{\gamma}})} & 0 & \cdots & 0 \\
 0 & \frac{1}{\exp(\boldsymbol{x}'_2\hat{\boldsymbol{\gamma}})} & \cdots & 0 \\
@@ -1227,10 +1227,10 @@ round(W[1:7,1:7], 3)
 ## [7,] 0.000 0.000 0.000 0.00 0.000 0.000 0.007
 ```
 
-- Os pr�ximos passos s�o os mesmos de MQP:
+- The remaining steps are the same as in WLS:
 
-**c)** Estimativas MQGF {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}}
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
+**c)** FGLS estimates {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 
 
 ```r
@@ -1249,7 +1249,7 @@ bhat_fgls
 ## restaurn -3.46106414
 ```
 
-**d)** Valores ajustados {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQGF}}${{</math>}}
+**d)** Fitted values {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{FGLS}}${{</math>}}
 
 ```r
 yhat_fgls = X %*% bhat_fgls
@@ -1267,7 +1267,7 @@ head(yhat_fgls)
 ```
 
 
-**e)** Res�duos {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQGF}}${{</math>}}
+**e)** Residuals {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{FGLS}}${{</math>}}
 
 ```r
 ehat_fgls = y - yhat_fgls
@@ -1284,7 +1284,7 @@ head(ehat_fgls)
 ## 6 -2.048962
 ```
 
-**f)** Estimativa da vari�ncia do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{MQGF}}${{</math>}}
+**f)** Error variance estimate {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{FGLS}}${{</math>}}
 {{<math>}}$$\hat{\sigma}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $${{</math>}}
 
 
@@ -1297,9 +1297,9 @@ sig2hat_fgls
 ## [1] 2.492289
 ```
 
-**h)** Matriz de Vari�ncias-Covari�ncias do Estimador
+**h)** Variance-Covariance Matrix of the Estimator
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} $${{</math>}}
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}) = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} $${{</math>}}
 
 
 ```r
@@ -1319,15 +1319,15 @@ round(Vbhat_fgls, 3)
 ```
 
 
-**i)** Erros-padr�o, estat�sticas t e p-valores
+**i)** Standard Errors, t Statistics, and p-values
 
 ```r
 se_fgls = sqrt( diag(Vbhat_fgls) )
 t_fgls = bhat_fgls / se_fgls
 p_fgls = 2 * pt(-abs(t_fgls), N-K-1)
 
-# Resultados
-round(data.frame(bhat_fgls, se_fgls, t_fgls, p_fgls), 4) # resultado MQP
+# Results
+round(data.frame(bhat_fgls, se_fgls, t_fgls, p_fgls), 4) # FGLS results
 ```
 
 ```
@@ -1342,7 +1342,7 @@ round(data.frame(bhat_fgls, se_fgls, t_fgls, p_fgls), 4) # resultado MQP
 ```
 
 ```r
-round(summary(reg.fgls)$coef, 4) # resultado MQGF via lm()
+round(summary(reg.fgls)$coef, 4) # FGLS results via lm()
 ```
 
 ```
@@ -1363,6 +1363,6 @@ round(summary(reg.fgls)$coef, 4) # resultado MQGF via lm()
 
 
 
-{{< cta cta_text="?Y'? Proceed to Instrumental Variable" cta_link="../sec11" >}}
+{{< cta cta_text="Proceed to Instrumental Variables" cta_link="../sec11" >}}
 
 

@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipulation
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Panel Data Manipulation
+linktitle: "Painel"
+summary: "Notas sobre construção de bases em painel no R com microdados da PNAD, incluindo formatos long e wide, painéis balanceados, identificadores, joins e reorganização dos dados."
+title: "Construção de bases em painel no R"
 weight: 14
 output: md_document
 type: book

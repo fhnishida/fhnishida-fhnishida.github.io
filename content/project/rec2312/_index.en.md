@@ -4,12 +4,12 @@ date: "2023-03-08T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on Panel Data and IV.
+summary: "Undergraduate Econometrics II teaching-assistance notes with R materials on multivariate OLS, panel data, instrumental variables, 2SLS, and hypothesis testing."
 tags:
 - Undergraduate
-title: Econometrics II (Spring 2023)
+title: "Econometrics II TA Notes (Spring 2023)"
 type: book
-linktitle: In�cio
+linktitle: "Home"
 weight: 1
 icon: book
 iconpack: fs

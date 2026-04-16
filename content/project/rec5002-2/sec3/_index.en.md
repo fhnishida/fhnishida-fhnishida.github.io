@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 3
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 3 (July 06, 2021)
+linktitle: "Nordhaus Model"
+summary: "Graduate macroeconomics notes on the Nordhaus political business cycle model, with complementary materials on Kuhn-Tucker conditions and differential equations."
+title: "Session 3: Political Business Cycle"
 weight: 3
 output: md_document
 type: book
@@ -25,4 +24,4 @@ type: book
 ## Complementary content
 - [AP_KuhnTucker_EqDif.pdf](../AP_KuhnTucker_EqDif.pdf)
 
-{{< cta cta_text="�Y'? Proceed to Session 4" cta_link="../chapter4" >}}
+{{< cta cta_text="Proceed to Session 4" cta_link="../sec4" >}}

@@ -1,14 +1,14 @@
----
+﻿---
 date: "2023-04-03T00:00:00Z"
 # external_link: https://fhnishida.github.io/fearp/eco1.html
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Graduate TA materials for Econometrics I, covering OLS, heteroskedasticity, IV, and panel data methods in R.
+summary: "Teaching assistance notes for Econometrics I at USP, with R materials on OLS, heteroskedasticity, instrumental variables, panel data, optimization, and hypothesis testing."
 tags:
 - Graduate
-title: Econometrics I (Spring 2023)
-linktitle: Main
+title: "Econometrics I TA Notes (Spring 2023)"
+linktitle: "Main"
 type: book
 weight: 1
 ---
@@ -18,7 +18,7 @@ Welcome to the TA materials for Econometrics I, prepared jointly with Felipe Bau
 Course page (Prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.br/course/view.php?id=108682](https://edisciplinas.usp.br/course/view.php?id=108682)
 
 Please feel free to contact us if you have any questions:
-- Fábio Nishida: `fabio.nishida@usp.br`
+- Fabio Nishida: `fabio.nishida@usp.br`
 - Felipe Bauer: `felipebauer@usp.br`
 
 {{< cta cta_text="Proceed to the R Toolkit" cta_link="sec1" >}}

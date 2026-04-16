@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Testes de Hipótese
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Testes de Hipótese
+linktitle: "Testes de Hipótese"
+summary: "Notas de econometria aplicada sobre testes de Wald e F, restrições lineares e implementações analíticas e em R."
+title: "Testes de Hipótese em Econometria"
 weight: 3
 output: md_document
 type: book

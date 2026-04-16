@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Data Manipulation with dplyr
-summary: The page provides an introduction to the dplyr package and its functions for column manipulation (select, rename, mutate), row manipulation (filter, arrange), and grouping of rows (summarize). The page also includes examples of using these functions with the Star Wars dataset. Additionally, the page discusses the use of the pipe operator (%>%) and join functions for merging data frames.
-title: Data Manipulation with dplyr
+linktitle: "dplyr"
+summary: "Applied R notes on dplyr workflows, including select, rename, mutate, filter, arrange, group_by, summarize, joins, and pipes."
+title: "Data Manipulation with dplyr"
 weight: 4
 output: md_document
 type: book
@@ -12,25 +12,25 @@ type: book
 
 
 
-## Pacote `dplyr`
+## The `dplyr` package
 - [Vignette - Introduction to _dplyr_](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html)
-- O pacote `dplyr` facilita a manipulação dos dados por meio de funções simples e computacionalmente eficientes
-- As funções pode, ser organizadas em três categorias:
-    - Colunas:
-        - `select()`: seleciona (ou retira) as colunas do data frame
-        - `rename()`: muda os nomes das colunas
-        - `mutate()`: cria ou muda os valores nas colunas
-    - Linhas:
-        - `filter()`: seleciona linhas de acordo com valores das colunas
-        - `arrange()`: organiza a ordem das linhas
-    - Grupo de linhas:
-        - `summarise()`: colapsa um grupo em uma única linha
-- Nesta subseção, continuaremos utilizando a base de dados de Star Wars (`starwars`), utilizada na subseção anterior.
-- Você irá notar que, ao usar essas funções, o data frame é transformado em um _tibble_ que é um formato mais eficiente para tratar dados tabulares, mas que funciona de forma igual a um data frame.
+- The `dplyr` package makes data manipulation easier through simple and computationally efficient functions.
+- These functions can be grouped into three categories:
+    - Columns:
+        - `select()`: selects or drops data-frame columns
+        - `rename()`: changes column names
+        - `mutate()`: creates or modifies column values
+    - Rows:
+        - `filter()`: selects rows according to column values
+        - `arrange()`: reorders the rows
+    - Groups of rows:
+        - `summarise()`: collapses each group into a single row
+- In this subsection, we continue using the Star Wars dataset (`starwars`) introduced in the previous subsection.
+- You will notice that, when these functions are applied, the data frame is turned into a _tibble_, which is a more efficient format for tabular data but works very similarly to a standard data frame.
 
 
 ```r
-library("dplyr") # Carregando pacote
+library("dplyr") # Load package
 ```
 
 ```
@@ -51,7 +51,7 @@ library("dplyr") # Carregando pacote
 ```
 
 ```r
-head(starwars) # olhando primeiras linhas da base contida no pacote
+head(starwars) # inspect the first rows of the dataset included in the package
 ```
 
 ```
@@ -69,8 +69,8 @@ head(starwars) # olhando primeiras linhas da base contida no pacote
 ```
 
 
-## Filtre linhas com `filter()`
-- Permite selecionar um subconjunto de linhas de um data frame
+## Filter rows with `filter()`
+- Selects a subset of rows from a data frame.
 ```yaml
 filter(.data, ...)
 
@@ -127,16 +127,16 @@ starwars[starwars$species == "Human" & starwars$height >= 100, ]
 ## #   vehicles <list>, starships <list>
 ```
 
-## Organize linhas com `arrange()`
-- Reordena as linhas a partir de um conjunto de nomes de coluna
+## Reorder rows with `arrange()`
+- Reorders the rows according to one or more column names.
 ```yaml
 arrange(.data, ..., .by_group = FALSE)
 
 .data: A data frame, data frame extension (e.g. a tibble), or a lazy data frame (e.g. from dbplyr or dtplyr).
 ... : <data-masking> Variables, or functions of variables. Use desc() to sort a variable in descending order.
 ```
-- Se for inserido mais de um nome de variável, organiza de acordo com a 1ª variável e, em caso de ter linhas com o mesmo valor na 1ª variável, ordena estas linhas de mesmo valor de acordo com a 2ª variável
-- Para usar a ordem decrescente, temos a função `desc()`
+- If more than one variable is provided, the rows are first sorted by the first variable and ties are broken using the second variable.
+- To sort in descending order, use the `desc()` function.
 
 ```r
 starwars2 = arrange(starwars1, height, desc(mass))
@@ -163,8 +163,8 @@ starwars2
 ```
 
 
-## Selecione colunas com `select()`
-- Seleciona colunas que são de interesse.
+## Select columns with `select()`
+- Selects the columns of interest.
 ```yaml
 select(.data, ...)
 
@@ -173,9 +173,9 @@ select(.data, ...)
 ! for taking the complement of a set of variables.
 c() for combining selections.
 ```
-- Coloca-se os nomes das colunas desejadas para selecioná-las.
-- Também é possível selecionar um intervalo de variáveis usando `var1:var2`
-- Caso queira tirar apenas algumas colunas, basta informar o nome delas precedidas pelo sinal de subtração (`-var`)
+- To select columns, simply list the desired column names.
+- We can also select a range of variables with `var1:var2`.
+- If we want to drop only a few columns, we can list their names preceded by a minus sign (`-var`).
 
 ```r
 starwars3 = select(starwars2, name:eye_color, sex:species)
@@ -200,8 +200,8 @@ starwars3
 ## # ℹ 21 more rows
 ## # ℹ 1 more variable: species <chr>
 ```
-- Note que o `select()` pode não funcionar corretamente se o pacote `MASS` estiver ativo. Caso esteja, retire a seleção do pacote `MASS` no quadrante inferior/direito em 'Packages' (ou digite `detach("package:MASS", unload = TRUE)`)
-- Uma outra forma de fazer a seleção de coluna é combinando com `starts_with()` e `ends_with()`, que resulta na seleção de colunas que se iniciam e terminam com um texto dado
+- Notice that `select()` may not work properly if the `MASS` package is attached. If that happens, detach `MASS` in the lower-right Packages pane or run `detach("package:MASS", unload = TRUE)`.
+- Another way to select columns is to combine `select()` with helpers such as `starts_with()` and `ends_with()`, which select columns that begin or end with a given text pattern.
 
 ```r
 head( select(starwars, ends_with("color")) ) # colunas que terminam com color
@@ -235,8 +235,8 @@ head( select(starwars, starts_with("s")) ) # colunas que iniciam com a letra "s"
 ## 6 light       male   Human   <chr [0]>
 ```
 
-## Renomeie colunas com `rename()`
-- Renomeia colunas usando `novo_nome = velho_nome`
+## Rename columns with `rename()`
+- Renames columns using `new_name = old_name`.
 ```yaml
 rename(.data, ...)
 
@@ -272,9 +272,9 @@ starwars4
 ```
 
 
-## Modifique/Adicione colunas com `mutate()`
-- Modifica uma coluna se ela já existir
-- Cria uma coluna se ela não existir
+## Modify/Add columns with `mutate()`
+- Modifies an existing column
+- Creates a new column if it does not exist
 ```yaml
 mutate(.data, ...)
 
@@ -287,11 +287,11 @@ mutate(.data, ...)
 
 ```r
 starwars5 = mutate(starwars4,
-                height = height/100, # transf cm p/ metro
+                height = height/100, # convert cm to meters
                 BMI = mass / height^2,
-                dummy = 1 # se não for vetor, tudo fica igual
+                dummy = 1 # if it is not a vector, the same value is recycled
                 )
-starwars5 = select(starwars5, BMI, dummy, everything()) # facilitar
+starwars5 = select(starwars5, BMI, dummy, everything()) # make reading easier
 starwars5
 ```
 
@@ -313,12 +313,12 @@ starwars5
 ## # ℹ 2 more variables: homeworld <chr>, species <chr>
 ```
 
-## Operador Pipe `%>%`
-- Note que todas as funções do pacote `dyplr` anteriores têm como 1º argumento a base de dados (`.data`), e isto não é por acaso.
-- O operador pipe `%>%` joga um data frame (escrito à sua esquerda) no 1º argumento da função seguinte (à sua direita).
+## The pipe operator `%>%`
+- Notice that all previous `dplyr` functions take the dataset (`.data`) as their first argument, and that is not accidental.
+- The pipe operator `%>%` passes the data frame written on the left-hand side into the first argument of the next function on the right-hand side.
 
 ```r
-filter(starwars, species=="Droid") # sem operador pipe
+filter(starwars, species=="Droid") # without the pipe operator
 ```
 
 ```
@@ -336,7 +336,7 @@ filter(starwars, species=="Droid") # sem operador pipe
 ```
 
 ```r
-starwars %>% filter(species=="Droid") # com operador pipe
+starwars %>% filter(species=="Droid") # with the pipe operator
 ```
 
 ```
@@ -352,8 +352,8 @@ starwars %>% filter(species=="Droid") # com operador pipe
 ## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está where aplicada automaticamente via `%>%`).
-- Note que, desde a subseção com a função `filter()` até `mutate()` fomos "acumulando" as alterações em novos data frames, ou seja, o último data frame `starwars5` é a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
+- Notice that, when we use the pipe operator, the first argument containing the dataset should not be filled in, because it is already passed automatically by `%>%`.
+- Also note that, from the subsection on `filter()` through `mutate()`, we have been accumulating the transformations in new data frames. In other words, the last object, `starwars5`, is the original `starwars` dataset after the sequence of changes produced by `filter()`, `arrange()`, `select()`, `rename()`, and `mutate()`.
 
 ```r
 starwars1 = filter(starwars, species == "Human", height >= 100)
@@ -389,7 +389,7 @@ starwars5
 ## # ℹ 21 more rows
 ## # ℹ 2 more variables: homeworld <chr>, species <chr>
 ```
-- Usando o operador pipe `%>%` várias vezes, podemos ir pegando o output resultante da aplicação de uma função e jogar como input da função seguinte. Reescreveremos o código acima "em única linha" com `%>%`, chegando ao mesmo data frame de `starwars5`
+- By using the pipe operator `%>%` repeatedly, we can take the output from one function and feed it directly into the next one. We can therefore rewrite the code above as a single pipeline and obtain the same data frame as `starwars5`.
 
 ```r
 starwars_pipe = starwars %>% 
@@ -426,7 +426,7 @@ starwars_pipe
 ```
 
 ```r
-all(starwars_pipe == starwars5, na.rm=TRUE) # verificando se todos elementos são iguais
+all(starwars_pipe == starwars5, na.rm=TRUE) # check whether all elements are equal
 ```
 
 ```
@@ -435,7 +435,7 @@ all(starwars_pipe == starwars5, na.rm=TRUE) # verificando se todos elementos sã
 
 ## Resuma com `summarise()`
 
-- Podemos usar a função `summarise()` para gerar alguma estatística acerca de uma ou mais variáveis:
+- We can use `summarise()` to compute statistics for one or more variables:
 
 ```r
 starwars %>% summarise(
@@ -451,11 +451,11 @@ starwars %>% summarise(
 ##   <int>       <dbl>     <dbl>
 ## 1    87        174.      97.3
 ```
-- No caso acima, gerou simplesmente o tamanho da amostra e as médias de altura e de massa considerando a amostra inteira de `starwars` (o que não foi muito útil).
+- In the example above, we simply obtained the sample size and the mean height and mass for the full `starwars` sample, which is not especially informative.
 
 
 ## Agrupe com `group_by()`
-- Diferente das outras funções do `dplyr` mostradas até agora, o output do `group_by` não altera conteúdo do data frame, apenas **transforma em uma base de dados agrupada** em categorias de uma dada variável
+- Unlike the other `dplyr` functions shown so far, the output of `group_by()` does not change the content of the data frame. It only **turns the data into a grouped dataset** according to the categories of a given variable.
 
 ```r
 grouped_sw = starwars %>% group_by(sex)
@@ -485,7 +485,7 @@ head(starwars)
 ```
 
 ```r
-head(grouped_sw) # agrupado por sexo
+head(grouped_sw) # grouped by sex
 ```
 
 ```
@@ -502,7 +502,7 @@ head(grouped_sw) # agrupado por sexo
 ## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observations
+- `group_by()` prepares the data frame for operations that depend on multiple rows. As an example, let us create a column containing the mean of `mass` across all observations.
 
 ```r
 starwars %>%
@@ -528,13 +528,13 @@ starwars %>%
 ## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
-- Note que todos os valores de `mean_mass` são iguais. Agora, agruparemos por `sex` antes de fazer a soma:
+- Notice that all values of `mean_mass` are identical. We now group by `sex` before computing the mean:
 
 ```r
 starwars %>%
     group_by(sex) %>%
     mutate(mean_mass = mean(mass, na.rm=TRUE)) %>% 
-    ungroup() %>% # Lembre-se sempre de desagrupar depois!
+    ungroup() %>% # always remember to ungroup afterward
     select(mean_mass, sex, everything()) %>%
     head(10)
 ```
@@ -556,13 +556,13 @@ starwars %>%
 ## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
-- Note que, agora, a coluna `mean_mass` tem valores diferentes de acordo com o sexo da observation.
-- Isso é útil em algumas aplicações econômicas where consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observation (e.g. morador) pertence.
+- Notice that the `mean_mass` column now takes different values depending on the sex of the observation.
+- This is useful in many economic applications where we work with group-level variables, for example at the household level, attached to individual observations such as household members.
 
-> **Evite potenciais erros**: Sempre que usar `group_by()`, não se esqueça de desagrupar o data frame via função `ungroup()` após realizar a operações desejadas.
+> **Avoid potential mistakes**: Whenever you use `group_by()`, remember to ungroup the data frame with `ungroup()` after carrying out the desired operations.
 
 ## Resuma em grupos com `group_by()` e `summarise()`
-- A função `summarise()` é de fato útil quando combinada com a função `group_by()`, pois conseguimos obter as estatísticas de grupos:
+- `summarise()` is especially useful when combined with `group_by()`, because it allows us to compute group-level statistics:
 
 ```r
 summary_sw = starwars %>% group_by(sex) %>%
@@ -586,14 +586,14 @@ summary_sw
 ```
 
 ```r
-class(summary_sw) # ao usar summary, deixa de ser agrupada
+class(summary_sw) # once we summarise, the result is no longer grouped
 ```
 
 ```
 ## [1] "tbl_df"     "tbl"        "data.frame"
 ```
-- Note que, ao usar `summarise()`, o data frame resultante não é agrupado e, portanto, não é necessário usar `ungroup()` neste caso.
-- Também é possível adicionar mais de uma variável para agrupar:
+- Notice that, after using `summarise()`, the resulting data frame is no longer grouped, so `ungroup()` is not necessary in this case.
+- We can also group by more than one variable:
 
 ```r
 starwars %>% group_by(sex, hair_color) %>%
@@ -626,7 +626,7 @@ starwars %>% group_by(sex, hair_color) %>%
 ## 10 male           black             9        176.      81.0
 ## # ℹ 13 more rows
 ```
-- Para agrupar variáveis **contínuas**, precisamos definir intervalos usando a função `cut()`
+- To group **continuous** variables, we need to define intervals with the `cut()` function.
 ```yaml
 cut(x, ...)
 
@@ -636,7 +636,7 @@ breaks: either a numeric vector of two or more unique cut points or a single num
 ```
 
 ```r
-# breaks com um integer = qtd desejada de grupos
+# breaks supplied as an integer = desired number of groups
 starwars %>% group_by(cut(birth_year, breaks=5)) %>%
     summarise(
         n_obs = n(),
@@ -656,7 +656,7 @@ starwars %>% group_by(cut(birth_year, breaks=5)) %>%
 ```
 
 ```r
-# breaks com um vetor = quebras dos intervalos dos grupos
+# breaks supplied as a vector = group cut points
 starwars %>% group_by(birth_year=cut(birth_year, 
                           breaks=c(0, 40, 90, 200, 900))) %>%
     summarise(
@@ -675,23 +675,23 @@ starwars %>% group_by(birth_year=cut(birth_year,
 ## 4 (200,900]      2        120.
 ## 5 <NA>          44        176.
 ```
-- Note que inserimos `birth_year=cut(birth_year, ...)` para que o nome da coluna ficasse `birth_year`, caso contrário a coluna ficaria com o nome `cut(birth_year, ...)`.
+- Notice that we wrote `birth_year = cut(birth_year, ...)` so the column keeps the name `birth_year`; otherwise it would be named `cut(birth_year, ...)`.
 
 
-## Junte bases com funções _join_
-- Vimos anteriormente que podemos usar o `cbind()` juntar um data frame com outro data frame (ou vetor), caso tenham o mesmo número de linhas
-- Para juntar linhas (considerando que as colunas possuem as mesmas classes de variáveis), podemos usar o `rbind`
-- Para agrupar bases de dados a partir de variáveis-chave, usamos a função `merge()`.
-- O pacote `dplyr` fornece uma família de funções _join_ que executam o mesmo comando que `merge()`, porém, ao invés de alterar o valor de um argumento, você precisa escolher uma das funções _join_ que podem ser resumidas na seguinte figura:
+## Join datasets with _join_ functions
+- We saw earlier that `cbind()` can be used to combine one data frame with another data frame, or a vector, as long as they have the same number of rows.
+- To append rows, provided the columns share compatible classes, we can use `rbind()`.
+- To combine datasets using key variables, we use `merge()`.
+- The `dplyr` package provides a family of _join_ functions that accomplish the same task as `merge()`. Instead of changing an argument value, however, we choose the specific _join_ function that matches the merge we want, as summarized in the figure below:
 
 <center><img src="../dplyr-data-join-functions.png"></center>
 
-- Todas as funções possuem a mesma sintaxe:
-    - `x`: base 1
-    - `y`: base 2
-    - `by`: vetor de variáveis-chave
-    - `suffix`: vetor de 2 sufixos para incluir em colunas de mesmos nomes
-- Como exemplo, usaremos subconjuntos da base de dados `starwars`:
+- All these functions share the same basic syntax:
+    - `x`: dataset 1
+    - `y`: dataset 2
+    - `by`: vector of key variables
+    - `suffix`: vector with two suffixes used for columns that share the same name
+- As an example, we use subsets of the `starwars` dataset:
 
 ```r
 bd1 = starwars[1:6, c(1, 3, 11)]
@@ -726,8 +726,8 @@ bd2
 ## 5 Biggs Darklighter     183 brown    
 ## 6 Obi-Wan Kenobi        182 blue-gray
 ```
-- Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observations comuns.
-- `inner_join()`: mantém apenas ID's presentes simultaneamente em ambas bases
+- Notice that there are 12 unique characters across the two datasets, but only `"C-3PO"` and `"Darth Vader"` appear in both datasets.
+- `inner_join()`: keeps only IDs present in both datasets
 
 ```r
 inner_join(bd1, bd2, by="name")
@@ -741,7 +741,7 @@ inner_join(bd1, bd2, by="name")
 ## 2 Darth Vader   136 Human      202 yellow
 ```
 
-- `full_join()`: mantém todas ID's, mesmo que estejam em apenas em um das bases
+- `full_join()`: keeps all IDs, even if they appear in only one of the two datasets
 
 ```r
 full_join(bd1, bd2, by="name")
@@ -762,7 +762,7 @@ full_join(bd1, bd2, by="name")
 ##  9 Biggs Darklighter     NA <NA>       183 brown    
 ## 10 Obi-Wan Kenobi        NA <NA>       182 blue-gray
 ```
-- `left_join()`: mantém apenas ID's presentes na base 1 (informada como `x`)
+- `left_join()`: keeps the IDs present in dataset 1 (supplied as `x`)
 
 ```r
 left_join(bd1, bd2, by="name")
@@ -779,7 +779,7 @@ left_join(bd1, bd2, by="name")
 ## 5 Leia Organa       49 Human       NA <NA>     
 ## 6 Owen Lars        120 Human       NA <NA>
 ```
-- `right_join()`: mantém apenas ID's presentes na base 2 (informada como `y`)
+- `right_join()`: keeps the IDs present in dataset 2 (supplied as `y`)
 
 ```r
 right_join(bd1, bd2, by="name")
@@ -797,13 +797,13 @@ right_join(bd1, bd2, by="name")
 ## 6 Obi-Wan Kenobi        NA <NA>       182 blue-gray
 ```
 
-- Note que podemos incluir mais de uma variável-chave para correspondência entre ID's de ambas bases. Primeiro, vamos construir as bases como paineis
+- We can also use more than one key variable to match IDs across datasets. First, let us build the two datasets as panels.
 
 ```r
 bd1 = starwars[1:5, c(1, 3)]
 bd1 = rbind(bd1, bd1) %>%
     mutate(year = c(rep(2021, 5), rep(2022, 5)),
-           # Se não for ano 2021, multiplica por um número aleatório ~ N(1, 0.025)
+           # if the year is not 2021, multiply by a random draw from N(1, 0.025)
            mass = ifelse(year == 2021, mass, mass*rnorm(10, 1, 0.025))) %>%
     select(name, year, mass) %>%
     arrange(name, year)
@@ -830,7 +830,7 @@ bd1
 bd2 = starwars[c(2, 4, 7:9), 1:2]
 bd2 = rbind(bd2, bd2) %>%
     mutate(year = c(rep(2021, 5), rep(2022, 5)),
-           # Se não for ano 2021, altura cresce 2%
+           # if the year is not 2021, height grows by 2%
            height = ifelse(year == 2021, height, height*1.02)) %>%
     select(name, year, height) %>%
     arrange(name, year)
@@ -852,10 +852,10 @@ bd2
 ##  9 R5-D4               2021   97  
 ## 10 R5-D4               2022   98.9
 ```
-- Note agora que, para cada personagem, temos 2 linhas que correspondem aos dois anos (2021 e 2022). Faremos um `full_join()` considerando como variáveis-chave ambos `name` e `year`.
+- Notice that each character now has two rows, corresponding to the two years, 2021 and 2022. We can therefore run a `full_join()` using both `name` and `year` as key variables.
 
 ```r
-# Juntando as bases
+# Merge the datasets
 full_join(bd1, bd2, by=c("name", "year"))
 ```
 
@@ -880,10 +880,10 @@ full_join(bd1, bd2, by=c("name", "year"))
 ## 15 R5-D4               2021  NA     97  
 ## 16 R5-D4               2022  NA     98.9
 ```
-- Atente-se também aos nomes das variáveis, pois ao juntar bases com variáveis de mesmos nomes (que não são usadas como chave), a função acaba incluindo ambas variáveis renomeadas, por padrão, com sufixos `.x` e `.y` (sufixos podem ser alterados pelo argumento `suffix`)
+- Also pay attention to the variable names. When we join datasets that share variables with the same names, but those variables are not used as keys, the function keeps both versions and renames them by default with suffixes `.x` and `.y`. These suffixes can be changed with the `suffix` argument.
 
 ```r
-bd2 = bd2 %>% mutate(mass = rnorm(10)) # Criando uma variável mass
+bd2 = bd2 %>% mutate(mass = rnorm(10)) # create a variable named mass
 
 full_join(bd1, bd2, by=c("name", "year"))
 ```
@@ -911,4 +911,4 @@ full_join(bd1, bd2, by=c("name", "year"))
 ```
 
 
-{{< cta cta_text="👉 Seguir para Data Visualization" cta_link="../sec5" >}}
+{{< cta cta_text="Proceed to Data Visualization" cta_link="../sec5" >}}

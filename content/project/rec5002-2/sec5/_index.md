@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 5
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 5 (May 18, 2021)
+linktitle: "Optimal Growth"
+summary: "TA notes on the neoclassical theory of optimal growth, with presentation slides and problem set 2 solutions."
+title: "Session 5: Neoclassical Optimal Growth"
 weight: 5
 output: md_document
 type: book
@@ -27,4 +26,4 @@ type: book
 - [Problem Set 2 Solution](../Lista-2_Resolucao.pdf)
 
 
-{{< cta cta_text="Proceed to Session 6" cta_link="../chapter6" >}}
+{{< cta cta_text="Proceed to Session 6" cta_link="../sec6" >}}

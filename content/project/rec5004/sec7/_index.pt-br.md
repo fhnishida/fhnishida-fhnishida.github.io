@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Optimization
-summary: The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed.
-title: Optimization
+linktitle: "Otimização"
+summary: "Notas de otimização numérica para Econometria, com grid search, steepest ascent e intuição de métodos numéricos ligados à estimação por MQO."
+title: "Otimização numérica para Econometria"
 weight: 7
 output: md_document
 type: book
@@ -768,4 +768,4 @@ mle2
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Multiple Regression" cta_link="../sec8" >}}
+{{< cta cta_text="👉 Seguir para Regressão Múltipla" cta_link="../sec8" >}}

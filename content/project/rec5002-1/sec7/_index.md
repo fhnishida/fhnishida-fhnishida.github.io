@@ -2,10 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Session 7
-summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
-  documentation, and tutorials.
-title: Session 7 (June 1, 2021)
+linktitle: "Problem Set 4"
+summary: "Worked solutions and code for the fourth Macroeconomics I problem set in the graduate TA sequence."
+title: "Session 7: Problem Set 4 Solutions"
 weight: 7
 output: md_document
 type: book
@@ -19,6 +18,5 @@ type: book
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/KtNUS45-cxw/maxresdefault.jpg)](https://www.youtube.com/watch?v=KtNUS45-cxw)
 
-- Problem Set 4 Solution: [Lista-2_Resolucao.pdf](../Lista-4_Resolucao.pdf)
+- Problem Set 4 Solution: [Lista-4_Resolucao_v2.pdf](../Lista-4_Resolucao_v2.pdf)
 - Script File: [Lista-4.py](../Lista-4.py)
-
