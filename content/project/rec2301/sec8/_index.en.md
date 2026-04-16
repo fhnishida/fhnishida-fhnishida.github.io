@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regressão Múltipla
+linktitle: Regress�o M�ltipla
 summary: This page explores OLS Multiple Regression, including with qualitative regressors. It also includes examples and code snippets to demonstrate the concepts being discussed. 
-title: Regressão Múltipla
+title: Regress�o M�ltipla
 weight: 8
 output: md_document
 type: book
@@ -14,23 +14,23 @@ type: book
 
 
 
-## Estimação MQO multivariado
+## Estima��o MQO multivariado
 
-### Regressão Múltipla via `lm()`
+### Regress�o M�ltipla via `lm()`
 
-- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
+- [Se��o 3.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/115)
 
-- Para estimar um modelo multivariado no R, podemos usar a função `lm()`:
-  - O til (`~`) separa a a variável dependente das variáveis independentes
-  - As variáveis independentes precisam ser separadas por um `+`
-  - A constante ({{<math>}}$\beta_0${{</math>}}) é incluída automaticamente pela função `lm()` -- para retirá-la, precisa incluir a "variável independente" `0` na fórmula.
+- Para estimar um modelo multivariado no R, podemos usar a fun��o `lm()`:
+  - O til (`~`) separa a a vari�vel dependente das vari�veis independentes
+  - As vari�veis independentes precisam ser separadas por um `+`
+  - A constante ({{<math>}}$\beta_0${{</math>}}) � inclu�da automaticamente pela fun��o `lm()` -- para retir�-la, precisa incluir a "vari�vel independente" `0` na f�rmula.
 
 
-#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
-- Sejam as variáveis
-    - `colGPA` (_college GPA_): a nota média em um curso superior,
-    - `hsGPA` (_high school GPA_): a nota médio do ensino médio, e
-    - `ACT` (_achievement test score_): a nota de avaliação de conhecimentos para ingresso no ensino superior.
+#### Exemplo 3.1: Determinantes da Nota M�dia em Curso Superior nos EUA (Wooldridge, 2006)
+- Sejam as vari�veis
+    - `colGPA` (_college GPA_): a nota m�dia em um curso superior,
+    - `hsGPA` (_high school GPA_): a nota m�dio do ensino m�dio, e
+    - `ACT` (_achievement test score_): a nota de avalia��o de conhecimentos para ingresso no ensino superior.
 - Usando a base `gpa1` do pacote `wooldridge`, vamos estimar o seguinte modelo:
 
 $$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
@@ -55,7 +55,7 @@ GPAres
 ##    1.286328     0.453456     0.009426
 ```
 
-- Note que podemos ver mais detalhes da estimação usando a função `summary()` no objeto resultante da função `lm()`
+- Note que podemos ver mais detalhes da estima��o usando a fun��o `summary()` no objeto resultante da fun��o `lm()`
 
 ```r
 summary(GPAres)
@@ -87,33 +87,33 @@ summary(GPAres)
 
 ### MQO na forma matricial
 
-- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
+- [Se��o 3.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/119)
 
 
-#### Notações
+#### Nota��es
 
-- Para mais detalhes sobre a forma matricial do MQO, ver Apêndice E de Wooldridge (2006)
-- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
+- Para mais detalhes sobre a forma matricial do MQO, ver Ap�ndice E de Wooldridge (2006)
+- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observa��o {{<math>}}$i${{</math>}}:
 $$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + u_i, \qquad i=1, 2, ..., N \tag{E.1} $$
-em que {{<math>}}$N${{</math>}} é o número de observações.
+em que {{<math>}}$N${{</math>}} � o n�mero de observa��es.
 
-- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (minúsculo):
+- Defina o vetor-coluna de par�metros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de vari�veis independentes da observa��o {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}_i${{</math>}} (min�sculo):
 {{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
 
-- Note que o produto interno {{<math>}}$\boldsymbol{x}_i \boldsymbol{\beta}${{</math>}} é:
+- Note que o produto interno {{<math>}}$\boldsymbol{x}_i \boldsymbol{\beta}${{</math>}} �:
 
 {{<math>}}\begin{align} \underset{1 \times 1}{\boldsymbol{x}_i \boldsymbol{\beta}} &= \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right]\\
 &= 1.\beta_0 + x_{i1} \beta_1  + x_{i2} \beta_2 + \cdots + x_{iK} \beta_K, \end{align}{{</math>}}
 
-- Logo, a equação (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
+- Logo, a equa��o (3.1) pode ser reescrita, para {{<math>}}$i=1, 2, ..., N${{</math>}}, como
 
 $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}_i \boldsymbol{\beta}} + u_i = \boldsymbol{x}_i \boldsymbol{\beta} + u_i, \tag{E.2} $$
 
-- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
+- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observa��es para as {{<math>}}$K+1${{</math>}} vari�veis explicativas:
 
 {{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \\ \vdots \\ \boldsymbol{x}_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
 
-- Agora, podemos "empilhar" as equações (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
+- Agora, podemos "empilhar" as equa��es (3.2) para todo {{<math>}}$i=1, 2, ..., N${{</math>}} e obtemos:
 
 {{<math>}}\begin{align} \boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{u} \tag{E.3} \\
 &= \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right] + \left[ \begin{matrix}u_1 \\ u_2 \\ \vdots \\ u_N \end{matrix} \right]   \\
@@ -123,17 +123,17 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x
 
 
 
-#### Estimação Analítica no R
+#### Estima��o Anal�tica no R
 
-##### Operações matriciais/vetoriais no R
-- Primeiro, vamos ver como realizar operações matriciais/vetoriais no R:
-  - **Transposta de uma matriz ou vetor**: função `t()`
-  - **Multiplicação matricial ou vetorial (produto interno)**: operador `%*%`
-  - **Inversa de uma matriz (quadrada)**: função `solve()`
+##### Opera��es matriciais/vetoriais no R
+- Primeiro, vamos ver como realizar opera��es matriciais/vetoriais no R:
+  - **Transposta de uma matriz ou vetor**: fun��o `t()`
+  - **Multiplica��o matricial ou vetorial (produto interno)**: operador `%*%`
+  - **Inversa de uma matriz (quadrada)**: fun��o `solve()`
 
 
 ```r
-# Como exemplo, criaremos matriz A de dimensão 4x2
+# Como exemplo, criaremos matriz A de dimens�o 4x2
 A = matrix(1:8, nrow=4, ncol=2)
 A
 ```
@@ -179,11 +179,11 @@ solve( t(A) %*% A )
 ## [2,] -0.21875  0.09375
 ```
 
-#### Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+#### Exemplo - Determinantes da Nota M�dia em Curso Superior nos EUA (Wooldridge, 2006)
 - Queremos estimar o modelo:
 $$ \text{colGPA} = \beta_0 + \beta_1 \text{hsGPA} + \beta_2 \text{ACT} + u $$
 
-- A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
+- A partir da base de dados `gpa1`, vamos criar o vetor da vari�vel dependente `y` e a matrix das vari�veis independentes `X`:
 
 
 ```r
@@ -282,7 +282,7 @@ head(yhat)
 ```
 
 
-##### 3. Resíduos {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
+##### 3. Res�duos {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
 
 {{<math>}}$$ \hat{\boldsymbol{u}} = \boldsymbol{y} - \hat{\boldsymbol{y}} \tag{3.3}  $${{</math>}}
 
@@ -304,11 +304,11 @@ head(uhat)
 ```
 
 
-##### 4. Variância do termo de erro {{<math>}}$S^2${{</math>}}
+##### 4. Vari�ncia do termo de erro {{<math>}}$S^2${{</math>}}
 
 {{<math>}}$$ S^2 = \frac{\hat{\boldsymbol{u}}'\hat{\boldsymbol{u}}}{N-K-1} \tag{3.4}  $${{</math>}}
 
-No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$S^2${{</math>}} � um escalar, � conveniente transformar a "matriz 1x1" em um n�mero usando `as.numeric()`:
 
 ```r
 S2 = as.numeric( t(uhat) %*% uhat / (N-K-1) )
@@ -320,11 +320,11 @@ S2
 ```
 
 
-##### 5. Matriz de variância-covariância do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
+##### 5. Matriz de vari�ncia-covari�ncia do estimador {{<math>}}$\widehat{\text{Var}}(\hat{\boldsymbol{\beta}})${{</math>}}
 
 {{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}) = S^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \tag{3.5}  $${{</math>}}
 
-No R, como {{<math>}}$S^2${{</math>}} é um escalar, é conveniente transformar a "matriz 1x1" em um número usando `as.numeric()`:
+No R, como {{<math>}}$S^2${{</math>}} � um escalar, � conveniente transformar a "matriz 1x1" em um n�mero usando `as.numeric()`:
 
 ```r
 V_bhat = S2 * solve( t(X) %*% X )
@@ -338,8 +338,8 @@ V_bhat
 ## ACT   -0.001590849 -0.0003570767  0.0001161478
 ```
 
-##### 6. Erros-padrão do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
-É a raiz quadrada da diagonal principal da matriz de variância-covariância do estimador
+##### 6. Erros-padr�o do estimador {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}
+?? a raiz quadrada da diagonal principal da matriz de vari�ncia-covari�ncia do estimador
 
 ```r
 se_bhat = sqrt( diag(V_bhat) )
@@ -352,8 +352,8 @@ se_bhat
 ```
 
 
-##### Comparando estimações via `lm()` e analítica
-- Até agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padrão {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
+##### Comparando estima��es via `lm()` e anal�tica
+- At� agora, obtivemos as estimativas {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}} e seus erros-padr�o {{<math>}}$\text{se}(\hat{\boldsymbol{\beta}})${{</math>}}:
 
 ```r
 cbind(bhat, se_bhat)
@@ -366,7 +366,7 @@ cbind(bhat, se_bhat)
 ## ACT   0.009426012 0.01077719
 ```
 
-- E, portanto, ainda percisamos concluir a parte de inferência da estimação por meio do cálculo da estatística _t_ e do p-valor:
+- E, portanto, ainda percisamos concluir a parte de infer�ncia da estima��o por meio do c�lculo da estat�stica _t_ e do p-valor:
 
 ```r
 summary(GPAres)$coef
@@ -382,63 +382,63 @@ summary(GPAres)$coef
 
 </br>
 
-## Inferência MQO multivariado
+## Infer�ncia MQO multivariado
 
 ### O teste _t_
 
-- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
+- [Se��o 4.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/127)
 
-- Após a estimação, é importante fazer testes de hipótese na forma
+- Ap�s a estima��o, � importante fazer testes de hip�tese na forma
 $$ H_0: \ \beta_j = a_j \tag{4.1} $$
-tal que {{<math>}}$a_j${{</math>}} é uma constante, e {{<math>}}$j${{</math>}} é um dos {{<math>}}$K+1${{</math>}} parâmetros estimados.
+tal que {{<math>}}$a_j${{</math>}} � uma constante, e {{<math>}}$j${{</math>}} � um dos {{<math>}}$K+1${{</math>}} par�metros estimados.
 
-- A hipótese alternativa para teste bicaudal é dada por
+- A hip�tese alternativa para teste bicaudal � dada por
 $$ H_1: \ \beta_j \neq a_j \tag{4.2} $$
-enquanto, para teste unicaudal, é
+enquanto, para teste unicaudal, �
 $$ H_1: \ \beta_j > a_j \qquad \text{ou} \qquad H_1: \ \beta_j < a_j \tag{4.3} $$
 
-- Estas hipóteses podem ser convenientemente testas pelo test _t_:
+- Estas hip�teses podem ser convenientemente testas pelo test _t_:
 $$ t = \frac{\hat{\beta}_j - a_j}{\text{se}(\hat{\beta}_j)} \tag{4.4} $$
 
-- **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} é estatisticamente significante, ou seja, se a variável independente tem efeito significante sobre a variável dependente (estatisticamente diferente de zero):
+- **[II]**Frequentemente, realizamos teste bicaudal com {{<math>}}$a_j=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_j${{</math>}} � estatisticamente significante, ou seja, se a vari�vel independente tem efeito significante sobre a vari�vel dependente (estatisticamente diferente de zero):
 
 {{<math>}}\begin{align} 
 H_0: \ \beta_j=0, \qquad H_1: \ \beta_j\neq 0 \tag{4.5}\\
 t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
 \end{align}{{</math>}}
 
-- Há três formas de avaliar essa hipótese.
-- **(i)** A primeira é por meio da comparação da estatística _t_ com o valor crítico _c_, dado um nível de significância {{<math>}}$\alpha${{</math>}}:
+- H� tr�s formas de avaliar essa hip�tese.
+- **(i)** A primeira � por meio da compara��o da estat�stica _t_ com o valor cr�tico _c_, dado um n�vel de signific�ncia {{<math>}}$\alpha${{</math>}}:
 {{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad | t_{\hat{\beta}_j} | > c. $${{</math>}}
 
 
-- Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor crítico {{<math>}}$c${{</math>}} tende a ficar próximo de 2 para quantidades razoáveis de graus de liberdade, e se aproxima ao valor crítico de 1,96 da distribuição normal.
+- Normalmente, utiliza-se {{<math>}}$\alpha = 5\%${{</math>}} e, portanto, o valor cr�tico {{<math>}}$c${{</math>}} tende a ficar pr�ximo de 2 para quantidades razo�veis de graus de liberdade, e se aproxima ao valor cr�tico de 1,96 da distribui��o normal.
 
 </br>
 
-- **(ii)** Outra maneira de avaliar a hipótese nula é via p-valor, que indica o quão provável é que  {{<math>}}$\hat{\beta}_j${{</math>}} **não seja um valor extremo** (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
+- **(ii)** Outra maneira de avaliar a hip�tese nula � via p-valor, que indica o qu�o prov�vel � que  {{<math>}}$\hat{\beta}_j${{</math>}} **n�o seja um valor extremo** (ou seja, o qu�o prov�vel � que a estimativa seja igual a {{<math>}}$a_j = 0${{</math>}}).
 
 {{<math>}}$$ p_{\hat{\beta}_j} = 2.F_{t_{(N-K-1)}}(-|t_{\hat{\beta}_j}|), \tag{4.7} $${{</math>}}
-em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} é a fda de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
+em que {{<math>}}$F_{t_{(N-K-1)}}(\cdot)${{</math>}} � a fda de uma distribui��o _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
 
-- Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor (a probabilidade da estimativa ser igual a zero) for menor do que um nível de significância {{<math>}}$\alpha${{</math>}}:
+- Portanto, rejeitamos {{<math>}}$H_0${{</math>}} quando o p-valor (a probabilidade da estimativa ser igual a zero) for menor do que um n�vel de signific�ncia {{<math>}}$\alpha${{</math>}}:
 
 {{<math>}}$$ \text{Rejeitamos H}_0 \text{ se:} \qquad p_{\hat{\beta}_j} \le \alpha $${{</math>}}
 
 
 </br>
 
-- **(iii)** A terceira maneira de avaliar a hipótese nula é via cálculo do intervalo de confiança:
+- **(iii)** A terceira maneira de avaliar a hip�tese nula � via c�lculo do intervalo de confian�a:
 $$ \hat{\beta}_j\ \pm\ c . \text{se}(\hat{\beta}_j) \tag{4.8} $$
-- Rejeitamos a hipótese nula, neste caso, quando {{<math>}}$a_j${{</math>}} estiver fora do intervalo de confiança.
+- Rejeitamos a hip�tese nula, neste caso, quando {{<math>}}$a_j${{</math>}} estiver fora do intervalo de confian�a.
 
 </br>
 
-#### (Continuação) Exemplo - Determinantes da Nota Média em Curso Superior nos EUA (Wooldridge, 2006)
+#### (Continua��o) Exemplo - Determinantes da Nota M�dia em Curso Superior nos EUA (Wooldridge, 2006)
 - Assuma {{<math>}}$\alpha = 5\%${{</math>}} e teste bicaudal com {{<math>}}$a_j = 0${{</math>}}.
 
 
-##### 7. Estatística _t_
+##### 7. Estat�stica _t_
 
 {{<math>}}$$ t_{\hat{\beta}_j} = \frac{\hat{\beta}_j}{\text{se}(\hat{\beta}_j)} \tag{4.6}
 $$ {{</math>}}
@@ -446,7 +446,7 @@ $$ {{</math>}}
 No R:
 
 ```r
-# Cálculo da estatística t
+# C�lculo da estat�stica t
 t_bhat = bhat / se_bhat
 t_bhat
 ```
@@ -458,12 +458,12 @@ t_bhat
 ## ACT   0.8746263
 ```
 
-##### 8. Avaliando as hipóteses nulas
+##### 8. Avaliando as hip�teses nulas
 
 ```r
-# definição do nível de significância
+# defini��o do n�vel de signific�ncia
 alpha = 0.05
-c = qt(1 - alpha/2, N-K-1) # valor crítico de teste bicaudal
+c = qt(1 - alpha/2, N-K-1) # valor cr�tico de teste bicaudal
 c
 ```
 
@@ -472,7 +472,7 @@ c
 ```
 
 ```r
-# (A) Comparando estatística t com o valor crítico
+# (A) Comparando estat�stica t com o valor cr�tico
 abs(t_bhat) > c # avaliando H0
 ```
 
@@ -484,9 +484,9 @@ abs(t_bhat) > c # avaliando H0
 ```
 
 ```r
-# (B) Comparando p-valor com o nível de significância de 5%
+# (B) Comparando p-valor com o n�vel de signific�ncia de 5%
 p_bhat = 2 * pt(-abs(t_bhat), N-K-1)
-round(p_bhat, 5) # arredondando para facilitar visualização
+round(p_bhat, 5) # arredondando para facilitar visualiza��o
 ```
 
 ```
@@ -508,7 +508,7 @@ p_bhat < 0.05 # avaliando H0
 ```
 
 ```r
-# (C) Verificando se zero (0) está fora do intervalo de confiança
+# (C) Verificando se zero (0) est� fora do intervalo de confian�a
 ci = cbind(bhat - c*se_bhat, bhat + c*se_bhat) # avaliando H0
 ci
 ```
@@ -522,9 +522,9 @@ ci
 
 
 
-##### Comparando estimações via `lm()` e analítica
+##### Comparando estima��es via `lm()` e anal�tica
 
-- Resultados calculados analiticamente ("na mão")
+- Resultados calculados analiticamente ("na m�o")
 
 ```r
 cbind(bhat, se_bhat, t_bhat, p_bhat) # coeficientes
@@ -538,7 +538,7 @@ cbind(bhat, se_bhat, t_bhat, p_bhat) # coeficientes
 ```
 
 ```r
-ci # intervalos de confiança
+ci # intervalos de confian�a
 ```
 
 ```
@@ -548,7 +548,7 @@ ci # intervalos de confiança
 ## ACT   -0.01188376 0.03073578
 ```
 
-- Resultado via função `lm()`
+- Resultado via fun��o `lm()`
 
 ```r
 summary(GPAres)$coef
@@ -574,37 +574,37 @@ confint(GPAres)
 
 </br>
 
-## Informando os Resultados das Regressões
+## Informando os Resultados das Regress�es
 
-- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
-- Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regressões usando a função `stargazer` do pacote de mesmo nome.
+- [Se��o 4.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/137)
+- Aqui, vamos utilizar um exemplo para mostrar como informar os resultados de diversas regress�es usando a fun��o `stargazer` do pacote de mesmo nome.
 
 
-#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores (Wooldridge, 2006)
+#### Exemplo 4.10 - A Rela��o Sal�rio-Benef�cios de Professores (Wooldridge, 2006)
 - Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
 
 $$ \log{\text{salary}} = \beta_0 + \beta_1. (\text{benefits/salary}) + \text{outros_fatores} + u $$
 
-- Primeiro, vamos carregar a base de dados e criar a variável benefits/salary (`b_s`):
+- Primeiro, vamos carregar a base de dados e criar a vari�vel benefits/salary (`b_s`):
 
 ```r
 data(meap93, package="wooldridge") # carregando base de dados
 
-# Definindo nova variável
+# Definindo nova vari�vel
 meap93$b_s = meap93$benefits / meap93$salary
 ```
 
 - Agora vamos estimar diversos modelos:
   - Modelo 1: apenas `b_s` como regressor
-  - Modelo 2: inclui as variáveis explicativas `log(enroll)` e `log(staff)` no Modelo 1
-  - Modelo 3: inclui as variáveis explicativas `droprate` e `gradrate` no Modelo 2
-- Depois, vamos resumir os resultados em uma única tabela usando a função `stagazer()` pacote `stagazer`
-  - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
-  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
-  - `star.cutoffs=c(.05, .01, .001)` níveis de significância de 5%, 1% e 0,1%
+  - Modelo 2: inclui as vari�veis explicativas `log(enroll)` e `log(staff)` no Modelo 1
+  - Modelo 3: inclui as vari�veis explicativas `droprate` e `gradrate` no Modelo 2
+- Depois, vamos resumir os resultados em uma �nica tabela usando a fun��o `stagazer()` pacote `stagazer`
+  - `type="text"` para retornar o resultado no pr�prio console (se omitir esse argumento, retorna o c�digo em LaTeX)
+  - `keep.stat=c("n", "rsq")` para manter apenas os n� de observa��es e os {{<math>}}R$^2${{</math>}}
+  - `star.cutoffs=c(.05, .01, .001)` n�veis de signific�ncia de 5%, 1% e 0,1%
 
 ```r
-# Estimando os três modelos
+# Estimando os tr�s modelos
 model1 = lm(log(salary) ~ b_s, meap93)
 model2 = lm(log(salary) ~ b_s + log(enroll) + log(staff), meap93)
 model3 = lm(log(salary) ~ b_s + log(enroll) + log(staff) + droprate + gradrate, meap93)
@@ -664,26 +664,26 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 ## Note:          *p<0.05; **p<0.01; ***p<0.001
 ```
 
-- É comum que os resultados econométricos venham acompanhados de asteriscos (`*`), pois estes indicam que as estimativas são significantes a um certo nível de significância
-- Quanto maior o nível de significância, mais asteriscos são inseridos e estes facilitam a interpretação das estimativas estatisticamente diferentes de zero.
+- ?? comum que os resultados econom�tricos venham acompanhados de asteriscos (`*`), pois estes indicam que as estimativas s�o significantes a um certo n�vel de signific�ncia
+- Quanto maior o n�vel de signific�ncia, mais asteriscos s�o inseridos e estes facilitam a interpreta��o das estimativas estatisticamente diferentes de zero.
 
 
 </br>
 
 ## Regressores Qualitativos
 
-- Muitas variáveis de interesse são qualitativas, ao invés de quantitativas.
-- Isso inclui variáveis como _sexo_, _raça_, _status de trabalho_, _estado civil_, _escolha de marca_, etc.
+- Muitas vari�veis de interesse s�o qualitativas, ao inv�s de quantitativas.
+- Isso inclui vari�veis como _sexo_, _ra�a_, _status de trabalho_, _estado civil_, _escolha de marca_, etc.
 
 
-### Variáveis Dummy
+### Vari�veis Dummy
 
-- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
-- Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
-- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
+- [Se��o 7.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/161)
+- Se um dado qualitativo est� armazenado na base como uma vari�vel qualitativa (ou seja, seus valores s�o 0's ou 1's), ent�o ele pode ser inserido imediatamente numa regress�o linear.
+- Se uma vari�vel dummy for usada num modelo, seu coeficiente representa a diferen�a do intercepto entre os grupos (Wooldridge, 2006, Se��o 7.2)
 
 
-##### Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### Exemplo 7.5 - Equa��o do Log do Sal�rio-Hora (Wooldridge, 2006)
 
 - Vamos usar a base de dados `wage1` do pacote `wooldridge`
 - Vamos estimar o modelo:
@@ -693,15 +693,15 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"),
 &\beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \tag{7.6} \end{align}{{</math>}}
 em que:
 
-- `wage`: salário médio por hora
+- `wage`: sal�rio m�dio por hora
 - `female`: dummy em que (1) mulher e (0) homem
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `educ`: anos de educa��o
+- `exper`: anos de experi�ncia (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 ```r
-# Carregando a base de dados necessária
+# Carregando a base de dados necess�ria
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
@@ -720,34 +720,34 @@ round( summary(reg_7.1)$coef, 4 )
 ## tenursq      -0.0029     0.0017 -1.7473   0.0812
 ```
 
-- Nota-se que as mulheres (`female = 1`) recebem em média $1,78/hora a menos, em relação aos homens (`female = 0`).
-- Essa diferença é estatisticamente significane (p-valor de `female` é menor do que 5\%)
+- Nota-se que as mulheres (`female = 1`) recebem em m�dia $1,78/hora a menos, em rela��o aos homens (`female = 0`).
+- Essa diferen�a � estatisticamente significane (p-valor de `female` � menor do que 5\%)
 
 
 
-### Variáveis com múltiplas categorias
+### Vari�veis com m�ltiplas categorias
 
-- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
-- Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
-- É necessário criar uma _dummy_ para cada categoria
-- Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
-  - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
-  - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
-  - Se houver outra dummy igual a 1, então última dummy é igual a 0
-- Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
+- [Se��o 7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/164)
+- Quando temos uma vari�vel categ�rica com mais de 2 categorias, n�o � poss�vel simplesmente us�-la na regress�o como se fosse uma _dummy_.
+- ?? necess�rio criar uma _dummy_ para cada categoria
+- Quando for feita a estima��o do modelo, � necess�rio deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
+  - Conhecendo todas as _dummies_ menos uma, d� para saber o valor esta �ltima _dummy_
+  - Se todas outras dummies forem iguais a 0, a �ltima dummy � igual a 1
+  - Se houver outra dummy igual a 1, ent�o �ltima dummy � igual a 0
+- Al�m disso, a categoria deixada de fora acaba sendo usada **refer�ncia** quando s�o estimados os par�metros.
 
 
-##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
+##### Exemplo: Efeito do aumento do sal�rio-m�nimo sobre o emprego (Card e Krueger, 1994)
 
-- Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo
-- Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
+- Em 1992, o estado de New Jersey (NJ) aumentou o sal�rio m�nimo
+- Para avaliar se o aumento do sal�rio m�nimo teria impacto na quantidade de trabalhadores empregados, usou como compara��o o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
 - Vamos estimar o seguinte modelo:
 
 {{<math>}}$$`
 \text{diff_fte} = \beta_0 + \beta_1 \text{nj} + \beta_2 \text{chain} + \beta_3 \text{hrsopen} + u $${{</math>}}
 em que:
 
-- `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
+- `diff_emptot`: diferen�a de n� de empregados entre fev/1992 e nov/1992
 - `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
 - `chain`: rede de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys`), e (4) Wendy's (`wendys`)
 - `hrsopen`: horas de funcionamento por dia
@@ -771,9 +771,9 @@ head(card1994) # olhando as 6 primeiras linhas
 ## 6   451  0     1    24.0    13.00
 ```
 
-- Note que a variável categórica `chain` possui números ao invés dos nomes das redes de fast food.
-- Isto é comum nas bases de dados, já que números consomem menos espaço de armazenamento.
-- Caso você rode a estimação com a variável `chain` desta maneira, o modelo considerará que é uma variável contínua e prejudicando a sua análise:
+- Note que a vari�vel categ�rica `chain` possui n�meros ao inv�s dos nomes das redes de fast food.
+- Isto � comum nas bases de dados, j� que n�meros consomem menos espa�o de armazenamento.
+- Caso voc� rode a estima��o com a vari�vel `chain` desta maneira, o modelo considerar� que � uma vari�vel cont�nua e prejudicando a sua an�lise:
 
 
 ```r
@@ -790,12 +790,12 @@ lm(diff_fte ~ nj + hrsopen + chain, data=card1994)
 ##     0.40284      4.61869     -0.28458     -0.06462
 ```
 
-- Note que a interpretação é que a mudança de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a variação do nº trabalhadores -- **o que não faz sentido!**
-- Portanto, precisamos criar as _dummies_ das variáveis categóricas:
+- Note que a interpreta��o � que a mudan�a de `bk` (1) para `kfc` (2) [ou  de `kfc` (2) para `roys` (3), ou de `roys` (3) para `wendys` (4)] diminuiu a varia��o do n� trabalhadores -- **o que n�o faz sentido!**
+- Portanto, precisamos criar as _dummies_ das vari�veis categ�ricas:
 
 
 ```r
-# Criando dummies para cada variável
+# Criando dummies para cada vari�vel
 card1994$bk = ifelse(card1994$chain==1, 1, 0)
 card1994$kfc = ifelse(card1994$chain==2, 1, 0)
 card1994$roys = ifelse(card1994$chain==3, 1, 0)
@@ -815,9 +815,9 @@ head(card1994)
 ## 6   451  0     1    24.0    13.00  1   0    0      0
 ```
 
-- Também é possível criar _dummies_ mais facilmente usando o pacote `fastDummies`
-- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
-- Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
+- Tamb�m � poss�vel criar _dummies_ mais facilmente usando o pacote `fastDummies`
+- Observe que, usando apenas tr�s colunas das redes de fast food, � poss�vel saber o valor da 4� coluna, pois cada observa��o/loja s� pode ser de uma dessas 4 redes de fast food e, portanto, h� apenas um `1` em cada linha.
+- Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regress�o, haver� um problema de multicolinearidade perfeita:
 
 
 ```r
@@ -837,13 +837,13 @@ lm(diff_fte ~ nj + hrsopen + bk + kfc + roys + wendys, data=card1994)
 ##          NA
 ```
 
-- Por padrão, o R já retira uma das categorias para servir como referência.
-- Aqui, a categoria `wendys` serve como referência às estimativas das demais _dummies_
-  - Em relação a `wendys`, o nº de empregados de:
-    - `bk` teve uma variação de empregados muito parecida (apenas 0,005 menor)
-    - `roys` teve uma diminuição (menos 1 empregado)
-    - `kfc` teve uma maior diminuição (menos 2 empregados)
-- Note que poderíamos usar como referência outra rede de fast food, deixando sua _dummy_ de fora da regressão.
+- Por padr�o, o R j� retira uma das categorias para servir como refer�ncia.
+- Aqui, a categoria `wendys` serve como refer�ncia �s estimativas das demais _dummies_
+  - Em rela��o a `wendys`, o n� de empregados de:
+    - `bk` teve uma varia��o de empregados muito parecida (apenas 0,005 menor)
+    - `roys` teve uma diminui��o (menos 1 empregado)
+    - `kfc` teve uma maior diminui��o (menos 2 empregados)
+- Note que poder�amos usar como refer�ncia outra rede de fast food, deixando sua _dummy_ de fora da regress�o.
 - Vamos deixar de fora a _dummy_ do `roys`:
 
 
@@ -861,18 +861,18 @@ lm(diff_fte ~ nj + hrsopen + bk + kfc + wendys, data=card1994)
 ##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
 ```
 
-- Note agora que os parâmetros estão em relação à `roys``:
-  - estimativa de `kfc` que tinha ficado -2, agora está "menos" negativo (-1)
-  - estimativas de `bk` e de `wendys` possuem estimativas positivas (lembre-se que, em relação a `wendys`, a estimativa de `roys` foi negativo na regressão anterior)
+- Note agora que os par�metros est�o em rela��o � `roys``:
+  - estimativa de `kfc` que tinha ficado -2, agora est� "menos" negativo (-1)
+  - estimativas de `bk` e de `wendys` possuem estimativas positivas (lembre-se que, em rela��o a `wendys`, a estimativa de `roys` foi negativo na regress�o anterior)
 
 </br>
 
-- No R, na verdade, não é necessário criar _dummies_ de uma variável categórica para rodar uma regressão, caso ela esteja como _texto_ ou como _factor_
+- No R, na verdade, n�o � necess�rio criar _dummies_ de uma vari�vel categ�rica para rodar uma regress�o, caso ela esteja como _texto_ ou como _factor_
 
-- Criando variável da classe texto:
+- Criando vari�vel da classe texto:
 
 ```r
-card1994$chain_txt = as.character(card1994$chain) # criando variável texto
+card1994$chain_txt = as.character(card1994$chain) # criando vari�vel texto
 head(card1994$chain_txt) # Visualizado os primeiros valores
 ```
 
@@ -895,14 +895,14 @@ lm(diff_fte ~ nj + hrsopen + chain_txt, data=card1994)
 ##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
 ```
 
-- Observe que a função `lm()` retira a categoria que aparece primeiro no vetor de texto (`"1"`)
-- Usando como variável texto, não é possível selecionar facilmente qual categoria vai ser retirada da regressão
+- Observe que a fun��o `lm()` retira a categoria que aparece primeiro no vetor de texto (`"1"`)
+- Usando como vari�vel texto, n�o � poss�vel selecionar facilmente qual categoria vai ser retirada da regress�o
 - Para isto, podemos usar a classe de objeto `factor`:
 
 
 ```r
-card1994$chain_fct = factor(card1994$chain) # criando variável factor
-levels(card1994$chain_fct) # verificando os níveis (categorias) da variável factor
+card1994$chain_fct = factor(card1994$chain) # criando vari�vel factor
+levels(card1994$chain_fct) # verificando os n�veis (categorias) da vari�vel factor
 ```
 
 ```
@@ -924,12 +924,12 @@ lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 ##    2.092109     4.859363    -0.388792    -1.991701    -1.005391     0.005512
 ```
 
-- Note que a função `lm()` retira o primeiro nível da regressão (não necessariamente o que aparece primeiro na base de dados)
-- Podemos trocar a referência usando a função `relevel()` em uma variável _factor_
+- Note que a fun��o `lm()` retira o primeiro n�vel da regress�o (n�o necessariamente o que aparece primeiro na base de dados)
+- Podemos trocar a refer�ncia usando a fun��o `relevel()` em uma vari�vel _factor_
 
 ```r
-card1994$chain_fct = relevel(card1994$chain_fct, ref="3") # referência roys
-levels(card1994$chain_fct) # verificando os níveis da variável factor
+card1994$chain_fct = relevel(card1994$chain_fct, ref="3") # refer�ncia roys
+levels(card1994$chain_fct) # verificando os n�veis da vari�vel factor
 ```
 
 ```
@@ -951,13 +951,13 @@ lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 ##      1.0867       4.8594      -0.3888       1.0054      -0.9863       1.0109
 ```
 
-- Observe que o primeiro nível foi alterado para `"3"` e, portanto, essa categoria foi retirada na regressão
+- Observe que o primeiro n�vel foi alterado para `"3"` e, portanto, essa categoria foi retirada na regress�o
 
 
 
-### Transformando variáveis contínuas em categorias
-- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
-- Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
+### Transformando vari�veis cont�nuas em categorias
+- [Se��o 7.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/166) 
+- Usando a fun��o `cut()`, podemos "dividir" um vetor de n�meros em intervalos, a partir de pontos de corte
 
 
 ```r
@@ -974,19 +974,19 @@ cut(1:10, cutpts)
 ```
 
 
-##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais (Wooldridge, 2006)
+##### Exemplo 7.8 - Efeitos da Classifica��o das Faculdade de Direito sobre Sal�rios Iniciais (Wooldridge, 2006)
 
-- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
-- Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
+- Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do sal�rio (`log(salary)`) em rela��o �s demais universidades (`r101_175`).
+- Utilizaremos como vari�veis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
 
 
 ```r
-data(lawsch85, package="wooldridge") # carregando base de dados necessária
+data(lawsch85, package="wooldridge") # carregando base de dados necess�ria
 
 # Definindo pontos de corte
 cutpts = c(0, 10, 25, 40, 60, 100, 175)
 
-# Criando variável com a classificação
+# Criando vari�vel com a classifica��o
 lawsch85$rankcat = cut(lawsch85$rank, cutpts)
 
 # Visualizando os 6 primeiros valores de rankcat
@@ -999,7 +999,7 @@ head(lawsch85$rankcat)
 ```
 
 ```r
-# Escolhendo a categoria de referência (acima de 100 até 175)
+# Escolhendo a categoria de refer�ncia (acima de 100 at� 175)
 lawsch85$rankcat = relevel(lawsch85$rankcat, '(100,175]')
 
 # Estimando o modelo
@@ -1021,40 +1021,40 @@ round( summary(res)$coef, 5 )
 ## lcost            0.00084    0.02514  0.03347  0.97336
 ```
 
-- Note que, em relação às universidades em piores colocações (`(100,175]`), as melhores ranqueadas provêem salários de 13,16\% a 69,96\% superiores
+- Note que, em rela��o �s universidades em piores coloca��es (`(100,175]`), as melhores ranqueadas prov�em sal�rios de 13,16\% a 69,96\% superiores
 
 
-### Interações Envolvendo Variáveis Dummy
+### Intera��es Envolvendo Vari�veis Dummy
 
-#### Interações entre variáveis dummy
-- [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
-- Seção 7. de Wooldridge (2006)
-- Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
+#### Intera��es entre vari�veis dummy
+- [Subse��o 6.1.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/154)
+- Se��o 7. de Wooldridge (2006)
+- Adicionando um termo de intera��o entre duas _dummies_, � poss�vel obter estimativas distintas de uma _dummy_ (mudan�a no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
 
 
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### (Continua��o) Exemplo 7.5 - Equa��o do Log do Sal�rio-Hora (Wooldridge, 2006)
 
-- Retornemos à base de dados `wage1` do pacote `wooldridge`
-- Agora, vamos incluir a variável _dummy_ `married`
+- Retornemos � base de dados `wage1` do pacote `wooldridge`
+- Agora, vamos incluir a vari�vel _dummy_ `married`
 
-- O modelo a ser estimado é:
+- O modelo a ser estimado �:
 
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \beta_3 \text{educ} +\\
 &\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
 em que:
 
-- `wage`: salário médio por hora
+- `wage`: sal�rio m�dio por hora
 - `female`: dummy em que (1) mulher e (0) homem
 - `married`: dummy em que (1) casado e (0) solteiro
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `educ`: anos de educa��o
+- `exper`: anos de experi�ncia (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 
 ```r
-# Carregando a base de dados necessária
+# Carregando a base de dados necess�ria
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
@@ -1074,13 +1074,13 @@ round( summary(reg_7.11)$coef, 4 )
 ## tenursq      -0.0006     0.0002 -2.4475   0.0147
 ```
 
-- Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29\% sobre o salário.
-- O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.
-- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
-  - `lwage ~ female + married + married:female` (o `:` cria apenas a interação), ou
-  - `lwage ~ female * married` (a "multiplicação" cria as dummies e a interação)
+- Por essa regress�o, nota-se que casar-se tem efeito estatisticamente n�o significante e positivo de 5,29\% sobre o sal�rio.
+- O fato deste efeito n�o ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que t�m seus sal�rios elevados, e as mulheres, que t�m seus sal�rios diminu�dos.
+- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indiv�duo, podemos interagir (multiplicar) as vari�veis `married` e `female` usando:
+  - `lwage ~ female + married + married:female` (o `:` cria apenas a intera��o), ou
+  - `lwage ~ female * married` (a "multiplica��o" cria as dummies e a intera��o)
 
-- O modelo a ser estimado agora é:
+- O modelo a ser estimado agora �:
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{married} + \delta_2 \text{female*married} + \beta_3 \text{educ} + \\
 &\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + u \end{align}{{</math>}}
@@ -1126,41 +1126,41 @@ round( summary(reg_7.14b)$coef, 4 )
 ## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
 
-- Observe que, agora, o parâmetro de casado refere-se apenas aos homens (`married`) é positivo e significante de 21,27\%.
-- Já, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, é igual a -8,79\% (= 0,2127 - 0,3006)
-- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudança do estado civil (**intercepto**) é diferente entre mulheres e homens.
-- No output da regressão, podemos ver que o parâmetros da interação (`female:married`) é significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher é estatisticamente diferente do efeito sobre o homem.
+- Observe que, agora, o par�metro de casado refere-se apenas aos homens (`married`) � positivo e significante de 21,27\%.
+- J�, sobre as mulheres, o casamento tem o efeito de {{<math>}}$\beta_2 + \delta_2${{</math>}}, ou seja, � igual a -8,79\% (= 0,2127 - 0,3006)
+- Uma hip�tese importante � a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno por mudan�a do estado civil (**intercepto**) � diferente entre mulheres e homens.
+- No output da regress�o, podemos ver que o par�metros da intera��o (`female:married`) � significante (p-valor bem baixo), logo, o efeito do casamento sobre a mulher � estatisticamente diferente do efeito sobre o homem.
 
 
 
-#### Considerando inclinações diferentes
-- Seção 7.4 de Wooldridge (2006)
-- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
-- Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
+#### Considerando inclina��es diferentes
+- Se��o 7.4 de Wooldridge (2006)
+- [Se��o 7.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/168)
+- Adicionando um termo de intera��o entre uma vari�vel cont�nua e uma _dummy_, � poss�vel obter estimativas distintas de da vari�vel num�rica (mudan�a na **inclina��o**) para cada um das 2 categorias da _dummy_ (0 e 1).
 
 
 
-##### Exemplo 7.10 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### Exemplo 7.10 - Equa��o do Log do Sal�rio-Hora (Wooldridge, 2006)
 
-- Retornemos à base de dados `wage1` do pacote `wooldridge`
-- Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
-- Então, incluiremos no modelo a interação entre a dummy `female` e os anos de educação (`educ`):
+- Retornemos � base de dados `wage1` do pacote `wooldridge`
+- Suspeita-se que as mulheres, al�m de terem um intercepto distinto em rela��o aos homens, tamb�m tem menores retornos de sal�rio para cada ano de educa��o a mais.
+- Ent�o, incluiremos no modelo a intera��o entre a dummy `female` e os anos de educa��o (`educ`):
 
 {{<math>}}\begin{align}
 \log(\text{wage}) = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \delta_2 \text{female*educ} \\
 &\beta_3 \text{exper} + \beta_4 \text{exper}^2 + \beta_5 \text{tenure} + \beta_6 \text{tenure}^2 + u \end{align}{{</math>}}
 em que:
 
-- `wage`: salário médio por hora
+- `wage`: sal�rio m�dio por hora
 - `female`: dummy em que (1) mulher e (0) homem
-- `educ`: anos de educação
-- `female*educ`: interação entre a dummy `female` e anos de educação (`educ`)
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `educ`: anos de educa��o
+- `female*educ`: intera��o entre a dummy `female` e anos de educa��o (`educ`)
+- `exper`: anos de experi�ncia (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 ```r
-# Carregando a base de dados necessária
+# Carregando a base de dados necess�ria
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
@@ -1181,11 +1181,11 @@ round( summary(reg_7.17)$coef, 4 )
 ## female:educ  -0.0056     0.0131 -0.4260   0.6703
 ```
 
-- Uma hipótese importante é a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno a cada ano de educação (**inclinação**) é diferente entre mulheres e homens.
-- Pela estimação, nota-se que o incremento no salário das mulheres para cada ano a mais de educação é 0,56\% menor em relação aos homens:
-  - Homens aumentam 8,24\% (`educ`) o salário para cada ano de educação
-  - Mulheres aumentam 7,58\% (= 0,0824 - 0,0056) o salário para cada ano de educação
-- No entanto, essa diferença é estatisticamente não-significante a 5\% de significância.
+- Uma hip�tese importante � a {{<math>}}H$_0:\ \delta_2 = 0${{</math>}} para verificar se o retorno a cada ano de educa��o (**inclina��o**) � diferente entre mulheres e homens.
+- Pela estima��o, nota-se que o incremento no sal�rio das mulheres para cada ano a mais de educa��o � 0,56\% menor em rela��o aos homens:
+  - Homens aumentam 8,24\% (`educ`) o sal�rio para cada ano de educa��o
+  - Mulheres aumentam 7,58\% (= 0,0824 - 0,0056) o sal�rio para cada ano de educa��o
+- No entanto, essa diferen�a � estatisticamente n�o-significante a 5\% de signific�ncia.
 
 <img src="../example_interaction.png" alt="">
 
@@ -1193,4 +1193,4 @@ round( summary(reg_7.17)$coef, 4 )
 </br>
 
 
-{{< cta cta_text="👉 Seguir para Testes de Hipótese" cta_link="../sec9" >}}
+{{< cta cta_text="?Y'? Seguir para Testes de Hip�tese" cta_link="../sec9" >}}

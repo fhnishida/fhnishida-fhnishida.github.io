@@ -89,7 +89,7 @@ tail(sw) # Visualizando as 6 últimas linhas
 - Usando `str()`, podemos visualizar a **estrutura** (_structure_) da base:
     - todas a variáveis (colunas),
     - a classe de cada uma delas e
-    - algumas de suas observações.
+    - algumas de suas observations.
 
 ```r
 str(sw)
@@ -575,7 +575,7 @@ with(sw,
 - Poderíamos também obter cabelo loiro **OU** (`|`) branco:
 
 ```r
-# Extraindo linhas em que cabelo é loiro ou branco
+# Extraindo linhas where cabelo é loiro ou branco
 sw[sw$hair_color == "blond" | sw$hair_color == "white", ]
 ```
 
@@ -870,7 +870,7 @@ exp(sw$BMI[1:4]) # exponencial
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
 - [Joining (Merging) Data (David E. Caughlin)](https://rforhr.com/join.html)
 
-- Uma junção é o processo de correspondência de casos (ou seja, linhas ou observações) entre dois bases de dados usando uma oou mais variáveis-chave:
+- Uma junção é o processo de correspondência de casos (ou seja, linhas ou observations) entre dois bases de dados usando uma oou mais variáveis-chave:
 
 <center><img src="../merge.webp"></center>
 
@@ -890,7 +890,7 @@ merge(x, y, by = intersect(names(x), names(y)),
 - suffixes: a character vector of length 2 specifying the suffixes to be used for making unique the names of columns.
 ```
 
-- Vamos criar duas bases de dados, sendo que existem indivíduos presentes em uma base que não está na outra:
+- Vamos criar duas bases de dados, where que existem individuals presentes em uma base que não está na outra:
 
 
 ```r
@@ -928,7 +928,7 @@ bd2
 ## 6 Obi-Wan Kenobi        182 blue-gray
 ```
 
-- Note que há 12 personagens únicos em ambas bases, mas apenas “C-3PO” e “Darth Vader” são observações comuns.
+- Note que há 12 personagens únicos em ambas bases, mas apenas “C-3PO” e “Darth Vader” são observations comuns.
 - Para verificar as colunas com mesmos nomes em duas bases, podemos usar a função `intersect()` em conjunto com a função `names()` ou `colnames()`:
 
 ```r
@@ -1307,7 +1307,7 @@ sw %>% filter(species=="Droid") # com operador pipe
 ## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está sendo aplicada automaticamente via `%>%`).
+- Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está where aplicada automaticamente via `%>%`).
 - Note que, desde a subseção com a função `filter()` até `mutate()` fomos "acumulando" as alterações em novos data frames, ou seja, o último data frame `starwars5` é a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
 
 ```r
@@ -1459,7 +1459,7 @@ head(grouped_sw) # agrupado por sexo
 ## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observações
+- O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observations
 
 ```r
 starwars %>%
@@ -1513,8 +1513,8 @@ starwars %>%
 ## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
-- Note que, agora, a coluna `mass_mean` tem valores diferentes de acordo com o sexo da observação.
-- Isso é útil em algumas aplicações econômicas em que consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observação (e.g. morador) pertence.
+- Note que, agora, a coluna `mass_mean` tem valores diferentes de acordo com o sexo da observation.
+- Isso é útil em algumas aplicações econômicas where consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observation (e.g. morador) pertence.
 
 > **Evite potenciais erros**: Sempre que usar `group_by()`, não se esqueça de desagrupar o data frame via função `ungroup()` após realizar a operações desejadas.
 
@@ -1683,7 +1683,7 @@ bd2
 ## 5 Biggs Darklighter     183 brown    
 ## 6 Obi-Wan Kenobi        182 blue-gray
 ```
-- Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observações comuns.
+- Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observations comuns.
 - `inner_join()`: mantém apenas ID's presentes simultaneamente em ambas bases
 
 ```r

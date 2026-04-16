@@ -9,7 +9,7 @@ tags:
 - Undergraduate
 title: Econometrics II (Spring 2023)
 type: book
-linktitle: Início
+linktitle: In�cio
 weight: 1
 icon: book
 iconpack: fs
@@ -17,56 +17,56 @@ weight: 1
 ---
 
 
-Sejam bem-vindas(os) ao conteúdo de Monitoria da disciplina de Econometria II!
+Sejam bem-vindas(os) ao conte�do de Monitoria da disciplina de Econometria II!
 
-Página do curso (prof. Daniel Domingues dos Santos):  [https://edisciplinas.usp.br/course/view.php?id=108687](https://edisciplinas.usp.br/course/view.php?id=108687)
+P�gina do curso (prof. Daniel Domingues dos Santos):  [https://edisciplinas.usp.br/course/view.php?id=108687](https://edisciplinas.usp.br/course/view.php?id=108687)
 
-Caso tenham dúvidas, podem enviar e-mail para: fabio.nishida@usp.br
+Caso tenham d�vidas, podem enviar e-mail para: fabio.nishida@usp.br
 
-Monitorias presenciais às quintas-feiras das 13h às 14h na sala 14-B1
+Monitorias presenciais �s quintas-feiras das 13h �s 14h na sala 14-B1
 
-Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.com/qtr-upxi-nwu](https://meet.google.com/qtr-upxi-nwu)
+Se necess�rio, usaremos a seguinte sala de Google Meet: [https://meet.google.com/qtr-upxi-nwu](https://meet.google.com/qtr-upxi-nwu)
 
 
-{{< cta cta_text="👉 Seguir para Revisão de R" cta_link="sec1" >}}
+{{< cta cta_text="?Y'? Seguir para Revis�o de R" cta_link="sec1" >}}
 
 </br>
 
-## Gravações das Monitorias
+## Grava��es das Monitorias
 
 - **Monitoria 10 (20/06)**: VI, MQ2E e Testes | [Script](monitoria10.R)
 [<img src="https://img.youtube.com/vi/7HrsKmRrm9g/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=7HrsKmRrm9g)
 
-- **Monitoria 9 (09/06)**: Testes de Hipótese | [Script](monitoria09.R)
+- **Monitoria 9 (09/06)**: Testes de Hip�tese | [Script](monitoria09.R)
 [<img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=0Kq11zaSGys)
 
-- **Monitoria 8 (18/05)**: Estimadores Within e de Primeiras Diferenças | [Script](monitoria08.R)
+- **Monitoria 8 (18/05)**: Estimadores Within e de Primeiras Diferen�as | [Script](monitoria08.R)
 [<img src="https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=KbOV12t_Ki0)
 
-- **Monitoria 7 (04/05)**: Matrizes de Tranformação e Estimador Between | [Script](monitoria07.R)
+- **Monitoria 7 (04/05)**: Matrizes de Tranforma��o e Estimador Between | [Script](monitoria07.R)
 [<img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=kh69ZHE8DNY)
 
 - **Monitoria 6 (27/04)**: Estimador de MQGF | [Script](monitoria06.R)
 [<img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=G-1AVqDQBqY)
 
-- **Monitoria 5 (20/04)**: Estimação da Matriz de Covariâncias dos Erros e Estimador de MQE | [Script](monitoria05.R)
+- **Monitoria 5 (20/04)**: Estima��o da Matriz de Covari�ncias dos Erros e Estimador de MQE | [Script](monitoria05.R)
 [<img src="https://img.youtube.com/vi/uxEXcGDL_zM/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=uxEXcGDL_zM)
 
-- **Monitoria 4 (13/04)**: Dados em Painel e Matriz de Covariâncias dos Erros | [Script](monitoria04.R)
+- **Monitoria 4 (13/04)**: Dados em Painel e Matriz de Covari�ncias dos Erros | [Script](monitoria04.R)
     
 [<img src="https://img.youtube.com/vi/6hZqBAGTNTc/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=6hZqBAGTNTc)
 
-- **Monitoria 3 (30/03)**: MQO com Variáveis Categóricas | [Script](monitoria03.R)
+- **Monitoria 3 (30/03)**: MQO com Vari�veis Categ�ricas | [Script](monitoria03.R)
     
 [<img src="https://img.youtube.com/vi/AH4FIVMNDYM/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=AH4FIVMNDYM)
 
 
-- **Monitoria 2 (23/03)**: Mínimos Quadrados Ordinários | [Script](monitoria02.R)
+- **Monitoria 2 (23/03)**: M�nimos Quadrados Ordin�rios | [Script](monitoria02.R)
     
 [<img src="https://img.youtube.com/vi/5ye1mOJFe6k/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=5ye1mOJFe6k)
 
 
-- **Monitoria 1 (16/03)**: Revisão de Programação em R | [Script](monitoria01.R)
+- **Monitoria 1 (16/03)**: Revis�o de Programa��o em R | [Script](monitoria01.R)
     
 [<img src="https://img.youtube.com/vi/SS-NLIn9gJk/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=SS-NLIn9gJk)
 

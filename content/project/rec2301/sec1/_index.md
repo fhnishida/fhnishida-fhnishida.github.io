@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Ferramentas do R
+linktitle: R Toolkit
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Ferramentas do R
+title: R Toolkit
 weight: 1
 output: md_document
 type: book
@@ -13,43 +13,43 @@ type: book
 
 
 
-- Baseado, principalmente, nos cursos da [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da universidade John Hopkins (disponível no Coursera).
-- Não é possível fazer a Especialização gratuitamente, mas é possível "participar como ouvinte" (_audit course_), o que permite acessar quase todo material (mas não pode fazer os testes e, portanto, não ganha certificado ao concluí-lo). 
-- Em cada tema abordado serão citadas as fontes, além de incluir aos vídeos dos cursos citados acima para que possam aprofundar nos estudos.
+- Based primarily on the courses from [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) from Johns Hopkins University (available on Coursera).
+- The specialization is not fully free, but you can still audit the courses, which gives access to most of the material even though you cannot complete the graded assignments or receive a certificate. 
+- For each topic, I cite the relevant sources and include videos from the courses mentioned above so that you can explore the material further.
 
 
-## Instalando R
+## Installing R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Instalação da base do R ([CRAN](https://cran.r-project.org))
+1. Install the base R distribution ([CRAN](https://cran.r-project.org))
     - Download R for Windows > base > Download R X.X.X for Windows
-    - Se o computador for 64-bits, opte pela versão 64-bits
+    - If your computer is 64-bit, choose the 64-bit version.
 
-2. Instalação do Rtools ([CRAN](https://cran.r-project.org))
+2. Install Rtools ([CRAN](https://cran.r-project.org))
     - Download R for Windows > Rtools > Installing Rtools > rtools40-x86_XX.exe
-    - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessários em alguns pacotes no R
+    - Rtools is a collection of compilation tools for several languages, including C, C++, and Fortran, which some R packages require.
 
-3. Instalação do RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
+3. Install RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
     - Download RStudio Desktop
-    - É uma interface de usuário para facilitar o uso do R
+    - RStudio is a user interface that makes it easier to work with R.
 
 
-## Usando R Studio
+## Using RStudio
 - [RStudio Tour (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
 
-RStudio é dividido em 4 quadrantes:
+RStudio is divided into four panes:
 
-- superior/esquerdo: source - onde ficam "blocos de nota" (scripts) com comandos a serem salvos
-- superior/direito: ambiente - visualizar variáveis
-- inferior/esquerdo: console - executar os comandos e ver resultados (é o R "bruto")
-- inferior/direito: arquivos/gráficos/pacotes/ajuda
+- upper-left: source pane, where scripts and notes are edited and saved
+- upper-right: environment pane, where you can inspect variables
+- lower-left: console pane, where commands run and results appear
+- lower-right: files, plots, packages, and help
 
-> **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão num tempo mais longo)<br/>  
+> **Tip**: Change the RStudio theme if you prefer a darker editor for longer work sessions.<br/>  
 Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
 
 
-### Diretório de trabalho
-Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).
+### Working directory
+Setting a working directory makes it easier to access the files in your folder, including datasets and scripts.
 
 > Session > Set Working Directory > Choose Directory...
 
@@ -57,7 +57,7 @@ Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base 
 setwd("C:/Users/Fabio/OneDrive/FEA-RP")
 ```
 
-> **Dica**: O comando para definir o diretório de trabalho aparecerá no console. Copie e cole no seu script para não precisar definir toda vez que abre o R Studio.
+> **Tip**: The command used to set the working directory will appear in the console. Copy it into your script so you do not need to redefine it every time you open RStudio.
 
 - Note que usa o "slash" (/) ao invés do "backslash" (\\), então não dá para copiar diretamente o endereço de uma pasta e colar no R sem fazer ajustes:
 ```r
@@ -69,11 +69,11 @@ setwd("C:/Users/Fabio/OneDrive/FEA-RP") # CORRETO!
 setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRETO!
 ```
 
-Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
+You can replace _backslashes_ with _slashes_, or escape them by writing double backslashes.
 
 
 ### Executando comandos
-- Execução direta no console: escreva `1 + 1` no console e dê \<Enter\>
+- Direct execution in the console: escreva `1 + 1` no console e dê \<Enter\>
 
 ```r
 1 + 1
@@ -82,7 +82,7 @@ Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
 ```
 ## [1] 2
 ```
-- Execução pelo script: escreva o seguinte código abaixo, e dê `Ctrl + Enter` na linha ou no código destacado. Note que o código do script é "jogado" no console.
+- Execution from a script: escreva o seguinte código abaixo, e dê `Ctrl + Enter` na linha ou no código destacado. Note que o código do script é "jogado" no console.
 
 ```r
 rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
@@ -101,7 +101,7 @@ hist(rnorm(n=1000, mean=0, sd=1))  # Histograma dos números gerados
 
 
 
-### Ajuda para comandos
+### Help for commands
 ```r
 ?rnorm
 ```
@@ -125,24 +125,24 @@ rnorm(mean=0, n=10, sd=1)
 ```
 
 
-## Pacotes no R
+## R Packages
 - Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
 - Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos economistas (principalmente econometristas) já desenvolvem e disponibilizam pacotes com as implementações de seus novos métodos.
 - A instalação de um pacote só precisa ser feita uma única vez.
 - No entanto, caso você atualize uma nova versão do R, é necessário instalar novamente todos os pacotes.
-- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de indivíduos (normalmente disponibilizados no GitHub)
+- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de individuals (normalmente disponibilizados no GitHub)
 - O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes, garante qualidade dos pacotes disponibilizados
 - Tome cuidado com pacotes disponibilizados por individuos! É possível executar, dentro do R, códigos para criar e apagar arquivos, por exemplo.
 
 
-### Instalação via CRAN
+### Installation via CRAN
 > quadrante inferior/direito > Packages > Install > (Nomes dos pacotes)
 
 ```r
 install.packages("ggplot2") # Pacote para criar graficos
 ```
 
-### Instalação via GitHub
+### Installation via GitHub
 - Primeiro, é necessário instalar o pacote `devtools`
 ```r
 install.packages("devtools")
@@ -212,7 +212,7 @@ select(obj) # do pacote MASS
 dplyr::select(.data, ...) # do pacote dplyr
 ```
 
-### Atualizando pacotes
+### Updating packages
 > quadrante inferior/direito > Packages > Update > Select All > Install Updates
 
 
@@ -256,5 +256,5 @@ Não será detalhado aqui, mas é algo interessante para olhar.
 
 
 
-{{< cta cta_text="👉 Seguir para Programação em R" cta_link="../sec2" >}}
+{{< cta cta_text="👉 Seguir para R Programming" cta_link="../sec2" >}}
 

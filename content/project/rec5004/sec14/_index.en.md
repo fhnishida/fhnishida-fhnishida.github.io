@@ -14,20 +14,20 @@ type: book
 
 
 
-## Manipulação de dados em painel
-- Para o que estamos estudando, é normalmente exigido que os dados estejam
-    - no formato _long_: para cada indivíduo, temos uma linha para cada período;
-    - _balanceados_: o tamanho da amostra é {{<math>}}$N \times T${{</math>}}, com {{<math>}}$N${{</math>}} indivíduos e {{<math>}}$T${{</math>}} períodos; e
-    - devidamente ordenados por indivíduos e, depois, por tempo.
+## Manipula��o de dados em painel
+- Para o que estamos estudando, � normalmente exigido que os dados estejam
+    - no formato _long_: para cada indiv�duo, temos uma linha para cada per�odo;
+    - _balanceados_: o tamanho da amostra � {{<math>}}$N \times T${{</math>}}, com {{<math>}}$N${{</math>}} indiv�duos e {{<math>}}$T${{</math>}} per�odos; e
+    - devidamente ordenados por indiv�duos e, depois, por tempo.
 
 <center><img src="../panel-example.jpg"></center>
 
-- Em muitos casos, as informações são disponibilizadas em várias bases de dados de cortes transversais (_cross sections_), então é necessário estruturar a base de dados em painel.
+- Em muitos casos, as informa��es s�o disponibilizadas em v�rias bases de dados de cortes transversais (_cross sections_), ent�o � necess�rio estruturar a base de dados em painel.
 - Isso por ser feito no R de, pelo menos, duas formas:
-    - empilhando as bases de dados e filtrando apenas indivíduos que aparecem em todos períodos; ou
-    - fazendo a junção interna (_inner join_) das bases por indivíduo e transformando do formato _wide_ para o _long_.
-- Como exemplo, usaremos a PNAD Contínua que é publicada trimestralmente e possui o pacote `PNADcIBGE` que auxilia na sua utilização.
-- Os dados podem ser obtidos via`read_pnadc(microdata, input_txt)` que necessita que você faça download das **bases de dados** e do **txt com informações das variáveis (_input_txt_)** no [FTP do IBGE](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2021):
+    - empilhando as bases de dados e filtrando apenas indiv�duos que aparecem em todos per�odos; ou
+    - fazendo a jun��o interna (_inner join_) das bases por indiv�duo e transformando do formato _wide_ para o _long_.
+- Como exemplo, usaremos a PNAD Cont�nua que � publicada trimestralmente e possui o pacote `PNADcIBGE` que auxilia na sua utiliza��o.
+- Os dados podem ser obtidos via`read_pnadc(microdata, input_txt)` que necessita que voc� fa�a download das **bases de dados** e do **txt com informa��es das vari�veis (_input_txt_)** no [FTP do IBGE](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2021):
 
 ```r
 # install.packages("PNADcIBGE")
@@ -35,7 +35,7 @@ type: book
 library(PNADcIBGE)
 library(dplyr)
 ```
-- O arquivo compactado .zip é cerca de 12\% do arquivo descompactado .txt (133mb {{<math>}}$\times${{</math>}} 1,08gb). Para não precisar manter o arquivo .txt no computador, podemos usar a função `unz()` para descompactar arquivos temporariamente:
+- O arquivo compactado .zip � cerca de 12\% do arquivo descompactado .txt (133mb {{<math>}}$\times${{</math>}} 1,08gb). Para n�o precisar manter o arquivo .txt no computador, podemos usar a fun��o `unz()` para descompactar arquivos temporariamente:
 
 
 
@@ -48,28 +48,28 @@ pnad_022021 = read_pnadc(unz("PNADC_022021_20220224.zip", "PNADC_022021.txt"),
                          input_txt = "input_PNADC_trimestral.txt")
 ```
 
-- Para identificar um indivíduo na base do PNAD, o IBGE usa as seguintes [variáveis-chave](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
-    - _UPA_: Unidade Primária de Amostragem / UF (2) + Nº Sequencial (6) + DV (1)
-    - _V1008_: Número do domicílio (01 a 14)
+- Para identificar um indiv�duo na base do PNAD, o IBGE usa as seguintes [vari�veis-chave](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
+    - _UPA_: Unidade Prim�ria de Amostragem / UF (2) + N� Sequencial (6) + DV (1)
+    - _V1008_: N�mero do domic�lio (01 a 14)
     - _V1014_: Painel/Grupo de amostra (01 a 99)
-    - _V2003_: Número de ordem (01 a 30)
-- Pesquisadores do Ipea ([Teixeira Júnior et al., 2020](http://repositorio.ipea.gov.br/bitstream/11058/9951/1/bmt_67_nt_pesos_longitudinais.pdf)) usam mais algumas variáveis-chave invariantes no tempo para tornar esse 
+    - _V2003_: N�mero de ordem (01 a 30)
+- Pesquisadores do Ipea ([Teixeira J�nior et al., 2020](http://repositorio.ipea.gov.br/bitstream/11058/9951/1/bmt_67_nt_pesos_longitudinais.pdf)) usam mais algumas vari�veis-chave invariantes no tempo para tornar esse 
     - _V2007_: Sexo
-    - _V2008_/_V20081_/_V20082_: Data de nascimento (dia/mês/ano)
-- Além disso, vamos adicionar mais algumas variáveis:
+    - _V2008_/_V20081_/_V20082_: Data de nascimento (dia/m�s/ano)
+- Al�m disso, vamos adicionar mais algumas vari�veis:
     - _invariante no tempo_:
-        - _UF_: Unidade da Federação
+        - _UF_: Unidade da Federa��o
     - _variantes no tempo_:
         - _V2009_: Idade (em anos)
         - _VD4020_: Rendimento mensal efetivo de todos os trabalhos para pessoas de 14 anos ou mais de idade
 
 
 ```r
-# Lista de variáveis que vamos utilizar
+# Lista de vari�veis que vamos utilizar
 lista_var = c("Trimestre", "UPA", "V1008", "V1014", "V2003", "V2007", "V2008",
               "V20081", "V20082", "UF", "V2009", "VD4020")
 
-# Selecionando e renomeando variáveis, e filtrando apenas maiores de 14 anos 
+# Selecionando e renomeando vari�veis, e filtrando apenas maiores de 14 anos 
 pnad_1 = pnad_012021 %>% select(all_of(lista_var)) %>%
     rename(DOMIC = V1008, PAINEL = V1014, ORDEM = V2003, SEXO = V2007, 
            DIA_NASC = V2008, MES_NASC = V20081, ANO_NASC = V20082, 
@@ -85,8 +85,8 @@ pnad_2 = pnad_022021 %>% select(all_of(lista_var)) %>%
 
 
 
-### Filtrando indivíduos presentes em todos períodos
-- Primeiro, empilharemos as bases de dados usando `rbind()`. É necessário garantir que tenham o mesmo número de colunas e estas sejam da mesma classe (_character_, _numeric_, etc.):
+### Filtrando indiv�duos presentes em todos per�odos
+- Primeiro, empilharemos as bases de dados usando `rbind()`. ?? necess�rio garantir que tenham o mesmo n�mero de colunas e estas sejam da mesma classe (_character_, _numeric_, etc.):
 
 ```r
 pnad_bind = rbind(pnad_1, pnad_2)
@@ -94,7 +94,7 @@ head(pnad_bind)
 ```
 
 ```
-## # A tibble: 6 × 12
+## # A tibble: 6 ?- 12
 ##   Trimestre UPA       DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_NASC ANO_NASC UF   
 ##   <chr>     <chr>     <chr> <chr>  <chr> <chr> <chr>    <chr>    <chr>    <chr>
 ## 1 1         110000016 01    08     01    2     16       05       1981     11   
@@ -103,35 +103,35 @@ head(pnad_bind)
 ## 4 1         110000016 01    08     04    1     26       07       1947     11   
 ## 5 1         110000016 01    08     05    2     15       08       1961     11   
 ## 6 1         110000016 02    08     01    2     11       07       1983     11   
-## # ℹ 2 more variables: IDADE <dbl>, RENDA <dbl>
+## # ?"? 2 more variables: IDADE <dbl>, RENDA <dbl>
 ```
-- Note que a 2ª observação não corresponde à mesma pessoa da 1º linha. Vamos criar uma variável `ID`, juntando informações de todas variáveis-chave, e rearranjar a base de dados de acordo com ela e o trimestre:
+- Note que a 2� observa��o n�o corresponde � mesma pessoa da 1� linha. Vamos criar uma vari�vel `ID`, juntando informa��es de todas vari�veis-chave, e rearranjar a base de dados de acordo com ela e o trimestre:
 
 ```r
 pnad_bind = pnad_bind %>% mutate(
     ID = paste0(UPA, DOMIC, PAINEL, ORDEM, SEXO, DIA_NASC, MES_NASC, ANO_NASC)
-    ) %>% select(ID, everything()) %>% # reordenando variáveis, começando com ID
+    ) %>% select(ID, everything()) %>% # reordenando vari�veis, come�ando com ID
     arrange(ID, Trimestre)
 head(pnad_bind, 10)
 ```
 
 ```
-## # A tibble: 10 × 13
+## # A tibble: 10 ?- 13
 ##    ID        Trimestre UPA   DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_NASC ANO_NASC
 ##    <chr>     <chr>     <chr> <chr> <chr>  <chr> <chr> <chr>    <chr>    <chr>   
-##  1 11000001… 1         1100… 01    08     01    2     16       05       1981    
-##  2 11000001… 1         1100… 01    08     02    2     12       06       2000    
-##  3 11000001… 1         1100… 01    08     03    2     15       05       2004    
-##  4 11000001… 1         1100… 01    08     04    1     26       07       1947    
-##  5 11000001… 1         1100… 01    08     05    2     15       08       1961    
-##  6 11000001… 1         1100… 02    08     01    2     11       07       1983    
-##  7 11000001… 2         1100… 02    08     01    2     11       07       1983    
-##  8 11000001… 1         1100… 02    08     02    1     99       99       9999    
-##  9 11000001… 2         1100… 02    08     02    1     99       99       9999    
-## 10 11000001… 1         1100… 03    08     01    2     09       03       1976    
-## # ℹ 3 more variables: UF <chr>, IDADE <dbl>, RENDA <dbl>
+##  1 11000001??? 1         1100??? 01    08     01    2     16       05       1981    
+##  2 11000001??? 1         1100??? 01    08     02    2     12       06       2000    
+##  3 11000001??? 1         1100??? 01    08     03    2     15       05       2004    
+##  4 11000001??? 1         1100??? 01    08     04    1     26       07       1947    
+##  5 11000001??? 1         1100??? 01    08     05    2     15       08       1961    
+##  6 11000001??? 1         1100??? 02    08     01    2     11       07       1983    
+##  7 11000001??? 2         1100??? 02    08     01    2     11       07       1983    
+##  8 11000001??? 1         1100??? 02    08     02    1     99       99       9999    
+##  9 11000001??? 2         1100??? 02    08     02    1     99       99       9999    
+## 10 11000001??? 1         1100??? 03    08     01    2     09       03       1976    
+## # ?"? 3 more variables: UF <chr>, IDADE <dbl>, RENDA <dbl>
 ```
-- Observe que o base de dados em painel não está balanceada, ou seja, nem todos os indivíduos aparecem nos 2 trimestres. Portanto, vamos criar um objeto auxiliar com a contagem de vezes que o `ID` aparece em `pnad_bind`
+- Observe que o base de dados em painel n�o est� balanceada, ou seja, nem todos os indiv�duos aparecem nos 2 trimestres. Portanto, vamos criar um objeto auxiliar com a contagem de vezes que o `ID` aparece em `pnad_bind`
 
 ```r
 cont_ID = pnad_bind %>% group_by(ID) %>% summarise(cont = n())
@@ -139,7 +139,7 @@ head(cont_ID, 10)
 ```
 
 ```
-## # A tibble: 10 × 2
+## # A tibble: 10 ?- 2
 ##    ID                        cont
 ##    <chr>                    <int>
 ##  1 110000016010801216051981     1
@@ -161,7 +161,7 @@ head(cont_ID, 10)
 ```
 
 ```
-## # A tibble: 10 × 2
+## # A tibble: 10 ?- 2
 ##    ID                        cont
 ##    <chr>                    <int>
 ##  1 110000016020801211071983     2
@@ -183,21 +183,21 @@ head(pnad_bind)
 ```
 
 ```
-## # A tibble: 6 × 13
+## # A tibble: 6 ?- 13
 ##   ID         Trimestre UPA   DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_NASC ANO_NASC
 ##   <chr>      <chr>     <chr> <chr> <chr>  <chr> <chr> <chr>    <chr>    <chr>   
-## 1 110000016… 1         1100… 02    08     01    2     11       07       1983    
-## 2 110000016… 2         1100… 02    08     01    2     11       07       1983    
-## 3 110000016… 1         1100… 02    08     02    1     99       99       9999    
-## 4 110000016… 2         1100… 02    08     02    1     99       99       9999    
-## 5 110000016… 1         1100… 03    08     01    2     09       03       1976    
-## 6 110000016… 2         1100… 03    08     01    2     09       03       1976    
-## # ℹ 3 more variables: UF <chr>, IDADE <dbl>, RENDA <dbl>
+## 1 110000016??? 1         1100??? 02    08     01    2     11       07       1983    
+## 2 110000016??? 2         1100??? 02    08     01    2     11       07       1983    
+## 3 110000016??? 1         1100??? 02    08     02    1     99       99       9999    
+## 4 110000016??? 2         1100??? 02    08     02    1     99       99       9999    
+## 5 110000016??? 1         1100??? 03    08     01    2     09       03       1976    
+## 6 110000016??? 2         1100??? 03    08     01    2     09       03       1976    
+## # ?"? 3 more variables: UF <chr>, IDADE <dbl>, RENDA <dbl>
 ```
 
 ```r
-N = pnad_bind$ID %>% unique() %>% length() # Nº de indivíduos únicos
-T = pnad_bind$Trimestre %>% unique() %>% length() # Nº de trimestre únicos
+N = pnad_bind$ID %>% unique() %>% length() # N� de indiv�duos �nicos
+T = pnad_bind$Trimestre %>% unique() %>% length() # N� de trimestre �nicos
 paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 ```
 
@@ -207,7 +207,7 @@ paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 
 
 ### Transformando de _wide_ para _long_
-- Agora, juntaremos a base usando a função `inner_join()` que apenas mantém indivíduos que aparecem em ambas bases de dados:
+- Agora, juntaremos a base usando a fun��o `inner_join()` que apenas mant�m indiv�duos que aparecem em ambas bases de dados:
 
 ```r
 pnad_joined = inner_join(pnad_1, pnad_2, 
@@ -225,15 +225,15 @@ colnames(pnad_joined) # nomes das colunas
 ```
 
 ```r
-dim(pnad_joined) # dimensões da base de dados
+dim(pnad_joined) # dimens�es da base de dados
 ```
 
 ```
 ## [1] 174468     16
 ```
-- Note que obtivemos a base no formato _wide_ (1 linha para cada indivíduo) e as informações relativas aos 2 períodos (1º e 2º trimestres de 2021) estão em colunas:
-    - Os sufixos foram utilizamos para duplicar colunas de informações contidas em ambas bases (e que não foram inseridas no argumento `by`).
-    - A variável invariante no tempo _UF_ foi duplicada, então seria interessante incluí-la também como uma ``variável-chave''
+- Note que obtivemos a base no formato _wide_ (1 linha para cada indiv�duo) e as informa��es relativas aos 2 per�odos (1� e 2� trimestres de 2021) est�o em colunas:
+    - Os sufixos foram utilizamos para duplicar colunas de informa��es contidas em ambas bases (e que n�o foram inseridas no argumento `by`).
+    - A vari�vel invariante no tempo _UF_ foi duplicada, ent�o seria interessante inclu�-la tamb�m como uma ``vari�vel-chave''
 
 ```r
 pnad_joined = inner_join(pnad_1, pnad_2, 
@@ -250,15 +250,15 @@ colnames(pnad_joined) # nomes das colunas
 ```
 
 ```r
-dim(pnad_joined) # dimensões da base de dados
+dim(pnad_joined) # dimens�es da base de dados
 ```
 
 ```
 ## [1] 174468     15
 ```
-- Observe que temos uma única coluna _UF_ agora e o número de observações manteve-se inalterado, pois os domicílios da amostra de fato não alteraram suas UFs entre estes trimestres.
-    - Caso alterasse o número de linhas, a variável invariante no tempo possui algumas observações que alteraram entre os períodos e estas foram excluídas da amostra.
-- Também podemos retirar as colunas "Trimestre.1" e "Trimestre.2":
+- Observe que temos uma �nica coluna _UF_ agora e o n�mero de observa��es manteve-se inalterado, pois os domic�lios da amostra de fato n�o alteraram suas UFs entre estes trimestres.
+    - Caso alterasse o n�mero de linhas, a vari�vel invariante no tempo possui algumas observa��es que alteraram entre os per�odos e estas foram exclu�das da amostra.
+- Tamb�m podemos retirar as colunas "Trimestre.1" e "Trimestre.2":
 
 ```r
 pnad_joined = pnad_joined %>% select(-Trimestre_1, -Trimestre_2)
@@ -266,15 +266,15 @@ pnad_joined = pnad_joined %>% select(-Trimestre_1, -Trimestre_2)
 - Estando no formato _wide_, precisamos transformar para o formato _long_
 
 
-#### Transformação _wide_/_long_ via `tidyr`
+#### Transforma��o _wide_/_long_ via `tidyr`
 - [Pivoting (_tidyr_)](https://tidyr.tidyverse.org/articles/pivot.html)
 
-- Para fazer transformações em _wide_ ou _long_ usaremos o pacote `tidyr` e suas funções `pivot_longer()`, `pivot_wider()` e `separate()`
+- Para fazer transforma��es em _wide_ ou _long_ usaremos o pacote `tidyr` e suas fun��es `pivot_longer()`, `pivot_wider()` e `separate()`
 
 ```r
 library(tidyr)
 ```
-- `pivot_longer()`: transforma várias colunas em duas: de nomes e de valores (aumenta o nº de linhas e diminui o de colunas)
+- `pivot_longer()`: transforma v�rias colunas em duas: de nomes e de valores (aumenta o n� de linhas e diminui o de colunas)
 ```yaml
 pivot_longer(
   data,
@@ -284,7 +284,7 @@ pivot_longer(
   ...
 )
 ```
-- `pivot_wider()`: transforma nomes (valores únicos) de uma variável em várias colunas (aumenta o nº de colunas e diminui o de linhas)
+- `pivot_wider()`: transforma nomes (valores �nicos) de uma vari�vel em v�rias colunas (aumenta o n� de colunas e diminui o de linhas)
 ```yaml
 pivot_wider(
   data,
@@ -312,25 +312,25 @@ library(tidyr)
 pnad_joined2 = pnad_joined %>%
     pivot_longer(
         cols = c(ends_with("_1"), ends_with("_2") ),
-        names_to = "VAR_TRI", # nome da coluna que vão os nomes das colunas antigas
+        names_to = "VAR_TRI", # nome da coluna que v�o os nomes das colunas antigas
         values_to = "VALUE" # nome da coluna com os valores das colunas transformadas
     )
 head(pnad_joined2)
 ```
 
 ```
-## # A tibble: 6 × 11
+## # A tibble: 6 ?- 11
 ##   UPA    DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_NASC ANO_NASC UF    VAR_TRI VALUE
 ##   <chr>  <chr> <chr>  <chr> <chr> <chr>    <chr>    <chr>    <chr> <chr>   <dbl>
-## 1 11000… 02    08     01    2     11       07       1983     11    IDADE_1    37
-## 2 11000… 02    08     01    2     11       07       1983     11    RENDA_1    NA
-## 3 11000… 02    08     01    2     11       07       1983     11    IDADE_2    37
-## 4 11000… 02    08     01    2     11       07       1983     11    RENDA_2    NA
-## 5 11000… 02    08     02    1     99       99       9999     11    IDADE_1    31
-## 6 11000… 02    08     02    1     99       99       9999     11    RENDA_1    NA
+## 1 11000??? 02    08     01    2     11       07       1983     11    IDADE_1    37
+## 2 11000??? 02    08     01    2     11       07       1983     11    RENDA_1    NA
+## 3 11000??? 02    08     01    2     11       07       1983     11    IDADE_2    37
+## 4 11000??? 02    08     01    2     11       07       1983     11    RENDA_2    NA
+## 5 11000??? 02    08     02    1     99       99       9999     11    IDADE_1    31
+## 6 11000??? 02    08     02    1     99       99       9999     11    RENDA_1    NA
 ```
-- Note que, ao invés de ter 2 linhas por indivíduo, temos 4 (pois temos 2 variáveis variantes no tempo).
-- Precisamos jogar metade das linhas de volta para colunas. Vamos usar a função `separate()` para separar _VAR.TRI_ (com 4 valores únicos: _IDADE_1_, _IDADE_2_, _RENDA_1_ e _RENDA_2_) em 2 colunas: _VAR_ (2 valores únicos: _IDADE_ e _RENDA_) e _TRI_ (2 valores únicos: _1_ e _2_).
+- Note que, ao inv�s de ter 2 linhas por indiv�duo, temos 4 (pois temos 2 vari�veis variantes no tempo).
+- Precisamos jogar metade das linhas de volta para colunas. Vamos usar a fun��o `separate()` para separar _VAR.TRI_ (com 4 valores �nicos: _IDADE_1_, _IDADE_2_, _RENDA_1_ e _RENDA_2_) em 2 colunas: _VAR_ (2 valores �nicos: _IDADE_ e _RENDA_) e _TRI_ (2 valores �nicos: _1_ e _2_).
 
 ```r
 pnad_joined3 = pnad_joined2[1:100,] %>%
@@ -343,19 +343,19 @@ head(pnad_joined3)
 ```
 
 ```
-## # A tibble: 6 × 12
+## # A tibble: 6 ?- 12
 ##   UPA      DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_NASC ANO_NASC UF    VAR   TRI  
 ##   <chr>    <chr> <chr>  <chr> <chr> <chr>    <chr>    <chr>    <chr> <chr> <chr>
-## 1 1100000… 02    08     01    2     11       07       1983     11    IDADE 1    
-## 2 1100000… 02    08     01    2     11       07       1983     11    RENDA 1    
-## 3 1100000… 02    08     01    2     11       07       1983     11    IDADE 2    
-## 4 1100000… 02    08     01    2     11       07       1983     11    RENDA 2    
-## 5 1100000… 02    08     02    1     99       99       9999     11    IDADE 1    
-## 6 1100000… 02    08     02    1     99       99       9999     11    RENDA 1    
-## # ℹ 1 more variable: VALUE <dbl>
+## 1 1100000??? 02    08     01    2     11       07       1983     11    IDADE 1    
+## 2 1100000??? 02    08     01    2     11       07       1983     11    RENDA 1    
+## 3 1100000??? 02    08     01    2     11       07       1983     11    IDADE 2    
+## 4 1100000??? 02    08     01    2     11       07       1983     11    RENDA 2    
+## 5 1100000??? 02    08     02    1     99       99       9999     11    IDADE 1    
+## 6 1100000??? 02    08     02    1     99       99       9999     11    RENDA 1    
+## # ?"? 1 more variable: VALUE <dbl>
 ```
 
-- Para finalizar, vamos transformar a coluna _VAR_ (com 2 valores únicos: _IDADE_ e _RENDA_) em 2 colunas (_IDADE_ e _RENDA_):
+- Para finalizar, vamos transformar a coluna _VAR_ (com 2 valores �nicos: _IDADE_ e _RENDA_) em 2 colunas (_IDADE_ e _RENDA_):
 
 ```r
 pnad_joined4 = pnad_joined3 %>%
@@ -367,35 +367,35 @@ pnad_joined4 %>% select(TRI, everything()) %>% head(20)
 ```
 
 ```
-## # A tibble: 20 × 12
+## # A tibble: 20 ?- 12
 ##    TRI   UPA     DOMIC PAINEL ORDEM SEXO  DIA_NASC MES_NASC ANO_NASC UF    IDADE
 ##    <chr> <chr>   <chr> <chr>  <chr> <chr> <chr>    <chr>    <chr>    <chr> <dbl>
-##  1 1     110000… 02    08     01    2     11       07       1983     11       37
-##  2 2     110000… 02    08     01    2     11       07       1983     11       37
-##  3 1     110000… 02    08     02    1     99       99       9999     11       31
-##  4 2     110000… 02    08     02    1     99       99       9999     11       31
-##  5 1     110000… 03    08     01    2     09       03       1976     11       44
-##  6 2     110000… 03    08     01    2     09       03       1976     11       45
-##  7 1     110000… 03    08     02    1     03       09       2000     11       20
-##  8 2     110000… 03    08     02    1     03       09       2000     11       20
-##  9 1     110000… 03    08     04    1     18       09       1954     11       66
-## 10 2     110000… 03    08     04    1     18       09       1954     11       66
-## 11 1     110000… 04    08     01    1     05       08       1969     11       51
-## 12 2     110000… 04    08     01    1     05       08       1969     11       51
-## 13 1     110000… 04    08     02    2     15       01       1976     11       44
-## 14 2     110000… 04    08     02    2     15       01       1976     11       45
-## 15 1     110000… 04    08     03    1     10       07       1994     11       26
-## 16 2     110000… 04    08     03    1     10       07       1994     11       26
-## 17 1     110000… 04    08     04    2     17       05       1997     11       23
-## 18 2     110000… 04    08     04    2     17       05       1997     11       23
-## 19 1     110000… 05    08     01    1     05       07       1965     11       55
-## 20 2     110000… 05    08     01    1     05       07       1965     11       55
-## # ℹ 1 more variable: RENDA <dbl>
+##  1 1     110000??? 02    08     01    2     11       07       1983     11       37
+##  2 2     110000??? 02    08     01    2     11       07       1983     11       37
+##  3 1     110000??? 02    08     02    1     99       99       9999     11       31
+##  4 2     110000??? 02    08     02    1     99       99       9999     11       31
+##  5 1     110000??? 03    08     01    2     09       03       1976     11       44
+##  6 2     110000??? 03    08     01    2     09       03       1976     11       45
+##  7 1     110000??? 03    08     02    1     03       09       2000     11       20
+##  8 2     110000??? 03    08     02    1     03       09       2000     11       20
+##  9 1     110000??? 03    08     04    1     18       09       1954     11       66
+## 10 2     110000??? 03    08     04    1     18       09       1954     11       66
+## 11 1     110000??? 04    08     01    1     05       08       1969     11       51
+## 12 2     110000??? 04    08     01    1     05       08       1969     11       51
+## 13 1     110000??? 04    08     02    2     15       01       1976     11       44
+## 14 2     110000??? 04    08     02    2     15       01       1976     11       45
+## 15 1     110000??? 04    08     03    1     10       07       1994     11       26
+## 16 2     110000??? 04    08     03    1     10       07       1994     11       26
+## 17 1     110000??? 04    08     04    2     17       05       1997     11       23
+## 18 2     110000??? 04    08     04    2     17       05       1997     11       23
+## 19 1     110000??? 05    08     01    1     05       07       1965     11       55
+## 20 2     110000??? 05    08     01    1     05       07       1965     11       55
+## # ?"? 1 more variable: RENDA <dbl>
 ```
 
 
 #### Outro exemplo 1: _wide_ para _long_
-- A base de dados abaixo possui informações de 5 condados com suas repectivas áreas territoriais, proporções de adultos com ensino superior e nº de vagas de emprego em 4 anos distintos:
+- A base de dados abaixo possui informa��es de 5 condados com suas repectivas �reas territoriais, propor��es de adultos com ensino superior e n� de vagas de emprego em 4 anos distintos:
 
 ```r
 bd_counties = data.frame(
@@ -427,20 +427,20 @@ bd_counties
 ## 4      4276      5564      6098
 ## 5      9490     11811     16503
 ```
-- Queremos estruturar a base de dados de modo que, para cada condado, tenhamos 4 linhas (cada uma corresponde a um dos anos: 1970, 1980, 1990 ou 2020). Portanto, teremos 5 colunas: _county_, _year_, _area_, _college_ e _jobs_. Começamos transformando as colunas cujos nomes iniciam com `college_` e com `jobs_` em linhas via `pivot_longer()`:
+- Queremos estruturar a base de dados de modo que, para cada condado, tenhamos 4 linhas (cada uma corresponde a um dos anos: 1970, 1980, 1990 ou 2020). Portanto, teremos 5 colunas: _county_, _year_, _area_, _college_ e _jobs_. Come�amos transformando as colunas cujos nomes iniciam com `college_` e com `jobs_` em linhas via `pivot_longer()`:
 
 ```r
 bd_counties2 = bd_counties %>%
     pivot_longer(
         cols = c( starts_with("college_"), starts_with("jobs_") ),
-        names_to = "var_year", # nome da coluna que vão os nomes das colunas antigas
+        names_to = "var_year", # nome da coluna que v�o os nomes das colunas antigas
         values_to = "value" # nome da coluna com os valores das colunas transformadas
     )
 head(bd_counties2, 10)
 ```
 
 ```
-## # A tibble: 10 × 4
+## # A tibble: 10 ?- 4
 ##    county   area var_year         value
 ##    <chr>   <dbl> <chr>            <dbl>
 ##  1 Autauga   599 college_1970     0.064
@@ -454,7 +454,7 @@ head(bd_counties2, 10)
 ##  9 Baldwin  1578 college_1970     0.065
 ## 10 Baldwin  1578 college_1980     0.121
 ```
-- Note que, para cada condado, há duas linhas para cada ano, já que há 2 que variam no tempo (_college_ e _jobs_). Precisamos tirar essa duplicidade de anos. Começamos usando a função `separate()` para separar a variável `var_year` em duas colunas (que chamaremos de `var` e `year`):
+- Note que, para cada condado, h� duas linhas para cada ano, j� que h� 2 que variam no tempo (_college_ e _jobs_). Precisamos tirar essa duplicidade de anos. Come�amos usando a fun��o `separate()` para separar a vari�vel `var_year` em duas colunas (que chamaremos de `var` e `year`):
 
 ```r
 bd_counties3 = bd_counties2 %>%
@@ -467,7 +467,7 @@ head(bd_counties3, 10)
 ```
 
 ```
-## # A tibble: 10 × 5
+## # A tibble: 10 ?- 5
 ##    county   area var     year      value
 ##    <chr>   <dbl> <chr>   <chr>     <dbl>
 ##  1 Autauga   599 college 1970      0.064
@@ -481,7 +481,7 @@ head(bd_counties3, 10)
 ##  9 Baldwin  1578 college 1970      0.065
 ## 10 Baldwin  1578 college 1980      0.121
 ```
-- Agora, transformaremos a coluna `var` em 2 colunas (`college`, `jobs`), usando a função `pivot_wider()`:
+- Agora, transformaremos a coluna `var` em 2 colunas (`college`, `jobs`), usando a fun��o `pivot_wider()`:
 
 ```r
 bd_counties4 = bd_counties3 %>%
@@ -493,7 +493,7 @@ bd_counties4 %>% select(county, year, everything()) %>% head(10)
 ```
 
 ```
-## # A tibble: 10 × 5
+## # A tibble: 10 ?- 5
 ##    county  year   area college  jobs
 ##    <chr>   <chr> <dbl>   <dbl> <dbl>
 ##  1 Autauga 1970    599   0.064  6853
@@ -507,14 +507,14 @@ bd_counties4 %>% select(county, year, everything()) %>% head(10)
 ##  9 Barbour 1970    891   0.073  9448
 ## 10 Barbour 1980    891   0.092  9755
 ```
-- Observe que, se só houvesse uma variável variante no tempo, não seria necessário usar o `pivot_wider()`, pois haveria 1 linha para cada ano para cada condado.
+- Observe que, se s� houvesse uma vari�vel variante no tempo, n�o seria necess�rio usar o `pivot_wider()`, pois haveria 1 linha para cada ano para cada condado.
 
 
 #### Outro exemplo 2: _long_ para _wide_
-- Usaremos agora a base de dados `TravelMode` do pacote `AER` que possui 840 observações em que 210 indivíduos escolhem um modo de viagem entre 4 opções: carro, aéreo, trem ou ônibus.
-- Note que cada um dos 210 indivíduos aparecem em 4 linhas, em que cada um corresponde a um dos modos de viagem.
-- Há variáveis específicas de
-    - indivíduo (_individual_, _income_ e _size_) que são repetidas nas 4 linhas em que aparece, e
+- Usaremos agora a base de dados `TravelMode` do pacote `AER` que possui 840 observa��es em que 210 indiv�duos escolhem um modo de viagem entre 4 op��es: carro, a�reo, trem ou �nibus.
+- Note que cada um dos 210 indiv�duos aparecem em 4 linhas, em que cada um corresponde a um dos modos de viagem.
+- H� vari�veis espec�ficas de
+    - indiv�duo (_individual_, _income_ e _size_) que s�o repetidas nas 4 linhas em que aparece, e
     - escolha (_choice_, _wait_, _vcost_, _travel_ e _gcost_) que variam de acordo com os modos de viagem.
 
 ```r
@@ -533,19 +533,19 @@ head(TravelMode, 8)
 ## 7          2   bus     no   53    25    399    85     30    2
 ## 8          2   car    yes    0    11    255    50     30    2
 ```
-- Agora, vamos fazer com que haja apenas uma linha por indivíduo, retirando a coluna _mode_ e gerando diversas colunas para cada possível modo de viagem.
+- Agora, vamos fazer com que haja apenas uma linha por indiv�duo, retirando a coluna _mode_ e gerando diversas colunas para cada poss�vel modo de viagem.
 
 ```r
 TravelMode2 = TravelMode %>% 
     pivot_wider(
         names_from = "mode",
-        values_from = c("choice":"gcost") # variáveis específicas do modo
+        values_from = c("choice":"gcost") # vari�veis espec�ficas do modo
     )
 head(TravelMode2)
 ```
 
 ```
-## # A tibble: 6 × 23
+## # A tibble: 6 ?- 23
 ##   individual income  size choice_air choice_train choice_bus choice_car wait_air
 ##   <fct>       <int> <int> <fct>      <fct>        <fct>      <fct>         <int>
 ## 1 1              35     1 no         no           no         yes              69
@@ -554,13 +554,13 @@ head(TravelMode2)
 ## 4 4              70     3 no         no           no         yes              64
 ## 5 5              45     2 no         no           no         yes              64
 ## 6 6              20     1 no         yes          no         no               69
-## # ℹ 15 more variables: wait_train <int>, wait_bus <int>, wait_car <int>,
+## # ?"? 15 more variables: wait_train <int>, wait_bus <int>, wait_car <int>,
 ## #   vcost_air <int>, vcost_train <int>, vcost_bus <int>, vcost_car <int>,
 ## #   travel_air <int>, travel_train <int>, travel_bus <int>, travel_car <int>,
 ## #   gcost_air <int>, gcost_train <int>, gcost_bus <int>, gcost_car <int>
 ```
-- Note que, para cada modo de viagem, foram criadas 5 colunas, que correspondem às 5 variáveis específicas de escolha. No total, foram retiradas 6 colunas (_mode_ + 5 variáveis específicas de escolha) e foram criadas 20 (4 modos {{<math>}}$\times${{</math>}} 5 variáveis específicas de escolha) colunas.
-- Em algumas aplicações econométricas (e.g. logit multinomial) é necessário que haja apenas uma coluna indicando a escolha da opção. Então, criaremos a coluna `choice` indicando qual opção escolheu (_air_, _train_, _bus_ ou _car_) e vamos retirar as 4 colunas que começam com "choice_":
+- Note que, para cada modo de viagem, foram criadas 5 colunas, que correspondem �s 5 vari�veis espec�ficas de escolha. No total, foram retiradas 6 colunas (_mode_ + 5 vari�veis espec�ficas de escolha) e foram criadas 20 (4 modos {{<math>}}$\times${{</math>}} 5 vari�veis espec�ficas de escolha) colunas.
+- Em algumas aplica��es econom�tricas (e.g. logit multinomial) � necess�rio que haja apenas uma coluna indicando a escolha da op��o. Ent�o, criaremos a coluna `choice` indicando qual op��o escolheu (_air_, _train_, _bus_ ou _car_) e vamos retirar as 4 colunas que come�am com "choice_":
 
 ```r
 TravelMode3 = TravelMode2 %>% 
@@ -580,7 +580,7 @@ TravelMode3 %>% head(10)
 ```
 
 ```
-## # A tibble: 10 × 18
+## # A tibble: 10 ?- 18
 ##    individual choice wait_air wait_train wait_bus wait_car vcost_air vcost_train
 ##    <fct>      <chr>     <int>      <int>    <int>    <int>     <int>       <int>
 ##  1 1          car          69         34       35        0        59          31
@@ -593,11 +593,11 @@ TravelMode3 %>% head(10)
 ##  8 8          car          69         34       35        0       121          52
 ##  9 9          car          69         34       35        0        59          31
 ## 10 10         car          69         34       35        0        58          31
-## # ℹ 10 more variables: vcost_bus <int>, vcost_car <int>, travel_air <int>,
+## # ?"? 10 more variables: vcost_bus <int>, vcost_car <int>, travel_air <int>,
 ## #   travel_train <int>, travel_bus <int>, travel_car <int>, gcost_air <int>,
 ## #   gcost_train <int>, gcost_bus <int>, gcost_car <int>
 ```
 
 
-<!-- {{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec6" >}} -->
+<!-- {{< cta cta_text="?Y'? Seguir para Vari�veis Instrumentais" cta_link="../sec6" >}} -->
 

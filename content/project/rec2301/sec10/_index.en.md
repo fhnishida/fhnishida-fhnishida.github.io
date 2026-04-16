@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Otimização Numérica
+linktitle: Otimiza��o Num�rica
 summary: The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed.
-title: (Extra) Otimização Numérica
+title: (Extra) Otimiza��o Num�rica
 weight: 10
 output: md_document
 type: book
@@ -13,73 +13,73 @@ type: book
 
 
 
-## Otimização numérica
-- Essa seção tem o objetivo para dar uma intuição sobre métodos de otimização.
-- Veremos os métodos de _grid search_ e _gradient ascent_ (_descent_) que representam famílias de métodos de otimização.
+## Otimiza��o num�rica
+- Essa se��o tem o objetivo para dar uma intui��o sobre m�todos de otimiza��o.
+- Veremos os m�todos de _grid search_ e _gradient ascent_ (_descent_) que representam fam�lias de m�todos de otimiza��o.
 
 
 ### _Grid Search_
 
-- O método mais simples de otimização numérica é o _grid search_ (discretização).
-- Como o R não lida com problemas com infinitos valores, uma forma lidar com isso é discretizando diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
-- Para cada possível combinação de parâmetros, calculam-se diversos valores a partir da função objetivo. De todos os valores calculados, escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
-- O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
+- O m�todo mais simples de otimiza��o num�rica � o _grid search_ (discretiza��o).
+- Como o R n�o lida com problemas com infinitos valores, uma forma lidar com isso � discretizando diversos poss�veis valores dos par�metros de escolha dentro de intervalos.
+- Para cada poss�vel combina��o de par�metros, calculam-se diversos valores a partir da fun��o objetivo. De todos os valores calculados, escolhe-se a combina��o de par�metros que maximizam (ou minimizam) a fun��o objetivo.
+- O exemplo abaixo considera apenas um par�metro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a fun��o objetivo:
 
 <center><img src="../grid_search.png"></center>
 
 
-- Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis), e menos sensível a chutes de valores iniciais. (ver método abaixo)
-- Porém, este método fica preciso apenas com maiores quantidades de pontos e, como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente (demora mais tempo para calcular).
+- Este � um m�todo robusto a fun��es com descontinuidades e quinas (n�o diferenci�veis), e menos sens�vel a chutes de valores iniciais. (ver m�todo abaixo)
+- Por�m, este m�todo fica preciso apenas com maiores quantidades de pontos e, como � necess�rio fazer o c�lculo da fun��o objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente (demora mais tempo para calcular).
 
 
 ### _Gradient Ascent (Descent)_
 
 
-- Conforme o número de parâmetros do modelo cresce, aumenta o número de possíveis combinações entre parâmetros e torna o processo computacional cada vez mais lento.
-- Uma forma mais eficiente de encontrar o conjunto de parâmetros que otimizam a função objetivo é por meio do método _gradient ascent_ (_descent_).
-- Queremos encontrar o {{<math>}}${\theta}^{**}${{</math>}} que é o parâmetro que maximiza globalmente a função objetivo
-- Passos para encontrar um máximo:
-  1. Comece com algum valor inicial de parâmetro, {{<math>}}${\theta}^0${{</math>}}
+- Conforme o n�mero de par�metros do modelo cresce, aumenta o n�mero de poss�veis combina��es entre par�metros e torna o processo computacional cada vez mais lento.
+- Uma forma mais eficiente de encontrar o conjunto de par�metros que otimizam a fun��o objetivo � por meio do m�todo _gradient ascent_ (_descent_).
+- Queremos encontrar o {{<math>}}${\theta}^{**}${{</math>}} que � o par�metro que maximiza globalmente a fun��o objetivo
+- Passos para encontrar um m�ximo:
+  1. Comece com algum valor inicial de par�metro, {{<math>}}${\theta}^0${{</math>}}
   2. Calcula-se a derivada e avalia-se a possibilidade de "andar para cima" a um valor mais alto
-  3. Caso possa, ande na direção correta a {{<math>}}${\theta}^1${{</math>}}
-  4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} até atingir um ponto máximo cuja derivada é igual a zero.
+  3. Caso possa, ande na dire��o correta a {{<math>}}${\theta}^1${{</math>}}
+  4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} at� atingir um ponto m�ximo cuja derivada � igual a zero.
 
 <center><img src="../steepest_ascent.png"></center>
 
 
-- Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
-    - No exemplo, se os chutes iniciais forem {{<math>}}${\theta}^0_A${{</math>}} ou {{<math>}}${\theta}^0_B${{</math>}}, então consegue atingir o máximo global.
-    - Já se o chute inicial for {{<math>}}${\theta}^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}${\theta}^*${{</math>}} (menor do que o máximo global em {{<math>}}${\theta}^{**}${{</math>}}).
+- Note que esse m�todo de otimiza��o � sens�vel ao par�metro inicial e �s descontinuidades da fun��o objetivo.
+    - No exemplo, se os chutes iniciais forem {{<math>}}${\theta}^0_A${{</math>}} ou {{<math>}}${\theta}^0_B${{</math>}}, ent�o consegue atingir o m�ximo global.
+    - J� se o chute inicial for {{<math>}}${\theta}^0_C${{</math>}}, ent�o ele acaba atingindo um m�ximo local com {{<math>}}${\theta}^*${{</math>}} (menor do que o m�ximo global em {{<math>}}${\theta}^{**}${{</math>}}).
 
 
 <video width="500px" height="500px" controls="controls"/>
     <source src="../local-maxima.mp4" type="video/mp4">
 </video>
 
-- Por outro lado, é um método mais eficiente, pois calcula-se a função objetivo uma vez a cada passo, além de ser mais preciso nas estimações.
+- Por outro lado, � um m�todo mais eficiente, pois calcula-se a fun��o objetivo uma vez a cada passo, al�m de ser mais preciso nas estima��es.
 
 
 
 </br>
 
-## Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) minimização da função perda, de (b) máxima verossimilhança e de (c) método dos momentos.
-- Em cada uma delas, usaremos uma função objetivo distinta para encontrar o vetor com dois parâmetros, {{<math>}}$ \boldsymbol{\theta} = \{ \beta_0, \beta_1 \} ${{</math>}}, que a otimiza. No R, vamos chamar esse vetor de `params`.
+## Encontrando MQO por diferentes estrat�gias
+- Nesta se��o, encontraremos as estimativas de MQO usando as estrat�gias da (a) minimiza��o da fun��o perda, de (b) m�xima verossimilhan�a e de (c) m�todo dos momentos.
+- Em cada uma delas, usaremos uma fun��o objetivo distinta para encontrar o vetor com dois par�metros, {{<math>}}$ \boldsymbol{\theta} = \{ \beta_0, \beta_1 \} ${{</math>}}, que a otimiza. No R, vamos chamar esse vetor de `params`.
 
 
 ### Base `mtcars`
-É necessário carregar o pacote `dplyr` para manipulação da base de dados abaixo.
+?? necess�rio carregar o pacote `dplyr` para manipula��o da base de dados abaixo.
 
 ```r
 library(dplyr)
 ```
 
-Usaremos dados extraídos da _Motor Trend_ US magazine de 1974, que analisa o
-consumo de combustível e 10 aspectos técnicos de 32 automóveis.
+Usaremos dados extra�dos da _Motor Trend_ US magazine de 1974, que analisa o
+consumo de combust�vel e 10 aspectos t�cnicos de 32 autom�veis.
 
-No _R_, a base de dados já está incorporada ao programa e pode ser acessada pelo código `mtcars`, contendo a seguinte estrutura:
+No _R_, a base de dados j� est� incorporada ao programa e pode ser acessada pelo c�digo `mtcars`, contendo a seguinte estrutura:
 
-> - _mpg_: milhas por galão
+> - _mpg_: milhas por gal�o
 > - _hp_: cavalos-vapor bruto
 
 Queremos estimar o seguinte modelo:
@@ -100,25 +100,25 @@ summary(reg)$coef
 
 
 
-### (a) Minimização da função perda
-- A função perda adotada pela Teoria da Decisão é a **função de soma dos quadrados dos resíduos**
-- Por essa estratégia, queremos encontrar as estimativas, {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}, que **minimizam** essa função.
+### (a) Minimiza��o da fun��o perda
+- A fun��o perda adotada pela Teoria da Decis�o � a **fun��o de soma dos quadrados dos res�duos**
+- Por essa estrat�gia, queremos encontrar as estimativas, {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}, que **minimizam** essa fun��o.
 
 
-#### 1. Criar função perda que calcula a soma dos resíduos quadráticos
-- A função para calcular a soma dos resíduos quadráticos recebe como inputs:
-  - um **vetor** de possíveis valores {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}
-  - um **texto** com o nome da variável dependente
+#### 1. Criar fun��o perda que calcula a soma dos res�duos quadr�ticos
+- A fun��o para calcular a soma dos res�duos quadr�ticos recebe como inputs:
+  - um **vetor** de poss�veis valores {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}
+  - um **texto** com o nome da vari�vel dependente
   - um **vetor de texto** com os nomes dos regressores
   - uma base de dados
 
 ```r
 resid_quad = function(params, yname, xname, data) {
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = as.matrix(data[yname])
   x = as.matrix(data[xname])
   
-  # Extraindo os parâmetros de params
+  # Extraindo os par�metros de params
   b0 = params[1]
   b1 = params[2]
   sig2 = params[3]
@@ -130,12 +130,12 @@ resid_quad = function(params, yname, xname, data) {
 ```
 
 
-#### 2. Otimização
-- Agora encontraremos os parâmetros que minimizam a função perda
+#### 2. Otimiza��o
+- Agora encontraremos os par�metros que minimizam a fun��o perda
 
 {{<math>}}$$ \underset{\hat{\beta}_0, \hat{\beta}_1}{\text{argmin}} \sum_{i=1}^{N}\hat{u}^2 \quad = \quad \underset{\hat{\beta}_0, \hat{\beta}_1}{\text{argmin}} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $${{</math>}}
 
-- Para isto usaremos a função `optim()` que retorna os parâmetros que minimizam uma função (equivalente ao _argmin_):
+- Para isto usaremos a fun��o `optim()` que retorna os par�metros que minimizam uma fun��o (equivalente ao _argmin_):
 ```yaml
 optim(par, fn, gr = NULL, ...,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"),
@@ -144,20 +144,20 @@ optim(par, fn, gr = NULL, ...,
 
 par: Initial values for the parameters to be optimized over.
 fn: A function to be minimized (or maximized), with first argument the vector of parameters over which minimization is to take place. It should return a scalar result.
-method: The method to be used. See ‘Details’. Can be abbreviated.
+method: The method to be used. See ??~Details??T. Can be abbreviated.
 hessian: Logical. Should a numerically differentiated Hessian matrix be returned?
 ```
 - Colocaremos como input:
-  - a função perda criada `resid_quad()`
-  - um chute inicial dos parâmetros
-    - Note que a estimação pode ser mais ou menos sensível ao valores iniciais, dependendo do método de otimização utilizado
-    - O mais comum é encontrar como chute inicial um vetor de zeros `c(0, 0, 0)`, por ser mais neutro em relação ao sinal das estimativas
-    - Em Econometria III, prof. Laurini recomendou usar método "Nelder-Mead" (padrão) com um chute inicial de zeros e, depois, usar suas estimativas como chute inicial para o método "BFGS".
-  - Por padrão, temos o argumento `hessian = FALSE`, coloque `TRUE` para calcularmos o erro padrão, estatística t e p-valor das estimativas
+  - a fun��o perda criada `resid_quad()`
+  - um chute inicial dos par�metros
+    - Note que a estima��o pode ser mais ou menos sens�vel ao valores iniciais, dependendo do m�todo de otimiza��o utilizado
+    - O mais comum � encontrar como chute inicial um vetor de zeros `c(0, 0, 0)`, por ser mais neutro em rela��o ao sinal das estimativas
+    - Em Econometria III, prof. Laurini recomendou usar m�todo "Nelder-Mead" (padr�o) com um chute inicial de zeros e, depois, usar suas estimativas como chute inicial para o m�todo "BFGS".
+  - Por padr�o, temos o argumento `hessian = FALSE`, coloque `TRUE` para calcularmos o erro padr�o, estat�stica t e p-valor das estimativas
 
 
 ```r
-# Estimação por BFGS
+# Estima��o por BFGS
 theta_ini = c(0, 0) # Chute inicial de b0, b1
 
 fit_ols2 = optim(par=theta_ini, fn=resid_quad, 
@@ -191,28 +191,28 @@ fit_ols2
 
 
 
-### (b) Máxima Verossimilhança
+### (b) M�xima Verossimilhan�a
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
-- A função objetivo é a função de verossimilhança e, ao contrário da função de soma de quadrado dos resíduos, queremos maximizá-la
-- Em nosso exemplo, temos que estimar 3 parâmetros
+- A fun��o objetivo � a fun��o de verossimilhan�a e, ao contr�rio da fun��o de soma de quadrado dos res�duos, queremos maximiz�-la
+- Em nosso exemplo, temos que estimar 3 par�metros
 
 {{<math>}}$$ \boldsymbol{\theta} = \left\{ \beta_0, \beta_1, \sigma^2 \right\}. $${{</math>}}
 
 
 
-#### Otimização Numérica para Máxima Verossimilhança
-A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
+#### Otimiza��o Num�rica para M�xima Verossimilhan�a
+A fun��o `optim()` do R ser� usada novamente para desempenhar a otimiza��o num�rica. Precisamos usar como input:
 
-- Alguns valores inicias dos parâmetros, {{<math>}}$\boldsymbol{\theta}^0 = \{ \beta_0, \beta_1, \sigma^2 \}${{</math>}}
-- Uma função que tome esses parâmetros como um argumento e calcule a 
-log-verossimilhança, {{<math>}}$\ln{L(\boldsymbol{\theta})}${{</math>}}.
+- Alguns valores inicias dos par�metros, {{<math>}}$\boldsymbol{\theta}^0 = \{ \beta_0, \beta_1, \sigma^2 \}${{</math>}}
+- Uma fun��o que tome esses par�metros como um argumento e calcule a 
+log-verossimilhan�a, {{<math>}}$\ln{L(\boldsymbol{\theta})}${{</math>}}.
 
-> Como `optim()` irá encontrar os parâmetros que minimizem a função objetivo, precisamos adaptar o output da função de log-verossimilhança (minimizaremos o negativo da log-lik).
+> Como `optim()` ir� encontrar os par�metros que minimizem a fun��o objetivo, precisamos adaptar o output da fun��o de log-verossimilhan�a (minimizaremos o negativo da log-lik).
 
-A função log-verossimilhança é dada por
+A fun��o log-verossimilhan�a � dada por
 {{<math>}}$$ \ln{L(\beta_0, \beta_1, \sigma^2 | y, x)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}, $${{</math>}}
 
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+em que a distribui��o condicional de cada {{<math>}}$y_i${{</math>}} �
 
 {{<math>}}$$ y_i | x_i \sim \mathcal{N}(\beta_0 + \beta_1 x_i, \sigma^2) $${{</math>}}
 
@@ -222,26 +222,26 @@ o que implica que
 
 <center><img src="../mle.jpg"></center>
 
-- Acima, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} são normalmente distribuídos com a mesma variância {{<math>}}$\sigma^2${{</math>}}
+- Acima, podemos ver que, para cada {{<math>}}$x${{</math>}}, temos um valor ajustado {{<math>}}$\hat{y} = \beta_0 + \beta_1 x${{</math>}} e seus desvios {{<math>}}$\varepsilon${{</math>}} s�o normalmente distribu�dos com a mesma vari�ncia {{<math>}}$\sigma^2${{</math>}}
 
 
-Passos para estimar uma regressão por máxima verossimilhança:
+Passos para estimar uma regress�o por m�xima verossimilhan�a:
 
 1. Chutar valores iniciais de 
 2. Calcular os valores ajustados, {{<math>}}$\hat{y}${{</math>}}
 3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, {{<math>}}$f(y_i | x_i, \beta_0, \beta_1, \sigma^2)${{</math>}}
-4. Calcular a log-verossimilhança, {{<math>}}$\ln{L(\beta_0, \beta_1, \sigma^2 | y, x)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}${{</math>}}
+4. Calcular a log-verossimilhan�a, {{<math>}}$\ln{L(\beta_0, \beta_1, \sigma^2 | y, x)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}${{</math>}}
 
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\beta_0, \beta_1${{</math>}} e {{<math>}}$\sigma^2${{</math>}}
-- Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
+- Note que, diferente da estima��o por MQO, um dos par�metros a ser estimado via MLE � a vari�ncia ({{<math>}}$\sigma^2${{</math>}}).
 
 ```r
 params = c(30, -0.06, 1)
 # (b0, b1 , sig2)
 ```
 
-##### 2. Seleção da base de dados e variáveis
+##### 2. Sele��o da base de dados e vari�veis
 
 ```r
 ## Inicializando
@@ -249,17 +249,17 @@ yname = "mpg"
 xname = "hp"
 data = mtcars
 
-# Extraindo as variáveis da base em vetores
+# Extraindo as vari�veis da base em vetores
 y = as.matrix(data[yname])
 x = as.matrix(data[xname])
 
-# Extraindo os parâmetros de params
+# Extraindo os par�metros de params
 b0 = params[1]
 b1 = params[2]
 sig2 = params[3]
 ```
 
-##### 3. Cálculo dos valores ajustados e das densidades
+##### 3. C�lculo dos valores ajustados e das densidades
 
 ```r
 ## Calculando valores ajustados de y
@@ -277,7 +277,7 @@ head(yhat)
 ## Valiant           23.70
 ```
 
-##### 4. Cálculo das densidades
+##### 4. C�lculo das densidades
 {{<math>}}$$ f(y_i | x_i, \beta_0, \beta_1, \sigma^2) $${{</math>}}
 
 ```r
@@ -298,7 +298,7 @@ head(round(ypdf, 4)) # Primeiros valores da densidade
 ```
 
 ```r
-sum(ypdf) # Verossimilhança
+sum(ypdf) # Verossimilhan�a
 ```
 
 ```
@@ -306,7 +306,7 @@ sum(ypdf) # Verossimilhança
 ```
 
 ```r
-prod(ypdf) # Log-Verossimilhança
+prod(ypdf) # Log-Verossimilhan�a
 ```
 
 ```
@@ -316,7 +316,7 @@ prod(ypdf) # Log-Verossimilhança
 
 ```r
 # Juntando as bases e visualizando os primeiros valores
-tab = cbind(y, x, yhat, round(ypdf, 4)) # arredondando ypdf (4 dígitos)
+tab = cbind(y, x, yhat, round(ypdf, 4)) # arredondando ypdf (4 d�gitos)
 colnames(tab) = c("y", "x", "yhat", "ypdf") # renomeando colunas
 head(tab)
 ```
@@ -330,14 +330,14 @@ head(tab)
 ## Hornet Sportabout 18.7 175 19.50 0.2897
 ## Valiant           18.1 105 23.70 0.0000
 ```
-- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
+- Como pode ser visto na base de dados juntada e nos gr�ficos abaixo, quanto mais pr�ximo o valor ajustado for do valor observado de cada observa��o, maior ser� a densidade/probabilidade.
 <img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-2.png" width="672" /><img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-3.png" width="672" />
-- Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
+- Logo, a verossimilhan�a (produto de todas probabilidades) ser� maior quanto mais pr�ximos forem os valores ajustados dos seus respectivos valores observados.
 
 
-##### 5. Calculando a Log-Verossimilhança
+##### 5. Calculando a Log-Verossimilhan�a
 
-A log-verossimilhança é a soma do log de todas probabilidades:
+A log-verossimilhan�a � a soma do log de todas probabilidades:
 
 {{<math>}}$$ \mathcal{l}(\beta_0, \beta_1, \sigma^2) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \beta_0, \beta_1, \sigma^2) \right]} $${{</math>}}
 
@@ -352,19 +352,19 @@ loglik
 ```
 
 
-##### 6. Criando a Função de Log-Verossimilhança
+##### 6. Criando a Fun��o de Log-Verossimilhan�a
 
-Juntando tudo que fizemos anteriormente, podemos criar uma função no R que calcular a função de log-verossimilhança.
+Juntando tudo que fizemos anteriormente, podemos criar uma fun��o no R que calcular a fun��o de log-verossimilhan�a.
 
 
 ```r
 ## Criando funcao para calcular log-verossimilhanca MQO 
 loglik_lm = function(params, yname, xname, data) {
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = as.matrix(data[yname])
   x = as.matrix(data[xname])
   
-  # Extraindo os parâmetros de params
+  # Extraindo os par�metros de params
   b0 = params[1]
   b1 = params[2]
   sig2 = params[3]
@@ -384,22 +384,22 @@ loglik_lm = function(params, yname, xname, data) {
 ```
 
 
-##### 7. Otimização
+##### 7. Otimiza��o
 
-Tendo a função objetivo, usaremos `optim()` para *minimizar*
+Tendo a fun��o objetivo, usaremos `optim()` para *minimizar*
 
 {{<math>}}$$ -\ln{L(\beta_0, \beta_1, \sigma^2 | y, X)} = -\sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}. $${{</math>}}
 
-Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (função`optim()` apenas minimiza).
+Aqui, **minimizamos o negativo** da log-Verossimilhan�a para **maximizarmos** (fun��o`optim()` apenas minimiza).
 
 
 ```r
-## Maximizando a função log-verossimilhança MQO
+## Maximizando a fun��o log-verossimilhan�a MQO
 mle = optim(par = c(0, 0, 1), fn = loglik_lm,
             yname = "mpg", xname = "hp", data = mtcars,
               method = "BFGS", hessian = TRUE)
 
-## Mostrando os resultados da otimização
+## Mostrando os resultados da otimiza��o
 mle
 ```
 
@@ -428,11 +428,11 @@ mle
 ```
 
 ```r
-## Calculando os erros padrão
+## Calculando os erros padr�o
 # hessiano > inversa p/ V_bhat > diagnonal > raiz quadrada
 mle_se = sqrt( diag( solve(mle$hessian) ) )
 
-# Visualizando as estimativas e os erros padrão
+# Visualizando as estimativas e os erros padr�o
 cbind(mle$par, mle_se)
 ```
 
@@ -444,8 +444,8 @@ cbind(mle$par, mle_se)
 ```
 
 
-### (c) Método dos Momentos
-- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
+### (c) M�todo dos Momentos
+- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chauss�)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
 - [Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)](https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199)
 
 
@@ -453,29 +453,29 @@ cbind(mle$par, mle_se)
 
 {{<math>}}$$ E(\boldsymbol{\varepsilon}) = 0 \qquad \text{ e } \qquad E(\boldsymbol{\varepsilon}' \boldsymbol{x}) = 0 $${{</math>}}
 
-Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM. Os análogos amostrais são
+Note que estes s�o os momentos relacionados ao MQO, dado que este � um caso particular do GMM. Os an�logos amostrais s�o
 
 {{<math>}}$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i.x_i} = 0 $${{</math>}}
 
-Podemos calcular os dois momentos amostrais em uma única multiplicação matricial. Considere:
+Podemos calcular os dois momentos amostrais em uma �nica multiplica��o matricial. Considere:
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \qquad \text{e} \qquad \boldsymbol{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix} $${{</math>}}
 
 Vamos juntar uma coluna de 1's com {{<math>}}$\boldsymbol{x}${{</math>}} e definir a matriz:
 {{<math>}}$$ \boldsymbol{X} = \begin{bmatrix} 1 & \varepsilon_1 \\ 1 & \varepsilon_2 \\ \vdots & \vdots \\ 1 & \varepsilon_N \end{bmatrix} $${{</math>}}
 
-Fazendo a multiplicação matricia entre {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}}, temos:
+Fazendo a multiplica��o matricia entre {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}}, temos:
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}}' \boldsymbol{X}\ =\ \begin{bmatrix} \varepsilon_1 & \varepsilon_2 & \cdots & \varepsilon_N \end{bmatrix} \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}\ =\ \begin{bmatrix}  \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}} & \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}.x_i} \end{bmatrix} $${{</math>}}
 
-Note que o vetor resultante são exatamente os momentos amostrais.
+Note que o vetor resultante s�o exatamente os momentos amostrais.
 
 
 
-#### Otimização Numérica para GMM
+#### Otimiza��o Num�rica para GMM
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\beta_0${{</math>}} e {{<math>}}$\beta_1${{</math>}}
-- Vamos criar um vetor com possíveis valores de {{<math>}}$\beta_0, \beta_1${{</math>}}:
+- Vamos criar um vetor com poss�veis valores de {{<math>}}$\beta_0, \beta_1${{</math>}}:
 
 ```r
 params = c(30, -0.06)
@@ -484,36 +484,36 @@ xname = "hp"
 data = mtcars
 ```
 
-##### 2. Seleção da base de dados e variáveis
+##### 2. Sele��o da base de dados e vari�veis
 
 ```r
-# Extraindo as variáveis da base em vetores
+# Extraindo as vari�veis da base em vetores
 y = as.matrix(data[yname])
 x = as.matrix(data[xname])
 X = cbind(1, x)
 
-# Extraindo os parâmetros de params
+# Extraindo os par�metros de params
 b0 = params[1]
 b1 = params[2]
 sig2 = params[3]
 ```
 
-##### 3. Cálculo dos valores ajustados e dos resíduos
+##### 3. C�lculo dos valores ajustados e dos res�duos
 
 ```r
 ## Valores ajustados de y
 yhat = b0 + b1 * x
 
-## Resíduos
+## Res�duos
 e_hat = y - yhat
 ```
 
 
-##### 4. Criação da matriz de momentos
-- Note que {{<math>}}$\hat{\boldsymbol{\varepsilon}}' X${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz com **multiplicação elemento a elemento** do resíduo {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com as covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante e hp), na forma:
+##### 4. Cria��o da matriz de momentos
+- Note que {{<math>}}$\hat{\boldsymbol{\varepsilon}}' X${{</math>}} um vetor dos momentos amostrais, mas a fun��o `gmm()` exige uma matriz com **multiplica��o elemento a elemento** do res�duo {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com as covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante e hp), na forma:
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}} \times \boldsymbol{X}\ =\ \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \times \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}\ =\ \begin{bmatrix} \varepsilon_1 & \varepsilon_1.x_1  \\ \varepsilon_2 & \varepsilon_2.x_2 \\ \vdots & \vdots \\ \varepsilon_N & \varepsilon_N.x_N \end{bmatrix} $${{</math>}}
-Note que, para fazer o GMM no R, não devemos tirar a média de cada coluna (a própria função `gmm()` fará isso).
+Note que, para fazer o GMM no R, n�o devemos tirar a m�dia de cada coluna (a pr�pria fun��o `gmm()` far� isso).
 
 
 
@@ -534,36 +534,36 @@ head(m) # 6 primeiras linhas
 ```
 
 ```r
-apply(m, 2, sum) # média de cada coluna
+apply(m, 2, sum) # m�dia de cada coluna
 ```
 
 ```
 ##                hp 
 ##   -35.46 -6400.62
 ```
-- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1ª coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperança).
-- Já as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as variáveis _hp_ e _wt_ (também sem tomar a esperança).
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\theta = \{ \beta_0, \beta_1 \}${{</math>}} que, ao tomar a esperança em cada um destas colunas, se aproximem ao máximo de zero. Isso será feito via função `gmm()` (semelhante à função `optim()`)
+- Note que, como multiplicamos a constante igual a 1 com os desvios {{<math>}}$\varepsilon${{</math>}}, a 1� coluna corresponde ao momento {{<math>}}$E(\varepsilon)=0${{</math>}} (mas sem tomar a esperan�a).
+- J� as colunas 2 e 3 correspodem ao momento {{<math>}}$E(\varepsilon'X)=0${{</math>}} para as vari�veis _hp_ e _wt_ (tamb�m sem tomar a esperan�a).
+- Logicamente, para estimar por GMM, precisamos escolher os par�metros {{<math>}}$\theta = \{ \beta_0, \beta_1 \}${{</math>}} que, ao tomar a esperan�a em cada um destas colunas, se aproximem ao m�ximo de zero. Isso ser� feito via fun��o `gmm()` (semelhante � fun��o `optim()`)
 
 
-##### 5. Criação de função com os momentos
-- Vamos criar uma função que tem como input um vetor de parâmetros (`params`) e uma base de dados (`data`), e que retorna uma matriz em que cada coluna representa um momento.
-- Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
+##### 5. Cria��o de fun��o com os momentos
+- Vamos criar uma fun��o que tem como input um vetor de par�metros (`params`) e uma base de dados (`data`), e que retorna uma matriz em que cada coluna representa um momento.
+- Essa fun��o incluir� todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por did�tica).
 
 ```r
 mom_ols = function(params, list) {
-  # No GMM, só pode ter 1 input que não sejam os parâmetros
-  # Por isso, foi incluído uma lista com 3 argumentos
+  # No GMM, s� pode ter 1 input que n�o sejam os par�metros
+  # Por isso, foi inclu�do uma lista com 3 argumentos
   yname = list[[1]]
   xname = list[[2]]
   data = list[[3]]
   
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = as.matrix(data[yname])
   x = as.matrix(data[xname])
   X = cbind(1, x)
   
-  # Extraindo os parâmetros de params
+  # Extraindo os par�metros de params
   b0 = params[1]
   b1 = params[2]
   sig2 = params[3]
@@ -571,19 +571,19 @@ mom_ols = function(params, list) {
   ## Valores ajustados de y
   yhat = b0 + b1 * x
   
-  ## Resíduos
+  ## Res�duos
   e_hat = y - yhat
   
   ## Matriz de momentos
   m = as.numeric(e_hat) * X
-  m # output da função
+  m # output da fun��o
 }
 ```
 
 
-##### 6. Otimização via função `gmm()`
-- A função `gmm()`, assim como a `optim()`, recebe uma função como argumento.
-- No entanto, ao invés de retornar um valor, a função que entra no `gmm()` retorna uma matriz, cujas médias das colunas queremos aproximar de zero. 
+##### 6. Otimiza��o via fun��o `gmm()`
+- A fun��o `gmm()`, assim como a `optim()`, recebe uma fun��o como argumento.
+- No entanto, ao inv�s de retornar um valor, a fun��o que entra no `gmm()` retorna uma matriz, cujas m�dias das colunas queremos aproximar de zero. 
 
 ```r
 library(gmm)
@@ -595,10 +595,10 @@ library(gmm)
 
 ```r
 gmm_lm = gmm(g=mom_ols, 
-             x=list(yname="mpg", xname="hp", data=mtcars), # argumentos função
+             x=list(yname="mpg", xname="hp", data=mtcars), # argumentos fun��o
              t0=c(0,0), # chute inicial de params
-             wmatrix = "optimal", # matriz de ponderação
-             optfct = "nlminb" # função de otimização
+             wmatrix = "optimal", # matriz de pondera��o
+             optfct = "nlminb" # fun��o de otimiza��o
              )
 
 summary(gmm_lm)$coefficients

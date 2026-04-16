@@ -3,7 +3,7 @@ date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
 linktitle: Simple Regression
-summary: This page covers topics such as simple MQO regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
+summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
 title: Simple Regression
 weight: 6
 output: md_document
@@ -14,11 +14,11 @@ type: book
 
 
 
-## Regressão simples por MQO
-- [Seção 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
+## Regressão simples por OLS
+- [Section 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
 - Considere o seguinte modelo empírico
 $$ y = \beta_0 + \beta_1 x + \varepsilon \tag{2.1} $$
-- Os estimadores de mínimos quadrados ordinários (MQO), segundo Wooldridge (2006, Seção 2.2) é dado por
+- Os estimadores de mínimos quadrados ordinários (OLS), segundo Wooldridge (2006, Section 2.2) é dado por
 
 {{<math>}}\begin{align}
     \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x} \tag{2.2}\\
@@ -30,14 +30,14 @@ $$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
 e os resíduos podem ser obtidos por 
 $$ \hat{\varepsilon} = y - \hat{y} $$
 
-### Exemplo 2.3: Salário de CEO e Retorno sobre Equity
+### Example 2.3: Salário de CEO e Retorno sobre Equity
 
 - Considere o seguinte modelo de regressão simples
 $$ \text{salary} = \beta_0 + \beta_1 \text{roe} + \varepsilon $$
-em que `salary` é a remuneração de um CEO em milhares de dólares e `roe` é o retorno sobre o patrimônio líquido em percentual.
+where `salary` é a remuneração de um CEO em milhares de dólares e `roe` é o retorno sobre o patrimônio líquido em percentual.
 
 
-#### Estimação Analítica ("na mão")
+#### Estimação Analítica ("by hand")
 
 
 ```r
@@ -76,7 +76,7 @@ mean(ceosal1$salary) # média do salário
 ```
 
 ```r
-# Cálculo "na mão" das estimativas de MQO
+# Cálculo "by hand" das estimativas de OLS
 b1hat = cov(ceosal1$salary, ceosal1$roe) / var(ceosal1$roe) # por (2.3)
 b1hat
 ```
@@ -98,7 +98,7 @@ b0hat
 
 
 #### Estimação via `lm()`
-- Uma maneira mais conveniente de fazer a estimação por MQO é usando a função `lm()`
+- Uma maneira mais conveniente de fazer a estimação por OLS é usando a função `lm()`
 - Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (`~`):
 
 ```r
@@ -147,7 +147,7 @@ abline(lm(salary ~ roe, data=ceosal1), col="red")
 </br>
 
 ## Coeficientes, Valores Ajustados e Resíduos
-- [Seção 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
+- [Section 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
 - Podemos "guardar" os resultados da estimação em um objeto (da classe `list`) e, depois, extrair informações dele.
 
 ```r
@@ -182,7 +182,7 @@ b0hat = bhat["(Intercept)"] # ou bhat[1]
 b1hat =  bhat["roe"] # ou bhat[2]
 ```
 
-- Dados estes parâmetros estimados, podemos calcular os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}}, e os desvios, {{<math>}}$\hat{\varepsilon}${{</math>}}, para cada observação {{<math>}}$i=1, ..., n${{</math>}}:
+- Dados estes parâmetros estimados, podemos calcular os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}}, e os desvios, {{<math>}}$\hat{\varepsilon}${{</math>}}, para cada observation {{<math>}}$i=1, ..., n${{</math>}}:
 
 {{<math>}}\begin{align}
     \hat{y}_i &= \hat{\beta}_0 + \hat{\beta}_1 . x_i \tag{2.5} \\
@@ -247,7 +247,7 @@ head( cbind(reg$fitted, reg$residuals) )
 ```
 
 
-- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por MQO usa as seguintes hipóteses:
+- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por OLS usa as seguintes hipóteses:
 {{<math>}}\begin{align}
     &\sum^n_{i=1}{\hat{\varepsilon}_i} = 0 \quad \implies \quad \bar{\hat{\varepsilon}} = 0 \tag{2.7} \\
     &\sum^n_{i=1}{x_i \hat{\varepsilon}_i} = 0 \quad \implies \quad cov(x,\hat{\varepsilon}) = 0 \tag{2.8}
@@ -274,25 +274,25 @@ cov(ceosal1$roe, ehat) # bem próximo de 0
 ```
 
 
-<!-- - **IMPORTANTE**: Isso só quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7 e 2.8 sejam verdadeiros. -->
+<!-- - **IMPORTANTE**: Isso só quer dizer que o OLS escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7 e 2.8 sejam verdadeiros. -->
 <!-- - Isto **NÃO** quer dizer que, para o modelo real as seguintes hipóteses sejam verdadeiras: -->
 <!-- {{<math>}}\begin{align} -->
 <!--     &E(\varepsilon) = 0 \tag{2.7'} \\ -->
 <!--     &E(x\varepsilon) = 0 \quad \Longrightarrow \quad cov(x, \varepsilon) = 0 \tag{2.8'} -->
 <!-- \end{align}{{</math>}} -->
-<!-- - De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7 e 2.8) será viesada. -->
+<!-- - De fato, se 2.7' e 2.8' não forem válidos, a estimação por OLS (que assume 2.7 e 2.8) será viesada. -->
 
 
 </br>
 
 ## Transformações log
-- [Seção 2.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- [Section 2.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
 - Também podemos fazer estimações transformando variáveis em nível para logaritmo.
 - É especialmente importante para transformar modelos não-lineares em lineares - quando o parâmetro está no expoente ao invés estar multiplicando:
   
 $$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $$
 
-- Também é frequentemente utilizada em variáveis dependentes {{<math>}}$y \ge 0${{</math>}}
+- Também é frequentemente utilizada em dependent variables {{<math>}}$y \ge 0${{</math>}}
 
 
 <center><img src="../tab_2-3.png"></center>
@@ -302,7 +302,7 @@ $$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = 
     - Usar a função `log()` diretamente no vetor dentro da função `lm()`
 
 
-### Exemplo 2.11: Salário de CEO e Retorno sobre Equity
+### Example 2.11: Salário de CEO e Retorno sobre Equity
 
 - _Modelo nível-log_:
 
@@ -344,7 +344,7 @@ lm(log(salary) ~ log(roe), data=ceosal1)$coef
 </br>
 
 ## Regressão a partir da origem ou sobre uma constante
-- [Seção 2.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- [Section 2.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
 - Para esstimar o modelo sem o intercepto (constante), precisamos adicionar um `0` ou `-1` nos regressores na função `lm()`:
 
 ```r
@@ -362,7 +362,7 @@ lm(salary ~ 0 + roe, data=ceosal1)
 ## 63.54
 ```
 
-- Ao regredirmos uma variável dependente sobre uma constante (1), obtemos a média desta variável.
+- Ao regredirmos uma dependent variable sobre uma constante (1), obtemos a média desta variável.
 
 ```r
 lm(salary ~ 1, data=ceosal1)
@@ -391,7 +391,7 @@ mean(ceosal1$roe, na.rm=TRUE)
 
 
 <!-- ## Qualidade do ajuste -->
-<!-- - [Seção 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101) -->
+<!-- - [Section 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101) -->
 <!-- - A soma de quadrados total (SST), a soma de quadrados explicada (SSE) e a soma de quadrados dos resíduos (SSR) podem ser escritos como: -->
 
 <!-- {{<math>}}\begin{align} -->
@@ -399,7 +399,7 @@ mean(ceosal1$roe, na.rm=TRUE)
 <!--     SSE &= \sum^n_{i=1}{(\hat{y}_i - \bar{y})^2} = (n-1) . var(\hat{y}) \tag{2.11}\\ -->
 <!--     SSR &= \sum^n_{i=1}{(\hat{\varepsilon}_i - 0)^2} = (n-1) . var(\hat{\varepsilon}) \tag{2.12} -->
 <!-- \end{align}{{</math>}} -->
-<!-- em que {{<math>}}$var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}. -->
+<!-- where {{<math>}}$var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}. -->
 
 <!-- - Wooldridge (2006) define o coeficiente de determinação como: -->
 <!-- {{<math>}}\begin{align} -->
@@ -434,46 +434,46 @@ mean(ceosal1$roe, na.rm=TRUE)
 ## Violações de hipótese
 - [Subseção 2.7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/113), mas usando exemplo distinto.
 - [Simulating a linear model (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model)
-- Na prática, fazemos regressões a partir de observações contidas em bases de dados e não sabemos qual é o _modelo real_ que gerou essas observações.
-- No R, podemos supor esse _modelo real_ e simular suas observações no R para analisar o que ocorre quando há violação de uma premissa de um modelo econométrico.
+- Na prática, fazemos regressões a partir de observations contidas em bases de dados e não sabemos qual é o _modelo real_ que gerou essas observations.
+- No R, podemos supor esse _modelo real_ e simular suas observations no R para analisar o que ocorre quando há violação de uma premissa de um modelo econométrico.
 - Usaremos como exemplo a relação das horas de treinamento em culinária com o número de queimaduras na cozinha.
 
 
-### Sem violação de hipótese: Exemplo 1
+### Sem violação de hipótese: Example 1
 - Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas de treinamento em culinária
 - Suponha o _modelo real_:
 $$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 4^2) \tag{1}$$
-em que {{<math>}}$\tilde{\beta}_0=50${{</math>}} e {{<math>}}$\tilde{\beta}_1=-5${{</math>}}.
+where {{<math>}}$\tilde{\beta}_0=50${{</math>}} e {{<math>}}$\tilde{\beta}_1=-5${{</math>}}.
 
-1. Iremos definir {{<math>}}$\tilde{\beta}_0${{</math>}} e {{<math>}}$\tilde{\beta}_1${{</math>}}, e gerar, por simulação, as observações de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
+1. Iremos definir {{<math>}}$\tilde{\beta}_0${{</math>}} e {{<math>}}$\tilde{\beta}_1${{</math>}}, e gerar, por simulação, as observations de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
     - Geraremos valores aleatórios de {{<math>}}$x \sim U(1, 9)${{</math>}} e de {{<math>}}$\tilde{\varepsilon} \sim N(0, 4^2)${{</math>}}
 
 ```r
 b0til = 50
 b1til = -5
-N = 1000 # Número de observações
+N = 1000 # Número de observations
 
 set.seed(123)
 e_til = rnorm(N, 0, 4) # Erros: 1000 obs. de média 0 e desv pad 2
 x = runif(N, 1, 9) # Gerando 1000 obs. de x
-y = b0til + b1til*x + e_til # calculando observações y
+y = b0til + b1til*x + e_til # calculando observations y
 
 plot(x, y)
 ```
 
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
     
-  - Simulamos as observações {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que são, na prática, as informações que observamos nas bases de dados.
+  - Simulamos as observations {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que são, na prática, as informações que observamos nas bases de dados.
 
-2. Estimaremos, por MQO, os parâmetros {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
+2. Estimaremos, por OLS, os parâmetros {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} a partir das observations simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
     - Um pesquisador supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
     $$ y = \beta_0 + \beta_1 x + \varepsilon, \tag{1a}$$
     assumindo que {{<math>}}$E[\varepsilon] = 0${{</math>}} e {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}.
-    - Para estimar o modelo por MQO, usamos a função `lm()`
+    - Para estimar o modelo por OLS, usamos a função `lm()`
     
 
 ```r
-lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
+lm(y ~ x) # regredindo por OLS a var. dependente y pela var. x
 ```
 
 ```
@@ -494,30 +494,30 @@ lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ```r
 plot(x, y) # Figura de x contra y
 abline(a=50, b=-5, col="red") # reta do modelo real
-abline(lm(y ~ x), col="blue") # reta estimada a partir das observações
+abline(lm(y ~ x), col="blue") # reta estimada a partir das observations
 ```
 
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
-### Sem violação de hipótese: Exemplo 2
+### Sem violação de hipótese: Example 2
 - Agora, no _modelo real_, suponha uma nova variável de quantidade de horas cozinhando {{<math>}}$z${{</math>}} que, a princípio, não tem relação com a quantidade de horas de treinamento em culinária:
 
 $$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\beta}_2 z + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, 4^2) \tag{2} $$
-em que {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{<math>}}$\beta_2=3${{</math>}}. Apenas para facilitar, geraremos também valores aleatórios de {{<math>}}$z \sim U(11, 15)${{</math>}} que, por construção, **não** é correlacionada com {{<math>}}$x${{</math>}}.
+where {{<math>}}$\beta_0=50${{</math>}}, {{<math>}}$\beta_1=-5${{</math>}} e {{<math>}}$\beta_2=3${{</math>}}. Apenas para facilitar, geraremos também valores aleatórios de {{<math>}}$z \sim U(11, 15)${{</math>}} que, por construção, **não** é correlacionada com {{<math>}}$x${{</math>}}.
 
-- Primeiro, vamos simular as observações:
+- Primeiro, vamos simular as observations:
 
 ```r
 b0til = 50
 b1til = -5
 b2til = 3
-N = 1000 # Número de observações
+N = 1000 # Número de observations
 
 set.seed(123)
 e_til = rnorm(N, 0, 4) # Erros: 1000 obs. de média 0 e desv pad 2
 x = runif(N, 1, 9) # Gerando 1000 obs. de x
 z = runif(N, 11, 15) # Gerando 1000 obs. de y
-y = b0til + b1til*x + b2til*z + e_til # calculando observações y
+y = b0til + b1til*x + b2til*z + e_til # calculando observations y
 ```
 
 - Considere que um pesquisador suponha a relação entre as variáveis pelo seguinte _modelo empírico_:
@@ -536,7 +536,7 @@ cor(x, z) # correlação de x e z -> próxima de 0
 ```
 
 ```r
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estimação por OLS
 ```
 
 ```
@@ -548,7 +548,7 @@ lm(y ~ x) # estimação por MQO
 ## (Intercept)            x  
 ##      89.342       -5.046
 ```
-- Note que {{<math>}}$\hat{\beta}_1 = \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro real, apesar da não-inclusão de {{<math>}}$z${{</math>}} no modelo.
+- Note que {{<math>}}$\hat{\beta}_1 = \approx -5 = \tilde{\beta}_1${{</math>}}, portanto a estimação por OLS conseguiu recuperar o parâmetro real, apesar da não-inclusão de {{<math>}}$z${{</math>}} no modelo.
 - Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e alguma variável de interesse {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$cov(\varepsilon, x) = 0${{</math>}}.
 
 
@@ -563,7 +563,7 @@ set.seed(123)
 e_til = rnorm(N, 0, 4) # Erros: 1000 obs. de média 0 e desv pad 2
 x = runif(N, 1, 9) # Gerando 1000 obs. de x
 z = 2.5*x + rnorm(N, 0, 2) # Gerando 1000 obs. de z
-y = b0til + b1til*x + b2til*z + e_til # calculando observações y
+y = b0til + b1til*x + b2til*z + e_til # calculando observations y
 cor(x, z) # correlação de x e z
 ```
 
@@ -578,7 +578,7 @@ cor(x, z) # correlação de x e z
     
 
 ```r
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estimação por OLS
 ```
 
 ```
@@ -592,7 +592,7 @@ lm(y ~ x) # estimação por MQO
 ```
 
 - Observe que {{<math>}}$\hat{\beta}_1 \neq -5 = \tilde{\beta}_1${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o erro {{<math>}}$\varepsilon = \tilde{\beta}_2 z + \tilde{\varepsilon}${{</math>}}.
-- Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do MQO).
+- Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$cov(\varepsilon, x)\neq 0${{</math>}} (violando a hipótese do OLS).
 - Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}:
 
 
@@ -611,7 +611,7 @@ lm(y ~ x + z)
 ```
 
 ### Violação de E(e) = 0, porém constante
-- Agora, consideraremos que {{<math>}}$E[\varepsilon] = k${{</math>}}, sendo {{<math>}}$k \neq 0${{</math>}} uma constante.
+- Agora, consideraremos que {{<math>}}$E[\varepsilon] = k${{</math>}}, where {{<math>}}$k \neq 0${{</math>}} uma constante.
 - Assuma que {{<math>}}$k = 100${{</math>}}:
 
 ```r
@@ -622,12 +622,12 @@ k = 100
 set.seed(123)
 e_til = rnorm(N, k, 2) # Erros: 1000 obs. de média k e desv pad 2
 x = runif(N, 1, 9) # Gerando 1000 obs. de x
-y = b0til + b1til*x + e_til # calculando observações y
+y = b0til + b1til*x + e_til # calculando observations y
 ```
 - Caso um pesquisador assuma {{<math>}}$E[\varepsilon] = 0${{</math>}}, segue que:
 
 ```r
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estimação por OLS
 ```
 
 ```
@@ -654,8 +654,8 @@ N = 1000
 set.seed(123)
 x = runif(N, 1, 9) # Gerando 1000 obs. de x
 e_til = rnorm(N, 0, 5*x) # Erros: 1000 obs. de média 0 e desv pad 5x
-y = b0til + b1til*x + e_til # calculando observações y
-lm(y ~ x) # estimação por MQO
+y = b0til + b1til*x + e_til # calculando observations y
+lm(y ~ x) # estimação por OLS
 ```
 
 ```
@@ -676,8 +676,8 @@ abline(lm(y ~ x), col="blue") # modelo estimado
 
 <img src="/project/rec5004/sec6/_index_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
-- Mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}, pois o estimador de MQO permanece não-viesado.
-- Heterocedasticidade compromete apenas a inferência (cálculo dos erros padrão, estatísticas t, e p-valor), tornando o estimador não-eficiente.
+- Mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{\beta}_1 \approx \tilde{\beta}_1${{</math>}}, pois o estimador de OLS permanece não-viesado.
+- Heteroskedasticity compromete apenas a inferência (cálculo dos erros padrão, estatísticas t, e p-valor), tornando o estimador não-eficiente.
 
 
 

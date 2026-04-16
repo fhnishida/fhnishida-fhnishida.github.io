@@ -4,7 +4,7 @@ date: "2018-09-09T00:00:00Z"
 # icon_pack: fas
 linktitle: GLS/WLS/FGLS
 summary: The section covers topics such as the variance-covariance matrix of errors, heteroskedasticity tests (including the Breusch-Pagan and White tests), and various estimators such as OLS with robust standard errors, GLS, WLS, and FGLS. The section provides R code examples for performing these analyses and includes references to relevant literature. Overall, this section of the webpage provides a comprehensive overview of econometric methods and techniques for analyzing data using R. It is a valuable resource for anyone interested in learning more about these topics.
-title: Heterocedasticidade
+title: Heteroskedasticity
 weight: 10
 output: md_document
 type: book
@@ -12,14 +12,14 @@ type: book
 
 
 
-- [Seções 8.2 e 8.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
-- Seções 5.5, 7.1 a 7.4 de Davidson e MacKinnon (1999)
-- Seções 4.2.3 e 4.2.4 de Wooldridge
+- [Sections 8.2 e 8.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- Sections 5.5, 7.1 a 7.4 de Davidson e MacKinnon (1999)
+- Sections 4.2.3 e 4.2.4 de Wooldridge
 
 
-## Matriz de variâncias-covariâncias dos erros
+## Error variance-covariance matrix
 
-Relembre que a matriz de variâncias-covariâncias dos erros é dada por:
+Recall that the error variance-covariance matrix is given by:
 
 {{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
 \left[ \begin{array}{cccc}
@@ -29,7 +29,7 @@ cov(\varepsilon_{2}, \varepsilon_{1}) & var(\varepsilon_{2}) & \cdots & cov(\var
 cov(\varepsilon_{N}, \varepsilon_{1}) & cov(\varepsilon_{N}, \varepsilon_{2}) & \cdots & var(\varepsilon_{N}) 
 \end{array} \right]$${{</math>}}
 
-Como assumimos amostragem aleatória, a covariância entre dois indivíduos distintos {{<math>}}($i \neq j$){{</math>}} é  
+Because we assume random sampling, the covariance between two distinct individuals {{<math>}}($i \neq j$){{</math>}} é  
 {{<math>}}$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{para todo } i \neq j.$${{</math>}}
 
 Logo, 
@@ -42,8 +42,8 @@ var(\varepsilon_{1}) & 0 & \cdots & 0 \\
 \end{array} \right]$${{</math>}}
 
 
-Para MQO, assumíamos homocedasticidade e, portanto, a diagonal principal era toda preenchida por um mesmo {{<math>}}$ var(\varepsilon_i) = \sigma^2,\ \forall i${{</math>}}.
-Na presença de **heteroscedasticidade**, segue que {{<math>}}$ var(\varepsilon_i) = \sigma^2_i,\ \forall i${{</math>}} e, logo:
+Under OLS, we assume homoskedasticity, so the main diagonal is filled by a common {{<math>}}$ var(\varepsilon_i) = \sigma^2,\ \forall i${{</math>}}.
+In the presence of **heteroskedasticity**, it follows that {{<math>}}$ var(\varepsilon_i) = \sigma^2_i,\ \forall i${{</math>}} e, logo:
 
 {{<math>}}$$ \boldsymbol{\Sigma} = 
 \left[ \begin{array}{cccc}
@@ -53,7 +53,7 @@ Na presença de **heteroscedasticidade**, segue que {{<math>}}$ var(\varepsilon_
 0 & 0 & \cdots & \sigma^2_N 
 \end{array} \right] \ \neq\ \sigma^2 I_N $${{</math>}}
 
-Como é uma matriz diagonal, é fácil computar a inversa da matriz:
+Because this is a diagonal matrix, its inverse is straightforward to compute:
 
 {{<math>}}$$ \boldsymbol{\Sigma}^{-1} = 
 \left[ \begin{array}{cccc}
@@ -78,7 +78,7 @@ e
 
 ## Testes de heterocedasticidade
 
-- A ideia os testes de heterocedasticidade é pegar os resíduos da estimação por MQO, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}, e verificar sua correlação com as variáveis explicativas, {{<math>}}$\boldsymbol{X}${{</math>}}. Em caso de homocedasticidade, essa correlação deveria ser estatisticamente nula.
+- A ideia os testes de heterocedasticidade é pegar os resíduos da estimação por OLS, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}, e verificar sua correlação com as explanatory variables, {{<math>}}$\boldsymbol{X}${{</math>}}. Em caso de homocedasticidade, essa correlação deveria ser estatisticamente nula.
 - Podemos testar isso por meio do testes de Breusch-Pagan ou de White.
 
 
@@ -86,9 +86,9 @@ e
 
 - Inicialmente, considere o seguinte modelo linear
 {{<math>}}$$\boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}_{1} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} $${{</math>}}
-- Ao estimá-lo por MQO, obtemos os resíduos
+- Ao estimá-lo por OLS, obtemos os resíduos
 {{<math>}}$\hat{\boldsymbol{\varepsilon}} = \boldsymbol{y} - \hat{\boldsymbol{y}} = \boldsymbol{y} - \boldsymbol{X} \hat{\boldsymbol{\beta}}${{</math>}}
-- Depois, fazemos a regressão dos resíduos ao quadrado em função das covariadas:
+- Depois, fazemos a regressão dos resíduos ao quadrado em função das covariates:
 {{<math>}}$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + \gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u} = \boldsymbol{X} \boldsymbol{\gamma} + \boldsymbol{u} $${{</math>}}
 - Breusch-Pagan (1979) e Koenker (1981) propuseram testar a hipótese nula **conjunta** de que todos os parâmetros são iguais a zero:
 {{<math>}}$$H_0: \quad \boldsymbol{\gamma} = \boldsymbol{0} \iff \begin{bmatrix} \gamma_1 \\ \gamma_2 \\ \vdots \\ \gamma_K \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} $${{</math>}}
@@ -98,7 +98,7 @@ e
 {{<math>}}$$ LM = N. R^2_{\scriptstyle{\hat{\varepsilon}}}\ \sim\ \chi^2_K $${{</math>}}
 
 
-#### Exemplo 8.7: Demanda por Cigarros (Wooldridge)
+#### Example 8.7: Demanda por Cigarros (Wooldridge)
 - Nesta seção, vamos usar a base de dados `smoke` do pacote `wooldridge` para estimar o seguinte modelo:
 {{<math>}}\begin{align}\text{cigs} = &\beta_0 + \beta_1 \text{lincome} + \beta_2 \text{lcigpric} + \beta_3 \text{educ} + \beta_4 \text{age}\\ &+ \beta_5 \text{agesq} + \beta_6 \text{restaurn} + \varepsilon \end{align}{{</math>}}
 em que:
@@ -206,7 +206,7 @@ F
 
 ### Teste de White
 
-- Embora o teste de Breusch-Pagan seja interessante, ele avalia os erros apenas de forma linear nas variáveis explicativas:
+- Embora o teste de Breusch-Pagan seja interessante, ele avalia os erros apenas de forma linear nas explanatory variables:
 {{<math>}}$$\hat{\boldsymbol{\varepsilon}}^2 = \alpha + \gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u}$${{</math>}}
 - Portanto, para capturar mais formas de heterocedasticidade, é interessante colocar também as **interações entre os regressores e seus quadrados** na forma:
 {{<math>}}\begin{align} \hat{\boldsymbol{\varepsilon}}^2 = & \alpha + {\color{blue}\gamma_1 \boldsymbol{x}_{1} + ... + \gamma_K \boldsymbol{x}_{K}} + {\color{red}\delta_{11} \boldsymbol{x}^2_{1} + \delta_{12} (\boldsymbol{x}_{1}\boldsymbol{x}_{2}) + ... + \delta_{1K} (\boldsymbol{x}_{1}\boldsymbol{x}_{K})}\\
@@ -238,7 +238,7 @@ bptest(reg, ~ yhat + I(yhat^2))
 ```
 
 ```r
-# Teste BP/LM "na mão"
+# Teste BP/LM "by hand"
 reg.resid = lm(resid(reg)^2 ~ yhat + I(yhat^2), data=smoke)
 r2e = summary(reg.resid)$r.squared
 LM = N * r2e
@@ -254,14 +254,14 @@ LM = N * r2e
 <br>
 
 
-## Estimador MQO com erros padrão robustos
+## Estimador OLS com erros padrão robustos
 
-- O estimador de MQO permanece não-viesado/consistente sob heterocedasticidade, mas perde eficiência.
+- O estimador de OLS permanece não-viesado/consistente sob heterocedasticidade, mas perde eficiência.
 - Um forma de contornar esse problema é modelarmos a matriz de variâncias-covariâncias **dos erros** {{<math>}}$\boldsymbol{\Sigma}${{</math>}}
-- Primeiro, lembre-se que a matriz de variâncias-covariâncias **do estimador de MQO** é dada por
+- Primeiro, lembre-se que a matriz de variâncias-covariâncias **do estimador de OLS** é dada por
 {{<math>}}$$V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}' \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}' \boldsymbol{X})^{-1}$${{</math>}}
-- Como há heterocedasticidade, essa matriz não se simplifica para {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) = \sigma^2 (\boldsymbol{X}' \boldsymbol{X})^{-1}${{</math>}}, porém também não conhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, que precisa ser estimado.
-- A forma mais simples de obter {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} foi sugerido por White (1980), que é preencher sua diagonal com o quadrado do resíduo de cada indivíduo (obtido por estimação MQO):
+- Como há heterocedasticidade, essa matriz não se simplifica para {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}) = \sigma^2 (\boldsymbol{X}' \boldsymbol{X})^{-1}${{</math>}}, porém também não conhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, que precisa ser estimado.
+- A forma mais simples de obter {{<math>}}$\hat{\boldsymbol{\Sigma}}${{</math>}} foi sugerido por White (1980), que é preencher sua diagonal com o quadrado do resíduo de cada individual (obtido por estimação OLS):
 {{<math>}}$$\hat{\boldsymbol{\Sigma}} = \begin{bmatrix}
 \hat{\varepsilon}^2_1 & 0 & \cdots & 0 \\
 0 & \hat{\varepsilon}^2_2 & \cdots & 0 \\
@@ -300,7 +300,7 @@ round(vcov_sandwich, 3)
 
 ```r
 # Resultados
-round(coeftest(reg), 3) # resultado padrão do MQO
+round(coeftest(reg), 3) # resultado padrão do OLS
 ```
 
 ```
@@ -351,7 +351,7 @@ round(coeftest(reg, vcov=vcov_sandwich), 3) # resultado com correção
 # Criando o vetor y
 y = as.matrix(smoke[,"cigs"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, smoke[,c("lincome", "lcigpric", "educ", "age", "agesq",
                                  "restaurn")]) ) # juntando 1's com x
 
@@ -359,7 +359,7 @@ X = as.matrix( cbind(1, smoke[,c("lincome", "lcigpric", "educ", "age", "agesq",
 N = nrow(X)
 K = ncol(X) - 1
 
-# Estimativas MQO, valores preditos e resíduos
+# Estimativas OLS, valores preditos e resíduos
 bhat = solve(t(X) %*% X) %*% t(X) %*% y
 yhat = X %*% bhat
 ehat = y - yhat
@@ -376,7 +376,7 @@ head(ehat^2)
 ## 6   5.950747
 ```
 
-- Agora vamos estimar a matriz de variâncias-covariâncias dos erros pelo método de White, preenchendo a sua diagonal com os resíduos ao quadrado para cada indivíduo:
+- Agora vamos estimar a error variance-covariance matrix pelo método de White, preenchendo a sua diagonal com os resíduos ao quadrado para cada individual:
 {{<math>}}$$\hat{\boldsymbol{\Sigma}} = diag(\hat{\varepsilon}_1, \hat{\varepsilon}_2, ..., \hat{\varepsilon}_N)  = \begin{bmatrix}
 \hat{\varepsilon}^2_1 & 0 & \cdots & 0 \\
 0 & \hat{\varepsilon}^2_2 & \cdots & 0 \\
@@ -470,16 +470,16 @@ round(coeftest(reg, vcov=vcov_sandwich), 3) # obtido por funções
 
 <br>
 
-## Estimador MQG
+## Estimador GLS
 
-- Alternativamente, podemos fazer a estimação e a inferência modelando a matriz de variâncias-covariâncias dos erros, {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
-- O estimador de Mínimos Quadrados Generalizados (MQG/GLS), assumindo dados em corte transversal, é dado por
-{{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQG}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
+- Alternativamente, podemos fazer a estimação e a inferência modelando a error variance-covariance matrix, {{<math>}}$\boldsymbol{\Sigma}${{</math>}}.
+- O estimador de Generalized Least Squares (GLS/GLS), assumindo dados em corte transversal, é dado por
+{{<math>}}$$ {\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{GLS}} = (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) $${{</math>}}
 
 - A matriz de variâncias-covariâncias do estimador é dada por
-{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
+{{<math>}}$$ V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}) = (\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X})^{-1} $${{</math>}}
 
-- O problema é que desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, e precisamos fazer mais premissas sobre a forma da matriz de variâncias-covariâncias dos erros (e sua inversa) para estimar {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
+- O problema é que desconhecemos {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, e precisamos fazer mais premissas sobre a forma da error variance-covariance matrix (e sua inversa) para estimar {{<math>}}$\boldsymbol{\hat{\Sigma}}${{</math>}}.
 
 
 
@@ -487,11 +487,11 @@ round(coeftest(reg, vcov=vcov_sandwich), 3) # obtido por funções
 
 ## Estimador MQP
 
-- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - [Weighted Least Squares (Yibi Huang)](https://www.stat.uchicago.edu/~yibi/teaching/stat224/L14.pdf)
 
-- Um caso especial de MQG é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que a variância do erro de cada observação é conhecida e proporcional a das demais.
-- A variância do erro individual é a partir uma função das variáveis explicativas, {{<math>}}$h(\boldsymbol{x}'_i)${{</math>}}:
+- Um caso especial de GLS é o estimador de Mínimos Quadrados Ponderados (MQP/WLS), que considera que a variância do erro de cada observation é conhecida e proporcional a das demais.
+- A variância do erro individual é a partir uma função das explanatory variables, {{<math>}}$h(\boldsymbol{x}'_i)${{</math>}}:
 {{<math>}}$$ Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2.h(\boldsymbol{x}'_i), $${{</math>}}
 ou seja,
 {{<math>}}\begin{align} \boldsymbol{\Sigma} &= 
@@ -509,7 +509,7 @@ h(\boldsymbol{x}'_1) & 0 & \cdots & 0 \\
 \end{array} \right] \\
 &\equiv \sigma^2 \boldsymbol{W}^{-1}
 \end{align}{{</math>}}
-em que {{<math>}}$\boldsymbol{W}${{</math>}} é uma matriz de pesos:
+where {{<math>}}$\boldsymbol{W}${{</math>}} é uma matriz de pesos:
 {{<math>}}$$ \boldsymbol{W} = \left[ \begin{array}{cccc}
 \frac{1}{h(\boldsymbol{x}'_1)} & 0 & \cdots & 0 \\
 0 & \frac{1}{h(\boldsymbol{x}'_2)} & \cdots & 0 \\
@@ -521,7 +521,7 @@ w_1 & 0 & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
 0 & 0 & \cdots & w_N
 \end{array} \right] $${{</math>}}
-em que {{<math>}}$w_i${{</math>}} são os pesos da estimação.
+where {{<math>}}$w_i${{</math>}} são os pesos da estimação.
 
 <br>
 
@@ -531,7 +531,7 @@ em que {{<math>}}$w_i${{</math>}} são os pesos da estimação.
 1, &\text{se female}_i = 0
 \end{matrix} \right. $${{</math>}}
 
-- Considerando que as {{<math>}}$M${{</math>}} primeiras linhas são de mulheres, a matriz de variâncias-covariâncias dos erros pode ser simplificada para:
+- Considerando que as {{<math>}}$M${{</math>}} primeiras linhas são de mulheres, a error variance-covariance matrix pode ser simplificada para:
 {{<math>}}\begin{align} \boldsymbol{\Sigma} &= 
 \left[ \begin{array}{cccc}
 \sigma^2_M & \cdots & 0 & 0 & \cdots & 0 \\
@@ -596,7 +596,7 @@ e
 
 - Disto, podemos obter o estimador {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}${{</math>}}:
 
-{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}} &= (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) \\
+{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}} &= (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{X})^{-1} (\boldsymbol{X}' {\boldsymbol{\Sigma}}^{-1} \boldsymbol{y}) \\
 &= \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{y} \right) \\
 &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \frac{1}{\sigma^2} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \\
 &= \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} \right) \equiv \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}
@@ -605,7 +605,7 @@ e
 
 - A matriz de variâncias-covariâncias do estimador de MQP é dada por
 
-{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQG}}) &= \left(\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X} \right)^{-1} \\
+{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{GLS}}) &= \left(\boldsymbol{X}' \boldsymbol{\Sigma}^{-1} \boldsymbol{X} \right)^{-1} \\
 &= \left(\boldsymbol{X}' \frac{1}{\sigma^2} \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} = V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) \end{align}{{</math>}}
 
@@ -618,10 +618,10 @@ e
 
 <br>
 
-- Também podemos transformar as variáveis e resolver por MQO, pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, e definindo:
+- Também podemos transformar as variáveis e resolver por OLS, pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, e definindo:
 {{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{y}$${{</math>}}
 
-- No exemplo em que a variância da mulher é o dobro da variância do homem, temos:
+- No exemplo where a variância da mulher é o dobro da variância do homem, temos:
 {{<math>}}\begin{align} \boldsymbol{W}^{0.5} \boldsymbol{y} &= \begin{bmatrix}
 2^{0.5} & \cdots & 0 & 0 & \cdots & 0 \\
 \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
@@ -639,7 +639,7 @@ e
 0 & \cdots & 0 & 0 & \cdots & \frac{1}{\sqrt{1}} \\
 \end{bmatrix} \begin{bmatrix}  y_1 \\ \vdots \\ y_M \\ y_{M+1} \\ \vdots \\ y_N \end{bmatrix} \\
 &= \begin{bmatrix} \frac{1}{\sqrt{2}} y_1 \\ \vdots \\ \frac{1}{\sqrt{2}}  y_M \\ \frac{1}{\sqrt{1}}  y_{M+1} \\ \vdots \\ \frac{1}{\sqrt{1}} y_N \end{bmatrix} \end{align}{{</math>}}
-em que {{<math>}}$M${{</math>}} é o número de mulheres na base de dados.
+where {{<math>}}$M${{</math>}} é o número de mulheres na base de dados.
 
 - Note que as variáveis {{<math>}}$\boldsymbol{y}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}} ficam multiplicadas pelo inverso da raiz de seus respectivos pesos, quando as pré-multiplicamos por {{<math>}}$\boldsymbol{W}${{</math>}}.
 
@@ -649,23 +649,23 @@ em que {{<math>}}$M${{</math>}} é o número de mulheres na base de dados.
 &= \left(\boldsymbol{X}' \boldsymbol{W}^{0.5} \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' \boldsymbol{W}^{0.5} \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
 &= \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
 &= \left( \left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5} \boldsymbol{X} \right)^{-1} \left(\left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5} \boldsymbol{y} \right) \\
-&= ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} ) \equiv \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}} \end{align}{{</math>}}
+&= ( \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1} (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} ) \equiv \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}} \end{align}{{</math>}}
 e
 {{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQP}}) &= \sigma^2 \left(\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}} \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\boldsymbol{X}' {\boldsymbol{W}^{0.5}}^{\prime} \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
 &= \sigma^2 \left(\left[ \boldsymbol{W}^{0.5} \boldsymbol{X} \right]' \boldsymbol{W}^{0.5}  \boldsymbol{X} \right)^{-1} \\
-V(\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}) &= \sigma^2 (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1}
+V(\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}}) &= \sigma^2 (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}} )^{-1}
 \end{align}{{</math>}}
 
-em que usamos {{<math>}}$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}${{</math>}} (matriz simétrica).
+where usamos {{<math>}}$\boldsymbol{W}^{0.5} = {\boldsymbol{W}^{0.5}}^{\prime}${{</math>}} (matriz simétrica).
 
 
 
 ### Estimação via `lm()`
 
 - Aqui usaremos um exemplo parecido com o que simulamos em uma seção anterior, pois é difícil encontrar um exemplo que saiba o formato exato da heterocedasticidade à priori.
-- Vamos criar observações do seguinte modelo real com presença de heterocedasticidade:
+- Vamos criar observations do seguinte modelo real com presença de heterocedasticidade:
 {{<math>}}$$ y = \tilde{\beta}_0 + \tilde{\beta}_1 x + \tilde{\varepsilon}, \qquad \tilde{\varepsilon} \sim N(0, (10x)^2) $${{</math>}}
 logo
 {{<math>}}$$ Var(\tilde{\varepsilon}_i | x_i) = \sigma^2 (10x_i)^2 \quad \implies\quad sd(\tilde{\varepsilon}_i | x_i) = \sigma (10x_i) $${{</math>}}
@@ -682,19 +682,19 @@ N = 100
 set.seed(123)
 x = runif(N, 1, 9) # Gerando 100 obs. de x
 e_til = rnorm(N, 0, 10*x) # Erros: 100 obs. de média 0 e desv pad 10x
-y = b0til + b1til*x + e_til # calculando observações y
+y = b0til + b1til*x + e_til # calculando observations y
 plot(x, y)
 ```
 
 <img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
-- Agora, vamos estimar por MQO e MQP o seguinte modelo empírico
+- Agora, vamos estimar por OLS e MQP o seguinte modelo empírico
 {{<math>}}$$ y = \beta_0 + \beta_1 x + \varepsilon $${{</math>}}
 
 
 ```r
 # Estimações
-reg.ols = lm(y ~ x) # estimação por MQO
+reg.ols = lm(y ~ x) # estimação por OLS
 reg.wls = lm(y ~ x, weights=1/(10*x)^2) # estimação por MQP
 stargazer::stargazer(reg.ols, reg.wls, digits=2, type="text", omit.stat="f")
 ```
@@ -759,7 +759,7 @@ stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.sta
 <!-- - Vamos continuar com a base de dados de cigarros -->
 <!-- - Aqui, vamos assumir que a variância dos erros é dada por -->
 <!-- {{<math>}}$$ Var(\varepsilon_i | \text{age}_i) = \sigma^2 (\text{age}_i + \text{age}^2_i)$${{</math>}} -->
-<!-- - Agora, vamos estimar por MQO e MQP: -->
+<!-- - Agora, vamos estimar por OLS e MQP: -->
 
 <!-- ```{r warning=FALSE} -->
 <!-- data(smoke, package="wooldridge") -->
@@ -782,7 +782,7 @@ stargazer::stargazer(reg.ols, reg.wls, reg.wls2, digits=2, type="text", omit.sta
 # Criando o vetor y
 y = as.matrix(y) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, x) ) # juntando 1's com x
 
 # Pegando valores N e K
@@ -925,8 +925,8 @@ summary(reg.wls)$coef # resultado MQP via lm()
 
 
 
-#### Transformando e estimando por MQO
-- Agora, vamos transformar as variáveis e resolver por MQO, pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, e definindo:
+#### Transformando e estimando por OLS
+- Agora, vamos transformar as variáveis e resolver por OLS, pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{y}${{</math>}} por {{<math>}}$ \boldsymbol{W}^{0.5}${{</math>}}, e definindo:
 
 {{<math>}}$$\tilde{\boldsymbol{X}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{X} \qquad \text{e} \qquad \tilde{\boldsymbol{y}} \equiv \boldsymbol{W}^{0.5} \boldsymbol{y}$${{</math>}}
 
@@ -977,7 +977,7 @@ plot(x, y, ylim=c(-125,175),
 <img src="/project/rec5004/sec10/_index_files/figure-html/unnamed-chunk-21-2.png" width="672" />
 
 
-**c')** Estimativas MQO {{<math>}}$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**c')** Estimativas OLS {{<math>}}$\tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 {{<math>}}$$ \tilde{\hat{\boldsymbol{\beta}}}_{\scriptscriptstyle{MQo}} = (\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} \tilde{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $${{</math>}}
 
@@ -993,7 +993,7 @@ bhat_ols
 ## x -5.923353
 ```
 
-**d')** Valores ajustados {{<math>}}$\tilde{\hat{\boldsymbol{y}}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**d')** Valores ajustados {{<math>}}$\tilde{\hat{\boldsymbol{y}}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 ```r
 yhat_ols = Xtil %*% bhat_ols
@@ -1011,7 +1011,7 @@ head(yhat_ols)
 ```
 
 
-**e')** Resíduos {{<math>}}$\tilde{\hat{\boldsymbol{\varepsilon}}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**e')** Resíduos {{<math>}}$\tilde{\hat{\boldsymbol{\varepsilon}}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 ```r
 ehat_ols = ytil - yhat_ols
@@ -1028,7 +1028,7 @@ head(ehat_ols)
 ## [6,]  1.50376081
 ```
 
-**f')** Estimativa da variância do erro {{<math>}}$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{MQO}}${{</math>}}
+**f')** Estimativa da variância do erro {{<math>}}$\tilde{\hat{\sigma}}^2_{\scriptscriptstyle{OLS}}${{</math>}}
 {{<math>}}$$\tilde{\hat{\sigma}}^2 =  \frac{\tilde{\hat{\boldsymbol{\varepsilon}}}' \tilde{\hat{\boldsymbol{\varepsilon}}}}{N - K - 1} $${{</math>}}
 
 
@@ -1043,7 +1043,7 @@ sig2hat_ols
 
 **h')** Matriz de Variâncias-Covariâncias do Estimador
 
-{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQO}}) = \tilde{\hat{\sigma}}^2(\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} $${{</math>}}
+{{<math>}}$$ \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{OLS}}) = \tilde{\hat{\sigma}}^2(\tilde{\boldsymbol{X}}' \tilde{\boldsymbol{X}})^{-1} $${{</math>}}
 
 
 ```r
@@ -1066,7 +1066,7 @@ t_ols = bhat_ols / se_ols
 p_ols = 2 * pt(-abs(t_ols), N-K-1)
 
 # Resultados
-data.frame(bhat_ols, se_ols, t_ols, p_ols) # resultado MQO transformado
+data.frame(bhat_ols, se_ols, t_ols, p_ols) # resultado OLS transformado
 ```
 
 ```
@@ -1088,14 +1088,14 @@ summary(reg.wls)$coef # resultado MQP via lm()
 
 <br>
 
-## Estimador MQGF
+## Estimador FGLS
 
-- Na prática, é difícil conhecer a priori a matriz de variâncias-covariâncias dos erros.
+- Na prática, é difícil conhecer a priori a error variance-covariance matrix.
 - Uma forma razoável é supor que {{<math>}}$\boldsymbol{\Sigma}${{</math>}} é uma função de parâmetros de um modelo linear {{<math>}}$\boldsymbol{\gamma}${{</math>}} desconhecidos.
-- Assim, podemos calcular {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} para obter {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}}, a partir de resíduos de MQO.
-- Esse tipo de procedimento é conhecido como Mínimos Quadrados Generalizados Factíveis (MQGF/FGLS), pois seu cálculo é possível enquanto o MQG não é.
+- Assim, podemos calcular {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}} para obter {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}}, a partir de resíduos de OLS.
+- Esse tipo de procedimento é conhecido como Feasible Generalized Least Squares (FGLS/FGLS), pois seu cálculo é possível enquanto o GLS não é.
 
-- Note que, se {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}} não for uma boa aproximação de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, então as estimativas e inferências por MQGF poderão ser ruins.
+- Note que, se {{<math>}}$\boldsymbol{\Sigma}(\hat{\boldsymbol{\gamma}})${{</math>}} não for uma boa aproximação de {{<math>}}$\boldsymbol{\Sigma}${{</math>}}, então as estimativas e inferências por FGLS poderão ser ruins.
 
 
 <br>
@@ -1105,9 +1105,9 @@ summary(reg.wls)$coef # resultado MQP via lm()
 enquanto, geralmente, assume-se a variância do erro individual é dada por:
 {{<math>}}$$Var(\varepsilon_i | \boldsymbol{x}'_i) = \sigma^2 \exp(\boldsymbol{x}'_i \boldsymbol{\gamma}). $${{</math>}}
 
-- A função {{<math>}}$\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})${{</math>}} é um exemplo de função _skedastic_, que garante que, após cálculo de {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}}, o valor ajustado não seja negativo (para a variância do indivíduo ser sempre positiva).
+- A função {{<math>}}$\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})${{</math>}} é um exemplo de função _skedastic_, que garante que, após cálculo de {{<math>}}$\hat{\boldsymbol{\gamma}}${{</math>}}, o valor ajustado não seja negativo (para a variância do individual ser sempre positiva).
 
-- Para estimar {{<math>}}$\boldsymbol{\gamma}${{</math>}}, é necessário ter estimativas {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} consistentes. A forma mais comum é começar calculando {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}.
+- Para estimar {{<math>}}$\boldsymbol{\gamma}${{</math>}}, é necessário ter estimativas {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} consistentes. A forma mais comum é começar calculando {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}.
 - Depois, é feita a regressão linear auxiliar
 {{<math>}}$$ \log{\hat{\varepsilon}}^2_i = \boldsymbol{x}'_i \boldsymbol{\gamma} + u_i, \tag{2} $${{</math>}}
 - A partir da estimação, podemos usar os valores ajustados para calcular
@@ -1115,8 +1115,8 @@ enquanto, geralmente, assume-se a variância do erro individual é dada por:
 que é a inverso do peso
 {{<math>}}$$w_i = \frac{1}{h(\boldsymbol{x}'_i)} = \frac{1}{\exp(\boldsymbol{x}'_i \boldsymbol{\gamma})}$${{</math>}}
 
-- Com {{<math>}}$\boldsymbol{W}${{</math>}} estimado, podemos calcular {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} e {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}})${{</math>}}, seguindo os mesmos passos de MQP.
-- Podemos usar esse {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}} estimado para estimar um novo {{<math>}}$\boldsymbol{\gamma}${{</math>}} e um novo {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}}. Isso pode ser feito iteradamente até sua convergência (se isso ocorrer) ou até um certo número de repetições.
+- Com {{<math>}}$\boldsymbol{W}${{</math>}} estimado, podemos calcular {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}} e {{<math>}}$V(\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}})${{</math>}}, seguindo os mesmos passos de MQP.
+- Podemos usar esse {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}} estimado para estimar um novo {{<math>}}$\boldsymbol{\gamma}${{</math>}} e um novo {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}}. Isso pode ser feito iteradamente até sua convergência (se isso ocorrer) ou até um certo número de repetições.
 
 
 ### Estimação via lm()
@@ -1125,7 +1125,7 @@ que é a inverso do peso
 ```r
 data(smoke, package="wooldridge")
 
-# Estimação por MQO
+# Estimação por OLS
 reg.ols = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn,
              data=smoke)
 round(summary(reg.ols)$coef, 4)
@@ -1149,7 +1149,7 @@ reg.var = lm(logu2 ~ lincome + lcigpric + educ + age + agesq + restaurn,
              data=smoke)
 w = 1/exp(fitted(reg.var))
 
-# Estimação por MQGF
+# Estimação por FGLS
 reg.fgls = lm(cigs ~ lincome + lcigpric + educ + age + agesq + restaurn,
               weight=w, data=smoke)
 round(summary(reg.fgls)$coef, 4)
@@ -1175,7 +1175,7 @@ round(summary(reg.fgls)$coef, 4)
 # Criando o vetor y
 y = as.matrix(smoke[,"cigs"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, smoke[,c("lincome", "lcigpric", "educ", "age", "agesq",
                                  "restaurn")]) ) # juntando 1's com x
 
@@ -1185,7 +1185,7 @@ K = ncol(X) - 1
 ```
 
 
-**b1)** Estimação por MQO para obter {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQO}}${{</math>}}
+**b1)** Estimação por OLS para obter {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{OLS}}${{</math>}}
 
 
 ```r
@@ -1229,8 +1229,8 @@ round(W[1:7,1:7], 3)
 
 - Os próximos passos são os mesmos de MQP:
 
-**c)** Estimativas MQGF {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}}${{</math>}}
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQGF}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
+**c)** Estimativas FGLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}}${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{FGLS}} = (\boldsymbol{X}' \boldsymbol{W} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{W} \boldsymbol{y} $${{</math>}}
 
 
 ```r
@@ -1249,7 +1249,7 @@ bhat_fgls
 ## restaurn -3.46106414
 ```
 
-**d)** Valores ajustados {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{MQGF}}${{</math>}}
+**d)** Valores ajustados {{<math>}}$\hat{\boldsymbol{y}}_{\scriptscriptstyle{FGLS}}${{</math>}}
 
 ```r
 yhat_fgls = X %*% bhat_fgls
@@ -1267,7 +1267,7 @@ head(yhat_fgls)
 ```
 
 
-**e)** Resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{MQGF}}${{</math>}}
+**e)** Resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}_{\scriptscriptstyle{FGLS}}${{</math>}}
 
 ```r
 ehat_fgls = y - yhat_fgls
@@ -1284,7 +1284,7 @@ head(ehat_fgls)
 ## 6 -2.048962
 ```
 
-**f)** Estimativa da variância do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{MQGF}}${{</math>}}
+**f)** Estimativa da variância do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{FGLS}}${{</math>}}
 {{<math>}}$$\hat{\sigma}^2 =  \frac{\hat{\boldsymbol{\varepsilon}}' \boldsymbol{W} \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $${{</math>}}
 
 
@@ -1342,7 +1342,7 @@ round(data.frame(bhat_fgls, se_fgls, t_fgls, p_fgls), 4) # resultado MQP
 ```
 
 ```r
-round(summary(reg.fgls)$coef, 4) # resultado MQGF via lm()
+round(summary(reg.fgls)$coef, 4) # resultado FGLS via lm()
 ```
 
 ```

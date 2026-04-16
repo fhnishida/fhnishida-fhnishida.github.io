@@ -285,18 +285,18 @@ I
 
 </br>
 
-## MQO na forma matricial
+## OLS na forma matricial
 
-- [Seção 3.2 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 3.2 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 
 
 ### Notações
 
-- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observação {{<math>}}$i${{</math>}}:
+- Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores para a observation {{<math>}}$i${{</math>}}:
 $$ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK} + \varepsilon_i, \qquad i=1, 2, ..., N \tag{1} $$
-em que {{<math>}}$N${{</math>}} é o número de observações.
+where {{<math>}}$N${{</math>}} é o número de observations.
 
-- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de variáveis independentes da observação {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}'_i${{</math>}} (minúsculo):
+- Defina o vetor-coluna de parâmetros, {{<math>}}$\boldsymbol{\beta}${{</math>}}, e o vetor-linha de independent variables da observation {{<math>}}$i${{</math>}}, {{<math>}}$\boldsymbol{x}'_i${{</math>}} (minúsculo):
 {{<math>}}$$ \underset{1 \times K}{\boldsymbol{x}'_i} = \left[ \begin{matrix} 1 & x_{i1} & x_{i2} & \cdots & x_{iK}  \end{matrix} \right]  \qquad \text{e} \qquad  \underset{(K+1) \times 1}{\boldsymbol{\beta}} = \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_K \end{matrix} \right],$${{</math>}}
 
 - Note que o produto interno {{<math>}}$\boldsymbol{x}'_i \boldsymbol{\beta}${{</math>}} é:
@@ -308,7 +308,7 @@ em que {{<math>}}$N${{</math>}} é o número de observações.
 
 $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x_{iK}}_{\boldsymbol{x}'_i \boldsymbol{\beta}} + \varepsilon_i = \boldsymbol{x}'_i \boldsymbol{\beta} + \varepsilon_i, \tag{2} $$
 
-- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observações para as {{<math>}}$K+1${{</math>}} variáveis explicativas:
+- Considere {{<math>}}$\boldsymbol{X}${{</math>}} a matriz de todas {{<math>}}$N${{</math>}} observations para as {{<math>}}$K+1${{</math>}} explanatory variables:
 
 {{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \left[ \begin{matrix} \boldsymbol{x}'_1 \\ \boldsymbol{x}'_2 \\ \vdots \\ \boldsymbol{x}'_N \end{matrix} \right] = \left[ \begin{matrix} 1 & x_{11} & x_{12} & \cdots & x_{1K}   \\ 1 & x_{21} & x_{22} & \cdots & x_{2K} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_{N1} & x_{N2} & \cdots & x_{NK} \end{matrix} \right] , $${{</math>}}
 
@@ -320,7 +320,7 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x
 &= \left[ \begin{matrix} \beta_0. 1 + \beta_1 x_{11} + \beta_2 x_{12} + ... + \beta_K x_{1K} + \varepsilon_1 \\ \beta_0 .1 + \beta_1 x_{21} + \beta_2 x_{22} + ... + \beta_K x_{2K} + \varepsilon_2 \\ \vdots \\ \beta_0. 1 + \beta_1 x_{N1} + \beta_2 x_{N2} + ... + \beta_K x_{NK} + \varepsilon_N \end{matrix} \right]\\
 &= \left[ \begin{matrix}y_1 \\ y_2 \\ \vdots \\ y_N \end{matrix} \right] = \boldsymbol{y} \end{align}{{</math>}}
 
-### Estimativas de MQO
+### Estimativas de OLS
 
 {{<math>}}$$ \hat{\boldsymbol{\beta}} = \left[ \begin{matrix} \hat{\beta}_0 \\ \hat{\beta}_1 \\ \hat{\beta}_2 \\ \vdots \\ \hat{\beta}_K \end{matrix} \right] = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{y} \tag{3.2} $${{</math>}}
 
@@ -336,11 +336,11 @@ $$ y_i = \underbrace{\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + ... + \beta_K x
 
 
 
-### Matriz de variâncias-covariâncias dos erros
-A Matriz de variâncias-covariâncias dos erros relaciona um termo de erro, {{<math>}}$\varepsilon_{i}${{</math>}}, com todos os demais termos de erro {{<math>}}$\varepsilon_{j}${{</math>}}, para todo {{<math>}}$j = 1, ..., N${{</math>}}.
+### Error variance-covariance matrix
+A Error variance-covariance matrix relaciona um termo de erro, {{<math>}}$\varepsilon_{i}${{</math>}}, com todos os demais termos de erro {{<math>}}$\varepsilon_{j}${{</math>}}, para todo {{<math>}}$j = 1, ..., N${{</math>}}.
 
 Na matriz de covariância de erro, cada linha representa um {{<math>}}$\varepsilon_{i}${{</math>}} e cada coluna representa um {{<math>}}$\varepsilon_{j}${{</math>}}. Seus elementos representam a covariância entre 
-{{<math>}}$\varepsilon_{i}${{</math>}} e {{<math>}}$\varepsilon_{j}${{</math>}}, sendo que pode haver {{<math>}}$\varepsilon_{i} = \varepsilon_{j}${{</math>}} (que, neste caso, torna-se variância):
+{{<math>}}$\varepsilon_{i}${{</math>}} e {{<math>}}$\varepsilon_{j}${{</math>}}, where que pode haver {{<math>}}$\varepsilon_{i} = \varepsilon_{j}${{</math>}} (que, neste caso, torna-se variância):
 
 {{<math>}}$$ cov(\boldsymbol{\varepsilon}) = \underset{N \times N}{\boldsymbol{\Sigma}} = 
 \left[ \begin{array}{cccc}
@@ -350,7 +350,7 @@ cov(\varepsilon_{2}, \varepsilon_{1}) & var(\varepsilon_{2}) & \cdots & cov(\var
 cov(\varepsilon_{N}, \varepsilon_{1}) & cov(\varepsilon_{N}, \varepsilon_{2}) & \cdots & var(\varepsilon_{N}) 
 \end{array} \right]$${{</math>}}
 
-Como assumimos amostragem aleatória, a covariância entre dois indivíduos distintos {{<math>}}($i \neq j$){{</math>}} é  
+Because we assume random sampling, the covariance between two distinct individuals {{<math>}}($i \neq j$){{</math>}} é  
 {{<math>}}$$ cov(\varepsilon_{i}, \varepsilon_{j}) = 0,  \qquad \text{para todo } i \neq j.$${{</math>}}
 
 Logo, 
@@ -396,7 +396,7 @@ cov(\hat{\beta}_K, \hat{\beta}_0) & cov(\hat{\beta}_K, \hat{\beta}_1) & \cdots &
 
 - Essa matriz pode ser obtida usando:
 {{<math>}}$$ V(\hat{\boldsymbol{\beta}}) = (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1}, $${{</math>}}
-mas como MQO supõe {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, então a matriz de variâncias-covariâncias do estimador pode ser simplificada:
+mas como OLS supõe {{<math>}}$ \boldsymbol{\Sigma} = \sigma^2 \boldsymbol{I} ${{</math>}}, então a matriz de variâncias-covariâncias do estimador pode ser simplificada:
 
 {{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}) 
 &= (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{\Sigma} \boldsymbol{X} (\boldsymbol{X}'\boldsymbol{X})^{-1} \\ 
@@ -414,7 +414,7 @@ Os erros padrão do estimador podem ser obtidos tomando a raiz quadrada da diago
 
 ### Teste _t_
 
-- [Seção 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 4.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 
 - Após a estimação, é importante testar hipóteses na forma
 $$ H_0: \ \beta_k = h_k \tag{4.1} $$
@@ -423,7 +423,7 @@ tal que {{<math>}}$h_k${{</math>}} é uma constante, e {{<math>}}$k${{</math>}} 
 - Esta hipótese pode ser testada pelo teste _t_:
 $$ t_k = \frac{\hat{\beta}_k - h_k}{\text{se}(\hat{\beta}_k)} \tag{4.4} $$
 
-- Por padrão, as rotinas de softwares estatísticos realizam o teste bicaudal com {{<math>}}$h_k=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_k${{</math>}} é estatisticamente significante (efeito estatisticamente diferente de zero sobre a variável dependente):
+- Por padrão, as rotinas de softwares estatísticos realizam o teste bicaudal com {{<math>}}$h_k=0${{</math>}} para testar se a estimativa {{<math>}}$\hat{\beta}_k${{</math>}} é estatisticamente significante (efeito estatisticamente diferente de zero sobre a dependent variable):
 
 {{<math>}}\begin{align} 
 H_0: \ \beta_k &= 0, \tag{4.5}\\
@@ -441,7 +441,7 @@ t_{\hat{\beta}_k} &= \frac{\hat{\beta}_k}{\text{se}(\hat{\beta}_k)} \tag{4.6}
 
 - **(ii)** Outra maneira de avaliar a hipótese nula é via **p-valor**, que indica o quão provável é que  {{<math>}}$\hat{\beta}_k${{</math>}} não seja um valor extremo (ou seja, o quão provável é que a estimativa seja igual a {{<math>}}$h_k = 0${{</math>}}).
 {{<math>}}$$ p_{\hat{\beta}_k} = 2.F_{t_{\small{(N-K-1)}}}(-|t_{\hat{\beta}_k}|), \tag{4.7} $${{</math>}}
-em que {{<math>}}$F_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
+where {{<math>}}$F_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma distribuição _t_ com {{<math>}}$(N-K-1)${{</math>}} graus de liberdade.
 
 <center><img src="../t_test.png" width=60%></center>
 
@@ -459,19 +459,19 @@ em que {{<math>}}$F_{t_{\small{(N-K-1)}}}(\cdot)${{</math>}} é a cdf de uma dis
 </br>
 
 
-## Estimação MQO multivariado
+## Estimação OLS multivariado
 
 ### Estimação via `lm()`
 
-- [Seção 3.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 3.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 
 - Para estimar um modelo multivariado no R, podemos usar a função `lm()`:
-  - O til (`~`) separa a a variável dependente das variáveis independentes
-  - As variáveis independentes precisam ser separadas por um `+`
+  - O til (`~`) separa a a dependent variable das independent variables
+  - As independent variables precisam ser separadas por um `+`
   - O intercepto ({{<math>}}$\beta_0${{</math>}}) é incluído automaticamente pela função `lm()` -- para retirá-lo, é preciso incluir a "variável" `0` na fórmula.
 
 
-#### Exemplo 3.1: Determinantes da Nota Média em Curso Superior nos EUA
+#### Example 3.1: Determinantes da Nota Média em Curso Superior nos EUA
 - Sejam as variáveis
     - `colGPA` (_college GPA_): a nota média em um curso superior,
     - `hsGPA` (_high school GPA_): a nota médio do ensino médio, e
@@ -592,7 +592,7 @@ vcov(reg)
 
 ### Estimação Analítica
 
-- A partir da base de dados `gpa1`, vamos criar o vetor da variável dependente `y` e a matrix das variáveis independentes `X`:
+- A partir da base de dados `gpa1`, vamos criar o vetor da dependent variable `y` e a matrix das independent variables `X`:
 
 
 ```r
@@ -615,8 +615,8 @@ head(y)
 ```
 
 ```r
-# Criando a matriz de covariadas X com primeira coluna de 1's
-X = cbind( 1, gpa1[, c("hsGPA", "ACT")] ) # juntando 1's com as covariadas
+# Criando a matriz de covariates X com primeira coluna de 1's
+X = cbind( 1, gpa1[, c("hsGPA", "ACT")] ) # juntando 1's com as covariates
 X = as.matrix(X) # transformando em matriz
 head(X)
 ```
@@ -650,7 +650,7 @@ K
 ## [1] 2
 ```
 
-##### 1. Estimativas de MQO {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
+##### 1. Estimativas de OLS {{<math>}}$\hat{\boldsymbol{\beta}}${{</math>}}
 
 ```r
 bhat = solve( t(X) %*% X ) %*% t(X) %*% y
@@ -822,7 +822,7 @@ ci
 
 
 ##### Comparando estimações via `lm()` e analítica
-- Resultados calculados analiticamente ("na mão")
+- Resultados calculados analiticamente ("by hand")
 
 ```r
 round( cbind(bhat, se_bhat, t_bhat, p_bhat), 4 ) # coeficientes
@@ -884,8 +884,8 @@ round( confint(reg), 4 ) # intervalos de confiança
 <!-- data(gpa1, package = "wooldridge") -->
 
 <!-- # Criando vetor e matriz de variáveis -->
-<!-- y = as.matrix(gpa1[,"colGPA"]) # vetor da variável dependente -->
-<!-- X = as.matrix(cbind( 1, gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas -->
+<!-- y = as.matrix(gpa1[,"colGPA"]) # vetor da dependent variable -->
+<!-- X = as.matrix(cbind( 1, gpa1[, c("hsGPA", "ACT")] )) # matriz de explanatory variables -->
 
 <!-- # Estimativas iniciais -->
 <!-- bhat = solve( t(X) %*% X ) %*% t(X) %*% y -->
@@ -901,8 +901,8 @@ round( confint(reg), 4 ) # intervalos de confiança
 <!--   boot_gpa1 = gpa1[sample(nrow(gpa1), replace = TRUE), ] -->
 
 <!--   # Criando vetor e matriz de variáveis -->
-<!--   y = as.matrix(boot_gpa1[,"colGPA"]) # vetor da variável dependente -->
-<!--   X = as.matrix(cbind( 1, boot_gpa1[, c("hsGPA", "ACT")] )) # matriz de variáveis explicativas -->
+<!--   y = as.matrix(boot_gpa1[,"colGPA"]) # vetor da dependent variable -->
+<!--   X = as.matrix(cbind( 1, boot_gpa1[, c("hsGPA", "ACT")] )) # matriz de explanatory variables -->
 
 <!--   # Estimativas iniciais -->
 <!--   boot_bhat = solve( t(X) %*% X ) %*% t(X) %*% y -->
@@ -936,13 +936,13 @@ round( confint(reg), 4 ) # intervalos de confiança
 
 ## Transformação de Variáveis e Comparação de Regressões
 
-- [Seção 4.4 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 4.4 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Aqui, vamos utilizar um exemplo para mostrar como:
   - tranformar variáveis diretamente da função `lm()`, e
   - informar os resultados de diversas regressões usando a função `stargazer()` do pacote `stargazer`.
 
 
-#### Exemplo 4.10 - A Relação Salário-Benefícios de Professores
+#### Example 4.10 - A Relação Salário-Benefícios de Professores
 - Vamos usar a base de dados `meap93` do pacote `wooldridge` e queremos estimar o modelo
 
 $$ \log{(\text{salary})} = \beta_0 + \beta_1. \left(\frac{\text{benefits}}{\text{salary}}\right) + \text{outros_fatores} + \varepsilon $$
@@ -955,8 +955,8 @@ data(meap93, package="wooldridge") # carregando base de dados
 
 - Agora vamos estimar diversos modelos:
   - Modelo 1: apenas *benefits/salary* como regressor
-  - Modelo 2: incluir as variáveis explicativas *log(enroll)* e *log(staff)*
-  - Modelo 3: incluir as variáveis explicativas *droprate* e *droprate²*
+  - Modelo 2: incluir as explanatory variables *log(enroll)* e *log(staff)*
+  - Modelo 3: incluir as explanatory variables *droprate* e *droprate²*
 
 - Para fazer transformações dentro de `lm()`, é necessário usar a função `I()`
 
@@ -982,7 +982,7 @@ round(summary(model3)$coef, 4)
 
 - Agora, vamos resumir os resultados em uma única tabela usando a função `stargazer()` pacote `stargazer`
   - `type="text"` para retornar o resultado no próprio console (se omitir esse argumento, retorna o código em LaTeX)
-  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observações e os {{<math>}}R$^2${{</math>}}
+  - `keep.stat=c("n", "rsq")` para manter apenas os nº de observations e os {{<math>}}R$^2${{</math>}}
 
 
 ```r
@@ -1038,15 +1038,15 @@ stargazer(list(model1, model2, model3), type="text", keep.stat=c("n", "rsq"))
 
 ### Variáveis Dummy
 
-- [Seção 7.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 7.1 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Se um dado qualitativo está armazenado na base como uma variável qualitativa (ou seja, seus valores são 0's ou 1's), então ele pode ser inserido imediatamente numa regressão linear.
-- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Seção 7.2)
+- Se uma variável dummy for usada num modelo, seu coeficiente representa a diferença do intercepto entre os grupos (Wooldridge, 2006, Section 7.2)
 
 
-##### Exemplo 7.5 - Equação do Log do Salário-Hora
+##### Example 7.5 - Equação do Log do Salário-Hora
 
 
-- Podemos calcular a **diferença de médias** de uma variável dependente por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
+- Podemos calcular a **diferença de médias** de uma dependent variable por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
 - Vamos utilizar a base de dados `wage1` do pacote `wooldridge`  para estimar o seguinte modelo
 {{<math>}}$$ \text{wage} = \beta_0 + \beta_1 \text{female} + \varepsilon $${{</math>}}
 
@@ -1092,7 +1092,7 @@ mean(wage1$wage[wage1$female==1]) # média salarial das mulheres
 </br>
 
 
-- Agora, vamos estimar o modelo com mais variáveis explicativas:
+- Agora, vamos estimar o modelo com mais explanatory variables:
 
 {{<math>}}\begin{align}
 \text{wage} = &\beta_0 + \beta_1 \text{female} + \beta_2 \text{educ} + \beta_3 \text{exper} + \beta_4 \text{exper2} +\\
@@ -1129,17 +1129,17 @@ round( summary(reg)$coef, 4 )
 
 ### Variáveis com múltiplas categorias
 
-- [Seção 7.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- [Section 7.3 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Quando temos uma variável categórica com mais de 2 categorias, não é possível simplesmente usá-la na regressão como se fosse uma _dummy_.
 - É necessário criar uma _dummy_ para cada categoria
 - Quando for feita a estimação do modelo, é necessário deixar uma destas categorias de fora para evitar problema de multicolinearidade perfeita.
   - Conhecendo todas as _dummies_ menos uma, dá para saber o valor esta última _dummy_
   - Se todas outras dummies forem iguais a 0, a última dummy é igual a 1
   - Se houver outra dummy igual a 1, então última dummy é igual a 0
-- Além disso, a categoria deixada de fora acaba sendo usada **referência** quando são estimados os parâmetros.
+- Além disso, a categoria deixada de fora acaba where usada **referência** quando são estimados os parâmetros.
 
 
-##### Exemplo: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
+##### Example: Efeito do aumento do salário-mínimo sobre o emprego (Card e Krueger, 1994)
 
 - Em 1992, o estado de New Jersey (NJ) aumentou o salário mínimo
 - Para avaliar se o aumento do salário mínimo teria impacto na quantidade de trabalhadores empregados, usou como comparação o estado vizinho de Pennsylvania (PA), considerado parecido com NJ.
@@ -1149,7 +1149,7 @@ round( summary(reg)$coef, 4 )
 em que:
 
 - `diff_emptot`: diferença de nº de empregados entre fev/1992 e nov/1992
-- `nj`: dummy em que (1) New Jersey - NJ, e (0) Pennsylvania - PA
+- `nj`: dummy where (1) New Jersey - NJ, e (0) Pennsylvania - PA
 - `chain`: rede de fast food: (1) Burger King (`bk`), (2) KFC (`kfc`), (3) Roy's (`roys`), e (4) Wendy's (`wendys`)
 - `hrsopen`: horas de funcionamento por dia
 
@@ -1217,7 +1217,7 @@ head(card1994)
 ```
 
 - Também é possível criar _dummies_ mais facilmente usando a função `dummy_cols()` do pacote `fastDummies`
-- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observação/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
+- Observe que, usando apenas três colunas das redes de fast food, é possível saber o valor da 4ª coluna, pois cada observation/loja só pode ser de uma dessas 4 redes de fast food e, portanto, há apenas um `1` em cada linha.
 - Portanto, caso coloquemos as 4 _dummies_ quando formos rodar a regressão, haverá um problema de multicolinearidade perfeita:
 
 
@@ -1357,7 +1357,7 @@ lm(diff_fte ~ nj + hrsopen + chain_fct, data=card1994)
 
 
 ### Transformando variáveis contínuas em categorias
-- [Seção 7.4 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf) 
+- [Section 7.4 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf) 
 - Usando a função `cut()`, podemos "dividir" um vetor de números em intervalos, a partir de pontos de corte
 
 
@@ -1375,7 +1375,7 @@ cut(1:10, cutpts)
 ```
 
 
-##### Exemplo 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais
+##### Example 7.8 - Efeitos da Classificação das Faculdade de Direito sobre Salários Iniciais
 
 - Queremos verificar o quanto as universidades top 10 (`top10`), e as ranqueadas entre 11 e 25 (`r11_25`), entre 26 e 40 (`r26_40`), entre 41 e 60 (`r41_60`), e entre 61 e 100 (`r61_100`), impactam o log do salário (`log(salary)`) em relação às demais universidades (`r101_175`).
 - Utilizaremos como variáveis de controle: `LSAT`, `GPA`, `llibvol` e `lcost`
@@ -1429,11 +1429,11 @@ round( summary(res)$coef, 5 )
 
 #### Interações entre variáveis dummy
 - [Subseção 6.1.6 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
-- Seção 7. de Wooldridge (2006)
+- Section 7. de Wooldridge (2006)
 - Adicionando um termo de interação entre duas _dummies_, é possível obter estimativas distintas de uma _dummy_ (mudança no **intercepto**) para cada um das 2 categorias da outra _dummy_ (0 e 1).
 
 
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora
+##### (Continuação) Example 7.5 - Equação do Log do Salário-Hora
 
 - Retornemos à base de dados `wage1` do pacote `wooldridge`
 - Agora, vamos incluir a variável _dummy_ `married`
@@ -1446,8 +1446,8 @@ round( summary(res)$coef, 5 )
 em que:
 
 - `wage`: salário médio por hora
-- `female`: dummy em que (1) mulher e (0) homem
-- `married`: dummy em que (1) casado e (0) solteiro
+- `female`: dummy where (1) mulher e (0) homem
+- `married`: dummy where (1) casado e (0) solteiro
 - `educ`: anos de educação
 - `exper`: anos de experiência (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
@@ -1477,7 +1477,7 @@ round( summary(reg)$coef, 4 )
 
 - Por essa regressão, nota-se que casar-se tem efeito estatisticamente não significante e positivo de 5,29\% sobre o salário.
 - O fato deste efeito não ser significante pode estar relacionado aos efeitos distintos dos casamentos sobre os homens, que têm seus salários elevados, e as mulheres, que têm seus salários diminuídos.
-- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do indivíduo, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
+- Para avaliar diferentes efeitos distintos do casamento considerando o sexo do individual, podemos interagir (multiplicar) as variáveis `married` e `female` usando:
   - `lwage ~ female + married + married:female` (o `:` cria apenas a interação), ou
   - `lwage ~ female * married` (a "multiplicação" cria as dummies e a interação)
 
@@ -1536,13 +1536,13 @@ round( summary(reg)$coef, 4 )
 </br>
 
 #### Considerando inclinações diferentes
-- Seção 7.4 de Wooldridge (2006)
-- [Seção 7.5 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- Section 7.4 de Wooldridge (2006)
+- [Section 7.5 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
 - Adicionando um termo de interação entre uma variável contínua e uma _dummy_, é possível obter estimativas distintas de da variável numérica (mudança na **inclinação**) para cada um das 2 categorias da _dummy_ (0 e 1).
 
 
 
-##### Exemplo 7.10 - Equação do Log do Salário-Hora
+##### Example 7.10 - Equação do Log do Salário-Hora
 
 - Retornemos à base de dados `wage1` do pacote `wooldridge`
 - Suspeita-se que as mulheres, além de terem um intercepto distinto em relação aos homens, também tem menores retornos de salário para cada ano de educação a mais.
@@ -1554,7 +1554,7 @@ round( summary(reg)$coef, 4 )
 em que:
 
 - `wage`: salário médio por hora
-- `female`: dummy em que (1) mulher e (0) homem
+- `female`: dummy where (1) mulher e (0) homem
 - `educ`: anos de educação
 - `female*educ`: interação entre a dummy `female` e anos de educação (`educ`)
 - `exper`: anos de experiência (`expersq` = anos ao quadrado)

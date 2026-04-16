@@ -70,7 +70,7 @@ type: book
   {{<math>}}$$\theta^1 = \theta^0 + \alpha f'(\theta^0)$${{</math>}}
   ou, no caso multivariado:
   {{<math>}}$$\boldsymbol{\theta}^1 = \boldsymbol{\theta}^0 + \alpha \nabla f(\boldsymbol{\theta}^0),$${{</math>}}
-  em que {{<math>}}$\alpha${{</math>}} é a taxa de aprendizado, e {{<math>}}$\nabla f(\cdot)${{</math>}} é o gradiente (vetor de derivadas parciais).
+  where {{<math>}}$\alpha${{</math>}} é a taxa de aprendizado, e {{<math>}}$\nabla f(\cdot)${{</math>}} é o gradiente (vetor de derivadas parciais).
   4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} até atingir um ponto máximo
 
 <center><img src="../steepest_ascent.png"></center>
@@ -87,12 +87,12 @@ type: book
 
 
 #### Método de Newton
-- O método de Newton é um algoritmo de segunda ordem que usa tanto o gradiente quanto a matriz Hessiana da função objetivo para iterativamente atualizar a solução.
+- O método de Newton é um algoritmo de segunda ordwhere usa tanto o gradiente quanto a matriz Hessiana da função objetivo para iterativamente atualizar a solução.
 - Agora, a segunda derivada permite dar "passos" mais otimizados, acelerando a convergência:
 {{<math>}}$$\theta^{n+1} = \theta^n + \frac{1}{f''(\theta^n)} f'(\theta^n)$${{</math>}}
   ou, no caso multivariado:
   {{<math>}}$$\boldsymbol{\theta}^{n+1} = \boldsymbol{\theta}^n + \mathcal{H}^{-1}(\theta^n) \nabla f(\boldsymbol{\theta}^n),$${{</math>}}
-  em que {{<math>}}$\mathcal{H}(\cdot)${{</math>}} é a Hessiana (matriz de segundas derivadas parciais).
+  where {{<math>}}$\mathcal{H}(\cdot)${{</math>}} é a Hessiana (matriz de segundas derivadas parciais).
 
 <center><img src="../gradient_newton.png"></center>
 
@@ -110,8 +110,8 @@ type: book
 
 </br>
 
-## Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) minimização da função perda, de (b) método dos momentos e de (c) máxima verossimilhança.
+## Encontrando OLS por diferentes estratégias
+- Nesta seção, encontraremos as estimativas de OLS usando as estratégias da (a) minimização da função perda, de (b) método dos momentos e de (c) máxima verossimilhança.
 - Em cada uma delas, temos uma função objetivo distinta, que será avaliada a partir de um vetor com dois parâmetros, {{<math>}}$ \hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}. ${{</math>}} No R, vamos chamar esse vetor de `theta`.
 
 
@@ -130,7 +130,7 @@ em que:
 
 
 ```r
-## Regressao MQO
+## Regressao OLS
 reg = lm(formula = mpg ~ hp, data = mtcars)
 reg$coef
 ```
@@ -151,8 +151,8 @@ reg$coef
 - A função para calcular a soma dos resíduos quadráticos recebe como inputs:
   - um **vetor** de possíveis valores {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0,\ \hat{\beta}_1 \right\}${{</math>}}
   - uma **lista** com
-    - um *texto* com o nome da variável dependente
-    - um *vetor de texto* com os nomes das variáveis explicativas
+    - um *texto* com o nome da dependent variable
+    - um *vetor de texto* com os nomes das explanatory variables
     - uma *base de dados*
 
 ```r
@@ -235,13 +235,13 @@ round(min_loss, 4)
 
 {{<math>}}$$ E(\boldsymbol{\varepsilon}) = 0 \qquad \text{ e } \qquad E(\boldsymbol{x \varepsilon}) = 0 $${{</math>}}
 
-- Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.
+- Note que estes são os momentos relacionados ao OLS, dado que este é um caso particular do GMM.
 - Os análogos amostrais são:
 {{<math>}}$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} = 0 $${{</math>}}
 
 - E queremos minimizar:
 {{<math>}}$$ \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2 $${{</math>}}
-em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
+where {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
 
 </br>
 
@@ -257,11 +257,11 @@ em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois es
 
 {{<math>}}\begin{align} \boldsymbol{m} \equiv \boldsymbol{X}' \hat{\boldsymbol{\varepsilon}} &= \begin{bmatrix} 1 & 1 & \cdots & 1 \\ x_1 & x_2 & \cdots & x_N  \end{bmatrix} \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \\\
 &= \begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}  \propto \begin{bmatrix} \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \end{align}{{</math>}}
-em que {{<math>}}$\propto${{</math>}} significa "proporcional a".
+where {{<math>}}$\propto${{</math>}} significa "proporcional a".
 
 - Agora, suponha a matriz de pesos (cuja soma não precisa ser igual a 1)
 {{<math>}}$$ W = \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} $${{</math>}}
-em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
+where {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
 
 - No GMM, queremos fazer com que esses momentos sejam o mais próximos de zero. Um forma de fazer isso é minimizar a soma (ponderada) dos quadrados dos momentos:
 
@@ -274,7 +274,7 @@ em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois es
 
 
 
-#### Otimização Numérica para GMM
+#### Numerical Optimization para GMM
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}
 
@@ -327,7 +327,7 @@ sum(m1)^2 + sum(m2)^2 # soma dos quadrados com mesmos pesos (1 e 1)
 
 
 ##### 5a. Criação de função com os momentos para `opm()`
-- Vamos criar uma função que tem como input um vetor de parâmetros (`theta`) e uma base de dados (`dta`), e que retorna uma matriz em que cada coluna representa um momento.
+- Vamos criar uma função que tem como input um vetor de parâmetros (`theta`) e uma base de dados (`dta`), e que retorna uma matriz where cada coluna representa um momento.
 - Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
 
 ```r
@@ -380,13 +380,13 @@ round(gmm1, 4)
 
 ##### 5b. Criação de função com os momentos para `gmm()`
 
-- Note que {{<math>}}$X' \hat{\boldsymbol{\varepsilon}}${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz de dimensão {{<math>}}$g \times N${{</math>}}, sendo {{<math>}}$g${{</math>}} o número de momentos e {{<math>}}$N${{</math>}} o tamanho da amostra.
-- No R, precisamos fazer **multiplicação elemento a elemento por linha** do vetor de resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com a matriz de covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante _1_ e _hp_), na forma:
+- Note que {{<math>}}$X' \hat{\boldsymbol{\varepsilon}}${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz de dimensão {{<math>}}$g \times N${{</math>}}, where {{<math>}}$g${{</math>}} o número de momentos e {{<math>}}$N${{</math>}} o tamanho da amostra.
+- No R, precisamos fazer **multiplicação elemento a elemento por linha** do vetor de resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com a matriz de covariates {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante _1_ e _hp_), na forma:
 
 {{<math>}}\begin{align} \hat{\boldsymbol{\varepsilon}} \odot \boldsymbol{X}\ =\ \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \odot \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}  \ =\ &\begin{bmatrix} \hat{\varepsilon}_1 & x_1.\hat{\varepsilon}_1  \\ \hat{\varepsilon}_2 & x_2.\hat{\varepsilon}_2 \\ \vdots & \vdots \\ \hat{\varepsilon}_N & x_N.\hat{\varepsilon}_N \end{bmatrix}\\
 \\ &\quad \Big\Downarrow \text{(Soma por coluna)} \\
 &\begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}, \end{align}{{</math>}}
-em que {{<math>}}$\odot${{</math>}} denota a multiplicação elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.
+where {{<math>}}$\odot${{</math>}} denota a multiplicação elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.
 
 Note que, para fazer o GMM no R, não devemos fazer a soma/média de cada coluna (a própria função `gmm()` fará isso).
 
@@ -454,7 +454,7 @@ reg$coef
 
 </br>
 
-### (c) Máxima Verossimilhança
+### (c) Maximum Likelihood
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
 - A função objetivo é a função de verossimilhança que, ao contrário da função de soma de quadrado dos resíduos, queremos maximizá-la
 
@@ -462,7 +462,7 @@ reg$coef
 #### Intuição do cálculo da função de verossimilhança
 - Apenas para ilustrar a construção da função de verossimilhança, {{<math>}}$\mathcal{L}${{</math>}}, considere um modelo de probabilidade linear:
 {{<math>}}$$ \text{am} = \beta_0 + \beta_1 \text{cyl} + \varepsilon, $${{</math>}}
-em que _cyl_ é a quantidade de cilindros do carro, e _am_ é uma variável _dummy_ que é igual a 1 se o carro for automático e 0 caso contrário.
+where _cyl_ é a quantidade de cilindros do carro, e _am_ é uma variável _dummy_ que é igual a 1 se o carro for automático e 0 caso contrário.
 
 - Queremos encontrar {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1 \right\}${{</math>}} que maximizam a função de verossimilhança.
 - Considere um chute de parâmetros {{<math>}}$\hat{\boldsymbol{\theta}}_A = \left\{ \hat{\beta}^A_0 = 1.3, \hat{\beta}^A_1 = -0.14 \right\}${{</math>}} que gerem os seguintes valores preditos/ajustados (probabilidades):
@@ -487,20 +487,20 @@ em que _cyl_ é a quantidade de cilindros do carro, e _am_ é uma variável _dum
 
 
 
-#### Otimização Numérica para Máxima Verossimilhança
+#### Numerical Optimization para Maximum Likelihood
 
 - Em nosso modelo
 {{<math>}} $$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon, $$ {{</math>}}
 queremos estimar 3 parâmetros
 {{<math>}}$$ \hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma} \right\}, $${{</math>}}
-em que {{<math>}}$\hat{\sigma}${{</math>}} é desvio padrão do resíduo.
+where {{<math>}}$\hat{\sigma}${{</math>}} é desvio padrão do resíduo.
 
 - No modelo de probabilidade linear, as probabilidades usadas para calcular a verossimilhança são os próprios valores ajustados (probabilidades) dos carros serem automáticos (manuais), dado que são automáticos (manuais).
-- Já no modelo linear "comum", usamos a função de densidade de probabilidade, a partir de uma distribuição normal com uma variância {{<math>}}$\hat{\sigma}^2${{</math>}}, para avaliar a "probabilidade" de cada observação, {{<math>}}$y_i${{</math>}}, ser o valor ajustado {{<math>}}$\hat{y}_i${{</math>}}.
+- Já no modelo linear "comum", usamos a função de densidade de probabilidade, a partir de uma distribuição normal com uma variância {{<math>}}$\hat{\sigma}^2${{</math>}}, para avaliar a "probabilidade" de cada observation, {{<math>}}$y_i${{</math>}}, ser o valor ajustado {{<math>}}$\hat{y}_i${{</math>}}.
 
 A função log-verossimilhança é dada por
 {{<math>}}$$ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \ln{L(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} = \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $${{</math>}}
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+where a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
 
 {{<math>}}$$ y_i | x_i \sim N(\hat{\beta}_0 + \hat{\beta}_1 x_i, \hat{\sigma}^2) $${{</math>}}
 o que implica que 
@@ -510,11 +510,11 @@ o que implica que
 
 <center><img src="../mle.jpg"></center> 
 
-- Como demonstra a figura acima, assumimos que o erro {{<math>}}$\varepsilon${{</math>}} é normalmente distribuído para todo {{<math>}}$x${{</math>}}, com a mesma variância {{<math>}}$\sigma^2${{</math>}} (homocedasticidade)
+- Como demonstra a figura acima, assumimos quand the error {{<math>}}$\varepsilon${{</math>}} é normalmente distribuído para todo {{<math>}}$x${{</math>}}, com a mesma variância {{<math>}}$\sigma^2${{</math>}} (homocedasticidade)
 
 
 
-#### Otimização Numérica para Máxima Verossimilhança
+#### Numerical Optimization para Maximum Likelihood
 
 - Nosso objetivo é
 {{<math>}}$$ \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $${{</math>}}
@@ -537,7 +537,7 @@ Passos para estimar uma regressão por máxima verossimilhança:
 
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\hat{\beta}_0, \hat{\beta}_1${{</math>}} e {{<math>}}$\hat{\sigma}^2${{</math>}}
-- Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\hat{\sigma}^2${{</math>}}).
+- Note que, diferente da estimação por OLS, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\hat{\sigma}^2${{</math>}}).
 
 ```r
 theta = c(30, -.05, 2)
@@ -622,7 +622,7 @@ head(tab)
 ## 5 18.7 175 21.25 0.0885
 ## 6 18.1 105 24.75 0.0008
 ```
-- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
+- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observation, maior será a densidade/probabilidade.
 <img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-3.png" width="672" />
 - Logo, a verossimilhança (produto de todas densidades de probabilidade) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
 

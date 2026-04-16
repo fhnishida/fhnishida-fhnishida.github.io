@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Testes de Hipótese
+linktitle: Hypothesis Testing
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Testes de Hipótese
+title: Hypothesis Testing
 weight: 3
 output: md_document
 type: book
@@ -42,7 +42,7 @@ type: book
 - Considere o modelo:
   {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \varepsilon$${{</math>}}
 
-- Logo, há {{<math>}}$K=2${{</math>}} variáveis explicativas (e há 3 parâmetros)
+- Logo, há {{<math>}}$K=2${{</math>}} explanatory variables (e há 3 parâmetros)
 - 1 restrição linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
 - Logo, neste caso específico, temos
 {{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
@@ -59,9 +59,9 @@ type: book
 
 
 
-#### Exemplo 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
+#### Example 1: {{<math>}}H$_0: \ \beta_1 = 4${{</math>}}
 - Note que {{<math>}}$h_1 = 4${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+- O vetor {{<math>}}$r'_1${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
 
@@ -81,9 +81,9 @@ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \h
 &= \sqrt{var(\hat{\beta}_1)} = se(\hat{\beta}_1) \end{align}{{</math>}}
 
 
-#### Exemplo 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
+#### Example 2: {{<math>}}H$_0: \ \beta_1 + \beta_2 = 2${{</math>}}
 - Note que {{<math>}}$h_1 = 2${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+- O vetor {{<math>}}$r'_1${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
@@ -103,12 +103,12 @@ cov(\hat{\beta}_0, \hat{\beta}_1)+cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{
 &= \sqrt{var(\hat{\beta}_1) + var(\hat{\beta}_2) + 2cov(\hat{\beta}_1, \hat{\beta}_2)} = \sqrt{var(\hat{\beta}_1 + \hat{\beta}_2)} \end{align}{{</math>}}
 
 
-#### Exemplo 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
+#### Example 3: {{<math>}}H$_0: \ \beta_1 = \beta_2${{</math>}}
 - Note que
 {{<math>}}$$\beta_1 = \beta_2 \iff \beta_1 - \beta_2 = 0 $${{</math>}}
 
 - Logo, {{<math>}}$h_1 = 0${{</math>}}
-- O vetor {{<math>}}$r'_1${{</math>}} pode ser escrito como
+- O vetor {{<math>}}$r'_1${{</math>}} can be written as
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $${{</math>}}
 
@@ -130,7 +130,7 @@ cov(\hat{\beta}_0, \hat{\beta}_1)-cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{
 
 #### Aplicando no R
 
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### (Continuação) Example 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
 - Anteriormente, estimamos o seguinte modelo:
 
 {{<math>}}\begin{align}
@@ -139,8 +139,8 @@ cov(\hat{\beta}_0, \hat{\beta}_1)-cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{
 em que:
 
 - `wage`: salário médio por hora
-- `female`: dummy em que (1) mulher e (0) homem
-- `married`: dummy em que (1) casado e (0) solteiro
+- `female`: dummy where (1) mulher e (0) homem
+- `married`: dummy where (1) casado e (0) solteiro
 - `female*married`: interação (multiplicação) das _dummies_ `female` e `married`
 - `educ`: anos de educação
 - `exper`: anos de experiência (`expersq` = anos ao quadrado)
@@ -180,8 +180,8 @@ round( summary(res_7.14)$coef, 4 )
 # Extraindo objetos da regressão
 bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
 Vbhat = vcov(res_7.14) # matriz de variância-covariância do estimador
-N = nrow(wage1) # número de observações
-K = length(bhat) - 1 # número de covariadas
+N = nrow(wage1) # número de observations
+K = length(bhat) - 1 # número de covariates
 ehat = residuals(res_7.14) # resíduos da regressão
 
 # Criando vetor-linha de restrição
@@ -261,7 +261,7 @@ p
 <img src="../chisq_test.png" alt="">
 
 
-#### Exemplo 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
+#### Example 4: {{<math>}}H$_0: \ \beta_1 = 0\ \text{ e }\ \beta_1 + \beta_2 = 2${{</math>}}
 - Note que {{<math>}}$h_1 = 0 \text{ e } h_2 = 2${{</math>}}
 - Os vetores {{<math>}}$r'_1 \text{ e } r'_2${{</math>}} podem ser escritos como
 
@@ -278,7 +278,7 @@ p
 
 ### Aplicando no R
 
-- Como exemplo, usaremos a base de dados `mlb1` (pacote `wooldridge`) com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)
+- Como exemplo, usaremos a base de dados `mlb1` (pacote `wooldridge`) com estatísticas de jogadores de beisebol (Wooldridge, 2006, Section 4.5)
 - Queremos estimar o modelo:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
 &\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
@@ -357,7 +357,7 @@ aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
 - Observe que rejeitamos a hipótese nula e, portanto, os parâmetros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} são conjuntamente significantes.
 
 
-#### Calculando "na mão"
+#### Calculando "by hand"
 
 - Estimando o modelo
 
@@ -370,8 +370,8 @@ names_X = c("years", "gamesyr", "bavg", "hrunsyr", "rbisyr")
 # Criando o vetor y
 y = as.matrix(mlb1[,name_y]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
-X = as.matrix( cbind( const=1, mlb1[,names_X] ) ) # juntando 1's com as covariadas
+# Criando a matriz de covariates X com primeira coluna de 1's
+X = as.matrix( cbind( const=1, mlb1[,names_X] ) ) # juntando 1's com as covariates
 
 # Pegando valores N e K
 N = nrow(mlb1)
@@ -507,10 +507,10 @@ w > c
 
 ## Teste F
 
-- [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
+- [Section 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
 - Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
 - Nele, estimamos dois modelos:
-  - Irrestrito: inclui todas as variáveis explicativas de interesse
+  - Irrestrito: inclui todas as explanatory variables de interesse
   - Restrito: exclui algumas variáveis da estimação
 - O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
 - A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
@@ -521,7 +521,7 @@ w > c
 
 {{<math>}}$$ F = \frac{\text{SSR}_{r} - \text{SSR}_{ur}}{\text{SSR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
 
-em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
+where `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 
 - Depois, avalia-se a estatística _F_ a partir de um teste unicaudal à direita em uma distribuição _F_:
 
@@ -531,8 +531,8 @@ em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 
 ### Aplicando no R
 
-- Aqui, continuaremos usando a base de dados `mlb1` da Seção 4.5 de Wooldridge (2006)
-- O modelo irrestrito (com todas variáveis explicativas) é:
+- Aqui, continuaremos usando a base de dados `mlb1` da Section 4.5 de Wooldridge (2006)
+- O modelo irrestrito (com todas explanatory variables) é:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
 &\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
 
@@ -575,7 +575,7 @@ car::linearHypothesis(res.ur, myH0)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-- Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que é esperado)
+- Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariates tem um maior poder explicativo (o que é esperado)
 - Para avaliar a hipótese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estatística _F_ é maior do que um valor crítico (dado um nível de significância), ou avaliarmos se o p-valor é menor do que esse nível de significância.
 - É possível ver acima, pelo segundo critério, que rejeitamos a hipótese nula.
 - Podemos ver o valor crítico a 5% de significância via:
@@ -591,7 +591,7 @@ qf(1-0.05, G, N-K-1)
 - Como 9,55 > 2,63, então rejeitamos a hipótese nula.
 
 
-#### Calculando "na mão"
+#### Calculando "by hand"
 
 - Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para não ter que fazer todos passos da estimação duas vezes.
 
@@ -645,4 +645,4 @@ F
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Estimação com Dados em Painel" cta_link="../sec4" >}}
+{{< cta cta_text="👉 Seguir para Estimação com Panel Data" cta_link="../sec4" >}}

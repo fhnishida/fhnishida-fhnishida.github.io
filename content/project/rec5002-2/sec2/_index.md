@@ -23,4 +23,4 @@ Presentation: [AP_Monitoria-2_pt2.pdf](../AP_Monitoria-2_pt2.pdf)
 
 
 
-{{< cta cta_text="👉 Proceed to Session 3" cta_link="../chapter3" >}}
+{{< cta cta_text="Proceed to Session 3" cta_link="../chapter3" >}}

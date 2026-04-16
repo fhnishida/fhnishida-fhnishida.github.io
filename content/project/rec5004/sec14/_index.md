@@ -14,18 +14,18 @@ type: book
 
 
 
-## Manipulação de dados em painel
+## Manipulação de panel data
 - Para o que estamos estudando, é normalmente exigido que os dados estejam
-    - no formato _long_: para cada indivíduo, temos uma linha para cada período;
-    - _balanceados_: o tamanho da amostra é {{<math>}}$N \times T${{</math>}}, com {{<math>}}$N${{</math>}} indivíduos e {{<math>}}$T${{</math>}} períodos; e
-    - devidamente ordenados por indivíduos e, depois, por tempo.
+    - no formato _long_: para cada individual, temos uma linha para cada period;
+    - _balanceados_: o tamanho da amostra é {{<math>}}$N \times T${{</math>}}, com {{<math>}}$N${{</math>}} individuals e {{<math>}}$T${{</math>}} periods; e
+    - devidamente ordenados por individuals e, depois, por tempo.
 
 <center><img src="../panel-example.jpg"></center>
 
-- Em muitos casos, as informações são disponibilizadas em várias bases de dados de cortes transversais (_cross sections_), então é necessário estruturar a base de dados em painel.
+- Em muitos casos, as informações são disponibilizadas em várias bases de dados de cortes transversais (_cross sections_), então é necessário estruturar a base de panel data.
 - Isso por ser feito no R de, pelo menos, duas formas:
-    - empilhando as bases de dados e filtrando apenas indivíduos que aparecem em todos períodos; ou
-    - fazendo a junção interna (_inner join_) das bases por indivíduo e transformando do formato _wide_ para o _long_.
+    - empilhando as bases de dados e filtrando apenas individuals que aparecem em todos periods; ou
+    - fazendo a junção interna (_inner join_) das bases por individual e transformando do formato _wide_ para o _long_.
 - Como exemplo, usaremos a PNAD Contínua que é publicada trimestralmente e possui o pacote `PNADcIBGE` que auxilia na sua utilização.
 - Os dados podem ser obtidos via`read_pnadc(microdata, input_txt)` que necessita que você faça download das **bases de dados** e do **txt com informações das variáveis (_input_txt_)** no [FTP do IBGE](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2021):
 
@@ -48,7 +48,7 @@ pnad_022021 = read_pnadc(unz("PNADC_022021_20220224.zip", "PNADC_022021.txt"),
                          input_txt = "input_PNADC_trimestral.txt")
 ```
 
-- Para identificar um indivíduo na base do PNAD, o IBGE usa as seguintes [variáveis-chave](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
+- Para identificar um individual na base do PNAD, o IBGE usa as seguintes [variáveis-chave](https://www.ibge.gov.br/estatisticas/downloads-estatisticas.html?caminho=Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/Documentacao):
     - _UPA_: Unidade Primária de Amostragem / UF (2) + Nº Sequencial (6) + DV (1)
     - _V1008_: Número do domicílio (01 a 14)
     - _V1014_: Painel/Grupo de amostra (01 a 99)
@@ -85,7 +85,7 @@ pnad_2 = pnad_022021 %>% select(all_of(lista_var)) %>%
 
 
 
-### Filtrando indivíduos presentes em todos períodos
+### Filtrando individuals presentes em todos periods
 - Primeiro, empilharemos as bases de dados usando `rbind()`. É necessário garantir que tenham o mesmo número de colunas e estas sejam da mesma classe (_character_, _numeric_, etc.):
 
 ```r
@@ -105,7 +105,7 @@ head(pnad_bind)
 ## 6 1         110000016 02    08     01    2     11       07       1983     11   
 ## # ℹ 2 more variables: IDADE <dbl>, RENDA <dbl>
 ```
-- Note que a 2ª observação não corresponde à mesma pessoa da 1º linha. Vamos criar uma variável `ID`, juntando informações de todas variáveis-chave, e rearranjar a base de dados de acordo com ela e o trimestre:
+- Note que a 2ª observation não corresponde à mesma pessoa da 1º linha. Vamos criar uma variável `ID`, juntando informações de todas variáveis-chave, e rearranjar a base de dados de acordo com ela e o trimestre:
 
 ```r
 pnad_bind = pnad_bind %>% mutate(
@@ -131,7 +131,7 @@ head(pnad_bind, 10)
 ## 10 11000001… 1         1100… 03    08     01    2     09       03       1976    
 ## # ℹ 3 more variables: UF <chr>, IDADE <dbl>, RENDA <dbl>
 ```
-- Observe que o base de dados em painel não está balanceada, ou seja, nem todos os indivíduos aparecem nos 2 trimestres. Portanto, vamos criar um objeto auxiliar com a contagem de vezes que o `ID` aparece em `pnad_bind`
+- Observe que o base de panel data não está balanceada, ou seja, nem todos os individuals aparecem nos 2 trimestres. Portanto, vamos criar um objeto auxiliar com a contagem de vezes que o `ID` aparece em `pnad_bind`
 
 ```r
 cont_ID = pnad_bind %>% group_by(ID) %>% summarise(cont = n())
@@ -196,7 +196,7 @@ head(pnad_bind)
 ```
 
 ```r
-N = pnad_bind$ID %>% unique() %>% length() # Nº de indivíduos únicos
+N = pnad_bind$ID %>% unique() %>% length() # Nº de individuals únicos
 T = pnad_bind$Trimestre %>% unique() %>% length() # Nº de trimestre únicos
 paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 ```
@@ -207,7 +207,7 @@ paste0("N = ", N, ", T = ", T, ", NT = ", N*T)
 
 
 ### Transformando de _wide_ para _long_
-- Agora, juntaremos a base usando a função `inner_join()` que apenas mantém indivíduos que aparecem em ambas bases de dados:
+- Agora, juntaremos a base usando a função `inner_join()` que apenas mantém individuals que aparecem em ambas bases de dados:
 
 ```r
 pnad_joined = inner_join(pnad_1, pnad_2, 
@@ -231,7 +231,7 @@ dim(pnad_joined) # dimensões da base de dados
 ```
 ## [1] 174468     16
 ```
-- Note que obtivemos a base no formato _wide_ (1 linha para cada indivíduo) e as informações relativas aos 2 períodos (1º e 2º trimestres de 2021) estão em colunas:
+- Note que obtivemos a base no formato _wide_ (1 linha para cada individual) e as informações relativas aos 2 periods (1º e 2º trimestres de 2021) estão em colunas:
     - Os sufixos foram utilizamos para duplicar colunas de informações contidas em ambas bases (e que não foram inseridas no argumento `by`).
     - A variável invariante no tempo _UF_ foi duplicada, então seria interessante incluí-la também como uma ``variável-chave''
 
@@ -256,8 +256,8 @@ dim(pnad_joined) # dimensões da base de dados
 ```
 ## [1] 174468     15
 ```
-- Observe que temos uma única coluna _UF_ agora e o número de observações manteve-se inalterado, pois os domicílios da amostra de fato não alteraram suas UFs entre estes trimestres.
-    - Caso alterasse o número de linhas, a variável invariante no tempo possui algumas observações que alteraram entre os períodos e estas foram excluídas da amostra.
+- Observe que temos uma única coluna _UF_ agora e o número de observations manteve-se inalterado, pois os domicílios da amostra de fato não alteraram suas UFs entre estes trimestres.
+    - Caso alterasse o número de linhas, a variável invariante no tempo possui algumas observations que alteraram entre os periods e estas foram excluídas da amostra.
 - Também podemos retirar as colunas "Trimestre.1" e "Trimestre.2":
 
 ```r
@@ -329,7 +329,7 @@ head(pnad_joined2)
 ## 5 11000… 02    08     02    1     99       99       9999     11    IDADE_1    31
 ## 6 11000… 02    08     02    1     99       99       9999     11    RENDA_1    NA
 ```
-- Note que, ao invés de ter 2 linhas por indivíduo, temos 4 (pois temos 2 variáveis variantes no tempo).
+- Note que, ao invés de ter 2 linhas por individual, temos 4 (pois temos 2 variáveis variantes no tempo).
 - Precisamos jogar metade das linhas de volta para colunas. Vamos usar a função `separate()` para separar _VAR.TRI_ (com 4 valores únicos: _IDADE_1_, _IDADE_2_, _RENDA_1_ e _RENDA_2_) em 2 colunas: _VAR_ (2 valores únicos: _IDADE_ e _RENDA_) e _TRI_ (2 valores únicos: _1_ e _2_).
 
 ```r
@@ -511,10 +511,10 @@ bd_counties4 %>% select(county, year, everything()) %>% head(10)
 
 
 #### Outro exemplo 2: _long_ para _wide_
-- Usaremos agora a base de dados `TravelMode` do pacote `AER` que possui 840 observações em que 210 indivíduos escolhem um modo de viagem entre 4 opções: carro, aéreo, trem ou ônibus.
-- Note que cada um dos 210 indivíduos aparecem em 4 linhas, em que cada um corresponde a um dos modos de viagem.
+- Usaremos agora a base de dados `TravelMode` do pacote `AER` que possui 840 observations where 210 individuals escolhem um modo de viagem entre 4 opções: carro, aéreo, trem ou ônibus.
+- Note que cada um dos 210 individuals aparecem em 4 linhas, where cada um corresponde a um dos modos de viagem.
 - Há variáveis específicas de
-    - indivíduo (_individual_, _income_ e _size_) que são repetidas nas 4 linhas em que aparece, e
+    - individual (_individual_, _income_ e _size_) que são repetidas nas 4 linhas where aparece, e
     - escolha (_choice_, _wait_, _vcost_, _travel_ e _gcost_) que variam de acordo com os modos de viagem.
 
 ```r
@@ -533,7 +533,7 @@ head(TravelMode, 8)
 ## 7          2   bus     no   53    25    399    85     30    2
 ## 8          2   car    yes    0    11    255    50     30    2
 ```
-- Agora, vamos fazer com que haja apenas uma linha por indivíduo, retirando a coluna _mode_ e gerando diversas colunas para cada possível modo de viagem.
+- Agora, vamos fazer com que haja apenas uma linha por individual, retirando a coluna _mode_ e gerando diversas colunas para cada possível modo de viagem.
 
 ```r
 TravelMode2 = TravelMode %>% 
@@ -599,5 +599,5 @@ TravelMode3 %>% head(10)
 ```
 
 
-<!-- {{< cta cta_text="👉 Seguir para Variáveis Instrumentais" cta_link="../sec6" >}} -->
+<!-- {{< cta cta_text="👉 Seguir para Instrumental Variables" cta_link="../sec6" >}} -->
 

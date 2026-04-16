@@ -13,43 +13,43 @@ type: book
 
 
 
-- Baseado, principalmente, nos cursos da [_Especialização em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da universidade John Hopkins (disponível no Coursera).
-- Não é possível fazer a Especialização gratuitamente, mas é possível "participar como ouvinte" (_audit course_), o que permite acessar quase todo material (mas não pode fazer os testes e, portanto, não ganha certificado ao concluí-lo). 
-- Em cada tema abordado serão citadas as fontes, além de incluir aos vídeos dos cursos citados acima para que possam aprofundar nos estudos.
+- Baseado, principalmente, nos cursos da [_Especializa��o em Data Science_](https://www.coursera.org/specializations/jhu-data-science) da universidade John Hopkins (dispon�vel no Coursera).
+- N�o � poss�vel fazer a Especializa��o gratuitamente, mas � poss�vel "participar como ouvinte" (_audit course_), o que permite acessar quase todo material (mas n�o pode fazer os testes e, portanto, n�o ganha certificado ao conclu�-lo). 
+- Em cada tema abordado ser�o citadas as fontes, al�m de incluir aos v�deos dos cursos citados acima para que possam aprofundar nos estudos.
 
 
 ## Instalando R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Instalação da base do R ([CRAN](https://cran.r-project.org))
+1. Instala��o da base do R ([CRAN](https://cran.r-project.org))
     - Download R for Windows > base > Download R X.X.X for Windows
-    - Se o computador for 64-bits, opte pela versão 64-bits
+    - Se o computador for 64-bits, opte pela vers�o 64-bits
 
-2. Instalação do Rtools ([CRAN](https://cran.r-project.org))
+2. Instala��o do Rtools ([CRAN](https://cran.r-project.org))
     - Download R for Windows > Rtools > Installing Rtools > rtools40-x86_XX.exe
-    - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessários em alguns pacotes no R
+    - ?? um conjunto de ferramentas de compila��o de v�rias linguagens (C, C++ e Fortran) que s�o necess�rios em alguns pacotes no R
 
-3. Instalação do RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
+3. Instala��o do RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
     - Download RStudio Desktop
-    - É uma interface de usuário para facilitar o uso do R
+    - ?? uma interface de usu�rio para facilitar o uso do R
 
 
 ## Usando R Studio
 - [RStudio Tour (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
 
-RStudio é dividido em 4 quadrantes:
+RStudio � dividido em 4 quadrantes:
 
 - superior/esquerdo: source - onde ficam "blocos de nota" (scripts) com comandos a serem salvos
-- superior/direito: ambiente - visualizar variáveis
-- inferior/esquerdo: console - executar os comandos e ver resultados (é o R "bruto")
-- inferior/direito: arquivos/gráficos/pacotes/ajuda
+- superior/direito: ambiente - visualizar vari�veis
+- inferior/esquerdo: console - executar os comandos e ver resultados (� o R "bruto")
+- inferior/direito: arquivos/gr�ficos/pacotes/ajuda
 
-> **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão num tempo mais longo)<br/>  
+> **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a vis�o num tempo mais longo)<br/>  
 Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
 
 
-### Diretório de trabalho
-Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).
+### Diret�rio de trabalho
+Definir um diret�rio de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).
 
 > Session > Set Working Directory > Choose Directory...
 
@@ -57,9 +57,9 @@ Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base 
 setwd("C:/Users/Fabio/OneDrive/FEA-RP")
 ```
 
-> **Dica**: O comando para definir o diretório de trabalho aparecerá no console. Copie e cole no seu script para não precisar definir toda vez que abre o R Studio.
+> **Dica**: O comando para definir o diret�rio de trabalho aparecer� no console. Copie e cole no seu script para n�o precisar definir toda vez que abre o R Studio.
 
-- Note que usa o "slash" (/) ao invés do "backslash" (\\), então não dá para copiar diretamente o endereço de uma pasta e colar no R sem fazer ajustes:
+- Note que usa o "slash" (/) ao inv�s do "backslash" (\\), ent�o n�o d� para copiar diretamente o endere�o de uma pasta e colar no R sem fazer ajustes:
 ```r
 setwd("C:\Users\Fabio\OneDrive\FEA-RP") # ERRADO!
 ```
@@ -69,11 +69,11 @@ setwd("C:/Users/Fabio/OneDrive/FEA-RP") # CORRETO!
 setwd("C:\\Users\\Fabio\\OneDrive\\FEA-RP") # CORRETO!
 ```
 
-Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
+Voc� pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
 
 
 ### Executando comandos
-- Execução direta no console: escreva `1 + 1` no console e dê \<Enter\>
+- Execu��o direta no console: escreva `1 + 1` no console e d� \<Enter\>
 
 ```r
 1 + 1
@@ -82,10 +82,10 @@ Você pode trocar _backslash_ por _slash_, ou duplicar os _backslashs_.
 ```
 ## [1] 2
 ```
-- Execução pelo script: escreva o seguinte código abaixo, e dê `Ctrl + Enter` na linha ou no código destacado. Note que o código do script é "jogado" no console.
+- Execu��o pelo script: escreva o seguinte c�digo abaixo, e d� `Ctrl + Enter` na linha ou no c�digo destacado. Note que o c�digo do script � "jogado" no console.
 
 ```r
-rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
+rnorm(n=10, mean=0, sd=1)  # Gerar 10 n�meros ~ N(0, 1)
 ```
 
 ```
@@ -94,7 +94,7 @@ rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
 ```
 
 ```r
-hist(rnorm(n=1000, mean=0, sd=1))  # Histograma dos números gerados
+hist(rnorm(n=1000, mean=0, sd=1))  # Histograma dos n�meros gerados
 ```
 
 <img src="/project/rec2301/sec1/_index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
@@ -114,53 +114,53 @@ mean: vector of means.
 sd: vector of standard deviations.
 ```
 
-- Note acima em "Usage" que já há valores pré-definidos para `mean = 0` e `sd = 1`. Portanto, se você só informar o `n`, a função irá funcionar, considerando os valores pré-definidos para os demais argumentos.
-- É possível escrever o código sem os nomes dos argumentos, mas devem ser inseridos na mesma ordem do descrito na Ajuda.
+- Note acima em "Usage" que j� h� valores pr�-definidos para `mean = 0` e `sd = 1`. Portanto, se voc� s� informar o `n`, a fun��o ir� funcionar, considerando os valores pr�-definidos para os demais argumentos.
+- ?? poss�vel escrever o c�digo sem os nomes dos argumentos, mas devem ser inseridos na mesma ordem do descrito na Ajuda.
 ```r
 rnorm(10, 0, 1)
 ```
-- Também podemos trocar a ordem explicitando o nome do argumento (NÃO RECOMENDADO)
+- Tamb�m podemos trocar a ordem explicitando o nome do argumento (N?fO RECOMENDADO)
 ```r
 rnorm(mean=0, n=10, sd=1)
 ```
 
 
 ## Pacotes no R
-- Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
-- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos economistas (principalmente econometristas) já desenvolvem e disponibilizam pacotes com as implementações de seus novos métodos.
-- A instalação de um pacote só precisa ser feita uma única vez.
-- No entanto, caso você atualize uma nova versão do R, é necessário instalar novamente todos os pacotes.
-- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de indivíduos (normalmente disponibilizados no GitHub)
-- O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes, garante qualidade dos pacotes disponibilizados
-- Tome cuidado com pacotes disponibilizados por individuos! É possível executar, dentro do R, códigos para criar e apagar arquivos, por exemplo.
+- Pacotes s�o cole��es de fun��es, dados e c�digos escritos por outras pessoas
+- Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos economistas (principalmente econometristas) j� desenvolvem e disponibilizam pacotes com as implementa��es de seus novos m�todos.
+- A instala��o de um pacote s� precisa ser feita uma �nica vez.
+- No entanto, caso voc� atualize uma nova vers�o do R, � necess�rio instalar novamente todos os pacotes.
+- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de indiv�duos (normalmente disponibilizados no GitHub)
+- O CRAN � administrado e, como existe uma curadoria para inser��o e manuten��o de pacotes, garante qualidade dos pacotes disponibilizados
+- Tome cuidado com pacotes disponibilizados por individuos! ?? poss�vel executar, dentro do R, c�digos para criar e apagar arquivos, por exemplo.
 
 
-### Instalação via CRAN
+### Instala��o via CRAN
 > quadrante inferior/direito > Packages > Install > (Nomes dos pacotes)
 
 ```r
 install.packages("ggplot2") # Pacote para criar graficos
 ```
 
-### Instalação via GitHub
-- Primeiro, é necessário instalar o pacote `devtools`
+### Instala��o via GitHub
+- Primeiro, � necess�rio instalar o pacote `devtools`
 ```r
 install.packages("devtools")
 ```
-- Depois, é preciso obter o nome do author (do GitHub) e nome do pacote. Como exemplo, iremos baixar o pacote `dplyr` do autor `hadley` (este pacote, na realidade, pode ser baixado direto do CRAN).
-- Para executar uma função de um pacote, podemos usar `<pacote>::<funcao>`
+- Depois, � preciso obter o nome do author (do GitHub) e nome do pacote. Como exemplo, iremos baixar o pacote `dplyr` do autor `hadley` (este pacote, na realidade, pode ser baixado direto do CRAN).
+- Para executar uma fun��o de um pacote, podemos usar `<pacote>::<funcao>`
 ```r
 devtools::install_github("hadley/dplyr")
 ```
 
-- Ou é possível carregar o pacote no ambiente e, depois, chamar a função do pacote carregado
+- Ou � poss�vel carregar o pacote no ambiente e, depois, chamar a fun��o do pacote carregado
 ```r
 library(devtools)
 install_github("hadley/dplyr")
 ```
 
-- CUIDADO! Ao carregar varios pacotes, talvez tenha 2 funções com mesmo nome
-    - R prioriza a função do pacote carregado por último
+- CUIDADO! Ao carregar varios pacotes, talvez tenha 2 fun��es com mesmo nome
+    - R prioriza a fun��o do pacote carregado por �ltimo
 
 ```r
 library(dplyr) # Pacote para manipulacao de base de dados
@@ -206,7 +206,7 @@ library(MASS) # Normalmente nao eh carregado diretamente (via outro pacote)
 ##     select
 ```
 
-- Uma forma de contornar o problema é usar `<pacote>::<funcao>`
+- Uma forma de contornar o problema � usar `<pacote>::<funcao>`
 ```r
 select(obj) # do pacote MASS
 dplyr::select(.data, ...) # do pacote dplyr
@@ -218,43 +218,43 @@ dplyr::select(.data, ...) # do pacote dplyr
 
 
 ## Ajuda
-- Caso saiba o nome da função, é possível olhar sua documentação escrevendo `?<nome_da_funcao>` (como visto anteriormente)
-- Caso saiba o nome do pacote, em alguns casos funciona `?<nome_do_pacote>`, mas o ideal é buscar sua documentação no CRAN (diretamente no site ou via Google)
-- Por exemplo, podemos acessar a página do [pacote `dplyr` no CRAN](https://cran.r-project.org/web/packages/dplyr/index.html):
-- Nela é possível ver a partir de qual versão do R funciona, os pacotes necessários para o seu funcionamento (Imports), os autores e sites.
-- Em Documentação, é possível ver o seu 'Reference manual' onde são expostos o objetivo do pacotes e as funções, incluindo explicações de seu funcionamento.
+- Caso saiba o nome da fun��o, � poss�vel olhar sua documenta��o escrevendo `?<nome_da_funcao>` (como visto anteriormente)
+- Caso saiba o nome do pacote, em alguns casos funciona `?<nome_do_pacote>`, mas o ideal � buscar sua documenta��o no CRAN (diretamente no site ou via Google)
+- Por exemplo, podemos acessar a p�gina do [pacote `dplyr` no CRAN](https://cran.r-project.org/web/packages/dplyr/index.html):
+- Nela � poss�vel ver a partir de qual vers�o do R funciona, os pacotes necess�rios para o seu funcionamento (Imports), os autores e sites.
+- Em Documenta��o, � poss�vel ver o seu 'Reference manual' onde s�o expostos o objetivo do pacotes e as fun��es, incluindo explica��es de seu funcionamento.
 
 <center><img src="../dplyr_cran.png"></center>
 
 
-- Além disso, pode ser interessante ver aplicações do pacote e suas funções nas 'vignettes'. Normalmente são expostas de maneira que podem ser replicadas no seu computador, o que acaba auxiliando na sua aplicação (verificar estrutura de base de dados necessária, sintaxes, etc.). Também pode ser acessada diretamente do R usando a função `browseVignettes()`:
+- Al�m disso, pode ser interessante ver aplica��es do pacote e suas fun��es nas 'vignettes'. Normalmente s�o expostas de maneira que podem ser replicadas no seu computador, o que acaba auxiliando na sua aplica��o (verificar estrutura de base de dados necess�ria, sintaxes, etc.). Tamb�m pode ser acessada diretamente do R usando a fun��o `browseVignettes()`:
 
     
 ```r
-browseVignettes("dplyr") # Abrirá uma página com vignettes no seu navegador
+browseVignettes("dplyr") # Abrir� uma p�gina com vignettes no seu navegador
 ```
 
-- Caso não saiba quais funções/pacotes são utilizados para resolver um problema, muitas vezes é possível encontrar a solução no Google utilizando palavras-chave (preferencialmente em inglês) junto de "R".
+- Caso n�o saiba quais fun��es/pacotes s�o utilizados para resolver um problema, muitas vezes � poss�vel encontrar a solu��o no Google utilizando palavras-chave (preferencialmente em ingl�s) junto de "R".
 
 <center><img src="../google_help.png"></center>
 
-- Além de sites especializados em R e vídeos com exemplos de aplicações, é comum aparecer questões no site Stack Overflow (ou em Cross Validated, pertencente ao mesmo grupo) que é o site mais utilizado por programadores em diversas linguagens para esclarecer dúvidas.
+- Al�m de sites especializados em R e v�deos com exemplos de aplica��es, � comum aparecer quest�es no site Stack Overflow (ou em Cross Validated, pertencente ao mesmo grupo) que � o site mais utilizado por programadores em diversas linguagens para esclarecer d�vidas.
 
-- Por R ser uma linguagem open source, há muitos usuários e, portanto, é comum achar perguntas/respostas que já solucionam o seu problema. Eventualmente, você pode fazer a sua pergunta, caso não encontre uma satisfatória.
+- Por R ser uma linguagem open source, h� muitos usu�rios e, portanto, � comum achar perguntas/respostas que j� solucionam o seu problema. Eventualmente, voc� pode fazer a sua pergunta, caso n�o encontre uma satisfat�ria.
 
 <center><img src="../stackoverflow_help.png"></center>
 
 
 
-## Sincornização no GitHub
-Não será detalhado aqui, mas é algo interessante para olhar.
+## Sincorniza��o no GitHub
+N�o ser� detalhado aqui, mas � algo interessante para olhar.
 
-- [Criação de projetos](https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r)
-- [Controle de versão](https://www.coursera.org/learn/data-scientists-tools/lecture/PjlHw/version-control)
+- [Cria��o de projetos](https://www.coursera.org/learn/data-scientists-tools/lecture/2o9zr/projects-in-r)
+- [Controle de vers�o](https://www.coursera.org/learn/data-scientists-tools/lecture/PjlHw/version-control)
 - [GitHub e Git](https://www.coursera.org/learn/data-scientists-tools/lecture/VOh24/github-and-git)
-- [Projetos sob controle de versões](https://www.coursera.org/learn/data-scientists-tools/lecture/wbfrX/projects-under-version-control)
+- [Projetos sob controle de vers�es](https://www.coursera.org/learn/data-scientists-tools/lecture/wbfrX/projects-under-version-control)
 
 
 
-{{< cta cta_text="👉 Seguir para Programação em R" cta_link="../sec2" >}}
+{{< cta cta_text="?Y'? Seguir para Programa��o em R" cta_link="../sec2" >}}
 

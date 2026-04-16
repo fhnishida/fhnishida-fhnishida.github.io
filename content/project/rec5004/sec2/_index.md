@@ -15,7 +15,7 @@ type: book
 
 </br>
 
-## Operações básicas
+## Basic operations
 
 ```r
 # Soma
@@ -662,7 +662,7 @@ class(x)
 ### Data frames
 - [Data types - Data frames (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/kz1Lh/data-types-data-frames)
 
-- É um tipo especial de lista, em que cada elemento da lista possui o mesmo tamanho
+- É um tipo especial de lista, where cada elemento da lista possui o mesmo tamanho
 - Cada elemento da lista pode ser entendida como uma coluna de uma base de dados
 - Diferente de matrizes, cada elemento de um _data frame_ pode ser de uma classe diferente 
 - Normalmente é criada automaticamente ao carregarmos uma base de dados em .txt ou .csv via `read.table()` ou `read.csv()`
@@ -747,7 +747,7 @@ Caso queira testar, faça download da base [mtcars.xlsx](../mtcars.xlsx)
 - [Subsetting - Basics (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/JDoLX/subsetting-basics)
 - Há 3 operadores básicos para extrair subconjuntos de objetos no R:
     - `[]`: retorna um "sub-objeto" da mesma classe do objeto original
-    - `[[]]`: usado para extrair elementos de uma lista ou data frame, em que o "sub-objeto" não é necessariamente da mesma classe do objeto original
+    - `[[]]`: usado para extrair elementos de uma lista ou data frame, where o "sub-objeto" não é necessariamente da mesma classe do objeto original
     - `$`: usado para extrair elemento de uma lista ou data frame pelo nome
 
 
@@ -1182,7 +1182,7 @@ max(x, na.rm=TRUE) # Excluindo valores ausentes
 ```
 
 
-### Exemplo: Otimização de função univariada
+### Example: Otimização de função univariada
 - Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x) = x^2 + 4x - 4${{</math>}}, ou seja,
     $$ \text{arg} \min_x (x^2 + 4x - 4) $$
 - Ver no [Wolfram](https://www.wolframalpha.com/input?i=solve+x%5E2+%2B+4x+-+4+%3D+0)
@@ -1392,7 +1392,7 @@ distancia
 ```
 
 
-### Exemplo: Preenchendo matriz a partir de uma _f(x,y)_
+### Example: Preenchendo matriz a partir de uma _f(x,y)_
 - É comum o uso de uma estrutura de repetição dentro de outra estrutura de repetição (repetições encaixadas).
 - Como exemplo, calcularemos a função
 {{<math>}}$$ f(x,y) = 2x^2 - y^2 + 3xy, $${{</math>}}
@@ -1442,7 +1442,7 @@ fxy
 ```
 
 
-<!-- ### Exemplo 2: Otimização de função bivariada -->
+<!-- ### Example 2: Otimização de função bivariada -->
 <!-- - Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja, -->
 <!--     $$ \text{arg} \min_{x, z} (x^2 + 4z^2 - 4) $$ -->
 <!-- - Primeiro, vamos criar vetores de possíveis valores de `\(x\)` e `\(z\)`. -->
@@ -1450,7 +1450,7 @@ fxy
 <!-- x_grid = seq(-5, 5, length=11) -->
 <!-- z_grid = seq(-6, 6, length=11) -->
 <!-- ``` -->
-<!-- - Agora, vamos criar uma matriz em que cada linha representa um valor de {{<math>}}$x${{</math>}} e cada coluna representa um valor de {{<math>}}$z${{</math>}}: -->
+<!-- - Agora, vamos criar uma matriz where cada linha representa um valor de {{<math>}}$x${{</math>}} e cada coluna representa um valor de {{<math>}}$z${{</math>}}: -->
 <!-- ```{r} -->
 <!-- # Criando matriz para preencher -->
 <!-- fxz = matrix(NA, length(x_grid), length(z_grid)) -->

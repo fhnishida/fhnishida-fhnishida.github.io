@@ -13,30 +13,30 @@ type: book
 
 
 
-- A parte de Econometria no R é baseada no livro de Florian Heiss "Using R for Introductory Econometrics" (2ª edição, 2020)
-    - Aplica no R o conteúdo e os exemplos do livro do Wooldridge de 2019 (versão em inglês)
-    - É possível ler gratuitamente a versão online em: <http://www.urfie.net>
-    - Há também uma versão de Python do livro em: <http://www.upfie.net>
-- A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instalação e do carregamento do pacote `wooldridge`:
+- A parte de Econometria no R � baseada no livro de Florian Heiss "Using R for Introductory Econometrics" (2� edi��o, 2020)
+    - Aplica no R o conte�do e os exemplos do livro do Wooldridge de 2019 (vers�o em ingl�s)
+    - ?? poss�vel ler gratuitamente a vers�o online em: <http://www.urfie.net>
+    - H� tamb�m uma vers�o de Python do livro em: <http://www.upfie.net>
+- A base de dados dos exemplos contidos no livro do Wooldridge podem ser obtidos por meio da instala��o e do carregamento do pacote `wooldridge`:
 ```r
 install.packages("wooldridge")
 ```
 
 </br>
 
-## Distribuições
-- [Seção 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
+## Distribui��es
+- [Se��o 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
 - [Probability Distributions in R (Examples): PDF, CDF & Quantile Function (Statistics Globe)](https://statisticsglobe.com/probability-distributions-in-r)
 - [Basic Probability Distributions in R (Greg Graham)](https://rstudio-pubs-static.s3.amazonaws.com/100906_8e3a32dd11c14b839468db756cee7400.html)
 
 
-- As funções relacionadas a distribuições são dadas por `<prefixo><nome da distribuição>`
-- Existem 4 prefixos que indicam qual ação será realizada:
-    - `d`: retorna uma probabilidade a partir de uma função de densidade de probabilidade (pdf)
-    - `p`: retorna uma probabilidade acumulada a partir de uma função de distribuição acumulada (cdf)
-    - `q`: retorna uma estatística da distribuição (quantil) dada uma probabilidade acumulada
-    - `r`: gera números aleatórios dada a distribuição
-- Existem diversas distribuições disponíveis no R:
+- As fun��es relacionadas a distribui��es s�o dadas por `<prefixo><nome da distribui��o>`
+- Existem 4 prefixos que indicam qual a��o ser� realizada:
+    - `d`: retorna uma probabilidade a partir de uma fun��o de densidade de probabilidade (pdf)
+    - `p`: retorna uma probabilidade acumulada a partir de uma fun��o de distribui��o acumulada (cdf)
+    - `q`: retorna uma estat�stica da distribui��o (quantil) dada uma probabilidade acumulada
+    - `r`: gera n�meros aleat�rios dada a distribui��o
+- Existem diversas distribui��es dispon�veis no R:
     - `norm`: Normal
     - `bern`: Bernoulli (pacote `Rlab`)
     - `binom`: Binomial
@@ -47,11 +47,11 @@ install.packages("wooldridge")
     - `unif`: Uniforme
     - `weibull`: Weibull
     - `gamma`: Gamma
-    - `logis`: Logística
+    - `logis`: Log�stica
     - `exp`: Exponencial
-- Seguem as principais distribuições e suas respectivas funções:
+- Seguem as principais distribui��es e suas respectivas fun��es:
 
-| **Distribuição**   | **Densidade de Probabilidade** | **Distribuição Acumulada** | **Quantil**             |
+| **Distribui��o**   | **Densidade de Probabilidade** | **Distribui��o Acumulada** | **Quantil**             |
 |--------------------|--------------------------------|----------------------------|-------------------------|
 | Normal             | `dnorm(x, mean, sd)`           | `pnorm(q, mean, sd)`       | `qnorm(p, mean, sd)`    |
 | Qui-Quadrado       | `dchisq(x, df)`                | `pchisq(q, df)`            | `qchisq(p, df)`         |
@@ -59,18 +59,18 @@ install.packages("wooldridge")
 | F                  | `df(x, df1, df2)`              | `pf(q, df1, df2)`          | `qf(p, df1, df2)`       |
 | Binomial           | `dbinom(x, size, prob)`        | `pbinom(q, size, prob)`    | `qbinom(p, size, prob)` |
 
-em que `x` e `q` são estatísticas de cada distribuição (quantis), e `p` é probabilidade.
+em que `x` e `q` s�o estat�sticas de cada distribui��o (quantis), e `p` � probabilidade.
 
 
-### Distribuição Normal
-- Considere uma normal padrão, {{<math>}}$N(\mu=0, \sigma=1)${{</math>}}, e escores padrão {{<math>}}$Z=-1,96 \text{ e } 1,96${{</math>}} (para intervalo de confiança de {{<math>}}$\approx 5\%${{</math>}}):
+### Distribui��o Normal
+- Considere uma normal padr�o, {{<math>}}$N(\mu=0, \sigma=1)${{</math>}}, e escores padr�o {{<math>}}$Z=-1,96 \text{ e } 1,96${{</math>}} (para intervalo de confian�a de {{<math>}}$\approx 5\%${{</math>}}):
 
 <center><img src="../standard-normal-distribution-with-critical-values.webp"></center>
 
-- [`d`]: Densidade a partir de uma pdf, dada estatística (escore padrão):
+- [`d`]: Densidade a partir de uma pdf, dada estat�stica (escore padr�o):
 
 ```r
-dnorm(1.96, mean=0, sd=1) # probabilidade para escore padrão de 1,96
+dnorm(1.96, mean=0, sd=1) # probabilidade para escore padr�o de 1,96
 ```
 
 ```
@@ -78,17 +78,17 @@ dnorm(1.96, mean=0, sd=1) # probabilidade para escore padrão de 1,96
 ```
 
 ```r
-dnorm(-1.96, mean=0, sd=1) # probabilidade para escore padrão de -1,96
+dnorm(-1.96, mean=0, sd=1) # probabilidade para escore padr�o de -1,96
 ```
 
 ```
 ## [1] 0.05844094
 ```
 
-- [`p`]: Probabilidade acumulada a partir de uma cdf, dada estatística (escore padrão):
+- [`p`]: Probabilidade acumulada a partir de uma cdf, dada estat�stica (escore padr�o):
 
 ```r
-pnorm(1.96, mean=0, sd=1) # probabilidade acumulada para escore padrão de 1,96
+pnorm(1.96, mean=0, sd=1) # probabilidade acumulada para escore padr�o de 1,96
 ```
 
 ```
@@ -96,14 +96,14 @@ pnorm(1.96, mean=0, sd=1) # probabilidade acumulada para escore padrão de 1,96
 ```
 
 ```r
-pnorm(-1.96, mean=0, sd=1) # probabilidade acumulada para escore padrão de -1,96
+pnorm(-1.96, mean=0, sd=1) # probabilidade acumulada para escore padr�o de -1,96
 ```
 
 ```
 ## [1] 0.0249979
 ```
 
-Logo, a probabilidade de que uma variável aleatória com distribuição normal padrão esteja com valor entre -1,96 e 1,96 é de 95\%
+Logo, a probabilidade de que uma vari�vel aleat�ria com distribui��o normal padr�o esteja com valor entre -1,96 e 1,96 � de 95\%
 
 ```r
 pnorm(1.96, mean=0, sd=1) - pnorm(-1.96, mean=0, sd=1)
@@ -114,7 +114,7 @@ pnorm(1.96, mean=0, sd=1) - pnorm(-1.96, mean=0, sd=1)
 ```
 
 
-- [`q`]: Estatística (escore padrão) a partir de um quantil:
+- [`q`]: Estat�stica (escore padr�o) a partir de um quantil:
 
 ```r
 qnorm(0.975, mean=0, sd=1) # quantil dada o quantil de 97,5%
@@ -132,37 +132,37 @@ qnorm(0.025, mean=0, sd=1) # quantil dada o quantil de 2,5%
 ## [1] -1.959964
 ```
 
-Podemos criar gráficos usando a função `curve( function(x), from, to )`, na qual inserimos uma função com um `x` arbitrário e seus limites mínimo e máximo (`from` e `to`):
+Podemos criar gr�ficos usando a fun��o `curve( function(x), from, to )`, na qual inserimos uma fun��o com um `x` arbitr�rio e seus limites m�nimo e m�ximo (`from` e `to`):
 
 ```r
-# pdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3
+# pdf de normal padr�o com estat�stica (escore padr�o) no intervalo -3 e 3
 curve(dnorm(x, mean=0, sd=1), from=-3, to=3)
 ```
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 ```r
-# cdf de normal padrão com estatística (escore padrão) no intervalo -3 e 3
+# cdf de normal padr�o com estat�stica (escore padr�o) no intervalo -3 e 3
 curve(pnorm(x, mean=0, sd=1), from=-3, to=3)
 ```
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
 
 ```r
-# quantil de normal padrão com probabilidade acumulada no intervalo 0 e 1
+# quantil de normal padr�o com probabilidade acumulada no intervalo 0 e 1
 curve(qnorm(x, mean=0, sd=1), from=0, to=1)
 ```
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
 
 
-### Distribuição t-Student
-- Criaremos gráficos com diversos graus de liberdade
-- Quanto maior os graus de liberdade, mais se aproxima de uma normal padrão
+### Distribui��o t-Student
+- Criaremos gr�ficos com diversos graus de liberdade
+- Quanto maior os graus de liberdade, mais se aproxima de uma normal padr�o
 
 
 ```r
-curve(dnorm(x, mean=0, sd=1), from=-3, to=3, pch=".") # pdf normal padrão
+curve(dnorm(x, mean=0, sd=1), from=-3, to=3, pch=".") # pdf normal padr�o
 
 for (n in c(1, 2, 4, 6, 10)) {
     curve(dt(x, df=n), from=-3, to=3, col=n, add=T) # pdf t-student
@@ -173,8 +173,8 @@ for (n in c(1, 2, 4, 6, 10)) {
 
 
 
-### Distribuição Qui-Quadrado
-- Criaremos gráficos com diversos graus de liberdade
+### Distribui��o Qui-Quadrado
+- Criaremos gr�ficos com diversos graus de liberdade
 
 
 ```r
@@ -189,8 +189,8 @@ for (n in c(2:5)) {
 
 
 
-### Distribuição F
-- Criaremos gráficos com diversos graus de liberdade
+### Distribui��o F
+- Criaremos gr�ficos com diversos graus de liberdade
 
 
 ```r
@@ -206,21 +206,21 @@ for (n in c(2:5)) {
 
 </br>
 
-## Simulação
+## Simula��o
 
-### Geração de números aleatórios
+### Gera��o de n�meros aleat�rios
 - [Simulation - Random sampling (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/ykXUb/simulation-random-sampling)
-- Para gerar números aleatórios, usaremos o prefixo `r` junto de uma distribuição.
+- Para gerar n�meros aleat�rios, usaremos o prefixo `r` junto de uma distribui��o.
 
 ```r
-rnorm(5) # gerando 5 números aleatórios
+rnorm(5) # gerando 5 n�meros aleat�rios
 ```
 
 ```
 ## [1]  1.9263422  0.8835259  0.4614015 -0.5351940 -0.2656456
 ```
 
-- Para reproduzir resultados que usem números aleatórios, podemos definir "sementes" usando a função `set.seed()` e informando um número inteiro. Isso também é válido para a função `sample()`.
+- Para reproduzir resultados que usem n�meros aleat�rios, podemos definir "sementes" usando a fun��o `set.seed()` e informando um n�mero inteiro. Isso tamb�m � v�lido para a fun��o `sample()`.
 
 ```r
 # definindo seed
@@ -252,13 +252,13 @@ rnorm(5)
 ```
 
 
-#### Exemplo: Criação de observações x e y
+#### Exemplo: Cria��o de observa��es x e y
 
-Vamos criar observações da variável {{<math>}}$x${{</math>}} a partir de uma distribuição uniforme no intervalo [0, 10]:
+Vamos criar observa��es da vari�vel {{<math>}}$x${{</math>}} a partir de uma distribui��o uniforme no intervalo [0, 10]:
 
 ```r
-N = 100 # número de observações
-x = runif(N, 0, 10) # nº aleatórios a partir de U[0,10]
+N = 100 # n�mero de observa��es
+x = runif(N, 0, 10) # n� aleat�rios a partir de U[0,10]
 head(x)
 ```
 
@@ -266,7 +266,7 @@ head(x)
 ## [1] 0.01862073 1.59799489 1.44741664 5.19396774 6.09476454 1.22510589
 ```
 
-Agora, vamos criar a variável {{<math>}}$y = 10 - 2x + \varepsilon, \ \varepsilon \sim N(0, 3^2)${{</math>}} e plotar ambas variáveis em um scatterplot:
+Agora, vamos criar a vari�vel {{<math>}}$y = 10 - 2x + \varepsilon, \ \varepsilon \sim N(0, 3^2)${{</math>}} e plotar ambas vari�veis em um scatterplot:
 
 ```r
 e = rnorm(N, mean=0, sd=3)
@@ -279,12 +279,12 @@ abline(a=10, b=-2, col="red")
 
 </br>
 
-### Amostragem aleatória
-- Para fazer uma amostragem a partir de um dado vetor, usamos a função `sample()`
+### Amostragem aleat�ria
+- Para fazer uma amostragem a partir de um dado vetor, usamos a fun��o `sample()`
 ```yaml
 sample(x, size, replace = FALSE, prob = NULL)
 
-x: either a vector of one or more elements from which to choose, or a positive integer. See ‘Details.’
+x: either a vector of one or more elements from which to choose, or a positive integer. See ??~Details.??T
 n: a positive number, the number of items to choose from.
 size: a non-negative integer giving the number of items to choose.
 replace: should sampling be with replacement?
@@ -300,7 +300,7 @@ sample(letters, 5) # Amostragem de 5 letras
 ```
 
 ```r
-sample(1:10, 4) # Amostragem de 4 números de 1 a 10
+sample(1:10, 4) # Amostragem de 4 n�meros de 1 a 10
 ```
 
 ```
@@ -308,7 +308,7 @@ sample(1:10, 4) # Amostragem de 4 números de 1 a 10
 ```
 
 ```r
-sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
+sample(1:10) # Permuta��o (amostra mesma qtd de elementos do vetor)
 ```
 
 ```
@@ -316,27 +316,27 @@ sample(1:10) # Permutação (amostra mesma qtd de elementos do vetor)
 ```
 
 ```r
-sample(1:10, replace = TRUE) # Amostragem com reposição
+sample(1:10, replace = TRUE) # Amostragem com reposi��o
 ```
 
 ```
 ##  [1]  3  5  4 10  2  9  7  4 10  1
 ```
-- Note que, por padrão, a função `sample()` faz a amostragem sem reposição.
+- Note que, por padr�o, a fun��o `sample()` faz a amostragem sem reposi��o.
 
 
-#### Exemplo: Lei dos Grandes Números (LGN)
-- Podemos usar a amostragem para simular jogadas de dado não-viesado.
+#### Exemplo: Lei dos Grandes N�meros (LGN)
+- Podemos usar a amostragem para simular jogadas de dado n�o-viesado.
 - Vamos jogar uma vez o dado:
 
 ```r
-sample(1:6, 1) # amostra um número dentro do vetor 1:6
+sample(1:6, 1) # amostra um n�mero dentro do vetor 1:6
 ```
 
 ```
 ## [1] 2
 ```
-- Vamos jogar 1000 vezes o dado (usando função `replicate()`) e verificar sua distribuição:
+- Vamos jogar 1000 vezes o dado (usando fun��o `replicate()`) e verificar sua distribui��o:
 
 ```r
 amostra = replicate(1000, expr=sample(1:6, 1))
@@ -350,13 +350,13 @@ table(amostra) # tabela com contagem das jogadas
 ```
 
 ```r
-# Gráfico
+# Gr�fico
 plot(table(amostra), type="h")
 ```
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
-- Note que não podemos usar a função `rep()` com simulação, pois ele sortearia um número e replicaria esse mesmo número 1000 vezes.
-- Agora, vamos jogar 2 vezes o dado e fazer a média entre eles
+- Note que n�o podemos usar a fun��o `rep()` com simula��o, pois ele sortearia um n�mero e replicaria esse mesmo n�mero 1000 vezes.
+- Agora, vamos jogar 2 vezes o dado e fazer a m�dia entre eles
 
 ```r
 mean(sample(1:6, 2))
@@ -369,7 +369,7 @@ mean(sample(1:6, 2))
 
 ```r
 amostra = replicate(1000, mean(sample(1:6, 2, replace=T)))
-table(amostra) # tabela com contagem das médias de 2 jogadas
+table(amostra) # tabela com contagem das m�dias de 2 jogadas
 ```
 
 ```
@@ -379,54 +379,54 @@ table(amostra) # tabela com contagem das médias de 2 jogadas
 ```
 
 ```r
-# Gráfico
+# Gr�fico
 plot(table(amostra), type="h")
 ```
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
-- Note que, ao repetir 1000 vezes, o cálculo da média de 2 jogadas de dado, começou a dar mais peso para médias próximas à média populacional (3,5), mas ainda tem densidade nos valores mais extremos (1 e 6)
-- Foi necessário usar o argumento `replace=TRUE` para ter "reposição" dos números do dado
-- Calculando 1000 vezes a média de {{<math>}}$N=100${{</math>}} jogadas de dado, temos:
+- Note que, ao repetir 1000 vezes, o c�lculo da m�dia de 2 jogadas de dado, come�ou a dar mais peso para m�dias pr�ximas � m�dia populacional (3,5), mas ainda tem densidade nos valores mais extremos (1 e 6)
+- Foi necess�rio usar o argumento `replace=TRUE` para ter "reposi��o" dos n�meros do dado
+- Calculando 1000 vezes a m�dia de {{<math>}}$N=100${{</math>}} jogadas de dado, temos:
 
 ```r
-N = 100 # nº de observações
+N = 100 # n� de observa��es
 amostra = replicate(1000, mean(sample(1:6, N, replace=T)))
 
-# Gráfico
+# Gr�fico
 plot(table(amostra), type="h", xlim=c(1,6))
 ```
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
-- Note que, quanto maior {{<math>}}$N${{</math>}}, a distribuição das médias vai se degenerando, tendo maior concentração na proximidade da média populacional (3,5), e sendo praticamente nula em médias mais distantes.
+- Note que, quanto maior {{<math>}}$N${{</math>}}, a distribui��o das m�dias vai se degenerando, tendo maior concentra��o na proximidade da m�dia populacional (3,5), e sendo praticamente nula em m�dias mais distantes.
 
 
 
 <!-- </br> -->
 
-<!-- ## Intervalos de Confiança -->
-<!-- - [Subseção 1.8.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/71) -->
-<!-- - No Apêndice C.5 de Wooldridge (2006, em português), são construídos intervalos de confiança de 95\%. -->
-<!-- - Para uma população normalmente distribuída com média {{<math>}}$\mu${{</math>}} e variância {{<math>}}$\sigma^2${{</math>}}, o intervalo de confiança com significância de `\(\alpha\)` é dado por: -->
+<!-- ## Intervalos de Confian�a -->
+<!-- - [Subse��o 1.8.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/71) -->
+<!-- - No Ap�ndice C.5 de Wooldridge (2006, em portugu�s), s�o constru�dos intervalos de confian�a de 95\%. -->
+<!-- - Para uma popula��o normalmente distribu�da com m�dia {{<math>}}$\mu${{</math>}} e vari�ncia {{<math>}}$\sigma^2${{</math>}}, o intervalo de confian�a com signific�ncia de `\(\alpha\)` � dado por: -->
 
 <!-- $$ \text{IC}_\alpha = \left[\bar{y} - C_{\alpha/2}.se(\bar{y}),\quad \bar{y} + C_{\alpha/2}.se(\bar{y})\right] \tag{1.2} $$ -->
 <!-- em que: -->
 
-<!-- - {{<math>}}$\bar{y}${{</math>}}: média amostral -->
-<!-- - {{<math>}}$se(\bar{y}) = \frac{s}{\sqrt{n}}${{</math>}}: erro padrão de {{<math>}}$\bar{y}${{</math>}} -->
-<!-- - {{<math>}}$s${{</math>}}: desvio padrão de {{<math>}}$\bar{y}${{</math>}} -->
+<!-- - {{<math>}}$\bar{y}${{</math>}}: m�dia amostral -->
+<!-- - {{<math>}}$se(\bar{y}) = \frac{s}{\sqrt{n}}${{</math>}}: erro padr�o de {{<math>}}$\bar{y}${{</math>}} -->
+<!-- - {{<math>}}$s${{</math>}}: desvio padr�o de {{<math>}}$\bar{y}${{</math>}} -->
 <!-- - {{<math>}}$n${{</math>}}: tamanho da amostra -->
-<!-- - {{<math>}}$C_{\alpha/2}${{</math>}}: é o valor crítico do quantil de {{<math>}}$(1-\alpha/2)${{</math>}} da distribuição {{<math>}}$t_{n-1}${{</math>}}. -->
+<!-- - {{<math>}}$C_{\alpha/2}${{</math>}}: � o valor cr�tico do quantil de {{<math>}}$(1-\alpha/2)${{</math>}} da distribui��o {{<math>}}$t_{n-1}${{</math>}}. -->
 <!--     - Por exemplo, para {{<math>}}$\alpha = 5\%${{</math>}}, usa-se o quantil 97,5\% ({{<math>}}$= 1 - 5\%/2${{</math>}}). -->
-<!--     - Quando o número de graus de liberdade é grande, a distribuição _t_ se aproxima ao de uma normal padrão. Logo, para um intervalo de confiança de 95\%, o valor crítico é {{<math>}}$C_{2,5\%} \approx 1,96${{</math>}} -->
+<!--     - Quando o n�mero de graus de liberdade � grande, a distribui��o _t_ se aproxima ao de uma normal padr�o. Logo, para um intervalo de confian�a de 95\%, o valor cr�tico � {{<math>}}$C_{2,5\%} \approx 1,96${{</math>}} -->
 
 
-<!-- #### Exemplo C.2: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
+<!-- #### Exemplo C.2: Efeito de subs�dios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
 
-<!-- - Holzer, Block, Cheatham e Knott (1993) estudaram os efeitos de subsídios de treinamentos corporativos sobre a produtividade dos trabalhadores -->
-<!-- - Para isto, avaliou-se a "taxa de refugo", isto é, a quantidade de itens descartados a cada 100 itens produzidos. -->
-<!-- - Entre 1987 e 1988, houve treinamento corporativo em 20 empresas e queremos saber se ele teve efeito sobre a taxa de refugo, ou seja, a diferença entre as médias dos anos foi estatisticamente significante (diferente de 0). -->
+<!-- - Holzer, Block, Cheatham e Knott (1993) estudaram os efeitos de subs�dios de treinamentos corporativos sobre a produtividade dos trabalhadores -->
+<!-- - Para isto, avaliou-se a "taxa de refugo", isto �, a quantidade de itens descartados a cada 100 itens produzidos. -->
+<!-- - Entre 1987 e 1988, houve treinamento corporativo em 20 empresas e queremos saber se ele teve efeito sobre a taxa de refugo, ou seja, a diferen�a entre as m�dias dos anos foi estatisticamente significante (diferente de 0). -->
 <!-- - Comecemos criando vetores de taxa de refugos das 20 empresas para os anos de 1987 (_SR87_) e de 1988 (_SR88_): -->
 <!-- ```{r} -->
 <!-- SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98, -->
@@ -434,68 +434,68 @@ plot(table(amostra), type="h", xlim=c(1,6))
 <!-- SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5,  -->
 <!--          .61, 6.7, 4, 7, 19, .2, 5, 3.83) -->
 <!-- ``` -->
-<!-- - Criando o vetor das variações das taxas de refugo e extraindo estatísticas: -->
+<!-- - Criando o vetor das varia��es das taxas de refugo e extraindo estat�sticas: -->
 <!-- ```{r} -->
-<!-- Change = SR88 - SR87 # vetor de variações -->
+<!-- Change = SR88 - SR87 # vetor de varia��es -->
 <!-- n = length(Change) # quantidade de empresas/tamanho do vetor Variacao -->
-<!-- avgChange = mean(Change) # média do vetor Variacao -->
-<!-- sdChange = sd(Change) # desvio padrão do vetor Variacao -->
+<!-- avgChange = mean(Change) # m�dia do vetor Variacao -->
+<!-- sdChange = sd(Change) # desvio padr�o do vetor Variacao -->
 <!-- ``` -->
-<!-- - Calculando o erro padrão e o valor crítico para intervalo de confiança de 95\%: -->
+<!-- - Calculando o erro padr�o e o valor cr�tico para intervalo de confian�a de 95\%: -->
 <!-- ```{r} -->
-<!-- se = sdChange / sqrt(n) # erro padrão -->
-<!-- CV = qt(.975, n-1) # valor crítico para intervalo de confiança de 95% -->
+<!-- se = sdChange / sqrt(n) # erro padr�o -->
+<!-- CV = qt(.975, n-1) # valor cr�tico para intervalo de confian�a de 95% -->
 <!-- ``` -->
-<!-- - Finalmente, calcula-se o intervalo de confiança usando (1.2) -->
+<!-- - Finalmente, calcula-se o intervalo de confian�a usando (1.2) -->
 <!-- ```{r} -->
 <!-- c(avgChange - CV*se, avgChange + CV*se) # limites inferior e superior do intervalo -->
 
-<!-- # também poderíamos escrever o intervalo mais sucintamente: -->
+<!-- # tamb�m poder�amos escrever o intervalo mais sucintamente: -->
 <!-- avgChange + CV * c(-se, se) -->
 <!-- ``` -->
-<!-- - Note que o valor 0 está fora do intervalo de confiança de 95\% e, portanto, conclui-se que houve alteração na taxa de refugo (houve efeito negativo estatisticamente significante). -->
+<!-- - Note que o valor 0 est� fora do intervalo de confian�a de 95\% e, portanto, conclui-se que houve altera��o na taxa de refugo (houve efeito negativo estatisticamente significante). -->
 
 
 <!-- </br> -->
 
 <!-- ## Teste _t_ e p-valores -->
-<!-- - [Subseções 1.8.2 e 1.8.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/74) -->
+<!-- - [Subse��es 1.8.2 e 1.8.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/74) -->
 
-<!-- - A estatística _t_ para testar uma hipótese sobre uma variável aleatória {{<math>}}$y${{</math>}} normalmente distribuída com média {{<math>}}$\bar{y}${{</math>}} é dado pela equação C.35 (Wooldridge, 2006). Dada a hipótese nula {{<math>}}$H_0: \bar{y} = \mu_0${{</math>}}, -->
+<!-- - A estat�stica _t_ para testar uma hip�tese sobre uma vari�vel aleat�ria {{<math>}}$y${{</math>}} normalmente distribu�da com m�dia {{<math>}}$\bar{y}${{</math>}} � dado pela equa��o C.35 (Wooldridge, 2006). Dada a hip�tese nula {{<math>}}$H_0: \bar{y} = \mu_0${{</math>}}, -->
 <!-- $$ t = \frac{\bar{y} - \mu_0}{se(\bar{y})}. \tag{1.3} $$ -->
 
-<!-- - Para rejeitarmos a hipótese nula, o módulo da estatística _t_ precisa ser maior do que o valor crítico, dado um nível de significância {{<math>}}$\alpha${{</math>}}. -->
-<!-- - Por exemplo, ao nível de significância {{<math>}}$\alpha = 5\%${{</math>}} e com uma grande amostra (e, portanto, a distribuição _t_ se aproxima a de uma normal padrão), rejeitamos a hipótese nula se -->
-<!-- $$ |t| \ge 1,96 \approx \text{valor crítico ao nível de significância de 5%} $$ -->
+<!-- - Para rejeitarmos a hip�tese nula, o m�dulo da estat�stica _t_ precisa ser maior do que o valor cr�tico, dado um n�vel de signific�ncia {{<math>}}$\alpha${{</math>}}. -->
+<!-- - Por exemplo, ao n�vel de signific�ncia {{<math>}}$\alpha = 5\%${{</math>}} e com uma grande amostra (e, portanto, a distribui��o _t_ se aproxima a de uma normal padr�o), rejeitamos a hip�tese nula se -->
+<!-- $$ |t| \ge 1,96 \approx \text{valor cr�tico ao n�vel de signific�ncia de 5%} $$ -->
 
-<!-- - A vantagem de utilizar o p-valor é a sua conveniência, pois pode-se compará-lo diretamente com o nível de significância. -->
-<!-- - Para testes _t_ bicaudais, a fórmula do p-valor é dado por (Wooldridge, 2006, equação C.42): -->
+<!-- - A vantagem de utilizar o p-valor � a sua conveni�ncia, pois pode-se compar�-lo diretamente com o n�vel de signific�ncia. -->
+<!-- - Para testes _t_ bicaudais, a f�rmula do p-valor � dado por (Wooldridge, 2006, equa��o C.42): -->
 <!-- $$ p = 2.Pr(T_{n-1} > |t|) = 2.[1 - F_{t_{n-1}}(|t|)] $$ -->
-<!-- em que {{<math>}}$F_{t_{n-1}}(\cdot)${{</math>}} é a cdf da distribuição {{<math>}}$t_{n-1}${{</math>}}. -->
+<!-- em que {{<math>}}$F_{t_{n-1}}(\cdot)${{</math>}} � a cdf da distribui��o {{<math>}}$t_{n-1}${{</math>}}. -->
 
 <!-- <center><img src="../t-student_test.png"></center> -->
 
-<!-- - Rejeitamos a hipótese nula se o p-valor for menor do que o nível de significância {{<math>}}$\alpha${{</math>}}. -->
+<!-- - Rejeitamos a hip�tese nula se o p-valor for menor do que o n�vel de signific�ncia {{<math>}}$\alpha${{</math>}}. -->
 
 
-<!-- #### Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
-<!-- - Continuação do exemplo C.2 -->
-<!-- - Considerando teste bicaudal (diferente dos livros), podemos calcular a estatística _t_ -->
+<!-- #### Exemplo C.6: Efeito de subs�dios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
+<!-- - Continua��o do exemplo C.2 -->
+<!-- - Considerando teste bicaudal (diferente dos livros), podemos calcular a estat�stica _t_ -->
 <!-- ```{r} -->
-<!-- # Estatística t para H0: mu = 0 -->
+<!-- # Estat�stica t para H0: mu = 0 -->
 <!-- t = (avgChange - 0) / se -->
-<!-- print(paste0("estatística t = ", abs(t), " > ", CV, " = valor crítico")) -->
+<!-- print(paste0("estat�stica t = ", abs(t), " > ", CV, " = valor cr�tico")) -->
 <!-- ``` -->
-<!-- - Como estatística _t_ é maior do que o valor crítico, rejeitamos {{<math>}}$H_0${{</math>}} a nível de significância de 5\%. -->
+<!-- - Como estat�stica _t_ � maior do que o valor cr�tico, rejeitamos {{<math>}}$H_0${{</math>}} a n�vel de signific�ncia de 5\%. -->
 <!-- - De forma equivalente, podemos calcular o p-valor: -->
 <!-- ```{r} -->
 <!-- p = 2 * (1 - pt(abs(t), n-1)) -->
-<!-- print(paste0("p-valor = ", p, " < 0.05 = nível de significância")) -->
+<!-- print(paste0("p-valor = ", p, " < 0.05 = n�vel de signific�ncia")) -->
 <!-- ``` -->
-<!-- - Como o p-valor é maior do que {{<math>}}$\alpha = 5\%${{</math>}}, rejeitamos {{<math>}}$H_0${{</math>}}. -->
+<!-- - Como o p-valor � maior do que {{<math>}}$\alpha = 5\%${{</math>}}, rejeitamos {{<math>}}$H_0${{</math>}}. -->
 
 
-<!-- ### Cálculos via `t.test()` -->
+<!-- ### C�lculos via `t.test()` -->
 <!-- ```yaml -->
 <!-- t.test(x, y = NULL, -->
 <!--        alternative = c("two.sided", "less", "greater"), -->
@@ -507,13 +507,13 @@ plot(table(amostra), type="h", xlim=c(1,6))
 <!-- - mu: a number indicating the true value of the mean (or difference in means if you are performing a two sample test). -->
 <!-- - conf.level: confidence level of the interval. -->
 <!-- ``` -->
-<!-- - Note que incluiremos um vetor de valor no argmento `x` e, por padrão, a função considera um teste bicaudal, testando a {{<math>}}$H_0${{</math>}} se média verdadeira é igual a zero e com intervalo de confiança de 95\%. -->
-<!-- - Retornando aos exemplos C.2 e C.6 ("Efeito de subsídios de treinamento corporativo sobre a produtividade"), temos: -->
+<!-- - Note que incluiremos um vetor de valor no argmento `x` e, por padr�o, a fun��o considera um teste bicaudal, testando a {{<math>}}$H_0${{</math>}} se m�dia verdadeira � igual a zero e com intervalo de confian�a de 95\%. -->
+<!-- - Retornando aos exemplos C.2 e C.6 ("Efeito de subs�dios de treinamento corporativo sobre a produtividade"), temos: -->
 <!-- ```{r} -->
 <!-- testresults = t.test(Change, mu = 0) -->
 <!-- testresults -->
 <!-- ``` -->
-<!-- - Dentro do objeto de resultado do teste, temos as seguintes informações: -->
+<!-- - Dentro do objeto de resultado do teste, temos as seguintes informa��es: -->
 <!-- ```{r} -->
 <!-- names(testresults) -->
 <!-- ``` -->
@@ -524,4 +524,4 @@ plot(table(amostra), type="h", xlim=c(1,6))
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Simple Regression" cta_link="../sec7" >}}
+{{< cta cta_text="?Y'? Proceed to Simple Regression" cta_link="../sec7" >}}

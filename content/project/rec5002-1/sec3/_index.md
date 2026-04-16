@@ -31,7 +31,7 @@ Introduction to Python (Part 3):
 ## Complementary content
 - [PEP 8 (Style Guide for Python)](https://www.python.org/dev/peps/pep-0008/)
 - [Pyplot Tutorial (Figures)](https://matplotlib.org/2.0.2/users/pyplot_tutorial.html)
-- [Python Course (in Portuguese): "Introdução à Ciência da Computação com Python Parte 1"](https://www.coursera.org/learn/ciencia-computacao-python-conceitos) (Fábio Kon, IME-USP)
-- [Python Course (in Portuguese): "Introdução à Ciência da Computação com Python Parte 2"](https://www.coursera.org/learn/ciencia-computacao-python-conceitos-2) (Fábio Kon, IME-USP)
+- [Python Course (in Portuguese): "Introdu��o � Ci�ncia da Computa��o com Python Parte 1"](https://www.coursera.org/learn/ciencia-computacao-python-conceitos) (F�bio Kon, IME-USP)
+- [Python Course (in Portuguese): "Introdu��o � Ci�ncia da Computa��o com Python Parte 2"](https://www.coursera.org/learn/ciencia-computacao-python-conceitos-2) (F�bio Kon, IME-USP)
 
-{{< cta cta_text="👉 Proceed to Session 4" cta_link="../sec4" >}}
+{{< cta cta_text="?Y'? Proceed to Session 4" cta_link="../sec4" >}}

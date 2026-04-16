@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipulação via dplyr
+linktitle: Data Manipulation with dplyr
 summary: The page provides an introduction to the dplyr package and its functions for column manipulation (select, rename, mutate), row manipulation (filter, arrange), and grouping of rows (summarize). The page also includes examples of using these functions with the Star Wars dataset. Additionally, the page discusses the use of the pipe operator (%>%) and join functions for merging data frames.
-title: Manipulação via dplyr
+title: Data Manipulation with dplyr
 weight: 4
 output: md_document
 type: book
@@ -352,7 +352,7 @@ starwars %>% filter(species=="Droid") # com operador pipe
 ## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está sendo aplicada automaticamente via `%>%`).
+- Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está where aplicada automaticamente via `%>%`).
 - Note que, desde a subseção com a função `filter()` até `mutate()` fomos "acumulando" as alterações em novos data frames, ou seja, o último data frame `starwars5` é a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
 
 ```r
@@ -502,7 +502,7 @@ head(grouped_sw) # agrupado por sexo
 ## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observações
+- O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observations
 
 ```r
 starwars %>%
@@ -556,8 +556,8 @@ starwars %>%
 ## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
-- Note que, agora, a coluna `mean_mass` tem valores diferentes de acordo com o sexo da observação.
-- Isso é útil em algumas aplicações econômicas em que consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observação (e.g. morador) pertence.
+- Note que, agora, a coluna `mean_mass` tem valores diferentes de acordo com o sexo da observation.
+- Isso é útil em algumas aplicações econômicas where consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observation (e.g. morador) pertence.
 
 > **Evite potenciais erros**: Sempre que usar `group_by()`, não se esqueça de desagrupar o data frame via função `ungroup()` após realizar a operações desejadas.
 
@@ -726,7 +726,7 @@ bd2
 ## 5 Biggs Darklighter     183 brown    
 ## 6 Obi-Wan Kenobi        182 blue-gray
 ```
-- Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observações comuns.
+- Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observations comuns.
 - `inner_join()`: mantém apenas ID's presentes simultaneamente em ambas bases
 
 ```r
@@ -911,4 +911,4 @@ full_join(bd1, bd2, by=c("name", "year"))
 ```
 
 
-{{< cta cta_text="👉 Seguir para Visualização de Dados" cta_link="../sec5" >}}
+{{< cta cta_text="👉 Seguir para Data Visualization" cta_link="../sec5" >}}

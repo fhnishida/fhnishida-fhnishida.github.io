@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Econometrics I (Fall 2022) | Fabio Nishida</title><link>https://fhnishida.github.io/project/rec2301/</link><atom:link href="https://fhnishida.github.io/project/rec2301/index.xml" rel="self" type="application/rss+xml"/><description>Econometrics I (Fall 2022)</description><generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 05 Dec 2022 00:00:00 +0000</lastBuildDate><image><url>https://fhnishida.github.io/project/rec2301/featured.jpg</url><title>Econometrics I (Fall 2022)</title><link>https://fhnishida.github.io/project/rec2301/</link></image><item><title>Econometrics I (Fall 2022)</title><link>https://fhnishida.github.io/project/rec2301/</link><pubDate>Mon, 05 Dec 2022 00:00:00 +0000</pubDate><guid>https://fhnishida.github.io/project/rec2301/</guid><description>&lt;p>Welcome to the TA materials for Econometrics I.&lt;/p>
+&lt;p>Course page (Prof. Daniel Domingues dos Santos): &lt;a href="https://edisciplinas.usp.br/course/view.php?id=101585" target="_blank" rel="noopener">https://edisciplinas.usp.br/course/view.php?id=99924&lt;/a>&lt;/p>
+&lt;ul class="cta-group">
+&lt;li>
+&lt;a href="sec1" class="btn btn-primary px-3 py-3">👉 Proceed to the R Toolkit&lt;/a>
+&lt;/li>
+&lt;/ul>
+&lt;/br>
+&lt;h2 id="problem-sets">Problem Sets&lt;/h2>
+&lt;h3 id="theory-problem-sets">Theory Problem Sets&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="Lista-Teorica-Cap2_v2.pdf">Theory Problem Set - Chapter 2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista-Teorica-Cap3_v2.pdf">Theory Problem Set - Chapter 3&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="applied-problem-sets">Applied Problem Sets&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="Lista_Pratica_1.pdf">Applied Problem Set 1&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista_Pratica_2.pdf">Applied Problem Set 2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="Lista_Pratica_3.pdf">Applied Problem Set 3&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/br>
+&lt;h2 id="ta-session-recordings">TA Session Recordings&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>TA Session 1 (08/18)&lt;/strong>: Introduction to R, basic operations, and objects (scalars and vectors) | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_01.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=WclDYhHj_Fk" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/WclDYhHj_Fk/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 2 (08/25)&lt;/strong>: Objects (vectors, matrices, lists, and data frames) and subsetting, including removing missing values | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_02.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=0DIlCKZb1gQ" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/0DIlCKZb1gQ/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 3 (09/01)&lt;/strong>: Vector and matrix operations, control structures (&lt;code>if/else&lt;/code>, &lt;code>for&lt;/code>, and &lt;code>while&lt;/code>), and numerical optimization examples | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_03.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=N2pkt0CBUOc" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/N2pkt0CBUOc/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 4 (09/22)&lt;/strong>: Functions, summary statistics, and data manipulation | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_04.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=cZpXDH96XPw" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/cZpXDH96XPw/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 5 (09/29)&lt;/strong>: Data manipulation with &lt;code>dplyr&lt;/code> | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_05.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=TycerslMhnU" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/TycerslMhnU/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 6 (10/06)&lt;/strong>: Distributions, simulation, confidence intervals, the &lt;em>t&lt;/em> test, and p-values | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_06.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=wkOGblJGuIw" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/wkOGblJGuIw/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>TA Session 7 (10/13)&lt;/strong>: Simple regression, the &lt;code>lm()&lt;/code> function, log transformations, and differences in means | &lt;a href="https://fhnishida.github.io/fearp/rec2301/monitoria_07.R" target="_blank" rel="noopener">Script&lt;/a>
+&lt;a href="https://www.youtube.com/watch?v=G0za24e0qj4" target="_blank" rel="noopener">
+&lt;figure >
+&lt;div class="d-flex justify-content-center">
+&lt;div class="w-100" >&lt;img src="https://img.youtube.com/vi/G0za24e0qj4/hqdefault.jpg" alt="IMAGE ALT TEXT HERE" loading="lazy" data-zoomable />&lt;/div>
+&lt;/div>&lt;/figure>
+&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>

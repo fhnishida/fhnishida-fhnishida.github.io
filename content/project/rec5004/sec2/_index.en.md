@@ -15,7 +15,7 @@ type: book
 
 </br>
 
-## Operações básicas
+## Opera��es b�sicas
 
 ```r
 # Soma
@@ -27,7 +27,7 @@ type: book
 ```
 
 ```r
-# Subtração
+# Subtra��o
 2 - 3
 ```
 
@@ -36,7 +36,7 @@ type: book
 ```
 
 ```r
-# Multiplicação
+# Multiplica��o
 2 * 3
 ```
 
@@ -45,7 +45,7 @@ type: book
 ```
 
 ```r
-# Divisão
+# Divis�o
 6 / 4
 ```
 
@@ -54,7 +54,7 @@ type: book
 ```
 
 ```r
-# Divisão Inteira
+# Divis�o Inteira
 6 %/% 4
 ```
 
@@ -63,7 +63,7 @@ type: book
 ```
 
 ```r
-# Resto da Divisão
+# Resto da Divis�o
 6 %% 4
 ```
 
@@ -72,7 +72,7 @@ type: book
 ```
 
 ```r
-# Potenciação
+# Potencia��o
 2 ^ 3
 ```
 
@@ -94,7 +94,7 @@ type: book
 ## Objetos no R
  - [Data types, R objects and attributes (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/OS8hs/data-types-r-objects-and-attributes)
  
-Para criar um objeto, atribuímos algo (neste caso, um valor) a um nome por meio do operador de atribuição `<-` ou `=`:
+Para criar um objeto, atribu�mos algo (neste caso, um valor) a um nome por meio do operador de atribui��o `<-` ou `=`:
 
 ```r
 obj1 <- 5
@@ -110,7 +110,7 @@ obj1
 ```
 ## [1] 5
 ```
-ou imprimindo explicitamente por meio da função `print()`:
+ou imprimindo explicitamente por meio da fun��o `print()`:
 
 ```r
 print(obj2)
@@ -131,7 +131,7 @@ obj1
 ## [1] 7
 ```
 
-Uma forma bastante utilizada para alteração de valor de um objeto é utilizando o próprio valor de objeto como base:
+Uma forma bastante utilizada para altera��o de valor de um objeto � utilizando o pr�prio valor de objeto como base:
 
 ```r
 obj1 = obj1 + 3
@@ -141,10 +141,10 @@ obj1
 ```
 ## [1] 10
 ```
-> Isto será especialmente relevante quando trabalharmos com repetições/loops.
+> Isto ser� especialmente relevante quando trabalharmos com repeti��es/loops.
 
 
-É possível visualizar o tipo de objeto usando a função `class()`:
+?? poss�vel visualizar o tipo de objeto usando a fun��o `class()`:
 
 ```r
 class(obj1)
@@ -154,12 +154,12 @@ class(obj1)
 ## [1] "numeric"
 ```
 
-Logo, `obj1` é um número real. Há 5 tipos de classes de objetos "atômicos" (que contêm apenas 1 valor):
+Logo, `obj1` � um n�mero real. H� 5 tipos de classes de objetos "at�micos" (que cont�m apenas 1 valor):
 
  - `character`: texto
- - `numeric`: número real
- - `integer`: número inteiro
- - `complex`: número complexo
+ - `numeric`: n�mero real
+ - `integer`: n�mero inteiro
+ - `complex`: n�mero complexo
  - `logical`: verdadeiro/falso (1 ou 0)
  
 
@@ -173,7 +173,7 @@ class(num_real)
 ```
 
 ```r
-num_inteiro = 3L # para número inteiro, usar sufixo L
+num_inteiro = 3L # para n�mero inteiro, usar sufixo L
 class(num_inteiro)
 ```
 
@@ -234,8 +234,8 @@ print(boolean3)
 ```
 
 
-### Expressões lógicas/booleanas
-São expressões que retornam o valor Verdadeiro ou Falso:
+### Express�es l�gicas/booleanas
+S�o express�es que retornam o valor Verdadeiro ou Falso:
 
 ```r
 class(TRUE)
@@ -293,7 +293,7 @@ T + F + T + F + F # soma de 1's (TRUE) e 0's (FALSE)
 ## [1] FALSE
 ```
 
-É possível escrever expressões compostas utilizando `|` (ou) e `&` (e):
+?? poss�vel escrever express�es compostas utilizando `|` (ou) e `&` (e):
 
 ```r
 x = 20
@@ -312,31 +312,31 @@ x < 0 & x^2 > 100
 ## [1] FALSE
 ```
 
-> **Tabela de Precedência de Operadores**
+> **Tabela de Preced�ncia de Operadores**
 > 
-> - Nível 6 - potenciação: `^`
-> - Nível 5 - multiplicação: `*`, `/`, `%/%`, `%%`
-> - Nível 4 - adição: `+`, `-`
-> - Nível 3 - relacional: `==`, `!=`, `<=`, `>=`, `>`, `<`
-> - Nível 2 - lógico: `&` (e)
-> - Nível 1 - lógico: `|` (ou)
+> - N�vel 6 - potencia��o: `^`
+> - N�vel 5 - multiplica��o: `*`, `/`, `%/%`, `%%`
+> - N�vel 4 - adi��o: `+`, `-`
+> - N�vel 3 - relacional: `==`, `!=`, `<=`, `>=`, `>`, `<`
+> - N�vel 2 - l�gico: `&` (e)
+> - N�vel 1 - l�gico: `|` (ou)
 
 
 ### Vetores
 - [Data types - Vectors and lists (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/wkAHm/data-types-vectors-and-lists)
 
-Depois das 5 classes de objetos apresentadas acima, as mais básicas são os vetores e as listas, que possuem mais de um elemento dentro do objeto. Um vetor necessariamente exige que os elementos sejam da mesma classe. Podemos criar um vetor usando a função `c()` e incluindo os valores separados por `,`:
+Depois das 5 classes de objetos apresentadas acima, as mais b�sicas s�o os vetores e as listas, que possuem mais de um elemento dentro do objeto. Um vetor necessariamente exige que os elementos sejam da mesma classe. Podemos criar um vetor usando a fun��o `c()` e incluindo os valores separados por `,`:
 
 ```r
 x = c(0.5, 0.6) # numeric
 x = c(TRUE, FALSE) # logical
 x = c("a", "b", "c") # character
-x = 9:12 # integer (é igual a c(9, 10, 11, 12))
+x = 9:12 # integer (� igual a c(9, 10, 11, 12))
 x = c(1+0i, 2+4i) # complex
 ```
 
 
-Se utilizarmos a função `c()` com elementos de classes diferentes, o R transforma a classe do objeto para o "mais geral":
+Se utilizarmos a fun��o `c()` com elementos de classes diferentes, o R transforma a classe do objeto para o "mais geral":
 
 ```r
 y = c(1.7, "a") # (numeric, character) -> character
@@ -369,7 +369,7 @@ class(y)
 >
 > character > complex > numeric > integer > logical
 
-Também podemos forçar a mudança de classe de objeto para a classe "menos geral", o que acaba transformando:
+Tamb�m podemos for�ar a mudan�a de classe de objeto para a classe "menos geral", o que acaba transformando:
 
 - os elementos "mais gerais" em missing values (NA's),
 
@@ -378,7 +378,7 @@ as.numeric(c(1.7, "a")) # (numeric, character)
 ```
 
 ```
-## Warning: NAs introduzidos por coerção
+## Warning: NAs introduzidos por coer��o
 ```
 
 ```
@@ -392,17 +392,17 @@ as.logical(c("a", TRUE)) # (character, logical)
 ```
 ## [1]   NA TRUE
 ```
-- [exceção] de _character_ com número (por exemplo, "9") para _numeric_: torna-se _numeric_
+- [exce��o] de _character_ com n�mero (por exemplo, "9") para _numeric_: torna-se _numeric_
 
 ```r
-as.numeric(c(1.7, "9")) # (numeric, character número)
+as.numeric(c(1.7, "9")) # (numeric, character n�mero)
 ```
 
 ```
 ## [1] 1.7 9.0
 ```
-- [exceção] de _numeric_ diferente de zero para _logical_: torna-se TRUE
-- [exceção] de _numeric_ igual a zero para _logical_: torna-se FALSE
+- [exce��o] de _numeric_ diferente de zero para _logical_: torna-se TRUE
+- [exce��o] de _numeric_ igual a zero para _logical_: torna-se FALSE
 
 ```r
 as.logical(c(FALSE, 0.75, -10)) # (logical, numeric > 0, numeric < 0)
@@ -419,7 +419,7 @@ as.logical(c(TRUE, 0)) # (logical, numeric zero)
 ```
 ## [1]  TRUE FALSE
 ```
-- [exceção] de _character_ lógico ("TRUE", "T", "FALSE", "F") para _logical_: torna-se _logical_ ("0" e "1" tornam-se NA)
+- [exce��o] de _character_ l�gico ("TRUE", "T", "FALSE", "F") para _logical_: torna-se _logical_ ("0" e "1" tornam-se NA)
 
 ```r
 as.logical(c("T", "FALSE", "1", TRUE)) # (character TRUE/FALSE, logical) 
@@ -429,8 +429,8 @@ as.logical(c("T", "FALSE", "1", TRUE)) # (character TRUE/FALSE, logical)
 ## [1]  TRUE FALSE    NA  TRUE
 ```
 
-#### Construção de vetor de sequência
-- Uma forma interessante de construir um vetor numérico com uma sequência é utilizando a função `seq()`
+#### Constru��o de vetor de sequ�ncia
+- Uma forma interessante de construir um vetor num�rico com uma sequ�ncia � utilizando a fun��o `seq()`
 
 ```yaml
 seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
@@ -440,10 +440,10 @@ seq(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 - by:	number, increment of the sequence.
 - length.out (length): desired length of the sequence.
 ```
-- Note que todos argumentos já possuem valores pré-definidos, então podemos montar sequências de maneiras distintas.
+- Note que todos argumentos j� possuem valores pr�-definidos, ent�o podemos montar sequ�ncias de maneiras distintas.
 - Considerando o preenchimento dos argumentos `from` e `to`, podemos:
     - definir `by` para dar um valor de quanto varia entre um elemento e outro, ou
-    - definir `length.out` (ou simplesmente `length`) para informar a quantidade de elementos que terá na sequência
+    - definir `length.out` (ou simplesmente `length`) para informar a quantidade de elementos que ter� na sequ�ncia
 
 ```r
 seq(from=0, to=10, by=2)
@@ -461,8 +461,8 @@ seq(from=0, to=10, length=5)
 ## [1]  0.0  2.5  5.0  7.5 10.0
 ```
 
-#### Construção de vetor com elementos repetidos
-- Podemos construir vetores com elementos repetidos usando a função `rep()`
+#### Constru��o de vetor com elementos repetidos
+- Podemos construir vetores com elementos repetidos usando a fun��o `rep()`
 ```yaml
 rep(x, times)
 
@@ -471,7 +471,7 @@ rep(x, times)
 ```
 
 ```r
-rep(0, 10) # repetição de 10 zeros
+rep(0, 10) # repeti��o de 10 zeros
 ```
 
 ```
@@ -479,7 +479,7 @@ rep(0, 10) # repetição de 10 zeros
 ```
 
 ```r
-rep(c("a", "b"), 2) # repetição do vetor c("a", "b")
+rep(c("a", "b"), 2) # repeti��o do vetor c("a", "b")
 ```
 
 ```
@@ -488,7 +488,7 @@ rep(c("a", "b"), 2) # repetição do vetor c("a", "b")
 
 
 ### Matrizes
-Matrizes também possuem elementos de mesma classe, mas bidimensional. Uma matriz pode ser criada usando a função `matrix()`:
+Matrizes tamb�m possuem elementos de mesma classe, mas bidimensional. Uma matriz pode ser criada usando a fun��o `matrix()`:
 
 ```yaml
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, ...)
@@ -524,7 +524,7 @@ m
 ## [2,]    0    0    0
 ```
 
-É possível construir uma matriz "preenchida" informando os seus (nº linhas {{<math>}}$\times${{</math>}} nº colunas) valores por meio de um vetor. Os elementos deste vetor preenchem primeiro todas linhas de uma coluna para, depois, preencher a próxima coluna (_column-wise_):
+?? poss�vel construir uma matriz "preenchida" informando os seus (n� linhas {{<math>}}$\times${{</math>}} n� colunas) valores por meio de um vetor. Os elementos deste vetor preenchem primeiro todas linhas de uma coluna para, depois, preencher a pr�xima coluna (_column-wise_):
 
 ```r
 m = matrix(1:6, nrow=2, ncol=3)
@@ -538,7 +538,7 @@ m
 ```
 
 
-Outra maneira de criar matrizes é juntando vetores em colunas (_column-binding_) ou em linhas (_row-binding_), usando as funções `cbind()` e `rbind()`, respectivamente:
+Outra maneira de criar matrizes � juntando vetores em colunas (_column-binding_) ou em linhas (_row-binding_), usando as fun��es `cbind()` e `rbind()`, respectivamente:
 
 
 ```r
@@ -567,7 +567,7 @@ rbind(x, y) # juntando por linha
 
 
 ### Arrays
-Arrays são "matrizes" com mais de duas dimensões.
+Arrays s�o "matrizes" com mais de duas dimens�es.
 ```yaml
 array(data = NA, dim = length(data), dimnames = NULL)
 
@@ -578,7 +578,7 @@ array(data = NA, dim = length(data), dimnames = NULL)
 
 
 ```r
-# arrays de NAs de dimensões 1 x 2 x 3
+# arrays de NAs de dimens�es 1 x 2 x 3
 a = array(dim=c(1, 2, 3))
 a
 ```
@@ -601,7 +601,7 @@ a
 ```
 
 ```r
-# matriz preenchida de dimensões 1 x 2 x 3
+# matriz preenchida de dimens�es 1 x 2 x 3
 a = array(1:6, c(1, 2, 3))
 a
 ```
@@ -626,7 +626,7 @@ a
 
 
 ### Listas
-Já uma lista permite que os valores pertençam a classes distintas, inclusive podendo conter um vetor como elemento. Ela pode ser criada por meio da função `list()`:
+J� uma lista permite que os valores perten�am a classes distintas, inclusive podendo conter um vetor como elemento. Ela pode ser criada por meio da fun��o `list()`:
 
 ```r
 x = list(1, "a", TRUE, 1+4i, c(0.5, 0.6))
@@ -662,11 +662,11 @@ class(x)
 ### Data frames
 - [Data types - Data frames (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/kz1Lh/data-types-data-frames)
 
-- É um tipo especial de lista, em que cada elemento da lista possui o mesmo tamanho
+- ?? um tipo especial de lista, em que cada elemento da lista possui o mesmo tamanho
 - Cada elemento da lista pode ser entendida como uma coluna de uma base de dados
 - Diferente de matrizes, cada elemento de um _data frame_ pode ser de uma classe diferente 
-- Normalmente é criada automaticamente ao carregarmos uma base de dados em .txt ou .csv via `read.table()` ou `read.csv()`
-- Mas também pode ser criada manualmente via `data.frame()`
+- Normalmente � criada automaticamente ao carregarmos uma base de dados em .txt ou .csv via `read.table()` ou `read.csv()`
+- Mas tamb�m pode ser criada manualmente via `data.frame()`
 
 ```yaml
 data.frame(...)
@@ -688,7 +688,7 @@ x
 ```
 
 ```r
-nrow(x) # Número de linhas de x
+nrow(x) # N�mero de linhas de x
 ```
 
 ```
@@ -696,7 +696,7 @@ nrow(x) # Número de linhas de x
 ```
 
 ```r
-ncol(x) # Número de colunas de x
+ncol(x) # N�mero de colunas de x
 ```
 
 ```
@@ -706,48 +706,48 @@ ncol(x) # Número de colunas de x
 
 #### Importando data frames
 - [Reading tabular data (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/bQ5B9/reading-tabular-data)
-- Para leitura de base de dados, as funções mais utilizadas são `read.table()` e `read.csv()`
-- O `read.table()` tem o seguinte argumentos (que também podem ser visto nas demais funções de leitura de base de dados):
-    - `file`: caminho/endereço do arquivo, incluindo a sua extensão
-    - `header`: `TRUE` ou `FALSE` indicando se a 1ª linha da base de dados é um cabeçalho
-    - `sep`: indica como as colunas são separadas
-    - `stringAsFactors`: `TRUE` ou `FALSE` se as variáveis de texto devem ser transformadas em _factors_.
+- Para leitura de base de dados, as fun��es mais utilizadas s�o `read.table()` e `read.csv()`
+- O `read.table()` tem o seguinte argumentos (que tamb�m podem ser visto nas demais fun��es de leitura de base de dados):
+    - `file`: caminho/endere�o do arquivo, incluindo a sua extens�o
+    - `header`: `TRUE` ou `FALSE` indicando se a 1� linha da base de dados � um cabe�alho
+    - `sep`: indica como as colunas s�o separadas
+    - `stringAsFactors`: `TRUE` ou `FALSE` se as vari�veis de texto devem ser transformadas em _factors_.
 ```r
-data_txt = read.table("mtcars.txt") # também lê .csv
+data_txt = read.table("mtcars.txt") # tamb�m l� .csv
 data_csv = read.csv("mtcars.csv")
 ```
-- Caso queira testar, faça download das bases: [mtcars.txt](../mtcars.txt) e [mtcars.csv](../mtcars.csv)
-- Note que, caso você não tenha definido o diretório de trabalho, é necessário informar o caminho/endereço inteiro do arquivo que você quer importar:
+- Caso queira testar, fa�a download das bases: [mtcars.txt](../mtcars.txt) e [mtcars.csv](../mtcars.csv)
+- Note que, caso voc� n�o tenha definido o diret�rio de trabalho, � necess�rio informar o caminho/endere�o inteiro do arquivo que voc� quer importar:
 ```r
 data = read.table("C:/Users/Fabio/OneDrive/FEA-RP/mtcars.csv")
 ```
-- `read.csv()` é igual ao `read.table()`, mas considera como padrão que o separador de colunas é a vírgula (`sep = ","`)
-- Para gravar uma base de dados, utilizamos as funções `write.csv()` e `write.table()`, nas quais informamos um data frame e o nome do arquivo (junto de sua extensão).
+- `read.csv()` � igual ao `read.table()`, mas considera como padr�o que o separador de colunas � a v�rgula (`sep = ","`)
+- Para gravar uma base de dados, utilizamos as fun��es `write.csv()` e `write.table()`, nas quais informamos um data frame e o nome do arquivo (junto de sua extens�o).
 
 
 #### Importando em outros formatos
-- Para abrir arquivos em Excel, nos formatos .xls e xlsx, é necessário utilizar o [pacote `xlsx`](https://cran.r-project.org/web/packages/xlsx/xlsx.pdf)
+- Para abrir arquivos em Excel, nos formatos .xls e xlsx, � necess�rio utilizar o [pacote `xlsx`](https://cran.r-project.org/web/packages/xlsx/xlsx.pdf)
 ```r
-read.xlsx("mtcars.xlsx", sheetIndex=1) # Lendo a 1ª aba do arquivo Excel
+read.xlsx("mtcars.xlsx", sheetIndex=1) # Lendo a 1� aba do arquivo Excel
 ```
-Caso queira testar, faça download da base [mtcars.xlsx](../mtcars.xlsx)
-- Para abrir arquivos de SPSS, Stata e SAS, é necessário utilizar o pacote `haven` e, respectivamente, as funções `read_spss()`, `read_dta()` e `read_sas()`
+Caso queira testar, fa�a download da base [mtcars.xlsx](../mtcars.xlsx)
+- Para abrir arquivos de SPSS, Stata e SAS, � necess�rio utilizar o pacote `haven` e, respectivamente, as fun��es `read_spss()`, `read_dta()` e `read_sas()`
 
-> Note que no padrão do R, o separador decimal é o ponto (`.`), enquanto no padrão brasileiro usa-se vírgula.
+> Note que no padr�o do R, o separador decimal � o ponto (`.`), enquanto no padr�o brasileiro usa-se v�rgula.
 >
-> Isso pode gerar importação equivocada dos valores, caso o .csv ou o .xlsx tenham sido gerados no padrão brasileiro.
+> Isso pode gerar importa��o equivocada dos valores, caso o .csv ou o .xlsx tenham sido gerados no padr�o brasileiro.
 >
-> Para contornar este problema, utilize as funções de importação `read.csv2()` e `read.xlsx2()` para que os dados sejam lidos a partir do padrão brasileiro e os dados sejam importados corretamente
-> Caso queira testar, faça download das bases: [mtcars_br.csv](../mtcars_br.csv) e [mtcars_br.xlsx](../mtcars_br.xlsx)
+> Para contornar este problema, utilize as fun��es de importa��o `read.csv2()` e `read.xlsx2()` para que os dados sejam lidos a partir do padr�o brasileiro e os dados sejam importados corretamente
+> Caso queira testar, fa�a download das bases: [mtcars_br.csv](../mtcars_br.csv) e [mtcars_br.xlsx](../mtcars_br.xlsx)
 
 
 </br>
 
 ## Extraindo Subconjuntos
 - [Subsetting - Basics (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/JDoLX/subsetting-basics)
-- Há 3 operadores básicos para extrair subconjuntos de objetos no R:
+- H� 3 operadores b�sicos para extrair subconjuntos de objetos no R:
     - `[]`: retorna um "sub-objeto" da mesma classe do objeto original
-    - `[[]]`: usado para extrair elementos de uma lista ou data frame, em que o "sub-objeto" não é necessariamente da mesma classe do objeto original
+    - `[[]]`: usado para extrair elementos de uma lista ou data frame, em que o "sub-objeto" n�o � necessariamente da mesma classe do objeto original
     - `$`: usado para extrair elemento de uma lista ou data frame pelo nome
 
 
@@ -755,7 +755,7 @@ Caso queira testar, faça download da base [mtcars.xlsx](../mtcars.xlsx)
 
 ```r
 x = c(1, 2, 3, 3, 4, 1)
-x[1] # extraindo o 1º elemento de x
+x[1] # extraindo o 1� elemento de x
 ```
 
 ```
@@ -763,7 +763,7 @@ x[1] # extraindo o 1º elemento de x
 ```
 
 ```r
-x[1:4] # extraindo do 1º ao 4º elemento de x
+x[1:4] # extraindo do 1� ao 4� elemento de x
 ```
 
 ```
@@ -771,7 +771,7 @@ x[1:4] # extraindo do 1º ao 4º elemento de x
 ```
 
 
-- Note que, ao fazer uma expressão lógica com um vetor, obtemos um _vetor lógico_
+- Note que, ao fazer uma express�o l�gica com um vetor, obtemos um _vetor l�gico_
 
 ```r
 x > 1
@@ -780,7 +780,7 @@ x > 1
 ```
 ## [1] FALSE  TRUE  TRUE  TRUE  TRUE FALSE
 ```
-- Usando o operador `[]`, podemos extrair um subconjunto do vetor `x` usando uma condição. Por exemplo, vamos extrair apenas valores maiores do que 1:
+- Usando o operador `[]`, podemos extrair um subconjunto do vetor `x` usando uma condi��o. Por exemplo, vamos extrair apenas valores maiores do que 1:
 
 ```r
 x[x > 1]
@@ -800,7 +800,7 @@ x[c(F, T, T, T, T, F)] # Equivalente ao x[x > 1] - Extrair apenas TRUE's
 
 ### Subconjunto de listas
 - [Subsetting - Lists (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/hVKHm/subsetting-lists)
-- Note que, diferente do vetor, para acessar um valor/elemento de uma lista é necessário utilizar `[[]]` com o número da posição do elemento da lista
+- Note que, diferente do vetor, para acessar um valor/elemento de uma lista � necess�rio utilizar `[[]]` com o n�mero da posi��o do elemento da lista
 
 ```r
 x = list(foo=1:4, bar=0.6)
@@ -864,7 +864,7 @@ x[[2]][1]
 ```
 ## [1] 0.6
 ```
-- Também podemos usar o nome para extrair um subconjunto do objeto
+- Tamb�m podemos usar o nome para extrair um subconjunto do objeto
 
 ```r
 x[["foo"]]
@@ -885,7 +885,7 @@ x$foo
 
 ### Subconjunto de matrizes e de data frames
 - [Subsetting - Matrices (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/4gSc1/subsetting-matrices)
-- Para extrair um pedaço de uma matriz ou de um data frame, indicamos as linhas e as colunas dentro do operador `[]`
+- Para extrair um peda�o de uma matriz ou de um data frame, indicamos as linhas e as colunas dentro do operador `[]`
 
 ```r
 x = matrix(1:6, 2, 3)
@@ -915,10 +915,10 @@ x[1:2, 2:3] # linha 1 e colunas 2 e 3 da matriz x
 ## [1,]    3    5
 ## [2,]    4    6
 ```
-- É possível selecionar linhas/colunas usando um vetor lógico (`TRUE`'s e `FALSE`'s) de mesmo comprimento da dimensão:
+- ?? poss�vel selecionar linhas/colunas usando um vetor l�gico (`TRUE`'s e `FALSE`'s) de mesmo comprimento da dimens�o:
 
 ```r
-x[, c(F, T, T)] # vet. lógico selecionando as 2 últimas colunas
+x[, c(F, T, T)] # vet. l�gico selecionando as 2 �ltimas colunas
 ```
 
 ```
@@ -926,7 +926,7 @@ x[, c(F, T, T)] # vet. lógico selecionando as 2 últimas colunas
 ## [1,]    3    5
 ## [2,]    4    6
 ```
-- Podemos selecionar linhas ou colunas inteiras ao não informar os índices:
+- Podemos selecionar linhas ou colunas inteiras ao n�o informar os �ndices:
 
 ```r
 x[1, ] # linha 1 e todas colunas
@@ -945,10 +945,10 @@ x[, 2] # todas linhas e coluna 2
 ```
 
 
-- O mesmo pode ser utilizado para arrays, porém com mais dimensões
+- O mesmo pode ser utilizado para arrays, por�m com mais dimens�es
 
 ```r
-x = array(1:16, c(1, 2, 3)) # array com 3 dimensões
+x = array(1:16, c(1, 2, 3)) # array com 3 dimens�es
 x
 ```
 
@@ -970,7 +970,7 @@ x
 ```
 
 ```r
-x[1, 1, 2] # extraindo valor com índices (1, 1, 2)
+x[1, 1, 2] # extraindo valor com �ndices (1, 1, 2)
 ```
 
 ```
@@ -980,8 +980,8 @@ x[1, 1, 2] # extraindo valor com índices (1, 1, 2)
 
 ### Removendo valores ausentes (`NA`)
 - [Subsetting - Removing missing values (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/Qy8bH/subsetting-removing-missing-values)
-- Remover dados faltantes é uma ação comum quando manipulamos bases de dados
-- Para verificar quais dados são `NA`, usa-se a função `is.na()`
+- Remover dados faltantes � uma a��o comum quando manipulamos bases de dados
+- Para verificar quais dados s�o `NA`, usa-se a fun��o `is.na()`
 
 ```r
 x = c(1, 2, NA, 4, NA, NA)
@@ -999,7 +999,7 @@ sum(is.na(x)) # qtd de missing values
 ```
 ## [1] 3
 ```
-- Relembre que o operador `!` nega uma expressão e, portanto, `!is.na()` nos resulta os elementos que **não** são ausentes
+- Relembre que o operador `!` nega uma express�o e, portanto, `!is.na()` nos resulta os elementos que **n�o** s�o ausentes
 
 ```r
 x[ !is.na(x) ]
@@ -1014,7 +1014,7 @@ x[ !is.na(x) ]
 
 
 
-## Estatísticas básicas
+## Estat�sticas b�sicas
 - **Valores Absolutos**: `abs()`
 
 ```r
@@ -1042,7 +1042,7 @@ sum(x)
 ```
 ## [1] 40
 ```
-- **Média**: `mean(x, trim = 0, na.rm = FALSE, ...)`
+- **M�dia**: `mean(x, trim = 0, na.rm = FALSE, ...)`
 
 ```r
 mean(x)
@@ -1051,7 +1051,7 @@ mean(x)
 ```
 ## [1] 2
 ```
-- **Desvio Padrão**: `sd(x, na.rm = FALSE)`
+- **Desvio Padr�o**: `sd(x, na.rm = FALSE)`
 
 ```r
 sd(x)
@@ -1063,7 +1063,7 @@ sd(x)
 - **Quantis**: `quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE, ...)`
 
 ```r
-# Mínimo, 1º Quartil, Mediana, 3º Quartil e Máximo
+# M�nimo, 1� Quartil, Mediana, 3� Quartil e M�ximo
 quantile(x, probs=c(0, .25, .5, .75, 1))
 ```
 
@@ -1071,11 +1071,11 @@ quantile(x, probs=c(0, .25, .5, .75, 1))
 ##    0%   25%   50%   75%  100% 
 ## -5.00 -0.50  2.00  4.25  8.00
 ```
-- **Máximo** e **Mínimo**: `max(..., na.rm = FALSE)` e `min(..., na.rm = FALSE)`
+- **M�ximo** e **M�nimo**: `max(..., na.rm = FALSE)` e `min(..., na.rm = FALSE)`
 
 ```r
-# Mínimo, 1º Quartil, Mediana, 3º Quartil e Máximo
-max(x) # Valor máximo
+# M�nimo, 1� Quartil, Mediana, 3� Quartil e M�ximo
+max(x) # Valor m�ximo
 ```
 
 ```
@@ -1083,14 +1083,14 @@ max(x) # Valor máximo
 ```
 
 ```r
-min(x) # Valor mínimo
+min(x) # Valor m�nimo
 ```
 
 ```
 ## [1] -5
 ```
 
-- Para obter os índices de todos os elementos iguais ao valor máximo/mínimo, podemos usar a função `which()` que tem como argumento um **vetor lógico** (de `TRUE`'s e `FALSE`'s) como input, e gera um vetor/matriz de índices:
+- Para obter os �ndices de todos os elementos iguais ao valor m�ximo/m�nimo, podemos usar a fun��o `which()` que tem como argumento um **vetor l�gico** (de `TRUE`'s e `FALSE`'s) como input, e gera um vetor/matriz de �ndices:
 ```yaml
 which(x, arr.ind = FALSE, ...)
     
@@ -1099,7 +1099,7 @@ which(x, arr.ind = FALSE, ...)
 ```
 
 ```r
-x == max(x) # vetor lógico (TRUE's são os máximos)
+x == max(x) # vetor l�gico (TRUE's s�o os m�ximos)
 ```
 
 ```
@@ -1108,7 +1108,7 @@ x == max(x) # vetor lógico (TRUE's são os máximos)
 ```
 
 ```r
-which(x == max(x)) # vetor de índices de elementos com valores máximos
+which(x == max(x)) # vetor de �ndices de elementos com valores m�ximos
 ```
 
 ```
@@ -1116,7 +1116,7 @@ which(x == max(x)) # vetor de índices de elementos com valores máximos
 ```
 
 ```r
-x[which(x == max(x))] # valores máximos
+x[which(x == max(x))] # valores m�ximos
 ```
 
 ```
@@ -1124,14 +1124,14 @@ x[which(x == max(x))] # valores máximos
 ```
 
 ```r
-x[which(x == min(x))] # valores máximos
+x[which(x == min(x))] # valores m�ximos
 ```
 
 ```
 ## [1] -5 -5
 ```
 
-- Isso também é válido para matrizes, mas se quisermos ter o índice da linha e da coluna, precisamos usar o argumento `arr.ind = TRUE`
+- Isso tamb�m � v�lido para matrizes, mas se quisermos ter o �ndice da linha e da coluna, precisamos usar o argumento `arr.ind = TRUE`
 
 ```r
 x = matrix(1:6, nrow=2)
@@ -1145,7 +1145,7 @@ x
 ```
 
 ```r
-which(x == max(x)) # retorna um número único
+which(x == max(x)) # retorna um n�mero �nico
 ```
 
 ```
@@ -1153,7 +1153,7 @@ which(x == max(x)) # retorna um número único
 ```
 
 ```r
-which(x == max(x), arr.ind = T) # retorna um vetor de números
+which(x == max(x), arr.ind = T) # retorna um vetor de n�meros
 ```
 
 ```
@@ -1162,7 +1162,7 @@ which(x == max(x), arr.ind = T) # retorna um vetor de números
 ```
 
 
-- Note que, se houver valores ausentes (`NA`), a função retorna `NA` por padrão. Para excluir os valores ausentes, precisamos definir o argumento `na.rm = TRUE`:
+- Note que, se houver valores ausentes (`NA`), a fun��o retorna `NA` por padr�o. Para excluir os valores ausentes, precisamos definir o argumento `na.rm = TRUE`:
 
 ```r
 x = c(1, 4, -5, 2, NA, -2, 4, 7, NA, 0, 2, 3, -5, NA, 4, -4, NA, 5, 2, NA)
@@ -1182,8 +1182,8 @@ max(x, na.rm=TRUE) # Excluindo valores ausentes
 ```
 
 
-### Exemplo: Otimização de função univariada
-- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x) = x^2 + 4x - 4${{</math>}}, ou seja,
+### Exemplo: Otimiza��o de fun��o univariada
+- Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a fun��o univariada {{<math>}}$f(x) = x^2 + 4x - 4${{</math>}}, ou seja,
     $$ \text{arg} \min_x (x^2 + 4x - 4) $$
 - Ver no [Wolfram](https://www.wolframalpha.com/input?i=solve+x%5E2+%2B+4x+-+4+%3D+0)
 - Para resolver numericamente, podemos chutar diversos valores de {{<math>}}$x${{</math>}} e pegar o menor valor
@@ -1200,12 +1200,12 @@ x_grid
 ## [13]  1.3157895  1.8421053  2.3684211  2.8947368  3.4210526  3.9473684
 ## [19]  4.4736842  5.0000000
 ```
-- Agora, vamos calcular o valor de {{<math>}}$f(x)${{</math>}} para cada possível {{<math>}}$x${{</math>}}
+- Agora, vamos calcular o valor de {{<math>}}$f(x)${{</math>}} para cada poss�vel {{<math>}}$x${{</math>}}
 
 ```r
 fx = x_grid^2 + 4*x_grid - 4 
 ```
-- Note que cada elemento calculado em `fx_grid` corresponde a um {{<math>}}$x${{</math>}} na mesma posição/índice em `x_grid`
+- Note que cada elemento calculado em `fx_grid` corresponde a um {{<math>}}$x${{</math>}} na mesma posi��o/�ndice em `x_grid`
 
 ```r
 head( cbind(x=x_grid, fx=fx), 6) # mostrando os 6 primeiros valores
@@ -1220,10 +1220,10 @@ head( cbind(x=x_grid, fx=fx), 6) # mostrando os 6 primeiros valores
 ## [5,] -2.894737 -7.199446
 ## [6,] -2.368421 -7.864266
 ```
-- Agora, vamos ver o valor e a *posição* de {{<math>}}$x${{</math>}} que minimiza a função:
+- Agora, vamos ver o valor e a *posi��o* de {{<math>}}$x${{</math>}} que minimiza a fun��o:
 
 ```r
-min(fx) # f(x) mínimo
+min(fx) # f(x) m�nimo
 ```
 
 ```
@@ -1231,14 +1231,14 @@ min(fx) # f(x) mínimo
 ```
 
 ```r
-argmin = which(fx == min(fx)) # índice de x que maximiza
+argmin = which(fx == min(fx)) # �ndice de x que maximiza
 argmin
 ```
 
 ```
 ## [1] 7
 ```
-- Para recuperar o valor de {{<math>}}$x${{</math>}} que minimiza {{<math>}}$f(x)${{</math>}}, precisamos usar o índice encontrado para encontrar no vetor `x_grid`:
+- Para recuperar o valor de {{<math>}}$x${{</math>}} que minimiza {{<math>}}$f(x)${{</math>}}, precisamos usar o �ndice encontrado para encontrar no vetor `x_grid`:
 
 ```r
 x_grid[argmin]
@@ -1247,7 +1247,7 @@ x_grid[argmin]
 ```
 ## [1] -1.842105
 ```
-- Observe que podemos aumentar a precisão aumentando o número de possíveis valores de {{<math>}}$x${{</math>}} no `x_grid`. Por outro lado, em contas mais complexas, pode elevar muito o tempo de execução do comando.
+- Observe que podemos aumentar a precis�o aumentando o n�mero de poss�veis valores de {{<math>}}$x${{</math>}} no `x_grid`. Por outro lado, em contas mais complexas, pode elevar muito o tempo de execu��o do comando.
 
 
 
@@ -1275,7 +1275,7 @@ y
 ## [1] 5
 ```
 
-- Essa mesma estrutura também pode atribuir diretamente um valor a um objeto
+- Essa mesma estrutura tamb�m pode atribuir diretamente um valor a um objeto
 
 ```r
 x = 5
@@ -1294,9 +1294,9 @@ y
 ```
 
 
-### Repetição (`for`)
+### Repeti��o (`for`)
 - [Control structures - For loops (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/baydC/control-structures-for-loops)
-- A repetição usando `for` exige que você insira um vetor e defina um nome para a variável de indicação
+- A repeti��o usando `for` exige que voc� insira um vetor e defina um nome para a vari�vel de indica��o
 
 ```r
 for(i in 3:7) {
@@ -1311,9 +1311,9 @@ for(i in 3:7) {
 ## [1] 6
 ## [1] 7
 ```
-- Acima, nomeamos a variável de indicação como `i` e inserimos um vetor de números inteiros entre 3 e 7.
-- A cada _iteração_ (loop) é atribuído ao `i` um valor do vetor `3:7`, até "acabarem" todos os elementos do vetor
-- Sequências são interessantes para incluir em repetições utilizando `for`
+- Acima, nomeamos a vari�vel de indica��o como `i` e inserimos um vetor de n�meros inteiros entre 3 e 7.
+- A cada _itera��o_ (loop) � atribu�do ao `i` um valor do vetor `3:7`, at� "acabarem" todos os elementos do vetor
+- Sequ�ncias s�o interessantes para incluir em repeti��es utilizando `for`
 
 ```r
 sequencia = seq(1, 5, length.out=11)
@@ -1345,12 +1345,12 @@ for (val in sequencia) {
 ```
 
 
-### Repetição (`while`)
+### Repeti��o (`while`)
 - [Control structures - While loops (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/WWXg6/control-structures-while-loops)
-- Diferente do `for`, a repetição via `while` exige que uma variável de indicação já esteja criada previamente antes de entrar no loop
-- Isto se dá, pois os loops (inclusive o primeiro) só serão realizados se uma condição for verdadeira
-- Note que, por não seguir uma sequência de elemento dentro de um vetor (como no `for`), **é necessário que a variável de indicação seja atualizada a cada iteração para que a repetição não seja feita infinitamente**.
-- Um forma comum de executar o `while` é definindo a variável de indicação como um contador, isto é, ir contando a quantidade de loops realizados e parar em uma determinada quantidade
+- Diferente do `for`, a repeti��o via `while` exige que uma vari�vel de indica��o j� esteja criada previamente antes de entrar no loop
+- Isto se d�, pois os loops (inclusive o primeiro) s� ser�o realizados se uma condi��o for verdadeira
+- Note que, por n�o seguir uma sequ�ncia de elemento dentro de um vetor (como no `for`), **� necess�rio que a vari�vel de indica��o seja atualizada a cada itera��o para que a repeti��o n�o seja feita infinitamente**.
+- Um forma comum de executar o `while` � definindo a vari�vel de indica��o como um contador, isto �, ir contando a quantidade de loops realizados e parar em uma determinada quantidade
 
 ```r
 contador = 0
@@ -1374,7 +1374,7 @@ while (contador <= 10) {
 ## [1] 9
 ## [1] 10
 ```
-- Uma alternativa à variável de indicação que funciona como contador: valor a ser calculado em cada iteração até convergir (chegar a um valor muito pequeno) ou ultrapassar algum valor limite. No exemplo abaixo, a cada loop da variável de indicação `distancia` diminuirá pela metade e irá parar num valor bem próximo de 0 (algum valor menor do que `\(10^{-3}\)`)
+- Uma alternativa � vari�vel de indica��o que funciona como contador: valor a ser calculado em cada itera��o at� convergir (chegar a um valor muito pequeno) ou ultrapassar algum valor limite. No exemplo abaixo, a cada loop da vari�vel de indica��o `distancia` diminuir� pela metade e ir� parar num valor bem pr�ximo de 0 (algum valor menor do que `\(10^{-3}\)`)
 
 ```r
 distancia = 10
@@ -1393,12 +1393,12 @@ distancia
 
 
 ### Exemplo: Preenchendo matriz a partir de uma _f(x,y)_
-- É comum o uso de uma estrutura de repetição dentro de outra estrutura de repetição (repetições encaixadas).
-- Como exemplo, calcularemos a função
+- ?? comum o uso de uma estrutura de repeti��o dentro de outra estrutura de repeti��o (repeti��es encaixadas).
+- Como exemplo, calcularemos a fun��o
 {{<math>}}$$ f(x,y) = 2x^2 - y^2 + 3xy, $${{</math>}}
-para cada combinação de {{<math>}}$x \in \boldsymbol{X}=\{ -5, -4, -3, ..., 3, 4, 5\}${{</math>}} e de {{<math>}}$y \in \boldsymbol{Y}=\{ 0, 2, 4, 6, 8, 10\} ${{</math>}}.
+para cada combina��o de {{<math>}}$x \in \boldsymbol{X}=\{ -5, -4, -3, ..., 3, 4, 5\}${{</math>}} e de {{<math>}}$y \in \boldsymbol{Y}=\{ 0, 2, 4, 6, 8, 10\} ${{</math>}}.
 
-Uma matriz será preenchida com os valores:
+Uma matriz ser� preenchida com os valores:
 
 {{<math>}}$$ \begin{pmatrix}
 f(-5, 0) & f(-5, 2) & \cdots & f(-5, 10) \\
@@ -1421,7 +1421,7 @@ for (i in 1:length(X)) {
     for (j in 1:length(Y)) {
         fxy[i, j] = 2*X[i]^2 - Y[j]^2 + 3*X[i]*Y[j]
     }
-    # Terminada todas colunas de uma linha, começa novo loop na próxima linha
+    # Terminada todas colunas de uma linha, come�a novo loop na pr�xima linha
 }
 fxy
 ```
@@ -1442,10 +1442,10 @@ fxy
 ```
 
 
-<!-- ### Exemplo 2: Otimização de função bivariada -->
-<!-- - Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a função univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja, -->
+<!-- ### Exemplo 2: Otimiza��o de fun��o bivariada -->
+<!-- - Queremos encontrar o {{<math>}}$x${{</math>}} que minimiza a fun��o univariada {{<math>}}$f(x, z) = x^2 + 4z^2 - 4${{</math>}}, ou seja, -->
 <!--     $$ \text{arg} \min_{x, z} (x^2 + 4z^2 - 4) $$ -->
-<!-- - Primeiro, vamos criar vetores de possíveis valores de `\(x\)` e `\(z\)`. -->
+<!-- - Primeiro, vamos criar vetores de poss�veis valores de `\(x\)` e `\(z\)`. -->
 <!-- ```{r} -->
 <!-- x_grid = seq(-5, 5, length=11) -->
 <!-- z_grid = seq(-6, 6, length=11) -->
@@ -1461,7 +1461,7 @@ fxy
 
 <!-- fxz -->
 <!-- ``` -->
-<!-- - Agora, vamos preencher cada possível combinação usando a estrutura de repetição dentro de outra repetição. -->
+<!-- - Agora, vamos preencher cada poss�vel combina��o usando a estrutura de repeti��o dentro de outra repeti��o. -->
 
 <!-- ```{r} -->
 <!-- # Preenchimento da matriz fxz -->
@@ -1472,34 +1472,34 @@ fxy
 <!-- } -->
 <!-- fxz -->
 <!-- ``` -->
-<!-- - Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a função `which.min()` usando argumento `arr.ind=TRUE`: -->
+<!-- - Para recuperar a dupla {{<math>}}$(x, z)${{</math>}} que minimiza {{<math>}}$f(x, z)${{</math>}}, precisamos usar a fun��o `which.min()` usando argumento `arr.ind=TRUE`: -->
 <!-- ```{r} -->
 <!-- argmin = which(fxz==min(fxz), arr.ind = TRUE) -->
 <!-- argmin -->
 
-<!-- argmin_x = x_grid[argmin[1]] # aplicando índice de x em x_grid -->
-<!-- argmin_z = z_grid[argmin[2]] # aplicando índice de z em z_grid -->
+<!-- argmin_x = x_grid[argmin[1]] # aplicando �ndice de x em x_grid -->
+<!-- argmin_z = z_grid[argmin[2]] # aplicando �ndice de z em z_grid -->
 
-<!-- paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a função f(x,z).") -->
+<!-- paste0("O par (x = ", argmin_x, ", z = ", argmin_z, ") minimizam a fun��o f(x,z).") -->
 <!-- ``` -->
 
 
 
 </br>
 
-## Criando funções
+## Criando fun��es
 - [Your first R function (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/BM3dR/your-first-r-function)
-- Para criar uma função, usamos a função `function(){}`:
-    - dentro dos parêntesis `()`, incluímos nomes de variáveis arbitrárias (argumentos/inputs) que serão utilizadas pela função para fazer cálculos
-    - dentro das chaves `{}`, usamos os nomes das variáveis arbitrárias definidas dentro do parêntesis para fazer cálculos e retornar um output (último valor dentro das chaves)
-- Como exemplo, criaremos uma função que pega 2 números como inputs e retorna sua soma
+- Para criar uma fun��o, usamos a fun��o `function(){}`:
+    - dentro dos par�ntesis `()`, inclu�mos nomes de vari�veis arbitr�rias (argumentos/inputs) que ser�o utilizadas pela fun��o para fazer c�lculos
+    - dentro das chaves `{}`, usamos os nomes das vari�veis arbitr�rias definidas dentro do par�ntesis para fazer c�lculos e retornar um output (�ltimo valor dentro das chaves)
+- Como exemplo, criaremos uma fun��o que pega 2 n�meros como inputs e retorna sua soma
 
 ```r
 soma = function(a, b) {
     a^2 + b
 }
 ```
-- Ao atribuir a função ao objeto `soma` não geramos resultados. Para fazer isso, usamos a função `soma()` inserindo 2 números como inputs:
+- Ao atribuir a fun��o ao objeto `soma` n�o geramos resultados. Para fazer isso, usamos a fun��o `soma()` inserindo 2 n�meros como inputs:
 
 ```r
 soma(10, 4)
@@ -1508,13 +1508,13 @@ soma(10, 4)
 ```
 ## [1] 104
 ```
-- Note que as variáveis arbitrárias `a` e `b` são utilizadas apenas dentro da função
+- Note que as vari�veis arbitr�rias `a` e `b` s�o utilizadas apenas dentro da fun��o
 ```r
 > a
 Error: object 'a' not found
 ```
 
-- Note que podemos inserir um valor padrão para um argumento de função. Como exemplo, criaremos uma função que retorna todos elementos acima de `n` de um vetor dado:
+- Note que podemos inserir um valor padr�o para um argumento de fun��o. Como exemplo, criaremos uma fun��o que retorna todos elementos acima de `n` de um vetor dado:
 
 ```r
 vetor = 1:20
@@ -1522,7 +1522,7 @@ above = function(x, n = 10) {
     x[x > n]
 }
 
-above(vetor) # todos acima do valor padrão 10
+above(vetor) # todos acima do valor padr�o 10
 ```
 
 ```
@@ -1542,4 +1542,4 @@ above(vetor, 14) # todos acima de 14
 
 
 
-{{< cta cta_text="👉 Proceed to Data Manipulation" cta_link="../sec3" >}}
+{{< cta cta_text="?Y'? Proceed to Data Manipulation" cta_link="../sec3" >}}

@@ -24,8 +24,8 @@ install.packages("wooldridge")
 
 </br>
 
-## Distribuições
-- [Seção 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
+## Distributions
+- [Section 1.7 de Heiss (2020)](http://www.urfie.net/read/index.html#page/65)
 - [Probability Distributions in R (Examples): PDF, CDF & Quantile Function (Statistics Globe)](https://statisticsglobe.com/probability-distributions-in-r)
 - [Basic Probability Distributions in R (Greg Graham)](https://rstudio-pubs-static.s3.amazonaws.com/100906_8e3a32dd11c14b839468db756cee7400.html)
 
@@ -51,7 +51,7 @@ install.packages("wooldridge")
     - `exp`: Exponencial
 - Seguem as principais distribuições e suas respectivas funções:
 
-| **Distribuição**   | **Densidade de Probabilidade** | **Distribuição Acumulada** | **Quantil**             |
+| **Distribution**   | **Densidade de Probabilidade** | **Distribution Acumulada** | **Quantil**             |
 |--------------------|--------------------------------|----------------------------|-------------------------|
 | Normal             | `dnorm(x, mean, sd)`           | `pnorm(q, mean, sd)`       | `qnorm(p, mean, sd)`    |
 | Qui-Quadrado       | `dchisq(x, df)`                | `pchisq(q, df)`            | `qchisq(p, df)`         |
@@ -59,10 +59,10 @@ install.packages("wooldridge")
 | F                  | `df(x, df1, df2)`              | `pf(q, df1, df2)`          | `qf(p, df1, df2)`       |
 | Binomial           | `dbinom(x, size, prob)`        | `pbinom(q, size, prob)`    | `qbinom(p, size, prob)` |
 
-em que `x` e `q` são estatísticas de cada distribuição (quantis), e `p` é probabilidade.
+where `x` e `q` são estatísticas de cada distribuição (quantis), e `p` é probabilidade.
 
 
-### Distribuição Normal
+### Distribution Normal
 - Considere uma normal padrão, {{<math>}}$N(\mu=0, \sigma=1)${{</math>}}, e escores padrão {{<math>}}$Z=-1,96 \text{ e } 1,96${{</math>}} (para intervalo de confiança de {{<math>}}$\approx 5\%${{</math>}}):
 
 <center><img src="../standard-normal-distribution-with-critical-values.webp"></center>
@@ -156,7 +156,7 @@ curve(qnorm(x, mean=0, sd=1), from=0, to=1)
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
 
 
-### Distribuição t-Student
+### Distribution t-Student
 - Criaremos gráficos com diversos graus de liberdade
 - Quanto maior os graus de liberdade, mais se aproxima de uma normal padrão
 
@@ -173,7 +173,7 @@ for (n in c(1, 2, 4, 6, 10)) {
 
 
 
-### Distribuição Qui-Quadrado
+### Distribution Qui-Quadrado
 - Criaremos gráficos com diversos graus de liberdade
 
 
@@ -189,7 +189,7 @@ for (n in c(2:5)) {
 
 
 
-### Distribuição F
+### Distribution F
 - Criaremos gráficos com diversos graus de liberdade
 
 
@@ -252,12 +252,12 @@ rnorm(5)
 ```
 
 
-#### Exemplo: Criação de observações x e y
+#### Example: Criação de observations x e y
 
-Vamos criar observações da variável {{<math>}}$x${{</math>}} a partir de uma distribuição uniforme no intervalo [0, 10]:
+Vamos criar observations da variável {{<math>}}$x${{</math>}} a partir de uma distribuição uniforme no intervalo [0, 10]:
 
 ```r
-N = 100 # número de observações
+N = 100 # número de observations
 x = runif(N, 0, 10) # nº aleatórios a partir de U[0,10]
 head(x)
 ```
@@ -325,7 +325,7 @@ sample(1:10, replace = TRUE) # Amostragem com reposição
 - Note que, por padrão, a função `sample()` faz a amostragem sem reposição.
 
 
-#### Exemplo: Lei dos Grandes Números (LGN)
+#### Example: Lei dos Grandes Números (LGN)
 - Podemos usar a amostragem para simular jogadas de dado não-viesado.
 - Vamos jogar uma vez o dado:
 
@@ -390,7 +390,7 @@ plot(table(amostra), type="h")
 - Calculando 1000 vezes a média de {{<math>}}$N=100${{</math>}} jogadas de dado, temos:
 
 ```r
-N = 100 # nº de observações
+N = 100 # nº de observations
 amostra = replicate(1000, mean(sample(1:6, N, replace=T)))
 
 # Gráfico
@@ -399,7 +399,7 @@ plot(table(amostra), type="h", xlim=c(1,6))
 
 <img src="/project/rec5004/sec5/_index_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
-- Note que, quanto maior {{<math>}}$N${{</math>}}, a distribuição das médias vai se degenerando, tendo maior concentração na proximidade da média populacional (3,5), e sendo praticamente nula em médias mais distantes.
+- Note que, quanto maior {{<math>}}$N${{</math>}}, a distribuição das médias vai se degenerando, tendo maior concentração na proximidade da média populacional (3,5), e where praticamente nula em médias mais distantes.
 
 
 
@@ -422,7 +422,7 @@ plot(table(amostra), type="h", xlim=c(1,6))
 <!--     - Quando o número de graus de liberdade é grande, a distribuição _t_ se aproxima ao de uma normal padrão. Logo, para um intervalo de confiança de 95\%, o valor crítico é {{<math>}}$C_{2,5\%} \approx 1,96${{</math>}} -->
 
 
-<!-- #### Exemplo C.2: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
+<!-- #### Example C.2: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
 
 <!-- - Holzer, Block, Cheatham e Knott (1993) estudaram os efeitos de subsídios de treinamentos corporativos sobre a produtividade dos trabalhadores -->
 <!-- - Para isto, avaliou-se a "taxa de refugo", isto é, a quantidade de itens descartados a cada 100 itens produzidos. -->
@@ -471,14 +471,14 @@ plot(table(amostra), type="h", xlim=c(1,6))
 <!-- - A vantagem de utilizar o p-valor é a sua conveniência, pois pode-se compará-lo diretamente com o nível de significância. -->
 <!-- - Para testes _t_ bicaudais, a fórmula do p-valor é dado por (Wooldridge, 2006, equação C.42): -->
 <!-- $$ p = 2.Pr(T_{n-1} > |t|) = 2.[1 - F_{t_{n-1}}(|t|)] $$ -->
-<!-- em que {{<math>}}$F_{t_{n-1}}(\cdot)${{</math>}} é a cdf da distribuição {{<math>}}$t_{n-1}${{</math>}}. -->
+<!-- where {{<math>}}$F_{t_{n-1}}(\cdot)${{</math>}} é a cdf da distribuição {{<math>}}$t_{n-1}${{</math>}}. -->
 
 <!-- <center><img src="../t-student_test.png"></center> -->
 
 <!-- - Rejeitamos a hipótese nula se o p-valor for menor do que o nível de significância {{<math>}}$\alpha${{</math>}}. -->
 
 
-<!-- #### Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
+<!-- #### Example C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006) -->
 <!-- - Continuação do exemplo C.2 -->
 <!-- - Considerando teste bicaudal (diferente dos livros), podemos calcular a estatística _t_ -->
 <!-- ```{r} -->

@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Otimização Numérica
+linktitle: Numerical Optimization
 summary: The author covers topics such as grid search and steepest ascent methods for optimization to show three approaches to reach the OLS estimation formula. The page also includes examples and code snippets to illustrate the concepts discussed.
-title: (Extra) Otimização Numérica
+title: (Extra) Numerical Optimization
 weight: 10
 output: md_document
 type: book
@@ -62,8 +62,8 @@ type: book
 
 </br>
 
-## Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) minimização da função perda, de (b) máxima verossimilhança e de (c) método dos momentos.
+## Encontrando OLS por diferentes estratégias
+- Nesta seção, encontraremos as estimativas de OLS usando as estratégias da (a) minimização da função perda, de (b) máxima verossimilhança e de (c) método dos momentos.
 - Em cada uma delas, usaremos uma função objetivo distinta para encontrar o vetor com dois parâmetros, {{<math>}}$ \boldsymbol{\theta} = \{ \beta_0, \beta_1 \} ${{</math>}}, que a otimiza. No R, vamos chamar esse vetor de `params`.
 
 
@@ -87,7 +87,7 @@ Queremos estimar o seguinte modelo:
 
 
 ```r
-## Regressao MQO
+## Regressao OLS
 reg = lm(formula = mpg ~ hp, data = mtcars)
 summary(reg)$coef
 ```
@@ -108,7 +108,7 @@ summary(reg)$coef
 #### 1. Criar função perda que calcula a soma dos resíduos quadráticos
 - A função para calcular a soma dos resíduos quadráticos recebe como inputs:
   - um **vetor** de possíveis valores {{<math>}}$\boldsymbol{\theta} = \{ \hat{\beta}_0,\ \hat{\beta}_1 \}${{</math>}}
-  - um **texto** com o nome da variável dependente
+  - um **texto** com o nome da dependent variable
   - um **vetor de texto** com os nomes dos regressores
   - uma base de dados
 
@@ -191,7 +191,7 @@ fit_ols2
 
 
 
-### (b) Máxima Verossimilhança
+### (b) Maximum Likelihood
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
 - A função objetivo é a função de verossimilhança e, ao contrário da função de soma de quadrado dos resíduos, queremos maximizá-la
 - Em nosso exemplo, temos que estimar 3 parâmetros
@@ -200,7 +200,7 @@ fit_ols2
 
 
 
-#### Otimização Numérica para Máxima Verossimilhança
+#### Numerical Optimization para Maximum Likelihood
 A função `optim()` do R será usada novamente para desempenhar a otimização numérica. Precisamos usar como input:
 
 - Alguns valores inicias dos parâmetros, {{<math>}}$\boldsymbol{\theta}^0 = \{ \beta_0, \beta_1, \sigma^2 \}${{</math>}}
@@ -212,7 +212,7 @@ log-verossimilhança, {{<math>}}$\ln{L(\boldsymbol{\theta})}${{</math>}}.
 A função log-verossimilhança é dada por
 {{<math>}}$$ \ln{L(\beta_0, \beta_1, \sigma^2 | y, x)} = \sum^n_{i=1}{\ln{f(y_i | x_i, \beta_0, \beta_1, \sigma^2)}}, $${{</math>}}
 
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+where a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
 
 {{<math>}}$$ y_i | x_i \sim \mathcal{N}(\beta_0 + \beta_1 x_i, \sigma^2) $${{</math>}}
 
@@ -234,7 +234,7 @@ Passos para estimar uma regressão por máxima verossimilhança:
 
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\beta_0, \beta_1${{</math>}} e {{<math>}}$\sigma^2${{</math>}}
-- Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
+- Note que, diferente da estimação por OLS, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\sigma^2${{</math>}}).
 
 ```r
 params = c(30, -0.06, 1)
@@ -330,7 +330,7 @@ head(tab)
 ## Hornet Sportabout 18.7 175 19.50 0.2897
 ## Valiant           18.1 105 23.70 0.0000
 ```
-- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
+- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observation, maior será a densidade/probabilidade.
 <img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-2.png" width="672" /><img src="/project/rec2301/sec10/_index_files/figure-html/unnamed-chunk-10-3.png" width="672" />
 - Logo, a verossimilhança (produto de todas probabilidades) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
 
@@ -358,7 +358,7 @@ Juntando tudo que fizemos anteriormente, podemos criar uma função no R que cal
 
 
 ```r
-## Criando funcao para calcular log-verossimilhanca MQO 
+## Criando funcao para calcular log-verossimilhanca OLS 
 loglik_lm = function(params, yname, xname, data) {
   # Extraindo as variáveis da base em vetores
   y = as.matrix(data[yname])
@@ -394,7 +394,7 @@ Aqui, **minimizamos o negativo** da log-Verossimilhança para **maximizarmos** (
 
 
 ```r
-## Maximizando a função log-verossimilhança MQO
+## Maximizando a função log-verossimilhança OLS
 mle = optim(par = c(0, 0, 1), fn = loglik_lm,
             yname = "mpg", xname = "hp", data = mtcars,
               method = "BFGS", hessian = TRUE)
@@ -453,7 +453,7 @@ cbind(mle$par, mle_se)
 
 {{<math>}}$$ E(\boldsymbol{\varepsilon}) = 0 \qquad \text{ e } \qquad E(\boldsymbol{\varepsilon}' \boldsymbol{x}) = 0 $${{</math>}}
 
-Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM. Os análogos amostrais são
+Note que estes são os momentos relacionados ao OLS, dado que este é um caso particular do GMM. Os análogos amostrais são
 
 {{<math>}}$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i.x_i} = 0 $${{</math>}}
 
@@ -472,7 +472,7 @@ Note que o vetor resultante são exatamente os momentos amostrais.
 
 
 
-#### Otimização Numérica para GMM
+#### Numerical Optimization para GMM
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\beta_0${{</math>}} e {{<math>}}$\beta_1${{</math>}}
 - Vamos criar um vetor com possíveis valores de {{<math>}}$\beta_0, \beta_1${{</math>}}:
@@ -510,7 +510,7 @@ e_hat = y - yhat
 
 
 ##### 4. Criação da matriz de momentos
-- Note que {{<math>}}$\hat{\boldsymbol{\varepsilon}}' X${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz com **multiplicação elemento a elemento** do resíduo {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com as covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante e hp), na forma:
+- Note que {{<math>}}$\hat{\boldsymbol{\varepsilon}}' X${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz com **multiplicação elemento a elemento** do resíduo {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com as covariates {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante e hp), na forma:
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}} \times \boldsymbol{X}\ =\ \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \times \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}\ =\ \begin{bmatrix} \varepsilon_1 & \varepsilon_1.x_1  \\ \varepsilon_2 & \varepsilon_2.x_2 \\ \vdots & \vdots \\ \varepsilon_N & \varepsilon_N.x_N \end{bmatrix} $${{</math>}}
 Note que, para fazer o GMM no R, não devemos tirar a média de cada coluna (a própria função `gmm()` fará isso).
@@ -547,7 +547,7 @@ apply(m, 2, sum) # média de cada coluna
 
 
 ##### 5. Criação de função com os momentos
-- Vamos criar uma função que tem como input um vetor de parâmetros (`params`) e uma base de dados (`data`), e que retorna uma matriz em que cada coluna representa um momento.
+- Vamos criar uma função que tem como input um vetor de parâmetros (`params`) e uma base de dados (`data`), e que retorna uma matriz where cada coluna representa um momento.
 - Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
 
 ```r

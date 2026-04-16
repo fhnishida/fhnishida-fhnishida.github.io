@@ -22,40 +22,40 @@ Principais referências desse material de Econometria com R:
 
 </br>
 
-## Instalando R
+## Installing R
 - [Installing R (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/y6mU2/installing-r)
 
-1. Instalação da base do R ([CRAN](https://cran.r-project.org/))
+1. Install the base R distribution ([CRAN](https://cran.r-project.org/))
     - Download R X.X.X for Windows
-    - Se o computador for 64-bits, opte pela versão 64-bits (+ rápido)
+    - If your computer is 64-bit, choose the 64-bit version. (+ rápido)
 
-2. Instalação do Rtools ([CRAN](https://cran.r-project.org/))
+2. Install Rtools ([CRAN](https://cran.r-project.org/))
     - RTools X.X > Rtools installer
     - É um conjunto de ferramentas de compilação de várias linguagens (C, C++ e Fortran) que são necessárias para o funcionamento de alguns pacotes no R
 
-3. Instalação do RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
+3. Install RStudio ([RStudio Dowload](https://www.rstudio.com/products/rstudio/download/#download))
     - Download RStudio Desktop
-    - É uma interface de usuário para facilitar o uso do R
+    - RStudio is a user interface that makes it easier to work with R.
 
 
 </br>
 
-## Usando R Studio
+## Using RStudio
 - [RStudio Tour (John Hopkins/Coursera)](https://www.coursera.org/learn/data-scientists-tools/lecture/0fUNC/rstudio-tour)
 
-RStudio é dividido em 4 quadrantes:
+RStudio is divided into four panes:
 
-- superior/esquerdo: source - onde ficam "blocos de nota" (scripts) com comandos a serem salvos
-- superior/direito: ambiente - visualizar variáveis
-- inferior/esquerdo: console - executar os comandos e ver resultados (é o R "bruto")
-- inferior/direito: arquivos/gráficos/pacotes/ajuda
+- upper-left: source pane, where scripts and notes are edited and saved
+- upper-right: environment pane, where you can inspect variables
+- lower-left: console pane, where commands run and results appear
+- lower-right: files, plots, packages, and help
 
-> **Dica**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão durante o uso prolongado do software)<br/>  
+> **Tip**: Alterar o tema do RStudio (fundo branco pode cansar mais a visão durante o uso prolongado do software)<br/>  
 Tools > Global Options... > Appearance > Editor theme > Cobalt (meu preferido)
 
 
-### Diretório de trabalho
-Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base de dados, etc.).
+### Working directory
+Setting a working directory makes it easier to access the files in your folder, including datasets and scripts.
 
 > Session > Set Working Directory > Choose Directory...
 
@@ -63,7 +63,7 @@ Definir um diretório de trabalho facilita o acesso aos arquivos da pasta (base 
 setwd("C:/Users/Fabio/OneDrive/FEA-RP")
 ```
 
-> **Dica**: O comando para definir o diretório de trabalho aparecerá no console. Copie e cole no seu script para não precisar definir toda vez que abre o R Studio.
+> **Tip**: The command used to set the working directory will appear in the console. Copy it into your script so you do not need to redefine it every time you open RStudio.
 
 - Note que usa o "slash" (/) ao invés do "backslash" (\\), então não dá para copiar diretamente o endereço de uma pasta e colar no R sem fazer ajustes:
 ```r
@@ -79,7 +79,7 @@ Você pode trocar _backslash_ (/) por _slash_(\\), ou  por dois _backslashs_ (\\
 
 
 ### Executando comandos
-- Execução direta no console: escreva `1 + 1` no console e dê \<Enter\>
+- Direct execution in the console: escreva `1 + 1` no console e dê \<Enter\>
 
 ```r
 1 + 1
@@ -88,7 +88,7 @@ Você pode trocar _backslash_ (/) por _slash_(\\), ou  por dois _backslashs_ (\\
 ```
 ## [1] 2
 ```
-- Execução pelo script: escreva o seguinte código abaixo, e dê `Ctrl + Enter` na linha ou no código destacado. Note que o código do script é "jogado" no console.
+- Execution from a script: escreva o seguinte código abaixo, e dê `Ctrl + Enter` na linha ou no código destacado. Note que o código do script é "jogado" no console.
 
 ```r
 rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
@@ -100,7 +100,7 @@ rnorm(n=10, mean=0, sd=1)  # Gerar 10 números ~ N(0, 1)
 ```
 
 
-### Ajuda para comandos
+### Help for commands
 ```r
 ?rnorm
 ```
@@ -126,17 +126,17 @@ rnorm(mean=0, n=10, sd=1)
 
 </br>
 
-## Pacotes no R
+## R Packages
 - Pacotes são coleções de funções, dados e códigos escritos por outras pessoas
 - Por ser um software _open source_, o R possui muitos pacotes disponibilizados pela internet e muitos estatísticos/econometristas desenvolvem e disponibilizam seus próprios pacotes na internet.
 - A instalação de um pacote só precisa ser feita uma única vez.
 - No entanto, caso você atualize uma nova versão do R, é necessário instalar novamente todos os pacotes.
-- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de indivíduos (normalmente disponibilizados no GitHub)
+- Os pacotes podem ser obtidos em bibliotecas (_libraries_), como CRAN, e de individuals (normalmente disponibilizados no GitHub)
 - O CRAN é administrado e, como existe uma curadoria para inserção e manutenção de pacotes, garante qualidade dos pacotes disponibilizados
 - Tome cuidado com pacotes disponibilizados por individuos desconhecidos: pode haver códigos maliciosos!
 
 
-### Instalação via CRAN
+### Installation via CRAN
 > quadrante inferior/direito > Packages > Install > (Nomes dos pacotes)
 
 ```r
@@ -151,7 +151,7 @@ Depois de instalar o pacote desejado, você precisa carregá-lo à sua sessão n
 2. Chamar o pacote indiretamente por meio de uma função contida no pacote `<nome_do_pacote>::<funcao_do_pacote>`
 
 
-#### Exemplo: Instalando pacotes do Github
+#### Example: Instalando pacotes do Github
 
 - Github é um site que programadores podem disponibilizar e armazenar arquivos, como códigos, bases de dados, pacotes de R, etc.
 - É possível instalar um pacote disponibilizado no Github diretamente do R.
@@ -215,7 +215,7 @@ MASS:select(...) # do pacote MASS
 dplyr::select(.data, ...) # do pacote dplyr
 ```
 
-### Atualizando pacotes
+### Updating packages
 > quadrante inferior/direito > Packages > Update > Select All > Install Updates
 
 

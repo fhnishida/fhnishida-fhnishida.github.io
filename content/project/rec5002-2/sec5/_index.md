@@ -27,4 +27,4 @@ type: book
 - [Problem Set 2 Solution](../Lista-2_Resolucao.pdf)
 
 
-{{< cta cta_text="👉 Proceed to Session 6" cta_link="../chapter6" >}}
+{{< cta cta_text="Proceed to Session 6" cta_link="../chapter6" >}}

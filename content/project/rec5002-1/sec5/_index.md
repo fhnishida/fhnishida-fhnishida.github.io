@@ -23,4 +23,4 @@ type: book
 - Script File: [Lista-2_v2.py](../Lista-2_v2.py)
 
 
-{{< cta cta_text="👉 Proceed to Session 6" cta_link="../sec6" >}}
+{{< cta cta_text="Proceed to Session 6" cta_link="../sec6" >}}

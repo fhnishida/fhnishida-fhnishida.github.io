@@ -35,7 +35,18 @@ paginate: 10
 enableEmoji: true
 enableRobotsTXT: true
 footnotereturnlinkcontents: <sup>^</sup>
-ignoreFiles: [\.ipynb$, .ipynb_checkpoints$, \.Rmd$, \.Rmarkdown$, _cache$]
+ignoreFiles:
+  - '\.ipynb$'
+  - '\.ipynb_checkpoints$'
+  - '\.Rmd$'
+  - '\.Rmarkdown$'
+  - '_cache$'
+  - '\.en\.md$'
+  - 'project/rec2301/index(\.pt-br)?\.md$'
+  - 'project/rec2312/index(\.pt-br)?\.md$'
+  - 'project/rec5002-1/index(\.pt-br)?\.md$'
+  - 'project/rec5002-2/index(\.pt-br)?\.md$'
+  - 'project/rec5004/index(\.pt-br)?\.md$'
 permalinks:
   event: '/talk/:slug/'
   tags: '/tag/:slug/'

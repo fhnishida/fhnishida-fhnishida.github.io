@@ -4,7 +4,7 @@ date: "2023-03-08T00:00:00Z"
 image:
   # caption: Photo by Toa Heftiba on Unsplash
   # focal_point: Smart
-summary: Undergraduate TA Sessions on Panel Data and IV.
+summary: Undergraduate TA materials for Econometrics II, covering panel data methods, instrumental variables, and applied econometrics in R.
 tags:
 - Undergraduate
 title: Econometrics II (Spring 2023)
@@ -13,57 +13,48 @@ linktitle: ------------------------
 weight: 1
 ---
 
+Welcome to the TA materials for Econometrics II.
 
-Sejam bem-vindas(os) ao conteúdo de Monitoria da disciplina de Econometria II!
+Course page (Prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.br/course/view.php?id=108687](https://edisciplinas.usp.br/course/view.php?id=108687)
 
-Página do curso (prof. Daniel Domingues dos Santos):  [https://edisciplinas.usp.br/course/view.php?id=108687](https://edisciplinas.usp.br/course/view.php?id=108687)
+If you have any questions, feel free to email me at `fabio.nishida@usp.br`.
 
-Caso tenham dúvidas, podem enviar e-mail para: fabio.nishida@usp.br
+In-person TA hours take place on Thursdays from 1:00 PM to 2:00 PM in room 14-B1.
 
-Monitorias presenciais às quintas-feiras das 13h às 14h na sala 14-B1
+If needed, we will use the following Google Meet room: [https://meet.google.com/qtr-upxi-nwu](https://meet.google.com/qtr-upxi-nwu)
 
-Se necessário, usaremos a seguinte sala de Google Meet: [https://meet.google.com/qtr-upxi-nwu](https://meet.google.com/qtr-upxi-nwu)
-
-
-{{< cta cta_text="👉 Seguir para Revisão de R" cta_link="sec1" >}}
-
+{{< cta cta_text="Proceed to the R Review" cta_link="sec1" >}}
 
 </br>
 
-## Gravações das Monitorias
+## TA Session Recordings
 
-- **Monitoria 10 (20/06)**: VI, MQ2E e Testes | [Script](monitoria10.R)
+- **TA Session 10 (06/20)**: Instrumental variables, 2SLS, and hypothesis tests | [Script](monitoria10.R)
 [<img src="https://img.youtube.com/vi/7HrsKmRrm9g/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=7HrsKmRrm9g)
 
-- **Monitoria 9 (09/06)**: Testes de Hipótese | [Script](monitoria09.R)
+- **TA Session 9 (06/09)**: Hypothesis testing | [Script](monitoria09.R)
 [<img src="https://img.youtube.com/vi/0Kq11zaSGys/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=0Kq11zaSGys)
 
-- **Monitoria 8 (18/05)**: Estimadores Within e de Primeiras Diferenças | [Script](monitoria08.R)
+- **TA Session 8 (05/18)**: Within and first-difference estimators | [Script](monitoria08.R)
 [<img src="https://img.youtube.com/vi/KbOV12t_Ki0/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=KbOV12t_Ki0)
 
-- **Monitoria 7 (04/05)**: Matrizes de Tranformação e Estimador Between | [Script](monitoria07.R)
+- **TA Session 7 (05/04)**: Transformation matrices and the between estimator | [Script](monitoria07.R)
 [<img src="https://img.youtube.com/vi/kh69ZHE8DNY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=kh69ZHE8DNY)
 
-- **Monitoria 6 (27/04)**: Estimação de MQGF | [Script](monitoria06.R)
+- **TA Session 6 (04/27)**: Feasible GLS estimation | [Script](monitoria06.R)
 [<img src="https://img.youtube.com/vi/G-1AVqDQBqY/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=G-1AVqDQBqY)
 
-- **Monitoria 5 (20/04)**: Estimação da Matriz de Covariâncias dos Erros e de MQE | [Script](monitoria05.R)
+- **TA Session 5 (04/20)**: Estimation of the error covariance matrix and GLS | [Script](monitoria05.R)
 [<img src="https://img.youtube.com/vi/uxEXcGDL_zM/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=uxEXcGDL_zM)
 
-- **Monitoria 4 (13/04)**: Dados em Painel e Matriz de Covariâncias dos Erros | [Script](monitoria04.R)
-    
+- **TA Session 4 (04/13)**: Panel data and the error covariance matrix | [Script](monitoria04.R)
 [<img src="https://img.youtube.com/vi/6hZqBAGTNTc/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=6hZqBAGTNTc)
 
-- **Monitoria 3 (30/03)**: MQO com Variáveis Categóricas | [Script](monitoria03.R)
-    
+- **TA Session 3 (03/30)**: OLS with categorical regressors | [Script](monitoria03.R)
 [<img src="https://img.youtube.com/vi/AH4FIVMNDYM/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=AH4FIVMNDYM)
 
-
-- **Monitoria 2 (23/03)**: Mínimos Quadrados Ordinários | [Script](monitoria02.R)
-    
+- **TA Session 2 (03/23)**: Ordinary least squares | [Script](monitoria02.R)
 [<img src="https://img.youtube.com/vi/5ye1mOJFe6k/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=5ye1mOJFe6k)
 
-
-- **Monitoria 1 (16/03)**: Revisão de Programação em R | [Script](monitoria01.R)
-    
+- **TA Session 1 (03/16)**: Review of R programming | [Script](monitoria01.R)
 [<img src="https://img.youtube.com/vi/SS-NLIn9gJk/maxresdefault.jpg" alt="img" width=70%/>](https://www.youtube.com/watch?v=SS-NLIn9gJk)

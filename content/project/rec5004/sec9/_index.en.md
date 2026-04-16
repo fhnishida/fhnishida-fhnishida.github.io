@@ -13,20 +13,20 @@ type: book
 
 
 
-- Agora, veremos formas mais gerais de testes de hipótese, que não são normalmente informadas nos resultados das regressões.
+- Agora, veremos formas mais gerais de testes de hip�tese, que n�o s�o normalmente informadas nos resultados das regress�es.
 
 
 ## Teste de Wald
 - Considere:
-  - {{<math>}}$G${{</math>}} o número de restrições lineares
-  - {{<math>}}$\boldsymbol{\beta}${{</math>}} é um vetor de parâmetros {{<math>}}$(K+1) \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{h}${{</math>}} é um vetor de constantes {{<math>}}$G \times 1${{</math>}}
-  - {{<math>}}$\boldsymbol{R}${{</math>}} é uma matriz {{<math>}}$G \times (K+1)${{</math>}}, que empilha {{<math>}}$G${{</math>}} vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimensões {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
+  - {{<math>}}$G${{</math>}} o n�mero de restri��es lineares
+  - {{<math>}}$\boldsymbol{\beta}${{</math>}} � um vetor de par�metros {{<math>}}$(K+1) \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{h}${{</math>}} � um vetor de constantes {{<math>}}$G \times 1${{</math>}}
+  - {{<math>}}$\boldsymbol{R}${{</math>}} � uma matriz {{<math>}}$G \times (K+1)${{</math>}}, que empilha {{<math>}}$G${{</math>}} vetores-linha {{<math>}}$\boldsymbol{r}'_g${{</math>}} de dimens�es {{<math>}}$1 \times (K+1)${{</math>}}, para {{<math>}}$g=1, 2, ..., G${{</math>}}
   - Modelo multivariado:
   
   {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_K x_K + \varepsilon$${{</math>}}
 
-- A partir destas matrizes e vetores, é possível construir testes de hipótese na forma:
+- A partir destas matrizes e vetores, � poss�vel construir testes de hip�tese na forma:
 {{<math>}}\begin{align}
 \text{H}_0: &\underset{G\times (K+1)}{\boldsymbol{R}} \underset{(K+1)\times 1}{\boldsymbol{\beta}} = \underset{G \times 1}{\boldsymbol{h}} \\
 \text{H}_0: &\left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \vdots \\ \boldsymbol{r}'_{G} \end{matrix} \right] \boldsymbol{\beta} = \left[ \begin{matrix} h_1 \\ h_2 \\ \vdots \\ h_G \end{matrix} \right] \\
@@ -36,25 +36,25 @@ type: book
 
 
 
-### Uma restrição linear
+### Uma restri��o linear
 
 - Considere o modelo:
   {{<math>}}$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \varepsilon$${{</math>}}
 
-- Logo, há {{<math>}}$K=2${{</math>}} variáveis explicativas (e há 3 parâmetros)
-- 1 restrição linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
-- Logo, neste caso específico, temos
+- Logo, h� {{<math>}}$K=2${{</math>}} vari�veis explicativas (e h� 3 par�metros)
+- 1 restri��o linear {{<math>}}$\Longrightarrow \ G=1${{</math>}}
+- Logo, neste caso espec�fico, temos
 {{<math>}}$$\boldsymbol{R} = \boldsymbol{r}'_1\ \implies\ \text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta} = h_1 $${{</math>}}
 
 
-#### Avaliando a hipótese nula com restrição única
-- Para o caso com uma única restrição, assumimos que 
+#### Avaliando a hip�tese nula com restri��o �nica
+- Para o caso com uma �nica restri��o, assumimos que 
 {{<math>}}$$ \boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}};\ \boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}}) r_1})$${{</math>}}
 
-- Calcula-se a estatística de Wald (igual à estatística _t_, quando tem uma única restrição):
+- Calcula-se a estat�stica de Wald (igual � estat�stica _t_, quando tem uma �nica restri��o):
 {{<math>}}$$ w = t = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \hat{\sigma}^2 (\boldsymbol{X}'\boldsymbol{X})^{-1} \boldsymbol{r}_1}} = \frac{\boldsymbol{r}'_1 \hat{\boldsymbol{\beta}} - h_1}{\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1}} $${{</math>}}
 
-- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística _t_ não pertencer ao intervalo de confiança.
+- Escolhe-se o n�vel de signific�ncia {{<math>}}$\alpha${{</math>}} e rejeita-se a hip�tese nula se a estat�stica _t_ n�o pertencer ao intervalo de confian�a.
 
 
 
@@ -64,10 +64,10 @@ type: book
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] $${{</math>}}
 
-- Então, a hipótese nula é
+- Ent�o, a hip�tese nula �
 {{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 4\ \iff\ \beta_1 = 4 $${{</math>}}
 
-- E o denomidor da estatística _t_ é igual a:
+- E o denomidor da estat�stica _t_ � igual a:
 {{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
 &= \sqrt{\left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right]  {\small \begin{bmatrix}
 var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
@@ -86,10 +86,10 @@ cov(\hat{\beta}_0, \hat{\beta}_1) & var(\hat{\beta}_1)   & cov(\hat{\beta}_1, \h
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
-- Então, a hipótese nula é
+- Ent�o, a hip�tese nula �
 {{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 2\ \iff\ \beta_1 + \beta_2 = 2 $${{</math>}}
 
-- E o denomidor da estatística _t_ é igual a:
+- E o denomidor da estat�stica _t_ � igual a:
 {{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
 &= \sqrt{\left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right]  {\small \begin{bmatrix}
 var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
@@ -111,10 +111,10 @@ cov(\hat{\beta}_0, \hat{\beta}_1)+cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] $${{</math>}}
 
-- Então, a hipótese nula é
+- Ent�o, a hip�tese nula �
 {{<math>}}$$\text{H}_0:\ \boldsymbol{r}'_1 \boldsymbol{\beta}\ =\ \left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = 0\ \iff\ \beta_1 - \beta_2 = 0 $${{</math>}}
 
-- E o denomidor da estatística _t_ é igual a:
+- E o denomidor da estat�stica _t_ � igual a:
 {{<math>}}\begin{align} &\sqrt{\boldsymbol{r}'_1 \boldsymbol{V(\hat{\boldsymbol{\beta}})} \boldsymbol{r}_1} \\
 &= \sqrt{\left[ \begin{matrix} 0 & 1 & -1 \end{matrix} \right]  {\small \begin{bmatrix}
 var(\hat{\beta}_0) & cov(\hat{\beta}_0, \hat{\beta}_1) & cov(\hat{\beta}_0, \hat{\beta}_2) \\
@@ -129,7 +129,7 @@ cov(\hat{\beta}_0, \hat{\beta}_1)-cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{
 
 #### Aplicando no R
 
-##### (Continuação) Exemplo 7.5 - Equação do Log do Salário-Hora (Wooldridge, 2006)
+##### (Continua��o) Exemplo 7.5 - Equa��o do Log do Sal�rio-Hora (Wooldridge, 2006)
 - Anteriormente, estimamos o seguinte modelo:
 
 {{<math>}}\begin{align}
@@ -137,17 +137,17 @@ cov(\hat{\beta}_0, \hat{\beta}_1)-cov(\hat{\beta}_0, \hat{\beta}_2) \\ var(\hat{
 &\beta_4 \text{exper} + \beta_5 \text{exper}^2 + \beta_6 \text{tenure} + \beta_7 \text{tenure}^2 + \varepsilon \end{align}{{</math>}}
 em que:
 
-- `wage`: salário médio por hora
+- `wage`: sal�rio m�dio por hora
 - `female`: dummy em que (1) mulher e (0) homem
 - `married`: dummy em que (1) casado e (0) solteiro
-- `female*married`: interação (multiplicação) das _dummies_ `female` e `married`
-- `educ`: anos de educação
-- `exper`: anos de experiência (`expersq` = anos ao quadrado)
+- `female*married`: intera��o (multiplica��o) das _dummies_ `female` e `married`
+- `educ`: anos de educa��o
+- `exper`: anos de experi�ncia (`expersq` = anos ao quadrado)
 - `tenure`: anos de trabalho no empregador atual (`tenursq` = anos ao quadrado)
 
 
 ```r
-# Carregando a base de dados necessária
+# Carregando a base de dados necess�ria
 data(wage1, package="wooldridge")
 
 # Estimando o modelo
@@ -168,25 +168,25 @@ round( summary(res_7.14)$coef, 4 )
 ## female:married  -0.3006     0.0718 -4.1885   0.0000
 ```
 
-- Notamos que o efeito do casamento sobre mulheres é diferente do efeito sobre homens, pois o parâmetro de `female:married` ({{<math>}}$\delta_2${{</math>}}) é significante.
-- No entanto, para avaliar se o efeito do casamento sobre a mulher é significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}.
-- Como tem apenas uma restrição, a hipótese pode ser avaliada por teste _t_:
+- Notamos que o efeito do casamento sobre mulheres � diferente do efeito sobre homens, pois o par�metro de `female:married` ({{<math>}}$\delta_2${{</math>}}) � significante.
+- No entanto, para avaliar se o efeito do casamento sobre a mulher � significante, precisamos ver se {{<math>}}H$_0 :\ \beta_2 + \delta_2 = 0${{</math>}}.
+- Como tem apenas uma restri��o, a hip�tese pode ser avaliada por teste _t_:
 
 <img src="../t_test.png" alt="" width=60%>
 
 
 ```r
-# Extraindo objetos da regressão
+# Extraindo objetos da regress�o
 bhat = matrix(coef(res_7.14), ncol=1) # coeficientes como vetor-coluna
-Vbhat = vcov(res_7.14) # matriz de variância-covariância do estimador
-N = nrow(wage1) # número de observações
-K = length(bhat) - 1 # número de covariadas
-ehat = residuals(res_7.14) # resíduos da regressão
+Vbhat = vcov(res_7.14) # matriz de vari�ncia-covari�ncia do estimador
+N = nrow(wage1) # n�mero de observa��es
+K = length(bhat) - 1 # n�mero de covariadas
+ehat = residuals(res_7.14) # res�duos da regress�o
 
-# Criando vetor-linha de restrição
-r1prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1) # vetor restrição
+# Criando vetor-linha de restri��o
+r1prime = matrix(c(0, 0, 1, 0, 0, 0, 0, 0, 1), nrow=1) # vetor restri��o
 h1 = 0 # constante da H0
-G = 1 # número de restrições
+G = 1 # n�mero de restri��es
 
 # Fazendo teste t
 t = (r1prime %*% bhat - h1) / sqrt(r1prime %*% Vbhat %*% t(r1prime))
@@ -209,16 +209,16 @@ p
 ## [1,] 0.09366368
 ```
 
-- Como {{<math>}}$|t| < 2${{</math>}} (valor crítico aproximada para nível de significância de 5\%), então não rejeitamos a hipótese nula e concluímos que o efeito do casamento sobre o salário de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) é estatisticamente não-significante.
+- Como {{<math>}}$|t| < 2${{</math>}} (valor cr�tico aproximada para n�vel de signific�ncia de 5\%), ent�o n�o rejeitamos a hip�tese nula e conclu�mos que o efeito do casamento sobre o sal�rio de mulheres ({{<math>}}$\beta_2 + \delta_2${{</math>}}) � estatisticamente n�o-significante.
 
-- Também podemos fazer o mesmo pelo teste de Wald, mas avaliando a estatística pela distribuição {{<math>}}$\chi^2${{</math>}} com 1 grau de liberdade (pois há apenas {{<math>}}$G=1${{</math>}} restrição)
-- Lembre-se também que usa-se o teste qui-quadrado unicaudal à direita.
+- Tamb�m podemos fazer o mesmo pelo teste de Wald, mas avaliando a estat�stica pela distribui��o {{<math>}}$\chi^2${{</math>}} com 1 grau de liberdade (pois h� apenas {{<math>}}$G=1${{</math>}} restri��o)
+- Lembre-se tamb�m que usa-se o teste qui-quadrado unicaudal � direita.
 
 
 
 
 ```r
-# Calculando estatística de Wald
+# Calculando estat�stica de Wald
 aux = r1prime %*% bhat - h1 # R \beta - h
 w = t(aux) %*% solve( r1prime %*% Vbhat %*% t(r1prime)) %*% aux
 w
@@ -244,16 +244,16 @@ p
 </br>
 
 
-### Múltiplas restrições lineares
+### M�ltiplas restri��es lineares
 
-#### Avaliando a hipótese nula com múltiplas restrições
-- Para o caso com _G_ restrições, assumimos que 
+#### Avaliando a hip�tese nula com m�ltiplas restri��es
+- Para o caso com _G_ restri��es, assumimos que 
 {{<math>}}$$ \boldsymbol{R} \hat{\boldsymbol{\beta}} \sim N(\boldsymbol{R} \hat{\boldsymbol{\beta}};\ \sigma^2 \boldsymbol{R} \boldsymbol{V(\hat{\boldsymbol{\beta}}) R'})$${{</math>}}
 
-- Calcula-se a estatística de Wald
+- Calcula-se a estat�stica de Wald
 {{<math>}}$$ w = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V(\hat{\beta}) R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
 
-- Escolhe-se o nível de significância {{<math>}}$\alpha${{</math>}} e rejeita-se a hipótese nula se a estatística {{<math>}}$w${{</math>}} não pertencer ao intervalo de confiança (do zero ao valor crítico).
+- Escolhe-se o n�vel de signific�ncia {{<math>}}$\alpha${{</math>}} e rejeita-se a hip�tese nula se a estat�stica {{<math>}}$w${{</math>}} n�o pertencer ao intervalo de confian�a (do zero ao valor cr�tico).
 
 
 
@@ -266,10 +266,10 @@ p
 
 {{<math>}}$$ r'_1 = \left[ \begin{matrix} 0 & 1 & 0 \end{matrix} \right] \quad \text{e} \quad r'_2 = \left[ \begin{matrix} 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
-- Logo, {{<math>}}$\boldsymbol{R}${{</math>}} é
+- Logo, {{<math>}}$\boldsymbol{R}${{</math>}} �
 {{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \end{matrix} \right] = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] $${{</math>}}
 
-- Então, a hipótese nula é
+- Ent�o, a hip�tese nula �
 {{<math>}}$$\text{H}_0:\ \boldsymbol{R} \boldsymbol{\beta} = \left[ \begin{matrix} 0 & 1 & 0 \\ 0 & 1 & 1 \end{matrix} \right] \left[ \begin{matrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{matrix} \right] = \left[ \begin{matrix} h_1 \\ h_2 \end{matrix} \right]\ \iff\ \text{H}_0:\ \left\{  \begin{matrix} \beta_1 &= 0 \\ \beta_1 + \beta_2 &= 2 \end{matrix} \right. $${{</math>}}
 
 
@@ -277,17 +277,17 @@ p
 
 ### Aplicando no R
 
-- Como exemplo, usaremos a base de dados `mlb1` (pacote `wooldridge`) com estatísticas de jogadores de beisebol (Wooldridge, 2006, Seção 4.5)
+- Como exemplo, usaremos a base de dados `mlb1` (pacote `wooldridge`) com estat�sticas de jogadores de beisebol (Wooldridge, 2006, Se��o 4.5)
 - Queremos estimar o modelo:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
 &\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
 em que:
-  - `log(salary)`: log do salário de 1993
-  - `years`: anos jogando na 1ª divisão de beisebol americano
-  - `gamesyr`: média de jogos por ano
-  - `bavg`: média de rebatidas na carreira
-  - `hrunsyr`: média de _home runs_ por ano
-  - `rbisyr`: média de corridas impulsionadas por ano
+  - `log(salary)`: log do sal�rio de 1993
+  - `years`: anos jogando na 1� divis�o de beisebol americano
+  - `gamesyr`: m�dia de jogos por ano
+  - `bavg`: m�dia de rebatidas na carreira
+  - `hrunsyr`: m�dia de _home runs_ por ano
+  - `rbisyr`: m�dia de corridas impulsionadas por ano
 
 
 ```r
@@ -295,7 +295,7 @@ data(mlb1, package="wooldridge")
 
 # Estimando o modelo completo (irrestrito)
 resMLB = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
-round(summary(resMLB)$coef, 5) # coeficientes da estimação
+round(summary(resMLB)$coef, 5) # coeficientes da estima��o
 ```
 
 ```
@@ -308,19 +308,19 @@ round(summary(resMLB)$coef, 5) # coeficientes da estimação
 ## rbisyr       0.01077    0.00717  1.50046  0.13440
 ```
 
-- Note que, individualmente, as variáveis `bavg`, `hrunsyr` e `rbisyr` são estatisticamente não significantes.
-- Queremos avaliar se eles são estatisticamente significantes de forma conjunta, ou seja,
+- Note que, individualmente, as vari�veis `bavg`, `hrunsyr` e `rbisyr` s�o estatisticamente n�o significantes.
+- Queremos avaliar se eles s�o estatisticamente significantes de forma conjunta, ou seja,
 {{<math>}}$$ \text{H}_0:\ \left\{ \begin{matrix} \beta_3 = 0 \\ \beta_4 = 0 \\ \beta_5 = 0\end{matrix} \right.   $${{</math>}}
 
 - Logo, temos que
 {{<math>}}$$ \boldsymbol{R} = \left[ \begin{matrix} \boldsymbol{r}'_1 \\ \boldsymbol{r}'_2 \\ \boldsymbol{r}'_3 \end{matrix} \right] = \left[ \begin{matrix} 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 \end{matrix} \right] $${{</math>}}
 
 
-#### Usando função `Wald.test()`
+#### Usando fun��o `Wald.test()`
 
 
 ```r
-# Extraindo matriz de variância-covariância do estimador
+# Extraindo matriz de vari�ncia-covari�ncia do estimador
 Vbhat = vcov(resMLB)
 round(Vbhat, 5)
 ```
@@ -336,11 +336,11 @@ round(Vbhat, 5)
 ```
 
 ```r
-# Calculando a estatística de Wald
-# install.packages("aod") # instalando o pacote necessário
-aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
+# Calculando a estat�stica de Wald
+# install.packages("aod") # instalando o pacote necess�rio
+aod::wald.test(Sigma = Vbhat, # matriz de vari�ncia-covari�ncia
                b = coef(resMLB), # estimativas
-               Terms = 4:6, # posições dos parâmetros a serem testados
+               Terms = 4:6, # posi��es dos par�metros a serem testados
                H0 = c(0, 0, 0) # vetor h (tudo igual a zero)
                )
 ```
@@ -353,10 +353,10 @@ aod::wald.test(Sigma = Vbhat, # matriz de variância-covariância
 ## X2 = 28.7, df = 3, P(> X2) = 2.7e-06
 ```
 
-- Observe que rejeitamos a hipótese nula e, portanto, os parâmetros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} são conjuntamente significantes.
+- Observe que rejeitamos a hip�tese nula e, portanto, os par�metros {{<math>}}$\beta_3, \beta_4 \text{ e } \beta_5${{</math>}} s�o conjuntamente significantes.
 
 
-#### Calculando "na mão"
+#### Calculando "na m�o"
 
 - Estimando o modelo
 
@@ -392,13 +392,13 @@ round(bhat, 5)
 ```
 
 ```r
-# Calculando os resíduos
+# Calculando os res�duos
 ehat = y - X %*% bhat
 
-# Variância do termo de erro
+# Vari�ncia do termo de erro
 sig2hat = as.numeric( t(ehat) %*% ehat / (N-K-1) )
 
-# Matriz de variância-covariância do estimador
+# Matriz de vari�ncia-covari�ncia do estimador
 Vbhat = sig2hat * solve( t(X) %*% X )
 round(Vbhat, 5)
 ```
@@ -413,13 +413,13 @@ round(Vbhat, 5)
 ## rbisyr   0.00082  0.00001 -0.00002  0.00000 -0.00010  0.00005
 ```
 
-- Agora, vamos criar a matriz das restrições
+- Agora, vamos criar a matriz das restri��es
 
 ```r
-# Número de restrições
+# N�mero de restri��es
 G = 3
 
-# Matriz das restrições
+# Matriz das restri��es
 R = matrix(c(0, 0, 0, 1, 0, 0,
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1),
@@ -448,14 +448,14 @@ h
 ## [3,]    0
 ```
 
-- Lembre-se que, por padrão, a função `matrix()` "preenche" a matrix por coluna.
-- No entanto, é mais intuito preencher as restrições por linha (já que cada linha representa uma restrição). Para isto, foi usado o argumento `byrow=TRUE`.
-- Calculando a estatística de Wald, dada por
+- Lembre-se que, por padr�o, a fun��o `matrix()` "preenche" a matrix por coluna.
+- No entanto, � mais intuito preencher as restri��es por linha (j� que cada linha representa uma restri��o). Para isto, foi usado o argumento `byrow=TRUE`.
+- Calculando a estat�stica de Wald, dada por
 {{<math>}}$$ w(\hat{\boldsymbol{\beta}}) = \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]' \left[ \boldsymbol{R V_{\hat{\beta}} R}' \right]^{-1} \left[ \boldsymbol{R}\hat{\boldsymbol{\beta}} - \boldsymbol{h} \right]\ \sim\ \chi^2_{(G)} $${{</math>}}
 
 
 ```r
-# Estatística de Wald
+# Estat�stica de Wald
 w = t( R %*% bhat - h ) %*% solve( R %*% Vbhat %*% t(R) ) %*% (R %*% bhat - h)
 w
 ```
@@ -466,7 +466,7 @@ w
 ```
 
 ```r
-# Encontrando valor crítico Qui-quadrado para 5% de signif.
+# Encontrando valor cr�tico Qui-quadrado para 5% de signif.
 alpha = 0.05
 c = qchisq(1-alpha, df=G)
 c
@@ -477,7 +477,7 @@ c
 ```
 
 ```r
-# Comparando estatística de Wald e valor crítico
+# Comparando estat�stica de Wald e valor cr�tico
 w > c
 ```
 
@@ -486,8 +486,8 @@ w > c
 ## [1,] TRUE
 ```
 
-- Como Estatística de Wald (= 28,65) é maior do que o valor crítico (= 7,81), então rejeitamos a hipótese nula conjunta de que todos parâmetros testados são iguais a zero.
-- Também poderíamos verificar o p-valor por meio da estatística de Wald:
+- Como Estat�stica de Wald (= 28,65) � maior do que o valor cr�tico (= 7,81), ent�o rejeitamos a hip�tese nula conjunta de que todos par�metros testados s�o iguais a zero.
+- Tamb�m poder�amos verificar o p-valor por meio da estat�stica de Wald:
 
 ```r
 1 - pchisq(w, df=G)
@@ -498,7 +498,7 @@ w > c
 ## [1,] 2.651604e-06
 ```
 
-- Como é menor do que 5%, rejeita-se a hipótese nula.
+- Como � menor do que 5%, rejeita-se a hip�tese nula.
 
 
 </br>
@@ -506,23 +506,23 @@ w > c
 
 ## Teste F
 
-- [Seção 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
-- Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
+- [Se��o 4.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/133)
+- Uma outra forma de avaliar restri��es m�ltiplas � por meio do teste F.
 - Nele, estimamos dois modelos:
-  - Irrestrito: inclui todas as variáveis explicativas de interesse
-  - Restrito: exclui algumas variáveis da estimação
-- O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
-- A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
+  - Irrestrito: inclui todas as vari�veis explicativas de interesse
+  - Restrito: exclui algumas vari�veis da estima��o
+- O teste F compara as somas dos quadrados dos res�duos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
+- A ideia �: se as vari�veis exclu�das forem significantes conjuntamente, ent�o haver� uma diferen�a de poder explicativo entre os modelos e, logo, as vari�veis seriam significantes.
 
 </br>
 
-- A estatística _F_ pode ser calculada por:
+- A estat�stica _F_ pode ser calculada por:
 
 {{<math>}}$$ F = \frac{\text{SSR}_{r} - \text{SSR}_{ur}}{\text{SSR}_{ur}}.\frac{N-K-1}{G} = \frac{R^2_{ur} - R^2_{r}}{1 - R^2_{ur}}.\frac{N-K-1}{G} \tag{4.10} $${{</math>}}
 
 em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 
-- Depois, avalia-se a estatística _F_ a partir de um teste unicaudal à direita em uma distribuição _F_:
+- Depois, avalia-se a estat�stica _F_ a partir de um teste unicaudal � direita em uma distribui��o _F_:
 
 <img src="../F_test.png" alt="">
 
@@ -530,29 +530,29 @@ em que `ur` indica o modelo irrestrito, e `r` indica o modelo restrito.
 
 ### Aplicando no R
 
-- Aqui, continuaremos usando a base de dados `mlb1` da Seção 4.5 de Wooldridge (2006)
-- O modelo irrestrito (com todas variáveis explicativas) é:
+- Aqui, continuaremos usando a base de dados `mlb1` da Se��o 4.5 de Wooldridge (2006)
+- O modelo irrestrito (com todas vari�veis explicativas) �:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \beta_3. \text{bavg} + \\
 &\beta_4 .\text{hrunsyr} + \beta_5. \text{rbisyr} + \varepsilon \end{align}{{</math>}}
 
-- O modelo restrito (excluindo as variáveis) é:
+- O modelo restrito (excluindo as vari�veis) �:
 {{<math>}}\begin{align} \log(\text{salary}) = &\beta_0 + \beta_1. \text{years} + \beta_2. \text{gameyr} + \varepsilon \end{align}{{</math>}}
 
 
-#### Usando função `linearHypothesis()`
-- É possível fazer o teste _F_ a partir da função `linearHypothesis()` do pacote `car`
-- Além de incluir o objeto resultante de uma estimação, é necessário incluir um vetor de texto com as restrições:
+#### Usando fun��o `linearHypothesis()`
+- ?? poss�vel fazer o teste _F_ a partir da fun��o `linearHypothesis()` do pacote `car`
+- Al�m de incluir o objeto resultante de uma estima��o, � necess�rio incluir um vetor de texto com as restri��es:
 
 
 ```r
 # Estimando o modelo irrestrito
 res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 
-# Criando vetor com as restrições
+# Criando vetor com as restri��es
 myH0 = c("bavg = 0", "hrunsyr = 0", "rbisyr = 0")
 
 # Aplicando o teste F
-# install.packages("car") # instalando o pacote necessário
+# install.packages("car") # instalando o pacote necess�rio
 car::linearHypothesis(res.ur, myH0)
 ```
 
@@ -574,10 +574,10 @@ car::linearHypothesis(res.ur, myH0)
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-- Note que na 2ª linha (modelo irrestrito), a soma dos quadrados dos resíduos (SQR/RSS) é menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que é esperado)
-- Para avaliar a hipótese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estatística _F_ é maior do que um valor crítico (dado um nível de significância), ou avaliarmos se o p-valor é menor do que esse nível de significância.
-- É possível ver acima, pelo segundo critério, que rejeitamos a hipótese nula.
-- Podemos ver o valor crítico a 5% de significância via:
+- Note que na 2� linha (modelo irrestrito), a soma dos quadrados dos res�duos (SQR/RSS) � menor do que o do modelo restrito e, portanto, o conjunto maior de covariadas tem um maior poder explicativo (o que � esperado)
+- Para avaliar a hip�tese nula ({{<math>}}$\beta_3 = \beta_4 = \beta_5 = 0${{</math>}}), podemos verificar se a estat�stica _F_ � maior do que um valor cr�tico (dado um n�vel de signific�ncia), ou avaliarmos se o p-valor � menor do que esse n�vel de signific�ncia.
+- ?? poss�vel ver acima, pelo segundo crit�rio, que rejeitamos a hip�tese nula.
+- Podemos ver o valor cr�tico a 5% de signific�ncia via:
 
 
 ```r
@@ -587,12 +587,12 @@ qf(1-0.05, G, N-K-1)
 ```
 ## [1] 2.630641
 ```
-- Como 9,55 > 2,63, então rejeitamos a hipótese nula.
+- Como 9,55 > 2,63, ent�o rejeitamos a hip�tese nula.
 
 
-#### Calculando "na mão"
+#### Calculando "na m�o"
 
-- Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para não ter que fazer todos passos da estimação duas vezes.
+- Aqui, vamos estimar os resultados dos modelos irrestrito e restrito, estimados por `lm()` para n�o ter que fazer todos passos da estima��o duas vezes.
 
 
 ```r
@@ -602,7 +602,7 @@ res.ur = lm(log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data=mlb1)
 # Estimando o modelo restrito
 res.r = lm(log(salary) ~ years + gamesyr, data=mlb1)
 
-# Extraindo os R2 dos resultados das estimações
+# Extraindo os R2 dos resultados das estima��es
 r2.ur = summary(res.ur)$r.squared
 r2.ur
 ```
@@ -621,7 +621,7 @@ r2.r
 ```
 
 ```r
-# Calculando a estatística F
+# Calculando a estat�stica F
 F = ( r2.ur - r2.r ) / (1 - r2.ur) * (N-K-1) /  G
 F
 ```
@@ -643,6 +643,6 @@ F
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Panel Data" cta_link="../sec10" >}}
+{{< cta cta_text="?Y'? Proceed to Panel Data" cta_link="../sec10" >}}
 
 

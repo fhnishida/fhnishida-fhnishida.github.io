@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipulação de Dados
+linktitle: Data Manipulation
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Manipulação de Dados
+title: Data Manipulation
 weight: 3
 output: md_document
 type: book
@@ -61,7 +61,7 @@ tail(airquality) # Visualizando as 6 últimas linhas
 - Usando `str()`, podemos visualizar a **estrutura** da base:
     - todas a variáveis (colunas),
     - a classe de cada uma delas e
-    - algumas de suas observações.
+    - algumas de suas observations.
 
 ```r
 str(airquality)
@@ -404,7 +404,7 @@ class(lapply(x, mean)) # classe do objeto retornado pelo lapply
 #### Função `sapply()`
 Similar ao `lapply`, mas `sapply` tenta simplificar o output:
 
-- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
+- Se o resultado for uma lista where todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
 
 ```r
 sapply(x, mean) # retorna um vetor
@@ -414,7 +414,7 @@ sapply(x, mean) # retorna um vetor
 ##          a          b          c 
 ##  3.0000000 -0.2621439 19.0000000
 ```
-- Se o resultado for uma lista em que cada elemento tem mesmo comprimento, retorna uma matriz
+- Se o resultado for uma lista where cada elemento tem mesmo comprimento, retorna uma matriz
 
 ```r
 sapply(x, summary) # retorna uma matriz
@@ -494,7 +494,7 @@ x[1:2, "var2"] # Linhas 1 e 2, e 2ª coluna (usando seu nome)
 ```
 ## [1] NA  7
 ```
-- Note que, podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair uma parte do data frame. Por exemplo, queremos obter apenas as observações em que a variável 1 seja menor ou igual a 3 **E** (`&`) que a variável 3 seja estritamente maior do que 11:
+- Note que, podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair uma parte do data frame. Por exemplo, queremos obter apenas as observations where a variável 1 seja menor ou igual a 3 **E** (`&`) que a variável 3 seja estritamente maior do que 11:
 
 ```r
 x$var1 <= 3 & x$var3 > 11
@@ -514,7 +514,7 @@ x[x$var1 <= 3 & x$var3 > 11, ]
 ## 3    2   NA   12
 ## 4    1   10   15
 ```
-- Poderíamos também obter apenas as observações em que a variável 1 seja menor ou igual a 3 **OU** (`|`) que a variável 3 seja estritamente maior do que 11:
+- Poderíamos também obter apenas as observations where a variável 1 seja menor ou igual a 3 **OU** (`|`) que a variável 3 seja estritamente maior do que 11:
 
 ```r
 x[x$var1 <= 3 | x$var3 > 11, ]
@@ -531,7 +531,7 @@ x[x$var1 <= 3 | x$var3 > 11, ]
 - Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale `==` com mais de um valor)
 
 ```r
-x$var1 %in% c(1, 5) # obs em que var1 é igual a 1 ou 5
+x$var1 %in% c(1, 5) # obs where var1 é igual a 1 ou 5
 ```
 
 ```

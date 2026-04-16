@@ -13,8 +13,8 @@ type: book
 
 
 
-- [Seções 15.1 a 15.5 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
-- Seção 4.8 de Cameron e Trivedi (2005)
+- [Sections 15.1 a 15.5 de Heiss (2020)](http://www.urfie.net/downloads/PDF/URfIE_web.pdf)
+- Section 4.8 de Cameron e Trivedi (2005)
 - Capítulo 5 de Wooldridge (2010)
 - Capítulo 8 de Davidson  e MacKinnon (1999)
 
@@ -23,7 +23,7 @@ type: book
 
 - Considere o modelo multivariado com {{<math>}}$K${{</math>}} regressores:
 {{<math>}}$$ \boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}^*_{1} + ... + \beta_J \boldsymbol{x}^*_{J} + \beta_{J+1} \boldsymbol{x}_{J+1} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} $${{</math>}}
-em que {{<math>}}$\boldsymbol{x}^*_1, ..., \boldsymbol{x}^*_{iJ}${{</math>}} são as {{<math>}}$J${{</math>}} regressores endógenos do modelo, com {{<math>}}$N${{</math>}} observações.
+where {{<math>}}$\boldsymbol{x}^*_1, ..., \boldsymbol{x}^*_{iJ}${{</math>}} são as {{<math>}}$J${{</math>}} regressores endógenos do modelo, com {{<math>}}$N${{</math>}} observations.
 
 
 - Matricialmente, podemos escrever (1) como:
@@ -32,17 +32,17 @@ em que
 {{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{X}} = \begin{bmatrix} 1 & x^*_{11} & \cdots & x^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & x^*_{21} & \cdots & x^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & x^*_{N1} & \cdots & x^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix}, $${{</math>}}
 {{<math>}}$$ \underset{N \times 1}{\boldsymbol{y}} = \left[ \begin{matrix} \boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_N \end{matrix} \right] \quad \text{ e } \quad  \underset{N \times 1}{\boldsymbol{\varepsilon}} = \left[ \begin{matrix} \boldsymbol{\varepsilon}_1 \\ \boldsymbol{\varepsilon}_2 \\ \vdots \\ \boldsymbol{\varepsilon}_N \end{matrix} \right] $${{</math>}}
 
-- Denote {{<math>}}$\boldsymbol{Z}${{</math>}} a matriz de instrumentos com {{<math>}}$L${{</math>}} variáveis instrumentais, {{<math>}}$\boldsymbol{z}_k${{</math>}}, e {{<math>}}$K-J${{</math>}} variáveis exógenas, {{<math>}}$\boldsymbol{x}_k${{</math>}}:
+- Denote {{<math>}}$\boldsymbol{Z}${{</math>}} a matriz de instrumentos com {{<math>}}$L${{</math>}} variáveis instrumentais, {{<math>}}$\boldsymbol{z}_k${{</math>}}, e {{<math>}}$K-J${{</math>}} exogenous variables, {{<math>}}$\boldsymbol{x}_k${{</math>}}:
 {{<math>}}$$ \underset{N \times (1+L+K-J)}{\boldsymbol{Z}} = \begin{bmatrix}
 1 & z_{11} & \cdots & z_{1L} & x_{1,J+1} & \cdots & x_{1K} \\
 1 & z_{21} & \cdots & z_{2L} & x_{2,J+1} & \cdots & x_{2K} \\
 \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
 1 & z_{N1} & \cdots & z_{NL} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix},$${{</math>}}
-em que {{<math>}}$J \ge L${{</math>}} e, logo, {{<math>}}$\boldsymbol{Z}${{</math>}} tem pelo menos o mesmo número de colunas da matriz {{<math>}}$\boldsymbol{X}${{</math>}}
+where {{<math>}}$J \ge L${{</math>}} e, logo, {{<math>}}$\boldsymbol{Z}${{</math>}} tem pelo menos o mesmo número de colunas da matriz {{<math>}}$\boldsymbol{X}${{</math>}}
 
 - Note que:
-  - os (melhores) instrumentos de variáveis exógenas são elas mesmas ({{<math>}}$\boldsymbol{x}_2, ..., \boldsymbol{x}_K${{</math>}})
-  - **Apenas no caso em que {{<math>}}$J = L${{</math>}} (nº de regressores endógenos = nº de instrumentos)**, a matriz {{<math>}}$\boldsymbol{Z}${{</math>}} tem as mesmas dimensões de {{<math>}}$\boldsymbol{X:}${{</math>}}
+  - os (melhores) instrumentos de exogenous variables são elas mesmas ({{<math>}}$\boldsymbol{x}_2, ..., \boldsymbol{x}_K${{</math>}})
+  - **Apenas no caso where {{<math>}}$J = L${{</math>}} (nº de regressores endógenos = nº de instrumentos)**, a matriz {{<math>}}$\boldsymbol{Z}${{</math>}} tem as mesmas dimensões de {{<math>}}$\boldsymbol{X:}${{</math>}}
   
 {{<math>}}$$ \underset{N \times (K+1)}{\boldsymbol{Z}} = \left[ \begin{matrix} 1 & z_{11} & \cdots & z_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & z_{21} & \cdots & z_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & z_{N1} & \cdots & z_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{matrix} \right], $${{</math>}}
 
@@ -69,7 +69,7 @@ em que {{<math>}}$J \ge L${{</math>}} e, logo, {{<math>}}$\boldsymbol{Z}${{</mat
 &= \sigma^2 {\color{red}\left( \boldsymbol{Z}' \boldsymbol{X}\right)^{-1}} {\color{green}\boldsymbol{Z}' \boldsymbol{Z}} {\color{blue}\left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1}} \\
 &\overset{*}{=} \sigma^2 \left( {\color{blue}\boldsymbol{X}' \boldsymbol{Z}} {\color{green}(\boldsymbol{Z}' \boldsymbol{Z})^{-1}} {\color{red}\boldsymbol{Z}' \boldsymbol{X}} \right)^{-1} \\
 &= \sigma^2 \left( \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} \right)^{-1}  \end{align}{{</math>}}
-em que {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é a matriz de projeção ortogonal em {{<math>}}$\boldsymbol{Z}${{</math>}}. (*) Como cada dupla de matrizes tem dimensão K x K, então podemos inverter toda expressão "da direita para esquerda", iniciando pela inversa de  {{<math>}}$\left(\boldsymbol{Z}' \boldsymbol{X} \right)^{-1}${{</math>}}, inversa de {{<math>}}$\boldsymbol{Z}' \boldsymbol{Z}${{</math>}}, e inversa de {{<math>}}$\left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1}${{</math>}}
+where {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é a matriz de projeção ortogonal em {{<math>}}$\boldsymbol{Z}${{</math>}}. (*) Como cada dupla de matrizes tem dimensão K x K, então podemos inverter toda expressão "da direita para esquerda", iniciando pela inversa de  {{<math>}}$\left(\boldsymbol{Z}' \boldsymbol{X} \right)^{-1}${{</math>}}, inversa de {{<math>}}$\boldsymbol{Z}' \boldsymbol{Z}${{</math>}}, e inversa de {{<math>}}$\left(\boldsymbol{X}' \boldsymbol{Z} \right)^{-1}${{</math>}}
 
 - A **variância do termo de erro** pode ser estimada usando:
 {{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{N-K-1} $${{</math>}}
@@ -77,19 +77,19 @@ em que {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é a matriz
 
 </br>
 
-#### Exemplo 15.1: Retorno da Educação para Mulheres (Wooldridge, 2019)
+#### Example 15.1: Returns to Education para Mulheres (Wooldridge, 2019)
 
 - Vamos usar a base de dados `mroz` do pacote `wooldridge` para estimar o seguinte modelo
 
 {{<math>}}$$ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ}^* + \beta_2 \text{exper} + \beta_3 \text{exper}^2 + \varepsilon $${{</math>}}
 
-- Apenas para comparação, vamos estimar por MQO:
+- Apenas para comparação, vamos estimar por OLS:
 
 ```r
 data(mroz, package="wooldridge") # carregando base de dados
 mroz = mroz[!is.na(mroz$wage),] # retirando valores ausentes de salário
 
-reg.ols = lm(lwage ~ educ + exper + expersq, mroz) # regressão MQO
+reg.ols = lm(lwage ~ educ + exper + expersq, mroz) # regressão OLS
 round( summary(reg.ols)$coef, 3 )
 ```
 
@@ -105,8 +105,8 @@ round( summary(reg.ols)$coef, 3 )
 ### Estimação via `ivreg()`
 
 - [CRAN - Package ivreg](https://cran.r-project.org/web/packages/ivreg/vignettes/ivreg.html)
-- Para fazer regressão com variável instrumental, vamos usar a função `ivreg()` do pacote `ivreg` (também presente no pacote `AER`, do mesmo autor).
-- É necessário incluir a variável instrumental de _educ_ (que neste caso é a educação do pai - _fatheduc_) e dos demais instrumentos das variáveis exógenas (elas mesmas), após informar o modelo, incluindo um `|`:
+- Para fazer regressão com instrumental variable, vamos usar a função `ivreg()` do pacote `ivreg` (também presente no pacote `AER`, do mesmo autor).
+- É necessário incluir a instrumental variable de _educ_ (que neste caso é a educação do pai - _fatheduc_) e dos demais instrumentos das exogenous variables (elas mesmas), após informar o modelo, incluindo um `|`:
 
 
 ```r
@@ -158,7 +158,7 @@ stargazer::stargazer(reg.ols, reg.iv, type="text", digits=4)
 # Criando o vetor y
 y = as.matrix(mroz[,"lwage"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, mroz[,c("educ","exper","expersq")]) )
 
 # Criando a matriz de instrumentos Z com primeira coluna de 1's
@@ -366,8 +366,8 @@ em que
 
 #### Estimação analítica
 
-- Aqui vamos criar "na mão" uma nova variável instrumental a partir das duas existentes
-- A partir do exemplo 15.1 do Wooldridge, vamos adicionar outra variável instrumental (_motheduc_), além _fatheduc_, para o regressor endógeno _educ_.
+- Aqui vamos criar "by hand" uma nova instrumental variable a partir das duas existentes
+- A partir do exemplo 15.1 do Wooldridge, vamos adicionar outra instrumental variable (_motheduc_), além _fatheduc_, para o regressor endógeno _educ_.
 - Lembre-se que queremos estimar o seguinte modelo:
 {{<math>}}$$ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ}^* + \beta_2 \text{exper} + \beta_3 \text{exper}^2 + \varepsilon $${{</math>}}
 
@@ -377,7 +377,7 @@ em que
 # Criando o vetor y
 y = as.matrix(mroz[,"lwage"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, mroz[,c("educ","exper","expersq")]) )
 
 # Criando vetor com variável x1* endógena
@@ -450,25 +450,25 @@ round(reg.iv2, 4)
 
 </br>
 
-## Estimador MQ2E
+## Estimador 2SLS
 
 - Como o estimador VI exige que o número de instrumentos seja igual ao número de regressores, não é utilizado para modelos sobreidentificados (a não ser que faça o ajuste mostrado acima).
-- Quando {{<math>}}$L>J${{</math>}}, é comum o uso do Mínimos Quadrados em 2 Estágios (MQ2E/2SLS), também conhecido como estimador VI generalizado (GIVE).
+- Quando {{<math>}}$L>J${{</math>}}, é comum o uso do Mínimos Quadrados em 2 Estágios (2SLS/2SLS), também conhecido como estimador VI generalizado (GIVE).
 
-- O **estimador de mínimos quadrados em 2 estágios (MQ2E)** é dado por
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}} = (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} $${{</math>}}
-em que {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é a matriz de projeção ortogonal em {{<math>}}$\boldsymbol{Z}${{</math>}}.
-- Observe também que o estimador MQ2E é o caso geral do VI, quando o modelo é exatamente identificado {{<math>}}($\boldsymbol{Z}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}} têm mesma dimensão):
-{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}} &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+- O **estimador de mínimos quadrados em 2 estágios (2SLS)** é dado por
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} = (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} $${{</math>}}
+where {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é a matriz de projeção ortogonal em {{<math>}}$\boldsymbol{Z}${{</math>}}.
+- Observe também que o estimador 2SLS é o caso geral do VI, quando o modelo é exatamente identificado {{<math>}}($\boldsymbol{Z}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}} têm mesma dimensão):
+{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
 &= ({\color{blue}\boldsymbol{X}' \boldsymbol{Z}} {\color{green}(\boldsymbol{Z}' \boldsymbol{Z})^{-1}} {\color{red}\boldsymbol{Z}' \boldsymbol{X}})^{-1} \boldsymbol{X}' \boldsymbol{Z} (\boldsymbol{Z}' \boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{y} \\
 &= {\color{red}(\boldsymbol{Z}' \boldsymbol{X})^{-1}} {\color{green}\boldsymbol{Z}' \boldsymbol{Z}} \underbrace{{\color{blue}(\boldsymbol{X}' \boldsymbol{Z})^{-1}} \boldsymbol{X}' \boldsymbol{Z}}_{\boldsymbol{I}} (\boldsymbol{Z}' \boldsymbol{Z})^{-1} \boldsymbol{Z}' \boldsymbol{y} \\
 &= (\boldsymbol{Z}' \boldsymbol{X})^{-1}  \underbrace{\boldsymbol{Z}' \boldsymbol{Z} (\boldsymbol{Z}' \boldsymbol{Z})^{-1}}_{\boldsymbol{I}}  \boldsymbol{Z}' \boldsymbol{y} \\
 &= (\boldsymbol{Z}' \boldsymbol{X})^{-1} \boldsymbol{Z}' \boldsymbol{y} = \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{IV}} \end{align}{{</math>}}
 
 - A **matriz de variâncias-covariâncias do estimador** é dada por
-{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}) &= \left( \boldsymbol{X}' \boldsymbol{Z}\right)^{-1} \boldsymbol{Z}' \boldsymbol{S} \boldsymbol{Z} \left(\boldsymbol{Z}' \boldsymbol{X} \right)^{-1} \\
+{{<math>}}\begin{align} V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) &= \left( \boldsymbol{X}' \boldsymbol{Z}\right)^{-1} \boldsymbol{Z}' \boldsymbol{S} \boldsymbol{Z} \left(\boldsymbol{Z}' \boldsymbol{X} \right)^{-1} \\
 &\overset{*}{=} \sigma^2 \left( \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} \right)^{-1} \end{align}{{</math>}}
-em que {{<math>}}$\boldsymbol{S} = N^{-1} \sum_i {\hat{\varepsilon}^2_i \boldsymbol{z}_i \boldsymbol{z}'_i}${{</math>}}. (*) Sob homocedasticidade.
+where {{<math>}}$\boldsymbol{S} = N^{-1} \sum_i {\hat{\varepsilon}^2_i \boldsymbol{z}_i \boldsymbol{z}'_i}${{</math>}}. (*) Sob homocedasticidade.
 
 - A **variância do termo de erro** pode ser estimada usando:
 {{<math>}}$$ \hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{N-K-1} $${{</math>}}
@@ -476,8 +476,8 @@ em que {{<math>}}$\boldsymbol{S} = N^{-1} \sum_i {\hat{\varepsilon}^2_i \boldsym
 
 </br>
 
-- Note que, definindo {{<math>}}$\hat{\boldsymbol{X}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}${{</math>}} e {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y}${{</math>}} (não é {{<math>}}$\hat{\boldsymbol{y}}${{</math>}} para não confundir com valor predito), o estimador de MQ2E pode ser reescrito como
-{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}} &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
+- Note que, definindo {{<math>}}$\hat{\boldsymbol{X}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}${{</math>}} e {{<math>}}$\tilde{\boldsymbol{y}} \equiv \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y}${{</math>}} (não é {{<math>}}$\hat{\boldsymbol{y}}${{</math>}} para não confundir com valor predito), o estimador de 2SLS pode ser reescrito como
+{{<math>}}\begin{align} \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
 &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
 &= (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
 &= ([\boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}]' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} [\boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X}]' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} \\
@@ -485,11 +485,11 @@ em que {{<math>}}$\boldsymbol{S} = N^{-1} \sum_i {\hat{\varepsilon}^2_i \boldsym
 \end{align}{{</math>}}
 pois {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}} é idempotente {{<math>}}$(\boldsymbol{P_{\scriptscriptstyle{Z}}}.\boldsymbol{P_{\scriptscriptstyle{Z}}}=\boldsymbol{P_{\scriptscriptstyle{Z}}})${{</math>}} e simétrico {{<math>}}$(\boldsymbol{P_{\scriptscriptstyle{Z}}}=\boldsymbol{P_{\scriptscriptstyle{Z}}}')${{</math>}}
 
-- Com a transformação das variáveis, podemos resolver o estimador por MQO e, por isso, o nome do estimador faz alusão a dois MQO's.
-- O 1º MQO ocorre quando pré-multiplicamos por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}}, pois esta matriz projeta {{<math>}}$\boldsymbol{X}${{</math>}} no espaço de {{<math>}}$\boldsymbol{Z}${{</math>}}:
+- Com a transformação das variáveis, podemos resolver o estimador por OLS e, por isso, o nome do estimador faz alusão a dois OLS's.
+- O 1º OLS ocorre quando pré-multiplicamos por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}}, pois esta matriz projeta {{<math>}}$\boldsymbol{X}${{</math>}} no espaço de {{<math>}}$\boldsymbol{Z}${{</math>}}:
 {{<math>}}\begin{align} \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X} &= \boldsymbol{P_{\scriptscriptstyle{Z}}} \begin{bmatrix} 1 & x^*_{11} & \cdots & x^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & x^*_{21} & \cdots & x^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & x^*_{N1} & \cdots & x^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix} \\
 &= \ \quad \begin{bmatrix} 1 & \hat{x}^*_{11} & \cdots & \hat{x}^*_{1J} & x_{1,J+1} & \cdots & x_{1K}   \\ 1 & \hat{x}^*_{21} & \cdots & \hat{x}^*_{2J} & x_{2,J+1} & \cdots & x_{2K} \\ \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\ 1 & \hat{x}^*_{N1} & \cdots & \hat{x}^*_{NJ} & x_{N,J+1} & \cdots & x_{NK} \end{bmatrix} \equiv \hat{\boldsymbol{X}} \end{align}{{</math>}}
-em que cada variável de {{<math>}}$\boldsymbol{X}${{</math>}} foi regredida por todos instrumentos (e variáveis exógenas) em {{<math>}}$\boldsymbol{Z}${{</math>}}:
+where cada variável de {{<math>}}$\boldsymbol{X}${{</math>}} foi regredida por todos instrumentos (e exogenous variables) em {{<math>}}$\boldsymbol{Z}${{</math>}}:
 {{<math>}}$$\hat{\boldsymbol{x}}^*_{k} = \hat{\gamma}_{k0} + \hat{\gamma}_{k1} \boldsymbol{z}^*_1 + \cdots + \hat{\gamma}_{kL} \boldsymbol{z}^*_L + \hat{\gamma}_{k,J+1} \boldsymbol{x}_{J+1} + \cdots + \hat{\gamma}_{kK} \boldsymbol{x}_{K}  ,$${{</math>}}
 para {{<math>}}$k = 1, ..., J ${{</math>}}, e
 {{<math>}}\begin{align} \hat{\boldsymbol{x}}_{k} &= \hat{\gamma}_{k0} + \hat{\gamma}_{k1} \boldsymbol{z}^*_1 + \cdots + \hat{\gamma}_{kL} \boldsymbol{z}_L + \hat{\gamma}_{k,J+1} \boldsymbol{x}_{J+1} + \cdots + \hat{\gamma}_{kK} \boldsymbol{x}_{K} \\
@@ -497,7 +497,7 @@ para {{<math>}}$k = 1, ..., J ${{</math>}}, e
 &= 0 + \cdots + 0 + 1 \boldsymbol{x}_k + 0 + \cdots + 0\ \ =\ \ \boldsymbol{x}_{k},
 \end{align}{{</math>}}
 para {{<math>}}$k = J+1, ..., K${{</math>}}.
-- Naturalmente, as variáveis exógenas não são modificadas por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}}, pois estão presentes em ambos espaços de {{<math>}}$\boldsymbol{X}${{</math>}} e de {{<math>}}$\boldsymbol{Z}${{</math>}}.
+- Naturalmente, as exogenous variables não são modificadas por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z}}}${{</math>}}, pois estão presentes em ambos espaços de {{<math>}}$\boldsymbol{X}${{</math>}} e de {{<math>}}$\boldsymbol{Z}${{</math>}}.
 
 
 
@@ -538,16 +538,16 @@ round(reg.iv2, 4) # resultado IV sobreidentificado
 
 
 ### Estimação via `lm()`
-- 1º MQO: `educ ~ fatheduc + motheduc + exper + expersq`
+- 1º OLS: `educ ~ fatheduc + motheduc + exper + expersq`
 - Obter os valores ajustados `educ_hat`
-- 2º MQO: `lwage ~ educ_hat + exper + expersq`
+- 2º OLS: `lwage ~ educ_hat + exper + expersq`
 
 ```r
 # 1o passo: educ em função dos instrumentos
 reg.1st = lm(educ ~ fatheduc + motheduc + exper + expersq, data=mroz)
 educ_hat = fitted(reg.1st)
 
-# 2o passo: lwage em função de educ_hat e demais variáveis exógenas
+# 2o passo: lwage em função de educ_hat e demais exogenous variables
 reg.2nd = lm(lwage ~ educ_hat + exper + expersq, data=mroz)
 
 # Comparativo
@@ -598,7 +598,7 @@ stargazer::stargazer(reg.2sls, reg.2nd, type="text", digits=4)
 # Criando o vetor y
 y = as.matrix(mroz[,"lwage"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, mroz[,c("educ","exper","expersq")]) )
 
 # Criando a matriz "sobreidentificada" de instrumentos Z e de projeção Pz
@@ -611,9 +611,9 @@ K = ncol(X) - 1
 ```
 
 
-**b)** Estimativas MQ2E {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}}${{</math>}}
+**b)** Estimativas 2SLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}} = (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} = (\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{y} $${{</math>}}
 
 
 ```r
@@ -665,7 +665,7 @@ head(ehat)
 ## 6  0.29297511
 ```
 
-**e)** Estimativa da variância do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{MQ2E}}${{</math>}}
+**e)** Estimativa da variância do erro {{<math>}}$\hat{\sigma}^2_{\scriptscriptstyle{2SLS}}${{</math>}}
 {{<math>}}$$\hat{\sigma}^2 = \frac{\hat{\boldsymbol{\varepsilon}}' \hat{\boldsymbol{\varepsilon}}}{N - K - 1} $${{</math>}}
 
 
@@ -734,7 +734,7 @@ round(summary(reg.2sls)$coef, 4) # resultado 2SLS via ivreg()
 
 ### Estimação analítica 2
 
-- Também podemos fazer a estimação MQ2E por meio de MQO nas variáveis transformadas
+- Também podemos fazer a estimação 2SLS por meio de OLS nas variáveis transformadas
 
 
 **a)** Criando vetores/matrizes e definindo _N_ e _K_
@@ -743,7 +743,7 @@ round(summary(reg.2sls)$coef, 4) # resultado 2SLS via ivreg()
 # Criando o vetor y
 y = as.matrix(mroz[,"lwage"]) # transformando coluna de data frame em matriz
 
-# Criando a matriz de covariadas X com primeira coluna de 1's
+# Criando a matriz de covariates X com primeira coluna de 1's
 X = as.matrix( cbind(1, mroz[,c("educ","exper","expersq")]) )
 
 # Criando a matriz "sobreidentificada" de instrumentos Z e de projeção Pz
@@ -775,13 +775,13 @@ head(cbind(X, Xhat))
 ## 6 1   12    33    1089 1 13.02938    33    1089
 ```
 
-- Note que, mesmo pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z^*}}}${{</math>}}, **as variáveis exógenas permaneceram com os mesmos valores**, já que _exper_ e _expersq_ estão presentes em ambas matrizes {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{Z}${{</math>}}.
+- Note que, mesmo pré-multiplicando {{<math>}}$\boldsymbol{X}${{</math>}} por {{<math>}}$\boldsymbol{P_{\scriptscriptstyle{Z^*}}}${{</math>}}, **as exogenous variables permaneceram com os mesmos valores**, já que _exper_ e _expersq_ estão presentes em ambas matrizes {{<math>}}$\boldsymbol{X}${{</math>}} e {{<math>}}$\boldsymbol{Z}${{</math>}}.
 - Embora o instrumento {{<math>}}$\boldsymbol{x}^*_1${{</math>}} em 
 
 
-**b2)** Estimativas MQ2E {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}}${{</math>}}
+**b2)** Estimativas 2SLS {{<math>}}$\hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}}${{</math>}}
 
-{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{MQ2E}} = (\hat{\boldsymbol{X}}' \hat{\boldsymbol{X}})^{-1} \hat{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}_{\scriptscriptstyle{2SLS}} = (\hat{\boldsymbol{X}}' \hat{\boldsymbol{X}})^{-1} \hat{\boldsymbol{X}}' \tilde{\boldsymbol{y}} $${{</math>}}
 
 
 ```r
@@ -839,9 +839,9 @@ round(summary(reg.2sls)$coef, 4) # resultado 2SLS via ivreg()
 ```
 
 
-<!-- ### Equações Simultâneas -->
+<!-- ### Simultaneous Equations -->
 
-<!-- - Modelos de Equações Simultâneas (MES/SEM) -->
+<!-- - Simultaneous Equations Models (MES/SEM) -->
 
 
 
@@ -853,8 +853,8 @@ round(summary(reg.2sls)$coef, 4) # resultado 2SLS via ivreg()
 
 - Para os testes, considere o modelo multivariado com {{<math>}}$J=1${{</math>}} regressor endógeno:
 {{<math>}}$$ \boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}^*_{1} + \beta_{2} \boldsymbol{x}_{2} + ... + \beta_K \boldsymbol{x}_{K} + \boldsymbol{\varepsilon} $${{</math>}}
-em que {{<math>}}$\boldsymbol{x}^*_1${{</math>}} é o regressor endógeno do modelo, com {{<math>}}$K${{</math>}} regressores.
-- Para estimar por MQ2E, fazemos o primeiro estágio do regressor endógeno em relação aos seus {{<math>}}$L${{</math>}} instrumentos e as demais variáveis exógenas:
+where {{<math>}}$\boldsymbol{x}^*_1${{</math>}} é o regressor endógeno do modelo, com {{<math>}}$K${{</math>}} regressores.
+- Para estimar por 2SLS, fazemos o primeiro estágio do regressor endógeno em relação aos seus {{<math>}}$L${{</math>}} instrumentos e as demais exogenous variables:
 {{<math>}}$$ \boldsymbol{x}^*_{1} = \gamma_0 + \gamma^*_1 \boldsymbol{z}_{1} + \gamma^*_2 \boldsymbol{z}_{2} + ... + \gamma^*_L \boldsymbol{z}_{L} + \gamma_{2} \boldsymbol{x}_{2} + ... + \gamma_K \boldsymbol{x}_{K} + \boldsymbol{u} $${{</math>}}
 
 Usando o próprio `summary()` em um objeto gerado por `ivreg()`, já são mostrados três testes de diagnóstico: 
@@ -925,17 +925,17 @@ A ideia do Teste de Hausman é a seguinte:
 </br>  
 
 No caso de variáveis instrumentais:
-- Escolhemos os estimadores de MQO e de MQ2E/VI, em que a "situação" é a endogeneidade.
-- Caso a **endogeneidade esteja presente**, estimador MQ2E/VI será não-viesado/consistente e, portanto, as estimativas tendem a ser diferentes de MQO (viesado)
-- Caso a **endogeneidade esteja ausente, ambos estimadores são consistentes** (tendem ao verdadeiro {{<math>}}$\boldsymbol{\beta}${{</math>}}), mas o estimador de **MQO será o mais eficiente**
-{{<math>}}$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}'  \boldsymbol{X})^{-1}\right] \quad \text{ e } \quad \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \right]$${{</math>}}
+- Escolhemos os estimadores de OLS e de 2SLS/VI, where a "situação" é a endogeneidade.
+- Caso a **endogeneidade esteja presente**, estimador 2SLS/VI será não-viesado/consistente e, portanto, as estimativas tendem a ser diferentes de OLS (viesado)
+- Caso a **endogeneidade esteja ausente, ambos estimadores são consistentes** (tendem ao verdadeiro {{<math>}}$\boldsymbol{\beta}${{</math>}}), mas o estimador de **OLS será o mais eficiente**
+{{<math>}}$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}'  \boldsymbol{X})^{-1}\right] \quad \text{ e } \quad \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[\beta,\ \sigma^2(\boldsymbol{X}' \boldsymbol{P_{\scriptscriptstyle{Z}}} \boldsymbol{X})^{-1} \right]$${{</math>}}
 e, portanto, podemos testar
-{{<math>}}$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[0,\ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}}) \right] $${{</math>}}
+{{<math>}}$$ \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}\ \overset{\scriptscriptstyle{A}}{\sim}\ N\left[0,\ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}) \right] $${{</math>}}
 por meio de uma estatística na forma quadrática (de Wald):
-{{<math>}}$$ w = (\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}})' \left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}}) \right]^{-1} (\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}})\, \sim\, \chi^2_{(J)} $${{</math>}}
-em que os graus de liberdade da estatística qui-quadrado é a quantidade de regressores endógenos sendo consideradas no modelo ({{<math>}}$J${{</math>}}).
+{{<math>}}$$ w = (\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}})' \left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}) \right]^{-1} (\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}} - \hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}})\, \sim\, \chi^2_{(J)} $${{</math>}}
+where os graus de liberdade da estatística qui-quadrado é a quantidade de regressores endógenos where consideradas no modelo ({{<math>}}$J${{</math>}}).
 
-- Note que a inversa a subtração de matrizes de variâncias-covariâncias de estimadores, {{<math>}}$\left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQO}}) \right]^{-1}${{</math>}}, é instável e, caso dê erro, pode ser necessário fazer a operação via **inversa generalizada** (`MASS::ginv()` no R).
+- Note que a inversa a subtração de matrizes de variâncias-covariâncias de estimadores, {{<math>}}$\left[ V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}) - V(\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{OLS}}) \right]^{-1}${{</math>}}, é instável e, caso dê erro, pode ser necessário fazer a operação via **inversa generalizada** (`MASS::ginv()` no R).
 
 
 </br>
@@ -944,10 +944,10 @@ Aplicando ao exemplo no R:
 
 
 ```r
-# estimação do modelo MQO
+# estimação do modelo OLS
 reg.ols = ivreg(lwage ~ educ + exper + expersq, data=mroz)
 
-# estimação do modelo MQ2E
+# estimação do modelo 2SLS
 reg.2sls = ivreg(lwage ~ educ + exper + expersq |
                    fatheduc + motheduc + exper + expersq, data=mroz)
 
@@ -969,8 +969,8 @@ w # estatística de Wald
 ##           [,1]
 ## [1,] 0.1006218
 ```
-- O p-valor é próximo de 10\%, ou seja, a diferença entre os estimadores MQO e MQ2E (vetor de contrastes) é não-significante aos níveis comuns de significância.
-- Isto é um indício de que não há endogeneidade, pois o estimador de MQO seria viesado na presença de endogeneidade e, portanto, geraria estimativas distintas do MQ2E/VI.
+- O p-valor é próximo de 10\%, ou seja, a diferença entre os estimadores OLS e 2SLS (vetor de contrastes) é não-significante aos níveis comuns de significância.
+- Isto é um indício de que não há endogeneidade, pois o estimador de OLS seria viesado na presença de endogeneidade e, portanto, geraria estimativas distintas do 2SLS/VI.
 
 
 
@@ -983,7 +983,7 @@ Como apontado por Hausman (1978, 1983), **é possível obter, por regressão, um
 - Obtém-se os resíduos do primeiro estágio {{<math>}}$\hat{\boldsymbol{u}}${{</math>}}
 - Realiza-se o 2º estágio modificado, incluindo os resíduos do primeiro estágio como um regressor:
   {{<math>}}$$ \boldsymbol{y} = \beta_0 + \beta_1 \boldsymbol{x}^*_{1} + \beta_{2} \boldsymbol{x}_{2} + ... + \beta_K \boldsymbol{x}_{K} + \delta \hat{\boldsymbol{u}} + \boldsymbol{\varepsilon} $${{</math>}}
-em que {{<math>}}$\boldsymbol{x}^*_1${{</math>}}
+where {{<math>}}$\boldsymbol{x}^*_1${{</math>}}
 - Avalia-se o p-valor do parâmetro dos resíduos do 1º estágio, {{<math>}}$\delta${{</math>}}
   
 
@@ -1015,10 +1015,10 @@ summary(reg.2nd.mod)$coef
 
 ### Testes de Instrumentos Fracos
 
-- No teste de instrumentos fracos, testamos a hipótese nula **conjunta** de que os parâmetros dos instrumentos (MQO do 1º estágio) são iguais a zero, ou seja:
+- No teste de instrumentos fracos, testamos a hipótese nula **conjunta** de que os parâmetros dos instrumentos (OLS do 1º estágio) são iguais a zero, ou seja:
 {{<math>}}$$H_0: \quad \ \boldsymbol{\gamma}^* = \boldsymbol{0}\ \iff\ \begin{bmatrix} \gamma^*_1 \\ \gamma^*_2 \\ \vdots \\ \gamma^*_L \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}$${{</math>}}
 - Podemos verificar isso por meio dos Testes de Wald ou F.
-- Para maior detalhes, ver [Seção de Teste de Hipótese](../sec9).
+- Para maior detalhes, ver [Section de Hypothesis Test](../sec9).
 
 
 #### (a) Teste de Wald
@@ -1111,7 +1111,7 @@ P-valor é praticamente igual a zero, então rejeitamos que os instrumentos seja
 #### (b) Teste F
 - Uma outra forma de avaliar restrições múltiplas é por meio do teste F.
 - Nele, estimamos dois modelos:
-  - Irrestrito (_ur_): inclui todas os variáveis explicativas de interesse
+  - Irrestrito (_ur_): inclui todas os explanatory variables de interesse
   - Restrito (_r_): exclui algumas variáveis da estimação
 - O teste F compara as somas dos quadrados dos resíduos (SQR) ou os {{<math>}}R$^2${{</math>}} de ambos modelos.
 - A ideia é: se as variáveis excluídas forem significantes conjuntamente, então haverá uma diferença de poder explicativo entre os modelos e, logo, as variáveis seriam significantes.
@@ -1132,8 +1132,8 @@ Aplicando ao exemplo no R:
 
 ```r
 # Pegando valores
-N = nrow(mroz) # nº de observações
-K = 4 # nº de covariadas
+N = nrow(mroz) # nº de observations
+K = 4 # nº de covariates
 G = 2 # nº de restrições/instrumentos
 
 # Estimando o modelo irrestrito (igual ao de cima)
@@ -1186,19 +1186,19 @@ Assim como no Teste de Wald, o p-valor do Teste F é praticamente igual a zero, 
 ### Testes de Sobreidentificação
 
 - Quando temos mais instrumentos disponíveis do que regressores endógenos {{<math>}}$(L>J)${{</math>}}, é interressante incluir a **maior quantidade de variáveis instrumentais** para tornar o estimador ainda **mais eficiente**.
-- No entanto, deve-se tomar cuidado para não incluir instrumentos que não sejam de fato exógenos (independentes do termo de erro), pois pode acarretar na perda da consistência dos estimadores {{<math>}}($\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{MQ2E}}${{</math>}} deixa de tender ao valor verdadeiro).
+- No entanto, deve-se tomar cuidado para não incluir instrumentos que não sejam de fato exógenos (independentes do termo de erro), pois pode acarretar na perda da consistência dos estimadores {{<math>}}($\hat{\boldsymbol{\beta}}^{\scriptscriptstyle{2SLS}}${{</math>}} deixa de tender ao valor verdadeiro).
 
 
 
 #### (a) Teste de Hausman
 
-- Aqui, vamos utilizar novamente o **Teste de (Durbin-Wu-)Hausman**, porém comparando dois vetores de estimativas calculadas pelo mesmo método (MQ2E):
+- Aqui, vamos utilizar novamente o **Teste de (Durbin-Wu-)Hausman**, porém comparando dois vetores de estimativas calculadas pelo mesmo método (2SLS):
   - [Irrestrito - _ur_]: um vetor de estimativas com **todos instrumentos** do regressor endógeno
     - **Mais eficiente na ausência de endogeneidade** ("situação") dos instrumentos extras com o erro
   - [Restrito - _r_]: outro **apenas com {{<math>}}$L=J${{</math>}} "melhores" instrumentos**, ou seja, inclui apenas os instrumentos que (por suposição) são de fato exógenos em relação ao erro.
     - Modelo exatamente identificado
     - Na presença de endogeneidade dos instrumentos extras, é (por suposição) consistente.
-- O Teste de Hausman faz um teste **comparativo** da diferença das estimativas MQ2E dos dois modelos (vetor de contrastes). Se as estimativas forem estatisticamente:
+- O Teste de Hausman faz um teste **comparativo** da diferença das estimativas 2SLS dos dois modelos (vetor de contrastes). Se as estimativas forem estatisticamente:
   - diferentes, então os instrumentos extras provavelmente são endógenos e suas estimativas inconsistentes, pois um conjunto de instrumentos ótimo deveria melhorar a eficiência do estimador
   - iguais, então os instrumentos extras provavelmente são exógenos e podem ser utilizados.
 
@@ -1253,9 +1253,9 @@ w # estatística de Wald
 
 - Alternativamente, podemos **avaliar diretamente a relação entre o termo de erro e os instrumentos**.
 - Para isto precisamos:
-  - Estimar por MQ2E o modelo com todos instrumentos disponíveis.
+  - Estimar por 2SLS o modelo com todos instrumentos disponíveis.
   - Obter resíduos do modelo, {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}}
-  - Regredir os resíduos em função de todos instrumentos e variáveis exógenas
+  - Regredir os resíduos em função de todos instrumentos e exogenous variables
   - Testar se as estimativas dos possíveis instrumentos (candidatos a exógenos) são conjuntamente iguais a zero via Teste de Wald (parecido com o teste de instrumentos fracos).
   
 
@@ -1263,7 +1263,7 @@ w # estatística de Wald
 #### (c) Teste de Sargan
 
 - Sargan desenvolveu um teste equivalente ao Wald (acima) utilizando regressão.
-- Utiliza os mesmos passos acima, porém, ao invés de calcular a estatística de Wald, após regredir os resíduos em função dos instrumentos e variáveis exógenas, calcula-se a estatística
+- Utiliza os mesmos passos acima, porém, ao invés de calcular a estatística de Wald, após regredir os resíduos em função dos instrumentos e exogenous variables, calcula-se a estatística
 {{<math>}}$$NR^2\ \overset{A}{\sim}\ \chi^2_{(L-J)}$${{</math>}}
 
 

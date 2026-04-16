@@ -21,7 +21,7 @@ Please feel free to contact us if you have any questions:
 - Fábio Nishida: `fabio.nishida@usp.br`
 - Felipe Bauer: `felipebauer@usp.br`
 
-{{< cta cta_text="👉 Proceed to the R Toolkit" cta_link="sec1" >}}
+{{< cta cta_text="�Y'? Proceed to the R Toolkit" cta_link="sec1" >}}
 
 </br>
 

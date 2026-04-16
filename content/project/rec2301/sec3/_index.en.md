@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Manipulação de Dados
+linktitle: Manipula��o de Dados
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Manipulação de Dados
+title: Manipula��o de Dados
 weight: 3
 output: md_document
 type: book
@@ -16,10 +16,10 @@ type: book
 
 ## Resumindo dados
 
-### Funções básicas
+### Fun��es b�sicas
 - [Summarizing data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/e5qVi/summarizing-data)
-- Para esta seção, usaremos a base de dados `airquality`, já presente no R.
-- Verificaremos o **dimensões** da base com `dim()` e visualizaremos as 6 **primeiras** e **últimas** linhas da base via `head()` e `tail()`, respectivamente.
+- Para esta se��o, usaremos a base de dados `airquality`, j� presente no R.
+- Verificaremos o **dimens�es** da base com `dim()` e visualizaremos as 6 **primeiras** e **�ltimas** linhas da base via `head()` e `tail()`, respectivamente.
 
 ```r
 # data() # lista de base de dados presentes no R
@@ -46,7 +46,7 @@ head(airquality) # Visualizando as 6 primeiras linhas
 ```
 
 ```r
-tail(airquality) # Visualizando as 6 últimas linhas
+tail(airquality) # Visualizando as 6 �ltimas linhas
 ```
 
 ```
@@ -59,9 +59,9 @@ tail(airquality) # Visualizando as 6 últimas linhas
 ## 153    20     223 11.5   68     9  30
 ```
 - Usando `str()`, podemos visualizar a **estrutura** da base:
-    - todas a variáveis (colunas),
+    - todas a vari�veis (colunas),
     - a classe de cada uma delas e
-    - algumas de suas observações.
+    - algumas de suas observa��es.
 
 ```r
 str(airquality)
@@ -78,7 +78,7 @@ str(airquality)
 ```
 
 
-- Para fazer um **resumo** de todas as variáveis da base, podemos usar a função `summary()` que, para variáveis numéricas, calcula a média e os quartis, e mostra a quantidade de `NA`.
+- Para fazer um **resumo** de todas as vari�veis da base, podemos usar a fun��o `summary()` que, para vari�veis num�ricas, calcula a m�dia e os quartis, e mostra a quantidade de `NA`.
 
 ```r
 summary(airquality)
@@ -102,7 +102,7 @@ summary(airquality)
 ##  Max.   :9.000   Max.   :31.0  
 ## 
 ```
-- Também podemos calcular os **quantis** via `quantile()`
+- Tamb�m podemos calcular os **quantis** via `quantile()`
 
 ```r
 quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
@@ -113,7 +113,7 @@ quantile(airquality$Ozone, probs=c(0, .25, .5 , .75, 1), na.rm=TRUE)
 ##   1.00  18.00  31.50  63.25 168.00
 ```
 
-- Note que, para variáveis lógicas, de texto ou categóricas (factor), aparecem a contagem de cada categoria/possível valor:
+- Note que, para vari�veis l�gicas, de texto ou categ�ricas (factor), aparecem a contagem de cada categoria/poss�vel valor:
 
 ```r
 summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
@@ -129,7 +129,7 @@ summary(CO2) # base de dados 'Carbon Dioxide Uptake in Grass Plants'
 ##  Qc2    : 7                                    Max.   :1000   Max.   :45.50  
 ##  (Other):42
 ```
-- Para variáveis de texto, pode ser interessante fazer uma **tabela com a contagem** de cada possível categoria de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
+- Para vari�veis de texto, pode ser interessante fazer uma **tabela com a contagem** de cada poss�vel categoria de uma vari�vel. Isto � poss�vel por meio da fun��o `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
 
 ```r
 table(CO2$Type) # contagem
@@ -150,7 +150,7 @@ prop.table(table(CO2$Type)) # percentual
 ##      Quebec Mississippi 
 ##         0.5         0.5
 ```
-- Também podemos incluir mais uma variável em `table()` para visualizar a contagem considerando 2 variáveis:
+- Tamb�m podemos incluir mais uma vari�vel em `table()` para visualizar a contagem considerando 2 vari�veis:
 
 ```r
 table(CO2$Type, CO2$Treatment)
@@ -164,25 +164,25 @@ table(CO2$Type, CO2$Treatment)
 ```
 
 
-### Família de funções _apply_
-Veremos uma família de funções _apply_ que permitem executar comandos em loop de maneira compacta:
-- `apply`: aplica uma função sobre as margens (linha ou coluna) de uma matrix/array
-- `lapply`: loop sobre uma lista e avalia uma função em cada elemento
-    - função auxiliar `split` é útil ao ser utilizada em conjunto da `lapply`
+### Fam�lia de fun��es _apply_
+Veremos uma fam�lia de fun��es _apply_ que permitem executar comandos em loop de maneira compacta:
+- `apply`: aplica uma fun��o sobre as margens (linha ou coluna) de uma matrix/array
+- `lapply`: loop sobre uma lista e avalia uma fun��o em cada elemento
+    - fun��o auxiliar `split` � �til ao ser utilizada em conjunto da `lapply`
 - `sapply`: mesmo que o `lapply`, mas simplifica o resultado
 
 
 
-#### Função `apply()`
+#### Fun��o `apply()`
 - [Loop functions - apply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/IUUhK/loop-functions-apply)
-- Usado para avaliar, por meio de uma função, margens de um array
-- Frequentemente é utilizado para aplicar uma função a linhas ou a colunas de uma matriz
-- Não é mais rápido do que escrever um loop, mas funciona em uma única linha
+- Usado para avaliar, por meio de uma fun��o, margens de um array
+- Frequentemente � utilizado para aplicar uma fun��o a linhas ou a colunas de uma matriz
+- N�o � mais r�pido do que escrever um loop, mas funciona em uma �nica linha
 ```yaml
 apply(X, MARGIN, FUN, ...)
 
 X: an array, including a matrix.MARGIN: a vector giving the subscripts which the function will be applied over. E.g., for a matrix 1 indicates rows, 2 indicates columns, c(1, 2) indicates rows and columns. Where X has named dimnames, it can be a character vector selecting dimension names.
-FUN: the function to be applied: see ‘Details’. In the case of functions like +, %*%, etc., the function name must be backquoted or quoted.
+FUN: the function to be applied: see ??~Details??T. In the case of functions like +, %*%, etc., the function name must be backquoted or quoted.
 ... : optional arguments to FUN.
 ```
 
@@ -201,7 +201,7 @@ x
 ```
 
 ```r
-apply(x, 1, mean) # médias das linhas
+apply(x, 1, mean) # m�dias das linhas
 ```
 
 ```
@@ -209,21 +209,21 @@ apply(x, 1, mean) # médias das linhas
 ```
 
 ```r
-apply(x, 2, mean) # médias das colunas
+apply(x, 2, mean) # m�dias das colunas
 ```
 
 ```
 ## [1]  3  8 13 18
 ```
-- Há funções pré-definidas que aplicam `apply` com soma e com média:
+- H� fun��es pr�-definidas que aplicam `apply` com soma e com m�dia:
     - `rowSums = apply(x, 1, sum)`
     - `rowMeans = apply(x, 1, mean)`
     - `colSums = apply(x, 2, sum)`
     - `colMeans = apply(x, 2, mean)`
-- Podemos, por exemplo, também calcular os quantis de uma matriz usando a função `quantile()`
+- Podemos, por exemplo, tamb�m calcular os quantis de uma matriz usando a fun��o `quantile()`
 
 ```r
-x = matrix(1:50, 10, 5) # matriz 20x10 - 200 números ~ N(0, 1)
+x = matrix(1:50, 10, 5) # matriz 20x10 - 200 n�meros ~ N(0, 1)
 x
 ```
 
@@ -253,7 +253,7 @@ apply(x, 2, quantile) # obtendo os quantis de cada coluna
 ## 75%   7.75 17.75 27.75 37.75 47.75
 ## 100% 10.00 20.00 30.00 40.00 50.00
 ```
-- Com também podemos verificar quais são os valores únicos de cada variável em um data frame combinando `apply()` e `unique()`
+- Com tamb�m podemos verificar quais s�o os valores �nicos de cada vari�vel em um data frame combinando `apply()` e `unique()`
 
 ```r
 apply(mtcars, 2, unique)
@@ -304,7 +304,7 @@ apply(mtcars, 2, unique)
 ```
 
 
-- Podemos verificar o **número de NA's** em cada coluna usando `apply()` com `sum` (ou também `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou não `NA`)
+- Podemos verificar o **n�mero de NA's** em cada coluna usando `apply()` com `sum` (ou tamb�m `colSums()`) na base de dados com `is.na()` (transforma a base de dados em TRUE/FALSE se for ou n�o `NA`)
 
 ```r
 head( is.na(airquality) ) # 6 primeiras linhas aplicando is.na()
@@ -330,19 +330,19 @@ apply(is.na(airquality), 2, sum) # somando cada coluna de TRUE/FALSE
 ```
 
 
-#### Função `lapply()`
+#### Fun��o `lapply()`
 - [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
-- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os da função inserida)
+- `lapply` usa tr�s argumentos: uma **lista**, o nome de uma fun��o e outros argumentos (incluindo os da fun��o inserida)
 ```yaml
 lapply(X, FUN, ...)
 
 X: a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.
-FUN: the function to be applied to each element of X: see ‘Details’. In the case of functions like +, %*%, the function name must be backquoted or quoted.
+FUN: the function to be applied to each element of X: see ??~Details??T. In the case of functions like +, %*%, the function name must be backquoted or quoted.
 ... : optional arguments to FUN.
 ```
 
 ```r
-# Criando uma lista com vetor de dimensões distintas
+# Criando uma lista com vetor de dimens�es distintas
 x = list(a=1:5, b=rnorm(10), c=c(1, 4, 65, 6))
 x
 ```
@@ -360,7 +360,7 @@ x
 ```
 
 ```r
-lapply(x, mean) # retorna médias de cada vetor dentro da lista
+lapply(x, mean) # retorna m�dias de cada vetor dentro da lista
 ```
 
 ```
@@ -375,7 +375,7 @@ lapply(x, mean) # retorna médias de cada vetor dentro da lista
 ```
 
 ```r
-lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista
+lapply(x, summary) # retorna 6 estat�sticas de cada vetor dentro da lista
 ```
 
 ```
@@ -401,10 +401,10 @@ class(lapply(x, mean)) # classe do objeto retornado pelo lapply
 ```
 
 
-#### Função `sapply()`
+#### Fun��o `sapply()`
 Similar ao `lapply`, mas `sapply` tenta simplificar o output:
 
-- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento também), retorna um vetor
+- Se o resultado for uma lista em que todo elemento tem comprimento 1 (tem apenas um elemento tamb�m), retorna um vetor
 
 ```r
 sapply(x, mean) # retorna um vetor
@@ -435,11 +435,11 @@ sapply(x, summary) # retorna uma matriz
 
 ## Manipulando dados
 
-> “Between 30% to 80% of the data analysis task is spent on cleaning and understanding the data.” (Dasu \& Johnson, 2003)
+> ??oBetween 30% to 80% of the data analysis task is spent on cleaning and understanding the data.??? (Dasu \& Johnson, 2003)
 
-### Extração de subconjuntos
+### Extra��o de subconjuntos
 - [Subsetting and sorting (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/aqd2Y/subsetting-and-sorting)
-- Como exemplo, criaremos um _data frame_ com três variáveis, em que, para misturar a ordem dos números, usaremos a função `sample()` num vetor de números e também incluiremos alguns valores ausentes `NA`.
+- Como exemplo, criaremos um _data frame_ com tr�s vari�veis, em que, para misturar a ordem dos n�meros, usaremos a fun��o `sample()` num vetor de n�meros e tamb�m incluiremos alguns valores ausentes `NA`.
 
 ```r
 set.seed(2022)
@@ -469,10 +469,10 @@ x
 ## 4    1   10   15
 ## 5    5    6   14
 ```
-- Lembre-se que, para extrair um subconjunto de um data frame, usamos as chaves `[]` indicando vetores de linhas e de colunas (ou também os nomes das colunas).
+- Lembre-se que, para extrair um subconjunto de um data frame, usamos as chaves `[]` indicando vetores de linhas e de colunas (ou tamb�m os nomes das colunas).
 
 ```r
-x[, 1] # Todas linhas e 1ª coluna
+x[, 1] # Todas linhas e 1� coluna
 ```
 
 ```
@@ -480,7 +480,7 @@ x[, 1] # Todas linhas e 1ª coluna
 ```
 
 ```r
-x[, "var1"] # Todas linhas e 1ª coluna (usando seu nome)
+x[, "var1"] # Todas linhas e 1� coluna (usando seu nome)
 ```
 
 ```
@@ -488,13 +488,13 @@ x[, "var1"] # Todas linhas e 1ª coluna (usando seu nome)
 ```
 
 ```r
-x[1:2, "var2"] # Linhas 1 e 2, e 2ª coluna (usando seu nome)
+x[1:2, "var2"] # Linhas 1 e 2, e 2� coluna (usando seu nome)
 ```
 
 ```
 ## [1] NA  7
 ```
-- Note que, podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair uma parte do data frame. Por exemplo, queremos obter apenas as observações em que a variável 1 seja menor ou igual a 3 **E** (`&`) que a variável 3 seja estritamente maior do que 11:
+- Note que, podemos usar express�es l�gicas (vetor com `TRUE` e `FALSE`) para extrair uma parte do data frame. Por exemplo, queremos obter apenas as observa��es em que a vari�vel 1 seja menor ou igual a 3 **E** (`&`) que a vari�vel 3 seja estritamente maior do que 11:
 
 ```r
 x$var1 <= 3 & x$var3 > 11
@@ -514,7 +514,7 @@ x[x$var1 <= 3 & x$var3 > 11, ]
 ## 3    2   NA   12
 ## 4    1   10   15
 ```
-- Poderíamos também obter apenas as observações em que a variável 1 seja menor ou igual a 3 **OU** (`|`) que a variável 3 seja estritamente maior do que 11:
+- Poder�amos tamb�m obter apenas as observa��es em que a vari�vel 1 seja menor ou igual a 3 **OU** (`|`) que a vari�vel 3 seja estritamente maior do que 11:
 
 ```r
 x[x$var1 <= 3 | x$var3 > 11, ]
@@ -528,10 +528,10 @@ x[x$var1 <= 3 | x$var3 > 11, ]
 ## 4    1   10   15
 ## 5    5    6   14
 ```
-- Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale `==` com mais de um valor)
+- Tamb�m podemos verificar se determinados valores est�o contidos em um vetor espec�fico (equivale `==` com mais de um valor)
 
 ```r
-x$var1 %in% c(1, 5) # obs em que var1 é igual a 1 ou 5
+x$var1 %in% c(1, 5) # obs em que var1 � igual a 1 ou 5
 ```
 
 ```
@@ -548,7 +548,7 @@ x[x$var1 %in% c(1, 5), ]
 ## 5    5    6   14
 ```
 
-- Note que, ao escrevermos uma expressão lógica para um vetor que contém valores ausentes, gerará um vetor com `TRUE`, `FALSE` e `NA`
+- Note que, ao escrevermos uma express�o l�gica para um vetor que cont�m valores ausentes, gerar� um vetor com `TRUE`, `FALSE` e `NA`
 
 ```r
 x$var2 > 8
@@ -568,7 +568,7 @@ x[x$var2 > 8, ]
 ## NA.1   NA   NA   NA
 ## 4       1   10   15
 ```
-- Para contornar este problema, podemos usar a função `which()` que, ao invés de gerar um vetor de `TRUE`/`FALSE`, retorna um vetor com as posições dos elementos que tornam a expressão lógica verdadeira
+- Para contornar este problema, podemos usar a fun��o `which()` que, ao inv�s de gerar um vetor de `TRUE`/`FALSE`, retorna um vetor com as posi��es dos elementos que tornam a express�o l�gica verdadeira
 
 ```r
 which(x$var2 > 8)
@@ -586,8 +586,8 @@ x[which(x$var2 > 8), ]
 ##   var1 var2 var3
 ## 4    1   10   15
 ```
-- Outra forma de contornar os valores ausentes é incluir a condição 
-de não incluir valores ausentes `!is.na()`:
+- Outra forma de contornar os valores ausentes � incluir a condi��o 
+de n�o incluir valores ausentes `!is.na()`:
 
 ```r
 x$var2 > 8 & !is.na(x$var2)
@@ -607,8 +607,8 @@ x[x$var2 > 8 & !is.na(x$var2), ]
 ```
 
 
-### Ordenação
-- Podemos usar a função `sort()` para ordenar um vetor de maneira crescente (padrão) ou decrescente:
+### Ordena��o
+- Podemos usar a fun��o `sort()` para ordenar um vetor de maneira crescente (padr�o) ou decrescente:
 
 ```r
 sort(x$var1) # ordenando de maneira crescente
@@ -625,7 +625,7 @@ sort(x$var1, decreasing=TRUE) # ordenando de maneira decrescente
 ```
 ## [1] 5 4 3 2 1
 ```
-- Por padrão, o `sort()` retira os valores ausentes. Para mantê-los e deixá-los no final, precisamos usar o argumento `na.last=TRUE`
+- Por padr�o, o `sort()` retira os valores ausentes. Para mant�-los e deix�-los no final, precisamos usar o argumento `na.last=TRUE`
 
 ```r
 sort(x$var2) # ordenando e retirando NA
@@ -642,7 +642,7 @@ sort(x$var2, na.last=TRUE) # ordenando e mantendo NA no final
 ```
 ## [1]  6  7 10 NA NA
 ```
-- Note que não podemos usar a função `sort()` para ordenar um data frame, pois a função retorna valores e, portanto, não retorna suas posições.
+- Note que n�o podemos usar a fun��o `sort()` para ordenar um data frame, pois a fun��o retorna valores e, portanto, n�o retorna suas posi��es.
 
 ```r
 sort(x$var3)
@@ -653,7 +653,7 @@ sort(x$var3)
 ```
 
 ```r
-x[sort(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
+x[sort(x$var3), ] # Retorna erro, pois n�o h� n� de linhas > 5
 ```
 
 ```
@@ -664,7 +664,7 @@ x[sort(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
 ## NA.3   NA   NA   NA
 ## NA.4   NA   NA   NA
 ```
-- Para ordenar data frames, precisamos utilizar a função `order()` que, ao invés de retorar os valores em algum ordem, retorna as suas posições
+- Para ordenar data frames, precisamos utilizar a fun��o `order()` que, ao inv�s de retorar os valores em algum ordem, retorna as suas posi��es
 
 ```r
 order(x$var3)
@@ -675,7 +675,7 @@ order(x$var3)
 ```
 
 ```r
-x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
+x[order(x$var3), ] # Retorna erro, pois n�o h� n� de linhas > 5
 ```
 
 ```
@@ -687,8 +687,8 @@ x[order(x$var3), ] # Retorna erro, pois não há nº de linhas > 5
 ## 4    1   10   15
 ```
 
-### Inclusão de novas colunas/variáveis
-- Para incluir novas variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
+### Inclus�o de novas colunas/vari�veis
+- Para incluir novas vari�veis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
 
 ```r
 set.seed(1234)
@@ -705,7 +705,7 @@ x
 ## 5    5    6   14  0.4291247
 ```
 
-- [Algumas transformações comuns de variáveis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
+- [Algumas transforma��es comuns de vari�veis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
 
 ```r
 abs(x$var4) # valor absoluto
@@ -744,7 +744,7 @@ floor(x$var4) # valor inteiro abaixo
 ```
 
 ```r
-round(x$var4, digits=1) # arredondamento com 1 dígito
+round(x$var4, digits=1) # arredondamento com 1 d�gito
 ```
 
 ```
@@ -805,7 +805,7 @@ exp(x$var4) # exponencial
 
 #### Acrescentando colunas e linhas via `cbind()` e `rbind()`
 
-- Uma maneira de juntar o data frame com um vetor de mesmo tamanho é usando `cbind()`
+- Uma maneira de juntar o data frame com um vetor de mesmo tamanho � usando `cbind()`
 
 ```r
 y = rnorm(5)
@@ -821,7 +821,7 @@ x
 ## 4    1   10   15 -2.3456977 -0.5644520
 ## 5    5    6   14  0.4291247 -0.8900378
 ```
-- Também podemos acrescentar linhas usando `rbind()`, desde que o vetor tenha a quantidade de elementos igual ao número de colunas (ou data frame a ser incluído tenha o mesmo número de colunas)
+- Tamb�m podemos acrescentar linhas usando `rbind()`, desde que o vetor tenha a quantidade de elementos igual ao n�mero de colunas (ou data frame a ser inclu�do tenha o mesmo n�mero de colunas)
 
 ```r
 z = rnorm(5)
@@ -841,8 +841,8 @@ x
 
 #### Mesclando base de dados com `merge()`
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
-- Podemos juntar base de dados a partir de uma variável-chave que aparece em ambas bases.
-- Como exemplo, utilizaremos duas bases de dados de respostas a perguntas ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) e de correções feitas por seus pares ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
+- Podemos juntar base de dados a partir de uma vari�vel-chave que aparece em ambas bases.
+- Como exemplo, utilizaremos duas bases de dados de respostas a perguntas ([`solutions.csv`](https://fhnishida-rec5004.netlify.app/docs/solutions.csv)) e de corre��es feitas por seus pares ([`reviews.csv`](https://fhnishida-rec5004.netlify.app/docs/reviews.csv)).
 
 ```r
 solutions = read.csv("https://fhnishida-rec5004.netlify.app/docs/solutions.csv")
@@ -874,9 +874,9 @@ head(reviews)
 ## 6  6           2          29 1304095471 1304095513      1999      1
 ```
 - Note que:
-    - as primeiras colunas das bases `solutions` e `reviews`` são os identificadores únicos das soluções e dos reviews, respectivamente.
-    - na base `reviews` há a coluna _problem_id_ que faz a ligação entre esta base com a coluna _id_ da base `solutions`.
-- Usaremos a função `merge()` para juntar ambas bases em uma só, a partir do id da solução.
+    - as primeiras colunas das bases `solutions` e `reviews`` s�o os identificadores �nicos das solu��es e dos reviews, respectivamente.
+    - na base `reviews` h� a coluna _problem_id_ que faz a liga��o entre esta base com a coluna _id_ da base `solutions`.
+- Usaremos a fun��o `merge()` para juntar ambas bases em uma s�, a partir do id da solu��o.
 
 ```yaml
 merge(x, y, by = intersect(names(x), names(y)),
@@ -884,7 +884,7 @@ merge(x, y, by = intersect(names(x), names(y)),
       sort = TRUE, suffixes = c(".x",".y"), ...)
 
 x, y: data frames, or objects to be coerced to one.
-by, by.x, by.y: specifications of the columns used for merging. See ‘Details’.
+by, by.x, by.y: specifications of the columns used for merging. See ??~Details??T.
 all: logical; all = L is shorthand for all.x = L and all.y = L, where L is either TRUE or FALSE.
 all.x: logical; if TRUE, then extra rows will be added to the output, one for each row in x that has no matching row in y. These rows will have NAs in those columns that are usually filled with values from y. The default is FALSE, so that only rows with data from both x and y are included in the output.
 all.y: logical; analogous to all.x.
@@ -920,8 +920,8 @@ head(mergedData)
 ## 6        384         27 1304095131 1304095270        2242      C
 ```
 
-- Note que, como há colunas de mesmos nomes, e especificamos que a variável chave era somente o id de solução, então as colunas de nomes iguais foram renomeadas com sufixos `.x` e `.y`, correspondendo às 1ª e 2ª bases inseridas na função `merge()`
-- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a função `intersect()` em conjunto com a função `names()`:
+- Note que, como h� colunas de mesmos nomes, e especificamos que a vari�vel chave era somente o id de solu��o, ent�o as colunas de nomes iguais foram renomeadas com sufixos `.x` e `.y`, correspondendo �s 1� e 2� bases inseridas na fun��o `merge()`
+- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a fun��o `intersect()` em conjunto com a fun��o `names()`:
 
 ```r
 intersect( names(solutions), names(reviews) )
@@ -930,7 +930,7 @@ intersect( names(solutions), names(reviews) )
 ```
 ## [1] "id"        "start"     "stop"      "time_left"
 ```
-- Se não especificássemos nenhuma variável-chave, a função `merge()` utilizaria como variável-chave todas as colunas com nomes iguais em ambas bases de dados 
+- Se n�o especific�ssemos nenhuma vari�vel-chave, a fun��o `merge()` utilizaria como vari�vel-chave todas as colunas com nomes iguais em ambas bases de dados 
 
 ```r
 wrong = merge(reviews, solutions,
@@ -957,4 +957,4 @@ head(wrong)
 
 
 
-{{< cta cta_text="👉 Seguir para Manipulação via `dplyr`" cta_link="../sec4" >}}
+{{< cta cta_text="?Y'? Seguir para Manipula��o via `dplyr`" cta_link="../sec4" >}}

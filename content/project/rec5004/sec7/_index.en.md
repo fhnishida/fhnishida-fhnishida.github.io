@@ -13,25 +13,25 @@ type: book
 
 
 
-## Otimização numérica
-- Essa seção tem o objetivo para dar uma intuição sobre alguns algoritmos de otimização numérica.
-- Veremos dois grupos/famílias de métodos de otimização: _livres de derivadas_ e _baseados em gradiente_.
+## Otimiza��o num�rica
+- Essa se��o tem o objetivo para dar uma intui��o sobre alguns algoritmos de otimiza��o num�rica.
+- Veremos dois grupos/fam�lias de m�todos de otimiza��o: _livres de derivadas_ e _baseados em gradiente_.
 
 
-### Métodos livres de derivadas
+### M�todos livres de derivadas
 
 #### _Grid Search_
 
-- O método mais simples de otimização numérica é o _grid search_.
-- Como o computador não lida com problemas com infinitos valores, discretizamos diversos possíveis valores dos parâmetros de escolha dentro de intervalos.
-- Para cada possível combinação de parâmetros, calcula-se a função objetivo e escolhe-se a combinação de parâmetros que maximizam (ou minimizam) a função objetivo.
-- O exemplo abaixo considera apenas um parâmetro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a função objetivo:
+- O m�todo mais simples de otimiza��o num�rica � o _grid search_.
+- Como o computador n�o lida com problemas com infinitos valores, discretizamos diversos poss�veis valores dos par�metros de escolha dentro de intervalos.
+- Para cada poss�vel combina��o de par�metros, calcula-se a fun��o objetivo e escolhe-se a combina��o de par�metros que maximizam (ou minimizam) a fun��o objetivo.
+- O exemplo abaixo considera apenas um par�metro de escolha {{<math>}}$\theta${{</math>}} e, para cada ponto escolhido dentro do intervalo {{<math>}}$[-1, 1]${{</math>}}, calcula-se a fun��o objetivo:
 
 <center><img src="../grid_search.png"></center>
 
-- Este é um método robusto a funções com descontinuidades e quinas (não diferenciáveis).
-- Porém, depende da definição de intervalo para busca do valor ótimo e fica mais preciso com maiores quantidades de pontos.
-- Como é necessário fazer o cálculo da função objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimensões:
+- Este � um m�todo robusto a fun��es com descontinuidades e quinas (n�o diferenci�veis).
+- Por�m, depende da defini��o de intervalo para busca do valor �timo e fica mais preciso com maiores quantidades de pontos.
+- Como � necess�rio fazer o c�lculo da fun��o objetivo para cada ponto, o _grid search_ tende a ser menos eficiente computacionalmente, sobretudo com o aumento de dimens�es:
 
 <center><img src="../multigrid_search.png" width=60%></center>
 
@@ -39,70 +39,70 @@ type: book
 
 #### Nelder-Mead
 - [Stats 102A Lesson 8-2 Nelder Mead Method / Algorithm](https://www.youtube.com/watch?v=vOYlVvT3W80)
-- Nelder-Mead também conhecido como método simplex downhill, é um método de busca direta que é frequentemente aplicado a problemas de otimização não linear para os quais as derivadas podem não ser conhecidas.
-- Ele opera em um simplex de _n + 1_ pontos em um espaço _n_-dimensional e move e transforma iterativamente o simplex para encontrar o mínimo ou máximo de uma função objetivo.
+- Nelder-Mead tamb�m conhecido como m�todo simplex downhill, � um m�todo de busca direta que � frequentemente aplicado a problemas de otimiza��o n�o linear para os quais as derivadas podem n�o ser conhecidas.
+- Ele opera em um simplex de _n + 1_ pontos em um espa�o _n_-dimensional e move e transforma iterativamente o simplex para encontrar o m�nimo ou m�ximo de uma fun��o objetivo.
 
 <center><img src="../nelder-mead_iter.png" width=60%></center>
 <center><img src="../nelder-mead_example.gif" ></center>
 
 
 <!-- #### _Simulated Annealing_ (SANN) -->
-<!-- - O _simulated annealing_ é um algoritmo de otimização probabilístico que busca aproximar o ótimo global de uma função dada. -->
-<!-- - O nome do algoritmo vem do recozimento (_annealing_) em metalurgia, uma técnica que envolve o aquecimento e resfriamento controlado de um material para alterar suas propriedades físicas. -->
-<!-- - O algoritmo começa com uma solução inicial e, em seguida, melhora iterativamente a solução atual perturbando-a aleatoriamente e aceitando a perturbação com uma certa probabilidade. A probabilidade de aceitar uma solução pior é inicialmente alta e diminui gradualmente à medida que o número de iterações aumenta. -->
+<!-- - O _simulated annealing_ � um algoritmo de otimiza��o probabil�stico que busca aproximar o �timo global de uma fun��o dada. -->
+<!-- - O nome do algoritmo vem do recozimento (_annealing_) em metalurgia, uma t�cnica que envolve o aquecimento e resfriamento controlado de um material para alterar suas propriedades f�sicas. -->
+<!-- - O algoritmo come�a com uma solu��o inicial e, em seguida, melhora iterativamente a solu��o atual perturbando-a aleatoriamente e aceitando a perturba��o com uma certa probabilidade. A probabilidade de aceitar uma solu��o pior � inicialmente alta e diminui gradualmente � medida que o n�mero de itera��es aumenta. -->
 
 <!-- <center><img src="../sann.gif" width=60%></center> -->
 
 
 
-### Métodos baseados em gradiente
+### M�todos baseados em gradiente
 - [BFGS in a Nutshell: An Introduction to Quasi-Newton Methods](https://towardsdatascience.com/bfgs-in-a-nutshell-an-introduction-to-quasi-newton-methods-21b0e13ee504)
-- Há uma outra família de algoritmos de otimização que utilizam o gradiente
+- H� uma outra fam�lia de algoritmos de otimiza��o que utilizam o gradiente
 
 
 #### _Gradient Ascent (Descent)_
-- O algoritmo desta família mais simples é o _gradient ascent_ (_descent_).
-- Queremos encontrar um {{<math>}}${\theta}^{*}${{</math>}} que é o parâmetro que maximiza a função objetivo
-- Passos para encontrar um máximo:
-  1. Comece com algum valor inicial de parâmetro, {{<math>}}${\theta}^0${{</math>}}
+- O algoritmo desta fam�lia mais simples � o _gradient ascent_ (_descent_).
+- Queremos encontrar um {{<math>}}${\theta}^{*}${{</math>}} que � o par�metro que maximiza a fun��o objetivo
+- Passos para encontrar um m�ximo:
+  1. Comece com algum valor inicial de par�metro, {{<math>}}${\theta}^0${{</math>}}
   2. Calcula-se o gradiente (vetor de derivadas parciais) avalia-se a possibilidade de "andar para cima" a um valor mais alto
   3. Caso possa, anda para {{<math>}}${\theta}^1${{</math>}}
   {{<math>}}$$\theta^1 = \theta^0 + \alpha f'(\theta^0)$${{</math>}}
   ou, no caso multivariado:
   {{<math>}}$$\boldsymbol{\theta}^1 = \boldsymbol{\theta}^0 + \alpha \nabla f(\boldsymbol{\theta}^0),$${{</math>}}
-  em que {{<math>}}$\alpha${{</math>}} é a taxa de aprendizado, e {{<math>}}$\nabla f(\cdot)${{</math>}} é o gradiente (vetor de derivadas parciais).
-  4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} até atingir um ponto máximo
+  em que {{<math>}}$\alpha${{</math>}} � a taxa de aprendizado, e {{<math>}}$\nabla f(\cdot)${{</math>}} � o gradiente (vetor de derivadas parciais).
+  4. Repita os passos (2) e (3), andando para um novo {{<math>}}${\theta}^2, {\theta}^3, ...${{</math>}} at� atingir um ponto m�ximo
 
 <center><img src="../steepest_ascent.png"></center>
 
-- Note que esse método de otimização é sensível ao parâmetro inicial e às descontinuidades da função objetivo.
-    - No exemplo, se os chutes iniciais forem {{<math>}}${\theta}^0_A${{</math>}} ou {{<math>}}${\theta}^0_B${{</math>}}, então consegue atingir o máximo global.
-    - Já se o chute inicial for {{<math>}}${\theta}^0_C${{</math>}}, então ele acaba atingindo um máximo local com {{<math>}}${\theta}^*${{</math>}} (menor do que o máximo global em {{<math>}}${\theta}^{**}${{</math>}}).
+- Note que esse m�todo de otimiza��o � sens�vel ao par�metro inicial e �s descontinuidades da fun��o objetivo.
+    - No exemplo, se os chutes iniciais forem {{<math>}}${\theta}^0_A${{</math>}} ou {{<math>}}${\theta}^0_B${{</math>}}, ent�o consegue atingir o m�ximo global.
+    - J� se o chute inicial for {{<math>}}${\theta}^0_C${{</math>}}, ent�o ele acaba atingindo um m�ximo local com {{<math>}}${\theta}^*${{</math>}} (menor do que o m�ximo global em {{<math>}}${\theta}^{**}${{</math>}}).
 
 <video width="500px" height="500px" controls="controls"/>
     <source src="../local-maxima.mp4" type="video/mp4">
 </video>
 
-- Por outro lado, é um método mais eficiente, pois calcula-se a função objetivo uma vez a cada passo, além de ser mais preciso nas estimações.
+- Por outro lado, � um m�todo mais eficiente, pois calcula-se a fun��o objetivo uma vez a cada passo, al�m de ser mais preciso nas estima��es.
 
 
-#### Método de Newton
-- O método de Newton é um algoritmo de segunda ordem que usa tanto o gradiente quanto a matriz Hessiana da função objetivo para iterativamente atualizar a solução.
-- Agora, a segunda derivada permite dar "passos" mais otimizados, acelerando a convergência:
+#### M�todo de Newton
+- O m�todo de Newton � um algoritmo de segunda ordem que usa tanto o gradiente quanto a matriz Hessiana da fun��o objetivo para iterativamente atualizar a solu��o.
+- Agora, a segunda derivada permite dar "passos" mais otimizados, acelerando a converg�ncia:
 {{<math>}}$$\theta^{n+1} = \theta^n + \frac{1}{f''(\theta^n)} f'(\theta^n)$${{</math>}}
   ou, no caso multivariado:
   {{<math>}}$$\boldsymbol{\theta}^{n+1} = \boldsymbol{\theta}^n + \mathcal{H}^{-1}(\theta^n) \nabla f(\boldsymbol{\theta}^n),$${{</math>}}
-  em que {{<math>}}$\mathcal{H}(\cdot)${{</math>}} é a Hessiana (matriz de segundas derivadas parciais).
+  em que {{<math>}}$\mathcal{H}(\cdot)${{</math>}} � a Hessiana (matriz de segundas derivadas parciais).
 
 <center><img src="../gradient_newton.png"></center>
 
 
-#### Métodos de quasi-Newton
-- Como o cálculo da Hessiana (e a sua inversão) é computacionalmente demandante, diversos métodos propõem cálculos para aproximações da Hessiana a partir do gradiente para agilizar o algoritmo.
-- A qualidade da aproximação da matriz Hessiana pode afetar a eficácia destes métodos e suas taxas de convergência.
-- Alguns exemplos são:
-  - `BFGS` (Broyden-Fletcher-Goldfarb-Shanno): um dos métodos quasi-newtonianos mais populares
-  - `nlminb` (Nonlinear Minimization subject to Box Constraints): otimização sem restrições ou com restrições de caixa usando rotinas PORT do FORTRAN. 
+#### M�todos de quasi-Newton
+- Como o c�lculo da Hessiana (e a sua invers�o) � computacionalmente demandante, diversos m�todos prop�em c�lculos para aproxima��es da Hessiana a partir do gradiente para agilizar o algoritmo.
+- A qualidade da aproxima��o da matriz Hessiana pode afetar a efic�cia destes m�todos e suas taxas de converg�ncia.
+- Alguns exemplos s�o:
+  - `BFGS` (Broyden-Fletcher-Goldfarb-Shanno): um dos m�todos quasi-newtonianos mais populares
+  - `nlminb` (Nonlinear Minimization subject to Box Constraints): otimiza��o sem restri��es ou com restri��es de caixa usando rotinas PORT do FORTRAN. 
 
 
 
@@ -110,23 +110,23 @@ type: book
 
 </br>
 
-## Encontrando MQO por diferentes estratégias
-- Nesta seção, encontraremos as estimativas de MQO usando as estratégias da (a) minimização da função perda, de (b) método dos momentos e de (c) máxima verossimilhança.
-- Em cada uma delas, temos uma função objetivo distinta, que será avaliada a partir de um vetor com dois parâmetros, {{<math>}}$ \hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}. ${{</math>}} No R, vamos chamar esse vetor de `theta`.
+## Encontrando MQO por diferentes estrat�gias
+- Nesta se��o, encontraremos as estimativas de MQO usando as estrat�gias da (a) minimiza��o da fun��o perda, de (b) m�todo dos momentos e de (c) m�xima verossimilhan�a.
+- Em cada uma delas, temos uma fun��o objetivo distinta, que ser� avaliada a partir de um vetor com dois par�metros, {{<math>}}$ \hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}. ${{</math>}} No R, vamos chamar esse vetor de `theta`.
 
 
 
 ### Base `mtcars`
 
-Usaremos dados extraídos da _Motor Trend_ US magazine de 1974, que analisa o
-consumo de combustível e 10 aspectos técnicos de 32 automóveis.
+Usaremos dados extra�dos da _Motor Trend_ US magazine de 1974, que analisa o
+consumo de combust�vel e 10 aspectos t�cnicos de 32 autom�veis.
 
-No _R_, a base de dados `mtcars` já está pré-carregada no programa e queremos estimar o seguinte modelo:
+No _R_, a base de dados `mtcars` j� est� pr�-carregada no programa e queremos estimar o seguinte modelo:
 {{<math>}} $$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon, $$ {{</math>}}
 em que:
 
-- _mpg_: consumo de combustível (milhas por galão)
-- _hp_: potência (cavalos-vapor)
+- _mpg_: consumo de combust�vel (milhas por gal�o)
+- _hp_: pot�ncia (cavalos-vapor)
 
 
 ```r
@@ -142,17 +142,17 @@ reg$coef
 
 
 
-### (a) Minimização da função perda
-- A função perda adotada pela Teoria da Decisão é a **função de soma dos quadrados dos resíduos**
-- Por essa estratégia, queremos encontrar as estimativas que **minimizam** essa função.
+### (a) Minimiza��o da fun��o perda
+- A fun��o perda adotada pela Teoria da Decis�o � a **fun��o de soma dos quadrados dos res�duos**
+- Por essa estrat�gia, queremos encontrar as estimativas que **minimizam** essa fun��o.
 
 
-#### 1. Criar função perda que calcula a soma dos resíduos quadráticos
-- A função para calcular a soma dos resíduos quadráticos recebe como inputs:
-  - um **vetor** de possíveis valores {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0,\ \hat{\beta}_1 \right\}${{</math>}}
+#### 1. Criar fun��o perda que calcula a soma dos res�duos quadr�ticos
+- A fun��o para calcular a soma dos res�duos quadr�ticos recebe como inputs:
+  - um **vetor** de poss�veis valores {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0,\ \hat{\beta}_1 \right\}${{</math>}}
   - uma **lista** com
-    - um *texto* com o nome da variável dependente
-    - um *vetor de texto* com os nomes das variáveis explicativas
+    - um *texto* com o nome da vari�vel dependente
+    - um *vetor de texto* com os nomes das vari�veis explicativas
     - uma *base de dados*
 
 ```r
@@ -162,11 +162,11 @@ resid_quad = function(theta, fn_args) {
   xname = fn_args[[2]]
   dta = fn_args[[3]]
   
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = dta[,yname]
   x = dta[,xname]
   
-  # Extraindo os parâmetros de theta
+  # Extraindo os par�metros de theta
   b0hat = theta[1]
   b1hat = theta[2]
   
@@ -177,12 +177,12 @@ resid_quad = function(theta, fn_args) {
 ```
 
 
-#### 2. Otimização
-- Agora encontraremos os parâmetros que minimizam a função perda
+#### 2. Otimiza��o
+- Agora encontraremos os par�metros que minimizam a fun��o perda
 
 {{<math>}}$$ \underset{\hat{\boldsymbol{\theta}}}{\text{argmin}} \sum_{i=1}^{N}\hat{\varepsilon}^2_i \quad = \quad \underset{\hat{\boldsymbol{\theta}}}{\text{argmin}} \sum_{i=1}^{N}\left( \text{mpg}_i - \widehat{\text{mpg}}_i \right)^2 $${{</math>}}
 
-- Para isto usaremos a função `opm()` do pacote `optimx` que retorna os parâmetros que minimizam uma função (equivalente ao _argmin_):
+- Para isto usaremos a fun��o `opm()` do pacote `optimx` que retorna os par�metros que minimizam uma fun��o (equivalente ao _argmin_):
 ```yaml
 opm(par, fn, gr=NULL, hess=NULL, lower=-Inf, upper=Inf, 
             method=c("Nelder-Mead","BFGS"), hessian=FALSE,
@@ -196,18 +196,18 @@ opm(par, fn, gr=NULL, hess=NULL, lower=-Inf, upper=Inf,
 - lower, upper: Bounds on the variables for methods such as "L-BFGS-B" that can handle box (or bounds) constraints. These are vectors.
 - method: A vector of the methods to be used, each as a character string. Possible method codes are "Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "nlm", "nlminb", "spg", "ucminf", "newuoa", "bobyqa", "nmkb", "hjkb", "Rcgmin", and/or "Rvmmin". It may be needed to install some optimization packages to perform them.
 - hessian: A logical control that if TRUE forces the computation of an approximation to the Hessian at the final set of parameters.
-- control: A list of control parameters. See ‘Details’.
+- control: A list of control parameters. See ??~Details??T.
 ```
 - Colocaremos como input:
-  - a função perda criada `resid_quad()`
-  - um chute inicial dos parâmetros
-    - Note que a estimação pode ser mais ou menos sensível ao valores iniciais, dependendo do método de otimização utilizado
-    - O mais comum é encontrar como chute inicial um vetor de zeros `c(0, 0)`, por ser mais neutro em relação ao sinal das estimativas
-  - Por padrão, temos o argumento `hessian = FALSE`, coloque `TRUE` se quiser calcular o erro padrão, estatística t e p-valor das estimativas.
+  - a fun��o perda criada `resid_quad()`
+  - um chute inicial dos par�metros
+    - Note que a estima��o pode ser mais ou menos sens�vel ao valores iniciais, dependendo do m�todo de otimiza��o utilizado
+    - O mais comum � encontrar como chute inicial um vetor de zeros `c(0, 0)`, por ser mais neutro em rela��o ao sinal das estimativas
+  - Por padr�o, temos o argumento `hessian = FALSE`, coloque `TRUE` se quiser calcular o erro padr�o, estat�stica t e p-valor das estimativas.
 
 
 ```r
-# Estimação por BFGS
+# Estima��o por BFGS
 theta_ini = c(0, 0) # Chute inicial de b0, b1
 
 min_loss = optimx::opm(par=theta_ini, fn=resid_quad,
@@ -226,8 +226,8 @@ round(min_loss, 4)
 
 </br>
 
-### (b) Método dos Momentos
-- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chaussé)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
+### (b) M�todo dos Momentos
+- [Computing Generalized Method of Moments and Generalized Empirical Likelihood with R (Pierre Chauss�)](https://cran.r-project.org/web/packages/gmm/vignettes/gmm_with_R.pdf)
 - [Generalized Method of Moments (GMM) in R - Part 1 (Alfred F. SAM)](https://medium.com/codex/generalized-method-of-moments-gmm-in-r-part-1-of-3-c65f41b6199)
 
 
@@ -235,17 +235,17 @@ round(min_loss, 4)
 
 {{<math>}}$$ E(\boldsymbol{\varepsilon}) = 0 \qquad \text{ e } \qquad E(\boldsymbol{x \varepsilon}) = 0 $${{</math>}}
 
-- Note que estes são os momentos relacionados ao MQO, dado que este é um caso particular do GMM.
-- Os análogos amostrais são:
+- Note que estes s�o os momentos relacionados ao MQO, dado que este � um caso particular do GMM.
+- Os an�logos amostrais s�o:
 {{<math>}}$$ \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} = 0 \qquad \text{ e } \qquad \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} = 0 $${{</math>}}
 
 - E queremos minimizar:
 {{<math>}}$$ \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2 $${{</math>}}
-em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
+em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} s�o dois escalares.
 
 </br>
 
-- Podemos calcular estes dois momentos amostrais em uma única multiplicação matricial.
+- Podemos calcular estes dois momentos amostrais em uma �nica multiplica��o matricial.
 - Primeiro, considere:
 
 {{<math>}}$$ \hat{\boldsymbol{\varepsilon}} = \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_N \end{bmatrix} \qquad \text{e} \qquad \boldsymbol{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_N \end{bmatrix} $${{</math>}}
@@ -253,28 +253,28 @@ em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois es
 - Vamos juntar uma coluna de 1's com {{<math>}}$\boldsymbol{x}${{</math>}} e definir a matriz
 {{<math>}}$$ \boldsymbol{X} = \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix} $${{</math>}}
 
-- Fazendo a multiplicação matricial entre {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}}, temos o vetor dos momentos amostrais:
+- Fazendo a multiplica��o matricial entre {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} e {{<math>}}$\boldsymbol{X}${{</math>}}, temos o vetor dos momentos amostrais:
 
 {{<math>}}\begin{align} \boldsymbol{m} \equiv \boldsymbol{X}' \hat{\boldsymbol{\varepsilon}} &= \begin{bmatrix} 1 & 1 & \cdots & 1 \\ x_1 & x_2 & \cdots & x_N  \end{bmatrix} \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \\\
 &= \begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}  \propto \begin{bmatrix} \frac{1}{N} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \frac{1}{N} \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \end{align}{{</math>}}
 em que {{<math>}}$\propto${{</math>}} significa "proporcional a".
 
-- Agora, suponha a matriz de pesos (cuja soma não precisa ser igual a 1)
+- Agora, suponha a matriz de pesos (cuja soma n�o precisa ser igual a 1)
 {{<math>}}$$ W = \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} $${{</math>}}
-em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} são dois escalares.
+em que {{<math>}}$\alpha${{</math>}} e {{<math>}}$\beta${{</math>}} s�o dois escalares.
 
-- No GMM, queremos fazer com que esses momentos sejam o mais próximos de zero. Um forma de fazer isso é minimizar a soma (ponderada) dos quadrados dos momentos:
+- No GMM, queremos fazer com que esses momentos sejam o mais pr�ximos de zero. Um forma de fazer isso � minimizar a soma (ponderada) dos quadrados dos momentos:
 
 {{<math>}}\begin{align} \boldsymbol{m}' \boldsymbol{W m} &= \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \alpha & 0 \\ 0 & \beta \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
 &= \begin{bmatrix} \alpha \sum^N_{i=1}{\hat{\varepsilon}_i} & \beta \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \begin{bmatrix} \sum^N_{i=1}{\hat{\varepsilon}_i} \\ \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix} \\
 &= \alpha \left(\sum^N_{i=1}{\hat{\varepsilon}_i}\right)^2 + \beta \left(\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}\right)^2
 \end{align}{{</math>}}
 
-- Note que, usamos os quadrados dos momentos amostrais, pois minimizar o valor absoluto tende a formar "quinas" (pontos não-diferenciáveis) na função objetivo.
+- Note que, usamos os quadrados dos momentos amostrais, pois minimizar o valor absoluto tende a formar "quinas" (pontos n�o-diferenci�veis) na fun��o objetivo.
 
 
 
-#### Otimização Numérica para GMM
+#### Otimiza��o Num�rica para GMM
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}
 
@@ -286,25 +286,25 @@ xname = "hp"
 dta = mtcars
 ```
 
-##### 2. Seleção da base de dados e variáveis
+##### 2. Sele��o da base de dados e vari�veis
 
 ```r
-# Extraindo as variáveis da base em vetores
+# Extraindo as vari�veis da base em vetores
 y = dta[,yname]
 x = dta[,xname]
 
-# Extraindo os parâmetros de theta
+# Extraindo os par�metros de theta
 b0hat = theta[1]
 b1hat = theta[2]
 ```
 
-##### 3. Cálculo dos valores ajustados e dos resíduos
+##### 3. C�lculo dos valores ajustados e dos res�duos
 
 ```r
 ## Valores ajustados de y
 yhat = b0hat + b1hat * x
 
-## Resíduos
+## Res�duos
 ehat = y - yhat
 ```
 
@@ -321,35 +321,35 @@ sum(m1)^2 + sum(m2)^2 # soma dos quadrados com mesmos pesos (1 e 1)
 ```
 ## [1] 217374633
 ```
-- Note que, como multiplicamos a constante igual a 1 com os resíduos {{<math>}}$\hat{\varepsilon}${{</math>}}, a 1ª coluna corresponde ao momento amostral {{<math>}}$\sum^N_{i=1}{\hat{\varepsilon}_i}${{</math>}} (mas sem dividir por _N_).
-- Já a coluna 2 correspode ao momento amostral {{<math>}}$\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}${{</math>}} para a variável _hp_ (mas sem dividir por _N_).
-- Logicamente, para estimar por GMM, precisamos escolher os parâmetros {{<math>}}$\hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}${{</math>}} que faça com que a soma dos quadrados dos momentos amostrais se aproxime ao máximo de zero.
+- Note que, como multiplicamos a constante igual a 1 com os res�duos {{<math>}}$\hat{\varepsilon}${{</math>}}, a 1� coluna corresponde ao momento amostral {{<math>}}$\sum^N_{i=1}{\hat{\varepsilon}_i}${{</math>}} (mas sem dividir por _N_).
+- J� a coluna 2 correspode ao momento amostral {{<math>}}$\sum^N_{i=1}{x_i.\hat{\varepsilon}_i}${{</math>}} para a vari�vel _hp_ (mas sem dividir por _N_).
+- Logicamente, para estimar por GMM, precisamos escolher os par�metros {{<math>}}$\hat{\boldsymbol{\theta}} = \{ \hat{\beta}_0, \hat{\beta}_1 \}${{</math>}} que fa�a com que a soma dos quadrados dos momentos amostrais se aproxime ao m�ximo de zero.
 
 
-##### 5a. Criação de função com os momentos para `opm()`
-- Vamos criar uma função que tem como input um vetor de parâmetros (`theta`) e uma base de dados (`dta`), e que retorna uma matriz em que cada coluna representa um momento.
-- Essa função incluirá todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por didática).
+##### 5a. Cria��o de fun��o com os momentos para `opm()`
+- Vamos criar uma fun��o que tem como input um vetor de par�metros (`theta`) e uma base de dados (`dta`), e que retorna uma matriz em que cada coluna representa um momento.
+- Essa fun��o incluir� todos os comandos descritos nos itens 1 a 4 (que, na verdade, apenas foram feitos por did�tica).
 
 ```r
 mom_ols1 = function(theta, fn_args) {
-  # No gmm(), só pode ter 1 input dos argumentos dessa função
+  # No gmm(), s� pode ter 1 input dos argumentos dessa fun��o
   # Extraindo argumentos da lista fn_args
   yname = fn_args[[1]]
   xname = fn_args[[2]]
   dta = fn_args[[3]]
   
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = dta[,yname]
   x = dta[,xname]
   
-  # Extraindo os parâmetros de theta
+  # Extraindo os par�metros de theta
   b0hat = theta[1]
   b1hat = theta[2]
   
   ## Valores ajustados de y
   yhat = b0hat + b1hat * x
   
-  ## Resíduos
+  ## Res�duos
   ehat = y - yhat
   
   ## Momentos
@@ -359,8 +359,8 @@ mom_ols1 = function(theta, fn_args) {
 }
 ```
 
-##### 6a. Otimização via `opm()`
-- Assim como na minimização da função perda, vamos usar a função `opm()` do pacote `optimx`
+##### 6a. Otimiza��o via `opm()`
+- Assim como na minimiza��o da fun��o perda, vamos usar a fun��o `opm()` do pacote `optimx`
 
 ```r
 theta_ini = c(0,0)
@@ -378,60 +378,60 @@ round(gmm1, 4)
 ```
 
 
-##### 5b. Criação de função com os momentos para `gmm()`
+##### 5b. Cria��o de fun��o com os momentos para `gmm()`
 
-- Note que {{<math>}}$X' \hat{\boldsymbol{\varepsilon}}${{</math>}} um vetor dos momentos amostrais, mas a função `gmm()` exige uma matriz de dimensão {{<math>}}$g \times N${{</math>}}, sendo {{<math>}}$g${{</math>}} o número de momentos e {{<math>}}$N${{</math>}} o tamanho da amostra.
-- No R, precisamos fazer **multiplicação elemento a elemento por linha** do vetor de resíduos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com a matriz de covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante _1_ e _hp_), na forma:
+- Note que {{<math>}}$X' \hat{\boldsymbol{\varepsilon}}${{</math>}} um vetor dos momentos amostrais, mas a fun��o `gmm()` exige uma matriz de dimens�o {{<math>}}$g \times N${{</math>}}, sendo {{<math>}}$g${{</math>}} o n�mero de momentos e {{<math>}}$N${{</math>}} o tamanho da amostra.
+- No R, precisamos fazer **multiplica��o elemento a elemento por linha** do vetor de res�duos {{<math>}}$\hat{\boldsymbol{\varepsilon}}${{</math>}} com a matriz de covariadas {{<math>}}$\boldsymbol{X}${{</math>}} (neste caso: constante _1_ e _hp_), na forma:
 
 {{<math>}}\begin{align} \hat{\boldsymbol{\varepsilon}} \odot \boldsymbol{X}\ =\ \begin{bmatrix} \hat{\varepsilon}_1 \\ \hat{\varepsilon}_2 \\ \vdots \\ \hat{\varepsilon}_N \end{bmatrix} \odot \begin{bmatrix} 1 & x_1 \\ 1 & x_2 \\ \vdots & \vdots \\ 1 & x_N \end{bmatrix}  \ =\ &\begin{bmatrix} \hat{\varepsilon}_1 & x_1.\hat{\varepsilon}_1  \\ \hat{\varepsilon}_2 & x_2.\hat{\varepsilon}_2 \\ \vdots & \vdots \\ \hat{\varepsilon}_N & x_N.\hat{\varepsilon}_N \end{bmatrix}\\
 \\ &\quad \Big\Downarrow \text{(Soma por coluna)} \\
 &\begin{bmatrix}  \sum^N_{i=1}{\hat{\varepsilon}_i} & \sum^N_{i=1}{x_i.\hat{\varepsilon}_i} \end{bmatrix}, \end{align}{{</math>}}
-em que {{<math>}}$\odot${{</math>}} denota a multiplicação elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.
+em que {{<math>}}$\odot${{</math>}} denota a multiplica��o elemento a elemento por linha. Note que se fizermos as somas de cada coluna, obtemos os dois momentos amostrais.
 
-Note que, para fazer o GMM no R, não devemos fazer a soma/média de cada coluna (a própria função `gmm()` fará isso).
+Note que, para fazer o GMM no R, n�o devemos fazer a soma/m�dia de cada coluna (a pr�pria fun��o `gmm()` far� isso).
 
 
 ```r
 mom_ols2 = function(theta, fn_args) {
-  # No gmm(), só pode ter 1 input dos argumentos dessa função
+  # No gmm(), s� pode ter 1 input dos argumentos dessa fun��o
   # Extraindo argumentos da lista fn_args
   yname = fn_args[[1]]
   xname = fn_args[[2]]
   dta = fn_args[[3]]
   
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = dta[,yname]
   x = dta[,xname]
   
-  # Extraindo os parâmetros de theta
+  # Extraindo os par�metros de theta
   b0hat = theta[1]
   b1hat = theta[2]
   
   ## Valores ajustados de y
   yhat = b0hat + b1hat * x
   
-  ## Resíduos
+  ## Res�duos
   ehat = y - yhat
   
   ## Matriz de momentos
   m = as.numeric(ehat) * cbind(1,x)
-  m # output da função
+  m # output da fun��o
 }
 ```
 
 
-##### 6b. Otimização via `gmm()`
-- A função `gmm()` do pacote `gmm`, assim como a `opm()`, recebe uma função como argumento.
-- No entanto, a função que entra no `gmm()` deve gerar uma matriz como output, cujas somas/médias das colunas queremos aproximar de zero.
-- O argumento de função de otimização deve ser `fctopt = "nlminb"`, pois `fctopt = "optim"` é mais instável
-- Note que, além do vetor de parâmetros, a função que entra como argumento (`gmm_ols()` neste caso) deve ter, no máximo, mais um argumento.
+##### 6b. Otimiza��o via `gmm()`
+- A fun��o `gmm()` do pacote `gmm`, assim como a `opm()`, recebe uma fun��o como argumento.
+- No entanto, a fun��o que entra no `gmm()` deve gerar uma matriz como output, cujas somas/m�dias das colunas queremos aproximar de zero.
+- O argumento de fun��o de otimiza��o deve ser `fctopt = "nlminb"`, pois `fctopt = "optim"` � mais inst�vel
+- Note que, al�m do vetor de par�metros, a fun��o que entra como argumento (`gmm_ols()` neste caso) deve ter, no m�ximo, mais um argumento.
 
 ```r
 gmm2 = gmm::gmm(
   g=mom_ols2, 
   x=list("mpg", "hp", mtcars), # joga no 2o arg de ols_mom (fn_args)
   t0=c(0,0), # chute inicial de theta
-  optfct = "nlminb" # função de otimização
+  optfct = "nlminb" # fun��o de otimiza��o
   )
 gmm2$coef
 ```
@@ -454,53 +454,53 @@ reg$coef
 
 </br>
 
-### (c) Máxima Verossimilhança
+### (c) M�xima Verossimilhan�a
 - [ResEcon 703](https://github.com/woerman/ResEcon703) - Week 6 (University of Massachusetts Amherst)
-- A função objetivo é a função de verossimilhança que, ao contrário da função de soma de quadrado dos resíduos, queremos maximizá-la
+- A fun��o objetivo � a fun��o de verossimilhan�a que, ao contr�rio da fun��o de soma de quadrado dos res�duos, queremos maximiz�-la
 
 
-#### Intuição do cálculo da função de verossimilhança
-- Apenas para ilustrar a construção da função de verossimilhança, {{<math>}}$\mathcal{L}${{</math>}}, considere um modelo de probabilidade linear:
+#### Intui��o do c�lculo da fun��o de verossimilhan�a
+- Apenas para ilustrar a constru��o da fun��o de verossimilhan�a, {{<math>}}$\mathcal{L}${{</math>}}, considere um modelo de probabilidade linear:
 {{<math>}}$$ \text{am} = \beta_0 + \beta_1 \text{cyl} + \varepsilon, $${{</math>}}
-em que _cyl_ é a quantidade de cilindros do carro, e _am_ é uma variável _dummy_ que é igual a 1 se o carro for automático e 0 caso contrário.
+em que _cyl_ � a quantidade de cilindros do carro, e _am_ � uma vari�vel _dummy_ que � igual a 1 se o carro for autom�tico e 0 caso contr�rio.
 
-- Queremos encontrar {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1 \right\}${{</math>}} que maximizam a função de verossimilhança.
-- Considere um chute de parâmetros {{<math>}}$\hat{\boldsymbol{\theta}}_A = \left\{ \hat{\beta}^A_0 = 1.3, \hat{\beta}^A_1 = -0.14 \right\}${{</math>}} que gerem os seguintes valores preditos/ajustados (probabilidades):
+- Queremos encontrar {{<math>}}$\hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1 \right\}${{</math>}} que maximizam a fun��o de verossimilhan�a.
+- Considere um chute de par�metros {{<math>}}$\hat{\boldsymbol{\theta}}_A = \left\{ \hat{\beta}^A_0 = 1.3, \hat{\beta}^A_1 = -0.14 \right\}${{</math>}} que gerem os seguintes valores preditos/ajustados (probabilidades):
 
 <center><img src="../likelihood_A.png" width=80%></center>
 
 
-- Logo, a verossimilhança, dado os parâmetros {{<math>}}$\hat{\boldsymbol{\theta}}_A${{</math>}} é
+- Logo, a verossimilhan�a, dado os par�metros {{<math>}}$\hat{\boldsymbol{\theta}}_A${{</math>}} �
 {{<math>}}$$ \mathcal{L}(\hat{\boldsymbol{\theta}}_A) = 46\% \times 46\% \times 74\% \times 54\% \times 82\% = 6,9\% $${{</math>}}
 
-- Agora, considere um segundo chute de parâmetros {{<math>}}$\hat{\boldsymbol{\theta}}_B = \left\{ \hat{\beta}^B_0=1.0, \hat{\beta}^B_1=-0.10 \right\}${{</math>}} que gerem as seguintes probabilidades:
+- Agora, considere um segundo chute de par�metros {{<math>}}$\hat{\boldsymbol{\theta}}_B = \left\{ \hat{\beta}^B_0=1.0, \hat{\beta}^B_1=-0.10 \right\}${{</math>}} que gerem as seguintes probabilidades:
 
 <center><img src="../likelihood_B.png" width=80%></center>
 
-- Então, a verossimilhança, dado {{<math>}}$\hat{\boldsymbol{\theta}}_B${{</math>}}, é
+- Ent�o, a verossimilhan�a, dado {{<math>}}$\hat{\boldsymbol{\theta}}_B${{</math>}}, �
 {{<math>}}$$ \mathcal{L}(\hat{\boldsymbol{\theta}}_B) = 40\% \times 40\% \times 60\% \times 60\% \times 80\% = 4,6\% $${{</math>}}
-- Como {{<math>}}$\mathcal{L}\left(\hat{\boldsymbol{\theta}}_A\right) = 6,9\% > 4,6\% = \mathcal{L}\left(\hat{\boldsymbol{\theta}}_B\right)${{</math>}}, então os parâmetros {{<math>}}$\hat{\boldsymbol{\theta}}_A${{</math>}} se mostram mais adequados em relação a {{<math>}}$\hat{\boldsymbol{\theta}}_B${{</math>}}
-- Na estratégia de máxima verossimilhança (ML), escolhe-se o conjunto de parâmetros {{<math>}}$\hat{\boldsymbol{\theta}}^*${{</math>}} que maximiza a função de verossimilhança (ou log-verossimilhança).
+- Como {{<math>}}$\mathcal{L}\left(\hat{\boldsymbol{\theta}}_A\right) = 6,9\% > 4,6\% = \mathcal{L}\left(\hat{\boldsymbol{\theta}}_B\right)${{</math>}}, ent�o os par�metros {{<math>}}$\hat{\boldsymbol{\theta}}_A${{</math>}} se mostram mais adequados em rela��o a {{<math>}}$\hat{\boldsymbol{\theta}}_B${{</math>}}
+- Na estrat�gia de m�xima verossimilhan�a (ML), escolhe-se o conjunto de par�metros {{<math>}}$\hat{\boldsymbol{\theta}}^*${{</math>}} que maximiza a fun��o de verossimilhan�a (ou log-verossimilhan�a).
 
 
 
 
 
 
-#### Otimização Numérica para Máxima Verossimilhança
+#### Otimiza��o Num�rica para M�xima Verossimilhan�a
 
 - Em nosso modelo
 {{<math>}} $$ \text{mpg} = \beta_0 + \beta_1 \text{hp} + \varepsilon, $$ {{</math>}}
-queremos estimar 3 parâmetros
+queremos estimar 3 par�metros
 {{<math>}}$$ \hat{\boldsymbol{\theta}} = \left\{ \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma} \right\}, $${{</math>}}
-em que {{<math>}}$\hat{\sigma}${{</math>}} é desvio padrão do resíduo.
+em que {{<math>}}$\hat{\sigma}${{</math>}} � desvio padr�o do res�duo.
 
-- No modelo de probabilidade linear, as probabilidades usadas para calcular a verossimilhança são os próprios valores ajustados (probabilidades) dos carros serem automáticos (manuais), dado que são automáticos (manuais).
-- Já no modelo linear "comum", usamos a função de densidade de probabilidade, a partir de uma distribuição normal com uma variância {{<math>}}$\hat{\sigma}^2${{</math>}}, para avaliar a "probabilidade" de cada observação, {{<math>}}$y_i${{</math>}}, ser o valor ajustado {{<math>}}$\hat{y}_i${{</math>}}.
+- No modelo de probabilidade linear, as probabilidades usadas para calcular a verossimilhan�a s�o os pr�prios valores ajustados (probabilidades) dos carros serem autom�ticos (manuais), dado que s�o autom�ticos (manuais).
+- J� no modelo linear "comum", usamos a fun��o de densidade de probabilidade, a partir de uma distribui��o normal com uma vari�ncia {{<math>}}$\hat{\sigma}^2${{</math>}}, para avaliar a "probabilidade" de cada observa��o, {{<math>}}$y_i${{</math>}}, ser o valor ajustado {{<math>}}$\hat{y}_i${{</math>}}.
 
-A função log-verossimilhança é dada por
+A fun��o log-verossimilhan�a � dada por
 {{<math>}}$$ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \ln{L(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} = \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $${{</math>}}
-em que a distribuição condicional de cada {{<math>}}$y_i${{</math>}} é
+em que a distribui��o condicional de cada {{<math>}}$y_i${{</math>}} �
 
 {{<math>}}$$ y_i | x_i \sim N(\hat{\beta}_0 + \hat{\beta}_1 x_i, \hat{\sigma}^2) $${{</math>}}
 o que implica que 
@@ -510,34 +510,34 @@ o que implica que
 
 <center><img src="../mle.jpg"></center> 
 
-- Como demonstra a figura acima, assumimos que o erro {{<math>}}$\varepsilon${{</math>}} é normalmente distribuído para todo {{<math>}}$x${{</math>}}, com a mesma variância {{<math>}}$\sigma^2${{</math>}} (homocedasticidade)
+- Como demonstra a figura acima, assumimos que o erro {{<math>}}$\varepsilon${{</math>}} � normalmente distribu�do para todo {{<math>}}$x${{</math>}}, com a mesma vari�ncia {{<math>}}$\sigma^2${{</math>}} (homocedasticidade)
 
 
 
-#### Otimização Numérica para Máxima Verossimilhança
+#### Otimiza��o Num�rica para M�xima Verossimilhan�a
 
-- Nosso objetivo é
+- Nosso objetivo �
 {{<math>}}$$ \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \ \mathcal{l}(\hat{\boldsymbol{\theta}}) = \underset{\hat{\boldsymbol{\theta}}}{\text{argmax}} \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}, $${{</math>}}
 
-- Usaremos as funções `opm()` e `mle2()` do pacote `bbmle` para desempenhar a otimização numérica. Precisamos usar como input:
-  - Alguns valores inicias dos parâmetros, {{<math>}}$\hat{\boldsymbol{\theta}}^0 = \left\{ \hat{\beta}^0_0, \hat{\beta}^0_1, \hat{\sigma}^0 \right\}${{</math>}}
-  - Uma função que tome esses parâmetros como argumento e calcule a 
-log-verossimilhança, {{<math>}}$\ln{L(\boldsymbol{\hat{\boldsymbol{\theta}}})}${{</math>}}.
+- Usaremos as fun��es `opm()` e `mle2()` do pacote `bbmle` para desempenhar a otimiza��o num�rica. Precisamos usar como input:
+  - Alguns valores inicias dos par�metros, {{<math>}}$\hat{\boldsymbol{\theta}}^0 = \left\{ \hat{\beta}^0_0, \hat{\beta}^0_1, \hat{\sigma}^0 \right\}${{</math>}}
+  - Uma fun��o que tome esses par�metros como argumento e calcule a 
+log-verossimilhan�a, {{<math>}}$\ln{L(\boldsymbol{\hat{\boldsymbol{\theta}}})}${{</math>}}.
 
-> Como as funções de otimização costumam encontrar o mínimo de uma função objetivo, precisamos adaptar o output para o negativo função de log-verossimilhança. Ao minimizar o negativo de log-lik, estamos maximizando log-lik.
+> Como as fun��es de otimiza��o costumam encontrar o m�nimo de uma fun��o objetivo, precisamos adaptar o output para o negativo fun��o de log-verossimilhan�a. Ao minimizar o negativo de log-lik, estamos maximizando log-lik.
 
 <!-- <center><img src="../mle.jpg"></center> -->
 
-Passos para estimar uma regressão por máxima verossimilhança:
+Passos para estimar uma regress�o por m�xima verossimilhan�a:
 
 1. Chutar valores iniciais de 
 2. Calcular os valores ajustados, {{<math>}}$\hat{y}${{</math>}}
 3. Calcular a densidade para cada {{<math>}}$y_i${{</math>}}, usando {{<math>}}$f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})${{</math>}}
-4. Calcular a log-verossimilhança, {{<math>}}$\sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}${{</math>}}
+4. Calcular a log-verossimilhan�a, {{<math>}}$\sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}}${{</math>}}
 
 
 ##### 1. Chute de valores iniciais para {{<math>}}$\hat{\beta}_0, \hat{\beta}_1${{</math>}} e {{<math>}}$\hat{\sigma}^2${{</math>}}
-- Note que, diferente da estimação por MQO, um dos parâmetros a ser estimado via MLE é a variância ({{<math>}}$\hat{\sigma}^2${{</math>}}).
+- Note que, diferente da estima��o por MQO, um dos par�metros a ser estimado via MLE � a vari�ncia ({{<math>}}$\hat{\sigma}^2${{</math>}}).
 
 ```r
 theta = c(30, -.05, 2)
@@ -545,7 +545,7 @@ theta = c(30, -.05, 2)
 ```
 
 
-##### 2. Seleção da base de dados e variáveis
+##### 2. Sele��o da base de dados e vari�veis
 
 ```r
 ## Inicializando
@@ -553,17 +553,17 @@ yname = "mpg"
 xname = "hp"
 dta = mtcars
 
-# Extraindo as variáveis da base em vetores
+# Extraindo as vari�veis da base em vetores
 y = dta[,yname]
 x = dta[,xname]
 
-# Extraindo os parâmetros de theta
+# Extraindo os par�metros de theta
 b0hat = theta[1]
 b1hat = theta[2]
 sighat = theta[3]
 ```
 
-##### 3. Cálculo dos valores ajustados e das densidades
+##### 3. C�lculo dos valores ajustados e das densidades
 
 ```r
 ## Calculando valores ajustados de y
@@ -575,7 +575,7 @@ head(yhat)
 ## [1] 24.50 24.50 25.35 24.50 21.25 24.75
 ```
 
-##### 4. Cálculo das densidades
+##### 4. C�lculo das densidades
 {{<math>}}$$ f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma}) $${{</math>}}
 
 ```r
@@ -590,7 +590,7 @@ head(round(ypdf, 4)) # Primeiros valores da densidade
 ```
 
 ```r
-prod(ypdf) # Verossimilhança
+prod(ypdf) # Verossimilhan�a
 ```
 
 ```
@@ -598,7 +598,7 @@ prod(ypdf) # Verossimilhança
 ```
 
 ```r
-sum(log(ypdf)) # Log-Verossimilhança
+sum(log(ypdf)) # Log-Verossimilhan�a
 ```
 
 ```
@@ -622,15 +622,15 @@ head(tab)
 ## 5 18.7 175 21.25 0.0885
 ## 6 18.1 105 24.75 0.0008
 ```
-- Como pode ser visto na base de dados juntada e nos gráficos abaixo, quanto mais próximo o valor ajustado for do valor observado de cada observação, maior será a densidade/probabilidade.
+- Como pode ser visto na base de dados juntada e nos gr�ficos abaixo, quanto mais pr�ximo o valor ajustado for do valor observado de cada observa��o, maior ser� a densidade/probabilidade.
 <img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="/project/rec5004/sec7/_index_files/figure-html/unnamed-chunk-18-3.png" width="672" />
-- Logo, a verossimilhança (produto de todas densidades de probabilidade) será maior quanto mais próximos forem os valores ajustados dos seus respectivos valores observados.
+- Logo, a verossimilhan�a (produto de todas densidades de probabilidade) ser� maior quanto mais pr�ximos forem os valores ajustados dos seus respectivos valores observados.
 
 
 
-##### 5. Calculando a Log-Verossimilhança
+##### 5. Calculando a Log-Verossimilhan�a
 
-A log-verossimilhança é a soma do log de todas probabilidades:
+A log-verossimilhan�a � a soma do log de todas probabilidades:
 
 {{<math>}}$$ \mathcal{l}(\hat{\beta}_0, \hat{\beta}_1, \hat{\sigma}) = \sum^{N}_{i=1}{\ln\left[ f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma}) \right]} $${{</math>}}
 
@@ -645,27 +645,27 @@ loglik
 ```
 
 
-##### 6a. Criando a Função de Log-Verossimilhança para `opm()`
+##### 6a. Criando a Fun��o de Log-Verossimilhan�a para `opm()`
 
-- Aqui, vamos *minimizar o negativo* da função de log-verossimilhança
+- Aqui, vamos *minimizar o negativo* da fun��o de log-verossimilhan�a
 {{<math>}}$$ \min_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} -\sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}} = \max_{(\hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})} \sum^n_{i=1}{\ln{f(y_i | x_i, \hat{\beta}_0, \hat{\beta}_1, \hat{\sigma})}} $${{</math>}}
-- Juntando tudo que fizemos anteriormente, podemos criar uma função no R que calcular a função de log-verossimilhança.
-- **IMPORTANTE**: Prefira já calcular a log-densidade de probabilidade direto do `dnorm()`, pois otimização fica mais estável.
-- Isso não foi feito anteriormente por questão didática, mas será feito abaixo:
+- Juntando tudo que fizemos anteriormente, podemos criar uma fun��o no R que calcular a fun��o de log-verossimilhan�a.
+- **IMPORTANTE**: Prefira j� calcular a log-densidade de probabilidade direto do `dnorm()`, pois otimiza��o fica mais est�vel.
+- Isso n�o foi feito anteriormente por quest�o did�tica, mas ser� feito abaixo:
 
 
 ```r
-## Criando função para calcular log-verossimilhanca de OLS
+## Criando fun��o para calcular log-verossimilhanca de OLS
 loglik1 = function(theta, fn_args) {
   yname = fn_args[[1]]
   xname = fn_args[[2]]
   dta = fn_args[[3]]
   
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = dta[,yname]
   x = dta[,xname]
   
-  # Extraindo os parâmetros de theta
+  # Extraindo os par�metros de theta
   b0hat = theta[1]
   b1hat = theta[2]
   sighat = theta[3]
@@ -685,8 +685,8 @@ loglik1 = function(theta, fn_args) {
 ```
 
 
-##### 7a. Otimização via `opm()`
-- **IMPORTANTE**: o chute inicial do erro padrão dos erros (_sighat_) deve ser um valor alto, pois o R tem um certo limite de casas decimais e acaba aproximando para zero (0) as probabilidades muito baixas (e o produtório da fórmula da Verossimilhança acaba ficando igual a zero).
+##### 7a. Otimiza��o via `opm()`
+- **IMPORTANTE**: o chute inicial do erro padr�o dos erros (_sighat_) deve ser um valor alto, pois o R tem um certo limite de casas decimais e acaba aproximando para zero (0) as probabilidades muito baixas (e o produt�rio da f�rmula da Verossimilhan�a acaba ficando igual a zero).
 - Similar aos anteriores:
 
 
@@ -709,15 +709,15 @@ round(mle1, 4)
 ## nlminb       0.03
 ```
 
-##### 6b. Criando a Função de Log-Verossimilhança para `mle2()`
-- A função `mle2()` do pacote `bbmle`, assim como a `opm()`, recebe uma função como argumento.
-- A função que entra como argumento (`loglik()` neste caso) deve ter apenas como argumentos apenas os parâmetros que queremos otimizar. Além disso, caso seja necessário incluir algum outro argumento, deve ser inserido no argumento `data` da função `mle2()` como um objeto _list_.
+##### 6b. Criando a Fun��o de Log-Verossimilhan�a para `mle2()`
+- A fun��o `mle2()` do pacote `bbmle`, assim como a `opm()`, recebe uma fun��o como argumento.
+- A fun��o que entra como argumento (`loglik()` neste caso) deve ter apenas como argumentos apenas os par�metros que queremos otimizar. Al�m disso, caso seja necess�rio incluir algum outro argumento, deve ser inserido no argumento `data` da fun��o `mle2()` como um objeto _list_.
 
 
 ```r
-## Criando função para calcular log-verossimilhanca de OLS
+## Criando fun��o para calcular log-verossimilhanca de OLS
 loglik = function(b0hat, b1hat, sighat) {
-  # Extraindo as variáveis da base em vetores
+  # Extraindo as vari�veis da base em vetores
   y = dta[,yname]
   x = dta[,xname]
 
@@ -736,11 +736,11 @@ loglik = function(b0hat, b1hat, sighat) {
 ```
 
 
-##### 7b. Otimização via `mle2()`
+##### 7b. Otimiza��o via `mle2()`
 
 
 ```r
-## Maximizando a função log-verossimilhança de OLS
+## Maximizando a fun��o log-verossimilhan�a de OLS
 mle2 = bbmle::mle2(
   minuslogl=loglik,
   start=list(b0hat=0, b1hat=0, sighat=1),
@@ -768,4 +768,4 @@ mle2
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Multiple Regression" cta_link="../sec8" >}}
+{{< cta cta_text="?Y'? Proceed to Multiple Regression" cta_link="../sec8" >}}

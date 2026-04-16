@@ -23,7 +23,7 @@ In-person TA hours take place on Thursdays from 1:00 PM to 2:00 PM in room 14-B1
 
 If needed, we will use the following Google Meet room: [https://meet.google.com/qtr-upxi-nwu](https://meet.google.com/qtr-upxi-nwu)
 
-{{< cta cta_text="👉 Proceed to the R Review" cta_link="sec1" >}}
+{{< cta cta_text="�Y'? Proceed to the R Review" cta_link="sec1" >}}
 
 </br>
 

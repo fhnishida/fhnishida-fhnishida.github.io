@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Visualização de Dados
+linktitle: Data Visualization
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Visualização de Dados
+title: Data Visualization
 weight: 5
 output: md_document
 type: book

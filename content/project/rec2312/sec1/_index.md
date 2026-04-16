@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Revisão de R
+linktitle: R Review
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Revisão de Programação em R
+title: R Review
 weight: 1
 output: md_document
 type: book
@@ -14,7 +14,7 @@ type: book
 
 
 
-## Operações básicas
+## Basic operations
 
 ```r
 # Soma
@@ -255,7 +255,7 @@ x < 0 & x^2 > 100 # TRUE se TODAS expressões for TRUE
 ## Vetores e Matrizes
 
 - Depois das 5 classes de objetos apresentadas acima, as mais básicas são vetores e matrizes, que possuem mais de um elemento dentro do objeto.
-- Ambos necessariamente exigem que os seus elementos sejam da mesma classe. 
+- Ambos necessariamente exigwhere os seus elementos sejam da mesma classe. 
 
 
 ### Vetores
@@ -918,4 +918,4 @@ head(mtcars) # primeiras 6 linhas de mtcars
 </br>
 
 
-{{< cta cta_text="👉 Seguir para Mínimos Quadrados Ordinários (MQO)" cta_link="../sec2" >}}
+{{< cta cta_text="👉 Seguir para Ordinary Least Squares (OLS)" cta_link="../sec2" >}}

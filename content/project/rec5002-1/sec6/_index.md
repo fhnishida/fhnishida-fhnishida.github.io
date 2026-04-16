@@ -27,4 +27,4 @@ type: book
 ## Problem Set 3
 - Problem Set 3 Solution: [Lista-3_Resolucao.pdf](../Lista-3_Resolucao.pdf)
 
-{{< cta cta_text="👉 Proceed to Session 7" cta_link="../sec7" >}}
+{{< cta cta_text="Proceed to Session 7" cta_link="../sec7" >}}

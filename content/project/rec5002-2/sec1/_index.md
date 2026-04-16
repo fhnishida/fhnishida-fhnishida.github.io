@@ -22,5 +22,5 @@ type: book
 Presentation: [AP_Monitoria-1_pt2_v2.pdf](../AP_Monitoria-1_pt2_v2.pdf)
 
 
-{{< cta cta_text="👉 Proceed to Session 2" cta_link="../chapter2" >}}
+{{< cta cta_text="Proceed to Session 2" cta_link="../chapter2" >}}
 

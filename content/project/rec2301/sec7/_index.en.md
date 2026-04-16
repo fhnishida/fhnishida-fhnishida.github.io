@@ -2,9 +2,9 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Regressão Simples
+linktitle: Regress�o Simples
 summary: This page covers topics such as simple OLS regression and assumptions violations. Also includes examples and code snippets to illustrate the concepts discussed.
-title: Regressão Simples
+title: Regress�o Simples
 weight: 7
 output: md_document
 type: book
@@ -12,39 +12,39 @@ type: book
 
 
 
-## Regressão simples por MQO
-- [Seção 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
-- Considere o seguinte modelo empírico
+## Regress�o simples por MQO
+- [Se��o 2.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/93)
+- Considere o seguinte modelo emp�rico
 $$ y = \beta_0 + \beta_1 x + u \tag{2.1} $$
-- Os estimadores de mínimos quadrados ordinários (MQO), segundo Wooldridge (2006, Seção 2.2) é dado por
+- Os estimadores de m�nimos quadrados ordin�rios (MQO), segundo Wooldridge (2006, Se��o 2.2) � dado por
 
 {{<math>}}\begin{align}
     \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x} \tag{2.2}\\
     \hat{\beta}_1 &= \frac{Cov(x,y)}{Var(x)} \tag{2.3}
 \end{align}{{</math>}}
 
-- E os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}} é dado por
+- E os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}} � dado por
 $$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \tag{2.4} $$
 tal que 
 $$ y = \hat{y} + \hat{u} $$
 
-### Exemplo 2.3: Salário de Diretores Executivos e Retornos de Ações (Wooldridge, 2006)
+### Exemplo 2.3: Sal�rio de Diretores Executivos e Retornos de A��es (Wooldridge, 2006)
 
-- Considere o seguinte modelo de regressão simples
+- Considere o seguinte modelo de regress�o simples
 $$ \text{salary} = \beta_0 + \beta_1 \text{roe} + u $$
-em que `salary` é a remuneração de um diretor executivo em milhares de dólares e `roe` é o retorno sobre o investimento em percentual.
+em que `salary` � a remunera��o de um diretor executivo em milhares de d�lares e `roe` � o retorno sobre o investimento em percentual.
 
 
-#### Estimando regressão simples "na mão"
+#### Estimando regress�o simples "na m�o"
 
 
 ```r
 # Carregando a base de dados do pacote 'wooldridge'
 data(ceosal1, package="wooldridge")
 
-attach(ceosal1) # para não precisar escrever 'ceosal1$' antes de toda variável
+attach(ceosal1) # para n�o precisar escrever 'ceosal1$' antes de toda vari�vel
 
-cov(salary, roe) # covariância entre variável dependente e independente
+cov(salary, roe) # covari�ncia entre vari�vel dependente e independente
 ```
 
 ```
@@ -52,7 +52,7 @@ cov(salary, roe) # covariância entre variável dependente e independente
 ```
 
 ```r
-var(roe) # variância do retorno sobre o investimento
+var(roe) # vari�ncia do retorno sobre o investimento
 ```
 
 ```
@@ -60,7 +60,7 @@ var(roe) # variância do retorno sobre o investimento
 ```
 
 ```r
-mean(roe) # média do retorno sobre o investimento
+mean(roe) # m�dia do retorno sobre o investimento
 ```
 
 ```
@@ -68,7 +68,7 @@ mean(roe) # média do retorno sobre o investimento
 ```
 
 ```r
-mean(salary) # média do salário
+mean(salary) # m�dia do sal�rio
 ```
 
 ```
@@ -76,7 +76,7 @@ mean(salary) # média do salário
 ```
 
 ```r
-# Cálculo "na mão" dos coeficientes de MQO
+# C�lculo "na m�o" dos coeficientes de MQO
 ( b1_hat = cov(salary, roe) / var(roe) ) # por (2.3)
 ```
 
@@ -93,15 +93,15 @@ mean(salary) # média do salário
 ```
 
 ```r
-detach(ceosal1) # para parar de procurar variável dentro do objeto 'ceosal1'
+detach(ceosal1) # para parar de procurar vari�vel dentro do objeto 'ceosal1'
 ```
 
-- Vemos que um incremento de uma unidade (porcento) no retorno sobre o investimento (_roe_), aumentar 18 unidades (milhares de dólares) nos salários dos diretores executivos.
+- Vemos que um incremento de uma unidade (porcento) no retorno sobre o investimento (_roe_), aumentar 18 unidades (milhares de d�lares) nos sal�rios dos diretores executivos.
 
 
-#### Estimando regressão simples via `lm()`
-- Uma maneira mais conveniente de fazer a estimação por MQO é usando a função `lm()`
-- Em um modelo univariado, inserimos dois vetores (variáveis dependente e independente) separados por um til (`~`):
+#### Estimando regress�o simples via `lm()`
+- Uma maneira mais conveniente de fazer a estima��o por MQO � usando a fun��o `lm()`
+- Em um modelo univariado, inserimos dois vetores (vari�veis dependente e independente) separados por um til (`~`):
 
 ```r
 lm(ceosal1$salary ~ ceosal1$roe)
@@ -117,7 +117,7 @@ lm(ceosal1$salary ~ ceosal1$roe)
 ##       963.2         18.5
 ```
 
-- Também podemos deixar de usar o prefixo `ceosal1$` antes dos nomes do vetores preenchermos o argumento `data = ceosal1`
+- Tamb�m podemos deixar de usar o prefixo `ceosal1$` antes dos nomes do vetores preenchermos o argumento `data = ceosal1`
 
 ```r
 lm(salary ~ roe, data=ceosal1)
@@ -133,28 +133,28 @@ lm(salary ~ roe, data=ceosal1)
 ##       963.2         18.5
 ```
 
-- Podemos usar a função `lm()` para incluir uma reta de regressão no gráfico
+- Podemos usar a fun��o `lm()` para incluir uma reta de regress�o no gr�fico
 
 ```r
-# Gráfico de dispersão (scatter)
+# Gr�fico de dispers�o (scatter)
 plot(ceosal1$roe, ceosal1$salary)
 
-# Adicionando a reta de regressão
+# Adicionando a reta de regress�o
 abline(lm(salary ~ roe, data=ceosal1), col="red")
 ```
 
 <img src="/project/rec2301/sec7/_index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 
-## Coeficientes, Valores Ajustados e Resíduos
-- [Seção 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
-- Podemos "guardar" os resultados da estimação em um objeto (da classe `list`) e, depois, extrair informações dele.
+## Coeficientes, Valores Ajustados e Res�duos
+- [Se��o 2.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/98)
+- Podemos "guardar" os resultados da estima��o em um objeto (da classe `list`) e, depois, extrair informa��es dele.
 
 ```r
-# atribuindo o resultado da regressão em um objeto
+# atribuindo o resultado da regress�o em um objeto
 CEOregres = lm(salary ~ roe, data=ceosal1)
 
-# verificando os "nomes" das informações contidas no objeto
+# verificando os "nomes" das informa��es contidas no objeto
 names(CEOregres)
 ```
 
@@ -164,7 +164,7 @@ names(CEOregres)
 ##  [9] "xlevels"       "call"          "terms"         "model"
 ```
 
-- Podemos usar a função `coef()` para extrairmos um data frame com os coeficientes da regressão
+- Podemos usar a fun��o `coef()` para extrairmos um data frame com os coeficientes da regress�o
 
 ```r
 ( bhat = coef(CEOregres) )
@@ -180,7 +180,7 @@ bhat_0 = bhat["(Intercept)"] # ou bhat[1]
 bhat_1 = bhat["roe"] # ou bhat[2]
 ```
 
-- Dados estes parâmetros estimados, podemos calcular os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}}, e os desvios, {{<math>}}$\hat{u}${{</math>}}, para cada observação {{<math>}}$i=1, ..., n${{</math>}}:
+- Dados estes par�metros estimados, podemos calcular os valores ajustados/preditos, {{<math>}}$\hat{y}${{</math>}}, e os desvios, {{<math>}}$\hat{u}${{</math>}}, para cada observa��o {{<math>}}$i=1, ..., n${{</math>}}:
 
 {{<math>}}\begin{align}
     \hat{y}_i &= \hat{\beta}_0 + \hat{\beta}_1 . x_i \tag{2.5} \\
@@ -213,7 +213,7 @@ head( cbind(sal, roe, sal_hat, u_hat) )
 ## [6,] 1145 20.0 1333.215 -188.2151
 ```
 
-- Com as funções `fitted()` e `resid()` podemos extrair os valores ajustados e os resíduos do objeto com resultado da regressão:
+- Com as fun��es `fitted()` e `resid()` podemos extrair os valores ajustados e os res�duos do objeto com resultado da regress�o:
 
 ```r
 head( cbind(fitted(CEOregres), resid(CEOregres)) )
@@ -230,7 +230,7 @@ head( cbind(fitted(CEOregres), resid(CEOregres)) )
 ```
 
 ```r
-# Ou também
+# Ou tamb�m
 head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 ```
 
@@ -245,18 +245,18 @@ head( cbind(CEOregres$fitted.values, CEOregres$residuals) )
 ```
 
 
-- Na seção 2.3 de Wooldridge (2006), vemos que a estimação por MQO assume as seguintes hipóteses:
+- Na se��o 2.3 de Wooldridge (2006), vemos que a estima��o por MQO assume as seguintes hip�teses:
 {{<math>}}\begin{align}
     &\sum^n_{i=1}{\hat{u}_i} = 0 \quad \implies \quad \bar{\hat{u}} = 0 \tag{2.7} \\
     &\sum^n_{i=1}{x_i \hat{u}_i} = 0 \quad \implies \quad Cov(x,\hat{u}) = 0 \tag{2.8} \\
     &\bar{y}=\hat{\beta}_0 + \hat{\beta}_1.\bar{x} \tag{2.9}
 \end{align}{{</math>}}
 
-- Podemos verificá-los em nosso exemplo:
+- Podemos verific�-los em nosso exemplo:
 
 ```r
 # Verificando (2.7)
-mean(u_hat) # bem próximo de 0
+mean(u_hat) # bem pr�ximo de 0
 ```
 
 ```
@@ -265,7 +265,7 @@ mean(u_hat) # bem próximo de 0
 
 ```r
 # Verificando (2.8)
-cor(ceosal1$roe, u_hat) # bem próximo de 0
+cor(ceosal1$roe, u_hat) # bem pr�ximo de 0
 ```
 
 ```
@@ -289,45 +289,45 @@ mean(sal_hat)
 ## [1] 1281.12
 ```
 
-- **IMPORTANTE**: Isso só quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
-- Isto **NÃO** quer dizer que, para o modelo empírico/populacional, as seguintes hipóteses sejam verdadeiras:
+- **IMPORTANTE**: Isso s� quer dizer que o MQO escolhe {{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}} tais que 2.7, 2.8 e 2.9 sejam verdadeiros.
+- Isto **N?fO** quer dizer que, para o modelo emp�rico/populacional, as seguintes hip�teses sejam verdadeiras:
 {{<math>}}\begin{align}
     &E(u) = 0 \tag{2.7'} \\
     &Cov(x, u) = 0 \tag{2.8'}
 \end{align}{{</math>}}
-- De fato, se 2.7' e 2.8' não forem válidos, a estimação por MQO (que assume 2.7, 2.8 e 2.9) será viesada.
+- De fato, se 2.7' e 2.8' n�o forem v�lidos, a estima��o por MQO (que assume 2.7, 2.8 e 2.9) ser� viesada.
 
 
-## Transformações log
-- [Seção 2.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
-- Também podemos fazer estimações transformando variáveis em nível para logaritmo.
-- É especialmente importante para transformar modelos não-lineares em lineares - quando o parâmetro está no expoente ao invés estar multiplicando:
+## Transforma��es log
+- [Se��o 2.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- Tamb�m podemos fazer estima��es transformando vari�veis em n�vel para logaritmo.
+- ?? especialmente importante para transformar modelos n�o-lineares em lineares - quando o par�metro est� no expoente ao inv�s estar multiplicando:
   
 $$ y = A K^\alpha L^\beta\quad \overset{\text{log}}{\rightarrow}\quad \log(y) = \log(A) + \alpha \log(K) + \beta \log(L) $$
 
-- Também é frequentemente utilizada em variáveis dependentes {{<math>}}$y \ge 0${{</math>}}
+- Tamb�m � frequentemente utilizada em vari�veis dependentes {{<math>}}$y \ge 0${{</math>}}
 
 
 <center><img src="../tab_2-3.png"></center>
 
-- Há duas maneiras de fazer a transformação log:
-    - Criar um novo vetor/coluna com a variável em log, ou
-    - Usar a função `log()` diretamente no vetor dentro da função `lm()`
+- H� duas maneiras de fazer a transforma��o log:
+    - Criar um novo vetor/coluna com a vari�vel em log, ou
+    - Usar a fun��o `log()` diretamente no vetor dentro da fun��o `lm()`
 
 
-### Exemplo 2.11: Salário de Diretores Executivos e Vendas das Empresas (Wooldridge, 2006)
-- Considere as variáveis:
-    - `wage`: salário anual em milhares de dólares
-    - `sales`: vendas em milhões de dólares
+### Exemplo 2.11: Sal�rio de Diretores Executivos e Vendas das Empresas (Wooldridge, 2006)
+- Considere as vari�veis:
+    - `wage`: sal�rio anual em milhares de d�lares
+    - `sales`: vendas em milh�es de d�lares
 
 
-- _Modelo nível-nível_:
+- _Modelo n�vel-n�vel_:
 
 ```r
 # Carregando a base de dados
 data(ceosal1, package="wooldridge")
 
-# Estimando modelo nível-nível
+# Estimando modelo n�vel-n�vel
 lm(salary ~ sales, data=ceosal1)
 ```
 
@@ -340,11 +340,11 @@ lm(salary ~ sales, data=ceosal1)
 ## (Intercept)        sales  
 ##   1.174e+03    1.547e-02
 ```
-- Um aumento em US\$ 1 milhão em vendas está relacionado incremento de US\$ 0,01547 milhares de dólares do salário do diretor executivo.
-- _Modelo log-nível_:
+- Um aumento em US\$ 1 milh�o em vendas est� relacionado incremento de US\$ 0,01547 milhares de d�lares do sal�rio do diretor executivo.
+- _Modelo log-n�vel_:
 
 ```r
-# Estimando modelo log-nível
+# Estimando modelo log-n�vel
 lm(log(salary) ~ sales, data=ceosal1)
 ```
 
@@ -357,7 +357,7 @@ lm(log(salary) ~ sales, data=ceosal1)
 ## (Intercept)        sales  
 ##   6.847e+00    1.498e-05
 ```
-- Um aumento em US\$ 1 milhão em vendas tende a elevar em 0,0015\% ($=100 \beta_1\%$ ) o salário do diretor executivo.
+- Um aumento em US\$ 1 milh�o em vendas tende a elevar em 0,0015\% ($=100 \beta_1\%$ ) o sal�rio do diretor executivo.
 - _Modelo log-log_:
 
 ```r
@@ -374,12 +374,12 @@ lm(log(salary) ~ log(sales), data=ceosal1)
 ## (Intercept)   log(sales)  
 ##      4.8220       0.2567
 ```
-- Um aumento em 1\% das vendas aumenta o salário em cerca de 0,257\% ($=\beta_1\%$) maior.
+- Um aumento em 1\% das vendas aumenta o sal�rio em cerca de 0,257\% ($=\beta_1\%$) maior.
 
 
-## Regressão a partir da origem e sobre uma constante
-- [Seção 2.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
-- Para esstimar o modelo sem o intercepto (constante), precisamos adicionar `0 +` nos regressores na função `lm()`:
+## Regress�o a partir da origem e sobre uma constante
+- [Se��o 2.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/103)
+- Para esstimar o modelo sem o intercepto (constante), precisamos adicionar `0 +` nos regressores na fun��o `lm()`:
 
 ```r
 data(ceosal1, package="wooldridge")
@@ -396,7 +396,7 @@ lm(salary ~ 0 + roe, data=ceosal1)
 ## 63.54
 ```
 
-- Ao regredirmos uma variável dependente sobre uma constante (1), obtemos a média desta variável.
+- Ao regredirmos uma vari�vel dependente sobre uma constante (1), obtemos a m�dia desta vari�vel.
 
 ```r
 lm(salary ~ 1, data=ceosal1)
@@ -421,10 +421,10 @@ mean(ceosal1$salary, na.rm=TRUE)
 ```
 
 
-## Diferença de médias
-- Baseado no Exemplo C.6: Efeito de subsídios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006)
-- Poderíamos ter calculado a diferença de médias por meio de uma regressão sobre uma variável _dummy_, cujos valores são 0 ou 1.
-- Primeiro vamos criar um vetor único de taxas de refugo (vamos empilhar `SR87` e `SR88`)
+## Diferen�a de m�dias
+- Baseado no Exemplo C.6: Efeito de subs�dios de treinamento corporativo sobre a produtividade do trabalhador  (Wooldridge, 2006)
+- Poder�amos ter calculado a diferen�a de m�dias por meio de uma regress�o sobre uma vari�vel _dummy_, cujos valores s�o 0 ou 1.
+- Primeiro vamos criar um vetor �nico de taxas de refugo (vamos empilhar `SR87` e `SR88`)
 
 ```r
 SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
@@ -432,7 +432,7 @@ SR87 = c(10, 1, 6, .45, 1.25, 1.3, 1.06, 3, 8.18, 1.67, .98,
 SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5, 
          .61, 6.7, 4, 7, 19, .2, 5, 3.83)
 
-( SR = c(SR87, SR88) ) # empilhando SR87 e SR88 em único vetor
+( SR = c(SR87, SR88) ) # empilhando SR87 e SR88 em �nico vetor
 ```
 
 ```
@@ -442,11 +442,11 @@ SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5,
 ## [37] 19.00  0.20  5.00  3.83
 ```
 
-- Note que os 20 primeiros valores são relativos às taxas de refugo no ano de 1987 e os 20 últimos valores são de 1988.
-- Vamos criar uma variável _dummy_ chamada de _group88_ que atribui valor 1 as observações do ano de 1988 e o valor 0 para as de 1987:
+- Note que os 20 primeiros valores s�o relativos �s taxas de refugo no ano de 1987 e os 20 �ltimos valores s�o de 1988.
+- Vamos criar uma vari�vel _dummy_ chamada de _group88_ que atribui valor 1 as observa��es do ano de 1988 e o valor 0 para as de 1987:
 
 ```r
-( group88 = c(rep(0, 20), rep(1, 20)) ) # valores 0/1 para 20 primeiras/últimas observações
+( group88 = c(rep(0, 20), rep(1, 20)) ) # valores 0/1 para 20 primeiras/�ltimas observa��es
 ```
 
 ```
@@ -454,7 +454,7 @@ SR88 = c(3, 1, 5, .5, 1.54, 1.5, .8, 2, .67, 1.17, .51, .5,
 ## [39] 1 1
 ```
 
-- Ao regredirmos a taxa de refugo em relação à _dummy_ obtemos a diferença das médias
+- Ao regredirmos a taxa de refugo em rela��o � _dummy_ obtemos a diferen�a das m�dias
 
 ```r
 lm(SR ~ group88)
@@ -472,17 +472,17 @@ lm(SR ~ group88)
 
 
 
-## Valores esperados, Variância e Erros padrão
-- [Seção 2.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/106)
+## Valores esperados, Vari�ncia e Erros padr�o
+- [Se��o 2.6 de Heiss (2020)](http://www.urfie.net/read/index.html#page/106)
 
 
-- Wooldridge (2006, Seção 2.5) deriva o estimador do termo de erro:
+- Wooldridge (2006, Se��o 2.5) deriva o estimador do termo de erro:
 $$ \hat{\sigma}^2 = \frac{1}{n-2} \sum^n_{i=1}{\hat{u}^2_i} = \frac{n-1}{n-2} Var(\hat{u}) \tag{2.14} $$
 em que {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</math>}}.
 
-- Observe que precisamos considerar os graus de liberdade, dado que estamos estimando dois parâmetros ({{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}).
-- Note que {{<math>}}$\hat{\sigma} = \sqrt{\hat{\sigma}^2}${{</math>}} é chamado de erro padrão da regressão (EPR). No R, é chamado de erro padrão residual 
-- também podemos obter os erros padrão (EP) dos estimadores:
+- Observe que precisamos considerar os graus de liberdade, dado que estamos estimando dois par�metros ({{<math>}}$\hat{\beta}_0${{</math>}} e {{<math>}}$\hat{\beta}_1${{</math>}}).
+- Note que {{<math>}}$\hat{\sigma} = \sqrt{\hat{\sigma}^2}${{</math>}} � chamado de erro padr�o da regress�o (EPR). No R, � chamado de erro padr�o residual 
+- tamb�m podemos obter os erros padr�o (EP) dos estimadores:
 
 {{<math>}}\begin{align}
     se(\hat{\beta}_0) &= \sqrt{\frac{\hat{\sigma}\bar{x}^2}{\sum^n_{i=1}{(x_i - \bar{x})^2}}} = \frac{1}{\sqrt{n-1}} \frac{\hat{\sigma}}{sd(x)} \sqrt{\bar{x^2}} \tag{2.15}\\
@@ -490,12 +490,12 @@ em que {{<math>}}$Var(\hat{u}) = \frac{1}{n-1} \sum^n_{i=1}{\hat{u}^2_i}${{</mat
 \end{align}{{</math>}}
 
 
-### Exemplo 2.12: Desempenho em Matemática de Estudante e o Programa de Merenda Escolar (Wooldridge, 2006)
-- Sejam as variáveis
-    - `math10`: o percentual de alunos de primeiro ano de ensino médio aprovados em exame de matemática
+### Exemplo 2.12: Desempenho em Matem�tica de Estudante e o Programa de Merenda Escolar (Wooldridge, 2006)
+- Sejam as vari�veis
+    - `math10`: o percentual de alunos de primeiro ano de ensino m�dio aprovados em exame de matem�tica
     - `lnchprg`: o percentual de estudante aptos para participar do programa de merenda escolar
     
-- O modelo de regressão simples é
+- O modelo de regress�o simples �
 $$ \text{math10} = \beta_0 + \beta_1 \text{lnchprg} + u $$
 
 
@@ -505,7 +505,7 @@ data(meap93, package="wooldridge")
 # Estimando o modelo e atribuindo no objeto 'results'
 results = lm(math10 ~ lnchprg, data=meap93)
 
-# Extraindo número de observações
+# Extraindo n�mero de observa��es
 ( n = nobs(results) )
 ```
 
@@ -514,7 +514,7 @@ results = lm(math10 ~ lnchprg, data=meap93)
 ```
 
 ```r
-# Calculando o Erro Padrão da Regressão (raiz quadrada de 2.14)
+# Calculando o Erro Padr�o da Regress�o (raiz quadrada de 2.14)
 ( SER = sqrt( (n-1)/(n-2) ) * sd(resid(results)) )
 ```
 
@@ -523,8 +523,8 @@ results = lm(math10 ~ lnchprg, data=meap93)
 ```
 
 ```r
-# Erro padrão de bhat_0 (2.15)
-(1 / sqrt(n-1)) * (SER / sd(meap93$lnchprg)) * sqrt( mean(meap93$lnchprg^2) ) # Erro padrão de bhat_1 (2.16)
+# Erro padr�o de bhat_0 (2.15)
+(1 / sqrt(n-1)) * (SER / sd(meap93$lnchprg)) * sqrt( mean(meap93$lnchprg^2) ) # Erro padr�o de bhat_1 (2.16)
 ```
 
 ```
@@ -539,7 +539,7 @@ results = lm(math10 ~ lnchprg, data=meap93)
 ## [1] 0.03483933
 ```
 
-- Os cálculos dos erros padrão podem ser obtidos via uso da função `summary()` sobre o objeto com resultado da regressão:
+- Os c�lculos dos erros padr�o podem ser obtidos via uso da fun��o `summary()` sobre o objeto com resultado da regress�o:
 
 ```r
 summary(results)
@@ -566,10 +566,10 @@ summary(results)
 ## F-statistic: 83.77 on 1 and 406 DF,  p-value: < 2.2e-16
 ```
 
-- Observe também que, por padrão, são feitos testes de hipótese (bicaudais), cujas hipóteses nulas são {{<math>}}$\beta_0 = 0${{</math>}} e {{<math>}}$\beta_1=0${{</math>}}.
-- Ou seja, avalia se as estimativas calculadas são estatisticamente nulas e também mostra as respectivas estatísticas t e p-valores.
-- Neste caso, como os p-valores são bem pequenos (`<2e-16` = menor do que {{<math>}}$2 \times 10^{-16}${{</math>}}), rejeitamos ambas hipóteses nulas e, portanto, as estimativas são estatisticamente significantes.
-- Também podemos calcular essas estimativas "na mão":
+- Observe tamb�m que, por padr�o, s�o feitos testes de hip�tese (bicaudais), cujas hip�teses nulas s�o {{<math>}}$\beta_0 = 0${{</math>}} e {{<math>}}$\beta_1=0${{</math>}}.
+- Ou seja, avalia se as estimativas calculadas s�o estatisticamente nulas e tamb�m mostra as respectivas estat�sticas t e p-valores.
+- Neste caso, como os p-valores s�o bem pequenos (`<2e-16` = menor do que {{<math>}}$2 \times 10^{-16}${{</math>}}), rejeitamos ambas hip�teses nulas e, portanto, as estimativas s�o estatisticamente significantes.
+- Tamb�m podemos calcular essas estimativas "na m�o":
 
 ```r
 # Extraindo as estimativas
@@ -583,7 +583,7 @@ summary(results)
 ```
 
 ```r
-# Estatísticas t para H0: bhat = 0
+# Estat�sticas t para H0: bhat = 0
 ( t_bhat_0 = (estim["(Intercept)", "Estimate"] - 0) / estim["(Intercept)", "Std. Error"] )
 ```
 
@@ -617,44 +617,44 @@ summary(results)
 ```
 
 
-## Violações de hipótese
-- [Subseção 2.7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/113), mas usando como exemplo o teste elaborado 1.
+## Viola��es de hip�tese
+- [Subse��o 2.7.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/113), mas usando como exemplo o teste elaborado 1.
 - [Simulating a linear model (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/u7in9/simulation-simulating-a-linear-model)
-- Na prática, fazemos regressões a partir de observações contidas em bases de dados e não sabemos qual é o _modelo real_ que gerou essas observações.
-- No R, podemos supor um _modelo real_ e simular suas observações no R para analisar o que ocorre quando há violação de hipótese de algum modelo econométrico ou estimador.
-- Usaremos o exemplo dado no Teste Elaborado 1, no qual queremos encontrar a relação das horas de prática em culinária com o número de queimaduras na cozinha.
+- Na pr�tica, fazemos regress�es a partir de observa��es contidas em bases de dados e n�o sabemos qual � o _modelo real_ que gerou essas observa��es.
+- No R, podemos supor um _modelo real_ e simular suas observa��es no R para analisar o que ocorre quando h� viola��o de hip�tese de algum modelo econom�trico ou estimador.
+- Usaremos o exemplo dado no Teste Elaborado 1, no qual queremos encontrar a rela��o das horas de pr�tica em culin�ria com o n�mero de queimaduras na cozinha.
 
 
-### Sem violação de hipótese: Exemplo 1
-- Sejam {{<math>}}$y${{</math>}} o número de queimaduras na cozinha e {{<math>}}$x${{</math>}} o número de horas gastas aprendendo a cozinhar.
+### Sem viola��o de hip�tese: Exemplo 1
+- Sejam {{<math>}}$y${{</math>}} o n�mero de queimaduras na cozinha e {{<math>}}$x${{</math>}} o n�mero de horas gastas aprendendo a cozinhar.
 - Suponha o _modelo real_:
 $$ y = a_0 + b_0 x + \varepsilon, \qquad \varepsilon \sim N(0, 2^2) \tag{1}$$
 em que {{<math>}}$a_0=50${{</math>}} e {{<math>}}$b_0=-5${{</math>}}.
 
-1. Definindo {{<math>}}$a_0${{</math>}} e {{<math>}}$b_0${{</math>}} e gerando por simulação as "observações" de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
-    - Apenas para facilitar, geraremos valores aleatórios {{<math>}}$x \sim N(5; 0,5^2)${{</math>}}. Aqui, não importa a distribuição de {{<math>}}$x${{</math>}}. 
+1. Definindo {{<math>}}$a_0${{</math>}} e {{<math>}}$b_0${{</math>}} e gerando por simula��o as "observa��es" de {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}}:
+    - Apenas para facilitar, geraremos valores aleat�rios {{<math>}}$x \sim N(5; 0,5^2)${{</math>}}. Aqui, n�o importa a distribui��o de {{<math>}}$x${{</math>}}. 
 
 ```r
 a0 = 50
 b0 = -5
-N = 200 # Número de observações
+N = 200 # N�mero de observa��es
 
 set.seed(1)
-u = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-y = a0 + b0*x + u # calculando observações y a partir de "e" e "x"
+u = rnorm(N, 0, 2) # Desvios: 200 obs. de m�dia 0 e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de m�dia 5 e desv pad 1
+y = a0 + b0*x + u # calculando observa��es y a partir de "e" e "x"
 
 plot(x, y)
 ```
 
 <img src="/project/rec2301/sec7/_index_files/figure-html/unnamed-chunk-21-1.png" width="672" />
-Simulamos as observações {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que são, na prática, as informações que observamos.
+Simulamos as observa��es {{<math>}}$x${{</math>}} e {{<math>}}$y${{</math>}} que s�o, na pr�tica, as informa��es que observamos.
 
-2. Estimando por MQO os parâmetros {{<math>}}$\hat{a}${{</math>}} e {{<math>}}$\hat{b}${{</math>}} a partir das observações simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
-    - Um economista supôs a relação entre as variáveis pelo seguinte _modelo empírico_:
+2. Estimando por MQO os par�metros {{<math>}}$\hat{a}${{</math>}} e {{<math>}}$\hat{b}${{</math>}} a partir das observa��es simuladas de {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}:
+    - Um economista sup�s a rela��o entre as vari�veis pelo seguinte _modelo emp�rico_:
     $$ y = a + b x + u, \tag{1a}$$
     assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
-    - Para estimar o modelo por MQO, usamos a função `lm()`
+    - Para estimar o modelo por MQO, usamos a fun��o `lm()`
     
 
 ```r
@@ -671,47 +671,47 @@ lm(y ~ x) # regredindo por MQO a var. dependente y pela var. x
 ##      50.463       -5.078
 ```
 
-- Note que foi possível recuperar os parâmetros populacionais ({{<math>}}$\hat{a} = 50,268 \approx 50 = a_0${{</math>}} e {{<math>}}$\hat{b} = -5,039 \approx -5 = b_0${{</math>}}).
+- Note que foi poss�vel recuperar os par�metros populacionais ({{<math>}}$\hat{a} = 50,268 \approx 50 = a_0${{</math>}} e {{<math>}}$\hat{b} = -5,039 \approx -5 = b_0${{</math>}}).
 
 
 ```r
 plot(x, y) # Figura de x contra y
 abline(a=50, b=-5, col="red") # reta do modelo real
-abline(lm(y ~ x), col="blue") # reta estimada a partir das observações
+abline(lm(y ~ x), col="blue") # reta estimada a partir das observa��es
 ```
 
 <img src="/project/rec2301/sec7/_index_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
-### Sem violação de hipótese: Exemplo 2
-- Agora, no _modelo real_, suponha que o número de queimaduras {{<math>}}$y${{</math>}} é determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
+### Sem viola��o de hip�tese: Exemplo 2
+- Agora, no _modelo real_, suponha que o n�mero de queimaduras {{<math>}}$y${{</math>}} � determinado tanto pela quantidade de horas de aprendizado {{<math>}}$x${{</math>}} e pela quantidade de horas gastas cozinhando {{<math>}}$z${{</math>}}:
 
 $$ y = a_0 + b_0 x + c_0 z + u, \qquad u \sim N(0, 2^2) \tag{2} $$
-em que {{<math>}}$a_0=50${{</math>}}, {{<math>}}$b_0=-5${{</math>}} e {{<math>}}$c_0=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleatórios de {{<math>}}$x \sim N(5; 0,5^2)${{</math>}} e {{<math>}}$z \sim N(1,875; 0,25^2)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por construção, não é correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
+em que {{<math>}}$a_0=50${{</math>}}, {{<math>}}$b_0=-5${{</math>}} e {{<math>}}$c_0=3${{</math>}}. Apenas para facilitar, usaremos geraremos valores aleat�rios de {{<math>}}$x \sim N(5; 0,5^2)${{</math>}} e {{<math>}}$z \sim N(1,875; 0,25^2)${{</math>}}. Note que {{<math>}}$z${{</math>}}, por constru��o, n�o � correlacionada com {{<math>}}$x${{</math>}} no _modelo real_.
 
-- Primeiro, vamos simular as observações:
+- Primeiro, vamos simular as observa��es:
 
 ```r
 a0 = 50
 b0 = -5
 c0 = 3
-N = 200 # Número de observações
+N = 200 # N�mero de observa��es
 
 set.seed(1)
-u = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-z = rnorm(N, 1.875, 0.25) # Gerando 200 obs. de média 1,875 e desv pad 0.25
-y = a0 + b0*x + c0*z + u # calculando observações y a partir de "e", "x" e "z"
+u = rnorm(N, 0, 2) # Desvios: 200 obs. de m�dia 0 e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de m�dia 5 e desv pad 1
+z = rnorm(N, 1.875, 0.25) # Gerando 200 obs. de m�dia 1,875 e desv pad 0.25
+y = a0 + b0*x + c0*z + u # calculando observa��es y a partir de "e", "x" e "z"
 ```
 
-- Considere que um economista suponha a relação entre as variáveis pelo seguinte _modelo empírico_:
+- Considere que um economista suponha a rela��o entre as vari�veis pelo seguinte _modelo emp�rico_:
     $$ y = a + b x + u, \tag{2a}$$
     assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux] = 0${{</math>}}.
 
-- Note que o economista deixou a variável de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, então ela acaba ``entrando'' no erro da estimação.
-- No entanto, como {{<math>}}$z${{</math>}} não tem relação com {{<math>}}$x${{</math>}}, então isso não afeta a estimativa de {{<math>}}$\hat{b}${{</math>}}:
+- Note que o economista deixou a vari�vel de horas cozinhando {{<math>}}$z${{</math>}} fora do modelo, ent�o ela acaba ``entrando'' no erro da estima��o.
+- No entanto, como {{<math>}}$z${{</math>}} n�o tem rela��o com {{<math>}}$x${{</math>}}, ent�o isso n�o afeta a estimativa de {{<math>}}$\hat{b}${{</math>}}:
 
 ```r
-cor(x, z) # correlação de x e z -> próxima de 0
+cor(x, z) # correla��o de x e z -> pr�xima de 0
 ```
 
 ```
@@ -719,7 +719,7 @@ cor(x, z) # correlação de x e z -> próxima de 0
 ```
 
 ```r
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estima��o por MQO
 ```
 
 ```
@@ -731,37 +731,37 @@ lm(y ~ x) # estimação por MQO
 ## (Intercept)            x  
 ##       56.27        -5.12
 ```
-- Note que {{<math>}}$\hat{b} = -5,12 \approx -5 = b_0${{</math>}}, portanto a estimação por MQO conseguiu recuperar o parâmetro populacional {{<math>}}$b_0${{</math>}}, apesar do economista não ter incluído {{<math>}}$z${{</math>}} no modelo.
-- Grande parte dos estudos econômicos tentam estabelecer a relação/causalidade entre {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}, então não é necessário incluir todas possíveis variáveis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$E(ux) = 0${{</math>}} (ou seja, que nenhuma variável explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro).
+- Note que {{<math>}}$\hat{b} = -5,12 \approx -5 = b_0${{</math>}}, portanto a estima��o por MQO conseguiu recuperar o par�metro populacional {{<math>}}$b_0${{</math>}}, apesar do economista n�o ter inclu�do {{<math>}}$z${{</math>}} no modelo.
+- Grande parte dos estudos econ�micos tentam estabelecer a rela��o/causalidade entre {{<math>}}$y${{</math>}} e {{<math>}}$x${{</math>}}, ent�o n�o � necess�rio incluir todas poss�veis vari�veis que impactam {{<math>}}$y${{</math>}}, desde que {{<math>}}$E(ux) = 0${{</math>}} (ou seja, que nenhuma vari�vel explicativa correlacionada com {{<math>}}$x${{</math>}} tenha ``ficado de fora'' e, portanto, compondo o termo de erro).
 
 
 
-### Violação de E(ux)=0
-- Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culinária, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} está relacionada com {{<math>}}$z${{</math>}}).
+### Viola��o de E(ux)=0
+- Agora, suponha que, no _modelo real_, quanto mais horas a pessoa pratica culin�ria, mais ele cozinha (ou seja, {{<math>}}$x${{</math>}} est� relacionada com {{<math>}}$z${{</math>}}).
     - Considere que {{<math>}}$z \sim N(1,875x; (0,25)^2)${{</math>}}:
     
 
 ```r
 set.seed(1)
-e = rnorm(N, 0, 2) # Desvios: 200 obs. de média 0 e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-z = rnorm(N, 1.875*x, 0.25) # Gerando 200 obs. de média 1,875x e desv pad 0.25x
-y = a0 + b0*x + c0*z + e # calculando observações y a partir de "e", "x" e "z"
-cor(x, z) # correlação de x e z
+e = rnorm(N, 0, 2) # Desvios: 200 obs. de m�dia 0 e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de m�dia 5 e desv pad 1
+z = rnorm(N, 1.875*x, 0.25) # Gerando 200 obs. de m�dia 1,875x e desv pad 0.25x
+y = a0 + b0*x + c0*z + e # calculando observa��es y a partir de "e", "x" e "z"
+cor(x, z) # correla��o de x e z
 ```
 
 ```
 ## [1] 0.9618748
 ```
 
-- Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} são consideravalmente correlacionados
-- Vamos estimar o _modelo empírico_:
+- Note que, agora, {{<math>}}$x${{</math>}} e {{<math>}}$z${{</math>}} s�o consideravalmente correlacionados
+- Vamos estimar o _modelo emp�rico_:
     $$ y = a + b x + u,$$
     assumindo que {{<math>}}$E[u] = 0${{</math>}} e {{<math>}}$E[ux]=0${{</math>}}.
     
 
 ```r
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estima��o por MQO
 ```
 
 ```
@@ -774,8 +774,8 @@ lm(y ~ x) # estimação por MQO
 ##     50.6406       0.5053
 ```
 
-- Observe que {{<math>}}$\hat{b} = 0,5 \neq -5 = b_0${{</math>}}. Isto se dá porque {{<math>}}$z${{</math>}} não foi incluído no modelo e, portanto, ele acaba compondo o desvio {{<math>}}$\hat{u}${{</math>}}. Como {{<math>}}$z${{</math>}} é correlacionado com {{<math>}}$x${{</math>}}, então {{<math>}}$E(ux)\neq 0${{</math>}} (violando a hipótese do MQO).
-- Observe que, se incluíssemos a variável {{<math>}}$z${{</math>}} na estimação, conseguiríamos recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}:
+- Observe que {{<math>}}$\hat{b} = 0,5 \neq -5 = b_0${{</math>}}. Isto se d� porque {{<math>}}$z${{</math>}} n�o foi inclu�do no modelo e, portanto, ele acaba compondo o desvio {{<math>}}$\hat{u}${{</math>}}. Como {{<math>}}$z${{</math>}} � correlacionado com {{<math>}}$x${{</math>}}, ent�o {{<math>}}$E(ux)\neq 0${{</math>}} (violando a hip�tese do MQO).
+- Observe que, se inclu�ssemos a vari�vel {{<math>}}$z${{</math>}} na estima��o, conseguir�amos recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}:
 
 
 ```r
@@ -792,7 +792,7 @@ lm(y ~ x + z)
 ##      50.435       -5.953        3.470
 ```
 
-### Violação de E(u)=0
+### Viola��o de E(u)=0
 - Agora, consideraremos que {{<math>}}$E[u] = k${{</math>}}, sendo {{<math>}}$k \neq 0${{</math>}} uma constante.
 - Assuma que {{<math>}}$k = 10${{</math>}}:
 
@@ -802,14 +802,14 @@ b0 = -5
 k = 10
 
 set.seed(1)
-u = rnorm(N, k, 2) # Desvios: 200 obs. de média k e desv pad 2
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-y = a0 + b0*x + u # calculando observações y a partir de "e" e "x"
+u = rnorm(N, k, 2) # Desvios: 200 obs. de m�dia k e desv pad 2
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de m�dia 5 e desv pad 1
+y = a0 + b0*x + u # calculando observa��es y a partir de "e" e "x"
 ```
-- Caso um economista considere um _modelo empírico_ com {{<math>}}$E[u] = 0${{</math>}}, segue que:
+- Caso um economista considere um _modelo emp�rico_ com {{<math>}}$E[u] = 0${{</math>}}, segue que:
 
 ```r
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estima��o por MQO
 ```
 
 ```
@@ -821,22 +821,22 @@ lm(y ~ x) # estimação por MQO
 ## (Intercept)            x  
 ##      60.463       -5.078
 ```
-- Note que o fato de {{<math>}}$E[u] \neq 0${{</math>}} afeta apenas a estimação de {{<math>}}$\hat{a} \neq a_0${{</math>}}, porém não afeta a de {{<math>}}$\hat{b} \approx b_0${{</math>}}, que é normalmente o parâmetro de interesse em estudos econômicos.
+- Note que o fato de {{<math>}}$E[u] \neq 0${{</math>}} afeta apenas a estima��o de {{<math>}}$\hat{a} \neq a_0${{</math>}}, por�m n�o afeta a de {{<math>}}$\hat{b} \approx b_0${{</math>}}, que � normalmente o par�metro de interesse em estudos econ�micos.
 
 
-### Violação de Homocedasticidade
-- Agora, consideraremos que {{<math>}}$u \sim N(0, (2x)^2)${{</math>}}, ou seja, a variância cresce com {{<math>}}$x${{</math>}} ({{<math>}}$u${{</math>}} não é independente de {{<math>}}$x${{</math>}}/não vale homocedasticidade).
+### Viola��o de Homocedasticidade
+- Agora, consideraremos que {{<math>}}$u \sim N(0, (2x)^2)${{</math>}}, ou seja, a vari�ncia cresce com {{<math>}}$x${{</math>}} ({{<math>}}$u${{</math>}} n�o � independente de {{<math>}}$x${{</math>}}/n�o vale homocedasticidade).
 
 ```r
 a0 = 50
 b0 = -5
 
 set.seed(1)
-x = rnorm(N, 5, 0.5) # Gerando 200 obs. de média 5 e desv pad 1
-u = rnorm(N, 0, 2*x) # Desvios: 200 obs. de média k e desv pad 2x
-y = a0 + b0*x + u # calculando observações y a partir de "e" e "x"
+x = rnorm(N, 5, 0.5) # Gerando 200 obs. de m�dia 5 e desv pad 1
+u = rnorm(N, 0, 2*x) # Desvios: 200 obs. de m�dia k e desv pad 2x
+y = a0 + b0*x + u # calculando observa��es y a partir de "e" e "x"
 
-lm(y ~ x) # estimação por MQO
+lm(y ~ x) # estima��o por MQO
 ```
 
 ```
@@ -848,13 +848,13 @@ lm(y ~ x) # estimação por MQO
 ## (Intercept)            x  
 ##      51.221       -5.166
 ```
-- Note que, mesmo com heterocesdasticidade, é possível recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}. Mas, observe também que, se a amostra for pequena, mais provável é que {{<math>}}$\hat{b} \neq b_0${{</math>}}. Teste diversas vezes para {{<math>}}$N${{</math>}} menores.
+- Note que, mesmo com heterocesdasticidade, � poss�vel recuperar {{<math>}}$\hat{b} \approx b_0${{</math>}}. Mas, observe tamb�m que, se a amostra for pequena, mais prov�vel � que {{<math>}}$\hat{b} \neq b_0${{</math>}}. Teste diversas vezes para {{<math>}}$N${{</math>}} menores.
 
 
 
 ## Qualidade do ajuste
-- [Seção 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101)
-- A soma de quadrados total (SQT), a soma de quadrados explicada (SQE) e a soma de quadrados dos resíduos (SQR) podem ser escritos como:
+- [Se��o 2.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/101)
+- A soma de quadrados total (SQT), a soma de quadrados explicada (SQE) e a soma de quadrados dos res�duos (SQR) podem ser escritos como:
 
 {{<math>}}\begin{align}
     SQT &= \sum^n_{i=1}{(y_i - \bar{y})^2} = (n-1) . Var(y) \tag{2.10}\\
@@ -863,7 +863,7 @@ lm(y ~ x) # estimação por MQO
 \end{align}{{</math>}}
 em que {{<math>}}$Var(x) = \frac{1}{n-1} \sum^n_{i=1}{(x_i - \bar{x})^2}${{</math>}}.
 
-- Wooldridge (2006) define o coeficiente de determinação como:
+- Wooldridge (2006) define o coeficiente de determina��o como:
 {{<math>}}\begin{align}
     R^2 &= \frac{SQE}{SQT} = 1 - \frac{SQR}{SQT}\\
         &= \frac{Var(\hat{y})}{Var(y)} = 1 - \frac{Var(\hat{u})}{Var(y)} \tag{2.13}
@@ -872,7 +872,7 @@ pois {{<math>}}$SQT = SQE + SQR${{</math>}}.
 
 
 ```r
-# Calculando R^2 de três maneiras:
+# Calculando R^2 de tr�s maneiras:
 var(sal_hat) / var(sal)
 ```
 
@@ -889,14 +889,14 @@ var(sal_hat) / var(sal)
 ```
 
 ```r
-cor(sal, sal_hat)^2 # correlação ao quadrado da variável dependente com valores ajustados
+cor(sal, sal_hat)^2 # correla��o ao quadrado da vari�vel dependente com valores ajustados
 ```
 
 ```
 ## [1] 0.01318862
 ```
 
-- Para obter o {{<math>}}$R^2${{</math>}} de forma mais conveniente, pode-se usar a função `summary()` sobre o objeto de resultado da regressão. Esta função fornece uma visualização dos resultados mais detalhada, incluindo o {{<math>}}$R^2${{</math>}}:
+- Para obter o {{<math>}}$R^2${{</math>}} de forma mais conveniente, pode-se usar a fun��o `summary()` sobre o objeto de resultado da regress�o. Esta fun��o fornece uma visualiza��o dos resultados mais detalhada, incluindo o {{<math>}}$R^2${{</math>}}:
 
 ```r
 summary(CEOregres)
@@ -925,4 +925,4 @@ summary(CEOregres)
 
 
 
-{{< cta cta_text="👉 Seguir para Regressão Múltipla" cta_link="../sec8" >}}
+{{< cta cta_text="?Y'? Seguir para Regress�o M�ltipla" cta_link="../sec8" >}}

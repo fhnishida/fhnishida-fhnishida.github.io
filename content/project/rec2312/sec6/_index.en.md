@@ -2,10 +2,10 @@
 date: "2018-09-09T00:00:00Z"
 # icon: book
 # icon_pack: fas
-linktitle: Variáveis Instrumentais
+linktitle: Vari�veis Instrumentais
 summary: Learn how to use Wowchemy's docs layout for publishing online courses, software
   documentation, and tutorials.
-title: Variáveis Instrumentais
+title: Vari�veis Instrumentais
 weight: 6
 output: md_document
 type: book
@@ -14,10 +14,10 @@ type: book
 
 
 
-## Variáveis Instrumentais em Regressão Simples
+## Vari�veis Instrumentais em Regress�o Simples
 
-- [Seção 15.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/247)
-- Considere a regressão linear simples:
+- [Se��o 15.1 de Heiss (2020)](http://www.urfie.net/read/index.html#page/247)
+- Considere a regress�o linear simples:
 
 {{<math>}}$$ y = \beta_0 + \beta_1 x + \varepsilon \tag{15.1} $${{</math>}}
 
@@ -25,28 +25,28 @@ O estimador de MQO seria:
 
 {{<math>}}$$ \beta^{MQO}_1 = \frac{cov(x, y)}{var(x)} $${{</math>}}
 
-Supondo que o regressor {{<math>}}$x${{</math>}} está relacionado com o termo de erro {{<math>}}$\varepsilon${{</math>}}, então o estimador de OLS será viesado.
+Supondo que o regressor {{<math>}}$x${{</math>}} est� relacionado com o termo de erro {{<math>}}$\varepsilon${{</math>}}, ent�o o estimador de OLS ser� viesado.
 
-Considerando a existência de uma variável instrumental válida {{<math>}}$z${{</math>}}, o estimador de variável instrumental (VI) é:
+Considerando a exist�ncia de uma vari�vel instrumental v�lida {{<math>}}$z${{</math>}}, o estimador de vari�vel instrumental (VI) �:
 
 {{<math>}}$$ \beta^{VI}_1 = \frac{cov(z, y)}{cov(z,x)} $${{</math>}}
 
 
 ### Aplicando no R
 
-#### Exemplo 15.1: Retorno da Educação para Mulheres Casadas (Wooldridge, 2019)
+#### Exemplo 15.1: Retorno da Educa��o para Mulheres Casadas (Wooldridge, 2019)
 
 - Vamos usar a base de dados `mroz` do pacote `wooldridge` para estimar o seguinte modelo
 
 {{<math>}}$$ \log(\text{wage}) = \beta_0 + \beta_1 \text{educ} + \varepsilon $${{</math>}}
 
-- Apenas para comparação, vamos estimar por MQO:
+- Apenas para compara��o, vamos estimar por MQO:
 
 ```r
 data(mroz, package="wooldridge") # carregando base de dados
-mroz = mroz[!is.na(mroz$wage),] # retirando valores ausentes de salário
+mroz = mroz[!is.na(mroz$wage),] # retirando valores ausentes de sal�rio
 
-reg.ols = lm(lwage ~ educ, mroz) # regressão por MQO
+reg.ols = lm(lwage ~ educ, mroz) # regress�o por MQO
 round( summary(reg.ols)$coef, 5 )
 ```
 
@@ -57,10 +57,10 @@ round( summary(reg.ols)$coef, 5 )
 ```
 
 
-#### Usando a função `ivreg()`
+#### Usando a fun��o `ivreg()`
 
-- Para fazer regressão com variável instrumental, vamos usar a função `ivreg()` do pacote `AER`.
-- É necessário incluir a variável instrumental (que neste caso é a educação do pai - `fatheduc`), após informar a variável explicativa `educ`, separada por uma `|`:
+- Para fazer regress�o com vari�vel instrumental, vamos usar a fun��o `ivreg()` do pacote `AER`.
+- ?? necess�rio incluir a vari�vel instrumental (que neste caso � a educa��o do pai - `fatheduc`), ap�s informar a vari�vel explicativa `educ`, separada por uma `|`:
 
 
 ```r
@@ -115,7 +115,7 @@ library(AER) # carregando pacote com ivreg
 ```
 
 ```r
-reg.iv = ivreg(lwage ~ educ | fatheduc, data=mroz) # regressão por VI
+reg.iv = ivreg(lwage ~ educ | fatheduc, data=mroz) # regress�o por VI
 round( summary(reg.iv)$coef, 5 )
 ```
 
@@ -130,7 +130,7 @@ round( summary(reg.iv)$coef, 5 )
 ```
 
 
-#### Estimação "na mão"
+#### Estima��o "na m�o"
 
 ##### (1) Estimativas {{<math>}}$$ \beta^{VI} $${{</math>}}
 
@@ -139,9 +139,9 @@ round( summary(reg.iv)$coef, 5 )
 </br>
 
 
-## Variáveis Instrumentais em Regressão Múltipla
+## Vari�veis Instrumentais em Regress�o M�ltipla
 
-- [Seção 15.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/249)
+- [Se��o 15.2 de Heiss (2020)](http://www.urfie.net/read/index.html#page/249)
 
 
 
@@ -150,27 +150,16 @@ round( summary(reg.iv)$coef, 5 )
 
 ## Testando a Exogeneidade dos Regressores
 
-- [Seção 15.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
+- [Se��o 15.4 de Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
 
 
 
 </br>
 
 
-## Testando Restrições Sobre-identificadas
+## Testando Restri��es Sobre-identificadas
 
-- [Seção 15.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
-
-
-
-
-</br>
-
-
-## Mínimos Quadrados em 2 Estágios
-
-- [Seção 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
-
+- [Se��o 15.5 de Heiss (2020)](http://www.urfie.net/read/index.html#page/252)
 
 
 
@@ -178,12 +167,23 @@ round( summary(reg.iv)$coef, 5 )
 </br>
 
 
-## Modelos de Equações Simultâneas
+## M�nimos Quadrados em 2 Est�gios
 
-- [Seção 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+- [Se��o 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+
+
 
 
 
 </br>
 
-{{< cta cta_text="👉 Seguir para Equações Simultâneas" cta_link="../sec7" >}}
+
+## Modelos de Equa��es Simult�neas
+
+- [Se��o 15.3 de Heiss (2020)](http://www.urfie.net/read/index.html#page/250)
+
+
+
+</br>
+
+{{< cta cta_text="?Y'? Seguir para Equa��es Simult�neas" cta_link="../sec7" >}}

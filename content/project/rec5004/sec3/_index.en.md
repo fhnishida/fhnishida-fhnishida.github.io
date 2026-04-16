@@ -13,9 +13,9 @@ type: book
 
 
 
-> “Between 30% to 80% of the data analysis task is spent on cleaning and understanding the data.” (Dasu \& Johnson, 2003)
+> ??oBetween 30% to 80% of the data analysis task is spent on cleaning and understanding the data.??? (Dasu \& Johnson, 2003)
 
-Para esta seção, usaremos a base de dados `starwars` do pacote de manipulação de dados `dplyr`:
+Para esta se��o, usaremos a base de dados `starwars` do pacote de manipula��o de dados `dplyr`:
 
 
 ```r
@@ -24,8 +24,8 @@ library(dplyr)
 # Vamos chamar a base de dados starwars de sw
 sw = starwars
 
-# vamos retirar as últimas 3 colunas para facilitar a manipulação.
-# São colunas da classe list
+# vamos retirar as �ltimas 3 colunas para facilitar a manipula��o.
+# S�o colunas da classe list
 sw[,c("films", "vehicles", "starships")] = NULL
 ```
 
@@ -33,17 +33,17 @@ sw[,c("films", "vehicles", "starships")] = NULL
 </br>
 
 ## Pacote `base`
-- Nesta seção, vamos manipular bases de dados usando as funções pré-carregadas no R (pacote `base`)
+- Nesta se��o, vamos manipular bases de dados usando as fun��es pr�-carregadas no R (pacote `base`)
 
 
 ### Resumo dos dados
 
-#### Funções básicas
+#### Fun��es b�sicas
 - [Summarizing data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/e5qVi/summarizing-data)
 - Verificaremos:
-  - as **dimensões** da base via `dim()`
+  - as **dimens�es** da base via `dim()`
   - as 6 **primeiras** linhas da base via `head()`
-  - as 6 **últimas** linhas da base via `tail()`
+  - as 6 **�ltimas** linhas da base via `tail()`
 
 ```r
 dim(sw) # Verificar tamanho da base (linhas x colunas)
@@ -58,45 +58,45 @@ head(sw) # Visualizando as 6 primeiras linhas
 ```
 
 ```
-## # A tibble: 6 × 11
+## # A tibble: 6 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
-## 3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
-## 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
-## 5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
-## 6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu???
+## 3 R2-D2         96    32 <NA>       white, bl??? red             33   none  mascu???
+## 4 Darth Va???    202   136 none       white      yellow          41.9 male  mascu???
+## 5 Leia Org???    150    49 brown      light      brown           19   fema??? femin???
+## 6 Owen Lars    178   120 brown, gr??? light      blue            52   male  mascu???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
 ```r
-tail(sw) # Visualizando as 6 últimas linhas
+tail(sw) # Visualizando as 6 �ltimas linhas
 ```
 
 ```
-## # A tibble: 6 × 11
+## # A tibble: 6 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Finn          NA    NA black      dark       dark              NA male  mascu…
-## 2 Rey           NA    NA brown      light      hazel             NA fema… femin…
-## 3 Poe Dame…     NA    NA brown      light      brown             NA male  mascu…
-## 4 BB8           NA    NA none       none       black             NA none  mascu…
-## 5 Captain …     NA    NA unknown    unknown    unknown           NA <NA>  <NA>  
-## 6 Padmé Am…    165    45 brown      light      brown             46 fema… femin…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 1 Finn          NA    NA black      dark       dark              NA male  mascu???
+## 2 Rey           NA    NA brown      light      hazel             NA fema??? femin???
+## 3 Poe Dame???     NA    NA brown      light      brown             NA male  mascu???
+## 4 BB8           NA    NA none       none       black             NA none  mascu???
+## 5 Captain ???     NA    NA unknown    unknown    unknown           NA <NA>  <NA>  
+## 6 Padm� Am???    165    45 brown      light      brown             46 fema??? femin???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 - Usando `str()`, podemos visualizar a **estrutura** (_structure_) da base:
-    - todas a variáveis (colunas),
+    - todas a vari�veis (colunas),
     - a classe de cada uma delas e
-    - algumas de suas observações.
+    - algumas de suas observa��es.
 
 ```r
 str(sw)
 ```
 
 ```
-## tibble [87 × 11] (S3: tbl_df/tbl/data.frame)
+## tibble [87 ?- 11] (S3: tbl_df/tbl/data.frame)
 ##  $ name      : chr [1:87] "Luke Skywalker" "C-3PO" "R2-D2" "Darth Vader" ...
 ##  $ height    : int [1:87] 172 167 96 202 150 178 165 97 183 182 ...
 ##  $ mass      : num [1:87] 77 75 32 136 49 120 75 32 84 77 ...
@@ -111,7 +111,7 @@ str(sw)
 ```
 
 
-- Para fazer um **resumo** de todas as variáveis da base, podemos usar a função `summary()` que, para variáveis numéricas, calcula a média e os quartis, e mostra a quantidade de `NA`.
+- Para fazer um **resumo** de todas as vari�veis da base, podemos usar a fun��o `summary()` que, para vari�veis num�ricas, calcula a m�dia e os quartis, e mostra a quantidade de `NA`.
 
 ```r
 summary(sw)
@@ -144,8 +144,8 @@ summary(sw)
 ## 
 ```
 
-- Note que, para variáveis lógicas, de texto (character) ou categóricas (factor), aparecem poucas informações.
-- Logo, pode ser interessante fazer uma **tabela com a contagem** de com as categorias de uma variável. Isto é possível por meio da função `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
+- Note que, para vari�veis l�gicas, de texto (character) ou categ�ricas (factor), aparecem poucas informa��es.
+- Logo, pode ser interessante fazer uma **tabela com a contagem** de com as categorias de uma vari�vel. Isto � poss�vel por meio da fun��o `table()` e aplicaremos `prop.table(table())` para visualizar em **percentuais**.
 
 ```r
 table(sw$hair_color) # contagem
@@ -174,7 +174,7 @@ prop.table(table(sw$hair_color)) # percentual
 ##       unknown         white 
 ##    0.01219512    0.04878049
 ```
-- Também podemos fazer uma "contagem cruzada" incluindo mais uma variável em `table()`:
+- Tamb�m podemos fazer uma "contagem cruzada" incluindo mais uma vari�vel em `table()`:
 
 ```r
 table(sw$hair_color, sw$gender)
@@ -198,20 +198,20 @@ table(sw$hair_color, sw$gender)
 ```
 
 
-#### Família de funções _apply_
-Veremos uma família de funções _apply_ que permitem executar comandos em loop de maneira compacta:
-- `apply`: aplica uma função sobre as margens (linha ou coluna) de uma matrix/array
-- `lapply`: loop sobre uma lista e avalia uma função em cada elemento
-    - função auxiliar `split` é útil ao ser utilizada em conjunto da `lapply`
+#### Fam�lia de fun��es _apply_
+Veremos uma fam�lia de fun��es _apply_ que permitem executar comandos em loop de maneira compacta:
+- `apply`: aplica uma fun��o sobre as margens (linha ou coluna) de uma matrix/array
+- `lapply`: loop sobre uma lista e avalia uma fun��o em cada elemento
+    - fun��o auxiliar `split` � �til ao ser utilizada em conjunto da `lapply`
 - `sapply`: mesmo que o `lapply`, mas simplifica o resultado
 
 
 
-##### Função `apply()`
+##### Fun��o `apply()`
 - [Loop functions - apply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/IUUhK/loop-functions-apply)
-- Usado para avaliar, por meio de uma função, margens de uma matriz/array
-- Frequentemente é utilizado para aplicar uma função a linhas ou a colunas de uma matriz
-- Não é mais rápido do que escrever um loop, mas funciona em uma única linha
+- Usado para avaliar, por meio de uma fun��o, margens de uma matriz/array
+- Frequentemente � utilizado para aplicar uma fun��o a linhas ou a colunas de uma matriz
+- N�o � mais r�pido do que escrever um loop, mas funciona em uma �nica linha
 ```yaml
 apply(X, MARGIN, FUN, ...)
 
@@ -234,7 +234,7 @@ x
 ```
 
 ```r
-apply(x, 1, mean) # médias das linhas
+apply(x, 1, mean) # m�dias das linhas
 ```
 
 ```
@@ -242,22 +242,22 @@ apply(x, 1, mean) # médias das linhas
 ```
 
 ```r
-apply(x, 2, mean) # médias das colunas
+apply(x, 2, mean) # m�dias das colunas
 ```
 
 ```
 ## [1]  3  8 13 18
 ```
-- Há funções pré-definidas que aplicam `apply` com soma e com média:
+- H� fun��es pr�-definidas que aplicam `apply` com soma e com m�dia:
     - `rowSums = apply(x, 1, sum)`
     - `rowMeans = apply(x, 1, mean)`
     - `colSums = apply(x, 2, sum)`
     - `colMeans = apply(x, 2, mean)`
 
 
-##### Função `lapply()`
+##### Fun��o `lapply()`
 - [Loop functions - lapply (John Hopkins/Coursera)](https://www.coursera.org/learn/r-programming/lecture/t5iuo/loop-functions-lapply)
-- `lapply` usa três argumentos: uma **lista**, o nome de uma função e outros argumentos (incluindo os argumentos da função inserida)
+- `lapply` usa tr�s argumentos: uma **lista**, o nome de uma fun��o e outros argumentos (incluindo os argumentos da fun��o inserida)
 ```yaml
 lapply(X, FUN, ...)
 
@@ -267,22 +267,22 @@ lapply(X, FUN, ...)
 
 
 <!-- ```{r} -->
-<!-- # Criando uma lista com vetor de dimensões distintas -->
+<!-- # Criando uma lista com vetor de dimens�es distintas -->
 <!-- x = list(a=1:5, b=45:38, c=c(1, 4, 65, 6, 78)) -->
 <!-- x -->
 
-<!-- lapply(x, mean) # retorna médias de cada vetor dentro da lista -->
-<!-- lapply(x, summary) # retorna 6 estatísticas de cada vetor dentro da lista -->
+<!-- lapply(x, mean) # retorna m�dias de cada vetor dentro da lista -->
+<!-- lapply(x, summary) # retorna 6 estat�sticas de cada vetor dentro da lista -->
 
 <!-- class(lapply(x, mean)) # classe do objeto retornado pelo lapply -->
 <!-- ``` -->
 
-- A função `lapply()` aplica uma função em cada um de seus elementos.
-- Um tipo especial de lista é o data frame, cujos elementos são suas colunas (variáveis).
+- A fun��o `lapply()` aplica uma fun��o em cada um de seus elementos.
+- Um tipo especial de lista � o data frame, cujos elementos s�o suas colunas (vari�veis).
 
 
 ```r
-lapply(sw, mean, na.rm=TRUE) # valores únicos
+lapply(sw, mean, na.rm=TRUE) # valores �nicos
 ```
 
 ```
@@ -320,13 +320,13 @@ lapply(sw, mean, na.rm=TRUE) # valores únicos
 ## [1] NA
 ```
 
-- Note que as variáveis não numérica retornaram `NA` e o 3º argumento é um arguemento da própria função `mean()`
+- Note que as vari�veis n�o num�rica retornaram `NA` e o 3� argumento � um arguemento da pr�pria fun��o `mean()`
 
 
-- Podemos verificar quais são os valores únicos de cada variável (um item da lista) usando `unique()`
+- Podemos verificar quais s�o os valores �nicos de cada vari�vel (um item da lista) usando `unique()`
 
 ```r
-lapply(sw, unique) # valores únicos
+lapply(sw, unique) # valores �nicos
 ```
 
 ```
@@ -343,15 +343,15 @@ lapply(sw, unique) # valores únicos
 ## [28] "Arvel Crynyd"          "Wicket Systri Warrick" "Nien Nunb"            
 ## [31] "Qui-Gon Jinn"          "Nute Gunray"           "Finis Valorum"        
 ## [34] "Jar Jar Binks"         "Roos Tarpals"          "Rugor Nass"           
-## [37] "Ric Olié"              "Watto"                 "Sebulba"              
+## [37] "Ric Oli�"              "Watto"                 "Sebulba"              
 ## [40] "Quarsh Panaka"         "Shmi Skywalker"        "Darth Maul"           
 ## [43] "Bib Fortuna"           "Ayla Secura"           "Dud Bolt"             
 ## [46] "Gasgano"               "Ben Quadinaros"        "Mace Windu"           
 ## [49] "Ki-Adi-Mundi"          "Kit Fisto"             "Eeth Koth"            
 ## [52] "Adi Gallia"            "Saesee Tiin"           "Yarael Poof"          
 ## [55] "Plo Koon"              "Mas Amedda"            "Gregar Typho"         
-## [58] "Cordé"                 "Cliegg Lars"           "Poggle the Lesser"    
-## [61] "Luminara Unduli"       "Barriss Offee"         "Dormé"                
+## [58] "Cord�"                 "Cliegg Lars"           "Poggle the Lesser"    
+## [61] "Luminara Unduli"       "Barriss Offee"         "Dorm�"                
 ## [64] "Dooku"                 "Bail Prestor Organa"   "Jango Fett"           
 ## [67] "Zam Wesell"            "Dexter Jettster"       "Lama Su"              
 ## [70] "Taun We"               "Jocasta Nu"            "Ratts Tyerell"        
@@ -359,7 +359,7 @@ lapply(sw, unique) # valores únicos
 ## [76] "Shaak Ti"              "Grievous"              "Tarfful"              
 ## [79] "Raymus Antilles"       "Sly Moore"             "Tion Medon"           
 ## [82] "Finn"                  "Rey"                   "Poe Dameron"          
-## [85] "BB8"                   "Captain Phasma"        "Padmé Amidala"        
+## [85] "BB8"                   "Captain Phasma"        "Padm� Amidala"        
 ## 
 ## $height
 ##  [1] 172 167  96 202 150 178 165  97 183 182 188 180 228 173 175 170  66 200 190
@@ -438,7 +438,7 @@ lapply(sw, unique) # valores únicos
 ## [37] "Kaleesh"        "Pau'an"
 ```
 
-- Um uso interessante é para a verificação do **número de NA's de um data frame**. No entanto, ao transformar uma variável com `is.na()`, ela se torna uma matriz e, portanto, é necessário usar função `apply()`:
+- Um uso interessante � para a verifica��o do **n�mero de NA's de um data frame**. No entanto, ao transformar uma vari�vel com `is.na()`, ela se torna uma matriz e, portanto, � necess�rio usar fun��o `apply()`:
 
 ```r
 head( is.na(sw) ) # 6 primeiras linhas aplicando is.na()
@@ -481,10 +481,10 @@ apply(is.na(sw), 2, sum) # somando cada coluna de TRUE/FALSE
 ```
 
 
-##### Função `sapply()`
+##### Fun��o `sapply()`
 Similar ao `lapply`, mas `sapply` tenta simplificar o output:
 
-- Se o resultado for uma lista em seus elementos têm o mesmo comprimento, retorna um vetor (ou matriz)
+- Se o resultado for uma lista em seus elementos t�m o mesmo comprimento, retorna um vetor (ou matriz)
 
 ```r
 sapply(sw, mean, na.rm=TRUE) # retorna um vetor
@@ -503,7 +503,7 @@ sapply(sw, mean, na.rm=TRUE) # retorna um vetor
 
 
 ```r
-# vetor lógico de cabelo loiro
+# vetor l�gico de cabelo loiro
 sw$hair_color == "blond"
 ```
 
@@ -524,37 +524,37 @@ sw[sw$hair_color == "blond", ]
 ```
 
 ```
-## # A tibble: 8 × 11
+## # A tibble: 8 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
 ## 2 <NA>          NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
 ## 3 <NA>          NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
 ## 4 <NA>          NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
-## 5 Anakin S…    188    84 blond      fair       blue            41.9 male  mascu…
+## 5 Anakin S???    188    84 blond      fair       blue            41.9 male  mascu???
 ## 6 <NA>          NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
 ## 7 <NA>          NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
-## 8 Finis Va…    170    NA blond      fair       blue            91   male  mascu…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 8 Finis Va???    170    NA blond      fair       blue            91   male  mascu???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
-- Podemos usar expressões lógicas (vetor com `TRUE` e `FALSE`) para extrair/filtrar uma parte do data frame. Por exemplo, queremos filtrar "Droid" **E** (`&`) que não seja `NA`:
+- Podemos usar express�es l�gicas (vetor com `TRUE` e `FALSE`) para extrair/filtrar uma parte do data frame. Por exemplo, queremos filtrar "Droid" **E** (`&`) que n�o seja `NA`:
 
 ```r
 sw[sw$hair_color == "blond" & !is.na(sw$hair_color), ]
 ```
 
 ```
-## # A tibble: 3 × 11
+## # A tibble: 3 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 2 Anakin S…    188    84 blond      fair       blue            41.9 male  mascu…
-## 3 Finis Va…    170    NA blond      fair       blue            91   male  mascu…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 2 Anakin S???    188    84 blond      fair       blue            41.9 male  mascu???
+## 3 Finis Va???    170    NA blond      fair       blue            91   male  mascu???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
-- Para não ter que ficar escrevendo `sw` antes de cada variáveis, podemos usar função `with()`
+- Para n�o ter que ficar escrevendo `sw` antes de cada vari�veis, podemos usar fun��o `with()`
 
 ```r
 with(sw,
@@ -563,41 +563,41 @@ with(sw,
 ```
 
 ```
-## # A tibble: 3 × 11
+## # A tibble: 3 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 2 Anakin S…    188    84 blond      fair       blue            41.9 male  mascu…
-## 3 Finis Va…    170    NA blond      fair       blue            91   male  mascu…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 2 Anakin S???    188    84 blond      fair       blue            41.9 male  mascu???
+## 3 Finis Va???    170    NA blond      fair       blue            91   male  mascu???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
-- Poderíamos também obter cabelo loiro **OU** (`|`) branco:
+- Poder�amos tamb�m obter cabelo loiro **OU** (`|`) branco:
 
 ```r
-# Extraindo linhas em que cabelo é loiro ou branco
+# Extraindo linhas em que cabelo � loiro ou branco
 sw[sw$hair_color == "blond" | sw$hair_color == "white", ]
 ```
 
 ```
-## # A tibble: 12 × 11
+## # A tibble: 12 ?- 11
 ##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
 ##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-##  1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+##  1 Luke Sk???    172    77 blond      fair       blue            19   male  mascu???
 ##  2 <NA>         NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
 ##  3 <NA>         NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
 ##  4 <NA>         NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
-##  5 Anakin …    188    84 blond      fair       blue            41.9 male  mascu…
+##  5 Anakin ???    188    84 blond      fair       blue            41.9 male  mascu???
 ##  6 <NA>         NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
 ##  7 <NA>         NA    NA <NA>       <NA>       <NA>            NA   <NA>  <NA>  
-##  8 Yoda         66    17 white      green      brown          896   male  mascu…
-##  9 Finis V…    170    NA blond      fair       blue            91   male  mascu…
-## 10 Ki-Adi-…    198    82 white      pale       yellow          92   male  mascu…
-## 11 Dooku       193    80 white      fair       brown          102   male  mascu…
-## 12 Jocasta…    167    NA white      fair       blue            NA   fema… femin…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+##  8 Yoda         66    17 white      green      brown          896   male  mascu???
+##  9 Finis V???    170    NA blond      fair       blue            91   male  mascu???
+## 10 Ki-Adi-???    198    82 white      pale       yellow          92   male  mascu???
+## 11 Dooku       193    80 white      fair       brown          102   male  mascu???
+## 12 Jocasta???    167    NA white      fair       blue            NA   fema??? femin???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
-- Também podemos verificar se determinados valores estão contidos em um vetor específico (equivale a `==` com mais de um valor)
+- Tamb�m podemos verificar se determinados valores est�o contidos em um vetor espec�fico (equivale a `==` com mais de um valor)
 
 ```r
 sw$hair_color %in% c("blond", "white") # T/F cabelo loiro ou branco
@@ -620,23 +620,23 @@ head(sw)
 ```
 
 ```
-## # A tibble: 6 × 11
+## # A tibble: 6 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 2 Anakin S…    188    84 blond      fair       blue            41.9 male  mascu…
-## 3 Yoda          66    17 white      green      brown          896   male  mascu…
-## 4 Finis Va…    170    NA blond      fair       blue            91   male  mascu…
-## 5 Ki-Adi-M…    198    82 white      pale       yellow          92   male  mascu…
-## 6 Dooku        193    80 white      fair       brown          102   male  mascu…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 2 Anakin S???    188    84 blond      fair       blue            41.9 male  mascu???
+## 3 Yoda          66    17 white      green      brown          896   male  mascu???
+## 4 Finis Va???    170    NA blond      fair       blue            91   male  mascu???
+## 5 Ki-Adi-M???    198    82 white      pale       yellow          92   male  mascu???
+## 6 Dooku        193    80 white      fair       brown          102   male  mascu???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
 
-### Ordenação de linhas
+### Ordena��o de linhas
 - [Subsetting and sorting (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/aqd2Y/subsetting-and-sorting)
 
-- Podemos usar a função `sort()` para ordenar um vetor de maneira crescente (padrão) ou decrescente:
+- Podemos usar a fun��o `sort()` para ordenar um vetor de maneira crescente (padr�o) ou decrescente:
 
 ```r
 sort(sw$height) # ordenando de maneira crescente
@@ -654,11 +654,11 @@ sort(sw$height, decreasing=TRUE) # ordenando de maneira decrescente
 ## [1] 198 193 188 172 170 167  66
 ```
 
-- Note que não podemos usar a função `sort()` para ordenar um data frame, pois a função retorna um vetor com os valores da base de dados.
-- Para **ordenar data frames**, precisamos utilizar a função `order()` que, retorna os índices dos menores valores aos maiores (ou decrescente com `decreasing = TRUE`):
+- Note que n�o podemos usar a fun��o `sort()` para ordenar um data frame, pois a fun��o retorna um vetor com os valores da base de dados.
+- Para **ordenar data frames**, precisamos utilizar a fun��o `order()` que, retorna os �ndices dos menores valores aos maiores (ou decrescente com `decreasing = TRUE`):
 
 ```r
-order(sw$height) # índices na forma crescente de altura
+order(sw$height) # �ndices na forma crescente de altura
 ```
 
 ```
@@ -671,21 +671,21 @@ head(sw)
 ```
 
 ```
-## # A tibble: 6 × 11
+## # A tibble: 6 ?- 11
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Yoda          66    17 white      green      brown          896   male  mascu…
-## 2 Jocasta …    167    NA white      fair       blue            NA   fema… femin…
-## 3 Finis Va…    170    NA blond      fair       blue            91   male  mascu…
-## 4 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 5 Anakin S…    188    84 blond      fair       blue            41.9 male  mascu…
-## 6 Dooku        193    80 white      fair       brown          102   male  mascu…
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+## 1 Yoda          66    17 white      green      brown          896   male  mascu???
+## 2 Jocasta ???    167    NA white      fair       blue            NA   fema??? femin???
+## 3 Finis Va???    170    NA blond      fair       blue            91   male  mascu???
+## 4 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 5 Anakin S???    188    84 blond      fair       blue            41.9 male  mascu???
+## 6 Dooku        193    80 white      fair       brown          102   male  mascu???
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
 
-### Seleção de colunas
-- Podemos selecionar colunas usando `[,]` e incluindo um vetor de nomes/índices das colunas que quer manter (ou retirar usando `!`)
+### Sele��o de colunas
+- Podemos selecionar colunas usando `[,]` e incluindo um vetor de nomes/�ndices das colunas que quer manter (ou retirar usando `!`)
 
 ```r
 # Selecionando 3 primeiras colunas
@@ -693,7 +693,7 @@ head( sw[,c("name","height", "mass")] )
 ```
 
 ```
-## # A tibble: 6 × 3
+## # A tibble: 6 ?- 3
 ##   name             height  mass
 ##   <chr>             <int> <dbl>
 ## 1 Yoda                 66    17
@@ -711,7 +711,7 @@ head(sw)
 ```
 
 ```
-## # A tibble: 6 × 6
+## # A tibble: 6 ?- 6
 ##   name             height  mass hair_color skin_color eye_color
 ##   <chr>             <int> <dbl> <chr>      <chr>      <chr>    
 ## 1 Yoda                 66    17 white      green      brown    
@@ -723,8 +723,8 @@ head(sw)
 ```
 
 
-### Renomeação de colunas
-- Podemos alterar os nomes das variáveis usando `names()` ou `colnames()` e atribuindo um vetor de nomes
+### Renomea��o de colunas
+- Podemos alterar os nomes das vari�veis usando `names()` ou `colnames()` e atribuindo um vetor de nomes
 
 
 ```r
@@ -738,9 +738,9 @@ names(sw) # nomes da base de dados
 
 ```r
 # Retirando os underlines
-names(sw)[4] = "haircolor" # alterando um único
+names(sw)[4] = "haircolor" # alterando um �nico
 names(sw)[5:6] = c("skincolor", "eyecolor") # alterando 2 nomes
-names(sw) # vetor de nomes com alteração
+names(sw) # vetor de nomes com altera��o
 ```
 
 ```
@@ -748,9 +748,9 @@ names(sw) # vetor de nomes com alteração
 ```
 
 
-### Modificação de colunas
+### Modifica��o de colunas
 
-- Para modificar variáveis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
+- Para modificar vari�veis, podemos usar `$<novo_nome_var>` e atribuir um vetor de mesmo tamanho (mesma quantidade de linhas):
 
 ```r
 sw$height = sw$height / 100 # de cm para metro
@@ -762,15 +762,15 @@ sw$height = sw$height / 100 # de cm para metro
 sw$const = 1
 ```
 
-- Também é possível criar uma nova variável:
+- Tamb�m � poss�vel criar uma nova vari�vel:
 
 ```r
-sw$BMI = sw$mass / sw$height^2 # índice de massa corpórea
+sw$BMI = sw$mass / sw$height^2 # �ndice de massa corp�rea
 head(sw)
 ```
 
 ```
-## # A tibble: 6 × 8
+## # A tibble: 6 ?- 8
 ##   name             height  mass haircolor skincolor eyecolor const   BMI
 ##   <chr>             <dbl> <dbl> <chr>     <chr>     <chr>    <dbl> <dbl>
 ## 1 Yoda               0.66    17 white     green     brown        1  39.0
@@ -782,7 +782,7 @@ head(sw)
 ```
 
 
-- [Algumas transformações comuns de variáveis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
+- [Algumas transforma��es comuns de vari�veis (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/r6VHJ/creating-new-variables)
 
 ```r
 abs(sw$BMI[1:4]) # valor absoluto
@@ -817,7 +817,7 @@ floor(sw$BMI[1:4]) # valor inteiro abaixo
 ```
 
 ```r
-round(sw$BMI[1:4], digits=1) # arred com 1 dígito
+round(sw$BMI[1:4], digits=1) # arred com 1 d�gito
 ```
 
 ```
@@ -865,16 +865,16 @@ exp(sw$BMI[1:4]) # exponencial
 ```
 
 
-### Junção de bases
+### Jun��o de bases
 
 - [Merging data (John Hopkins/Coursera)](https://www.coursera.org/learn/data-cleaning/lecture/pVV6K/merging-data)
 - [Joining (Merging) Data (David E. Caughlin)](https://rforhr.com/join.html)
 
-- Uma junção é o processo de correspondência de casos (ou seja, linhas ou observações) entre dois bases de dados usando uma oou mais variáveis-chave:
+- Uma jun��o � o processo de correspond�ncia de casos (ou seja, linhas ou observa��es) entre dois bases de dados usando uma oou mais vari�veis-chave:
 
 <center><img src="../merge.webp"></center>
 
-- Para isto, vamos usar a função `merge()`:
+- Para isto, vamos usar a fun��o `merge()`:
 
 ```yaml
 merge(x, y, by = intersect(names(x), names(y)),
@@ -890,7 +890,7 @@ merge(x, y, by = intersect(names(x), names(y)),
 - suffixes: a character vector of length 2 specifying the suffixes to be used for making unique the names of columns.
 ```
 
-- Vamos criar duas bases de dados, sendo que existem indivíduos presentes em uma base que não está na outra:
+- Vamos criar duas bases de dados, sendo que existem indiv�duos presentes em uma base que n�o est� na outra:
 
 
 ```r
@@ -900,7 +900,7 @@ bd1
 ```
 
 ```
-## # A tibble: 6 × 3
+## # A tibble: 6 ?- 3
 ##   name            mass species
 ##   <chr>          <dbl> <chr>  
 ## 1 Luke Skywalker    77 Human  
@@ -917,7 +917,7 @@ bd2
 ```
 
 ```
-## # A tibble: 6 × 3
+## # A tibble: 6 ?- 3
 ##   name               height eye_color
 ##   <chr>               <int> <chr>    
 ## 1 C-3PO                 167 yellow   
@@ -928,8 +928,8 @@ bd2
 ## 6 Obi-Wan Kenobi        182 blue-gray
 ```
 
-- Note que há 12 personagens únicos em ambas bases, mas apenas “C-3PO” e “Darth Vader” são observações comuns.
-- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a função `intersect()` em conjunto com a função `names()` ou `colnames()`:
+- Note que h� 12 personagens �nicos em ambas bases, mas apenas ??oC-3PO??? e ??oDarth Vader??? s�o observa��es comuns.
+- Para verificar as colunas com mesmos nomes em duas bases, podemos usar a fun��o `intersect()` em conjunto com a fun��o `names()` ou `colnames()`:
 
 ```r
 intersect( names(bd1), names(bd2) )
@@ -938,7 +938,7 @@ intersect( names(bd1), names(bd2) )
 ```
 ## [1] "name"
 ```
-- Caso não especifiquemos nenhuma variável-chave, a função `merge()` utiliza como variável-chave todas as colunas com nomes iguais.
+- Caso n�o especifiquemos nenhuma vari�vel-chave, a fun��o `merge()` utiliza como vari�vel-chave todas as colunas com nomes iguais.
 
 ##### Inner-join
 
@@ -1020,8 +1020,8 @@ merge(bd1, bd2, all.y = TRUE)
 
 ## Pacote `dplyr`
 - [Vignette - Introduction to _dplyr_](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html)
-- O pacote `dplyr` facilita a manipulação dos dados por meio de funções simples e computacionalmente eficientes
-- As funções pode, ser organizadas em três categorias:
+- O pacote `dplyr` facilita a manipula��o dos dados por meio de fun��es simples e computacionalmente eficientes
+- As fun��es pode, ser organizadas em tr�s categorias:
     - Colunas:
         - `select()`: seleciona (ou retira) as colunas do data frame
         - `rename()`: muda os nomes das colunas
@@ -1030,10 +1030,10 @@ merge(bd1, bd2, all.y = TRUE)
         - `filter()`: seleciona linhas de acordo com valores das colunas
         - `arrange()`: organiza a ordem das linhas
     - Grupo de linhas:
-        - `summarise()`: colapsa um grupo em uma única linha
-        - `group_by()`: agrupa base de dados a partir de uma variável categórica
-- Nesta subseção, continuaremos utilizando a base de dados de Star Wars (`starwars`), utilizada na subseção anterior.
-- Você irá notar que, ao usar essas funções, o data frame é transformado em um _tibble_ que é um formato mais eficiente para tratar dados tabulares, mas que funciona de forma igual a um data frame.
+        - `summarise()`: colapsa um grupo em uma �nica linha
+        - `group_by()`: agrupa base de dados a partir de uma vari�vel categ�rica
+- Nesta subse��o, continuaremos utilizando a base de dados de Star Wars (`starwars`), utilizada na subse��o anterior.
+- Voc� ir� notar que, ao usar essas fun��es, o data frame � transformado em um _tibble_ que � um formato mais eficiente para tratar dados tabulares, mas que funciona de forma igual a um data frame.
 
 
 ```r
@@ -1053,31 +1053,31 @@ filter(.data, ...)
 
 ```r
 sw1 = filter(sw, species == "Human", height >= 100)
-sw1 # já filtra os NA's
+sw1 # j� filtra os NA's
 ```
 
 ```
-## # A tibble: 31 × 14
+## # A tibble: 31 ?- 14
 ##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
 ##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-##  1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
-##  2 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
-##  3 Leia Or…    150    49 brown      light      brown           19   fema… femin…
-##  4 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
-##  5 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
-##  6 Biggs D…    183    84 black      light      brown           24   male  mascu…
-##  7 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-##  8 Anakin …    188    84 blond      fair       blue            41.9 male  mascu…
-##  9 Wilhuff…    180    NA auburn, g… fair       blue            64   male  mascu…
-## 10 Han Solo    180    80 brown      fair       brown           29   male  mascu…
-## # ℹ 21 more rows
-## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+##  1 Luke Sk???    172    77 blond      fair       blue            19   male  mascu???
+##  2 Darth V???    202   136 none       white      yellow          41.9 male  mascu???
+##  3 Leia Or???    150    49 brown      light      brown           19   fema??? femin???
+##  4 Owen La???    178   120 brown, gr??? light      blue            52   male  mascu???
+##  5 Beru Wh???    165    75 brown      light      blue            47   fema??? femin???
+##  6 Biggs D???    183    84 black      light      brown           24   male  mascu???
+##  7 Obi-Wan???    182    77 auburn, w??? fair       blue-gray       57   male  mascu???
+##  8 Anakin ???    188    84 blond      fair       blue            41.9 male  mascu???
+##  9 Wilhuff???    180    NA auburn, g??? fair       blue            64   male  mascu???
+## 10 Han Solo    180    80 brown      fair       brown           29   male  mascu???
+## # ?"? 21 more rows
+## # ?"? 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
 
 
 
-### Ordenação via `arrange()`
+### Ordena��o via `arrange()`
 - Reordena as linhas a partir de um conjunto de nomes de coluna
 ```yaml
 arrange(.data, ..., .by_group = FALSE)
@@ -1085,8 +1085,8 @@ arrange(.data, ..., .by_group = FALSE)
 - .data: A data frame, data frame extension (e.g. a tibble).
 - ... : Variables, or functions of variables. Use desc() to sort a variable in descending order.
 ```
-- Se for inserido mais de um nome de variável, organiza de acordo com a 1ª variável e, em caso de ter linhas com o mesmo valor na 1ª variável, ordena estas linhas de mesmo valor de acordo com a 2ª variável
-- Para usar a ordem decrescente, temos a função `desc()`
+- Se for inserido mais de um nome de vari�vel, organiza de acordo com a 1� vari�vel e, em caso de ter linhas com o mesmo valor na 1� vari�vel, ordena estas linhas de mesmo valor de acordo com a 2� vari�vel
+- Para usar a ordem decrescente, temos a fun��o `desc()`
 
 ```r
 sw2 = arrange(sw1, height, desc(mass))
@@ -1094,28 +1094,28 @@ sw2
 ```
 
 ```
-## # A tibble: 31 × 14
+## # A tibble: 31 ?- 14
 ##    name     height  mass hair_color skin_color eye_color birth_year sex   gender
 ##    <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-##  1 Leia Or…    150    49 brown      light      brown             19 fema… femin…
-##  2 Mon Mot…    150    NA auburn     fair       blue              48 fema… femin…
-##  3 Cordé       157    NA brown      light      brown             NA fema… femin…
-##  4 Shmi Sk…    163    NA black      fair       brown             72 fema… femin…
-##  5 Beru Wh…    165    75 brown      light      blue              47 fema… femin…
-##  6 Padmé A…    165    45 brown      light      brown             46 fema… femin…
-##  7 Dormé       165    NA brown      light      brown             NA fema… femin…
-##  8 Jocasta…    167    NA white      fair       blue              NA fema… femin…
-##  9 Wedge A…    170    77 brown      fair       hazel             21 male  mascu…
-## 10 Palpati…    170    75 grey       pale       yellow            82 male  mascu…
-## # ℹ 21 more rows
-## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+##  1 Leia Or???    150    49 brown      light      brown             19 fema??? femin???
+##  2 Mon Mot???    150    NA auburn     fair       blue              48 fema??? femin???
+##  3 Cord�       157    NA brown      light      brown             NA fema??? femin???
+##  4 Shmi Sk???    163    NA black      fair       brown             72 fema??? femin???
+##  5 Beru Wh???    165    75 brown      light      blue              47 fema??? femin???
+##  6 Padm� A???    165    45 brown      light      brown             46 fema??? femin???
+##  7 Dorm�       165    NA brown      light      brown             NA fema??? femin???
+##  8 Jocasta???    167    NA white      fair       blue              NA fema??? femin???
+##  9 Wedge A???    170    77 brown      fair       hazel             21 male  mascu???
+## 10 Palpati???    170    75 grey       pale       yellow            82 male  mascu???
+## # ?"? 21 more rows
+## # ?"? 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
 
 
 
-### Seleção via `select()`
-- Seleciona colunas que são de interesse.
+### Sele��o via `select()`
+- Seleciona colunas que s�o de interesse.
 ```yaml
 select(.data, ...)
 
@@ -1124,9 +1124,9 @@ select(.data, ...)
   - ! for taking the complement of a set of variables.
   - c() for combining selections.
 ```
-- Coloca-se os nomes das colunas desejadas para selecioná-las.
-- Também é possível selecionar um intervalo de variáveis usando `var1:var2`
-- Caso queira tirar apenas algumas colunas, basta informar o nome delas precedidas pelo sinal de subtração (`-var`)
+- Coloca-se os nomes das colunas desejadas para selecion�-las.
+- Tamb�m � poss�vel selecionar um intervalo de vari�veis usando `var1:var2`
+- Caso queira tirar apenas algumas colunas, basta informar o nome delas precedidas pelo sinal de subtra��o (`-var`)
 
 ```r
 sw3 = select(sw2, name:eye_color, sex:species)
@@ -1134,31 +1134,31 @@ sw3
 ```
 
 ```
-## # A tibble: 31 × 10
+## # A tibble: 31 ?- 10
 ##    name      height  mass hair_color skin_color eye_color sex   gender homeworld
 ##    <chr>      <int> <dbl> <chr>      <chr>      <chr>     <chr> <chr>  <chr>    
-##  1 Leia Org…    150    49 brown      light      brown     fema… femin… Alderaan 
-##  2 Mon Moth…    150    NA auburn     fair       blue      fema… femin… Chandrila
-##  3 Cordé        157    NA brown      light      brown     fema… femin… Naboo    
-##  4 Shmi Sky…    163    NA black      fair       brown     fema… femin… Tatooine 
-##  5 Beru Whi…    165    75 brown      light      blue      fema… femin… Tatooine 
-##  6 Padmé Am…    165    45 brown      light      brown     fema… femin… Naboo    
-##  7 Dormé        165    NA brown      light      brown     fema… femin… Naboo    
-##  8 Jocasta …    167    NA white      fair       blue      fema… femin… Coruscant
-##  9 Wedge An…    170    77 brown      fair       hazel     male  mascu… Corellia 
-## 10 Palpatine    170    75 grey       pale       yellow    male  mascu… Naboo    
-## # ℹ 21 more rows
-## # ℹ 1 more variable: species <chr>
+##  1 Leia Org???    150    49 brown      light      brown     fema??? femin??? Alderaan 
+##  2 Mon Moth???    150    NA auburn     fair       blue      fema??? femin??? Chandrila
+##  3 Cord�        157    NA brown      light      brown     fema??? femin??? Naboo    
+##  4 Shmi Sky???    163    NA black      fair       brown     fema??? femin??? Tatooine 
+##  5 Beru Whi???    165    75 brown      light      blue      fema??? femin??? Tatooine 
+##  6 Padm� Am???    165    45 brown      light      brown     fema??? femin??? Naboo    
+##  7 Dorm�        165    NA brown      light      brown     fema??? femin??? Naboo    
+##  8 Jocasta ???    167    NA white      fair       blue      fema??? femin??? Coruscant
+##  9 Wedge An???    170    77 brown      fair       hazel     male  mascu??? Corellia 
+## 10 Palpatine    170    75 grey       pale       yellow    male  mascu??? Naboo    
+## # ?"? 21 more rows
+## # ?"? 1 more variable: species <chr>
 ```
-- Note que o `select()` pode não funcionar corretamente se o pacote `MASS` estiver ativo. Caso esteja, retire a seleção do pacote `MASS` no quadrante inferior/direito em 'Packages' (ou digite `detach("package:MASS", unload = TRUE)`)
-- Uma outra forma de fazer a seleção de coluna é combinando com `starts_with()` e `ends_with()`, que resulta na seleção de colunas que se iniciam e terminam com um texto dado
+- Note que o `select()` pode n�o funcionar corretamente se o pacote `MASS` estiver ativo. Caso esteja, retire a sele��o do pacote `MASS` no quadrante inferior/direito em 'Packages' (ou digite `detach("package:MASS", unload = TRUE)`)
+- Uma outra forma de fazer a sele��o de coluna � combinando com `starts_with()` e `ends_with()`, que resulta na sele��o de colunas que se iniciam e terminam com um texto dado
 
 ```r
 head( select(sw, ends_with("color")) ) # colunas que terminam com color
 ```
 
 ```
-## # A tibble: 6 × 3
+## # A tibble: 6 ?- 3
 ##   hair_color  skin_color  eye_color
 ##   <chr>       <chr>       <chr>    
 ## 1 blond       fair        blue     
@@ -1174,7 +1174,7 @@ head( select(sw, starts_with("s")) ) # colunas que iniciam com a letra "s"
 ```
 
 ```
-## # A tibble: 6 × 4
+## # A tibble: 6 ?- 4
 ##   skin_color  sex    species starships
 ##   <chr>       <chr>  <chr>   <list>   
 ## 1 fair        male   Human   <chr [2]>
@@ -1187,7 +1187,7 @@ head( select(sw, starts_with("s")) ) # colunas que iniciam com a letra "s"
 
 
 
-### Renomeação via `rename()`
+### Renomea��o via `rename()`
 - Renomeia colunas usando `novo_nome = velho_nome`
 ```yaml
 rename(.data, ...)
@@ -1206,28 +1206,28 @@ sw4
 ```
 
 ```
-## # A tibble: 31 × 10
+## # A tibble: 31 ?- 10
 ##    name         height  mass haircolor skincolor eyecolor sex   gender homeworld
 ##    <chr>         <int> <dbl> <chr>     <chr>     <chr>    <chr> <chr>  <chr>    
-##  1 Leia Organa     150    49 brown     light     brown    fema… femin… Alderaan 
-##  2 Mon Mothma      150    NA auburn    fair      blue     fema… femin… Chandrila
-##  3 Cordé           157    NA brown     light     brown    fema… femin… Naboo    
-##  4 Shmi Skywal…    163    NA black     fair      brown    fema… femin… Tatooine 
-##  5 Beru Whites…    165    75 brown     light     blue     fema… femin… Tatooine 
-##  6 Padmé Amida…    165    45 brown     light     brown    fema… femin… Naboo    
-##  7 Dormé           165    NA brown     light     brown    fema… femin… Naboo    
-##  8 Jocasta Nu      167    NA white     fair      blue     fema… femin… Coruscant
-##  9 Wedge Antil…    170    77 brown     fair      hazel    male  mascu… Corellia 
-## 10 Palpatine       170    75 grey      pale      yellow   male  mascu… Naboo    
-## # ℹ 21 more rows
-## # ℹ 1 more variable: species <chr>
+##  1 Leia Organa     150    49 brown     light     brown    fema??? femin??? Alderaan 
+##  2 Mon Mothma      150    NA auburn    fair      blue     fema??? femin??? Chandrila
+##  3 Cord�           157    NA brown     light     brown    fema??? femin??? Naboo    
+##  4 Shmi Skywal???    163    NA black     fair      brown    fema??? femin??? Tatooine 
+##  5 Beru Whites???    165    75 brown     light     blue     fema??? femin??? Tatooine 
+##  6 Padm� Amida???    165    45 brown     light     brown    fema??? femin??? Naboo    
+##  7 Dorm�           165    NA brown     light     brown    fema??? femin??? Naboo    
+##  8 Jocasta Nu      167    NA white     fair      blue     fema??? femin??? Coruscant
+##  9 Wedge Antil???    170    77 brown     fair      hazel    male  mascu??? Corellia 
+## 10 Palpatine       170    75 grey      pale      yellow   male  mascu??? Naboo    
+## # ?"? 21 more rows
+## # ?"? 1 more variable: species <chr>
 ```
 
 
 
-### Modificação via `mutate()`
-- Modifica uma coluna se ela já existir
-- Cria uma coluna se ela não existir
+### Modifica��o via `mutate()`
+- Modifica uma coluna se ela j� existir
+- Cria uma coluna se ela n�o existir
 ```yaml
 mutate(.data, ...)
 
@@ -1242,51 +1242,51 @@ mutate(.data, ...)
 sw5 = mutate(sw4,
              height = height/100, # transf cm p/ metro
              BMI = mass / height^2,
-             dummy = 1 # se não for vetor, tudo fica igual
+             dummy = 1 # se n�o for vetor, tudo fica igual
              )
-sw5 = select(sw5, BMI, dummy, everything()) # reordenação colunas
+sw5 = select(sw5, BMI, dummy, everything()) # reordena��o colunas
 sw5
 ```
 
 ```
-## # A tibble: 31 × 12
+## # A tibble: 31 ?- 12
 ##      BMI dummy name       height  mass haircolor skincolor eyecolor sex   gender
 ##    <dbl> <dbl> <chr>       <dbl> <dbl> <chr>     <chr>     <chr>    <chr> <chr> 
-##  1  21.8     1 Leia Orga…   1.5     49 brown     light     brown    fema… femin…
-##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema… femin…
-##  3  NA       1 Cordé        1.57    NA brown     light     brown    fema… femin…
-##  4  NA       1 Shmi Skyw…   1.63    NA black     fair      brown    fema… femin…
-##  5  27.5     1 Beru Whit…   1.65    75 brown     light     blue     fema… femin…
-##  6  16.5     1 Padmé Ami…   1.65    45 brown     light     brown    fema… femin…
-##  7  NA       1 Dormé        1.65    NA brown     light     brown    fema… femin…
-##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema… femin…
-##  9  26.6     1 Wedge Ant…   1.7     77 brown     fair      hazel    male  mascu…
-## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu…
-## # ℹ 21 more rows
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+##  1  21.8     1 Leia Orga???   1.5     49 brown     light     brown    fema??? femin???
+##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema??? femin???
+##  3  NA       1 Cord�        1.57    NA brown     light     brown    fema??? femin???
+##  4  NA       1 Shmi Skyw???   1.63    NA black     fair      brown    fema??? femin???
+##  5  27.5     1 Beru Whit???   1.65    75 brown     light     blue     fema??? femin???
+##  6  16.5     1 Padm� Ami???   1.65    45 brown     light     brown    fema??? femin???
+##  7  NA       1 Dorm�        1.65    NA brown     light     brown    fema??? femin???
+##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema??? femin???
+##  9  26.6     1 Wedge Ant???   1.7     77 brown     fair      hazel    male  mascu???
+## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu???
+## # ?"? 21 more rows
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
 
 
 ### Operador Pipe `%>%`
-- Note que todas as funções do pacote `dyplr` anteriores têm como 1º argumento a base de dados (`.data`), e isto não é por acaso.
-- O operador pipe `%>%` joga um data frame (escrito à sua esquerda) no 1º argumento da função seguinte (à sua direita).
+- Note que todas as fun��es do pacote `dyplr` anteriores t�m como 1� argumento a base de dados (`.data`), e isto n�o � por acaso.
+- O operador pipe `%>%` joga um data frame (escrito � sua esquerda) no 1� argumento da fun��o seguinte (� sua direita).
 
 ```r
 filter(sw, species=="Droid") # sem operador pipe
 ```
 
 ```
-## # A tibble: 6 × 14
+## # A tibble: 6 ?- 14
 ##   name   height  mass hair_color skin_color  eye_color birth_year sex   gender  
 ##   <chr>   <int> <dbl> <chr>      <chr>       <chr>          <dbl> <chr> <chr>   
-## 1 C-3PO     167    75 <NA>       gold        yellow           112 none  masculi…
-## 2 R2-D2      96    32 <NA>       white, blue red               33 none  masculi…
-## 3 R5-D4      97    32 <NA>       white, red  red               NA none  masculi…
-## 4 IG-88     200   140 none       metal       red               15 none  masculi…
+## 1 C-3PO     167    75 <NA>       gold        yellow           112 none  masculi???
+## 2 R2-D2      96    32 <NA>       white, blue red               33 none  masculi???
+## 3 R5-D4      97    32 <NA>       white, red  red               NA none  masculi???
+## 4 IG-88     200   140 none       metal       red               15 none  masculi???
 ## 5 R4-P17     96    NA none       silver, red red, blue         NA none  feminine
-## 6 BB8        NA    NA none       none        black             NA none  masculi…
-## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## 6 BB8        NA    NA none       none        black             NA none  masculi???
+## # ?"? 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
 
@@ -1295,20 +1295,20 @@ sw %>% filter(species=="Droid") # com operador pipe
 ```
 
 ```
-## # A tibble: 6 × 14
+## # A tibble: 6 ?- 14
 ##   name   height  mass hair_color skin_color  eye_color birth_year sex   gender  
 ##   <chr>   <int> <dbl> <chr>      <chr>       <chr>          <dbl> <chr> <chr>   
-## 1 C-3PO     167    75 <NA>       gold        yellow           112 none  masculi…
-## 2 R2-D2      96    32 <NA>       white, blue red               33 none  masculi…
-## 3 R5-D4      97    32 <NA>       white, red  red               NA none  masculi…
-## 4 IG-88     200   140 none       metal       red               15 none  masculi…
+## 1 C-3PO     167    75 <NA>       gold        yellow           112 none  masculi???
+## 2 R2-D2      96    32 <NA>       white, blue red               33 none  masculi???
+## 3 R5-D4      97    32 <NA>       white, red  red               NA none  masculi???
+## 4 IG-88     200   140 none       metal       red               15 none  masculi???
 ## 5 R4-P17     96    NA none       silver, red red, blue         NA none  feminine
-## 6 BB8        NA    NA none       none        black             NA none  masculi…
-## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## 6 BB8        NA    NA none       none        black             NA none  masculi???
+## # ?"? 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- Observe que, ao usar o operador pipe, o 1º argumento com a base de dados não deve ser preenchida (já está sendo aplicada automaticamente via `%>%`).
-- Note que, desde a subseção com a função `filter()` até `mutate()` fomos "acumulando" as alterações em novos data frames, ou seja, o último data frame `starwars5` é a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
+- Observe que, ao usar o operador pipe, o 1� argumento com a base de dados n�o deve ser preenchida (j� est� sendo aplicada automaticamente via `%>%`).
+- Note que, desde a subse��o com a fun��o `filter()` at� `mutate()` fomos "acumulando" as altera��es em novos data frames, ou seja, o �ltimo data frame `starwars5` � a base original `starwars` que foi alterada por `filter()`, `arrange()`, `select()`, `rename()` e `mutate()`.
 
 ```r
 sw1 = filter(sw, species == "Human", height >= 100)
@@ -1328,23 +1328,23 @@ sw5
 ```
 
 ```
-## # A tibble: 31 × 12
+## # A tibble: 31 ?- 12
 ##      BMI dummy name       height  mass haircolor skincolor eyecolor sex   gender
 ##    <dbl> <dbl> <chr>       <dbl> <dbl> <chr>     <chr>     <chr>    <chr> <chr> 
-##  1  21.8     1 Leia Orga…   1.5     49 brown     light     brown    fema… femin…
-##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema… femin…
-##  3  NA       1 Cordé        1.57    NA brown     light     brown    fema… femin…
-##  4  NA       1 Shmi Skyw…   1.63    NA black     fair      brown    fema… femin…
-##  5  27.5     1 Beru Whit…   1.65    75 brown     light     blue     fema… femin…
-##  6  16.5     1 Padmé Ami…   1.65    45 brown     light     brown    fema… femin…
-##  7  NA       1 Dormé        1.65    NA brown     light     brown    fema… femin…
-##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema… femin…
-##  9  26.6     1 Wedge Ant…   1.7     77 brown     fair      hazel    male  mascu…
-## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu…
-## # ℹ 21 more rows
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+##  1  21.8     1 Leia Orga???   1.5     49 brown     light     brown    fema??? femin???
+##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema??? femin???
+##  3  NA       1 Cord�        1.57    NA brown     light     brown    fema??? femin???
+##  4  NA       1 Shmi Skyw???   1.63    NA black     fair      brown    fema??? femin???
+##  5  27.5     1 Beru Whit???   1.65    75 brown     light     blue     fema??? femin???
+##  6  16.5     1 Padm� Ami???   1.65    45 brown     light     brown    fema??? femin???
+##  7  NA       1 Dorm�        1.65    NA brown     light     brown    fema??? femin???
+##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema??? femin???
+##  9  26.6     1 Wedge Ant???   1.7     77 brown     fair      hazel    male  mascu???
+## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu???
+## # ?"? 21 more rows
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
-- Usando o operador pipe `%>%` várias vezes, podemos ir pegando o output resultante da aplicação de uma função e jogar como input da função seguinte. Reescreveremos o código acima "em única linha" com `%>%`, chegando ao mesmo data frame de `starwars5`
+- Usando o operador pipe `%>%` v�rias vezes, podemos ir pegando o output resultante da aplica��o de uma fun��o e jogar como input da fun��o seguinte. Reescreveremos o c�digo acima "em �nica linha" com `%>%`, chegando ao mesmo data frame de `starwars5`
 
 ```r
 sw_pipe = sw %>% 
@@ -1363,25 +1363,25 @@ sw_pipe
 ```
 
 ```
-## # A tibble: 31 × 12
+## # A tibble: 31 ?- 12
 ##      BMI dummy name       height  mass haircolor skincolor eyecolor sex   gender
 ##    <dbl> <dbl> <chr>       <dbl> <dbl> <chr>     <chr>     <chr>    <chr> <chr> 
-##  1  21.8     1 Leia Orga…   1.5     49 brown     light     brown    fema… femin…
-##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema… femin…
-##  3  NA       1 Cordé        1.57    NA brown     light     brown    fema… femin…
-##  4  NA       1 Shmi Skyw…   1.63    NA black     fair      brown    fema… femin…
-##  5  27.5     1 Beru Whit…   1.65    75 brown     light     blue     fema… femin…
-##  6  16.5     1 Padmé Ami…   1.65    45 brown     light     brown    fema… femin…
-##  7  NA       1 Dormé        1.65    NA brown     light     brown    fema… femin…
-##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema… femin…
-##  9  26.6     1 Wedge Ant…   1.7     77 brown     fair      hazel    male  mascu…
-## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu…
-## # ℹ 21 more rows
-## # ℹ 2 more variables: homeworld <chr>, species <chr>
+##  1  21.8     1 Leia Orga???   1.5     49 brown     light     brown    fema??? femin???
+##  2  NA       1 Mon Mothma   1.5     NA auburn    fair      blue     fema??? femin???
+##  3  NA       1 Cord�        1.57    NA brown     light     brown    fema??? femin???
+##  4  NA       1 Shmi Skyw???   1.63    NA black     fair      brown    fema??? femin???
+##  5  27.5     1 Beru Whit???   1.65    75 brown     light     blue     fema??? femin???
+##  6  16.5     1 Padm� Ami???   1.65    45 brown     light     brown    fema??? femin???
+##  7  NA       1 Dorm�        1.65    NA brown     light     brown    fema??? femin???
+##  8  NA       1 Jocasta Nu   1.67    NA white     fair      blue     fema??? femin???
+##  9  26.6     1 Wedge Ant???   1.7     77 brown     fair      hazel    male  mascu???
+## 10  26.0     1 Palpatine    1.7     75 grey      pale      yellow   male  mascu???
+## # ?"? 21 more rows
+## # ?"? 2 more variables: homeworld <chr>, species <chr>
 ```
 
 ```r
-all(sw_pipe == sw5, na.rm=TRUE) # verificando se todos elementos são iguais
+all(sw_pipe == sw5, na.rm=TRUE) # verificando se todos elementos s�o iguais
 ```
 
 ```
@@ -1392,7 +1392,7 @@ all(sw_pipe == sw5, na.rm=TRUE) # verificando se todos elementos são iguais
 
 ### Resumo via `summarise()`
 
-- Podemos usar a função `summarise()` para gerar alguma estatística acerca de uma ou mais variáveis:
+- Podemos usar a fun��o `summarise()` para gerar alguma estat�stica acerca de uma ou mais vari�veis:
 
 ```r
 starwars %>% summarise(
@@ -1403,16 +1403,16 @@ starwars %>% summarise(
 ```
 
 ```
-## # A tibble: 1 × 3
+## # A tibble: 1 ?- 3
 ##   n_obs height_mean mass_mean
 ##   <int>       <dbl>     <dbl>
 ## 1    87        174.      97.3
 ```
-- No caso acima, gerou simplesmente o tamanho da amostra e as médias de altura e de massa considerando a amostra inteira de `starwars` (o que não foi muito útil).
+- No caso acima, gerou simplesmente o tamanho da amostra e as m�dias de altura e de massa considerando a amostra inteira de `starwars` (o que n�o foi muito �til).
 
 
 ### Agrupamento via `group_by()`
-- Diferente das outras funções do `dplyr` mostradas até agora, o output do `group_by` não altera conteúdo do data frame, apenas **transforma em uma base de dados agrupada** em categorias de uma dada variável
+- Diferente das outras fun��es do `dplyr` mostradas at� agora, o output do `group_by` n�o altera conte�do do data frame, apenas **transforma em uma base de dados agrupada** em categorias de uma dada vari�vel
 
 ```r
 grouped_sw = starwars %>% group_by(sex)
@@ -1428,16 +1428,16 @@ head(starwars)
 ```
 
 ```
-## # A tibble: 6 × 14
+## # A tibble: 6 ?- 14
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
-## 3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
-## 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
-## 5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
-## 6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
-## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu???
+## 3 R2-D2         96    32 <NA>       white, bl??? red             33   none  mascu???
+## 4 Darth Va???    202   136 none       white      yellow          41.9 male  mascu???
+## 5 Leia Org???    150    49 brown      light      brown           19   fema??? femin???
+## 6 Owen Lars    178   120 brown, gr??? light      blue            52   male  mascu???
+## # ?"? 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
 
@@ -1446,20 +1446,20 @@ head(grouped_sw) # agrupado por sexo
 ```
 
 ```
-## # A tibble: 6 × 14
+## # A tibble: 6 ?- 14
 ## # Groups:   sex [3]
 ##   name      height  mass hair_color skin_color eye_color birth_year sex   gender
 ##   <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-## 1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
-## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
-## 3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
-## 4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
-## 5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
-## 6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
-## # ℹ 5 more variables: homeworld <chr>, species <chr>, films <list>,
+## 1 Luke Sky???    172    77 blond      fair       blue            19   male  mascu???
+## 2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu???
+## 3 R2-D2         96    32 <NA>       white, bl??? red             33   none  mascu???
+## 4 Darth Va???    202   136 none       white      yellow          41.9 male  mascu???
+## 5 Leia Org???    150    49 brown      light      brown           19   fema??? femin???
+## 6 Owen Lars    178   120 brown, gr??? light      blue            52   male  mascu???
+## # ?"? 5 more variables: homeworld <chr>, species <chr>, films <list>,
 ## #   vehicles <list>, starships <list>
 ```
-- O `group_by()` prepara o data frame para operações que consideram várias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observações
+- O `group_by()` prepara o data frame para opera��es que consideram v�rias linhas. Como exemplo, vamos criar uma coluna com a soma de `mass` de todas observa��es
 
 ```r
 starwars %>%
@@ -1469,23 +1469,23 @@ starwars %>%
 ```
 
 ```
-## # A tibble: 10 × 15
+## # A tibble: 10 ?- 15
 ##    mass_mean sex   name  height  mass hair_color skin_color eye_color birth_year
 ##        <dbl> <chr> <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl>
-##  1      97.3 male  Luke…    172    77 blond      fair       blue            19  
+##  1      97.3 male  Luke???    172    77 blond      fair       blue            19  
 ##  2      97.3 none  C-3PO    167    75 <NA>       gold       yellow         112  
-##  3      97.3 none  R2-D2     96    32 <NA>       white, bl… red             33  
-##  4      97.3 male  Dart…    202   136 none       white      yellow          41.9
-##  5      97.3 fema… Leia…    150    49 brown      light      brown           19  
-##  6      97.3 male  Owen…    178   120 brown, gr… light      blue            52  
-##  7      97.3 fema… Beru…    165    75 brown      light      blue            47  
+##  3      97.3 none  R2-D2     96    32 <NA>       white, bl??? red             33  
+##  4      97.3 male  Dart???    202   136 none       white      yellow          41.9
+##  5      97.3 fema??? Leia???    150    49 brown      light      brown           19  
+##  6      97.3 male  Owen???    178   120 brown, gr??? light      blue            52  
+##  7      97.3 fema??? Beru???    165    75 brown      light      blue            47  
 ##  8      97.3 none  R5-D4     97    32 <NA>       white, red red             NA  
-##  9      97.3 male  Bigg…    183    84 black      light      brown           24  
-## 10      97.3 male  Obi-…    182    77 auburn, w… fair       blue-gray       57  
-## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
+##  9      97.3 male  Bigg???    183    84 black      light      brown           24  
+## 10      97.3 male  Obi-???    182    77 auburn, w??? fair       blue-gray       57  
+## # ?"? 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
-- Note que todos os valores de `mass_mean` são iguais. Agora, agruparemos por `sex` antes de fazer a soma:
+- Note que todos os valores de `mass_mean` s�o iguais. Agora, agruparemos por `sex` antes de fazer a soma:
 
 ```r
 starwars %>%
@@ -1497,29 +1497,29 @@ starwars %>%
 ```
 
 ```
-## # A tibble: 10 × 15
+## # A tibble: 10 ?- 15
 ##    mass_mean sex   name  height  mass hair_color skin_color eye_color birth_year
 ##        <dbl> <chr> <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl>
-##  1      81.0 male  Luke…    172    77 blond      fair       blue            19  
+##  1      81.0 male  Luke???    172    77 blond      fair       blue            19  
 ##  2      69.8 none  C-3PO    167    75 <NA>       gold       yellow         112  
-##  3      69.8 none  R2-D2     96    32 <NA>       white, bl… red             33  
-##  4      81.0 male  Dart…    202   136 none       white      yellow          41.9
-##  5      54.7 fema… Leia…    150    49 brown      light      brown           19  
-##  6      81.0 male  Owen…    178   120 brown, gr… light      blue            52  
-##  7      54.7 fema… Beru…    165    75 brown      light      blue            47  
+##  3      69.8 none  R2-D2     96    32 <NA>       white, bl??? red             33  
+##  4      81.0 male  Dart???    202   136 none       white      yellow          41.9
+##  5      54.7 fema??? Leia???    150    49 brown      light      brown           19  
+##  6      81.0 male  Owen???    178   120 brown, gr??? light      blue            52  
+##  7      54.7 fema??? Beru???    165    75 brown      light      blue            47  
 ##  8      69.8 none  R5-D4     97    32 <NA>       white, red red             NA  
-##  9      81.0 male  Bigg…    183    84 black      light      brown           24  
-## 10      81.0 male  Obi-…    182    77 auburn, w… fair       blue-gray       57  
-## # ℹ 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
+##  9      81.0 male  Bigg???    183    84 black      light      brown           24  
+## 10      81.0 male  Obi-???    182    77 auburn, w??? fair       blue-gray       57  
+## # ?"? 6 more variables: gender <chr>, homeworld <chr>, species <chr>,
 ## #   films <list>, vehicles <list>, starships <list>
 ```
-- Note que, agora, a coluna `mass_mean` tem valores diferentes de acordo com o sexo da observação.
-- Isso é útil em algumas aplicações econômicas em que consideramos variáveis a nível de grupo (e.g. domicílio) a qual uma observação (e.g. morador) pertence.
+- Note que, agora, a coluna `mass_mean` tem valores diferentes de acordo com o sexo da observa��o.
+- Isso � �til em algumas aplica��es econ�micas em que consideramos vari�veis a n�vel de grupo (e.g. domic�lio) a qual uma observa��o (e.g. morador) pertence.
 
-> **Evite potenciais erros**: Sempre que usar `group_by()`, não se esqueça de desagrupar o data frame via função `ungroup()` após realizar a operações desejadas.
+> **Evite potenciais erros**: Sempre que usar `group_by()`, n�o se esque�a de desagrupar o data frame via fun��o `ungroup()` ap�s realizar a opera��es desejadas.
 
 ### Resumo por grupo via `group_by()` e `summarise()`
-- A função `summarise()` é de fato útil quando combinada com a função `group_by()`, pois conseguimos obter as estatísticas de grupos:
+- A fun��o `summarise()` � de fato �til quando combinada com a fun��o `group_by()`, pois conseguimos obter as estat�sticas de grupos:
 
 ```r
 summary_sw = starwars %>% group_by(sex) %>%
@@ -1532,7 +1532,7 @@ summary_sw
 ```
 
 ```
-## # A tibble: 5 × 4
+## # A tibble: 5 ?- 4
 ##   sex            n_obs height_mean mass_mean
 ##   <chr>          <int>       <dbl>     <dbl>
 ## 1 female            16        169.      54.7
@@ -1549,8 +1549,8 @@ class(summary_sw) # ao usar summary, deixa de ser agrupada
 ```
 ## [1] "tbl_df"     "tbl"        "data.frame"
 ```
-- Note que, ao usar `summarise()`, o data frame resultante não é agrupado e, portanto, não é necessário usar `ungroup()` neste caso.
-- Também é possível adicionar mais de uma variável para agrupar:
+- Note que, ao usar `summarise()`, o data frame resultante n�o � agrupado e, portanto, n�o � necess�rio usar `ungroup()` neste caso.
+- Tamb�m � poss�vel adicionar mais de uma vari�vel para agrupar:
 
 ```r
 starwars %>% group_by(sex, hair_color) %>%
@@ -1567,7 +1567,7 @@ starwars %>% group_by(sex, hair_color) %>%
 ```
 
 ```
-## # A tibble: 23 × 5
+## # A tibble: 23 ?- 5
 ## # Groups:   sex [5]
 ##    sex            hair_color    n_obs height_mean mass_mean
 ##    <chr>          <chr>         <int>       <dbl>     <dbl>
@@ -1581,9 +1581,9 @@ starwars %>% group_by(sex, hair_color) %>%
 ##  8 male           auburn, grey      1        180      NaN  
 ##  9 male           auburn, white     1        182       77  
 ## 10 male           black             9        176.      81.0
-## # ℹ 13 more rows
+## # ?"? 13 more rows
 ```
-- Para agrupar variáveis **contínuas**, precisamos definir intervalos usando a função `cut()`
+- Para agrupar vari�veis **cont�nuas**, precisamos definir intervalos usando a fun��o `cut()`
 ```yaml
 cut(x, ...)
 
@@ -1602,7 +1602,7 @@ starwars %>% group_by(cut(birth_year, breaks=5)) %>%
 ```
 
 ```
-## # A tibble: 5 × 3
+## # A tibble: 5 ?- 3
 ##   `cut(birth_year, breaks = 5)` n_obs height_mean
 ##   <fct>                         <int>       <dbl>
 ## 1 (7.11,186]                       40        175.
@@ -1623,7 +1623,7 @@ starwars %>% group_by(birth_year=cut(birth_year,
 ```
 
 ```
-## # A tibble: 5 × 3
+## # A tibble: 5 ?- 3
 ##   birth_year n_obs height_mean
 ##   <fct>      <int>       <dbl>
 ## 1 (0,40]        13        164.
@@ -1632,21 +1632,21 @@ starwars %>% group_by(birth_year=cut(birth_year,
 ## 4 (200,900]      2        120.
 ## 5 <NA>          44        176.
 ```
-- Note que inserimos `birth_year=cut(birth_year, ...)` para que o nome da coluna ficasse `birth_year`, caso contrário a coluna ficaria com o nome `cut(birth_year, ...)`.
+- Note que inserimos `birth_year=cut(birth_year, ...)` para que o nome da coluna ficasse `birth_year`, caso contr�rio a coluna ficaria com o nome `cut(birth_year, ...)`.
 
 
 
 
-### Junção via _\_join()_
-- Vimos anteriormente que, para agrupar bases de dados a partir de variáveis-chave, podemos usar a função `merge()`.
-- O pacote `dplyr` fornece uma família de funções _join_ que executam o mesmo comando que `merge()`, porém, ao invés de alterar o valor de um argumento, você precisa escolher uma das funções _join_ que podem ser resumidas na seguinte figura:
+### Jun��o via _\_join()_
+- Vimos anteriormente que, para agrupar bases de dados a partir de vari�veis-chave, podemos usar a fun��o `merge()`.
+- O pacote `dplyr` fornece uma fam�lia de fun��es _join_ que executam o mesmo comando que `merge()`, por�m, ao inv�s de alterar o valor de um argumento, voc� precisa escolher uma das fun��es _join_ que podem ser resumidas na seguinte figura:
 
 <center><img src="../dplyr-data-join-functions.png"></center>
 
-- Todas as funções possuem a mesma sintaxe:
+- Todas as fun��es possuem a mesma sintaxe:
     - `x`: base 1
     - `y`: base 2
-    - `by`: vetor de variáveis-chave
+    - `by`: vetor de vari�veis-chave
     - `suffix`: vetor de 2 sufixos para incluir em colunas de mesmos nomes
 - Como exemplo, usaremos subconjuntos da base de dados `starwars`:
 
@@ -1656,7 +1656,7 @@ bd1
 ```
 
 ```
-## # A tibble: 6 × 3
+## # A tibble: 6 ?- 3
 ##   name            mass species
 ##   <chr>          <dbl> <chr>  
 ## 1 Luke Skywalker    77 Human  
@@ -1673,7 +1673,7 @@ bd2
 ```
 
 ```
-## # A tibble: 6 × 3
+## # A tibble: 6 ?- 3
 ##   name               height eye_color
 ##   <chr>               <int> <chr>    
 ## 1 C-3PO                 167 yellow   
@@ -1683,29 +1683,29 @@ bd2
 ## 5 Biggs Darklighter     183 brown    
 ## 6 Obi-Wan Kenobi        182 blue-gray
 ```
-- Note que há 12 personagens únicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" são observações comuns.
-- `inner_join()`: mantém apenas ID's presentes simultaneamente em ambas bases
+- Note que h� 12 personagens �nicos em ambas bases, mas apenas "C-3PO" e "Darth Vader" s�o observa��es comuns.
+- `inner_join()`: mant�m apenas ID's presentes simultaneamente em ambas bases
 
 ```r
 inner_join(bd1, bd2, by="name")
 ```
 
 ```
-## # A tibble: 2 × 5
+## # A tibble: 2 ?- 5
 ##   name         mass species height eye_color
 ##   <chr>       <dbl> <chr>    <int> <chr>    
 ## 1 C-3PO          75 Droid      167 yellow   
 ## 2 Darth Vader   136 Human      202 yellow
 ```
 
-- `full_join()`: mantém todas ID's, mesmo que estejam em apenas em um das bases
+- `full_join()`: mant�m todas ID's, mesmo que estejam em apenas em um das bases
 
 ```r
 full_join(bd1, bd2, by="name")
 ```
 
 ```
-## # A tibble: 10 × 5
+## # A tibble: 10 ?- 5
 ##    name                mass species height eye_color
 ##    <chr>              <dbl> <chr>    <int> <chr>    
 ##  1 Luke Skywalker        77 Human       NA <NA>     
@@ -1719,14 +1719,14 @@ full_join(bd1, bd2, by="name")
 ##  9 Biggs Darklighter     NA <NA>       183 brown    
 ## 10 Obi-Wan Kenobi        NA <NA>       182 blue-gray
 ```
-- `left_join()`: mantém apenas ID's presentes na base 1 (informada como `x`)
+- `left_join()`: mant�m apenas ID's presentes na base 1 (informada como `x`)
 
 ```r
 left_join(bd1, bd2, by="name")
 ```
 
 ```
-## # A tibble: 6 × 5
+## # A tibble: 6 ?- 5
 ##   name            mass species height eye_color
 ##   <chr>          <dbl> <chr>    <int> <chr>    
 ## 1 Luke Skywalker    77 Human       NA <NA>     
@@ -1736,14 +1736,14 @@ left_join(bd1, bd2, by="name")
 ## 5 Leia Organa       49 Human       NA <NA>     
 ## 6 Owen Lars        120 Human       NA <NA>
 ```
-- `right_join()`: mantém apenas ID's presentes na base 2 (informada como `y`)
+- `right_join()`: mant�m apenas ID's presentes na base 2 (informada como `y`)
 
 ```r
 right_join(bd1, bd2, by="name")
 ```
 
 ```
-## # A tibble: 6 × 5
+## # A tibble: 6 ?- 5
 ##   name                mass species height eye_color
 ##   <chr>              <dbl> <chr>    <int> <chr>    
 ## 1 C-3PO                 75 Droid      167 yellow   
@@ -1757,6 +1757,6 @@ right_join(bd1, bd2, by="name")
 
 </br>
 
-{{< cta cta_text="👉 Proceed to Data Visualization" cta_link="../sec4" >}}
+{{< cta cta_text="?Y'? Proceed to Data Visualization" cta_link="../sec4" >}}
 
 

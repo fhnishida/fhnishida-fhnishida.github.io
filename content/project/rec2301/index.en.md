@@ -17,7 +17,7 @@ Welcome to the TA materials for Econometrics I.
 
 Course page (Prof. Daniel Domingues dos Santos): [https://edisciplinas.usp.br/course/view.php?id=99924](https://edisciplinas.usp.br/course/view.php?id=101585)
 
-{{< cta cta_text="👉 Proceed to the R Toolkit" cta_link="sec1" >}}
+{{< cta cta_text="�Y'? Proceed to the R Toolkit" cta_link="sec1" >}}
 
 </br>
 

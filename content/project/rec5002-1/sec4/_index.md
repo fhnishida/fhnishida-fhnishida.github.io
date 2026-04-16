@@ -23,4 +23,4 @@ type: book
 - Script file: [Monitoria-4.py](../Monitoria-4.py)
 
 
-{{< cta cta_text="👉 Proceed to Session 5" cta_link="../sec5" >}}
+{{< cta cta_text="Proceed to Session 5" cta_link="../sec5" >}}

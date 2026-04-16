@@ -25,4 +25,4 @@ type: book
 ## Complementary content
 - [AP_KuhnTucker_EqDif.pdf](../AP_KuhnTucker_EqDif.pdf)
 
-{{< cta cta_text="👉 Proceed to Session 4" cta_link="../chapter4" >}}
+{{< cta cta_text="Proceed to Session 4" cta_link="../chapter4" >}}
