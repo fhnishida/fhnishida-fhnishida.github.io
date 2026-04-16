@@ -13,6 +13,20 @@ pt-br:
   languageCode: pt-br
   languageName: Português (Brasil)
   title: Fabio Nishida
+  menu:
+    main:
+      - name: Início
+        url: '#about'
+        weight: 10
+      - name: Monitoria
+        url: '#projects'
+        weight: 40
+      - name: Pesquisa
+        url: '#featured'
+        weight: 30
+      - name: Contato
+        url: '#contact'
+        weight: 60
 
 # Uncomment the lines below to configure your website in a second language.
 #zh:

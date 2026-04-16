@@ -41,6 +41,7 @@ ignoreFiles:
   - '\.Rmd$'
   - '\.Rmarkdown$'
   - '_cache$'
+  - '_index-DESKTOP-.*\.md$'
   - '\.en\.md$'
   - 'project/rec2301/index(\.pt-br)?\.md$'
   - 'project/rec2312/index(\.pt-br)?\.md$'

@@ -287,7 +287,7 @@ sections:
       folders:
       - project
     title: Teaching Assistance
-    subtitle: (in Portuguese)
+    subtitle: (in Portuguese and English)
   design:
     columns: "2"
     flip_alt_rows: false
